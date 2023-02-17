@@ -7,6 +7,7 @@ dependencyResolutionManagement {
         maven {
             setUrl("https://jitpack.io")
         }
+        jcenter()
     }
 }
 rootProject.name = "ComposeScreenExample"

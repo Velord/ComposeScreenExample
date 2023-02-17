@@ -1,18 +1,45 @@
+// Migrate to gradle 8.1 when be released should fix that
+// Suppress according to https://github.com/gradle/gradle/issues/22797
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
 }
+
+// When app incompatible with previous version change this value
+val globalVersion = 1
+// When you create huge feature(or many) release change this value
+val majorVersion = 0
+// When you create feature release change this value
+val minorVersion = 0
+// When you create fix change this value
+val fixVersion = 0
+// When you create quick fix from master branch change this value
+val hotfixVersion = 0
+// Based on current CI BUILD_NUMBER
+val buildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull() ?: hotfixVersion
+// Doc says: max number is 2100000000
+// Do not use auto numeration when value beyond edge
+val maxSafeVersionCode = 1000000000
+val calculatedVersionNumber = globalVersion * 100000 + majorVersion * 10000 + minorVersion * 1000 + fixVersion * 100 + buildNumber
 
 android {
     namespace = "com.velord.composescreenexample"
-    compileSdk = 33
+    compileSdk = libs.versions.targetApi.get().toInt()
 
     defaultConfig {
         applicationId = "com.velord.composescreenexample"
-        minSdk = 29
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+
+        minSdk = libs.versions.minApi.get().toInt()
+        targetSdk = libs.versions.targetApi.get().toInt()
+
+        //Don"t use number greater than maxSafeVersionCode
+        val isLessThanMax = calculatedVersionNumber < maxSafeVersionCode
+        versionCode = if (isLessThanMax) calculatedVersionNumber else 0
+        versionName = "$globalVersion.$majorVersion.$minorVersion"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -31,13 +58,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = libs.versions.jvmTarget.get()
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.0"
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     packagingOptions {
         resources {
@@ -47,18 +74,35 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.1")
-
-    val composeVersion = rootProject.extra["compose_version"]
-    implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha11")
-    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
+    // Templates
+    implementation(libs.bundles.kotlin.module.app)
+    implementation(libs.bundles.androidx.module.app)
+    // Compose
+    implementation(libs.bundles.compose.core)
+    implementation(libs.bundles.compose.foundation)
+    implementation(libs.bundles.compose.material)
+    implementation(libs.bundles.compose.accompanist)
+    implementation(libs.compose.paging)
+    implementation(libs.bundles.compose.thirdparty)
+    // DI
+    implementation(libs.bundles.dagger)
+    kapt(libs.bundles.dagger.kapt)
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.compiler)
+    // Image Loader
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
+    // Permission
+    implementation(libs.sagar.coroutine.permission)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
     kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+}
+
+// https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = libs.versions.jvmTarget.get()
+    }
 }
