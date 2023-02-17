@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">model</string>
+    <string name="unknown_exception">Unknown exception</string>
+</resources>
