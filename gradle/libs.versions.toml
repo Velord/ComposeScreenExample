@@ -152,6 +152,10 @@ kotlin-module-app = [
 ]
 # Network
 retrofit = ["square-retrofit", "square-okhttp3-interceptor"]
+network = [
+    "square-retrofit", "square-okhttp3-interceptor",
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+]
 # Compose
 compose-core = [
     "compose-activity", "compose-constraint",

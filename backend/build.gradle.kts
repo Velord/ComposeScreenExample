@@ -37,7 +37,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.bundles.kotlin.base)
     // Network
-    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.network)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

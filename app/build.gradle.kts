@@ -48,11 +48,52 @@ android {
     }
 
     buildTypes {
+        named("debug") {
+            buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
+        }
         named("release") {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
         }
     }
+
+    flavorDimensions.add("environment")
+    productFlavors {
+        val baseUrl = "https://google.com"
+        val currentVersion = globalVersion * 100000 + majorVersion * 10000 + minorVersion * 1000 + fixVersion * 100
+        create("develop") {
+            dimension = "environment"
+            manifestPlaceholders["enableCrashReporting"] = false
+            applicationIdSuffix = ".develop"
+            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+        }
+        create("qa") {
+            dimension = "environment"
+            manifestPlaceholders["enableCrashReporting"] = true
+            applicationIdSuffix = ".develop"
+            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+        }
+
+        create("stage") {
+            dimension = "environment"
+            manifestPlaceholders["enableCrashReporting"] = true
+            applicationIdSuffix = ".stage"
+            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+        }
+
+        create("production") {
+            dimension = "environment"
+            manifestPlaceholders["enableCrashReporting"] = true
+            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -81,6 +122,7 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.module.app)
     implementation(libs.bundles.androidx.module.app)
+    implementation(libs.bundles.retrofit)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
