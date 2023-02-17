@@ -1,6 +1,7 @@
 include(":app")
 include(":backend")
 include(":model")
+include(":datastore")
 rootProject.name = "ComposeScreenExample"
 
 dependencyResolutionManagement {
