@@ -1,5 +1,6 @@
 include(":app")
 include(":backend")
+include(":model")
 rootProject.name = "ComposeScreenExample"
 
 dependencyResolutionManagement {
