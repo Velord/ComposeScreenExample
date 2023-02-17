@@ -1,4 +1,4 @@
-package com.velord.backend.model
+package com.velord.backend.service.user.response
 
 data class UserProfileResponse(
     val id: Int,

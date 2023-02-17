@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.theme
+package com.velord.composescreenexample.ui.compose.theme
 
 import androidx.compose.ui.graphics.Color
 
