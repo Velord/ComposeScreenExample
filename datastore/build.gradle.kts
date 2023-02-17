@@ -1,12 +1,11 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    kotlin("plugin.serialization") version "1.7.0"
-    id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
-    namespace = "com.velord.backend"
+    namespace = "com.velord.datastore"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -27,21 +26,14 @@ android {
             )
         }
     }
+    kotlinOptions {
+        jvmTarget = libs.versions.jvmTarget.get()
+    }
 }
 
 dependencies {
-    // Module
     implementation(project(":model"))
-    implementation(project(":datastore"))
-    // Templates
-    implementation(libs.androidx.core)
-    implementation(libs.bundles.kotlin.base)
-    // Network
-    implementation(libs.bundles.retrofit)
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+    implementation(libs.androidx.datastore.preference)
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo

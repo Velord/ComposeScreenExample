@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.velord.composescreenexample.ui.preview.PreviewCombined
 import com.velord.composescreenexample.ui.theme.MainTheme
 import com.velord.model.profile.UserProfile
 
@@ -35,13 +35,13 @@ private fun MainScreen() {
 }
 
 @Composable
-fun GreetingUser(data: UserProfile) {
+private fun GreetingUser(data: UserProfile) {
     Text(text = "Hello ${data.name}!")
 }
 
-@Preview(showBackground = true)
+@PreviewCombined
 @Composable
-fun MainPreview() {
+private fun MainPreview() {
     MainScreen()
 }
 
