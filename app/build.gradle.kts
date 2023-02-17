@@ -74,6 +74,9 @@ android {
 }
 
 dependencies {
+    // Module
+    implementation(project(":backend"))
+    implementation(project(":model"))
     // Templates
     implementation(libs.bundles.kotlin.module.app)
     implementation(libs.bundles.androidx.module.app)

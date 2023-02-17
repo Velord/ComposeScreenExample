@@ -1,12 +1,13 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("kotlin-parcelize")
+    kotlin("kapt")
     kotlin("plugin.serialization") version "1.7.0"
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "com.velord.backend"
+    namespace = "com.velord.model"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -30,15 +31,17 @@ android {
 }
 
 dependencies {
-    // Module
-    implementation(project(":model"))
     // Templates
-    implementation(libs.androidx.core)
+    implementation(libs.bundles.androidx.core)
     implementation(libs.bundles.kotlin.base)
-    // Network
-    implementation(libs.bundles.retrofit)
+    // Json
+    implementation(libs.kotlin.serialization.json)
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+// https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = libs.versions.jvmTarget.get()
+    }
 }
+
