@@ -2,6 +2,8 @@ package com.velord.composescreenexample.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -11,8 +13,10 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.ViewCompat
 
 private val DarkColorScheme = darkColorScheme(
@@ -38,7 +42,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun ComposeScreenExampleTheme(
+fun MainTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
@@ -65,4 +69,20 @@ fun ComposeScreenExampleTheme(
         typography = Typography,
         content = content
     )
+}
+
+fun Activity.setContentWithTheme(
+    screen: @Composable ComposeView.() -> Unit
+): ComposeView = ComposeView(this).setContentWithTheme(screen)
+
+context(Activity)
+fun ComposeView.setContentWithTheme(
+    screen: @Composable ComposeView.() -> Unit
+): ComposeView = apply {
+    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+    setContent {
+        MainTheme {
+            screen()
+        }
+    }
 }
