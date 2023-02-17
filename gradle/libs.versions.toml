@@ -71,6 +71,9 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 # AndroidX Navigation
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
+# Network SquareUp
+square-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "squareRetrofit" }
+square-okhttp3-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "squareOkhttp3Interceptor" }
 # Kotlin
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
@@ -147,6 +150,8 @@ kotlin-module-app = [
     "kotlin-stdlib", "kotlin-coroutine-core",
     "kotlin-reflect", "kotlin-coroutine-play-service"
 ]
+# Network
+retrofit = ["square-retrofit", "square-okhttp3-interceptor"]
 # Compose
 compose-core = [
     "compose-activity", "compose-constraint",
