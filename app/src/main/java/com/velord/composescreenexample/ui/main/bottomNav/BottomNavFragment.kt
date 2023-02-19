@@ -25,9 +25,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.velord.composescreenexample.ui.compose.component.FullSizeBackground
 import com.velord.composescreenexample.ui.compose.theme.GunPowder
 import com.velord.composescreenexample.ui.compose.theme.RegularAmethystSmoke14Style
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
+import com.velord.composescreenexample.ui.compose.utils.getScreenWidthAndHeightInPx
 import com.velord.model.utils.dpToPx
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,17 +52,15 @@ class BottomNavFragment : Fragment() {
 
 @Composable
 private fun BottomNavScreen(viewModel: BottomNavViewModel) {
-    val configuration = LocalConfiguration.current
-    val density = LocalDensity.current
-    val screenWidthPx = with(density) {configuration.screenWidthDp.dp.roundToPx() }
-    val screenHeightPx = with(density) {configuration.screenHeightDp.dp.roundToPx() }
-    AsyncImage(
-        model = "https://picsum.photos/seed/BottomNavScreen/$screenWidthPx/$screenHeightPx",
-        contentDescription = null,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.FillBounds,
-    )
+    val (screenWidthPx, screenHeightPx) = getScreenWidthAndHeightInPx()
+    val url = "https://picsum.photos/seed/BottomNavScreen/$screenWidthPx/$screenHeightPx"
+    FullSizeBackground(url = url)
 
+    Content()
+}
+
+@Composable
+private fun Content() {
     Box(
         modifier = Modifier
             .fillMaxSize()
