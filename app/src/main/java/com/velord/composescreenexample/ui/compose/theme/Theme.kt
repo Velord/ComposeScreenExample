@@ -18,6 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
+import com.velord.composescreenexample.utils.getActivity
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -57,9 +59,9 @@ fun MainTheme(
         else -> LightColorScheme
     }
     val view = LocalView.current
-    if (!view.isInEditMode) {
+    if (view.isInEditMode.not()) {
         SideEffect {
-            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
+            (view.context.getActivity())?.window?.statusBarColor = colorScheme.primary.toArgb()
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
         }
     }
@@ -76,6 +78,22 @@ fun Activity.setContentWithTheme(
 ): ComposeView = ComposeView(this).setContentWithTheme(screen)
 
 context(Activity)
+fun ComposeView.setContentWithTheme(
+    screen: @Composable ComposeView.() -> Unit
+): ComposeView = apply {
+    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+    setContent {
+        MainTheme {
+            screen()
+        }
+    }
+}
+
+fun Fragment.setContentWithTheme(
+    screen: @Composable ComposeView.() -> Unit
+): ComposeView = ComposeView(requireContext()).setContentWithTheme(screen)
+
+context(Fragment)
 fun ComposeView.setContentWithTheme(
     screen: @Composable ComposeView.() -> Unit
 ): ComposeView = apply {
