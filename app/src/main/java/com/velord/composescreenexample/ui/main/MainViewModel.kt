@@ -17,13 +17,7 @@ class MainViewModel @Inject constructor(
     private val dataStoreService: DataStoreService,
 ) : BaseViewModel() {
 
-    val userFlow = MutableStateFlow<UserProfile?>(null)
-
     init {
-        getData()
-    }
 
-    private fun getData() = launch {
-        userFlow.emit(UserProfile(1, "John Doe"))
     }
 }
