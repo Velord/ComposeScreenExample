@@ -4,14 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.velord.composescreenexample.ui.compose.theme.GunPowder
+import com.velord.composescreenexample.ui.compose.theme.RegularAmethystSmoke14Style
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,13 +36,21 @@ class BottomNavFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        AuthViaExternalServiceScreen(viewModel)
+        BottomNavScreen(viewModel)
     }
 }
 
 @Composable
-private fun AuthViaExternalServiceScreen(viewModel: BottomNavViewModel) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text("AuthViaExternalServiceScreen")
+private fun BottomNavScreen(viewModel: BottomNavViewModel) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .statusBarsPadding()
+    ) {
+        Text(
+            text = "AuthViaExternalServiceScreen",
+            style = RegularAmethystSmoke14Style
+        )
     }
 }
