@@ -29,7 +29,7 @@ androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.5.0"
 androidxNavigation = "2.5.0"
 androidxPaging = "3.1.1"
-androidxCamera = "1.2.0"
+androidxCamera = "1.2.1"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.9.1"
