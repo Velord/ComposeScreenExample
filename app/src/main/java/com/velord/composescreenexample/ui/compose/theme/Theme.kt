@@ -2,8 +2,6 @@ package com.velord.composescreenexample.ui.compose.theme
 
 import android.app.Activity
 import android.os.Build
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -21,7 +19,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.velord.composescreenexample.utils.getActivity
+import com.velord.composescreenexample.utils.context.getActivity
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color.Heliotrope,
