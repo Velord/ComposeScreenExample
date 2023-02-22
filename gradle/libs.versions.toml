@@ -29,6 +29,7 @@ androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.5.0"
 androidxNavigation = "2.5.0"
 androidxPaging = "3.1.1"
+androidxCamera = "1.2.1"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.9.1"
@@ -71,6 +72,11 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 # AndroidX Navigation
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
+# AndroidX Camera
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidxCamera" }
+androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "androidxCamera" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidxCamera" }
+androidx-camera-extension = { module = "androidx.camera:camera-extensions", version.ref = "androidxCamera" }
 # Network SquareUp
 square-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "squareRetrofit" }
 square-okhttp3-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "squareOkhttp3Interceptor" }
@@ -121,7 +127,7 @@ dagger-android-processor = { module = "com.google.dagger:dagger-android-processo
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-navigation = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigation" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
-# Persmission
+# Permission
 sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", version.ref = "sagarCororutinePermission" }
 # Image loader
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
@@ -141,6 +147,10 @@ androidx-module-app = [
     "androidx-lifecycle-runtime", "androidx-lifecycle-livedata", "androidx-lifecycle-viewmodel",
     "androidx-constraint", "androidx-paging-runtime", "androidx-preference",
     "androidx-datastore-preference", "androidx-paging"
+]
+androidx-camera = [
+    "androidx-camera-lifecycle", "androidx-camera-video",
+    "androidx-camera-view", "androidx-camera-extension",
 ]
 # Kotlin
 kotlin-base = ["kotlin-stdlib", "kotlin-coroutine-core"]
