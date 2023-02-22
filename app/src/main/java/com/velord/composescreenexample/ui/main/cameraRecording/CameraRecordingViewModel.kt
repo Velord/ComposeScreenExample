@@ -27,7 +27,7 @@ data class RecordVideoMetaData(
 )
 
 @HiltViewModel
-class RecordVideoViewModel @Inject constructor(
+class CameraRecordingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : BaseViewModel() {
     // Permission
