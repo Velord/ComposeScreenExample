@@ -18,13 +18,14 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
@@ -33,18 +34,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.velord.composescreenexample.R
-import com.velord.composescreenexample.ui.compose.component.FullSizeBackground
-import com.velord.composescreenexample.ui.compose.theme.GunPowder
-import com.velord.composescreenexample.ui.compose.theme.RegularAmethystSmoke14Style
-import com.velord.composescreenexample.ui.compose.theme.SteelGray
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
-import com.velord.composescreenexample.ui.compose.utils.getScreenWidthAndHeightInPx
 import com.velord.composescreenexample.utils.PermissionState
 import com.velord.composescreenexample.utils.context.*
 import com.velord.composescreenexample.utils.fragment.checkRecordVideoPermission
 import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.io.File
 
 @AndroidEntryPoint
 class BottomNavFragment : Fragment() {
@@ -143,24 +140,35 @@ private fun Content(
     onStopRecording: () -> Unit
 ) {
     if (permission.isDenied()) {
-        val (screenWidthPx, screenHeightPx) = getScreenWidthAndHeightInPx()
-        val url = "https://picsum.photos/seed/BottomNavScreen/$screenWidthPx/$screenHeightPx"
-        FullSizeBackground(url)
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .statusBarsPadding()
+                .background(MaterialTheme.colorScheme.surface)
         ) {
-            Text(
-                text = stringResource(id = R.string.can_not_get_permission),
+            Row(
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(16.dp)
-                    .background(Color.White)
+                    .padding(horizontal = 32.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant, shape = MaterialTheme.shapes.medium)
                     .clickable { onCheckPermissionClick() },
-                style = RegularAmethystSmoke14Style
-            )
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PermCameraMic,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .padding(4.dp),
+                    tint = MaterialTheme.colorScheme.error
+                )
+                Text(
+                    text = stringResource(id = R.string.can_not_get_permission),
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp),
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
         }
     } else {
         CameraRecordingPreview(
@@ -309,7 +317,7 @@ private fun StartStop(
             imageVector = icon,
             contentDescription = null,
             modifier = Modifier.size(64.dp),
-            tint = Color.SteelGray
+            tint = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -328,8 +336,28 @@ private fun CameraSelector(
                 imageVector = Icons.Filled.SwitchVideo,
                 contentDescription = null,
                 modifier = Modifier.size(64.dp),
-                tint = Color.SteelGray
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun CameraRecordingPreview() {
+    Content(
+        permission = PermissionState.Denied,
+        quality = Quality.SD,
+        cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
+        isAudioEnabled = true,
+        fileMetaData = RecordVideoMetaData(
+            outputDirectory = File(""),
+            fileNameFormat = "test",
+        ),
+        onCheckPermissionClick = {},
+        onChangeCameraSelector = {},
+        onVideoRecordEvent = {},
+        onNewRecording = {},
+        onStopRecording = {}
+    )
 }
