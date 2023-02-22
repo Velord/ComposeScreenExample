@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_nav_graph"
+    app:startDestination="@id/cameraRecordingFragment">
+
+    <action
+        android:id="@+id/toInDevelopmentFragment"
+        app:destination="@id/inDevelopmentFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@+id/bottom_nav_graph"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/toCameraRecordingFragment"
+        app:destination="@id/cameraRecordingFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@+id/bottom_nav_graph"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/inDevelopmentFragment"
+        android:name="com.velord.composescreenexample.ui.main.inDevelopment.InDevelopmentFragment"
+        android:label="InDevelopmentFragment" />
+
+    <fragment
+        android:id="@+id/cameraRecordingFragment"
+        android:name="com.velord.composescreenexample.ui.main.cameraRecording.CameraRecordingFragment"
+        android:label="CameraRecordingFragment" />
+
+</navigation>
