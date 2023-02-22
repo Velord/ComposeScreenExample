@@ -3,11 +3,7 @@ package com.velord.composescreenexample.ui.compose.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
@@ -22,44 +18,69 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.velord.composescreenexample.utils.context.getActivity
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color.Heliotrope,
-    secondary = Color.Rum,
-    tertiary = Color.Carnation
+    primary = Color.DarkPrimary,
+    onPrimary = Color.DarkOnPrimary,
+    secondary = Color.DarkSecondary,
+    onSecondary = Color.DarkOnSecondary,
+    tertiary = Color.DarkTertiary,
+    onTertiary = Color.DarkOnTertiary,
+    background = Color.DarkBackground,
+    onBackground = Color.DarkOnBackground,
+    surface = Color.DarkSurface,
+    onSurface = Color.DarkOnSurface,
+    primaryContainer = Color.DarkPrimaryContainer,
+    onPrimaryContainer = Color.DarkOnPrimaryContainer,
+    secondaryContainer = Color.DarkSecondaryContainer,
+    onSecondaryContainer = Color.DarkOnSecondaryContainer,
+    tertiaryContainer = Color.DarkTertiaryContainer,
+    onTertiaryContainer = Color.DarkOnTertiaryContainer,
+    surfaceVariant = Color.DarkSurfaceVariant,
+    onSurfaceVariant = Color.DarkOnSurfaceVariant,
+    outline = Color.DarkOutline,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color.Heliotrope,
-    secondary = Color.Rum,
-    tertiary = Color.Carnation,
-    background = Color.SteelGray,
-    surface = Color.GunPowder,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color.Charade,
-    onSurface = Color.Zumthor,
+    primary = Color.DarkPrimary,
+    onPrimary = Color.DarkOnPrimary,
+    secondary = Color.DarkSecondary,
+    onSecondary = Color.DarkOnSecondary,
+    tertiary = Color.DarkTertiary,
+    onTertiary = Color.DarkOnTertiary,
+    background = Color.DarkBackground,
+    onBackground = Color.DarkOnBackground,
+    surface = Color.DarkSurface,
+    onSurface = Color.DarkOnSurface,
+    primaryContainer = Color.DarkPrimaryContainer,
+    onPrimaryContainer = Color.DarkOnPrimaryContainer,
+    secondaryContainer = Color.DarkSecondaryContainer,
+    onSecondaryContainer = Color.DarkOnSecondaryContainer,
+    tertiaryContainer = Color.DarkTertiaryContainer,
+    onTertiaryContainer = Color.DarkOnTertiaryContainer,
+    surfaceVariant = Color.DarkSurfaceVariant,
+    onSurfaceVariant = Color.DarkOnSurfaceVariant,
+    outline = Color.DarkOutline,
 )
 
 @Composable
 fun MainTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (useDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> DarkColorScheme
+        useDarkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
     val view = LocalView.current
     if (view.isInEditMode.not()) {
         SideEffect {
             (view.context.getActivity())?.window?.statusBarColor = colorScheme.primary.toArgb()
-            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
+            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = useDarkTheme
         }
     }
 
@@ -70,7 +91,8 @@ fun MainTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        shapes = MainShapes,
+        typography = MainTypography,
         content = content
     )
 }
