@@ -21,11 +21,12 @@ class MainActivity : AppCompatActivity() {
         private const val NAVIGATION_EXTRA = "navigation_extra"
         const val fragmentContainer = R.id.navHostFragment
 
-        fun startIntent(context: Context, bundle: Bundle) =
-            Intent(context, MainActivity::class.java).apply {
-                putExtra(NAVIGATION_EXTRA, bundle)
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
+        fun startIntent(context: Context, bundle: Bundle) = Intent(
+            context, MainActivity::class.java
+        ).apply {
+            putExtra(NAVIGATION_EXTRA, bundle)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
     }
 
     private val viewModel: MainViewModel by viewModels()
@@ -47,15 +48,15 @@ class MainActivity : AppCompatActivity() {
         handleIntent(savedInstanceState)
     }
 
-    override fun onBackPressed() {
-        val navHostFragment =
-            (supportFragmentManager.findFragmentById(fragmentContainer) as? NavHostFragment)
-                ?: supportFragmentManager.fragments[0] as NavHostFragment
-        val entryCount = navHostFragment.childFragmentManager.backStackEntryCount
-
-        if (entryCount == 0) binding?.snackBarAnchorView?.showSnackbarOrFinish()
-        else super.onBackPressed()
-    }
+//    override fun onBackPressed() {
+//        val navHostFragment =
+//            (supportFragmentManager.findFragmentById(fragmentContainer) as? NavHostFragment)
+//                ?: supportFragmentManager.fragments[0] as NavHostFragment
+//        val entryCount = navHostFragment.childFragmentManager.backStackEntryCount
+//
+//        if (entryCount == 0) binding?.snackBarAnchorView?.showSnackbarOrFinish()
+//        else super.onBackPressed()
+//    }
 
     private fun handleIntent(savedInstanceState: Bundle?) {
         /** The Intent provided by getIntent() (and its extras) always persist the same

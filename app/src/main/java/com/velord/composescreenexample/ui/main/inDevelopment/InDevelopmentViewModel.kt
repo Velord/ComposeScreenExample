@@ -1,0 +1,20 @@
+package com.velord.composescreenexample.ui.main.inDevelopment
+
+import com.velord.composescreenexample.R
+import com.velord.composescreenexample.utils.shared.NavigationData
+import com.velord.composescreenexample.viewModel.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class InDevelopmentViewModel @Inject constructor(
+) : BaseViewModel() {
+
+    val navigationEvent = MutableSharedFlow<NavigationData>()
+
+    fun onOpenNew() = launch {
+        navigationEvent.emit(NavigationData(R.id.toInDevelopmentFragment))
+    }
+}
