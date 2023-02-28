@@ -18,9 +18,7 @@
     <action
         android:id="@+id/toInDevelopmentFragment"
         app:destination="@id/inDevelopmentFragment"
-        app:launchSingleTop="true"
-        app:popUpTo="@+id/bottom_nav_graph"
-        app:popUpToInclusive="true" />
+        />
 
     <fragment
         android:id="@+id/bottomNavFragment"

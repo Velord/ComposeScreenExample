@@ -8,15 +8,28 @@
         android:id="@+id/toInDevelopmentFragment"
         app:destination="@id/inDevelopmentFragment"
         app:launchSingleTop="true"
-        app:popUpTo="@+id/bottom_nav_graph"
-        app:popUpToInclusive="true" />
+        app:popUpTo="@+id/cameraRecordingFragment"
+        app:popUpToSaveState="true"
+        app:restoreState="true"
+        />
 
     <action
         android:id="@+id/toCameraRecordingFragment"
         app:destination="@id/cameraRecordingFragment"
         app:launchSingleTop="true"
-        app:popUpTo="@+id/bottom_nav_graph"
-        app:popUpToInclusive="true" />
+        app:popUpTo="@+id/cameraRecordingFragment"
+        app:popUpToSaveState="true"
+        app:restoreState="true"
+        />
+
+    <action
+        android:id="@+id/toTestFragment"
+        app:destination="@id/testFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@+id/cameraRecordingFragment"
+        app:popUpToSaveState="true"
+        app:restoreState="true"
+        />
 
     <fragment
         android:id="@+id/inDevelopmentFragment"
@@ -27,5 +40,10 @@
         android:id="@+id/cameraRecordingFragment"
         android:name="com.velord.composescreenexample.ui.main.cameraRecording.CameraRecordingFragment"
         android:label="CameraRecordingFragment" />
+
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.velord.composescreenexample.ui.main.inDevelopment.TestFragment"
+        android:label="TestFragment" />
 
 </navigation>

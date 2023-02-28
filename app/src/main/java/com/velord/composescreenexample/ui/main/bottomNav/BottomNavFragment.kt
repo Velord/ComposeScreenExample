@@ -89,6 +89,9 @@ private fun BottomNavScreen(viewModel: BottomNavViewModel) {
         onClick = viewModel::onTabClick,
     )
 
+//    BackHandler {
+//        viewModel.onBackDoubleClick()
+//    }
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
