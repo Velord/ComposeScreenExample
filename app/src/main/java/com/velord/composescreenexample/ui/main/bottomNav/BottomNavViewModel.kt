@@ -37,7 +37,7 @@ class BottomNavViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val tabFlow: MutableStateFlow<BottomNavItem> = MutableStateFlow(BottomNavItem.Camera)
-    val finishAppEvent = MutableSharedFlow<Unit>()
+    val finishAppEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     fun onTabClick(newTab: BottomNavItem) {
         if (newTab == tabFlow.value) return

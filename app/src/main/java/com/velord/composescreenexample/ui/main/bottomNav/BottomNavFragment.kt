@@ -71,7 +71,7 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
             }
             launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.finishAppEvent.collectLatest {
+                    viewModel.finishAppEvent.collect {
                         requireActivity().finish()
                     }
                 }
