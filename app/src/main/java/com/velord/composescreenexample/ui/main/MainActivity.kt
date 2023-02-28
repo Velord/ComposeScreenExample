@@ -11,7 +11,6 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
-import com.velord.composescreenexample.utils.showSnackbarOrFinish
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val viewModel: MainViewModel by viewModels()
-
     private var binding: ActivityMainBinding? = null
 
     override fun onDestroy() {
@@ -47,16 +45,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
         handleIntent(savedInstanceState)
     }
-
-//    override fun onBackPressed() {
-//        val navHostFragment =
-//            (supportFragmentManager.findFragmentById(fragmentContainer) as? NavHostFragment)
-//                ?: supportFragmentManager.fragments[0] as NavHostFragment
-//        val entryCount = navHostFragment.childFragmentManager.backStackEntryCount
-//
-//        if (entryCount == 0) binding?.snackBarAnchorView?.showSnackbarOrFinish()
-//        else super.onBackPressed()
-//    }
 
     private fun handleIntent(savedInstanceState: Bundle?) {
         /** The Intent provided by getIntent() (and its extras) always persist the same
