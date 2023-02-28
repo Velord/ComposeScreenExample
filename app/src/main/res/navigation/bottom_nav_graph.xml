@@ -8,7 +8,7 @@
         android:id="@+id/toInDevelopmentFragment"
         app:destination="@id/inDevelopmentFragment"
         app:launchSingleTop="true"
-        app:popUpTo="@+id/cameraRecordingFragment"
+        app:popUpTo="@+id/bottom_nav_graph"
         app:popUpToSaveState="true"
         app:restoreState="true"
         />
@@ -17,7 +17,7 @@
         android:id="@+id/toCameraRecordingFragment"
         app:destination="@id/cameraRecordingFragment"
         app:launchSingleTop="true"
-        app:popUpTo="@+id/cameraRecordingFragment"
+        app:popUpTo="@+id/bottom_nav_graph"
         app:popUpToSaveState="true"
         app:restoreState="true"
         />
@@ -26,7 +26,7 @@
         android:id="@+id/toTestFragment"
         app:destination="@id/testFragment"
         app:launchSingleTop="true"
-        app:popUpTo="@+id/cameraRecordingFragment"
+        app:popUpTo="@+id/bottom_nav_graph"
         app:popUpToSaveState="true"
         app:restoreState="true"
         />

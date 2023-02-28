@@ -15,15 +15,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.fragment.findNavController
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.component.AnimatableLabeledIcon
+import com.velord.composescreenexample.ui.compose.component.SnackBarOnBackPressHandler
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
-import com.velord.composescreenexample.utils.DELAY_TO_EXIT_APP
-import com.velord.composescreenexample.utils.OnBackPressHandler
-import com.velord.composescreenexample.utils.SnackBarOnBackPressHandler
 import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -89,9 +89,6 @@ private fun BottomNavScreen(viewModel: BottomNavViewModel) {
         onClick = viewModel::onTabClick,
     )
 
-//    BackHandler {
-//        viewModel.onBackDoubleClick()
-//    }
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,

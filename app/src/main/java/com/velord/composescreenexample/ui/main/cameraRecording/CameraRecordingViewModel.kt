@@ -85,11 +85,11 @@ class CameraRecordingViewModel @Inject constructor(
     }
 
     fun onVideoRecordEvent(newEvent: VideoRecordEvent) {
-        Log.d("@@@", "Recording event: $newEvent")
+        Log.d("CameraRecordingViewModel", "Recording event: $newEvent")
         if (newEvent is VideoRecordEvent.Finalize) {
             val uri = newEvent.outputResults.outputUri
             //if (uri != Uri.EMPTY) saveVideo(uri)
-            Log.d("@@@", "Recording uri: $uri")
+            Log.d("CameraRecordingViewModel", "Recording uri: $uri")
         }
     }
 
