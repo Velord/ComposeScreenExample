@@ -13,8 +13,13 @@ class InDevelopmentViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val navigationEvent = MutableSharedFlow<NavigationData>()
+    val backEvent = MutableSharedFlow<Unit>()
 
     fun onOpenNew() = launch {
         navigationEvent.emit(NavigationData(R.id.toInDevelopmentFragment))
+    }
+
+    fun onBackPressed() = launch {
+        backEvent.emit(Unit)
     }
 }
