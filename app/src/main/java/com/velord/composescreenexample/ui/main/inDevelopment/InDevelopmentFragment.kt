@@ -63,8 +63,6 @@ class InDevelopmentFragment : Fragment() {
 
 @Composable
 private fun InDevelopmentScreen(viewModel: InDevelopmentViewModel) {
-    //BackHandler(onBack = viewModel::onBackPressed)
-
     val time = remember { System.currentTimeMillis().toString() }
     Box(Modifier.fillMaxSize()) {
         Text(

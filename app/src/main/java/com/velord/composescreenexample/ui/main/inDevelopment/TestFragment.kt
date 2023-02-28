@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.Fragment
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
+import com.velord.composescreenexample.ui.compose.utils.TestScreen
 import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,31 +29,5 @@ class TestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
         TestScreen()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initObserving()
-    }
-
-    private fun initObserving() {
-        viewLifecycleScope.launch {
-        }
-    }
-}
-
-@Composable
-private fun TestScreen() {
-    val time = remember { System.currentTimeMillis().toString() }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.surface),
-    ) {
-        Text(
-            text = time,
-            modifier = Modifier.align(Alignment.Center)
-        )
     }
 }
