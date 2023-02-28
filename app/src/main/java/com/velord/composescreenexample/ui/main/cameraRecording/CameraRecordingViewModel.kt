@@ -7,7 +7,7 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.*
-import com.velord.composescreenexample.utils.PermissionState
+import com.velord.composescreenexample.utils.shared.PermissionState
 import com.velord.composescreenexample.utils.context.createDirInCache
 import com.velord.composescreenexample.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
