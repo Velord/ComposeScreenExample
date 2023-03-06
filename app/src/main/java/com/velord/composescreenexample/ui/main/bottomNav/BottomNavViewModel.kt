@@ -8,7 +8,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 enum class BottomNavItem {
@@ -24,9 +26,9 @@ enum class BottomNavItem {
     }
 
     val navigationId get() = when (this) {
-        Camera -> R.id.cameraRecordingFragment
-        Add -> R.id.inDevelopmentFragment
-        Settings -> R.id.inDevelopmentFragment
+        Camera -> R.id.toCameraRecordingFragment
+        Add -> R.id.toInDevelopmentFragment
+        Settings -> R.id.toTestFragment
     }
 }
 
@@ -35,9 +37,14 @@ class BottomNavViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val tabFlow: MutableStateFlow<BottomNavItem> = MutableStateFlow(BottomNavItem.Camera)
+    val finishAppEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     fun onTabClick(newTab: BottomNavItem) {
         if (newTab == tabFlow.value) return
         tabFlow.value = newTab
+    }
+
+    fun onBackDoubleClick() = launch {
+        finishAppEvent.emit(Unit)
     }
 }

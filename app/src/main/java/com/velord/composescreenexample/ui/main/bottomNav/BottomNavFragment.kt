@@ -1,28 +1,34 @@
 package com.velord.composescreenexample.ui.main.bottomNav
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.component.AnimatableLabeledIcon
+import com.velord.composescreenexample.ui.compose.component.SnackBarOnBackPressHandler
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
 import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -58,9 +64,18 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
 
     private fun initObserving() {
         viewLifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.tabFlow.collectLatest {
-                    navController.navigate(it.navigationId)
+            launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.tabFlow.collectLatest {
+                        navController.navigate(it.navigationId)
+                    }
+                }
+            }
+            launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.finishAppEvent.collect {
+                        requireActivity().finish()
+                    }
                 }
             }
         }
@@ -75,6 +90,17 @@ private fun BottomNavScreen(viewModel: BottomNavViewModel) {
         selectedItem = tabFlow.value,
         onClick = viewModel::onTabClick,
     )
+
+    val str = stringResource(id = R.string.press_again_to_exit)
+    SnackBarOnBackPressHandler(
+        message = str,
+        modifier = Modifier.padding(horizontal = 8.dp),
+        onBackClickLessThanDuration = viewModel::onBackDoubleClick,
+    ) {
+        Snackbar {
+            Text(text = it.visuals.message)
+        }
+    }
 }
 
 @Composable

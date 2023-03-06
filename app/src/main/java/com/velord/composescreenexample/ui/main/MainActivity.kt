@@ -11,7 +11,6 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
-import com.velord.composescreenexample.utils.showSnackbarOrFinish
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,15 +20,15 @@ class MainActivity : AppCompatActivity() {
         private const val NAVIGATION_EXTRA = "navigation_extra"
         const val fragmentContainer = R.id.navHostFragment
 
-        fun startIntent(context: Context, bundle: Bundle) =
-            Intent(context, MainActivity::class.java).apply {
-                putExtra(NAVIGATION_EXTRA, bundle)
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
+        fun startIntent(context: Context, bundle: Bundle) = Intent(
+            context, MainActivity::class.java
+        ).apply {
+            putExtra(NAVIGATION_EXTRA, bundle)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
     }
 
     private val viewModel: MainViewModel by viewModels()
-
     private var binding: ActivityMainBinding? = null
 
     override fun onDestroy() {
@@ -45,16 +44,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         handleIntent(savedInstanceState)
-    }
-
-    override fun onBackPressed() {
-        val navHostFragment =
-            (supportFragmentManager.findFragmentById(fragmentContainer) as? NavHostFragment)
-                ?: supportFragmentManager.fragments[0] as NavHostFragment
-        val entryCount = navHostFragment.childFragmentManager.backStackEntryCount
-
-        if (entryCount == 0) binding?.snackBarAnchorView?.showSnackbarOrFinish()
-        else super.onBackPressed()
     }
 
     private fun handleIntent(savedInstanceState: Bundle?) {
