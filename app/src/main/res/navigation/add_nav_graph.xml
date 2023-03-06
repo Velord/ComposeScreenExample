@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/camera_nav_graph"
-    app:startDestination="@id/cameraGraphFragment">
+    android:id="@+id/add_nav_graph"
+    app:startDestination="@id/addGraphFragment">
 
     <fragment
-        android:id="@+id/cameraGraphFragment"
-        android:name="com.velord.composescreenexample.ui.main.bottomNav.cameraGraph.CameraGraphFragment"
-        android:label="CameraGraphFragment" >
+        android:id="@+id/addGraphFragment"
+        android:name="com.velord.composescreenexample.ui.main.bottomNav.addGraph.AddGraphFragment"
+        android:label="AddGraphFragment" >
 
         <action
             android:id="@+id/toInDevelopmentFragment"

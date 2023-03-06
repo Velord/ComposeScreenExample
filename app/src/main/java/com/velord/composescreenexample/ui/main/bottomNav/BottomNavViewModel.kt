@@ -26,9 +26,9 @@ enum class BottomNavItem {
     }
 
     val navigationId get() = when (this) {
-        Camera -> R.id.toCameraRecordingFragment
-        Add -> R.id.toInDevelopmentFragment
-        Settings -> R.id.toTestFragment
+        Camera -> R.id.camera_nav_graph
+        Add -> R.id.add_nav_graph
+        Settings -> R.id.settings_nav_graph
     }
 }
 
