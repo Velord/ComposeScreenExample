@@ -7,7 +7,7 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.*
-import com.velord.composescreenexample.utils.PermissionState
+import com.velord.composescreenexample.utils.shared.PermissionState
 import com.velord.composescreenexample.utils.context.createDirInCache
 import com.velord.composescreenexample.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -85,11 +85,11 @@ class CameraRecordingViewModel @Inject constructor(
     }
 
     fun onVideoRecordEvent(newEvent: VideoRecordEvent) {
-        Log.d("@@@", "Recording event: $newEvent")
+        Log.d("CameraRecordingViewModel", "Recording event: $newEvent")
         if (newEvent is VideoRecordEvent.Finalize) {
             val uri = newEvent.outputResults.outputUri
             //if (uri != Uri.EMPTY) saveVideo(uri)
-            Log.d("@@@", "Recording uri: $uri")
+            Log.d("CameraRecordingViewModel", "Recording uri: $uri")
         }
     }
 
