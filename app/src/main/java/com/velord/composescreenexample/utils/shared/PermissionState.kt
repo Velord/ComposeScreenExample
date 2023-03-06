@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.utils
+package com.velord.composescreenexample.utils.shared
 
 enum class PermissionState {
     NotAsked,

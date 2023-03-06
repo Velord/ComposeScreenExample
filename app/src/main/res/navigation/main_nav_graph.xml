@@ -15,10 +15,20 @@
         app:popUpTo="@id/bottomNavFragment"
         app:popUpToInclusive="true" />
 
+    <action
+        android:id="@+id/toInDevelopmentFragment"
+        app:destination="@id/inDevelopmentFragment"
+        />
+
     <fragment
         android:id="@+id/bottomNavFragment"
         android:name="com.velord.composescreenexample.ui.main.bottomNav.BottomNavFragment"
         android:label="BottomNavFragment"
         />
+
+    <fragment
+        android:id="@+id/inDevelopmentFragment"
+        android:name="com.velord.composescreenexample.ui.main.inDevelopment.InDevelopmentFragment"
+        android:label="InDevelopmentFragment" />
 
 </navigation>
