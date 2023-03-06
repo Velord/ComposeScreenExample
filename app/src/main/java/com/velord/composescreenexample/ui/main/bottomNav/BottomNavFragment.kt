@@ -14,6 +14,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.component.AnimatableLabeledIcon
@@ -48,7 +50,7 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
     }
 
     context(FragmentBottomNavBinding)
-            private fun initView() {
+    private fun initView() {
         bottomNavBarView.setContentWithTheme {
             BottomNavScreen(viewModel)
         }
