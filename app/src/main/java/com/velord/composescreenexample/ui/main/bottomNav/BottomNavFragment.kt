@@ -44,13 +44,6 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
         super.onDestroy()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = super.onCreateView(inflater, container, savedInstanceState).also {
-
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

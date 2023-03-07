@@ -11,7 +11,7 @@
 
         <action
             android:id="@+id/toInDevelopmentFragment"
-            app:destination="@id/inDevelopmentFragment"/>
+            app:destination="@id/inDevelopmentFragment" />
     </fragment>
 
     <fragment
