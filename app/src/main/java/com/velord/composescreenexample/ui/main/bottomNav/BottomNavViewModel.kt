@@ -1,5 +1,6 @@
 package com.velord.composescreenexample.ui.main.bottomNav
 
+import androidx.navigation.NavDestination
 import com.velord.composescreenexample.utils.navigation.BottomNavigationItem
 import com.velord.composescreenexample.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,15 +13,25 @@ import javax.inject.Inject
 class BottomNavViewModel @Inject constructor(
 ) : BaseViewModel() {
 
-    val tabFlow: MutableStateFlow<BottomNavigationItem> = MutableStateFlow(BottomNavigationItem.Camera)
+    val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)
+    val isBackHandlingEnabledFlow = MutableStateFlow(false)
     val finishAppEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
 
+    fun getNavigationItems() = BottomNavigationItem.values().toList()
+
     fun onTabClick(newTab: BottomNavigationItem) {
-        if (newTab == tabFlow.value) return
-        tabFlow.value = newTab
+        if (newTab == currentTabFlow.value) return
+        currentTabFlow.value = newTab
     }
 
     fun onBackDoubleClick() = launch {
         finishAppEvent.emit(Unit)
+    }
+
+    fun updateBackHandling(currentNavigationDestination: NavDestination?) {
+        val isCurrentStartDestination = getNavigationItems()
+            .map { it.startDestinationId }
+            .contains(currentNavigationDestination?.id)
+        isBackHandlingEnabledFlow.value = isCurrentStartDestination
     }
 }

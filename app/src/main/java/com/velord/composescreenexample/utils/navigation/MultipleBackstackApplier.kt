@@ -3,19 +3,15 @@ package com.velord.composescreenexample.utils.navigation
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.annotation.IdRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Camera
-import androidx.compose.material.icons.outlined.Settings
 import androidx.core.view.forEach
 import androidx.lifecycle.*
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.google.android.material.navigation.NavigationBarMenu
-import com.velord.composescreenexample.R
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,7 +22,7 @@ import java.lang.ref.WeakReference
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:id="@+id/camera_nav_graph" // this is your navigationGraphId
-app:startDestination="@id/cameraGraphFragment">
+app:startDestination="@id/cameraGraphFragment">  // this is your startDestinationId
 ...
 ...
 </navigation>
@@ -35,6 +31,7 @@ interface MultipleBackstackGraphItem {
     // Id of navigation graph for multiple backstack.
     // Graph must be included in "main|desirable|bottom" navigation graph.
     val navigationGraphId: Int
+    val startDestinationId: Int
 }
 
 object MultipleBackstackApplier {
@@ -61,7 +58,8 @@ object MultipleBackstackApplier {
         items: List<MultipleBackstackGraphItem>,
         navigationView: View,
         navController: NavController,
-        flowOnSelect: MutableSharedFlow<BottomNavigationItem>
+        flowOnSelect: MutableSharedFlow<BottomNavigationItem>,
+        onMenuChange: (MenuItem) -> Unit
     ) {
         val menu = createNavigationBarMenu(navigationView.context, items)
 
@@ -94,6 +92,7 @@ object MultipleBackstackApplier {
                     menu.forEach { item ->
                         if (destination.matchDestination(item.itemId)) {
                             item.isChecked = true
+                            onMenuChange(item)
                         }
                     }
                 }

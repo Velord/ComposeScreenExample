@@ -1,7 +1,9 @@
 package com.velord.composescreenexample.ui.main.bottomNav
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -26,7 +28,6 @@ import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
 import com.velord.composescreenexample.utils.navigation.BottomNavigationItem
 import com.velord.composescreenexample.utils.navigation.MultipleBackstackApplier
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -43,11 +44,19 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
         super.onDestroy()
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = super.onCreateView(inflater, container, savedInstanceState).also {
+
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentBottomNavBinding.bind(view).apply {
             initView()
+            initMultipleBackStack()
         }
         initObserving()
     }
@@ -57,29 +66,26 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
         bottomNavBarView.setContentWithTheme {
             BottomNavScreen(viewModel)
         }
+    }
 
+    context(FragmentBottomNavBinding)
+    private fun initMultipleBackStack() {
         MultipleBackstackApplier.setupWithNavController(
-            items = BottomNavigationItem.values().toList(),
+            items = viewModel.getNavigationItems(),
             navigationView = bottomNavBarView,
             navController = navController,
-            flowOnSelect = viewModel.tabFlow,
-        )
+            flowOnSelect = viewModel.currentTabFlow,
+        ) {
+            val destination = navController.currentDestination
+            viewModel.updateBackHandling(destination)
+        }
     }
 
     private fun initObserving() {
         viewLifecycleScope.launch {
-            launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.tabFlow.collectLatest {
-                        //navController.navigate(it.navigationId)
-                    }
-                }
-            }
-            launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.finishAppEvent.collect {
-                        requireActivity().finish()
-                    }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.finishAppEvent.collect {
+                    requireActivity().finish()
                 }
             }
         }
@@ -88,7 +94,8 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
 
 @Composable
 private fun BottomNavScreen(viewModel: BottomNavViewModel) {
-    val tabFlow = viewModel.tabFlow.collectAsStateWithLifecycle()
+    val tabFlow = viewModel.currentTabFlow.collectAsStateWithLifecycle()
+    val isBackHandlingEnabledState = viewModel.isBackHandlingEnabledFlow.collectAsStateWithLifecycle()
 
     Content(
         selectedItem = tabFlow.value,
@@ -99,6 +106,7 @@ private fun BottomNavScreen(viewModel: BottomNavViewModel) {
     SnackBarOnBackPressHandler(
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),
+        enabled = isBackHandlingEnabledState.value,
         onBackClickLessThanDuration = viewModel::onBackDoubleClick,
     ) {
         Snackbar {
