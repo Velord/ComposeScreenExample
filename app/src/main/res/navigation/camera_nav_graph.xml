@@ -11,7 +11,11 @@
 
         <action
             android:id="@+id/toCameraRecordingFragment"
-            app:destination="@id/cameraRecordingFragment"/>
+            app:destination="@id/cameraRecordingFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/do_not_slide"
+            />
     </fragment>
 
     <fragment
