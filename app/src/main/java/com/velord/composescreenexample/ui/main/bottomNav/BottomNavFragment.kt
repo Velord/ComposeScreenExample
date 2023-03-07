@@ -1,12 +1,12 @@
 package com.velord.composescreenexample.ui.main.bottomNav
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -15,11 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.component.AnimatableLabeledIcon
@@ -27,8 +23,9 @@ import com.velord.composescreenexample.ui.compose.component.SnackBarOnBackPressH
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
 import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
+import com.velord.composescreenexample.utils.navigation.BottomNavigationItem
+import com.velord.composescreenexample.utils.navigation.MultipleBackstackApplier
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -60,6 +57,13 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
         bottomNavBarView.setContentWithTheme {
             BottomNavScreen(viewModel)
         }
+
+        MultipleBackstackApplier.setupWithNavController(
+            items = BottomNavigationItem.values().toList(),
+            navigationView = bottomNavBarView,
+            navController = navController,
+            flowOnSelect = viewModel.tabFlow,
+        )
     }
 
     private fun initObserving() {
@@ -67,7 +71,7 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
             launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.tabFlow.collectLatest {
-                        navController.navigate(it.navigationId)
+                        //navController.navigate(it.navigationId)
                     }
                 }
             }
@@ -105,15 +109,15 @@ private fun BottomNavScreen(viewModel: BottomNavViewModel) {
 
 @Composable
 private fun Content(
-    selectedItem: BottomNavItem,
-    onClick: (BottomNavItem) -> Unit,
+    selectedItem: BottomNavigationItem,
+    onClick: (BottomNavigationItem) -> Unit,
 ) {
     NavigationBar(
         modifier = Modifier
             .navigationBarsPadding()
             .height(72.dp),
     ) {
-        BottomNavItem.values().forEach {
+        BottomNavigationItem.values().forEach {
             val isSelected = selectedItem == it
             NavigationBarItem(
                 selected = isSelected,
@@ -146,7 +150,7 @@ private fun Content(
 @Composable
 private fun BottomNavContentPreview() {
     Content(
-        selectedItem = BottomNavItem.Camera,
+        selectedItem = BottomNavigationItem.Camera,
         onClick = {},
     )
 }

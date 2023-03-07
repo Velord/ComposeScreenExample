@@ -20,7 +20,7 @@ class CameraGraphFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
         TestScreen(R.string.open_new_camera) {
-            findNavController().navigate(R.id.toInDevelopmentFragment)
+            findNavController().navigate(R.id.toCameraRecordingFragment)
         }
     }
 }
