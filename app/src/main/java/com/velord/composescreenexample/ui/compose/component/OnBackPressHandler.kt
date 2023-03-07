@@ -1,6 +1,5 @@
 package com.velord.composescreenexample.ui.compose.component
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.SnackbarData
 import androidx.compose.material3.SnackbarDuration
@@ -16,6 +15,7 @@ private const val DEFAULT_TIME = 0L
 
 @Composable
 fun OnBackPressHandler(
+    enabled: Boolean = true,
     duration: Long = DELAY_TO_EXIT_APP,
     onEdgeViolation: () -> Unit = {},
     afterEdge: () -> Unit = {},
@@ -32,7 +32,7 @@ fun OnBackPressHandler(
         mutableStateOf(DEFAULT_TIME)
     }
 
-    BackHandler {
+    BackHandler(enabled) {
         triggerState.value = System.currentTimeMillis()
     }
 
@@ -55,6 +55,7 @@ fun OnBackPressHandler(
 fun SnackBarOnBackPressHandler(
     message: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     duration: Long = DELAY_TO_EXIT_APP,
     onBackClickLessThanDuration: () -> Unit = {},
     content: @Composable (SnackbarData) -> Unit,
@@ -64,6 +65,7 @@ fun SnackBarOnBackPressHandler(
     }
 
     OnBackPressHandler(
+        enabled = enabled,
         duration = duration,
         onEdgeViolation = onBackClickLessThanDuration,
         afterEdge = {
