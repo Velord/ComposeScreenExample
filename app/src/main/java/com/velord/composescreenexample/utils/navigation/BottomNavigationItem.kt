@@ -6,10 +6,13 @@ import androidx.compose.material.icons.outlined.Camera
 import androidx.compose.material.icons.outlined.Settings
 import com.velord.composescreenexample.R
 
-enum class BottomNavigationItem(override val navigationGraphId: Int) : MultipleBackstackGraphItem {
-    Camera(R.id.camera_nav_graph),
-    Add(R.id.add_nav_graph),
-    Settings(R.id.settings_nav_graph);
+enum class BottomNavigationItem(
+    override val navigationGraphId: Int,
+    override val startDestinationId: Int
+) : MultipleBackstackGraphItem {
+    Camera(R.id.camera_nav_graph, R.id.cameraGraphFragment),
+    Add(R.id.add_nav_graph, R.id.addGraphFragment),
+    Settings(R.id.settings_nav_graph, R.id.settingsGraphFragment);
 
 
     val icon get() = when (this) {
