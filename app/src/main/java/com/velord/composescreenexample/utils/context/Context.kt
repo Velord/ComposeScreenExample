@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
-import com.velord.composescreenexample.R
 import java.io.File
 
 fun Context.getActivity(): Activity? = when (this) {
@@ -26,4 +25,9 @@ fun Context.createSettingsIntent() = Intent().apply {
 
 fun Context.createDirInCache(dirName: String) = externalCacheDirs.firstOrNull()?.let {
     File(it, dirName).apply { mkdirs() }
+}
+
+fun Context.createDirInCacheOrFilesDir(dirName: String): File {
+    val mediaDir = createDirInCache(dirName)
+    return if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
 }
