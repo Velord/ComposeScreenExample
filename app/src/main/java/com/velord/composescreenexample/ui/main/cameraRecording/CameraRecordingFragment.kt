@@ -36,17 +36,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
-import com.velord.composescreenexample.ui.main.bottomNav.RecordVideoMetaData
 import com.velord.composescreenexample.ui.main.bottomNav.CameraRecordingViewModel
 import com.velord.composescreenexample.utils.shared.PermissionState
-import com.velord.composescreenexample.utils.context.createRecording
 import com.velord.composescreenexample.utils.context.createSettingsIntent
 import com.velord.composescreenexample.utils.context.createVideoCapture
 import com.velord.composescreenexample.utils.fragment.checkRecordVideoPermission
 import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.File
 
 @AndroidEntryPoint
 class CameraRecordingFragment : Fragment() {

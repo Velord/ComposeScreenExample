@@ -8,7 +8,7 @@ import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.*
 import com.velord.composescreenexample.utils.context.createDirInCache
-import com.velord.composescreenexample.utils.context.createRecording
+import com.velord.composescreenexample.utils.context.createRecordingViaMediaStore
 import com.velord.composescreenexample.utils.shared.PermissionState
 import com.velord.composescreenexample.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -79,14 +79,11 @@ class CameraRecordingViewModel @Inject constructor(
     }
 
     fun onNewRecording(newCapture: VideoCapture<Recorder>) {
-        val newRecording = context.createRecording(
-            fileMetaData = createFileMetadata(),
+        val newRecording = context.createRecordingViaMediaStore(
             videoCapture = newCapture,
             audioEnabled = videoIsAudioEnabledFlow.value,
-        ) { event ->
-            onVideoRecordEvent(event)
-        }
-        recordingFlow.value?.close()
+            consumer = ::onVideoRecordEvent,
+        )
         recordingFlow.value = newRecording
     }
 
