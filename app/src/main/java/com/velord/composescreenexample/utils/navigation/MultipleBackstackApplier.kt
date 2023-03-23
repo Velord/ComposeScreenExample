@@ -11,7 +11,9 @@ import androidx.lifecycle.*
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationBarMenu
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -58,7 +60,7 @@ object MultipleBackstackApplier {
         items: List<MultipleBackstackGraphItem>,
         navigationView: View,
         navController: NavController,
-        flowOnSelect: MutableSharedFlow<BottomNavigationItem>,
+        flowOnSelect: Flow<BottomNavigationItem>,
         onMenuChange: (MenuItem) -> Unit
     ) {
         val menu = createNavigationBarMenu(navigationView.context, items)
@@ -68,9 +70,9 @@ object MultipleBackstackApplier {
                 it.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     flowOnSelect.collectLatest { navItem ->
                         val menuItem = menu.findItem(navItem.navigationGraphId)
-                        androidx.navigation.ui.NavigationUI.onNavDestinationSelected(
-                            menuItem,
-                            navController
+                        NavigationUI.onNavDestinationSelected(
+                            item = menuItem,
+                            navController = navController
                         )
                     }
                 }
