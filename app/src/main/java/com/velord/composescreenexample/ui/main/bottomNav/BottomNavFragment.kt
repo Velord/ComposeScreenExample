@@ -1,9 +1,7 @@
 package com.velord.composescreenexample.ui.main.bottomNav
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -21,12 +19,12 @@ import androidx.navigation.fragment.findNavController
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.component.AnimatableLabeledIcon
-import com.velord.composescreenexample.ui.compose.component.SnackBarOnBackPressHandler
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
 import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
 import com.velord.composescreenexample.utils.navigation.BottomNavigationItem
-import com.velord.composescreenexample.utils.navigation.MultipleBackstackApplier
+import com.velord.multiplebackstackapplier.MultipleBackstack
+import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -39,9 +37,29 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
     private val viewModel by viewModels<BottomNavViewModel>()
     private var binding: FragmentBottomNavBinding? = null
 
+    private val multipleBackStack by lazy {
+        MultipleBackstack(
+            navController = lazy { navController },
+            lifecycleOwner = this,
+            context = requireContext(),
+            items = viewModel.getNavigationItems(),
+            flowOnSelect = viewModel.currentTabFlow,
+            onMenuChange = {
+                val current = navController.currentDestination
+                viewModel.updateBackHandling(current)
+            }
+        )
+    }
+
     override fun onDestroy() {
         binding = null
+        lifecycle.removeObserver(multipleBackStack)
         super.onDestroy()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycle.addObserver(multipleBackStack)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +67,6 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
 
         binding = FragmentBottomNavBinding.bind(view).apply {
             initView()
-            initMultipleBackStack()
         }
         initObserving()
     }
@@ -58,19 +75,6 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
     private fun initView() {
         bottomNavBarView.setContentWithTheme {
             BottomNavScreen(viewModel)
-        }
-    }
-
-    context(FragmentBottomNavBinding)
-    private fun initMultipleBackStack() {
-        MultipleBackstackApplier.setupWithNavController(
-            items = viewModel.getNavigationItems(),
-            navigationView = bottomNavBarView,
-            navController = navController,
-            flowOnSelect = viewModel.currentTabFlow,
-        ) {
-            val destination = navController.currentDestination
-            viewModel.updateBackHandling(destination)
         }
     }
 

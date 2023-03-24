@@ -47,10 +47,12 @@ composeAccompanist = "0.28.0"
 composePaging = "1.0.0-alpha17"
 # Compose 3-rd party
 composeHtml = "1.0.2"
-# Imge loader
+# Image loader
 coil = "2.2.1"
 # Permission
 sagarCororutinePermission = "2.0.2"
+# Navigation
+velordMultipleBackstack = "0.3.0"
 
 [libraries]
 # AndroidX
@@ -132,6 +134,9 @@ sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", versio
 # Image loader
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+# Navigation
+velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
+
 
 
 [bundles]
@@ -194,6 +199,7 @@ compose-thirdparty = [
 dagger = ["dagger", "dagger-android", "dagger-android-support"]
 dagger-kapt = ["dagger-compiler", "dagger-android-processor"]
 hilt = ["hilt", "hilt-navigation"]
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
