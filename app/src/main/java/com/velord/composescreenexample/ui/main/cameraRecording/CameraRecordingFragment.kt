@@ -36,17 +36,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
-import com.velord.composescreenexample.ui.main.bottomNav.RecordVideoMetaData
-import com.velord.composescreenexample.ui.main.bottomNav.CameraRecordingViewModel
 import com.velord.composescreenexample.utils.shared.PermissionState
-import com.velord.composescreenexample.utils.context.createRecording
 import com.velord.composescreenexample.utils.context.createSettingsIntent
 import com.velord.composescreenexample.utils.context.createVideoCapture
 import com.velord.composescreenexample.utils.fragment.checkRecordVideoPermission
 import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.File
 
 @AndroidEntryPoint
 class CameraRecordingFragment : Fragment() {
@@ -118,10 +114,8 @@ private fun CameraRecordingScreen(viewModel: CameraRecordingViewModel) {
         quality = qualityState.value,
         cameraSelector = cameraSelectorState.value,
         isAudioEnabled = isAudioEnabledState.value,
-        fileMetaData = viewModel.createFileMetadata(),
         onCheckPermissionClick = viewModel::onCheckPermission,
         onChangeCameraSelector = viewModel::onChangeVideoCameraSelector,
-        onVideoRecordEvent = viewModel::onVideoRecordEvent,
         onNewRecording = viewModel::onNewRecording,
         onStopRecording = viewModel::onStopRecording
     )
@@ -133,11 +127,9 @@ private fun Content(
     quality: Quality,
     cameraSelector: CameraSelector,
     isAudioEnabled: Boolean,
-    fileMetaData: RecordVideoMetaData,
     onCheckPermissionClick: () -> Unit,
     onChangeCameraSelector: () -> Unit,
-    onVideoRecordEvent: (VideoRecordEvent) -> Unit,
-    onNewRecording: (Recording) -> Unit,
+    onNewRecording: (VideoCapture<Recorder>) -> Unit,
     onStopRecording: () -> Unit
 ) {
     if (permission.isDenied()) {
@@ -175,10 +167,7 @@ private fun Content(
         CameraRecordingPreview(
             quality = quality,
             cameraSelector = cameraSelector,
-            isAudioEnabled = isAudioEnabled,
-            fileMetaData = fileMetaData,
             onChangeCameraSelector = onChangeCameraSelector,
-            onVideoRecordEvent = onVideoRecordEvent,
             onNewRecording = onNewRecording,
             onStopRecording = onStopRecording
         )
@@ -189,11 +178,8 @@ private fun Content(
 private fun CameraRecordingPreview(
     quality: Quality,
     cameraSelector: CameraSelector,
-    isAudioEnabled: Boolean,
-    fileMetaData: RecordVideoMetaData,
     onChangeCameraSelector: () -> Unit,
-    onVideoRecordEvent: (VideoRecordEvent) -> Unit,
-    onNewRecording: (Recording) -> Unit,
+    onNewRecording: (VideoCapture<Recorder>) -> Unit,
     onStopRecording: () -> Unit
 ) {
     val context = LocalContext.current
@@ -222,11 +208,8 @@ private fun CameraRecordingPreview(
     )
 
     Adjustments(
-        isAudioEnabled = isAudioEnabled,
-        fileMetaData = fileMetaData,
         videoCapture = videoCaptureState.value,
         onChangeCameraSelector = onChangeCameraSelector,
-        onVideoRecordEvent = onVideoRecordEvent,
         onNewRecording = onNewRecording,
         onStopRecording = onStopRecording
     )
@@ -234,12 +217,9 @@ private fun CameraRecordingPreview(
 
 @Composable
 private fun Adjustments(
-    isAudioEnabled: Boolean,
-    fileMetaData: RecordVideoMetaData,
     videoCapture: VideoCapture<Recorder>?,
     onChangeCameraSelector: () -> Unit,
-    onVideoRecordEvent: (VideoRecordEvent) -> Unit,
-    onNewRecording: (Recording) -> Unit,
+    onNewRecording: (VideoCapture<Recorder>) -> Unit,
     onStopRecording: () -> Unit
 ) {
     val isRecordingStartedState = remember { mutableStateOf(false) }
@@ -257,18 +237,18 @@ private fun Adjustments(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             StartStop(
-                isAudioEnabled = isAudioEnabled,
-                fileMetaData = fileMetaData,
-                videoCapture = videoCapture,
                 isRecordingStarted = isRecordingStartedState.value,
-                onChangeIsRecordingStarted = {
-                    isRecordingStartedState.value = it
-                    if (it.not()) {
+                onClick = {
+                    if (isRecordingStartedState.value.not()) {
+                        videoCapture?.let {
+                            isRecordingStartedState.value = true
+                            onNewRecording(it)
+                        }
+                    } else {
+                        isRecordingStartedState.value = false
                         onStopRecording()
                     }
-                },
-                onNewRecording = onNewRecording,
-                onEvent = onVideoRecordEvent
+                }
             )
             CameraSelector(
                 isRecordingStarted = isRecordingStartedState.value,
@@ -280,37 +260,10 @@ private fun Adjustments(
 
 @Composable
 private fun StartStop(
-    isAudioEnabled: Boolean,
-    fileMetaData: RecordVideoMetaData,
-    videoCapture: VideoCapture<Recorder>?,
     isRecordingStarted: Boolean,
-    onChangeIsRecordingStarted: (Boolean) -> Unit,
-    onNewRecording: (Recording) -> Unit,
-    onEvent: (VideoRecordEvent) -> Unit
+    onClick: () -> Unit
 ) {
-    val context = LocalContext.current
-
-    IconButton(
-        onClick = {
-            if (isRecordingStarted.not()) {
-                videoCapture?.let {
-                    onChangeIsRecordingStarted(true)
-
-                    val recording = context.createRecording(
-                        fileMetaData = fileMetaData,
-                        videoCapture = videoCapture,
-                        audioEnabled = isAudioEnabled,
-                    ) { event ->
-                        onEvent(event)
-                    }
-
-                    onNewRecording(recording)
-                }
-            } else {
-                onChangeIsRecordingStarted(false)
-            }
-        }
-    ) {
+    IconButton(onClick = onClick) {
         val icon =  Icons.Filled.run {
             if (isRecordingStarted) Stop else AddPhotoAlternate
         }
@@ -351,13 +304,8 @@ private fun CameraRecordingPreview() {
         quality = Quality.SD,
         cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
         isAudioEnabled = true,
-        fileMetaData = RecordVideoMetaData(
-            outputDirectory = File(""),
-            fileNameFormat = "test",
-        ),
         onCheckPermissionClick = {},
         onChangeCameraSelector = {},
-        onVideoRecordEvent = {},
         onNewRecording = {},
         onStopRecording = {}
     )

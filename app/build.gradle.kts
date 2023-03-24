@@ -142,6 +142,8 @@ dependencies {
     implementation(libs.coil.compose)
     // Permission
     implementation(libs.sagar.coroutine.permission)
+    // Navigation
+    implementation(libs.velord.multiplebackstack)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
