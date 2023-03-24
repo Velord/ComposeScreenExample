@@ -81,11 +81,8 @@ class CameraRecordingViewModel @Inject constructor(
     }
 
     private fun onVideoRecordEvent(newEvent: VideoRecordEvent) {
-        Log.d("CameraRecordingViewModel", "Recording event: $newEvent")
         if (newEvent is VideoRecordEvent.Finalize) {
-
             val isNone = newEvent.error == VideoRecordEvent.Finalize.ERROR_NONE
-            Log.d("CameraRecordingViewModel", "VideoRecordEvent.Finalize isNone: $isNone")
             if (isNone.not()) {
                 when(val options = newEvent.outputOptions) {
                     is FileOutputOptions -> options.file.delete()
