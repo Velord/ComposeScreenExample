@@ -1,30 +1,20 @@
-package com.velord.composescreenexample.ui.main.bottomNav
+package com.velord.composescreenexample.ui.main.cameraRecording
 
-import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.*
+import com.velord.composescreenexample.utils.context.createRecordingViaMediaStore
+import com.velord.composescreenexample.utils.file.FileName
 import com.velord.composescreenexample.utils.shared.PermissionState
-import com.velord.composescreenexample.utils.context.createDirInCache
 import com.velord.composescreenexample.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
-
-private const val DIR_NAME = "video"
-private const val VIDEO_FILE_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-
-data class RecordVideoMetaData(
-    val outputDirectory: File,
-    val fileNameFormat: String,
-)
 
 @HiltViewModel
 class CameraRecordingViewModel @Inject constructor(
@@ -76,39 +66,37 @@ class CameraRecordingViewModel @Inject constructor(
         videoIsAudioEnabledFlow.value = enabled
     }
 
-    fun onNewRecording(recording: Recording) {
-        recordingFlow.value = recording
+    fun onNewRecording(newCapture: VideoCapture<Recorder>) {
+        val newRecording = context.createRecordingViaMediaStore(
+            fileName = FileName(),
+            videoCapture = newCapture,
+            audioEnabled = videoIsAudioEnabledFlow.value,
+            consumer = ::onVideoRecordEvent,
+        )
+        recordingFlow.value = newRecording
     }
 
     fun onStopRecording() {
         recordingFlow.value?.stop()
     }
 
-    fun onVideoRecordEvent(newEvent: VideoRecordEvent) {
-        Log.d("CameraRecordingViewModel", "Recording event: $newEvent")
+    private fun onVideoRecordEvent(newEvent: VideoRecordEvent) {
         if (newEvent is VideoRecordEvent.Finalize) {
-            val uri = newEvent.outputResults.outputUri
-            //if (uri != Uri.EMPTY) saveVideo(uri)
-            Log.d("CameraRecordingViewModel", "Recording uri: $uri")
+            val isNone = newEvent.error == VideoRecordEvent.Finalize.ERROR_NONE
+            if (isNone.not()) {
+                when(val options = newEvent.outputOptions) {
+                    is FileOutputOptions -> options.file.delete()
+                    is MediaStoreOutputOptions -> {
+                        val uri: Uri = newEvent.outputResults.outputUri
+                        if (uri != Uri.EMPTY) {
+                            context.contentResolver.delete(uri, null, null)
+                        }
+                    }
+                    is FileDescriptorOutputOptions -> {
+                        // User has to clean up the referenced target of the file descriptor.
+                    }
+                }
+            }
         }
-    }
-
-    fun createFileMetadata(): RecordVideoMetaData {
-        val mediaDir = context.createDirInCache(DIR_NAME)
-        val dir = if (mediaDir != null && mediaDir.exists()) mediaDir else context.filesDir
-        return RecordVideoMetaData(
-            outputDirectory = dir,
-            fileNameFormat = VIDEO_FILE_FORMAT,
-        )
-    }
-
-    private fun saveVideoToGallery(uri: Uri) {
-        val values = ContentValues(1).apply {
-            put(MediaStore.Video.Media.TITLE, "My video title")
-            put(MediaStore.Video.Media.MIME_TYPE, "video/mp4")
-            put(MediaStore.Video.Media.DATA, uri.path)
-        }
-        val newUri = context.contentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values)
-
     }
 }
