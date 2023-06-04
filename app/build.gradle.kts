@@ -69,6 +69,8 @@ android {
             applicationIdSuffix = ".develop"
             buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
             buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+
+            resourceConfigurations += listOf("en", "xxxhdpi")
         }
         create("qa") {
             dimension = "environment"
