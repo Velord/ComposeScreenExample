@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    kotlin("plugin.serialization") version "1.7.0"
+    kotlin("plugin.serialization") version "1.8.21"
     id("org.jetbrains.kotlin.android")
 }
 
@@ -11,11 +11,8 @@ android {
     compileSdk = libs.versions.targetApi.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.minApi.get().toInt()
         targetSdk = libs.versions.targetApi.get().toInt()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        minSdk = libs.versions.minApi.get().toInt()
     }
 
     buildTypes {
@@ -33,10 +30,10 @@ dependencies {
     // Module
     implementation(project(":model"))
     implementation(project(":datastore"))
+    implementation(project(":util"))
     // Templates
     implementation(libs.androidx.core)
-    implementation(libs.bundles.kotlin.base)
-    // Network
+    implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.network)
 }
 

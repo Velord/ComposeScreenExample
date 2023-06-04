@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/cameraRecordingFragment"
-        android:name="com.velord.composescreenexample.ui.main.cameraRecording.CameraRecordingFragment"
+        android:name="com.velord.camerarecording.CameraRecordingFragment"
         android:label="CameraRecordingFragment" />
 
 </navigation>

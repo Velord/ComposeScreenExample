@@ -2,6 +2,9 @@ include(":app")
 include(":backend")
 include(":model")
 include(":datastore")
+include(":camerarecording")
+include(":util")
+include(":uicore")
 rootProject.name = "ComposeScreenExample"
 
 dependencyResolutionManagement {
