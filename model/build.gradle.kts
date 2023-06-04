@@ -29,8 +29,8 @@ dependencies {
     // Module
     implementation(project(":util"))
     // Templates
-    implementation(libs.bundles.androidx.core)
-    implementation(libs.bundles.kotlin.base)
+    implementation(libs.bundles.androidx.activity)
+    implementation(libs.bundles.kotlin.core)
     // Json
     implementation(libs.kotlin.serialization.json)
 }

@@ -33,7 +33,7 @@ dependencies {
     implementation(project(":util"))
     // Templates
     implementation(libs.androidx.core)
-    implementation(libs.bundles.kotlin.base)
+    implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.network)
 }
 
