@@ -1,9 +1,9 @@
 package com.velord.composescreenexample.ui.main.bottomNav
 
 import androidx.navigation.NavDestination
-import com.velord.composescreenexample.utils.navigation.BottomNavigationItem
-import com.velord.composescreenexample.viewModel.BaseViewModel
+import com.velord.composescreenexample.shared.navigation.BottomNavigationItem
 import com.velord.multiplebackstackapplier.utils.isCurrentStartDestination
+import com.velord.util.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

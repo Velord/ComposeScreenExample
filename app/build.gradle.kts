@@ -120,11 +120,13 @@ dependencies {
     implementation(project(":backend"))
     implementation(project(":model"))
     implementation(project(":datastore"))
+    implementation(project(":uicore"))
+    implementation(project(":util"))
+    implementation(project(":camerarecording"))
     // Templates
     implementation(libs.bundles.kotlin.module.app)
     implementation(libs.bundles.androidx.module.app)
     implementation(libs.bundles.retrofit)
-    implementation(libs.bundles.androidx.camera)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)

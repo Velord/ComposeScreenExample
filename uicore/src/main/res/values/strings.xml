@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ComposeScreenExample</string>
+    <string name="press_again_to_exit">Press again to exit</string>
+    <string name="go_to_app_settings">Go to App Settings</string>
+    <string name="decline">Decline</string>
+    <string name="require_microphone_permission">Require microphone permission</string>
+    <string name="require_camera_permission">Require camera permission</string>
+    <string name="give_access_to_microphone">Give access to microphone to proceed</string>
+    <string name="give_access_to_camera">Give access to camera to proceed</string>
+    <string name="can_not_get_permission">Can not get permission, seems like you declined it. Click to check again</string>
+    <string name="open_new">Open new</string>
+    <string name="open_new_add">Open new Add</string>
+    <string name="open_new_settings">Open new Settings</string>
+    <string name="open_new_camera">Open new Camera</string>
+    <string name="test">Test</string>
+</resources>
