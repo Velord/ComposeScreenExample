@@ -11,42 +11,40 @@ dagger = "2.44.2"
 hilt = "2.44.2"
 hiltNavigation = "1.0.0"
 # Kotlin
-kotlin = "1.8.0"
-coroutine = "1.6.4"
+kotlin = "1.8.21"
+coroutine = "1.7.1"
 # Kotlin Serialization
-kotlinJsonSerialization = "1.4.1"
-kotlinJsonSerializationRetrofitConverter = "0.8.0"
+kotlinJsonSerialization = "1.5.0"
+kotlinJsonSerializationRetrofitConverter = "1.0.0"
 # AndroidX
-androidxAppCompat = "1.4.2"
-androidxExifInterface = "1.3.3"
-androidxDatastorePreference = "1.0.0"
-androidxAndroid = "1.5.0"
-androidxCore = "1.8.0"
-androidxPreference = "1.2.0"
+androidxActivity = "1.7.2"
+androidxAppCompat = "1.6.1"
+androidxCamera = "1.2.3"
 androidxConstraint = "2.1.4"
+androidxCore = "1.10.1"
+androidxDatastorePreference = "1.0.0"
+androidxExifInterface = "1.3.6"
+androidxFragment = "1.5.7"
 androidxPagingRuntime = "3.1.1"
+androidxPreference = "1.2.0"
 androidxLegacySupport = "1.0.0"
-androidxLifecycle = "2.5.0"
+androidxLifecycle = "2.6.1"
 androidxNavigation = "2.5.0"
 androidxPaging = "3.1.1"
-androidxCamera = "1.2.1"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.9.1"
 # Compose
-compose = "1.3.3"
-composeCompiler = "1.4.0"
-composeFoundation = "1.3.1"
-composeMaterial = "1.3.1"
-composeMaterial3 = "1.0.1"
-composeActivity = "1.6.1"
-composeConstraint = "1.1.0-alpha05"
-composeAnimation = "1.1.1"
-composeLifecycle = "2.6.0-alpha04"
-composeAccompanist = "0.28.0"
-composePaging = "1.0.0-alpha17"
+compose = "1.4.3"
+composeActivity = "1.7.2"
+composeAccompanist = "0.31.3-beta"
+composeCompiler = "1.4.7"
+composeConstraint = "1.1.0-alpha10"
+composeLifecycle = "2.6.1"
+composeMaterial3 = "1.1.0"
+composePaging = "1.0.0-alpha20"
 # Compose 3-rd party
-composeHtml = "1.0.2"
+composeHtmlIreward = "1.0.2"
 # Image loader
 coil = "2.2.1"
 # Permission
@@ -62,8 +60,8 @@ androidx-datastore-preference = { module = "androidx.datastore:datastore-prefere
 androidx-constraint = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraint" }
 androidx-paging = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
 # AndroidX KTX
-androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidxAndroid" }
-androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxAndroid" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragment" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
 androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreference" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "androidxPagingRuntime" }
@@ -92,7 +90,7 @@ kotlin-coroutine-play-service = { module = "org.jetbrains.kotlinx:kotlinx-corout
 kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinJsonSerialization" }
 kotlin-serialization-json-retrofit-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlinJsonSerializationRetrofitConverter" }
 # Compose Core
-compose-animation = { module = "androidx.compose.animation:animation", version.ref = "composeAnimation" }
+compose-animation = { module = "androidx.compose.animation:animation", version.ref = "compose" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
 compose-constraint = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "composeConstraint" }
 compose-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "composeLifecycle" }
@@ -103,22 +101,24 @@ compose-accompanist-drawable = { module = "com.google.accompanist:accompanist-dr
 compose-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "composeAccompanist" }
 compose-accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "composeAccompanist" }
 # Compose Foundation
-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeFoundation" }
-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "composeFoundation" }
-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeFoundation" }
-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "composeFoundation" }
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeFoundation" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeFoundation" }
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeFoundation" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
+# Compose Runtime
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "compose" }
+# Compose Ui
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 # Compose material
-compose-material = { module = "androidx.compose.material:material", version.ref = "composeMaterial" }
-compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeFoundation" }
+compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 compose-material3-window = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "composeMaterial3" }
 # Compose Other
 compose-paging = { module = "androidx.paging:paging-compose", version.ref = "composePaging" }
 # Compose 3-rd party
-compose-html = { module = "com.github.ireward:compose-html", version.ref = "composeHtml" }
+compose-html = { module = "com.github.ireward:compose-html", version.ref = "composeHtmlIreward" }
 # DI Dagger
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "dagger" }

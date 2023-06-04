@@ -1,8 +1,8 @@
 package com.velord.composescreenexample.ui.main.inDevelopment
 
 import com.velord.composescreenexample.R
-import com.velord.composescreenexample.utils.shared.NavigationData
-import com.velord.composescreenexample.viewModel.BaseViewModel
+import com.velord.composescreenexample.shared.navigation.NavigationData
+import com.velord.util.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
