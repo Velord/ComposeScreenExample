@@ -43,14 +43,13 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":model"))
     // Templates
-    implementation(libs.bundles.kotlin.base)
-    implementation(libs.bundles.kotlin.module.app)
-    implementation(libs.bundles.androidx.module.app)
+    implementation(libs.bundles.kotlin.core)
+    implementation(libs.bundles.androidx.all)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material)
-    implementation(libs.bundles.compose.accompanist)
+    implementation(libs.bundles.compose.material.all)
+    implementation(libs.bundles.compose.accompanist.all)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

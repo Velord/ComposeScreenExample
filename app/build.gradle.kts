@@ -124,24 +124,16 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":camerarecording"))
     // Templates
-    implementation(libs.bundles.kotlin.module.app)
-    implementation(libs.bundles.androidx.module.app)
-    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.kotlin.all)
+    implementation(libs.bundles.androidx.all)
+    implementation(libs.bundles.network)
+    implementation(libs.bundles.coil)
     // Compose
-    implementation(libs.bundles.compose.core)
-    implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material)
-    implementation(libs.bundles.compose.accompanist)
-    implementation(libs.compose.paging)
-    implementation(libs.bundles.compose.thirdparty)
+    implementation(libs.bundles.compose.all)
     // DI
-    implementation(libs.bundles.dagger)
+    implementation(libs.bundles.dagger.all)
     kapt(libs.bundles.dagger.kapt)
-    implementation(libs.bundles.hilt)
     kapt(libs.hilt.compiler)
-    // Image Loader
-    implementation(libs.coil)
-    implementation(libs.coil.compose)
     // Permission
     implementation(libs.sagar.coroutine.permission)
     // Navigation

@@ -36,24 +36,30 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     // Modules
     implementation(project(":model"))
     implementation(project(":util"))
     implementation(project(":uicore"))
     // Templates
-    implementation(libs.bundles.kotlin.module.app)
-    implementation(libs.bundles.androidx.module.app)
+    implementation(libs.bundles.kotlin.module)
+    implementation(libs.bundles.androidx.activity)
     implementation(libs.bundles.androidx.camera)
+    implementation(libs.bundles.androidx.lifecycle.runtime)
+    implementation(libs.google.guava)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material)
-    implementation(libs.bundles.compose.accompanist)
+    implementation(libs.bundles.compose.material.all)
+    implementation(libs.bundles.compose.ui)
+    implementation(libs.bundles.compose.accompanist.core)
     // DI
-    implementation(libs.bundles.dagger)
+    implementation(libs.bundles.dagger.all)
     kapt(libs.bundles.dagger.kapt)
-    implementation(libs.bundles.hilt)
     kapt(libs.hilt.compiler)
 }
 

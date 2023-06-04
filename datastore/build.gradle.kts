@@ -31,7 +31,7 @@ android {
 
 dependencies {
     implementation(project(":model"))
-    implementation(libs.androidx.datastore.preference)
+    implementation(libs.androidx.datastore.preferences)
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo
