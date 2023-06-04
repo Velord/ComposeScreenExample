@@ -1,7 +1,7 @@
 package com.velord.backend.factory.interceptor
 
 import android.content.Context
-import com.velord.backend.ext.getPackageInfoCompat
+import com.velord.util.packageManager.getPackageInfoCompat
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.Interceptor
 import okhttp3.Response

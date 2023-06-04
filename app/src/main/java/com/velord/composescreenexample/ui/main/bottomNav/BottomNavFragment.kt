@@ -18,15 +18,16 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.FragmentBottomNavBinding
+import com.velord.composescreenexample.shared.navigation.BottomNavigationItem
 import com.velord.composescreenexample.ui.compose.component.AnimatableLabeledIcon
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
-import com.velord.composescreenexample.ui.compose.theme.setContentWithTheme
-import com.velord.composescreenexample.utils.fragment.viewLifecycleScope
-import com.velord.composescreenexample.utils.navigation.BottomNavigationItem
 import com.velord.multiplebackstackapplier.MultipleBackstack
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
+import com.velord.uicore.compose.setContentWithTheme
+import com.velord.util.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.velord.uicore.R as RString
 
 @AndroidEntryPoint
 class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
@@ -99,7 +100,7 @@ private fun BottomNavScreen(viewModel: BottomNavViewModel) {
         onClick = viewModel::onTabClick,
     )
 
-    val str = stringResource(id = R.string.press_again_to_exit)
+    val str = stringResource(id = RString.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),

@@ -2,8 +2,6 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-parcelize")
-    kotlin("kapt")
-    kotlin("plugin.serialization") version "1.7.0"
 }
 
 android {
@@ -14,9 +12,6 @@ android {
     defaultConfig {
         minSdk = libs.versions.minApi.get().toInt()
         targetSdk = libs.versions.targetApi.get().toInt()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -31,9 +26,11 @@ android {
 }
 
 dependencies {
+    // Module
+    implementation(project(":util"))
     // Templates
-    implementation(libs.bundles.androidx.core)
-    implementation(libs.bundles.kotlin.base)
+    implementation(libs.bundles.androidx.activity)
+    implementation(libs.bundles.kotlin.core)
     // Json
     implementation(libs.kotlin.serialization.json)
 }
