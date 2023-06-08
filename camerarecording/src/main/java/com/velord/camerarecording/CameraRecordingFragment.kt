@@ -39,6 +39,7 @@ import com.velord.uicore.R
 import com.velord.uicore.dialog.checkRecordVideoPermission
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.context.createSettingsIntent
+import com.velord.util.fragment.navigate
 import com.velord.util.fragment.viewLifecycleScope
 import com.velord.util.permission.PermissionState
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,7 +89,7 @@ class CameraRecordingFragment : Fragment() {
             }
             launch {
                 viewModel.navigationEvent.collect {
-                    findNavController().navigate(it.id, it.bundle)
+                    findNavController().navigate(it)
                 }
             }
         }
