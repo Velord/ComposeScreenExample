@@ -38,8 +38,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.uicore.R
-import com.velord.uicore.compose.setContentWithTheme
 import com.velord.uicore.dialog.checkRecordVideoPermission
+import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.context.createSettingsIntent
 import com.velord.util.fragment.viewLifecycleScope
 import com.velord.util.permission.PermissionState

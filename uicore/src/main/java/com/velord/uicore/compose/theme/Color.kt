@@ -1,9 +1,8 @@
-package com.velord.uicore.compose
+package com.velord.uicore.compose.theme
 
 import androidx.compose.ui.graphics.Color
 
 val Color.Companion.AmethystSmoke: Color get() = Color(0xFF9290B1)
-
 val Color.Companion.DarkPrimary: Color get() = Color(0xFFc5c0ff)
 val Color.Companion.DarkOnPrimary: Color get() = Color(0xFF2b2276)
 val Color.Companion.DarkSecondary: Color get() = Color(0xFFc7bfff)
