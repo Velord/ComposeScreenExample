@@ -17,10 +17,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddPhotoAlternate
-import androidx.compose.material.icons.filled.PermCameraMic
-import androidx.compose.material.icons.filled.Stop
-import androidx.compose.material.icons.filled.SwitchVideo
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -36,11 +33,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.uicore.R
-import com.velord.uicore.compose.setContentWithTheme
 import com.velord.uicore.dialog.checkRecordVideoPermission
+import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.context.createSettingsIntent
+import com.velord.util.fragment.navigate
 import com.velord.util.fragment.viewLifecycleScope
 import com.velord.util.permission.PermissionState
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,6 +87,11 @@ class CameraRecordingFragment : Fragment() {
                     checkRecordVideoPermission()
                 }
             }
+            launch {
+                viewModel.navigationEvent.collect {
+                    findNavController().navigate(it)
+                }
+            }
         }
     }
 
@@ -119,7 +123,8 @@ private fun CameraRecordingScreen(viewModel: CameraRecordingViewModel) {
         onCheckPermissionClick = viewModel::onCheckPermission,
         onChangeCameraSelector = viewModel::onChangeVideoCameraSelector,
         onNewRecording = viewModel::onNewRecording,
-        onStopRecording = viewModel::onStopRecording
+        onStopRecording = viewModel::onStopRecording,
+        onSettingsClick = viewModel::onSettingsClick
     )
 }
 
@@ -132,39 +137,11 @@ private fun Content(
     onCheckPermissionClick: () -> Unit,
     onChangeCameraSelector: () -> Unit,
     onNewRecording: (VideoCapture<Recorder>) -> Unit,
-    onStopRecording: () -> Unit
+    onStopRecording: () -> Unit,
+    onSettingsClick: () -> Unit
 ) {
     if (permission.isDenied()) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
-        ) {
-            Row(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(horizontal = 32.dp)
-                    .background(MaterialTheme.colorScheme.surfaceVariant, shape = MaterialTheme.shapes.medium)
-                    .clickable { onCheckPermissionClick() },
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    imageVector = Icons.Default.PermCameraMic,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(64.dp)
-                        .padding(4.dp),
-                    tint = MaterialTheme.colorScheme.error
-                )
-                Text(
-                    text = stringResource(id = R.string.can_not_get_permission),
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp),
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
-        }
+        PermissionIsNotGrantedState(onCheckPermissionClick)
     } else {
         CameraRecordingPreview(
             quality = quality,
@@ -173,6 +150,47 @@ private fun Content(
             onNewRecording = onNewRecording,
             onStopRecording = onStopRecording
         )
+    }
+
+    Box {
+        SettingsIcon(onSettingsClick)
+    }
+}
+
+@Composable
+private fun PermissionIsNotGrantedState(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
+        Row(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(horizontal = 32.dp)
+                .background(
+                    MaterialTheme.colorScheme.surfaceVariant,
+                    shape = MaterialTheme.shapes.medium
+                )
+                .clickable { onClick() },
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                imageVector = Icons.Default.PermCameraMic,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(64.dp)
+                    .padding(4.dp),
+                tint = MaterialTheme.colorScheme.error
+            )
+            Text(
+                text = stringResource(id = R.string.can_not_get_permission),
+                modifier = Modifier
+                    .padding(horizontal = 8.dp),
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
     }
 }
 
@@ -213,7 +231,7 @@ private fun CameraRecordingPreview(
         videoCapture = videoCaptureState.value,
         onChangeCameraSelector = onChangeCameraSelector,
         onNewRecording = onNewRecording,
-        onStopRecording = onStopRecording
+        onStopRecording = onStopRecording,
     )
 }
 
@@ -298,6 +316,19 @@ private fun CameraSelector(
     }
 }
 
+@Composable
+private fun BoxScope.SettingsIcon(onClick: () -> Unit) {
+    Icon(
+        imageVector = Icons.Filled.SettingsApplications,
+        contentDescription = null,
+        modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(16.dp)
+            .size(40.dp)
+            .clickable { onClick() }
+    )
+}
+
 @Preview
 @Composable
 private fun CameraRecordingPreview() {
@@ -309,6 +340,7 @@ private fun CameraRecordingPreview() {
         onCheckPermissionClick = {},
         onChangeCameraSelector = {},
         onNewRecording = {},
-        onStopRecording = {}
+        onStopRecording = {},
+        onSettingsClick = {}
     )
 }

@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.compose.utils
+package com.velord.uicore.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration

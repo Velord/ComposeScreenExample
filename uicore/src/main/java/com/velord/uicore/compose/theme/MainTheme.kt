@@ -1,6 +1,5 @@
-package com.velord.uicore.compose
+package com.velord.uicore.compose.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -10,12 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.Fragment
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.velord.util.context.getActivity
 
@@ -53,36 +49,4 @@ fun MainTheme(
         typography = MainTypography,
         content = content
     )
-}
-
-fun Activity.setContentWithTheme(
-    screen: @Composable ComposeView.() -> Unit
-): ComposeView = ComposeView(this).setContentWithTheme(screen)
-
-context(Activity)
-fun ComposeView.setContentWithTheme(
-    screen: @Composable ComposeView.() -> Unit
-): ComposeView = apply {
-    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-    setContent {
-        MainTheme {
-            screen()
-        }
-    }
-}
-
-fun Fragment.setContentWithTheme(
-    screen: @Composable ComposeView.() -> Unit
-): ComposeView = ComposeView(requireContext()).setContentWithTheme(screen)
-
-context(Fragment)
-fun ComposeView.setContentWithTheme(
-    screen: @Composable ComposeView.() -> Unit
-): ComposeView = apply {
-    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-    setContent {
-        MainTheme {
-            screen()
-        }
-    }
 }

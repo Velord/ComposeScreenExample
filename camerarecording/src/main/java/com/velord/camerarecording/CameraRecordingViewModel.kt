@@ -6,6 +6,8 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.video.*
 import com.velord.camerarecording.model.createRecordingViaMediaStore
 import com.velord.model.file.FileName
+import com.velord.model.profile.UserProfile
+import com.velord.util.navigation.NavigationData
 import com.velord.util.permission.PermissionState
 import com.velord.util.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +26,7 @@ class CameraRecordingViewModel @Inject constructor(
     // User interaction
     val goToSettingsEvent = MutableSharedFlow<Unit>()
     val checkPermissionEvent = MutableSharedFlow<Unit>()
+    val navigationEvent = MutableSharedFlow<NavigationData>()
     // Adjustments
     val videoQualityFlow = MutableStateFlow(Quality.HIGHEST)
     val videoCameraSelectorFlow = MutableStateFlow(CameraSelector.DEFAULT_FRONT_CAMERA)
@@ -33,6 +36,14 @@ class CameraRecordingViewModel @Inject constructor(
     // It will allow us to stop, pause and resume the current recording.
     // We create that object when we start recording.
     val recordingFlow: MutableStateFlow<Recording?> = MutableStateFlow(null)
+
+    fun onSettingsClick() = launch {
+        val nav = NavigationData(
+            R.id.from_cameraRecordingFragment_to_settingsFragment,
+            UserProfile(234, "sdfsd")
+        )
+        navigationEvent.emit(nav)
+    }
 
     fun onGoToSettingsClick() = launch {
         goToSettingsEvent.emit(Unit)

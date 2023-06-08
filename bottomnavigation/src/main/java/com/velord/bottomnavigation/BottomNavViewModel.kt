@@ -1,7 +1,6 @@
-package com.velord.composescreenexample.ui.main.bottomNav
+package com.velord.bottomnavigation
 
 import androidx.navigation.NavDestination
-import com.velord.composescreenexample.shared.navigation.BottomNavigationItem
 import com.velord.multiplebackstackapplier.utils.isCurrentStartDestination
 import com.velord.util.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
