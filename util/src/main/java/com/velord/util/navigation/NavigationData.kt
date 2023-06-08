@@ -1,8 +1,8 @@
-package com.velord.composescreenexample.shared.navigation
+package com.velord.util.navigation
 
-import android.os.Bundle
+import android.os.Parcelable
 
 data class NavigationData(
     val id: Int,
-    val bundle: Bundle? = null
+    val data: Parcelable? = null
 )

@@ -5,8 +5,9 @@ import android.net.Uri
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.*
 import com.velord.camerarecording.model.createRecordingViaMediaStore
-import com.velord.composescreenexample.shared.navigation.NavigationData
 import com.velord.model.file.FileName
+import com.velord.model.profile.UserProfile
+import com.velord.util.navigation.NavigationData
 import com.velord.util.permission.PermissionState
 import com.velord.util.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +40,7 @@ class CameraRecordingViewModel @Inject constructor(
     fun onSettingsClick() = launch {
         val nav = NavigationData(
             R.id.from_cameraRecordingFragment_to_settingsFragment,
-            null
+            UserProfile(234, "sdfsd")
         )
         navigationEvent.emit(nav)
     }

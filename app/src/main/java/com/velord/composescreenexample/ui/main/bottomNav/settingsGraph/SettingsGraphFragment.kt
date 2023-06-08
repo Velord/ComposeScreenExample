@@ -8,12 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.ui.compose.screen.TestScreen
+import com.velord.model.profile.UserProfile
 import com.velord.uicore.utils.setContentWithTheme
+import com.velord.util.fragment.getNavigationData
 import dagger.hilt.android.AndroidEntryPoint
 import com.velord.uicore.R as RString
 
 @AndroidEntryPoint
 class SettingsGraphFragment : Fragment() {
+
+    val navData: UserProfile by getNavigationData()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,5 +27,7 @@ class SettingsGraphFragment : Fragment() {
         TestScreen(RString.string.open_new_settings) {
             findNavController().navigate(R.id.toInDevelopmentFragment)
         }
+
+        //navData
     }
 }
