@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.main.bottomNav
+package com.velord.bottomnavigation
 
 import android.os.Bundle
 import android.view.View
@@ -16,20 +16,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.velord.composescreenexample.R
-import com.velord.composescreenexample.databinding.FragmentBottomNavBinding
-import com.velord.composescreenexample.shared.navigation.BottomNavigationItem
-import com.velord.composescreenexample.ui.compose.component.AnimatableLabeledIcon
+import com.velord.bottomnavigation.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.MultipleBackstack
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
-import com.velord.uicore.compose.setContentWithTheme
+import com.velord.uicore.compose.component.AnimatableLabeledIcon
+import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.velord.uicore.R as RString
 
-@AndroidEntryPoint
 class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
 
     private val navController by lazy {

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.ui.compose.screen.TestScreen
-import com.velord.uicore.compose.setContentWithTheme
+import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
 import com.velord.uicore.R as RString
 

@@ -1,4 +1,4 @@
-package com.velord.uicore.compose
+package com.velord.uicore.compose.theme
 
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
