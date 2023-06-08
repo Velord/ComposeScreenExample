@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.compose.component
+package com.velord.uicore.compose.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing

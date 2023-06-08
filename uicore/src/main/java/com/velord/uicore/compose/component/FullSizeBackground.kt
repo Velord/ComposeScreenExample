@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.compose.component
+package com.velord.uicore.compose.component
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

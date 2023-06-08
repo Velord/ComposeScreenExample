@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.compose.theme
+package com.velord.uicore.compose.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

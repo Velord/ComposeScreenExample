@@ -1,4 +1,4 @@
-package com.velord.uicore.compose
+package com.velord.uicore.compose.theme
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme

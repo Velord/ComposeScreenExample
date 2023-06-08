@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="bottom_nav_graph" type="id" />
+
+    <item name="left_nav_graph" type="id" />
+    <item name="center_nav_graph" type="id" />
+    <item name="right_nav_graph" type="id" />
+
+    <item name="bottom_nav_graph_left_start_destination" type="id" />
+    <item name="bottom_nav_graph_center_start_destination" type="id" />
+    <item name="bottom_nav_graph_right_start_destination" type="id" />
+</resources>
