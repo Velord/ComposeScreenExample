@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -62,13 +63,24 @@ class InDevelopmentFragment : Fragment() {
 @Composable
 private fun InDevelopmentScreen(viewModel: InDevelopmentViewModel) {
     val time = remember { System.currentTimeMillis().toString() }
+    Content(
+        text = time,
+        onOpenNew = viewModel::onOpenNew
+    )
+}
+
+@Composable
+private fun Content(
+    text: String,
+    onOpenNew: () -> Unit
+) {
     Box(Modifier.fillMaxSize()) {
         Text(
-            text = time,
+            text = text,
             modifier = Modifier.align(Alignment.Center)
         )
         Button(
-            onClick = viewModel::onOpenNew,
+            onClick = onOpenNew,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(32.dp)
@@ -76,4 +88,13 @@ private fun InDevelopmentScreen(viewModel: InDevelopmentViewModel) {
             Text(text = stringResource(id = RString.string.open_new))
         }
     }
+}
+
+@Preview
+@Composable
+private fun InDevelopmentPreview() {
+    Content(
+        text = "Now",
+        onOpenNew = {}
+    )
 }

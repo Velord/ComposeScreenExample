@@ -21,6 +21,20 @@
     <fragment
         android:id="@+id/cameraRecordingFragment"
         android:name="com.velord.camerarecording.CameraRecordingFragment"
+        android:label="CameraRecordingFragment" >
+
+        <action
+            android:id="@id/from_cameraRecordingFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/do_not_slide"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.velord.composescreenexample.ui.main.bottomNav.settingsGraph.SettingsGraphFragment"
         android:label="CameraRecordingFragment" />
 
 </navigation>
