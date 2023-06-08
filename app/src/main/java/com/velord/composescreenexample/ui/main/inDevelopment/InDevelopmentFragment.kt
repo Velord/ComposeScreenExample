@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -15,7 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.velord.uicore.compose.PervasiveArcFromBottomShape
+import com.velord.uicore.compose.theme.PervasiveArcFromBottomShape
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.activityNavController
 import com.velord.util.fragment.viewLifecycleScope
@@ -92,13 +95,6 @@ private fun Content(
         ) {
             Text(text = stringResource(id = RString.string.open_new))
         }
-
-        VisByGenericShape(
-            isVisible = isVisibleState.value,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 82.dp)
-        )
     }
 }
 
