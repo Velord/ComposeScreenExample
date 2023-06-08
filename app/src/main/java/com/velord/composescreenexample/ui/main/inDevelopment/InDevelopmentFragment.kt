@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.velord.uicore.compose.setContentWithTheme
+import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.activityNavController
 import com.velord.util.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint

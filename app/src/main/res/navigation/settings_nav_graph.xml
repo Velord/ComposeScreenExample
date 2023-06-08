@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/settings_nav_graph"
-    app:startDestination="@id/settingsGraphFragment">
+    android:id="@id/right_nav_graph"
+    app:startDestination="@id/bottom_nav_graph_right_start_destination">
 
     <fragment
-        android:id="@+id/settingsGraphFragment"
+        android:id="@id/bottom_nav_graph_right_start_destination"
         android:name="com.velord.composescreenexample.ui.main.bottomNav.settingsGraph.SettingsGraphFragment"
         android:label="SettingsGraphFragment" >
 

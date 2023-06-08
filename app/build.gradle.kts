@@ -122,9 +122,10 @@ dependencies {
     implementation(project(":backend"))
     implementation(project(":model"))
     implementation(project(":datastore"))
-    implementation(project(":uicore"))
     implementation(project(":util"))
+    implementation(project(":uicore"))
     implementation(project(":camerarecording"))
+    implementation(project(":bottomnavigation"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.all)
@@ -138,8 +139,6 @@ dependencies {
     kapt(libs.hilt.compiler)
     // Permission
     implementation(libs.sagar.coroutine.permission)
-    // Navigation
-    implementation(libs.velord.multiplebackstack)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
