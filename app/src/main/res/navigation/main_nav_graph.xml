@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/bottomNavFragment"
-        android:name="com.velord.composescreenexample.ui.main.bottomNav.BottomNavFragment"
+        android:name="com.velord.bottomnavigation.BottomNavFragment"
         android:label="BottomNavFragment"
         />
 

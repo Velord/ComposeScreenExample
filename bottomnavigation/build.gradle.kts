@@ -1,10 +1,12 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
-    namespace = "com.velord.uicore"
+    namespace = "com.velord.bottomnavigation"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -29,10 +31,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     kotlinOptions {
         jvmTarget = libs.versions.jvmTarget.get()
     }
@@ -41,17 +39,26 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":model"))
+    implementation(project(":uicore"))
     // Templates
-    implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.all)
-    implementation(libs.bundles.coil)
+    implementation(libs.bundles.kotlin.module)
+    implementation(libs.bundles.androidx.activity)
+    implementation(libs.bundles.androidx.camera)
+    implementation(libs.bundles.androidx.lifecycle.runtime)
+    implementation(libs.androidx.constraint)
+    implementation(libs.google.guava)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
     implementation(libs.bundles.compose.material.all)
-    implementation(libs.bundles.compose.accompanist.all)
     implementation(libs.bundles.compose.ui)
+    implementation(libs.bundles.compose.accompanist.core)
+    // DI
+    implementation(libs.bundles.dagger.all)
+    kapt(libs.bundles.dagger.kapt)
+    kapt(libs.hilt.compiler)
+    // Third Party
+    implementation(libs.velord.multiplebackstack)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.compose.theme
+package com.velord.uicore.compose.theme
 
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme

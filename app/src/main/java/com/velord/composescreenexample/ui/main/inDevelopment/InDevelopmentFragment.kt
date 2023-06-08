@@ -17,13 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.velord.uicore.compose.PervasiveArcFromBottomShape
-import com.velord.uicore.compose.setContentWithTheme
+import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.activityNavController
 import com.velord.util.fragment.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,19 +68,24 @@ class InDevelopmentFragment : Fragment() {
 @Composable
 private fun InDevelopmentScreen(viewModel: InDevelopmentViewModel) {
     val time = remember { System.currentTimeMillis().toString() }
-    
-    val isVisibleState = remember {
-        mutableStateOf(false)
-    }
+    Content(
+        text = time,
+        onOpenNew = viewModel::onOpenNew
+    )
+}
+
+@Composable
+private fun Content(
+    text: String,
+    onOpenNew: () -> Unit
+) {
     Box(Modifier.fillMaxSize()) {
         Text(
-            text = time,
+            text = text,
             modifier = Modifier.align(Alignment.Center)
         )
         Button(
-            onClick = {
-                isVisibleState.value = isVisibleState.value.not()
-            },
+            onClick = onOpenNew,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(32.dp)
@@ -174,4 +180,13 @@ private fun Row2(count: Int) {
             color = MaterialTheme.colorScheme.onPrimary
         )
     }
+}
+
+@Preview
+@Composable
+private fun InDevelopmentPreview() {
+    Content(
+        text = "Now",
+        onOpenNew = {}
+    )
 }
