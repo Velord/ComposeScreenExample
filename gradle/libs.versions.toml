@@ -4,7 +4,7 @@ minApi = "29"
 targetApi = "33"
 # Build
 buildTools = "30.0.3"
-gradle = "7.4.1"
+gradle = "8.0.2"
 jvmTarget = "1.8"
 # DI
 dagger = "2.46.1"
@@ -28,15 +28,15 @@ androidxCollection = "1.2.0"
 androidxCore = "1.10.1"
 androidxDatastore = "1.0.0"
 androidxExifInterface = "1.3.6"
-androidxFragment = "1.5.7"
+androidxFragment = "1.6.0"
 androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.6.1"
-androidxMedia3 = "1.0.0"
-androidxNavigation = "2.5.0"
+androidxMedia3 = "1.0.2"
+androidxNavigation = "2.6.0"
 androidxPreference = "1.2.0"
 # AndroidX Paging
 androidxPaging = "3.1.1"
-androidxPagingCompose = "1.0.0-alpha20"
+androidxPagingCompose = "3.2.0-beta01"
 # AndroidX Constraint
 androidxConstraint = "2.1.4"
 androidxConstraintCompose = "1.1.0-alpha10"
@@ -307,3 +307,6 @@ android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

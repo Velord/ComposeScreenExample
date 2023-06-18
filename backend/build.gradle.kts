@@ -1,8 +1,7 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    kotlin("plugin.serialization") version "1.8.21"
-    id("org.jetbrains.kotlin.android")
+    id(libs.plugins.android.library.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
