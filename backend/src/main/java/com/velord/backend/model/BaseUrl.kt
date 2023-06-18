@@ -1,3 +1,3 @@
 package com.velord.backend.model
 
-class BaseUrl(val value: String)
+data class BaseUrl(val value: String)

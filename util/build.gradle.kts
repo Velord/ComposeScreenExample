@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-parcelize")
-    kotlin("plugin.serialization") version "1.8.21"
+    id(libs.plugins.android.library.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
