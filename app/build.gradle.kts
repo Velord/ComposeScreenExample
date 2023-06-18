@@ -1,12 +1,9 @@
-// Migrate to gradle 8.1 when be released should fix that
-// Suppress according to https://github.com/gradle/gradle/issues/22797
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
+    id(libs.plugins.android.application.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
+    id(libs.plugins.dagger.hilt.get().pluginId)
 }
 
 // When app incompatible with previous version change this value
@@ -106,11 +103,12 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -126,6 +124,7 @@ dependencies {
     implementation(project(":uicore"))
     implementation(project(":camerarecording"))
     implementation(project(":bottomnavigation"))
+    implementation(project(":shapedemo"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.all)

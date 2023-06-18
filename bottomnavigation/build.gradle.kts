@@ -1,8 +1,7 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id(libs.plugins.android.library.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.kotlin.kapt.get().pluginId)
 }
 
 android {
@@ -43,9 +42,9 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)
-    implementation(libs.bundles.androidx.camera)
     implementation(libs.bundles.androidx.lifecycle.runtime)
-    implementation(libs.androidx.constraint)
+    implementation(libs.bundles.androidx.ktx)
+    implementation(libs.bundles.androidx.navigation)
     implementation(libs.google.guava)
     // Compose
     implementation(libs.bundles.compose.core)
@@ -53,10 +52,6 @@ dependencies {
     implementation(libs.bundles.compose.material.all)
     implementation(libs.bundles.compose.ui)
     implementation(libs.bundles.compose.accompanist.core)
-    // DI
-    implementation(libs.bundles.dagger.all)
-    kapt(libs.bundles.dagger.kapt)
-    kapt(libs.hilt.compiler)
     // Third Party
     implementation(libs.velord.multiplebackstack)
 }

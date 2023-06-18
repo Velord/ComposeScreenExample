@@ -21,7 +21,7 @@ class AddGraphFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
         TestScreen(RString.string.open_new_add) {
-            findNavController().navigate(R.id.toInDevelopmentFragment)
+            findNavController().navigate(R.id.from_addGraphFragment_to_shapeDemoFragment)
         }
     }
 }
