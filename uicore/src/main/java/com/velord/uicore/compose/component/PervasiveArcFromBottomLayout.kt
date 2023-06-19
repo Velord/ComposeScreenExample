@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.compose.theme.PervasiveArcFromBottomShape
+import com.velord.uicore.compose.theme.ArcAtBottomCenterShape
 
 @Composable
 fun PervasiveArcFromBottomLayout(
@@ -43,7 +43,7 @@ fun PervasiveArcFromBottomLayout(
         animationProgressState == 1f -> shape
         else -> {
             val progress = (animationProgressState * 100).toInt()
-            PervasiveArcFromBottomShape(progress) {
+            ArcAtBottomCenterShape(progress) {
                 if (abortAnimationOnEdge) {
                     isEdgeState.value = true
                 }

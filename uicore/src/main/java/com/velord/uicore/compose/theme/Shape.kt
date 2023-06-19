@@ -5,8 +5,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.compose.path.createTicketPath
-import com.velord.uicore.compose.path.pervasiveArcFromBottomPath
+import com.velord.uicore.compose.path.arcAtBottomCenterPath
+import com.velord.uicore.compose.path.ticketPath
 
 val MainShapes = Shapes(
     extraSmall = RoundedCornerShape(4.dp),
@@ -18,12 +18,12 @@ val MainShapes = Shapes(
 
 fun TicketShape(cornerRadius: Float): Shape =
     GenericShape { size, _ ->
-        addPath(createTicketPath(cornerRadius, size))
+        addPath(ticketPath(cornerRadius, size))
     }
 
-fun PervasiveArcFromBottomShape(
+fun ArcAtBottomCenterShape(
     progress: Int,
     onEdgeTouch: () -> Unit
 ) : Shape = GenericShape { size, _ ->
-    addPath(pervasiveArcFromBottomPath(size, progress, onEdgeTouch))
+    addPath(arcAtBottomCenterPath(size, progress, onEdgeTouch))
 }

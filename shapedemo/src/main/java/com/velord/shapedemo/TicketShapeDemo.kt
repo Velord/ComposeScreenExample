@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.compose.path.createTicketPath
+import com.velord.uicore.compose.path.ticketPath
 import com.velord.uicore.compose.theme.TicketShape
 
 @Composable
@@ -95,7 +95,7 @@ private fun Ticket(
             .drawBehind {
                 scale(scale = innerStrokeScale) {
                     drawPath(
-                        path = createTicketPath(
+                        path = ticketPath(
                             size = size,
                             cornerRadius = cornerRadius,
                         ),
