@@ -4,7 +4,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Path
 
-fun pervasiveArcFromBottomPath(
+fun arcAtBottomCenterPath(
     size: Size,
     progress: Int,
     onEdgeTouch: () -> Unit
