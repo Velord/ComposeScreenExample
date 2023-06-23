@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,7 +29,6 @@ import com.velord.uicore.R
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
-
 
 class DemoFragment : Fragment() {
 
@@ -72,20 +69,15 @@ private fun Content(
     onOpenShape: () -> Unit,
     onOpenModifier: () -> Unit,
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
+            .statusBarsPadding(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .statusBarsPadding()
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            OpenButton(text = stringResource(id = R.string.open_shape_demo), onClick = onOpenShape)
-            OpenButton(text = stringResource(id = R.string.open_modifier_demo), onClick = onOpenModifier)
-        }
+        OpenButton(text = stringResource(id = R.string.open_shape_demo), onClick = onOpenShape)
+        OpenButton(text = stringResource(id = R.string.open_modifier_demo), onClick = onOpenModifier)
     }
 }
 
