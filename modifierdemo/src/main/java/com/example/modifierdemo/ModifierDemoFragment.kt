@@ -1,4 +1,4 @@
-package com.velord.shapedemo
+package com.example.modifierdemo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,19 +17,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
 import com.velord.uicore.utils.setContentWithTheme
 
-class ShapeDemoFragment : Fragment() {
+class ModifierDemoFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        ShapeDemoScreen()
+        ModifierDemoScreen()
     }
 }
 
 @Composable
-private fun ShapeDemoScreen() {
+private fun ModifierDemoScreen() {
     Content()
 }
 
@@ -42,13 +42,12 @@ private fun Content() {
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
     ) {
-        TicketShapeDemo()
-        PervasiveArcFromBottomShapeDemo()
+        ShimmeringDemo()
     }
 }
 
 @Preview
 @Composable
-private fun ShapeDemoPreview() {
+private fun ModifierDemoPreview() {
     Content()
 }

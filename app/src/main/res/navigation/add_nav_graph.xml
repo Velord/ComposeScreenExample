@@ -10,25 +10,43 @@
         android:label="AddGraphFragment" >
 
         <action
-            android:id="@+id/toInDevelopmentFragment"
-            app:destination="@id/inDevelopmentFragment"/>
-
-        <action
-            android:id="@+id/from_addGraphFragment_to_shapeDemoFragment"
-            app:destination="@id/shapeDemoFragment"
+            android:id="@+id/from_addGraphFragment_to_demoFragment"
+            app:destination="@id/demoFragment"
             app:enterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_in_down"
             />
     </fragment>
 
     <fragment
-        android:id="@+id/inDevelopmentFragment"
-        android:name="com.velord.composescreenexample.ui.main.inDevelopment.InDevelopmentFragment"
-        android:label="InDevelopmentFragment"  />
-
-    <fragment
         android:id="@+id/shapeDemoFragment"
         android:name="com.velord.shapedemo.ShapeDemoFragment"
         android:label="ShapeDemoFragment" />
+
+    <fragment
+        android:id="@+id/modifierDemoFragment"
+        android:name="com.example.modifierdemo.ModifierDemoFragment"
+        android:label="ModifierDemoFragment" />
+
+    <fragment
+        android:id="@+id/demoFragment"
+        android:name="com.velord.composescreenexample.ui.main.demo.DemoFragment"
+        android:label="DemoFragment" >
+
+        <action
+            android:id="@+id/from_demoFragment_to_shapeDemoFragment"
+            app:destination="@id/shapeDemoFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_in_down"
+            />
+
+        <action
+            android:id="@+id/from_demoFragment_to_modifierDemoFragment"
+            app:destination="@id/modifierDemoFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_in_down"
+            />
+
+    </fragment>
+
 
 </navigation>

@@ -18,15 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.activityNavController
 import com.velord.util.fragment.viewLifecycleScope
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.velord.uicore.R as RString
 
-@AndroidEntryPoint
 class InDevelopmentFragment : Fragment() {
 
     private val viewModel by viewModels<InDevelopmentViewModel>()
@@ -46,15 +43,8 @@ class InDevelopmentFragment : Fragment() {
 
     private fun initObserving() {
         viewLifecycleScope.launch {
-            launch {
-                viewModel.navigationEvent.collect {
-                    activityNavController()?.navigate(it.id)
-                }
-            }
-            launch {
-                viewModel.backEvent.collect {
-                    findNavController().popBackStack()
-                }
+            viewModel.navigationEvent.collect {
+                activityNavController()?.navigate(it.id)
             }
         }
     }

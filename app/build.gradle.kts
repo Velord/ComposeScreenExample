@@ -125,6 +125,7 @@ dependencies {
     implementation(project(":camerarecording"))
     implementation(project(":bottomnavigation"))
     implementation(project(":shapedemo"))
+    implementation(project(":modifierdemo"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.all)

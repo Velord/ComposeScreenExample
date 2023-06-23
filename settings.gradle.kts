@@ -10,6 +10,7 @@ include(":uicore")
 include(":camerarecording")
 include(":bottomnavigation")
 include(":shapedemo")
+include(":modifierdemo")
 
 
 
