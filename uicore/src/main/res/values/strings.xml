@@ -13,4 +13,6 @@
     <string name="open_new_settings">Open new Settings</string>
     <string name="open_new_camera">Open new Camera</string>
     <string name="test">Test</string>
+    <string name="open_shape_demo">Open Shape Demo</string>
+    <string name="open_modifier_demo">Open Modifier Demo</string>
 </resources>
