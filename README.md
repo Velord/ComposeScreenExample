@@ -29,3 +29,11 @@ That component brings animation that devastating layout based on ArcAtBottomCent
 ### ShapeDemoScreen has TicketShapeDemo and PervasiveArcFromBottomShapeDemo
 [ShapeDemo.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/c5cbd5ca-8cb3-4efb-8601-10994eb011a5)
 
+
+## Modifier Demo
+### You can find custom crafted Modifiers:
+#### 1. Modifier.shimmering()
+
+### ModifierDemoScreen has ShimmeringDemo
+https://github.com/Velord/ComposeScreenExample/assets/33905170/4ebd28e1-539b-4731-8f9f-d8f3c9fae4e1
+
