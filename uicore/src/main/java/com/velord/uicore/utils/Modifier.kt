@@ -51,9 +51,10 @@ fun Modifier.shimmering(
         endColor,
     ),
     // If you want to use more than 3 colors, you must declare the position of each color
-    colorsPosition: (animatedValue: Float) -> List<Float> = { listOf(0f, it, 1f) }
+    colorsPosition: (animatedValue: Float) -> List<Float> = { listOf(0f, it, 1f) },
+    reverse: Boolean = false
 ): Modifier = composed {
-    val transition = rememberInfiniteTransition(label = "")
+    val transition = rememberInfiniteTransition(label = "shimmering")
     val animatedValueState = transition.animateFloat(
         initialValue = 0f,
         targetValue = 1f,
@@ -61,14 +62,25 @@ fun Modifier.shimmering(
             animation = tween(durationMillis = duration, easing = easing),
             repeatMode = repeatMode
         ),
-        label = "ShimmerEffect animated value"
+        label = "shimmering animated value"
     )
+
+    val positionsBasedOnValue = colorsPosition(animatedValueState.value)
+    val orReverse = if (reverse) {
+        // After map 0f, 0.2f, 1.f -> 1f, 0.8f, 0f
+        // Reverse the list is necessary
+        // Because the gradient first color can not be 1f
+        positionsBasedOnValue.map { 1f - it }.reversed()
+    } else {
+        positionsBasedOnValue
+    }
+
     this.drawBehindLinearGradientShaderCanvas(
         animatedValue = animatedValueState.value,
         startColor = startColor,
         centerColor = centerColor,
         endColor = endColor,
         gradientColors = gradientColors,
-        colorsPosition = colorsPosition(animatedValueState.value)
+        colorsPosition = orReverse
     )
 }

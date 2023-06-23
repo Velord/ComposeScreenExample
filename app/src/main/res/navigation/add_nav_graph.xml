@@ -12,8 +12,6 @@
         <action
             android:id="@+id/from_addGraphFragment_to_demoFragment"
             app:destination="@id/demoFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:popExitAnim="@anim/slide_in_down"
             />
     </fragment>
 
@@ -37,6 +35,8 @@
             app:destination="@id/shapeDemoFragment"
             app:enterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/do_not_slide"
+            app:popEnterAnim="@anim/do_not_slide"
             />
 
         <action
@@ -44,6 +44,8 @@
             app:destination="@id/modifierDemoFragment"
             app:enterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/do_not_slide"
+            app:popEnterAnim="@anim/do_not_slide"
             />
 
     </fragment>
