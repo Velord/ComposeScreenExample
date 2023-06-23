@@ -4,7 +4,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Path
 
-fun createTicketPath(
+fun ticketPath(
     cornerRadius: Float,
     size: Size
 ): Path = Path().apply {

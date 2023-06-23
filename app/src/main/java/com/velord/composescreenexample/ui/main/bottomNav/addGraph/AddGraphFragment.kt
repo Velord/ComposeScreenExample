@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.velord.composescreenexample.R
-import com.velord.composescreenexample.ui.compose.screen.TestScreen
 import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
-import com.velord.uicore.R as RString
 
 @AndroidEntryPoint
 class AddGraphFragment : Fragment() {
@@ -19,9 +17,10 @@ class AddGraphFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = setContentWithTheme {
-        TestScreen(RString.string.open_new_add) {
-            findNavController().navigate(R.id.from_addGraphFragment_to_shapeDemoFragment)
-        }
+    ): View = setContentWithTheme {}
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findNavController().navigate(R.id.from_addGraphFragment_to_demoFragment)
     }
 }

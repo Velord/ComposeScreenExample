@@ -21,14 +21,25 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.compose.path.createTicketPath
+import com.velord.uicore.compose.path.ticketPath
 import com.velord.uicore.compose.theme.TicketShape
 
 @Composable
 internal fun TicketShapeDemo() {
     Title(text = "Ticket shape demo")
+
+    Text (
+        text = "",
+        style = TextStyle(
+            platformStyle = PlatformTextStyle(
+                includeFontPadding = false
+            )
+        )
+    )
 
     Column(
         modifier = Modifier
@@ -95,7 +106,7 @@ private fun Ticket(
             .drawBehind {
                 scale(scale = innerStrokeScale) {
                     drawPath(
-                        path = createTicketPath(
+                        path = ticketPath(
                             size = size,
                             cornerRadius = cornerRadius,
                         ),
