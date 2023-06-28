@@ -25,10 +25,10 @@ private fun Modifier.default(): Modifier = this
 
 @Composable
 internal fun ShimmeringDemo() {
-    SmallLeft(text = "Modifier.shimmering")
+    Title(text = "Modifier.shimmering")
 
     Rainbow()
-    Default()
+    OneAndAHalf()
     Magenta()
     SurfaceTint()
     Reverse()
@@ -64,7 +64,7 @@ private fun Rainbow() {
 }
 
 @Composable
-private fun Default() {
+private fun OneAndAHalf() {
     Text(
         text = "Default",
         modifier = Modifier

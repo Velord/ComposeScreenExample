@@ -48,12 +48,13 @@ private fun Content() {
     ) {
         //ShimmeringDemo()
         //BlinkingShadowDemo()
-        HangingDemo()
+        //HangingDemo()
+        SwolingDemo()
     }
 }
 
 @Composable
-internal fun SmallLeft(
+internal fun Title(
     text: String,
     modifier: Modifier = Modifier
 ) {

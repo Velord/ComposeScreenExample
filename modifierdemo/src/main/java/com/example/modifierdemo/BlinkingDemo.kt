@@ -23,7 +23,7 @@ import com.velord.uicore.utils.modifier.blinkingShadow
 
 @Composable
 internal fun BlinkingShadowDemo() {
-    SmallLeft(text = "Modifier.blinkingShadow")
+    Title(text = "Modifier.blinkingShadow")
 
     GreenReverse()
     RedReverse()
