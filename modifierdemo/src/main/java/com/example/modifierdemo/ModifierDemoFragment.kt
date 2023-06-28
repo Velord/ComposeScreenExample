@@ -46,9 +46,9 @@ private fun Content() {
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
     ) {
-        //ShimmeringDemo()
-        //BlinkingShadowDemo()
-        //HangingDemo()
+        ShimmeringDemo()
+        BlinkingShadowDemo()
+        HangingDemo()
         SwolingDemo()
     }
 }

@@ -28,8 +28,8 @@ import com.velord.uicore.utils.modifier.hanging
 internal fun ColumnScope.HangingDemo() {
     Title(text = "Modifier.hanging")
     Bell()
-    OneAndAHalf()
-    Title()
+    Default()
+    SmallLeft()
     FullRotation()
     HangingOnRightSide()
     QuickHangingOnLeftSide()
@@ -52,7 +52,7 @@ private fun ColumnScope.Bell() {
 }
 
 @Composable
-private fun OneAndAHalf() {
+private fun Default() {
     Button(
         onClick = {},
         modifier = Modifier
@@ -69,7 +69,7 @@ private fun OneAndAHalf() {
 }
 
 @Composable
-private fun Title() {
+private fun SmallLeft() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
