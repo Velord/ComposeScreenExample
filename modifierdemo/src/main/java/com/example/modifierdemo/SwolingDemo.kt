@@ -25,15 +25,15 @@ import com.velord.uicore.utils.modifier.swoling
 @Composable
 internal fun ColumnScope.SwolingDemo() {
     Title(text = "Modifier.swoling")
-    Point()
+    Default()
     OneAndAHalf()
-    Title()
+    HalfToOnePointTwo()
     TitleWithBounce()
     Spacer(modifier = Modifier.height(50.dp))
 }
 
 @Composable
-private fun ColumnScope.Point() {
+private fun ColumnScope.Default() {
     Icon(
         imageVector = Icons.Filled.PointOfSale,
         contentDescription = null,
@@ -64,7 +64,7 @@ private fun OneAndAHalf() {
 }
 
 @Composable
-private fun Title() {
+private fun HalfToOnePointTwo() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -94,7 +94,7 @@ private fun TitleWithBounce() {
                 initialScale = 0.7f,
                 targetScale = 1.1f,
                 duration = 3000,
-                easing = EaseInBounce,
+                easing = EaseInBounce
             )
     ) {
         Text(
