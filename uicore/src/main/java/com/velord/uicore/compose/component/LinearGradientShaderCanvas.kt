@@ -16,32 +16,26 @@ fun DrawScope.LinearGradientShaderCanvas(
     startColor: Color = Color.Transparent,
     centerColor: Color = Color.White,
     endColor: Color = Color.Transparent,
-    // If you want to use more than 3 colors, you can use this parameter
-    gradientColors: List<Color> = listOf(
-        startColor,
-        centerColor,
-        endColor,
-    ),
-    // If you want to use more than 3 colors, you must declare the position of each color
-    colorsPosition: List<Float> = listOf(0f, animatedValue, 1f)
+    gradientColorAndPosition: List<Pair<Color, Float>> = listOf(
+        startColor to 0f,
+        centerColor to animatedValue,
+        endColor to 1f
+    )
 ) {
-    require(gradientColors.size == colorsPosition.size) {
-        "The size of gradientColors and colorsPosition must be the same"
-    }
-    drawIntoCanvas {
+    drawIntoCanvas { canvas ->
         val width = size.width
         val height = size.height
         val shader = LinearGradientShader(
             from = Offset(0f, 0f),
             to = Offset(width, height),
-            colors = gradientColors,
-            colorStops = colorsPosition,
+            colors = gradientColorAndPosition.map { it.first },
+            colorStops = gradientColorAndPosition.map { it.second },
             tileMode = TileMode.Clamp
         )
         val paint = Paint().asFrameworkPaint()
         paint.shader = shader
 
-        it.nativeCanvas.withSave {
+        canvas.nativeCanvas.withSave {
             val rect = RectF(0f, 0f, width, height)
             drawRoundRect(rect, 8f, 8f, paint)
         }
