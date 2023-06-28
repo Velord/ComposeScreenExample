@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.utils.shimmering
+import com.velord.uicore.utils.modifier.shimmering
 
 private fun Modifier.default(): Modifier = this
     .fillMaxWidth()
@@ -25,7 +25,7 @@ private fun Modifier.default(): Modifier = this
 
 @Composable
 internal fun ShimmeringDemo() {
-    Title(text = "Modifier.shimmering")
+    SmallLeft(text = "Modifier.shimmering")
 
     Rainbow()
     Default()

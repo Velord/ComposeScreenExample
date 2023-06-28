@@ -46,13 +46,14 @@ private fun Content() {
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
     ) {
-        ShimmeringDemo()
-        BlinkingShadowDemo()
+        //ShimmeringDemo()
+        //BlinkingShadowDemo()
+        HangingDemo()
     }
 }
 
 @Composable
-internal fun Title(
+internal fun SmallLeft(
     text: String,
     modifier: Modifier = Modifier
 ) {
