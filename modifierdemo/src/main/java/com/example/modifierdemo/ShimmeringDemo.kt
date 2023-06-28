@@ -25,6 +25,8 @@ private fun Modifier.default(): Modifier = this
 
 @Composable
 internal fun ShimmeringDemo() {
+    Title(text = "Modifier.shimmering")
+
     Rainbow()
     Default()
     Magenta()
@@ -42,28 +44,17 @@ private fun Rainbow() {
             .padding(horizontal = 16.dp)
             .clip(RoundedCornerShape(32.dp))
             .shimmering(
-                gradientColors = listOf(
-                    Color.Red,
-                    Color.Green,
-                    Color.Blue,
-                    Color.Yellow,
-                    Color.Magenta,
-                    Color.Cyan,
-                    Color.Gray,
-                    Color.Black,
-                    Color.White,
-                ),
-                colorsPosition = { animatedValue ->
+                gradientColorAndPosition = { animatedValue ->
                     listOf(
-                        0f,
-                        animatedValue * 0.1f,
-                        animatedValue * 0.2f,
-                        animatedValue * 0.3f,
-                        animatedValue * 0.7f,
-                        animatedValue * 0.8f,
-                        animatedValue * 0.9f,
-                        animatedValue,
-                        1f
+                        Color.Red to 0f,
+                        Color.Green to animatedValue * 0.1f,
+                        Color.Blue to animatedValue * 0.2f,
+                        Color.Yellow to animatedValue * 0.3f,
+                        Color.Magenta to animatedValue * 0.7f,
+                        Color.Cyan to animatedValue * 0.8f,
+                        Color.Gray to animatedValue * 0.9f,
+                        Color.Black to animatedValue,
+                        Color.White to 1f,
                     )
                 }
             )
@@ -96,10 +87,14 @@ private fun Magenta() {
             .clip(CutCornerShape(16.dp))
             .shimmering(
                 duration = 2000,
-                gradientColors = listOf(Color.Magenta, Color.Cyan, Color.Gray, Color.Magenta),
-                colorsPosition = { animatedValue ->
-                    listOf(0f, animatedValue * 0.3f, animatedValue, 1f)
-                }
+                gradientColorAndPosition = { animatedValue ->
+                    listOf(
+                        Color.Magenta to 0f,
+                        Color.Cyan to animatedValue * 0.3f,
+                        Color.Gray to animatedValue,
+                        Color.Magenta to 1f,
+                    ) }
+
             ),
         textAlign = TextAlign.Center
     )
@@ -116,12 +111,13 @@ private fun SurfaceTint() {
             .background(MaterialTheme.colorScheme.surfaceTint)
             .shimmering(
                 duration = 3000,
-                gradientColors = listOf(
-                    MaterialTheme.colorScheme.surfaceTint,
-                    MaterialTheme.colorScheme.tertiary,
-                    MaterialTheme.colorScheme.surfaceTint,
-                ),
-                colorsPosition = { animatedValue -> listOf(0f, animatedValue, 1f) }
+                gradientColorAndPosition = { animatedValue ->
+                    listOf(
+                        MaterialTheme.colorScheme.surfaceTint to 0f,
+                        MaterialTheme.colorScheme.tertiary to animatedValue,
+                        MaterialTheme.colorScheme.surfaceTint to 1f,
+                    )
+                }
             ),
         textAlign = TextAlign.Center
     )
@@ -145,12 +141,13 @@ private fun Reverse() {
             .background(MaterialTheme.colorScheme.tertiaryContainer)
             .shimmering(
                 duration = 3000,
-                gradientColors = listOf(
-                    MaterialTheme.colorScheme.tertiaryContainer,
-                    MaterialTheme.colorScheme.onTertiaryContainer,
-                    MaterialTheme.colorScheme.tertiaryContainer,
-                ),
-                colorsPosition = { animatedValue -> listOf(0f, animatedValue, 1f) },
+                gradientColorAndPosition = { animatedValue ->
+                    listOf(
+                        MaterialTheme.colorScheme.tertiaryContainer to 0f,
+                        MaterialTheme.colorScheme.onTertiaryContainer to animatedValue,
+                        MaterialTheme.colorScheme.tertiaryContainer to 1f,
+                    )
+                },
                 reverse = true
             ),
         textAlign = TextAlign.Center
@@ -174,34 +171,20 @@ private fun ReverseRainbow() {
             )
             .shimmering(
                 duration = 3000,
-                gradientColors = listOf(
-                    Color.Green,
-                    Color.Yellow,
-                    Color.DarkGray,
-                    Color.Magenta,
-                    Color.Cyan,
-                    Color.Transparent,
-                    Color.Gray,
-                    Color.Black,
-                    Color.White,
-                    Color.LightGray,
-                    Color.Red,
-                    Color.Blue,
-                ),
-                colorsPosition = { animatedValue ->
+                gradientColorAndPosition = { animatedValue ->
                     listOf(
-                        0f,
-                        animatedValue * 0.1f,
-                        animatedValue * 0.2f,
-                        animatedValue * 0.3f,
-                        animatedValue * 0.35f,
-                        animatedValue * 0.7f,
-                        animatedValue * 0.8f,
-                        animatedValue * 0.85f,
-                        animatedValue * 0.9f,
-                        animatedValue * 0.95f,
-                        animatedValue,
-                        1f
+                        Color.Green to 0f,
+                        Color.Yellow to animatedValue * 0.1f,
+                        Color.DarkGray to animatedValue * 0.2f,
+                        Color.Magenta to animatedValue * 0.3f,
+                        Color.Cyan to animatedValue * 0.35f,
+                        Color.Transparent to animatedValue * 0.7f,
+                        Color.Gray to animatedValue * 0.8f,
+                        Color.Black to animatedValue * 0.85f,
+                        Color.White to animatedValue * 0.9f,
+                        Color.LightGray to animatedValue * 0.95f,
+                        Color.Red to animatedValue,
+                        Color.Blue to 1f
                     )
                 },
                 reverse = true
