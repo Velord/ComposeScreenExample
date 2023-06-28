@@ -152,7 +152,6 @@ That component brings animation that devastating layout based on ArcAtBottomCent
 ```
 ![ezgif com-crop (1)](https://github.com/Velord/ComposeScreenExample/assets/33905170/15eba3f3-a0d0-482f-92a3-7887aa13cccb)
 
-
 2. RedReverse
 ```
 .blinkingShadow(
@@ -175,4 +174,105 @@ That component brings animation that devastating layout based on ArcAtBottomCent
 ```
 ![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/01927ade-1920-4558-9afe-62a2adae8c97)
 
+### Modifier.hanging()
+1. Default
+```
+.hanging()
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/b0a593e4-12d1-4226-b541-a195df850a25)
 
+2. SmallLeft
+```
+.hanging(
+    shift = HangingDefaults.shift(
+        startRotationAngle = 5,
+        endRotationAngle = -20
+    ),
+    animation = HangingDefaults.animation(duration = 2000)
+)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/706099c8-d3eb-4137-9551-b5d2c06861c3)
+
+3. FullRotation
+```
+.hanging(
+    shift = HangingDefaults.shift(startRotationAngle = 180),
+    animation = HangingDefaults.animation(3000)
+)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/869dd32d-c4f5-4229-8667-ba61b9eae371)
+
+4. HangingOnRightSide
+```
+.hanging(pivotPoint = HangingPivotPoint.Right)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/1ffe734c-6f34-4527-bb7c-2114253bd4c8)
+
+5. QuickHangingOnLeftSide
+```
+.hanging(
+    shift = HangingDefaults.shift(10),
+    animation = HangingDefaults.animation(300),
+    pivotPoint = HangingPivotPoint.Left
+)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/157c095e-e59b-4a52-9afa-9319855ab90e)
+
+6. EpilepsyAtBottom
+```
+.hanging(
+    shift = HangingDefaults.shift(
+        startRotationAngle = 5,
+        endRotationAngle = -10
+    ),
+    animation = HangingDefaults.animation(duration = 80),
+    pivotPoint = HangingPivotPoint.Bottom
+)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/dc8a22b2-6def-43dc-8e6d-53f26951d1ac)
+
+7. HangingOnCenter
+```
+.hanging(
+    animation = HangingDefaults.animation(duration = 4300),
+    pivotPoint = HangingDefaults.pivot(
+        pivotFractionX = 0.5f,
+        pivotFractionY = 0.5f
+    )
+)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/42720e4d-724d-440b-9c5d-c4f5a259aa54)
+
+### Modifier.hanging()
+1. Default
+```
+.swoling()
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/4cc02032-f7f9-442c-9c25-de3bf128242f)
+
+2. OneAndAHalf
+```
+.swoling(targetScale = 1.5f)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/037f85aa-deef-433e-abe3-6e0b0dd8c99c)
+
+3. HalfToOnePointTwo
+```
+.swoling(
+    initialScale = 0.5f,
+    targetScale = 1.2f,
+    duration = 2000
+)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/232cd7cb-93cd-4264-b1bd-6001ac53b2f2)
+
+4. Bounce
+```
+.swoling(
+    initialScale = 0.7f,
+    targetScale = 1.1f,
+    duration = 3000,
+    easing = EaseInBounce
+)
+```
+![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/adb556b2-2c0c-46de-ac09-55efa9145ee8)
