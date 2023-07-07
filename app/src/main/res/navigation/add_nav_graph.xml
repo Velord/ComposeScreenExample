@@ -26,6 +26,11 @@
         android:label="ModifierDemoFragment" />
 
     <fragment
+        android:id="@+id/flowSummatorFragment"
+        android:name="com.example.windyappflowsummator.FlowSummatorFragment"
+        android:label="FlowSummatorFragment" />
+
+    <fragment
         android:id="@+id/demoFragment"
         android:name="com.velord.composescreenexample.ui.main.demo.DemoFragment"
         android:label="DemoFragment" >
@@ -42,6 +47,15 @@
         <action
             android:id="@+id/from_demoFragment_to_modifierDemoFragment"
             app:destination="@id/modifierDemoFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/do_not_slide"
+            app:popEnterAnim="@anim/do_not_slide"
+            />
+
+        <action
+            android:id="@+id/from_demoFragment_to_flowSummatorFragment"
+            app:destination="@id/flowSummatorFragment"
             app:enterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_in_down"
             app:exitAnim="@anim/do_not_slide"
