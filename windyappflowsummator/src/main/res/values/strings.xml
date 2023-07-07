@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WindyApp FlowSummator</string>
+    <string name="launch">Launch</string>
+    <string name="please_enter_the_number">Please, enter the number</string>
 </resources>
