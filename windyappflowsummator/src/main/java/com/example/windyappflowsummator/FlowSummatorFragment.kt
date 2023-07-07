@@ -43,11 +43,11 @@ class FlowSummatorFragment : Fragment() {
 
 @Composable
 private fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
-    val flowState = viewModel.state.collectAsStateWithLifecycle()
-    val currentEnteredValueState = viewModel.currentEnteredValueFlow.collectAsStateWithLifecycle()
+    val currentTextState = viewModel.currentTextFlow.collectAsStateWithLifecycle()
+    val currentEnteredValueState = viewModel.currentEnteredNumberFlow.collectAsStateWithLifecycle()
 
     Content(
-        current = flowState.value,
+        currentText = currentTextState.value,
         isStartEnabled = currentEnteredValueState.value != null,
         onStartClick = viewModel::onStartClick,
         enteredValue = currentEnteredValueState.value,
@@ -57,10 +57,10 @@ private fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
 
 @Composable
 private fun Content(
-    current: Int,
+    currentText: String,
     isStartEnabled: Boolean,
     onStartClick: () -> Unit,
-    enteredValue: String?,
+    enteredValue: Int?,
     onNewEnteredValue: (String) -> Unit,
 ) {
     Column(
@@ -80,6 +80,7 @@ private fun Content(
             value = enteredValue,
             onNewValue = onNewEnteredValue
         )
+        Result(text = currentText)
     }
 }
 
@@ -96,7 +97,7 @@ private fun Title() {
 @Composable
 private fun Start(
     isEnabled: Boolean,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Button(
         onClick = onClick,
@@ -109,17 +110,27 @@ private fun Start(
 
 @Composable
 private fun EnterField(
-    value: String?,
-    onNewValue: (String) -> Unit,
+    value: Int?,
+    onNewValue: (String) -> Unit
 ) {
     TextField(
-        value = value ?: "",
+        value = value?.toString() ?: "",
         onValueChange = onNewValue,
         modifier = Modifier
             .padding(top = 16.dp)
             .padding(horizontal = 32.dp),
         placeholder = { Text(text = stringResource(id = R.string.please_enter_the_number)) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+    )
+}
+
+@Composable
+private fun Result(text: String) {
+    Text(
+        text = text,
+        modifier = Modifier.padding(top = 16.dp),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodySmall,
     )
 }
 
@@ -127,7 +138,7 @@ private fun EnterField(
 @Composable
 private fun FlowSummatorPreview() {
     Content(
-        current = 0,
+        currentText = "",
         isStartEnabled = true,
         onStartClick = {},
         enteredValue = null,
