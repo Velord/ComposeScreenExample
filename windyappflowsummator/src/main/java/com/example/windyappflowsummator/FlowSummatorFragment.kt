@@ -142,7 +142,7 @@ private fun EnterField(
 private fun Result(text: String) {
     Text(
         text = text,
-        modifier = Modifier.padding(top = 16.dp),
+        modifier = Modifier.padding(16.dp),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
     )
