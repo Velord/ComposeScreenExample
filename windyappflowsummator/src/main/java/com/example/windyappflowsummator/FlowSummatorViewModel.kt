@@ -11,15 +11,16 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.math.BigInteger
 
 data class EmitNumber(
-    val newValue: Int,
-    val previousValue: Int
+    val newValue: BigInteger,
+    val previousValue: BigInteger
 ) {
-    val sum: Int = newValue + previousValue
+    val sum: BigInteger = newValue + previousValue
 
     companion object {
-        val DEFAULT = EmitNumber(0, 0)
+        val DEFAULT = EmitNumber(BigInteger.ZERO, BigInteger.ZERO)
     }
 }
 
@@ -60,8 +61,8 @@ class FlowSummatorViewModel : BaseViewModel() {
         currentEnteredNumberFlow.value = calculatedValue
     }
 
-    private fun getPrevEmittedValue(): Int =
-        sumFlow.replayCache.firstOrNull()?.sum ?: 0
+    private fun getPrevEmittedValue(): BigInteger =
+        sumFlow.replayCache.firstOrNull()?.sum ?: BigInteger.ZERO
 
     private fun createFlows(countOfFlowToCreate: Int): Array<Flow<Int>> {
         val flows = mutableListOf<Flow<Int>>()
@@ -90,7 +91,7 @@ class FlowSummatorViewModel : BaseViewModel() {
                         flow.collect { newNumber ->
                             val number = EmitNumber(
                                 previousValue = getPrevEmittedValue(),
-                                newValue = newNumber
+                                newValue = newNumber.toBigInteger()
                             )
                             sumFlow.emit(number)
                         }
