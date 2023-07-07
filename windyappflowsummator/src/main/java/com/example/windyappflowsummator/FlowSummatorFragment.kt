@@ -1,5 +1,6 @@
 package com.example.windyappflowsummator
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.windyappflowsummator.FlowSummatorViewModel.Companion.mapToCumulativeStringEachNumberByLine
 import com.velord.uicore.utils.setContentWithTheme
 
 class FlowSummatorFragment : Fragment() {
@@ -43,24 +50,31 @@ class FlowSummatorFragment : Fragment() {
 
 @Composable
 private fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
-    val currentTextState = viewModel.currentTextFlow.collectAsStateWithLifecycle()
-    val currentEnteredValueState = viewModel.currentEnteredNumberFlow.collectAsStateWithLifecycle()
+    val currentTextState = viewModel.sumFlow
+        .mapToCumulativeStringEachNumberByLine()
+        .collectAsStateWithLifecycle(initialValue = "")
+    val currentEnteredValueState = viewModel.currentEnteredNumberFlow
+        .collectAsStateWithLifecycle()
+
+    val isStartEnabledState = remember {
+        derivedStateOf { currentEnteredValueState.value != null }
+    }
 
     Content(
-        currentText = currentTextState.value,
-        isStartEnabled = currentEnteredValueState.value != null,
+        currentTextState = currentTextState,
+        isStartEnabledState = isStartEnabledState,
         onStartClick = viewModel::onStartClick,
-        enteredValue = currentEnteredValueState.value,
+        enteredValueState = currentEnteredValueState,
         onNewEnteredValue = viewModel::onNewEnteredValue,
     )
 }
 
 @Composable
 private fun Content(
-    currentText: String,
-    isStartEnabled: Boolean,
+    currentTextState: State<String>,
+    isStartEnabledState: State<Boolean>,
     onStartClick: () -> Unit,
-    enteredValue: Int?,
+    enteredValueState: State<Int?>,
     onNewEnteredValue: (String) -> Unit,
 ) {
     Column(
@@ -73,14 +87,14 @@ private fun Content(
     ) {
         Title()
         Start(
-            isEnabled = isStartEnabled,
+            isEnabled = isStartEnabledState.value,
             onClick = onStartClick
         )
         EnterField(
-            value = enteredValue,
+            value = enteredValueState.value,
             onNewValue = onNewEnteredValue
         )
-        Result(text = currentText)
+        Result(text = currentTextState.value)
     }
 }
 
@@ -134,14 +148,15 @@ private fun Result(text: String) {
     )
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Preview
 @Composable
 private fun FlowSummatorPreview() {
     Content(
-        currentText = "",
-        isStartEnabled = true,
+        currentTextState = mutableStateOf("") ,
+        isStartEnabledState = mutableStateOf(true),
         onStartClick = {},
-        enteredValue = null,
+        enteredValueState = mutableIntStateOf(4) ,
         onNewEnteredValue = {},
     )
 }

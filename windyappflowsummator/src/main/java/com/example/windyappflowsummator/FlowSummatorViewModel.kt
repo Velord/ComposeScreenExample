@@ -9,21 +9,24 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-private data class EmitNumber(
+data class EmitNumber(
     val newValue: Int,
     val previousValue: Int
 ) {
     val sum: Int = newValue + previousValue
+
+    companion object {
+        val DEFAULT = EmitNumber(0, 0)
+    }
 }
 
 class FlowSummatorViewModel : BaseViewModel() {
 
-    val currentTextFlow: MutableStateFlow<String> = MutableStateFlow("")
     val currentEnteredNumberFlow: MutableStateFlow<Int?> = MutableStateFlow(null)
-    private val sumFlow: MutableSharedFlow<EmitNumber> = MutableSharedFlow(
+    val sumFlow: MutableSharedFlow<EmitNumber> = MutableSharedFlow(
         replay = 1,
         extraBufferCapacity = 10,
         onBufferOverflow = BufferOverflow.SUSPEND
@@ -31,8 +34,7 @@ class FlowSummatorViewModel : BaseViewModel() {
     private val launchSumFlow: MutableSharedFlow<Int> = MutableSharedFlow()
 
     init {
-        observeSumFlow()
-        observeSumLaunchFlow()
+        observeLaunchSumFlow()
     }
 
     fun onStartClick() = launch {
@@ -76,20 +78,9 @@ class FlowSummatorViewModel : BaseViewModel() {
         return flows.toTypedArray()
     }
 
-    private fun observeSumFlow() = launch {
-        sumFlow.collect { newNumber ->
-            // Суммирующий Flow должен возвращать значение после обновления каждого из N Flow.
-            currentTextFlow.update {
-                it + "\n" + newNumber.sum
-            }
-        }
-    }
-
-    private fun observeSumLaunchFlow() = launch {
+    private fun observeLaunchSumFlow() = launch {
         launchSumFlow.collectLatest { flowCount ->
-            // Reset state
-            currentTextFlow.value = ""
-            sumFlow.resetReplayCache()
+            sumFlow.emit(EmitNumber.DEFAULT)
 
             val flows = createFlows(flowCount)
             // Результирующий Flow должен суммировать значения всех N Flow.
@@ -105,6 +96,19 @@ class FlowSummatorViewModel : BaseViewModel() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    companion object {
+        // Суммирующий Flow должен возвращать значение после обновления каждого из N Flow.
+        fun MutableSharedFlow<EmitNumber>.mapToCumulativeStringEachNumberByLine(): Flow<String> {
+            var cumulativeStr = ""
+            return map {
+                if (it == EmitNumber.DEFAULT) cumulativeStr = ""
+                else cumulativeStr += "\n" + it.sum
+
+                cumulativeStr
             }
         }
     }
