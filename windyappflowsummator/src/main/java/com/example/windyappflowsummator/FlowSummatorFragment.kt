@@ -14,12 +14,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.uicore.utils.setContentWithTheme
 
 class FlowSummatorFragment : Fragment() {
@@ -37,44 +39,44 @@ class FlowSummatorFragment : Fragment() {
 
 @Composable
 private fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
-    val flowState = viewModel.flowState
+    val flowState = viewModel.state.collectAsStateWithLifecycle()
 
 
-    Content()
+    Content(
+        current = flowState.value
+    )
 }
 
 @Composable
-private fun Content() {
+private fun Content(
+    current: Int,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
             .statusBarsPadding()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ShimmeringDemo()
-        BlinkingShadowDemo()
-        HangingDemo()
-        SwolingDemo()
+        Title()
     }
 }
 
 @Composable
-internal fun Title(
-    text: String,
-    modifier: Modifier = Modifier
-) {
+private fun Title() {
     Text(
-        text = text,
-        modifier = modifier.padding(top = 32.dp, start = 16.dp),
-        color = MaterialTheme.colorScheme.primary,
-        textAlign = TextAlign.Start,
-        style = MaterialTheme.typography.bodyMedium,
+        text = stringResource(id = R.string.app_name),
+        modifier = Modifier.padding(top = 32.dp),
+        color = MaterialTheme.colorScheme.onSurface,
+        style = MaterialTheme.typography.bodyLarge,
     )
 }
 
 @Preview
 @Composable
 private fun FlowSummatorPreview() {
-    Content()
+    Content(
+        current = 0
+    )
 }
