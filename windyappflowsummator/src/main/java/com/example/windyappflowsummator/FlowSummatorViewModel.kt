@@ -1,16 +1,23 @@
 package com.example.windyappflowsummator
 
 import com.velord.util.viewModel.BaseViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import java.math.BigInteger
 
 data class EmitNumber(
@@ -29,10 +36,14 @@ class FlowSummatorViewModel : BaseViewModel() {
     val currentEnteredNumberFlow: MutableStateFlow<Int?> = MutableStateFlow(null)
     val sumFlow: MutableSharedFlow<EmitNumber> = MutableSharedFlow(
         replay = 1,
-        extraBufferCapacity = 10,
+        extraBufferCapacity = Int.MAX_VALUE,
         onBufferOverflow = BufferOverflow.SUSPEND
     )
-    private val launchSumFlow: MutableSharedFlow<Int> = MutableSharedFlow()
+    private val launchSumFlow: MutableSharedFlow<Int> = MutableSharedFlow(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    private var launchSumJob: Job? = null
 
     init {
         observeLaunchSumFlow()
@@ -64,10 +75,11 @@ class FlowSummatorViewModel : BaseViewModel() {
     private fun getPrevEmittedValue(): BigInteger =
         sumFlow.replayCache.firstOrNull()?.sum ?: BigInteger.ZERO
 
-    private fun createFlows(countOfFlowToCreate: Int): Array<Flow<Int>> {
+    private suspend fun createFlows(countOfFlowToCreate: Int): Array<Flow<Int>> {
         val flows = mutableListOf<Flow<Int>>()
         // Необходимо создать массив Flow<Int>, количества N
         repeat(countOfFlowToCreate) { index ->
+            yield()
             flows += flow {
                 // после задержки в (index + 1) * 100
                 val waitFor = (index + 1) * 100L
@@ -79,23 +91,32 @@ class FlowSummatorViewModel : BaseViewModel() {
         return flows.toTypedArray()
     }
 
-    private fun observeLaunchSumFlow() = launch {
-        launchSumFlow.collectLatest { flowCount ->
-            sumFlow.emit(EmitNumber.DEFAULT)
+    private fun observeLaunchSumFlow() = launch(Dispatchers.IO) {
+        launchSumFlow
+            .onEach { sumFlow.emit(EmitNumber.DEFAULT) }
+            .collectLatest { flowCount ->
+                launchSumJob?.cancel()
+                launchSumJob = createThanLaunchFlowsJob(flowCount) {
+                    sumFlow.emit(it)
+                }
+            }
+    }
 
-            val flows = createFlows(flowCount)
-            // Результирующий Flow должен суммировать значения всех N Flow.
-            coroutineScope {
-                flows.forEach { flow ->
-                    launch {
-                        flow.collect { newNumber ->
-                            val number = EmitNumber(
-                                previousValue = getPrevEmittedValue(),
-                                newValue = newNumber.toBigInteger()
-                            )
-                            sumFlow.emit(number)
-                        }
-                    }
+    private fun CoroutineScope.createThanLaunchFlowsJob(
+        flowCount: Int,
+        onEmit: suspend (EmitNumber) -> Unit
+    ): Job = launch {
+        val flows = createFlows(flowCount)
+        // Результирующий Flow должен суммировать значения всех N Flow.
+        flows.forEach { flow ->
+            launch {
+                flow.collect { newNumber ->
+                    ensureActive()
+                    val number = EmitNumber(
+                        previousValue = getPrevEmittedValue(),
+                        newValue = newNumber.toBigInteger()
+                    )
+                    onEmit(number)
                 }
             }
         }
@@ -104,13 +125,14 @@ class FlowSummatorViewModel : BaseViewModel() {
     companion object {
         // Суммирующий Flow должен возвращать значение после обновления каждого из N Flow.
         fun MutableSharedFlow<EmitNumber>.mapToCumulativeStringEachNumberByLine(): Flow<String> {
-            var cumulativeStr = ""
+            var cumulativeStr = StringBuilder("")
             return map {
-                if (it == EmitNumber.DEFAULT) cumulativeStr = ""
-                else cumulativeStr += "\n" + it.sum
+                if (it == EmitNumber.DEFAULT) cumulativeStr = StringBuilder("")
+                // Каждое обновление должно находиться на новой строчке.
+                else cumulativeStr.append("\n" + it.sum)
 
-                cumulativeStr
-            }
+                cumulativeStr.toString()
+            }.buffer(Int.MAX_VALUE).flowOn(Dispatchers.IO)
         }
     }
 }
