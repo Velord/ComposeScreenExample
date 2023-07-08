@@ -1,23 +1,18 @@
 package com.example.windyappflowsummator
 
 import com.velord.util.viewModel.BaseViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.yield
 import java.math.BigInteger
 
 data class EmitNumber(
@@ -30,6 +25,8 @@ data class EmitNumber(
         val DEFAULT = EmitNumber(BigInteger.ZERO, BigInteger.ZERO)
     }
 }
+
+private const val SPLIT_FLOW_CREATION_BY_CHUNK = 10000
 
 class FlowSummatorViewModel : BaseViewModel() {
 
@@ -75,51 +72,20 @@ class FlowSummatorViewModel : BaseViewModel() {
     private fun getPrevEmittedValue(): BigInteger =
         sumFlow.replayCache.firstOrNull()?.sum ?: BigInteger.ZERO
 
-    private suspend fun createFlows(countOfFlowToCreate: Int): Array<Flow<Int>> {
-        val flows = mutableListOf<Flow<Int>>()
-        // Необходимо создать массив Flow<Int>, количества N
-        repeat(countOfFlowToCreate) { index ->
-            yield()
-            flows += flow {
-                // после задержки в (index + 1) * 100
-                val waitFor = (index + 1) * 100L
-                delay(waitFor)
-                // эмитит значение index + 1
-                emit(index + 1)
-            }
-        }
-        return flows.toTypedArray()
-    }
-
     private fun observeLaunchSumFlow() = launch(Dispatchers.IO) {
         launchSumFlow
             .onEach { sumFlow.emit(EmitNumber.DEFAULT) }
             .collectLatest { flowCount ->
                 launchSumJob?.cancel()
-                launchSumJob = createThanLaunchFlowsJob(flowCount) {
-                    sumFlow.emit(it)
-                }
+                sumFlow.emit(EmitNumber.DEFAULT)
+                launchSumJob = FlowSummator(
+                    countOfFlowToCreate = flowCount,
+                    splitCreatingBy = SPLIT_FLOW_CREATION_BY_CHUNK,
+                    paralellism = true,
+                    onEmit = { sumFlow.emit(it) },
+                    getLastCachedValue = ::getPrevEmittedValue
+                ).start(this)
             }
-    }
-
-    private fun CoroutineScope.createThanLaunchFlowsJob(
-        flowCount: Int,
-        onEmit: suspend (EmitNumber) -> Unit
-    ): Job = launch {
-        val flows = createFlows(flowCount)
-        // Результирующий Flow должен суммировать значения всех N Flow.
-        flows.forEach { flow ->
-            launch {
-                flow.collect { newNumber ->
-                    ensureActive()
-                    val number = EmitNumber(
-                        previousValue = getPrevEmittedValue(),
-                        newValue = newNumber.toBigInteger()
-                    )
-                    onEmit(number)
-                }
-            }
-        }
     }
 
     companion object {
