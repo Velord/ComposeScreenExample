@@ -6,23 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -34,6 +44,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.windyappflowsummator.FlowSummatorViewModel.Companion.mapToCumulativeStringEachNumberByLine
 import com.velord.uicore.utils.setContentWithTheme
+import kotlinx.coroutines.launch
 
 class FlowSummatorFragment : Fragment() {
 
@@ -75,7 +86,7 @@ private fun Content(
     isStartEnabledState: State<Boolean>,
     onStartClick: () -> Unit,
     enteredValueState: State<Int?>,
-    onNewEnteredValue: (String) -> Unit,
+    onNewEnteredValue: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -96,12 +107,15 @@ private fun Content(
         )
         Result(text = currentTextState.value)
     }
+    Info(
+
+    )
 }
 
 @Composable
 private fun Title() {
     Text(
-        text = stringResource(id = R.string.app_name),
+        text = stringResource(id = R.string.flow_summator),
         modifier = Modifier.padding(top = 32.dp),
         color = MaterialTheme.colorScheme.onSurface,
         style = MaterialTheme.typography.bodyLarge,
@@ -146,6 +160,53 @@ private fun Result(text: String) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun Info() {
+    val infoDialogState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+
+    InfoIcon {
+        scope.launch {
+            if (infoDialogState.isVisible) {
+                infoDialogState.hide()
+            } else {
+                infoDialogState.show()
+            }
+        }
+    }
+    if (infoDialogState.isVisible) {
+        ModalBottomSheet(
+            onDismissRequest = {},
+            sheetState = infoDialogState
+        ) {
+            Text(
+                text = stringResource(id = R.string.info_description),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp)
+                    .verticalScroll(rememberScrollState())
+            )
+        }
+    }
+}
+
+@Composable
+private fun InfoIcon(onClick: () -> Unit) {
+    Box(Modifier.fillMaxWidth()) {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .statusBarsPadding()
+                .padding(16.dp)
+                .clickable(onClick = onClick),
+            tint = MaterialTheme.colorScheme.onSurface
+        )
+    }
 }
 
 @SuppressLint("UnrememberedMutableState")

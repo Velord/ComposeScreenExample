@@ -21,7 +21,7 @@ class FlowSummator(
     private val onEmit: suspend (EmitNumber) -> Unit,
     private val getLastCachedValue: suspend () -> BigInteger
 ) {
-    // Необходимо создать массив Flow<Int>, количества N
+    // It is necessary to create an array of Flow<Int> of N.
     private val flows = mutableListOf<Flow<Int>>()
 
     fun start(scope: CoroutineScope): Job = scope.launch {
@@ -37,7 +37,7 @@ class FlowSummator(
                 flows.addAll(createFlowsByRange(it))
             }
         }.awaitAll()
-        // Результирующий Flow должен суммировать значения всех N Flow.
+        // The summing Flow must return a value after updating each of the N Flows
         launchAllFlow(flows.toTypedArray(), onEmit)
     }
 
@@ -66,10 +66,10 @@ class FlowSummator(
             yield()
             val shift = indexRange.first + index
             flows += flow {
-                // после задержки в (index + 1) * 100
+                // After a delay of (index + 1) * 100
                 val waitFor = (shift + 1) * 100L
                 delay(waitFor)
-                // эмитит значение index + 1
+                // Emits the value index + 1
                 emit(shift + 1)
             }
         }
