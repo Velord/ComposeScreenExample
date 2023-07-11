@@ -44,7 +44,7 @@ dependencies {
     implementation(project(":model"))
     // Templates
     implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.all)
+    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.coil)
     // Compose
     implementation(libs.bundles.compose.core)

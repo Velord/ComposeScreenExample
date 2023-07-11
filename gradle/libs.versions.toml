@@ -1,7 +1,7 @@
 [versions]
 # API
 minApi = "29"
-targetApi = "33"
+targetApi = "34"
 # Build
 buildTools = "30.0.3"
 gradle = "8.0.2"
@@ -11,7 +11,7 @@ dagger = "2.46.1"
 hilt = "2.46.1"
 hiltNavigation = "1.0.0"
 # Kotlin
-kotlin = "1.8.21"
+kotlin = "1.8.22"
 coroutine = "1.7.1"
 # Kotlin Serialization
 kotlinJsonSerialization = "1.5.0"
@@ -19,27 +19,50 @@ kotlinJsonSerializationRetrofitConverter = "1.0.0"
 # Google
 googleGuava = "32.0.0-android"
 # AndroidX
+## A
 androidxActivity = "1.7.2"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.6.0"
 androidxAppCompat = "1.6.1"
+androidxAppSearch = "1.1.0-alpha03"
+androidxArchCore = "2.2.0"
+androidxAsyncLayoutInflater = "1.0.0"
+androidxAutoFill = "1.1.0"
+## B
+androidxBenchmark = "1.1.1"
+androidxBiometric = "1.1.0"
+androidxBrowser = "1.5.0"
+## C
 androidxCamera = "1.2.3"
+androidxCarApp = "1.2.0"
+androidXCardView = "1.0.0"
 androidxCollection = "1.2.0"
+androidxConcurrent = "1.1.0"
+# AndroidX Constraint
+androidxConstraint = "2.1.4"
+androidxConstraintCompose = "1.1.0-alpha10"
+## C
+androidxContentPager = "1.0.0"
+androidXCoordinatorLayout = "1.2.0"
 androidxCore = "1.10.1"
+androidxCoreUWB = "1.0.0-alpha05"
+androidxCredentials = "1.2.0-alpha05"
+androidxCursorAdapter = "1.0.0"
+# AndroidX CustomView
+androidxCustomView = "1.1.0"
+androidxCustomViewPollingContainer = "1.0.0"
+## D
 androidxDatastore = "1.0.0"
 androidxExifInterface = "1.3.6"
 androidxFragment = "1.6.0"
 androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.6.1"
-androidxMedia3 = "1.0.2"
+androidxMedia3 = "1.1.0"
 androidxNavigation = "2.6.0"
 androidxPreference = "1.2.0"
 # AndroidX Paging
 androidxPaging = "3.1.1"
-androidxPagingCompose = "3.2.0-beta01"
-# AndroidX Constraint
-androidxConstraint = "2.1.4"
-androidxConstraintCompose = "1.1.0-alpha10"
+androidxPagingCompose = "3.2.0-rc01"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.9.1"
@@ -47,9 +70,9 @@ squareOkhttp3Interceptor = "4.9.1"
 composeDefault = "1.4.3" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeActivity = "1.7.2"
 composeAccompanist = "0.31.3-beta"
-composeCompiler = "1.4.7"
+composeCompiler = "1.4.8"
 composeLifecycle = "2.6.1"
-composeMaterial3 = "1.1.0"
+composeMaterial3 = "1.1.1"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
 # Image loader
@@ -63,22 +86,52 @@ velordMultipleBackstack = "0.3.0"
 [libraries]
 # AndroidX -----------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
-androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
-androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
 androidx-ads-identifier = { module = "androidx.ads:ads-identifier", version.ref = "androidxAds" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
+androidx-appsearch = { module = "androidx.appsearch:appsearch", version.ref = "androidxAppSearch" }
+androidx-asynclayoutinflater = { module = "androidx.asynclayoutinflater:asynclayoutinflater", version.ref = "androidxAsyncLayoutInflater" }
+androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidxAutoFill" }
+androidx-benchmark = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidxBenchmark" }
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "androidxBiometric" }
+androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
+androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "androidXCardView" }
+androidx-contentpager = { module = "androidx.contentpager:contentpager", version.ref = "androidxContentPager" }
+androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "androidXCoordinatorLayout" }
+androidx-core-uwb = { module = "androidx.core.uwb:uwb", version.ref = "androidxCoreUWB" }
+androidx-cursoradapter = { module = "androidx.cursoradapter:cursoradapter", version.ref = "androidxCursorAdapter" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
+androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
 # AndroidX Activity
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
+# AndroidX Arch
+androidx-arch-common = { module = "androidx.arch.core:core-common", version.ref = "androidxArchCore" }
+androidx-arch-runtime = { module = "androidx.arch.core:core-runtime", version.ref = "androidxArchCore" }
+androidx-arch-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidxArchCore" }
+# AndroidX Camera
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidxCamera" }
+androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "androidxCamera" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidxCamera" }
+androidx-camera-extension = { module = "androidx.camera:camera-extensions", version.ref = "androidxCamera" }
+# AndroidX Car App
+androidx-carapp-automotive = { module = "androidx.car.app:app-automotive", version.ref = "androidxCarApp" }
+androidx-carapp-testing = { module = "androidx.car.app:app-testing", version.ref = "androidxCarApp" }
 # AndroidX Constraint
 androidx-constraint = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraint" }
 androidx-constraint-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "androidxConstraintCompose" }
+# AndroidX Credentials
+androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "androidxCredentials" }
+androidx-credentials-below13 = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidxCredentials" }
+# AndroidX CustomView
+androidx-customview = { module = "androidx.customview:customview", version.ref = "androidxCustomView" }
+androidx-customview-pollingcontainer = { module = "androidx.customview:customview-poolingcontainer", version.ref = "androidxCustomViewPollingContainer" }
 # AndroidX KTX
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragment" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
 androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreference" }
 androidx-collection = { module = "androidx.collection:collection-ktx", version.ref = "androidxCollection" }
+androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
 # AndroidX Paging
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
@@ -97,11 +150,6 @@ androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragme
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-dynamicfeature = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "androidxNavigation" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
-# AndroidX Camera
-androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidxCamera" }
-androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "androidxCamera" }
-androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidxCamera" }
-androidx-camera-extension = { module = "androidx.camera:camera-extensions", version.ref = "androidxCamera" }
 # AndroidX Media3
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
 # Kotlin --------------------------------------------------------------------------------------------
@@ -170,18 +218,37 @@ velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplie
 [bundles]
 # AndroidX
 androidx-other = [
-    "androidx-appcompat", "androidx-exifinterface",
-    "androidx-datastore-preferences", "androidx-ads-identifier",
-    "androidx-annotation"
+    "androidx-ads-identifier", "androidx-annotation",
+    "androidx-appcompat", "androidx-appsearch",
+    "androidx-asynclayoutinflater", "androidx-autofill",
+    "androidx-benchmark", "androidx-biometric", "androidx-browser",
+    "androidx-cardview", "androidx-contentpager",
+    "androidx-coordinatorlayout", "androidx-core-uwb",
+    "androidx-cursoradapter",
+    "androidx-datastore-preferences", "androidx-exifinterface",
 ]
 # AndroidX Activity
 androidx-activity = ["androidx-activity-ktx", "androidx-activity-compose"]
+# AndroidX Arch Core
+androidx-arch = ["androidx-arch-common", "androidx-arch-runtime", "androidx-arch-testing"]
+# AndroidX Camera
+androidx-camera = [
+    "androidx-camera-lifecycle", "androidx-camera-video",
+    "androidx-camera-view", "androidx-camera-extension",
+]
+# AndroidX Car App
+androidx-carapp = ["androidx-carapp-automotive" ,"androidx-carapp-testing"]
 # AndroidX Constraint
 androidx-constraint = ["androidx-constraint", "androidx-constraint-compose"]
+# AndroidX Credentials
+androidx-credentials = ["androidx-credentials", "androidx-credentials-below13"]
+# AndroidX CustomView
+androidx-customview = ["androidx-customview", "androidx-customview-pollingcontainer"]
 # AndroidX KTX
 androidx-ktx = [
     "androidx-fragment", "androidx-core",
-    "androidx-preference", "androidx-collection"
+    "androidx-preference", "androidx-collection",
+    "androidx-concurrent"
 ]
 # AndroidX Paging
 androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
@@ -209,31 +276,62 @@ androidx-navigation = [
     "androidx-navigation-fragment", "androidx-navigation-ui",
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose"
 ]
-androidx-camera = [
-    "androidx-camera-lifecycle", "androidx-camera-video",
-    "androidx-camera-view", "androidx-camera-extension",
-]
 # AndroidX Media3
 androidx-media3 = ["androidx-media3-exoplayer"]
-# AndroidX All
-androidx-all = [
-    "androidx-appcompat", "androidx-exifinterface",
-    "androidx-datastore-preferences", "androidx-ads-identifier",
-    "androidx-annotation",
+# AndroidX Module
+androidx-module = [
     "androidx-activity-ktx", "androidx-activity-compose",
-    "androidx-constraint", "androidx-constraint-compose",
-    "androidx-fragment", "androidx-core",
-    "androidx-preference", "androidx-collection",
-    "androidx-paging-runtime", "androidx-paging-compose",
     "androidx-lifecycle-service", "androidx-lifecycle-process",
     "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose",
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-viewmodel-compose",
     "androidx-lifecycle-viewmodel-savedstate",
     "androidx-navigation-fragment", "androidx-navigation-ui",
-    "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
+    "androidx-navigation-dynamicfeature", "androidx-navigation-compose"
+]
+# AndroidX All
+androidx-all = [
+    # AndroidX Activity
+    "androidx-activity-ktx", "androidx-activity-compose",
+    # AndroidX Arch Core
+    "androidx-arch-common", "androidx-arch-runtime", "androidx-arch-testing",
+    # AndroidX Other
+    "androidx-ads-identifier", "androidx-annotation",
+    "androidx-appcompat", "androidx-appsearch",
+    "androidx-asynclayoutinflater", "androidx-autofill",
+    "androidx-benchmark", "androidx-biometric", "androidx-browser",
+    "androidx-cardview", "androidx-contentpager",
+    "androidx-coordinatorlayout",
+    # Manifest merger failed : uses-sdk:minSdkVersion 29 cannot be smaller than version 31 declared in library [androidx.core.uwb:uwb:1.0.0-alpha05]
+    #"androidx-core-uwb",
+    "androidx-cursoradapter",
+    "androidx-datastore-preferences", "androidx-exifinterface",
+    # AndroidX Camera
     "androidx-camera-lifecycle", "androidx-camera-video",
     "androidx-camera-view", "androidx-camera-extension",
+    # AndroidX Car App
+    "androidx-carapp-automotive" ,"androidx-carapp-testing",
+    # AndroidX Constraint
+    "androidx-constraint", "androidx-constraint-compose",
+    # AndroidX Credentials
+    "androidx-credentials", "androidx-credentials-below13",
+    # AndroidX CustomView
+    "androidx-customview", "androidx-customview-pollingcontainer",
+    # AdnroidX KTX
+    "androidx-fragment", "androidx-core",
+    "androidx-preference", "androidx-collection", "androidx-concurrent",
+    # AndroidX Paging
+    "androidx-paging-runtime", "androidx-paging-compose",
+    # AndroidX Lifecycle
+    "androidx-lifecycle-service", "androidx-lifecycle-process",
+    "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-viewmodel-savedstate",
+    # AndroidX Navigation
+    "androidx-navigation-fragment", "androidx-navigation-ui",
+    "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
+    # AndroidX Media3
     "androidx-media3-exoplayer"
 ]
 # Kotlin

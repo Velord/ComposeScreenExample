@@ -129,7 +129,8 @@ dependencies {
     implementation(project(":flowsummator"))
     // Templates
     implementation(libs.bundles.kotlin.all)
-    implementation(libs.bundles.androidx.all)
+    implementation(libs.bundles.androidx.module)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.bundles.network)
     implementation(libs.bundles.coil)
     // Compose
