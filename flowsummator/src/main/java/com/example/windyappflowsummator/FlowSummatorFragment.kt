@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -178,11 +179,10 @@ private fun Info() {
         }
     }
     if (infoDialogState.isVisible) {
-        // https://issuetracker.google.com/issues/272973615
-        // No way to draw scrim of ModalBottomSheet behind status bar
         ModalBottomSheet(
             onDismissRequest = {},
-            sheetState = infoDialogState
+            sheetState = infoDialogState,
+            windowInsets = WindowInsets(top = 0.dp),
         ) {
             Text(
                 text = stringResource(id = R.string.info_description),
