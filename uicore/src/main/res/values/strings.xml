@@ -15,4 +15,5 @@
     <string name="test">Test</string>
     <string name="open_shape_demo">Open Shape Demo</string>
     <string name="open_modifier_demo">Open Modifier Demo</string>
+    <string name="open_flow_summator">Open Flow Summator</string>
 </resources>
