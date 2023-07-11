@@ -178,6 +178,8 @@ private fun Info() {
         }
     }
     if (infoDialogState.isVisible) {
+        // https://issuetracker.google.com/issues/272973615
+        // No way to draw scrim of ModalBottomSheet behind status bar
         ModalBottomSheet(
             onDismissRequest = {},
             sheetState = infoDialogState
