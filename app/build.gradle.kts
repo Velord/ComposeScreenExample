@@ -126,7 +126,7 @@ dependencies {
     implementation(project(":bottomnavigation"))
     implementation(project(":shapedemo"))
     implementation(project(":modifierdemo"))
-    implementation(project(":windyappflowsummator"))
+    implementation(project(":flowsummator"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.all)

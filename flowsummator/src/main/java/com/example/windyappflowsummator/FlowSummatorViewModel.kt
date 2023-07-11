@@ -89,12 +89,12 @@ class FlowSummatorViewModel : BaseViewModel() {
     }
 
     companion object {
-        // Суммирующий Flow должен возвращать значение после обновления каждого из N Flow.
+        // The resulting Flow must sum the values of all N Flows
         fun MutableSharedFlow<EmitNumber>.mapToCumulativeStringEachNumberByLine(): Flow<String> {
             var cumulativeStr = StringBuilder("")
             return map {
                 if (it == EmitNumber.DEFAULT) cumulativeStr = StringBuilder("")
-                // Каждое обновление должно находиться на новой строчке.
+                // Every new update should be on the new line
                 else cumulativeStr.append("\n" + it.sum)
 
                 cumulativeStr.toString()

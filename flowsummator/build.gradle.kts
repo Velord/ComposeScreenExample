@@ -46,7 +46,7 @@ dependencies {
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material.all)
+    implementation(libs.bundles.compose.material.third)
     implementation(libs.bundles.compose.ui)
     implementation(libs.bundles.compose.accompanist.core)
 }

@@ -11,7 +11,7 @@ include(":camerarecording")
 include(":bottomnavigation")
 include(":shapedemo")
 include(":modifierdemo")
-include(":windyappflowsummator")
+include(":flowsummator")
 
 
 
