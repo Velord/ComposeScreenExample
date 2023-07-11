@@ -18,4 +18,8 @@ class DemoViewModel : BaseViewModel() {
     fun onOpenModifier() = launch {
         navigationEvent.emit(NavigationData(R.id.from_demoFragment_to_modifierDemoFragment))
     }
+
+    fun onOpenSummator() = launch {
+        navigationEvent.emit(NavigationData(R.id.from_demoFragment_to_flowSummatorFragment))
+    }
 }

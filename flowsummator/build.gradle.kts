@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.uicore"
+    namespace = "com.example.windyappflowsummator"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -29,10 +29,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     kotlinOptions {
         jvmTarget = libs.versions.jvmTarget.get()
     }
@@ -41,21 +37,18 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":model"))
+    implementation(project(":uicore"))
     // Templates
-    implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.coil)
+    implementation(libs.bundles.kotlin.module)
+    implementation(libs.bundles.androidx.activity)
+    implementation(libs.bundles.androidx.lifecycle.runtime)
+    implementation(libs.bundles.androidx.ktx)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material.all)
-    implementation(libs.bundles.compose.accompanist.all)
+    implementation(libs.bundles.compose.material.third)
     implementation(libs.bundles.compose.ui)
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+    implementation(libs.bundles.compose.accompanist.core)
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo

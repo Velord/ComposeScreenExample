@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/shapedemo" />
             <option value="$PROJECT_DIR$/uicore" />
             <option value="$PROJECT_DIR$/util" />
+            <option value="$PROJECT_DIR$/windyappflowsummator" />
           </set>
         </option>
       </GradleProjectSettings>

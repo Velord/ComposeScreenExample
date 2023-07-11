@@ -60,7 +60,8 @@ class DemoFragment : Fragment() {
 private fun DemoScreen(viewModel: DemoViewModel) {
     Content(
         onOpenShape = viewModel::onOpenShape,
-        onOpenModifier = viewModel::onOpenModifier
+        onOpenModifier = viewModel::onOpenModifier,
+        onOpenSummator = viewModel::onOpenSummator
     )
 }
 
@@ -68,6 +69,7 @@ private fun DemoScreen(viewModel: DemoViewModel) {
 private fun Content(
     onOpenShape: () -> Unit,
     onOpenModifier: () -> Unit,
+    onOpenSummator: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -78,6 +80,7 @@ private fun Content(
     ) {
         OpenButton(text = stringResource(id = R.string.open_shape_demo), onClick = onOpenShape)
         OpenButton(text = stringResource(id = R.string.open_modifier_demo), onClick = onOpenModifier)
+        OpenButton(text = stringResource(id = R.string.open_flow_summator), onClick = onOpenSummator)
     }
 }
 
@@ -108,6 +111,7 @@ private fun OpenButton(
 private fun DemoPreview() {
     Content(
         onOpenShape = {},
-        onOpenModifier = {}
+        onOpenModifier = {},
+        onOpenSummator = {}
     )
 }
