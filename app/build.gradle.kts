@@ -127,6 +127,7 @@ dependencies {
     implementation(project(":shapedemo"))
     implementation(project(":modifierdemo"))
     implementation(project(":flowsummator"))
+    implementation(project(":settings"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)

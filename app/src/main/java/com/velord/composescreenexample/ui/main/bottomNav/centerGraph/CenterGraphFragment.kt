@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.main.bottomNav.addGraph
+package com.velord.composescreenexample.ui.main.bottomNav.centerGraph
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddGraphFragment : Fragment() {
+class CenterGraphFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
