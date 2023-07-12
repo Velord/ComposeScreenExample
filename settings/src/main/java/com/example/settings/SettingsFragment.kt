@@ -67,13 +67,11 @@ private fun Content(
         val themeSwitcher = LocalThemeSwitcher.current
         ThemeSwitcher(
             title = stringResource(id = R.string.use_system_dynamic_theme),
-            isEnabled = true,
             isChecked = themeSwitcher.useDynamicColor,
             onChange = onChangeSystemTheme
         )
         ThemeSwitcher(
             title = stringResource(id = R.string.use_dark_theme),
-            isEnabled = themeSwitcher.useDynamicColor.not(),
             isChecked = themeSwitcher.useDarkTheme,
             onChange = onChangeDarkTheme
         )
@@ -83,7 +81,6 @@ private fun Content(
 @Composable
 private fun ThemeSwitcher(
     title: String,
-    isEnabled: Boolean,
     isChecked: Boolean,
     onChange: () -> Unit
 ) {
@@ -95,7 +92,7 @@ private fun ThemeSwitcher(
         checked = isChecked,
         onCheckedChange = { onChange() },
         modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-        enabled = isEnabled
+        enabled = true
     )
 }
 

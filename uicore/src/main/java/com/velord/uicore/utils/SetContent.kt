@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.ComposeView
@@ -38,15 +37,11 @@ fun ComposeView.setContentWithTheme(
     setContent {
         val activity = LocalContext.current.getActivity()
         val themeViewModel = viewModel<ThemeViewModel>(activity as ViewModelStoreOwner)
-        val themeSwitcherState: State<ThemeSwitcher> = themeViewModel.themeSwitcherFlow
+        val themeSwitcherState: State<ThemeSwitcher?> = themeViewModel.themeSwitcherFlow
             .collectAsStateWithLifecycle()
 
-        val switcher = ThemeSwitcher.considerSystem()
-        LaunchedEffect(Unit) {
-            themeViewModel.changeTheme(switcher)
-        }
-
-        CompositionLocalProvider(LocalThemeSwitcher provides themeSwitcherState.value) {
+        val themeSwitcher = themeSwitcherState.value ?: ThemeSwitcher.considerSystem()
+        CompositionLocalProvider(LocalThemeSwitcher provides themeSwitcher) {
             val localThemeSwitcher = LocalThemeSwitcher.current
             MainTheme(
                 useDarkTheme = localThemeSwitcher.useDarkTheme,
