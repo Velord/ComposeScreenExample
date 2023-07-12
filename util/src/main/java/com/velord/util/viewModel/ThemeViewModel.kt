@@ -17,14 +17,13 @@ data class ThemeSwitcher(
 
 class ThemeViewModel : BaseViewModel() {
 
-    val themeSwitcherFlow = MutableStateFlow(ThemeSwitcher.DEFAULT)
+    val themeSwitcherFlow = MutableStateFlow<ThemeSwitcher?>(null)
 
     fun changeSystemTheme(currentSwitcher: ThemeSwitcher) {
         launch {
-            val newDynamicState = currentSwitcher.useDynamicColor.not()
             val newSwitcher = ThemeSwitcher(
-                useDarkTheme = if (newDynamicState) false else currentSwitcher.useDarkTheme,
-                useDynamicColor = newDynamicState
+                useDarkTheme = currentSwitcher.useDarkTheme,
+                useDynamicColor = currentSwitcher.useDynamicColor.not()
             )
             themeSwitcherFlow.emit(newSwitcher)
         }
@@ -38,9 +37,5 @@ class ThemeViewModel : BaseViewModel() {
             )
             themeSwitcherFlow.emit(newSwitcher)
         }
-    }
-
-    fun changeTheme(newThemeSwitcher: ThemeSwitcher) = launch {
-        themeSwitcherFlow.emit(newThemeSwitcher)
     }
 }
