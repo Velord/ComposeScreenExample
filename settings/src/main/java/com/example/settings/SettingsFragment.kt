@@ -1,5 +1,6 @@
 package com.example.settings
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
@@ -18,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,17 +67,28 @@ private fun Content(
     ) {
         Title(stringResource(id = R.string.settings))
 
-        val themeSwitcher = LocalThemeSwitcher.current
-        ThemeSwitcher(
-            title = stringResource(id = R.string.use_system_dynamic_theme),
-            isChecked = themeSwitcher.useDynamicColor,
-            onChange = onChangeSystemTheme
-        )
-        ThemeSwitcher(
-            title = stringResource(id = R.string.use_dark_theme),
-            isChecked = themeSwitcher.useDarkTheme,
-            onChange = onChangeDarkTheme
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+                .padding(horizontal = 8.dp)
+                .clip(MaterialTheme.shapes.medium)
+                .background(MaterialTheme.colorScheme.primaryContainer)
+        ) {
+            val themeSwitcher = LocalThemeSwitcher.current
+            val apiBiggerThanS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+            ThemeSwitcher(
+                title = stringResource(id = R.string.use_system_dynamic_theme),
+                isChecked = themeSwitcher.useDynamicColor,
+                isEnabled = apiBiggerThanS,
+                onChange = onChangeSystemTheme
+            )
+            ThemeSwitcher(
+                title = stringResource(id = R.string.use_dark_theme),
+                isChecked = themeSwitcher.useDarkTheme,
+                onChange = onChangeDarkTheme
+            )
+        }
     }
 }
 
@@ -82,18 +96,29 @@ private fun Content(
 private fun ThemeSwitcher(
     title: String,
     isChecked: Boolean,
+    modifier: Modifier = Modifier,
+    isEnabled: Boolean = true,
     onChange: () -> Unit
 ) {
-    Text(
-        text = title,
-        modifier = Modifier.padding(top = 8.dp, start = 16.dp)
-    )
-    Switch(
-        checked = isChecked,
-        onCheckedChange = { onChange() },
-        modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-        enabled = true
-    )
+    Column(modifier = modifier) {
+        Text(
+            text = title,
+            modifier = Modifier.padding(top = 8.dp, start = 16.dp)
+        )
+        if (isEnabled.not()) {
+            Text(
+                text = stringResource(id = R.string.not_available_on_android_11),
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+        Switch(
+            checked = isChecked,
+            onCheckedChange = { onChange() },
+            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+            enabled = isEnabled
+        )
+    }
 }
 
 @Composable
