@@ -18,13 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.settings.SettingsViewModel
 import com.velord.bottomnavigation.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.MultipleBackstack
@@ -41,7 +39,6 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
         childFragmentManager.fragments.first().findNavController()
     }
     private val viewModel by viewModels<BottomNavViewModel>()
-    private val settingsViewModel by activityViewModels<SettingsViewModel>()
     private var binding: FragmentBottomNavBinding? = null
 
     private val multipleBackStack by lazy {
@@ -80,7 +77,7 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
 
     context(FragmentBottomNavBinding)
     private fun initView() {
-        bottomNavBarView.setContentWithTheme(settingsViewModel.themeSwitcherFlow) {
+        bottomNavBarView.setContentWithTheme {
             BottomNavScreen(viewModel)
         }
     }

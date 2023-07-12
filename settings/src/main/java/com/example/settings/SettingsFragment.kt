@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.velord.uicore.utils.LocalThemeSwitcher
+import com.velord.uicore.utils.SettingsViewModel
 import com.velord.uicore.utils.ThemeSwitcher
 import com.velord.uicore.utils.setContentWithTheme
 
@@ -36,22 +37,18 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = setContentWithTheme(viewModel.themeSwitcherFlow) {
+    ): View = setContentWithTheme {
         SettingsScreen(viewModel)
     }
 }
 
 @Composable
 private fun SettingsScreen(viewModel: SettingsViewModel) {
-    Content(
-        onChangeThemeSwitcher = viewModel::changeTheme
-    )
+    Content(onChangeThemeSwitcher = viewModel::changeTheme)
 }
 
 @Composable
-private fun Content(
-    onChangeThemeSwitcher: (ThemeSwitcher) -> Unit = {}
-) {
+private fun Content(onChangeThemeSwitcher: (ThemeSwitcher) -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
