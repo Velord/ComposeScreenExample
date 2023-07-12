@@ -12,7 +12,7 @@ include(":bottomnavigation")
 include(":shapedemo")
 include(":modifierdemo")
 include(":flowsummator")
-
+include(":settings")
 
 
 rootProject.name = "ComposeScreenExample"
@@ -28,4 +28,3 @@ dependencyResolutionManagement {
         }
     }
 }
-
