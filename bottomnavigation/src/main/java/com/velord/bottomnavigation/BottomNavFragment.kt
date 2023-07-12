@@ -5,17 +5,26 @@ import android.view.View
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
+import androidx.compose.material3.LocalAbsoluteTonalElevation
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.settings.SettingsViewModel
 import com.velord.bottomnavigation.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.MultipleBackstack
@@ -32,6 +41,7 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
         childFragmentManager.fragments.first().findNavController()
     }
     private val viewModel by viewModels<BottomNavViewModel>()
+    private val settingsViewModel by activityViewModels<SettingsViewModel>()
     private var binding: FragmentBottomNavBinding? = null
 
     private val multipleBackStack by lazy {
@@ -70,7 +80,7 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
 
     context(FragmentBottomNavBinding)
     private fun initView() {
-        bottomNavBarView.setContentWithTheme {
+        bottomNavBarView.setContentWithTheme(settingsViewModel.themeSwitcherFlow) {
             BottomNavScreen(viewModel)
         }
     }
