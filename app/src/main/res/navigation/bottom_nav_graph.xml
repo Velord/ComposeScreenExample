@@ -5,7 +5,7 @@
     app:startDestination="@id/left_nav_graph">
 
     <include app:graph="@navigation/camera_nav_graph"/>
-    <include app:graph="@navigation/add_nav_graph"/>
+    <include app:graph="@navigation/center_nav_graph"/>
     <include app:graph="@navigation/settings_nav_graph"/>
 
 </navigation>

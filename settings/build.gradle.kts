@@ -1,11 +1,11 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
 }
 
 android {
-    namespace = "com.velord.bottomnavigation"
+    namespace = "com.example.settings"
+    compileSdk = 33
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -39,26 +39,15 @@ dependencies {
     // Modules
     implementation(project(":util"))
     implementation(project(":uicore"))
-    implementation(project(":settings"))
     // Templates
     implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.activity)
-    implementation(libs.bundles.androidx.lifecycle.runtime)
     implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.navigation)
-    implementation(libs.google.guava)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
     implementation(libs.bundles.compose.material.all)
     implementation(libs.bundles.compose.ui)
     implementation(libs.bundles.compose.accompanist.core)
-    // Third Party
-    implementation(libs.velord.multiplebackstack)
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo
