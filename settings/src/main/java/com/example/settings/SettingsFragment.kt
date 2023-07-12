@@ -25,13 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.velord.uicore.utils.LocalThemeSwitcher
-import com.velord.uicore.utils.SettingsViewModel
-import com.velord.uicore.utils.ThemeSwitcher
 import com.velord.uicore.utils.setContentWithTheme
+import com.velord.util.viewModel.ThemeViewModel
 
 class SettingsFragment : Fragment() {
 
-    private val viewModel by activityViewModels<SettingsViewModel>()
+    private val viewModel by activityViewModels<ThemeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,12 +42,19 @@ class SettingsFragment : Fragment() {
 }
 
 @Composable
-private fun SettingsScreen(viewModel: SettingsViewModel) {
-    Content(onChangeThemeSwitcher = viewModel::changeTheme)
+private fun SettingsScreen(viewModel: ThemeViewModel) {
+    val themeSwitcher = LocalThemeSwitcher.current
+    Content(
+        onChangeSystemTheme = { viewModel.changeSystemTheme(themeSwitcher) },
+        onChangeDarkTheme = { viewModel.changeDarkTheme(themeSwitcher) }
+    )
 }
 
 @Composable
-private fun Content(onChangeThemeSwitcher: (ThemeSwitcher) -> Unit = {}) {
+private fun Content(
+    onChangeSystemTheme: () -> Unit = {},
+    onChangeDarkTheme: () -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -57,31 +63,39 @@ private fun Content(onChangeThemeSwitcher: (ThemeSwitcher) -> Unit = {}) {
             .verticalScroll(rememberScrollState()),
     ) {
         Title(stringResource(id = R.string.settings))
-        ThemeSwitcher(onChangeThemeSwitcher)
+
+        val themeSwitcher = LocalThemeSwitcher.current
+        ThemeSwitcher(
+            title = stringResource(id = R.string.use_system_dynamic_theme),
+            isEnabled = true,
+            isChecked = themeSwitcher.useDynamicColor,
+            onChange = onChangeSystemTheme
+        )
+        ThemeSwitcher(
+            title = stringResource(id = R.string.use_dark_theme),
+            isEnabled = themeSwitcher.useDynamicColor.not(),
+            isChecked = themeSwitcher.useDarkTheme,
+            onChange = onChangeDarkTheme
+        )
     }
 }
 
 @Composable
 private fun ThemeSwitcher(
-    onChange: (ThemeSwitcher) -> Unit
+    title: String,
+    isEnabled: Boolean,
+    isChecked: Boolean,
+    onChange: () -> Unit
 ) {
-    val themeSwitcher = LocalThemeSwitcher.current
     Text(
-        text = "Use Dark theme",
+        text = title,
         modifier = Modifier.padding(top = 8.dp, start = 16.dp)
     )
     Switch(
-        checked = themeSwitcher.useDarkTheme,
-        onCheckedChange = {
-            onChange(
-                ThemeSwitcher(
-                    useDarkTheme = it,
-                    useDynamicColor = themeSwitcher.useDynamicColor
-                )
-            )
-        },
+        checked = isChecked,
+        onCheckedChange = { onChange() },
         modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-        enabled = themeSwitcher.useDynamicColor.not()
+        enabled = isEnabled
     )
 }
 
