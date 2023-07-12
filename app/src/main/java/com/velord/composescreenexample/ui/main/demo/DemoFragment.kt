@@ -95,13 +95,13 @@ private fun OpenButton(
             .padding(top = 32.dp)
             .clip(RoundedCornerShape(16.dp)),
         colors = ButtonDefaults.buttonColors(
-            contentColor = MaterialTheme.colorScheme.surfaceVariant,
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer
         )
     ) {
         Text(
             text = text,
-            modifier = Modifier,
-            style = MaterialTheme.typography.displaySmall.copy(fontSize = 22.sp,)
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            style = MaterialTheme.typography.displaySmall.copy(fontSize = 22.sp)
         )
     }
 }
