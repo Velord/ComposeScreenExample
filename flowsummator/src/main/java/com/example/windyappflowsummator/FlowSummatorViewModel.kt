@@ -15,23 +15,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.math.BigInteger
 
-data class EmitNumber(
-    val newValue: BigInteger,
-    val previousValue: BigInteger
-) {
-    val sum: BigInteger = newValue + previousValue
-
-    companion object {
-        val DEFAULT = EmitNumber(BigInteger.ZERO, BigInteger.ZERO)
-    }
-}
-
-private const val SPLIT_FLOW_CREATION_BY_CHUNK = 10000
-
 class FlowSummatorViewModel : BaseViewModel() {
 
     val currentEnteredNumberFlow: MutableStateFlow<Int?> = MutableStateFlow(null)
-    val sumFlow: MutableSharedFlow<EmitNumber> = MutableSharedFlow(
+    val sumFlow: MutableSharedFlow<BigInteger> = MutableSharedFlow(
         replay = 1,
         extraBufferCapacity = Int.MAX_VALUE,
         onBufferOverflow = BufferOverflow.SUSPEND
@@ -70,32 +57,35 @@ class FlowSummatorViewModel : BaseViewModel() {
     }
 
     private fun getPrevEmittedValue(): BigInteger =
-        sumFlow.replayCache.firstOrNull()?.sum ?: BigInteger.ZERO
+        sumFlow.replayCache.firstOrNull() ?: BigInteger.ZERO
 
     private fun observeLaunchSumFlow() = launch(Dispatchers.IO) {
         launchSumFlow
-            .onEach { sumFlow.emit(EmitNumber.DEFAULT) }
+            .onEach { sumFlow.emit(BigInteger.ZERO) }
             .collectLatest { flowCount ->
                 launchSumJob?.cancel()
-                sumFlow.emit(EmitNumber.DEFAULT)
-                launchSumJob = FlowSummator(
+                // During cancellation some items can be emitted, need to clear them
+                sumFlow.emit(BigInteger.ZERO)
+                launchSumJob = FlowCreator(
                     countOfFlowToCreate = flowCount,
-                    splitCreatingBy = SPLIT_FLOW_CREATION_BY_CHUNK,
                     paralellism = true,
-                    onEmit = { sumFlow.emit(it) },
-                    getLastCachedValue = ::getPrevEmittedValue
+                    onEmit = {
+                        // The summing Flow must return a value after updating each of the N Flows
+                        val newValue = getPrevEmittedValue() + it.toBigInteger()
+                        sumFlow.emit(newValue)
+                    },
                 ).start(this)
             }
     }
 
     companion object {
         // The resulting Flow must sum the values of all N Flows
-        fun MutableSharedFlow<EmitNumber>.mapToCumulativeStringEachNumberByLine(): Flow<String> {
+        fun MutableSharedFlow<BigInteger>.mapToCumulativeStringEachNumberByLine(): Flow<String> {
             var cumulativeStr = StringBuilder("")
             return map {
-                if (it == EmitNumber.DEFAULT) cumulativeStr = StringBuilder("")
+                if (it == BigInteger.ZERO) cumulativeStr = StringBuilder("")
                 // Every new update should be on the new line
-                else cumulativeStr.append("\n" + it.sum)
+                else cumulativeStr.append("\n" + it)
 
                 cumulativeStr.toString()
             }.buffer(Int.MAX_VALUE).flowOn(Dispatchers.IO)

@@ -10,16 +10,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
-import java.math.BigInteger
 
+private const val SPLIT_FLOW_CREATION_BY_CHUNK = 10000
 private const val WAIT_FOR_BEFORE_ADD_NEW_CHUNK_OF_FLOWS = 10L
+private const val DELAY_BEFORE_EMIT = 100L
 
-class FlowSummator(
+class FlowCreator(
     private val countOfFlowToCreate: Int,
-    private val splitCreatingBy: Int,
+    private val splitCreatingBy: Int = SPLIT_FLOW_CREATION_BY_CHUNK,
     private val paralellism: Boolean = true,
-    private val onEmit: suspend (EmitNumber) -> Unit,
-    private val getLastCachedValue: suspend () -> BigInteger
+    private val onEmit: suspend (Int) -> Unit,
 ) {
     // It is necessary to create an array of Flow<Int> of N.
     private val flows = mutableListOf<Flow<Int>>()
@@ -37,8 +37,7 @@ class FlowSummator(
                 flows.addAll(createFlowsByRange(it))
             }
         }.awaitAll()
-        // The summing Flow must return a value after updating each of the N Flows
-        launchAllFlow(flows.toTypedArray(), onEmit)
+        launchAllFlow(flows.toTypedArray())
     }
 
     private fun createRanges(): List<IntRange> {
@@ -67,7 +66,7 @@ class FlowSummator(
             val shift = indexRange.first + index
             flows += flow {
                 // After a delay of (index + 1) * 100
-                val waitFor = (shift + 1) * 100L
+                val waitFor = (shift + 1) * DELAY_BEFORE_EMIT
                 delay(waitFor)
                 // Emits the value index + 1
                 emit(shift + 1)
@@ -76,19 +75,12 @@ class FlowSummator(
         return flows
     }
 
-    private fun CoroutineScope.launchAllFlow(
-        flows: Array<Flow<Int>>,
-        onEmit: suspend (EmitNumber) -> Unit
-    ) {
+    private fun CoroutineScope.launchAllFlow(flows: Array<Flow<Int>>) {
         flows.forEach { flow ->
             launch {
                 flow.collect { newNumber ->
                     ensureActive()
-                    val number = EmitNumber(
-                        previousValue = getLastCachedValue(),
-                        newValue = newNumber.toBigInteger()
-                    )
-                    onEmit(number)
+                    onEmit(newNumber)
                 }
             }
         }
