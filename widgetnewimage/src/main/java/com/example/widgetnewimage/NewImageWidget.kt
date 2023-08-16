@@ -2,8 +2,6 @@ package com.example.widgetnewimage
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.GlanceId
@@ -26,27 +24,16 @@ internal val countPreferenceKey = intPreferencesKey("countNewImagePreferenceKey"
 
 class NewImageWidget : GlanceAppWidget(errorUiLayout = R.layout.new_image_widget_error_layout) {
 
-    companion object {
-        private val SMALL_SQUARE = DpSize(100.dp, 100.dp)
-        private val HORIZONTAL_RECTANGLE = DpSize(250.dp, 100.dp)
-        private val BIG_SQUARE = DpSize(250.dp, 250.dp)
-    }
-
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
-
-//    override val sizeMode: SizeMode = SizeMode.Responsive(
-//        setOf(SMALL_SQUARE, HORIZONTAL_RECTANGLE, BIG_SQUARE)
-//    )
 
     override val sizeMode: SizeMode = SizeMode.Exact
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
-        Log.d("NewImageWidget", "provideGlance: $id")
-        provideContent { NewImageWidgetScreen(id) }
-    }
+    override suspend fun provideGlance(context: Context, id: GlanceId) =
+        provideContent { NewImageWidgetScreen() }
 }
 
 internal class RefreshCallback : ActionCallback {
+
     override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,
