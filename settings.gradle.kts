@@ -13,6 +13,7 @@ include(":shapedemo")
 include(":modifierdemo")
 include(":flowsummator")
 include(":settings")
+include(":widgetnewimage")
 
 
 rootProject.name = "ComposeScreenExample"

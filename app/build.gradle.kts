@@ -128,6 +128,7 @@ dependencies {
     implementation(project(":modifierdemo"))
     implementation(project(":flowsummator"))
     implementation(project(":settings"))
+    implementation(project(":widgetnewimage"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
