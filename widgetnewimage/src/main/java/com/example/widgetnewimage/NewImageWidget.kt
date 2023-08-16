@@ -14,6 +14,7 @@ import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.state.updateAppWidgetState
+import androidx.glance.appwidget.updateAll
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
 
@@ -40,8 +41,8 @@ class NewImageWidget : GlanceAppWidget(errorUiLayout = R.layout.new_image_widget
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        Log.d("NewImageWidget", "provideGlance")
-        provideContent { NewImageWidgetScreen() }
+        Log.d("NewImageWidget", "provideGlance: $id")
+        provideContent { NewImageWidgetScreen(id) }
     }
 }
 
@@ -69,12 +70,13 @@ internal class UpdateCountCallback : ActionCallback {
         }
 
         updateAppWidgetState(context, glanceId) {
-            it.toMutablePreferences().apply {
+            it.apply {
                 this[countPreferenceKey] = newCount
             }
         }
 
-        NewImageWidget().update(context, glanceId)
+        Log.d("NewImageWidget", "UpdateCountCallback.onAction: $glanceId; newCount=$newCount")
+        NewImageWidget().updateAll(context)
     }
 }
 
