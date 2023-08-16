@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
 import androidx.glance.Button
+import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
 import androidx.glance.LocalSize
@@ -26,11 +27,11 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 
 @Composable
-internal fun NewImageWidgetScreen() {
-    Log.d("NewImageWidget", "Screen")
+internal fun NewImageWidgetScreen(glanceId: GlanceId) {
     val prefs = currentState<Preferences>()
     val count = prefs[countPreferenceKey] ?: 0
     val refresh = prefs[refreshPreferenceKey] ?: ""
+    Log.d("NewImageWidget", "Screen: id - $glanceId; C - $count; R - $refresh")
 
     Content(
         count = count,
