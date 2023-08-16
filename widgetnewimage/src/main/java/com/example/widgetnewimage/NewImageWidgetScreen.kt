@@ -1,111 +1,204 @@
 package com.example.widgetnewimage
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.Button
-import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.GlanceTheme
+import androidx.glance.Image
+import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
+import androidx.glance.LocalGlanceId
 import androidx.glance.LocalSize
 import androidx.glance.action.actionParametersOf
+import androidx.glance.appwidget.CircularProgressIndicator
+import androidx.glance.appwidget.ImageProvider
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.appWidgetBackground
+import androidx.glance.appwidget.cornerRadius
+import androidx.glance.appwidget.lazy.LazyColumn
+import androidx.glance.appwidget.lazy.LazyListScope
+import androidx.glance.background
 import androidx.glance.currentState
 import androidx.glance.layout.Alignment
-import androidx.glance.layout.Column
-import androidx.glance.layout.Spacer
+import androidx.glance.layout.ContentScale
+import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
+import androidx.glance.layout.width
+import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
 
-@Composable
-internal fun NewImageWidgetScreen(glanceId: GlanceId) {
-    val prefs = currentState<Preferences>()
-    val count = prefs[countPreferenceKey] ?: 0
-    val refresh = prefs[refreshPreferenceKey] ?: ""
-    Log.d("NewImageWidget", "Screen: id - $glanceId; C - $count; R - $refresh")
+private fun getImageKey(size: DpSize) = getImageKey(size.width.value, size.height.value)
 
-    Content(
-        count = count,
-        refresh = refresh,
-    )
+private fun getImageKey(width: Float, height: Float) = stringPreferencesKey(
+    "size-w:$width-h:$height",
+)
+
+private fun getImageProvider(path: String): ImageProvider {
+    if (path.startsWith("content://")) ImageProvider(path.toUri())
+
+    val bitmap = BitmapFactory.decodeFile(path)
+    return ImageProvider(bitmap)
 }
 
 @Composable
-internal fun Content(
-    count: Int,
-    refresh: String,
-) {
-    Log.d("NewImageWidget", "Content: $count, $refresh")
+internal fun NewImageWidgetScreen() {
+    val prefs = currentState<Preferences>()
+    val count = prefs[countPreferenceKey] ?: 0
 
-    Column(
+    val size = LocalSize.current
+    val imageKey = getImageKey(size)
+    val filePath = prefs[imageKey] ?: ""
+    Log.d("NewImageWidget", "Screen: id - $glanceId; C - $count; Path - $filePath")
+
+    GlanceTheme {
+        Content(
+            count = count,
+            filePath = filePath,
+        )
+    }
+}
+
+@Composable
+private fun Content(
+    count: Int,
+    filePath: String,
+) {
+    LazyColumn(
         modifier = GlanceModifier
             .fillMaxSize()
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
+            .cornerRadius(16.dp)
+            .appWidgetBackground()
+            .background(GlanceTheme.colors.background),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = "Responsive NewImageWidget",
-            style = TextStyle(
-                textDecoration = TextDecoration.Underline,
-                color = ColorProvider(Color.Cyan),
-                fontSize = 18.sp,
-            ),
-        )
+        item {
+            Text(
+                text = "Counter And Image Widget",
+                style = TextStyle(
+                    color = GlanceTheme.colors.onSurface,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+            )
+        }
+
+        Counter(count)
+        RefreshableImage(filePath)
+
+        item {
+            val size = LocalSize.current
+            Text(
+                text = "Current Widget Size:\n${size.width} x ${size.height}",
+                modifier = GlanceModifier.padding(16.dp),
+                style = TextStyle(
+                    textDecoration = TextDecoration.Underline,
+                    color = GlanceTheme.colors.onSecondaryContainer,
+                    fontSize = 14.sp,
+                ),
+            )
+        }
+    }
+}
+
+private fun LazyListScope.Counter(count: Int) {
+    item {
         Text(
             text = "Count: $count",
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 textDecoration = TextDecoration.Underline,
-                color = ColorProvider(Color.Red),
-                fontSize = 22.sp,
+                color = GlanceTheme.colors.onSurfaceVariant,
+                fontSize = 16.sp,
             ),
         )
+    }
 
-        Button(
-            text = "+",
+    item {
+        Row(
             modifier = GlanceModifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            onClick = actionRunCallback<UpdateCountCallback>(
-                parameters = actionParametersOf(
-                    countWidgetKey to count + 1
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Button(
+                text = "+",
+                modifier = GlanceModifier
+                    .width(100.dp)
+                    .background(GlanceTheme.colors.surfaceVariant)
+                    .padding(8.dp),
+                onClick = actionRunCallback<UpdateCountCallback>(
+                    parameters = actionParametersOf(
+                        countWidgetKey to count + 1
+                    )
                 )
             )
-        )
-        Spacer(modifier = GlanceModifier.padding(8.dp))
-        Button(
-            text = "-",
-            modifier = GlanceModifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            onClick = actionRunCallback<UpdateCountCallback>(
-                parameters = actionParametersOf(
-                    countWidgetKey to count - 1
+            Button(
+                text = "-",
+                modifier = GlanceModifier
+                    .width(100.dp)
+                    .background(GlanceTheme.colors.surfaceVariant)
+                    .padding(8.dp),
+                onClick = actionRunCallback<UpdateCountCallback>(
+                    parameters = actionParametersOf(
+                        countWidgetKey to count - 1
+                    )
                 )
             )
-        )
 
+        }
+    }
+}
+
+private fun LazyListScope.RefreshableImage(filePath: String) {
+    item {
         Button(
             text = LocalContext.current.getString(R.string.refresh),
             onClick = actionRunCallback<RefreshCallback>(
                 parameters = actionParametersOf(
                     refreshWidgetKey to "RefreshCallback"
                 )
-            )
+            ),
+            modifier = GlanceModifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .background(GlanceTheme.colors.secondaryContainer),
         )
+    }
 
-        val size = LocalSize.current
-        Text(text = "${size.width} x ${size.height}")
+    item {
+        if (filePath.isNotEmpty()) {
+            Image(
+                provider = getImageProvider(filePath),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = GlanceModifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .padding(8.dp)
+            )
+        } else {
+            CircularProgressIndicator()
+            val glanceId = LocalGlanceId.current
+            SideEffect {
+
+            }
+        }
     }
 }
 
@@ -114,6 +207,6 @@ internal fun Content(
 private fun ContentPreview() {
     Content(
         count = 0,
-        refresh = "",
+        filePath = "",
     )
 }
