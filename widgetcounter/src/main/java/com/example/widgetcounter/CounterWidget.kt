@@ -1,7 +1,6 @@
 package com.example.widgetcounter
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
@@ -34,8 +33,6 @@ internal class UpdateCountCallback : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        Log.d("CounterWidget", "UpdateCountCallback.onAction: $glanceId")
-
         val newCount = requireNotNull(parameters[countWidgetKey]) {
             "Missing countWidgetKey"
         }
@@ -46,7 +43,6 @@ internal class UpdateCountCallback : ActionCallback {
             }
         }
 
-        Log.d("CounterWidget", "UpdateCountCallback.onAction: $glanceId; newCount=$newCount")
         CounterWidget().update(context, glanceId)
     }
 }

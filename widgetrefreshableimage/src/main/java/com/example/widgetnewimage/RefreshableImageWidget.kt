@@ -12,7 +12,6 @@ import androidx.glance.ImageProvider
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.appwidget.ImageProvider
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.provideContent
@@ -57,6 +56,7 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
             stringPreferencesKey("uri - size(w:$width; h:$height)")
 
         /**
+         * https://github.com/android/platform-samples/blob/main/samples/user-interface/appwidgets/src/main/java/com/example/platform/ui/appwidgets/glance/image/ImageGlanceWidget.kt
          * Create an ImageProvider using an URI if it's a "content://" type, otherwise load
          * the bitmap from the cache file
          *
@@ -67,13 +67,22 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
          * More info:
          * https://developer.android.com/training/secure-file-sharing/share-file#GrantPermissions
          */
-        fun getImageProvider(path: String): ImageProvider {
-            Log.d("RefreshableImageWidget", "getImageProvider path: $path")
-            if (path.startsWith("content://"))
-                return ImageProvider(path.toUri())
+        fun getImageProvider(context: Context, path: String): ImageProvider {
+            /**
+             * https://stackoverflow.com/questions/74361073/how-to-load-images-from-the-internet-into-a-widget-with-jetpack-glance
+             * UriImageProvider doesn't work
+             * Always return ImageProvider with bitmap inside
+             */
+//            if (path.startsWith("content://"))
+//                return ImageProvider(path.toUri())
+//           Also doesn't work
+//            val bitmap = BitmapFactory.decodeFile(path)
+//            ImageProvider(bitmap)
 
-            val bitmap = BitmapFactory.decodeFile(path)
-            return ImageProvider(bitmap!!)
+            val bitmap = context.contentResolver.openInputStream(path.toUri()).use { data ->
+                BitmapFactory.decodeStream(data)
+            }
+            return ImageProvider(bitmap)
         }
     }
 }

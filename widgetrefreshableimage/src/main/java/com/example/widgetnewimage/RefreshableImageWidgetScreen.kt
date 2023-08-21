@@ -49,7 +49,7 @@ internal fun NewImageWidgetScreen() {
 
     val sourceUrl = prefs[RefreshableImageWidget.sourceUrlKey] ?: ""
 
-    Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current}; Path - $filePath; Url - $sourceUrl")
+    Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl")
 
     GlanceTheme {
         Content(
@@ -137,7 +137,7 @@ private fun LazyListScope.RefreshableImage(filePath: String) {
     item {
         if (filePath.isNotEmpty()) {
             Image(
-                provider = RefreshableImageWidget.getImageProvider(filePath),
+                provider = RefreshableImageWidget.getImageProvider(LocalContext.current, filePath),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = GlanceModifier
