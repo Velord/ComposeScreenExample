@@ -1,25 +1,21 @@
 package com.example.widgetnewimage
 
-import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toUri
 import androidx.datastore.preferences.core.Preferences
 import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
-import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.LocalGlanceId
 import androidx.glance.LocalSize
 import androidx.glance.action.actionParametersOf
 import androidx.glance.appwidget.CircularProgressIndicator
-import androidx.glance.appwidget.ImageProvider
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.appWidgetBackground
 import androidx.glance.appwidget.cornerRadius
@@ -36,24 +32,6 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
-
-/**
- * Create an ImageProvider using an URI if it's a "content://" type, otherwise load
- * the bitmap from the cache file
- *
- * Note: When using bitmaps directly your might reach the memory limit for RemoteViews.
- * If you do reach the memory limit, you'll need to generate a URI granting permissions
- * to the launcher.
- *
- * More info:
- * https://developer.android.com/training/secure-file-sharing/share-file#GrantPermissions
- */
-private fun getImageProvider(path: String): ImageProvider {
-    if (path.startsWith("content://")) ImageProvider(path.toUri())
-
-    val bitmap = BitmapFactory.decodeFile(path)
-    return ImageProvider(bitmap)
-}
 
 @Composable
 private fun createParametersSize(): ParametersSize {
@@ -146,7 +124,7 @@ private fun LazyListScope.RefreshableImage(filePath: String) {
             text = LocalContext.current.getString(R.string.refresh),
             onClick = actionRunCallback<RefreshCallback>(
                 parameters = actionParametersOf(
-                    refreshImageWidgetKey to createParametersSize()
+                    RefreshableImageWidget.refreshableImageWidgetKey to createParametersSize()
                 )
             ),
             modifier = GlanceModifier
@@ -159,7 +137,7 @@ private fun LazyListScope.RefreshableImage(filePath: String) {
     item {
         if (filePath.isNotEmpty()) {
             Image(
-                provider = getImageProvider(filePath),
+                provider = RefreshableImageWidget.getImageProvider(filePath),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = GlanceModifier

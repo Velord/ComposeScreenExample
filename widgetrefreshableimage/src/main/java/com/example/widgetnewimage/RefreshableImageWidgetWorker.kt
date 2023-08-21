@@ -1,6 +1,7 @@
 package com.example.widgetnewimage
 
 import android.content.Context
+import android.util.Log
 import androidx.glance.GlanceId
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
@@ -34,7 +35,7 @@ class RefreshableImageWidgetWorker(
         private val uniqueWorkName =
             RefreshableImageWidgetWorker::class.simpleName ?: "RefreshableImageWidgetWorker"
 
-        fun enqueue(
+        internal fun enqueue(
             context: Context,
             glanceId: GlanceId,
             size: ParametersSize,
@@ -76,7 +77,7 @@ class RefreshableImageWidgetWorker(
             )
         }
 
-        fun cancel(context: Context, glanceId: GlanceId) {
+        internal fun cancel(context: Context, glanceId: GlanceId) {
             WorkManager.getInstance(context).cancelAllWorkByTag(glanceId.toString())
         }
     }
@@ -87,6 +88,7 @@ class RefreshableImageWidgetWorker(
             val height: Float = inputData.getFloat(HEIGHT_KEY, 0f)
             val force: Boolean = inputData.getBoolean(FORCE_KEY, false)
             val uri = getRandomImage(width, height, force)
+            Log.d("RefreshableImageWidget", "uri: $uri")
             updateRefreshableImageWidget(width, height, uri)
             Result.success()
         } catch (e: Exception) {
@@ -104,6 +106,7 @@ class RefreshableImageWidgetWorker(
         force: Boolean
     ) : String {
         val url = createUrl(width, height)
+        Log.d("RefreshableImageWidget", "url: $url")
         executeRequest(url, force)
         val path = context.getUriForFileThanGrantPermissionThanGetUriPath(url)
 
