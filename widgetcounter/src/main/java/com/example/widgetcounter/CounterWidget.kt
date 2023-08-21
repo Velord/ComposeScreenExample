@@ -1,4 +1,4 @@
-package com.example.widgetnewimage.counter
+package com.example.widgetcounter
 
 import android.content.Context
 import android.util.Log
@@ -13,12 +13,11 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import com.example.widgetnewimage.R
 
 internal val countWidgetKey = ActionParameters.Key<Int>("countWidgetKey")
 internal val countPreferenceKey = intPreferencesKey("countPreferenceKey")
 
-class CounterWidget : GlanceAppWidget(errorUiLayout = R.layout.new_image_widget_error_layout) {
+class CounterWidget : GlanceAppWidget(errorUiLayout = R.layout.counter_widget_error_layout) {
 
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
 

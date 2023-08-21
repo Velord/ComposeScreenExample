@@ -1,4 +1,4 @@
-package com.example.widgetnewimage.counter
+package com.example.widgetcounter
 
 import android.util.Log
 import androidx.compose.runtime.Composable

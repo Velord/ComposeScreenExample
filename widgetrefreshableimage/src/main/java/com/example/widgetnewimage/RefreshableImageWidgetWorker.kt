@@ -6,13 +6,13 @@ import androidx.glance.GlanceId
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 
-class ImageWidgetWorker(
+class RefreshableImageWidgetWorker(
     private val context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
     companion object {
-        private val uniqueWorkName = ImageWidgetWorker::class.simpleName
+        private val uniqueWorkName = RefreshableImageWidgetWorker::class.simpleName
 
         fun enqueu(context: Context, size: DpSize, glanceId: GlanceId, force: Boolean = false) {
 

@@ -33,7 +33,6 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.ContentScale
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
-import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
@@ -59,7 +58,7 @@ internal fun NewImageWidgetScreen() {
     val size = LocalSize.current
     val imageKey = getImageKey(size)
     val filePath = prefs[imageKey] ?: ""
-    Log.d("NewImageWidget", "Screen: id - ${LocalGlanceId.current}; Path - $filePath")
+    Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current}; Path - $filePath")
 
     GlanceTheme {
         Content(filePath)
@@ -87,12 +86,10 @@ private fun Content(filePath: String) {
             )
         }
 
-        RefreshableImage(filePath)
-
         item {
             val size = LocalSize.current
             Text(
-                text = "Current Widget Size:\n${size.width} x ${size.height}",
+                text = "Widget Size:\n${size.width} x ${size.height}",
                 modifier = GlanceModifier.padding(16.dp),
                 style = TextStyle(
                     textDecoration = TextDecoration.Underline,
@@ -101,6 +98,8 @@ private fun Content(filePath: String) {
                 ),
             )
         }
+
+        RefreshableImage(filePath)
     }
 }
 
@@ -127,8 +126,7 @@ private fun LazyListScope.RefreshableImage(filePath: String) {
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = GlanceModifier
-                    .fillMaxWidth()
-                    .height(150.dp)
+                    .fillMaxSize()
                     .padding(8.dp)
             )
         } else {
@@ -138,7 +136,7 @@ private fun LazyListScope.RefreshableImage(filePath: String) {
             val size = LocalSize.current
             val glanceId = LocalGlanceId.current
             SideEffect {
-                ImageWidgetWorker.enqueu(context, size, glanceId)
+                RefreshableImageWidgetWorker.enqueu(context, size, glanceId)
             }
         }
     }
@@ -147,7 +145,5 @@ private fun LazyListScope.RefreshableImage(filePath: String) {
 @Preview
 @Composable
 private fun ContentPreview() {
-    Content(
-        filePath = "",
-    )
+    Content(filePath = "")
 }
