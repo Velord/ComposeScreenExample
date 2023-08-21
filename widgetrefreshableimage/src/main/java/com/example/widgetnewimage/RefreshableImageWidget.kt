@@ -15,7 +15,7 @@ import androidx.glance.state.PreferencesGlanceStateDefinition
 
 internal val refreshImageWidgetKey = ActionParameters.Key<DpSize>("refreshImageWidgetKey")
 
-class NewImageWidget : GlanceAppWidget(errorUiLayout = R.layout.new_image_widget_error_layout) {
+class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout) {
 
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
 
@@ -32,15 +32,15 @@ internal class RefreshCallback : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        val newSize = requireNotNull(parameters[refreshImageWidgetKey]) {
+        val newSize: DpSize = requireNotNull(parameters[refreshImageWidgetKey]) {
             "Missing refreshWidgetKey"
         }
-        Log.d("NewImageWidget", "RefreshCallback.onAction: $glanceId; Size: $newSize")
+        Log.d("RefreshableImageWidget", "RefreshCallback.onAction: $glanceId; Size: $newSize")
 
-        ImageWidgetWorker.enqueu(context, newSize, glanceId, force = true)
+        RefreshableImageWidgetWorker.enqueu(context, newSize, glanceId, force = true)
     }
 }
 
-class NewImageWidgetReceiver : GlanceAppWidgetReceiver() {
-    override val glanceAppWidget: GlanceAppWidget = NewImageWidget()
+class RefreshableWidgetReceiver : GlanceAppWidgetReceiver() {
+    override val glanceAppWidget: GlanceAppWidget = RefreshableImageWidget()
 }

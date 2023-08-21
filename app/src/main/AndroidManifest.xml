@@ -39,7 +39,7 @@
         </activity>
 
         <receiver
-            android:name="com.example.widgetnewimage.NewImageWidgetReceiver"
+            android:name="com.example.widgetnewimage.RefreshableWidgetReceiver"
             android:enabled="true"
             android:exported="false">
 
@@ -49,12 +49,12 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/new_image_widget_meta" />
+                android:resource="@xml/refreshable_image_widget_meta" />
 
         </receiver>
 
         <receiver
-            android:name="com.example.widgetnewimage.counter.CounterWidgetReceiver"
+            android:name="com.example.widgetcounter.CounterWidgetReceiver"
             android:enabled="true"
             android:exported="false">
 
@@ -64,7 +64,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/new_image_widget_meta" />
+                android:resource="@xml/counter_widget_meta" />
 
         </receiver>
 

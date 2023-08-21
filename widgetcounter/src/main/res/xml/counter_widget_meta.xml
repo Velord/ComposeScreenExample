@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/app_name"
+    android:initialLayout="@layout/counter_widget_initial_layout"
+    android:minWidth="100dp"
+    android:minHeight="100dp"
+    android:previewImage="@drawable/counter_widget_preview"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    />
+<!--    android:configure="com.example.note_glance_widget.widget.config.ConfigWidgetActivity"-->
+<!--    android:previewLayout="@layout/widget_preview_layout"-->
+<!--    android:targetCellWidth="4"-->
+<!--    android:targetCellHeight="2"-->
