@@ -3,6 +3,8 @@ package com.example.widgetnewimage
 import android.content.Context
 import android.os.Parcelable
 import android.util.Log
+import androidx.compose.ui.unit.DpSize
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.GlanceAppWidget
@@ -12,6 +14,7 @@ import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.provideContent
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
+import androidx.work.CoroutineWorker
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -35,7 +38,19 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
 
     override suspend fun onDelete(context: Context, glanceId: GlanceId) {
         super.onDelete(context, glanceId)
-        //RefreshableImageWidgetWorker.cancel(context, glanceId)
+        RefreshableImageWidgetWorker.cancel(context, glanceId)
+    }
+
+    companion object {
+        val sourceUrlKey = stringPreferencesKey("image_source_url")
+
+        fun getImageUriKey(size: DpSize) = createPreferenceKey(size.width.value, size.height.value)
+
+        context(CoroutineWorker)
+        fun getImageUriKey(width: Float, height: Float) = createPreferenceKey(width, height)
+
+        private fun createPreferenceKey(width: Float, height: Float) =
+            stringPreferencesKey("uri - size(w:$width; h:$height)")
     }
 }
 
@@ -52,7 +67,7 @@ internal class RefreshCallback : ActionCallback {
         }
         Log.d("RefreshableImageWidget", "RefreshCallback.onAction: $glanceId; Size: $newSize")
 
-        RefreshableImageWidgetWorker.enqueu(context, glanceId, newSize, force = true)
+        RefreshableImageWidgetWorker.enqueue(context, glanceId, newSize, force = true)
     }
 }
 

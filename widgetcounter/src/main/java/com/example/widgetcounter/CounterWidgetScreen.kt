@@ -2,6 +2,7 @@ package com.example.widgetcounter
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
@@ -112,4 +113,10 @@ private fun LazyListScope.Counter(count: Int) {
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun ContentPreview() {
+    Content(count = 5)
 }

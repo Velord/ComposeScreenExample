@@ -5,12 +5,10 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -39,12 +37,17 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
 
-private fun getImageKey(size: DpSize) = getImageKey(size.width.value, size.height.value)
-
-private fun getImageKey(width: Float, height: Float) = stringPreferencesKey(
-    "size-w:$width-h:$height",
-)
-
+/**
+ * Create an ImageProvider using an URI if it's a "content://" type, otherwise load
+ * the bitmap from the cache file
+ *
+ * Note: When using bitmaps directly your might reach the memory limit for RemoteViews.
+ * If you do reach the memory limit, you'll need to generate a URI granting permissions
+ * to the launcher.
+ *
+ * More info:
+ * https://developer.android.com/training/secure-file-sharing/share-file#GrantPermissions
+ */
 private fun getImageProvider(path: String): ImageProvider {
     if (path.startsWith("content://")) ImageProvider(path.toUri())
 
@@ -53,20 +56,36 @@ private fun getImageProvider(path: String): ImageProvider {
 }
 
 @Composable
+private fun createParametersSize(): ParametersSize {
+    val size = LocalSize.current
+    return ParametersSize(size.width.value, size.height.value)
+}
+
+@Composable
 internal fun NewImageWidgetScreen() {
     val prefs = currentState<Preferences>()
+
     val size = LocalSize.current
-    val imageKey = getImageKey(size)
+    val imageKey = RefreshableImageWidget.getImageUriKey(size)
     val filePath = prefs[imageKey] ?: ""
-    Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current}; Path - $filePath")
+
+    val sourceUrl = prefs[RefreshableImageWidget.sourceUrlKey] ?: ""
+
+    Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current}; Path - $filePath; Url - $sourceUrl")
 
     GlanceTheme {
-        Content(filePath)
+        Content(
+            filePath = filePath,
+            url = sourceUrl
+        )
     }
 }
 
 @Composable
-private fun Content(filePath: String) {
+private fun Content(
+    filePath: String,
+    url: String
+) {
     LazyColumn(
         modifier = GlanceModifier
             .fillMaxSize()
@@ -75,33 +94,47 @@ private fun Content(filePath: String) {
             .background(GlanceTheme.colors.background),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        item {
-            Text(
-                text = "Image Widget",
-                modifier = GlanceModifier.padding(16.dp),
-                style = TextStyle(
-                    color = GlanceTheme.colors.onSurface,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                ),
-            )
-        }
-
-        CurrentSize()
+        Title()
+        CurrentSize(url)
         RefreshableImage(filePath)
     }
 }
 
-private fun LazyListScope.CurrentSize() {
+private fun LazyListScope.Title() {
+    item {
+        Text(
+            text = "Image Widget",
+            modifier = GlanceModifier.padding(16.dp),
+            style = TextStyle(
+                color = GlanceTheme.colors.onSurface,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            ),
+        )
+    }
+}
+
+private fun LazyListScope.CurrentSize(url: String) {
     item {
         val size = LocalSize.current
         Text(
             text = "Widget Size:\nW: ${size.width} x H: ${size.height}",
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
-                textDecoration = TextDecoration.Underline,
                 color = GlanceTheme.colors.onSecondaryContainer,
                 fontSize = 14.sp,
+            ),
+        )
+    }
+
+    item {
+        Text(
+            text = "Downloaded from:\n$url",
+            modifier = GlanceModifier.padding(8.dp),
+            style = TextStyle(
+                textDecoration = TextDecoration.Underline,
+                color = GlanceTheme.colors.onSecondaryContainer,
+                fontSize = 12.sp,
             ),
         )
     }
@@ -109,12 +142,11 @@ private fun LazyListScope.CurrentSize() {
 
 private fun LazyListScope.RefreshableImage(filePath: String) {
     item {
-        val size = LocalSize.current
         Button(
             text = LocalContext.current.getString(R.string.refresh),
             onClick = actionRunCallback<RefreshCallback>(
                 parameters = actionParametersOf(
-                    refreshImageWidgetKey to ParametersSize(size.width.value, size.height.value)
+                    refreshImageWidgetKey to createParametersSize()
                 )
             ),
             modifier = GlanceModifier
@@ -138,10 +170,10 @@ private fun LazyListScope.RefreshableImage(filePath: String) {
             CircularProgressIndicator()
 
             val context = LocalContext.current
-            val size = LocalSize.current
             val glanceId = LocalGlanceId.current
+            val size = createParametersSize()
             SideEffect {
-                RefreshableImageWidgetWorker.enqueu(context, size, glanceId)
+                RefreshableImageWidgetWorker.enqueue(context, glanceId, size)
             }
         }
     }
@@ -150,5 +182,8 @@ private fun LazyListScope.RefreshableImage(filePath: String) {
 @Preview
 @Composable
 private fun ContentPreview() {
-    Content(filePath = "")
+    Content(
+        filePath = "",
+        url = ""
+    )
 }
