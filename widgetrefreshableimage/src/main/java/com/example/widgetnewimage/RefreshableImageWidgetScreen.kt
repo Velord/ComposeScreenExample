@@ -78,6 +78,7 @@ private fun Content(filePath: String) {
         item {
             Text(
                 text = "Image Widget",
+                modifier = GlanceModifier.padding(16.dp),
                 style = TextStyle(
                     color = GlanceTheme.colors.onSurface,
                     fontSize = 18.sp,
@@ -86,30 +87,34 @@ private fun Content(filePath: String) {
             )
         }
 
-        item {
-            val size = LocalSize.current
-            Text(
-                text = "Widget Size:\n${size.width} x ${size.height}",
-                modifier = GlanceModifier.padding(16.dp),
-                style = TextStyle(
-                    textDecoration = TextDecoration.Underline,
-                    color = GlanceTheme.colors.onSecondaryContainer,
-                    fontSize = 14.sp,
-                ),
-            )
-        }
-
+        CurrentSize()
         RefreshableImage(filePath)
+    }
+}
+
+private fun LazyListScope.CurrentSize() {
+    item {
+        val size = LocalSize.current
+        Text(
+            text = "Widget Size:\nW: ${size.width} x H: ${size.height}",
+            modifier = GlanceModifier.padding(8.dp),
+            style = TextStyle(
+                textDecoration = TextDecoration.Underline,
+                color = GlanceTheme.colors.onSecondaryContainer,
+                fontSize = 14.sp,
+            ),
+        )
     }
 }
 
 private fun LazyListScope.RefreshableImage(filePath: String) {
     item {
+        val size = LocalSize.current
         Button(
             text = LocalContext.current.getString(R.string.refresh),
             onClick = actionRunCallback<RefreshCallback>(
                 parameters = actionParametersOf(
-                    refreshImageWidgetKey to LocalSize.current
+                    refreshImageWidgetKey to ParametersSize(size.width.value, size.height.value)
                 )
             ),
             modifier = GlanceModifier

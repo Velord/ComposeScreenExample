@@ -1,7 +1,6 @@
 package com.example.widgetnewimage
 
 import android.content.Context
-import androidx.compose.ui.unit.DpSize
 import androidx.glance.GlanceId
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -14,7 +13,7 @@ class RefreshableImageWidgetWorker(
     companion object {
         private val uniqueWorkName = RefreshableImageWidgetWorker::class.simpleName
 
-        fun enqueu(context: Context, size: DpSize, glanceId: GlanceId, force: Boolean = false) {
+        fun enqueu(context: Context, glanceId: GlanceId, size: ParametersSize, force: Boolean = false) {
 
         }
     }
