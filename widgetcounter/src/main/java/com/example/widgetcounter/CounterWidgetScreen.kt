@@ -1,6 +1,5 @@
 package com.example.widgetcounter
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -9,7 +8,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
-import androidx.glance.LocalGlanceId
 import androidx.glance.action.actionParametersOf
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.appWidgetBackground
@@ -33,8 +31,6 @@ import androidx.glance.text.TextStyle
 internal fun CounterWidgetScreen() {
     val prefs = currentState<Preferences>()
     val count = prefs[countPreferenceKey] ?: 0
-
-    Log.d("NewImageWidget", "Screen: id - ${LocalGlanceId.current}; C - $count")
 
     GlanceTheme {
         Content(count)
