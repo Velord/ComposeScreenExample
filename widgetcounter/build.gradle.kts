@@ -44,11 +44,7 @@ dependencies {
     implementation(libs.bundles.androidx.glance)
     implementation(libs.bundles.androidx.workmanager)
     // Compose
-    implementation(libs.bundles.compose.core)
-    implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material.all)
     implementation(libs.bundles.compose.ui)
-    implementation(libs.bundles.compose.accompanist.core)
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo
