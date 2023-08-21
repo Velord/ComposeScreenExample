@@ -70,6 +70,8 @@ androidxPaging = "3.1.1"
 androidxPagingCompose = "3.2.0-rc01"
 # P
 androidxPreference = "1.2.0"
+## W
+androidxWorkManager = "2.8.1"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.9.1"
@@ -161,6 +163,10 @@ androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", versi
 # AndroidX Paging
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
+# AndroidX WorkManager
+androidx-workmanager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxWorkManager" }
+androidx-workmanager-gcm = { module = "androidx.work:work-gcm", version.ref = "androidxWorkManager" }
+androidx-workmanager-multiprocess = { module = "androidx.work:work-multiprocess", version.ref = "androidxWorkManager" }
 # AndroidX KTX
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragment" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
@@ -293,6 +299,11 @@ androidx-navigation = [
 androidx-media3 = ["androidx-media3-exoplayer"]
 # AndroidX Paging
 androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
+# AndroidX WorkManager
+androidx-workmanager = [
+    "androidx-workmanager-runtime", "androidx-workmanager-gcm",
+    "androidx-workmanager-multiprocess"
+]
 # AndroidX KTX
 androidx-ktx = [
     "androidx-fragment", "androidx-core",
@@ -353,6 +364,9 @@ androidx-all = [
     "androidx-media3-exoplayer",
     # AndroidX Paging
     "androidx-paging-runtime", "androidx-paging-compose",
+    # AndroidX WorkManager
+    "androidx-workmanager-runtime", "androidx-workmanager-gcm",
+    "androidx-workmanager-multiprocess",
     # AdnroidX KTX
     "androidx-fragment", "androidx-core",
     "androidx-preference", "androidx-collection", "androidx-concurrent",
