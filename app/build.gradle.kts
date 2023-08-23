@@ -134,12 +134,14 @@ dependencies {
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.glance)
     implementation(libs.bundles.network)
     implementation(libs.bundles.coil)
     // Compose
     implementation(libs.bundles.compose.all)
     // DI
     implementation(libs.bundles.dagger.all)
+    implementation(libs.androidx.glance.appwidget)
     kapt(libs.bundles.dagger.kapt)
     kapt(libs.hilt.compiler)
     // Permission

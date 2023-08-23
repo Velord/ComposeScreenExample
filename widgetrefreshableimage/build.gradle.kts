@@ -47,7 +47,6 @@ dependencies {
     implementation(libs.bundles.coil)
     // Compose
     implementation(libs.bundles.compose.ui)
-    implementation(libs.bundles.compose.material.third)
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo

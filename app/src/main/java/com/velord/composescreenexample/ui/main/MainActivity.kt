@@ -8,10 +8,15 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
+import com.velord.util.viewModel.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val viewModel: MainViewModel by viewModels()
+    private val themeViewModel: ThemeViewModel by viewModels()
     private var binding: ActivityMainBinding? = null
 
     override fun onDestroy() {
@@ -44,6 +50,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         handleIntent(savedInstanceState)
+
+        initObserving()
     }
 
     private fun handleIntent(savedInstanceState: Bundle?) {
@@ -80,6 +88,16 @@ class MainActivity : AppCompatActivity() {
 
         if (destination != null) {
             controller.navigate(destination, bundle)
+        }
+    }
+
+    private fun initObserving() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                themeViewModel.themeSwitcherFlow.collect { themeSwitcher ->
+                    viewModel.updateTheme(themeSwitcher)
+                }
+            }
         }
     }
 }

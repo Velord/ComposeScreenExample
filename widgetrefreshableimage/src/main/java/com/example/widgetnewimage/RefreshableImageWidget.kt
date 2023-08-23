@@ -6,6 +6,7 @@ import android.os.Parcelable
 import android.util.Log
 import androidx.compose.ui.unit.DpSize
 import androidx.core.net.toUri
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.GlanceId
@@ -21,6 +22,7 @@ import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
+import com.velord.uicore.compose.glance.GlanceWidgetThemeSustainer
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -44,11 +46,13 @@ internal class ImageParameters(
     }
 }
 
-class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout) {
-
+class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout), GlanceWidgetThemeSustainer<RefreshableImageWidget> {
+    // GlanceAppWidget
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
-
     override val sizeMode: SizeMode = SizeMode.Exact
+    // GlanceWidgetThemeSustainer
+    override val name: Class<RefreshableImageWidget> = RefreshableImageWidget::class.java
+    override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = isDarkThemePreferenceKey
 
     override suspend fun provideGlance(context: Context, id: GlanceId) =
         provideContent { NewImageWidgetScreen() }
@@ -59,11 +63,12 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
     }
 
     companion object {
-
-        internal val sourceUrlPreferenceKey = stringPreferencesKey("image_source_url")
+        // Preferences keys
+        private val sourceUrlPreferenceKey = stringPreferencesKey("image_source_url")
         internal val seedPreferenceKey = stringPreferencesKey("image_seed")
         internal val isDownloadingNewImagePreferenceKey = booleanPreferencesKey("image_is_downloading")
-
+        internal val isDarkThemePreferenceKey = booleanPreferencesKey("is_dark_theme")
+        // ActionParameters keys
         internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameters>("refreshableImageWidgetKey")
 
         internal fun getImageUriKey(imageParameters: ImageParameters) = createPreferenceKey(imageParameters)
