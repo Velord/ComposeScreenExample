@@ -35,6 +35,6 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.velord.composescreenexample.ui.main.bottomNav.settingsGraph.SettingsGraphFragment"
-        android:label="CameraRecordingFragment" />
+        android:label="SettingsGraphFragment" />
 
 </navigation>
