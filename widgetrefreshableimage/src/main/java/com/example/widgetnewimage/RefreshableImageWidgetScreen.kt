@@ -1,7 +1,6 @@
 package com.example.widgetnewimage
 
 import android.util.Log
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +33,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
+import com.velord.uicore.compose.glance.GlanceColorProviders
 import kotlin.math.roundToInt
 
 // On emulator redundant compositions with wrong LocalSize.current ruin all flow
@@ -66,9 +65,15 @@ internal fun NewImageWidgetScreen() {
     val filePath = prefs.getImageFilePath(parameters)
     val sourceUrl = RefreshableImageWidgetWorker.createUrl(parameters)
     val isDownloading = prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] ?: false
+    val isDarkTheme = prefs[RefreshableImageWidget.isDarkThemePreferenceKey] ?: true
 
     Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl")
-    GlanceTheme {
+    val colors = if (isDarkTheme) {
+        GlanceColorProviders.dark()
+    } else {
+        GlanceColorProviders.light()
+    }
+    GlanceTheme(colors = colors) {
         Content(
             filePath = filePath,
             url = sourceUrl,
@@ -88,7 +93,7 @@ private fun Content(
             .fillMaxSize()
             .cornerRadius(16.dp)
             .appWidgetBackground()
-            .background(MaterialTheme.colorScheme.background),
+            .background(GlanceTheme.colors.background),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Title()
@@ -103,7 +108,7 @@ private fun Title() {
         text = "Image Widget",
         modifier = GlanceModifier.padding(top = 16.dp),
         style = TextStyle(
-            color = ColorProvider(MaterialTheme.colorScheme.onSurface),
+            color = GlanceTheme.colors.onBackground,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         ),
@@ -128,7 +133,7 @@ private fun CurrentSize(
             text = "Widget Size:\nW: ${size.width.value} x H: ${size.height.value}",
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
-                color = ColorProvider(MaterialTheme.colorScheme.onSecondaryContainer),
+                color = GlanceTheme.colors.onBackground,
                 fontSize = 12.sp,
             ),
         )
@@ -144,7 +149,7 @@ private fun CurrentSize(
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 textDecoration = TextDecoration.Underline,
-                color = ColorProvider(MaterialTheme.colorScheme.onSecondaryContainer),
+                color = GlanceTheme.colors.onBackground,
                 fontSize = 12.sp,
             ),
         )
@@ -160,7 +165,7 @@ private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
         modifier = GlanceModifier
             .height(48.dp)
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .background(GlanceTheme.colors.secondaryContainer)
             .cornerRadius(16.dp)
             .clickable(
                 actionRunCallback<RefreshCallback>(
@@ -175,7 +180,7 @@ private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
             text = LocalContext.current.getString(R.string.refresh),
             modifier = GlanceModifier.padding(horizontal = 8.dp),
             style = TextStyle(
-                color = ColorProvider(MaterialTheme.colorScheme.onSecondaryContainer),
+                color = GlanceTheme.colors.onSecondaryContainer,
                 fontSize = 14.sp,
             ),
         )
@@ -183,7 +188,7 @@ private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
         if (isDownloading) {
             CircularProgressIndicator(
                 modifier = GlanceModifier,
-                color = ColorProvider(MaterialTheme.colorScheme.onSecondaryContainer),
+                color = GlanceTheme.colors.onSecondaryContainer,
             )
         }
     }
@@ -204,7 +209,7 @@ private fun RefreshableImage(filePath: String) {
     } else {
         CircularProgressIndicator(
             modifier = GlanceModifier.padding(24.dp),
-            color = ColorProvider(MaterialTheme.colorScheme.onSurface),
+            color = GlanceTheme.colors.onSurface,
         )
 
         val context = LocalContext.current

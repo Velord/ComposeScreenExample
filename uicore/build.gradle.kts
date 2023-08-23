@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.bundles.compose.material.all)
     implementation(libs.bundles.compose.accompanist.all)
     implementation(libs.bundles.compose.ui)
+    implementation(libs.androidx.glance)
+    implementation(libs.androidx.glance.appwidget)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

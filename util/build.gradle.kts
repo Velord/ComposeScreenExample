@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.bundles.androidx.activity)
     implementation(libs.bundles.androidx.ktx)
     implementation(libs.bundles.androidx.navigation)
+    implementation(libs.androidx.glance.appwidget)
     implementation(libs.bundles.network)
 }
 
