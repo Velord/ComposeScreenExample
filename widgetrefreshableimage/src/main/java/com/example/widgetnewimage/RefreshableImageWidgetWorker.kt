@@ -32,6 +32,11 @@ class RefreshableImageWidgetWorker(
         private val uniqueWorkName =
             RefreshableImageWidgetWorker::class.simpleName ?: "RefreshableImageWidgetWorker"
 
+        internal fun createUrl(imageParameters: ImageParameters): String =
+            PICSUM_BASE_URL +
+                    "/seed/${imageParameters.seed}" +
+                    "/${imageParameters.getSimpleWidth()}/${imageParameters.getSimpleHeight()}"
+
         internal fun enqueue(
             context: Context,
             glanceId: GlanceId,
@@ -120,11 +125,6 @@ class RefreshableImageWidgetWorker(
             "Failed to load image from $url"
         }
     }
-
-    private fun createUrl(imageParameters: ImageParameters): String =
-        PICSUM_BASE_URL +
-                "/seed/${imageParameters.seed}" +
-                "/${imageParameters.getSimpleWidth()}/${imageParameters.getSimpleHeight()}"
 
     private suspend fun executeRequest(url: String, force: Boolean) {
         val request = ImageRequest.Builder(context)
