@@ -62,7 +62,7 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
 
         internal val sourceUrlPreferenceKey = stringPreferencesKey("image_source_url")
         internal val seedPreferenceKey = stringPreferencesKey("image_seed")
-        internal val isDownloadingPreferenceKey = booleanPreferencesKey("image_is_downloading")
+        internal val isDownloadingNewImagePreferenceKey = booleanPreferencesKey("image_is_downloading")
 
         internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameters>("refreshableImageWidgetKey")
 
@@ -86,7 +86,7 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
                     prefs[sourceUrlPreferenceKey] = url
                     prefs[getImageUriKey(parameters)] = uri
                     prefs[seedPreferenceKey] = parameters.seed
-                    prefs[isDownloadingPreferenceKey] = false
+                    prefs[isDownloadingNewImagePreferenceKey] = false
                 }
             }
             RefreshableImageWidget().updateAll(context)
@@ -134,7 +134,7 @@ internal class RefreshCallback : ActionCallback {
         val manager = GlanceAppWidgetManager(context)
         manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {
             updateAppWidgetState(context, it) { prefs ->
-                prefs[RefreshableImageWidget.isDownloadingPreferenceKey] = true
+                prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] = true
             }
         }
         RefreshableImageWidget().update(context, glanceId)

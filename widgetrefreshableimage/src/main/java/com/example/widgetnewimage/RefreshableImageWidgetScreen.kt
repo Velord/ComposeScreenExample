@@ -48,17 +48,19 @@ private fun createImageParameters(size: DpSize, generateNewSeed: Boolean): Image
     } else {
         currentState<Preferences>()[RefreshableImageWidget.seedPreferenceKey] ?: ImageParameters.DEFAULT_SEED
     }
-    Log.d("RefreshableImageWidget", "newSeed = $seed; force = $generateNewSeed")
     return ImageParameters(seed, size)
 }
 
 @Composable
-private fun Preferences.getImageFilePath(): String {
+private fun Preferences.createImageParameters(): ImageParameters {
     val size = LocalSize.current
     val seed = this[RefreshableImageWidget.seedPreferenceKey] ?: ImageParameters.DEFAULT_SEED
-    val parameters = ImageParameters(seed, size)
+    return ImageParameters(seed, size)
+}
+
+private fun Preferences.getImageFilePath(parameters: ImageParameters): String {
     val imageKey = RefreshableImageWidget.getImageUriKey(parameters)
-    Log.d("RefreshableImageWidget", "Screen: seed - ${seed}; UriKey - $imageKey")
+    Log.d("RefreshableImageWidget", "Screen: seed - ${parameters.seed}; UriKey - $imageKey")
     return this[imageKey] ?: ""
 }
 
@@ -67,15 +69,17 @@ internal fun NewImageWidgetScreen() {
     if (LocalSize.current.width.value.roundToInt() == ERROR_COMPOSITION_WIDTH) return
 
     val prefs = currentState<Preferences>()
-    val filePath = prefs.getImageFilePath()
-    val sourceUrl = prefs[RefreshableImageWidget.sourceUrlPreferenceKey] ?: ""
+    val parameters = prefs.createImageParameters()
+    val filePath = prefs.getImageFilePath(parameters)
+    val sourceUrl = RefreshableImageWidgetWorker.createUrl(parameters)
+    val isDownloading = prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] ?: false
 
     Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl")
-
     GlanceTheme {
         Content(
             filePath = filePath,
-            url = sourceUrl
+            url = sourceUrl,
+            isDownloadingNewImage = isDownloading
         )
     }
 }
@@ -83,7 +87,8 @@ internal fun NewImageWidgetScreen() {
 @Composable
 private fun Content(
     filePath: String,
-    url: String
+    url: String,
+    isDownloadingNewImage: Boolean = false,
 ) {
     Column(
         modifier = GlanceModifier
@@ -94,7 +99,7 @@ private fun Content(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Title()
-        CurrentSize(url)
+        CurrentSize(url, isDownloadingNewImage)
         RefreshableImage(filePath)
     }
 }
@@ -113,7 +118,10 @@ private fun Title() {
 }
 
 @Composable
-private fun CurrentSize(url: String) {
+private fun CurrentSize(
+    url: String,
+    isDownloadingNewImage: Boolean
+) {
     val size = LocalSize.current
 
     Row(
@@ -132,7 +140,7 @@ private fun CurrentSize(url: String) {
             ),
         )
 
-        Refresh(url)
+        Refresh(url, isDownloadingNewImage)
     }
     Row(
         modifier = GlanceModifier.fillMaxWidth(),
@@ -151,15 +159,9 @@ private fun CurrentSize(url: String) {
 }
 
 @Composable
-private fun Refresh(url: String) {
-    val prefs = currentState<Preferences>()
-    val isDownloadingState = if (url.isEmpty()) {
-        true
-    } else {
-        prefs[RefreshableImageWidget.isDownloadingPreferenceKey] ?: false
-    }
-    Log.d("RefreshableImageWidget", "isDownloading: id - $isDownloadingState")
-
+private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
+    val isDownloading = if (url.isEmpty()) true else isDownloadingNewImage
+    Log.d("RefreshableImageWidget", "isDownloading: id - $isDownloading")
     Row(
         modifier = GlanceModifier
             .height(48.dp)
@@ -187,7 +189,7 @@ private fun Refresh(url: String) {
             ),
         )
 
-        if (isDownloadingState) {
+        if (isDownloading) {
             CircularProgressIndicator(
                 modifier = GlanceModifier,
                 color = ColorProvider(MaterialTheme.colorScheme.onSecondaryContainer),
