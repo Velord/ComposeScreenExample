@@ -52,7 +52,7 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
     override val sizeMode: SizeMode = SizeMode.Exact
     // GlanceWidgetThemeSustainer
     override val name: Class<RefreshableImageWidget> = RefreshableImageWidget::class.java
-    override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = isDarkThemePreferenceKey
+    override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = RefreshableImageWidget.useDarkThemePreferenceKey
 
     override suspend fun provideGlance(context: Context, id: GlanceId) =
         provideContent { NewImageWidgetScreen() }
@@ -67,7 +67,7 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
         private val sourceUrlPreferenceKey = stringPreferencesKey("image_source_url")
         internal val seedPreferenceKey = stringPreferencesKey("image_seed")
         internal val isDownloadingNewImagePreferenceKey = booleanPreferencesKey("image_is_downloading")
-        internal val isDarkThemePreferenceKey = booleanPreferencesKey("is_dark_theme")
+        internal val useDarkThemePreferenceKey = booleanPreferencesKey("use_dark_theme")
         // ActionParameters keys
         internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameters>("refreshableImageWidgetKey")
 

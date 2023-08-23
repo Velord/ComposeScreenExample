@@ -7,4 +7,6 @@
     android:previewImage="@drawable/counter_widget_preview"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
+    android:targetCellWidth="3"
+    android:targetCellHeight="1"
     />
