@@ -5,7 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
@@ -42,19 +41,13 @@ import kotlin.math.roundToInt
 private const val ERROR_COMPOSITION_WIDTH = 675
 
 @Composable
-private fun createImageParameters(size: DpSize, generateNewSeed: Boolean): ImageParameters {
+private fun Preferences.createImageParameters(generateNewSeed: Boolean): ImageParameters {
+    val size = LocalSize.current
     val seed = if (generateNewSeed) {
         randomStringByKotlinRandom()
     } else {
-        currentState<Preferences>()[RefreshableImageWidget.seedPreferenceKey] ?: ImageParameters.DEFAULT_SEED
+        this[RefreshableImageWidget.seedPreferenceKey] ?: ImageParameters.DEFAULT_SEED
     }
-    return ImageParameters(seed, size)
-}
-
-@Composable
-private fun Preferences.createImageParameters(): ImageParameters {
-    val size = LocalSize.current
-    val seed = this[RefreshableImageWidget.seedPreferenceKey] ?: ImageParameters.DEFAULT_SEED
     return ImageParameters(seed, size)
 }
 
@@ -69,7 +62,7 @@ internal fun NewImageWidgetScreen() {
     if (LocalSize.current.width.value.roundToInt() == ERROR_COMPOSITION_WIDTH) return
 
     val prefs = currentState<Preferences>()
-    val parameters = prefs.createImageParameters()
+    val parameters = prefs.createImageParameters(false)
     val filePath = prefs.getImageFilePath(parameters)
     val sourceUrl = RefreshableImageWidgetWorker.createUrl(parameters)
     val isDownloading = prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] ?: false
@@ -79,7 +72,7 @@ internal fun NewImageWidgetScreen() {
         Content(
             filePath = filePath,
             url = sourceUrl,
-            isDownloadingNewImage = isDownloading
+            isDownloadingNewImage = isDownloading,
         )
     }
 }
@@ -88,7 +81,7 @@ internal fun NewImageWidgetScreen() {
 private fun Content(
     filePath: String,
     url: String,
-    isDownloadingNewImage: Boolean = false,
+    isDownloadingNewImage: Boolean
 ) {
     Column(
         modifier = GlanceModifier
@@ -162,6 +155,7 @@ private fun CurrentSize(
 private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
     val isDownloading = if (url.isEmpty()) true else isDownloadingNewImage
     Log.d("RefreshableImageWidget", "isDownloading: id - $isDownloading")
+    val prefs = currentState<Preferences>()
     Row(
         modifier = GlanceModifier
             .height(48.dp)
@@ -171,10 +165,7 @@ private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
             .clickable(
                 actionRunCallback<RefreshCallback>(
                 parameters = actionParametersOf(
-                    RefreshableImageWidget.refreshableImageWidgetKey to createImageParameters(
-                        LocalSize.current,
-                        true
-                    )
+                    RefreshableImageWidget.refreshableImageWidgetKey to prefs.createImageParameters(true)
                 )
             )),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -218,7 +209,7 @@ private fun RefreshableImage(filePath: String) {
 
         val context = LocalContext.current
         val glanceId = LocalGlanceId.current
-        val parameters = createImageParameters(LocalSize.current,false)
+        val parameters = currentState<Preferences>().createImageParameters(false)
         SideEffect {
             RefreshableImageWidgetWorker.enqueue(context, glanceId, parameters)
         }
@@ -230,6 +221,7 @@ private fun RefreshableImage(filePath: String) {
 private fun ContentPreview() {
     Content(
         filePath = "",
-        url = ""
+        url = "",
+        isDownloadingNewImage = false,
     )
 }
