@@ -56,7 +56,7 @@ import com.velord.uicore.compose.theme.color.LightSurfaceVariant
 import com.velord.uicore.compose.theme.color.LightTertiary
 import com.velord.uicore.compose.theme.color.LightTertiaryContainer
 
-object GlanceColorProviders {
+internal object GlanceColorProviders {
 
     fun dark() = colorProviders(
         primary = ColorProvider(Color.DarkPrimary),

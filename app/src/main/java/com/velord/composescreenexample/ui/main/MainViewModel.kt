@@ -2,6 +2,7 @@ package com.velord.composescreenexample.ui.main
 
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
+import com.example.widgetcounter.CounterWidget
 import com.example.widgetnewimage.RefreshableImageWidget
 import com.velord.backend.service.auth.AuthService
 import com.velord.datastore.DataStoreService
@@ -23,7 +24,7 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val widgets = listOf<GlanceWidgetThemeSustainer<*>>(
-        RefreshableImageWidget()
+        RefreshableImageWidget(), CounterWidget()
     )
 
     fun updateTheme(themeSwitcher: ThemeSwitcher?) {

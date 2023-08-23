@@ -33,7 +33,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
-import com.velord.uicore.compose.glance.GlanceColorProviders
+import com.velord.uicore.compose.glance.MainGlanceTheme
 import kotlin.math.roundToInt
 
 // On emulator redundant compositions with wrong LocalSize.current ruin all flow
@@ -65,15 +65,9 @@ internal fun NewImageWidgetScreen() {
     val filePath = prefs.getImageFilePath(parameters)
     val sourceUrl = RefreshableImageWidgetWorker.createUrl(parameters)
     val isDownloading = prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] ?: false
-    val isDarkTheme = prefs[RefreshableImageWidget.isDarkThemePreferenceKey] ?: true
 
     Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl")
-    val colors = if (isDarkTheme) {
-        GlanceColorProviders.dark()
-    } else {
-        GlanceColorProviders.light()
-    }
-    GlanceTheme(colors = colors) {
+    MainGlanceTheme(RefreshableImageWidget()) {
         Content(
             filePath = filePath,
             url = sourceUrl,
@@ -105,7 +99,7 @@ private fun Content(
 @Composable
 private fun Title() {
     Text(
-        text = "Image Widget",
+        text = LocalContext.current.getString(R.string.image_widget),
         modifier = GlanceModifier.padding(top = 16.dp),
         style = TextStyle(
             color = GlanceTheme.colors.onBackground,
@@ -130,7 +124,7 @@ private fun CurrentSize(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Widget Size:\nW: ${size.width.value} x H: ${size.height.value}",
+            text = LocalContext.current.getString(R.string.widget_size, size.width.value, size.height.value),
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 color = GlanceTheme.colors.onBackground,
@@ -145,7 +139,7 @@ private fun CurrentSize(
         horizontalAlignment = Alignment.Start,
     ) {
         Text(
-            text = "Downloaded from:\n$url",
+            text = LocalContext.current.getString(R.string.downloaded_from, url),
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 textDecoration = TextDecoration.Underline,
