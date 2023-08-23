@@ -9,7 +9,6 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
-import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
@@ -17,6 +16,7 @@ import androidx.glance.LocalContext
 import androidx.glance.LocalGlanceId
 import androidx.glance.LocalSize
 import androidx.glance.action.actionParametersOf
+import androidx.glance.action.clickable
 import androidx.glance.appwidget.CircularProgressIndicator
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.appWidgetBackground
@@ -29,28 +29,26 @@ import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import kotlin.random.Random
+import kotlin.math.roundToInt
 
-private const val STRING_LENGTH = 6
-private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-private fun randomStringByKotlinRandom() = (1..STRING_LENGTH)
-    .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
-    .joinToString("")
+// On emulator redundant compositions with wrong LocalSize.current ruin all flow
+private const val ERROR_COMPOSITION_WIDTH = 675
 
-
-private fun createImageParameters(size: DpSize, tag: String, generateNewSeed: Boolean): ImageParameters {
+@Composable
+private fun createImageParameters(size: DpSize, generateNewSeed: Boolean): ImageParameters {
     val seed = if (generateNewSeed) {
         randomStringByKotlinRandom()
     } else {
-        ImageParameters.DEFAULT_SEED
+        currentState<Preferences>()[RefreshableImageWidget.seedPreferenceKey] ?: ImageParameters.DEFAULT_SEED
     }
-    Log.d("RefreshableImageWidget", "tag: $tag; newSeed = $seed; force = $generateNewSeed")
+    Log.d("RefreshableImageWidget", "newSeed = $seed; force = $generateNewSeed")
     return ImageParameters(seed, size)
 }
 
@@ -66,8 +64,9 @@ private fun Preferences.getImageFilePath(): String {
 
 @Composable
 internal fun NewImageWidgetScreen() {
-    val prefs = currentState<Preferences>()
+    if (LocalSize.current.width.value.roundToInt() == ERROR_COMPOSITION_WIDTH) return
 
+    val prefs = currentState<Preferences>()
     val filePath = prefs.getImageFilePath()
     val sourceUrl = prefs[RefreshableImageWidget.sourceUrlPreferenceKey] ?: ""
 
@@ -104,7 +103,7 @@ private fun Content(
 private fun Title() {
     Text(
         text = "Image Widget",
-        modifier = GlanceModifier.padding(16.dp),
+        modifier = GlanceModifier.padding(top = 16.dp),
         style = TextStyle(
             color = ColorProvider(MaterialTheme.colorScheme.onSurface),
             fontSize = 18.sp,
@@ -118,17 +117,22 @@ private fun CurrentSize(url: String) {
     val size = LocalSize.current
 
     Row(
-        modifier = GlanceModifier.fillMaxWidth(),
+        modifier = GlanceModifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, end = 8.dp),
         horizontalAlignment = Alignment.Start,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = "Widget Size:\nW: ${size.width.value} x H: ${size.height.value}",
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 color = ColorProvider(MaterialTheme.colorScheme.onSecondaryContainer),
-                fontSize = 14.sp,
+                fontSize = 12.sp,
             ),
         )
+
+        Refresh(url)
     }
     Row(
         modifier = GlanceModifier.fillMaxWidth(),
@@ -147,22 +151,53 @@ private fun CurrentSize(url: String) {
 }
 
 @Composable
-private fun RefreshableImage(filePath: String) {
-    val size = LocalSize.current
-    Button(
-        text = LocalContext.current.getString(R.string.refresh),
-        onClick = actionRunCallback<RefreshCallback>(
-                parameters = actionParametersOf(
-                    RefreshableImageWidget.refreshableImageWidgetKey to createImageParameters(size,"refresh",true)
-                )
-            )
-        ,
-        modifier = GlanceModifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .background(MaterialTheme.colorScheme.secondaryContainer),
-    )
+private fun Refresh(url: String) {
+    val prefs = currentState<Preferences>()
+    val isDownloadingState = if (url.isEmpty()) {
+        true
+    } else {
+        prefs[RefreshableImageWidget.isDownloadingPreferenceKey] ?: false
+    }
+    Log.d("RefreshableImageWidget", "isDownloading: id - $isDownloadingState")
 
+    Row(
+        modifier = GlanceModifier
+            .height(48.dp)
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .cornerRadius(16.dp)
+            .clickable(
+                actionRunCallback<RefreshCallback>(
+                parameters = actionParametersOf(
+                    RefreshableImageWidget.refreshableImageWidgetKey to createImageParameters(
+                        LocalSize.current,
+                        true
+                    )
+                )
+            )),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = LocalContext.current.getString(R.string.refresh),
+            modifier = GlanceModifier.padding(horizontal = 8.dp),
+            style = TextStyle(
+                color = ColorProvider(MaterialTheme.colorScheme.onSecondaryContainer),
+                fontSize = 14.sp,
+            ),
+        )
+
+        if (isDownloadingState) {
+            CircularProgressIndicator(
+                modifier = GlanceModifier,
+                color = ColorProvider(MaterialTheme.colorScheme.onSecondaryContainer),
+            )
+        }
+    }
+}
+
+@Composable
+private fun RefreshableImage(filePath: String) {
     if (filePath.isNotEmpty()) {
         Image(
             provider = RefreshableImageWidget.getImageProvider(LocalContext.current, filePath),
@@ -174,11 +209,14 @@ private fun RefreshableImage(filePath: String) {
                 .cornerRadius(8.dp)
         )
     } else {
-        CircularProgressIndicator()
+        CircularProgressIndicator(
+            modifier = GlanceModifier.padding(24.dp),
+            color = ColorProvider(MaterialTheme.colorScheme.onSurface),
+        )
 
         val context = LocalContext.current
         val glanceId = LocalGlanceId.current
-        val parameters = createImageParameters(size,"when empty",false)
+        val parameters = createImageParameters(LocalSize.current,false)
         SideEffect {
             RefreshableImageWidgetWorker.enqueue(context, glanceId, parameters)
         }

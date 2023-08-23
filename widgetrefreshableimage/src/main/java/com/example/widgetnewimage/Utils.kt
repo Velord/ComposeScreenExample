@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.FileProvider
 import coil.imageLoader
+import kotlin.random.Random
 
 internal fun Context.getUriForFileThanGrantPermissionThanGetUriPath(url: String): String? {
     return imageLoader.diskCache?.get(url)?.use { snapshot ->
@@ -41,3 +42,10 @@ internal fun Context.getUriForFileThanGrantPermissionThanGetUriPath(url: String)
 // See manifest for correct path
 private fun Context.createAuthorityForFile(): String =
     "${applicationContext.packageName}.fileprovider"
+
+
+private const val STRING_LENGTH = 6
+private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+internal fun randomStringByKotlinRandom() = (1..STRING_LENGTH)
+    .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
+    .joinToString("")
