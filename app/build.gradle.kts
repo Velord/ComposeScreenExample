@@ -25,6 +25,7 @@ val calculatedVersionNumber = globalVersion * 100000 + majorVersion * 10000 + mi
 
 android {
     namespace = "com.velord.composescreenexample"
+
     compileSdk = libs.versions.targetApi.get().toInt()
 
     defaultConfig {
@@ -134,7 +135,6 @@ dependencies {
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
     implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.glance)
     implementation(libs.bundles.network)
     implementation(libs.bundles.coil)
     // Compose
