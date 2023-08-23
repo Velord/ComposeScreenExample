@@ -19,6 +19,7 @@ import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
+import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
@@ -55,6 +56,7 @@ private fun Content(count: Int) {
     ) {
         Text(
             text = LocalContext.current.getString(R.string.counter_widget),
+            modifier = GlanceModifier.padding(top = 8.dp),
             style = TextStyle(
                 color = GlanceTheme.colors.onSurface,
                 fontSize = 18.sp,
@@ -70,7 +72,7 @@ private fun Content(count: Int) {
 private fun Counter(count: Int) {
     Text(
         text = LocalContext.current.getString(R.string.count, count),
-        modifier = GlanceModifier.padding(8.dp),
+        modifier = GlanceModifier.padding(top = 8.dp),
         style = TextStyle(
             textDecoration = TextDecoration.Underline,
             color = GlanceTheme.colors.onSurfaceVariant,
@@ -79,9 +81,7 @@ private fun Counter(count: Int) {
     )
 
     Row(
-        modifier = GlanceModifier
-            .fillMaxWidth()
-            .padding(8.dp),
+        modifier = GlanceModifier.fillMaxWidth().padding(top = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -93,7 +93,7 @@ private fun Counter(count: Int) {
                 .padding(8.dp),
             onClick = createAction(count + 1)
         )
-
+        Spacer(modifier = GlanceModifier.width(32.dp))
         Button(
             text = LocalContext.current.getString(R.string.minus_sign),
             modifier = GlanceModifier
