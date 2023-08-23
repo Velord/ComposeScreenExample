@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import androidx.core.content.FileProvider
 import coil.imageLoader
 
@@ -28,7 +27,6 @@ internal fun Context.getUriForFileThanGrantPermissionThanGetUriPath(url: String)
         }
 
         resolveInfo?.activityInfo?.packageName?.also {
-            Log.d("RefreshableImageWidget", "getRandomImage: launcherName: $it")
             this.grantUriPermission(
                 it,
                 contentUri,

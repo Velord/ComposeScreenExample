@@ -29,8 +29,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ComposeScreenExample"
-            android:windowSoftInputMode="adjustResize"
-            >
+            android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,15 +50,13 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/refreshable_image_widget_meta" />
-
         </receiver>
 
         <provider
             android:name="com.example.widgetnewimage.RefreshableImageWidgetFileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            >
+            android:grantUriPermissions="true">
 
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
@@ -78,7 +75,6 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/counter_widget_meta" />
-
         </receiver>
 
     </application>

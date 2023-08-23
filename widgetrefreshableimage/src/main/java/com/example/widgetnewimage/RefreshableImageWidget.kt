@@ -11,21 +11,35 @@ import androidx.glance.GlanceId
 import androidx.glance.ImageProvider
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.provideContent
+import androidx.glance.appwidget.state.updateAppWidgetState
+import androidx.glance.appwidget.updateAll
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import androidx.work.CoroutineWorker
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-internal class ParametersSize(
+internal class ImageParameters(
+    val seed: String,
     val width: Float,
     val height: Float
 ) : Parcelable {
-    override fun toString(): String = "Width = $width x Height=$height"
+
+    constructor(seed: String, size: DpSize) : this(seed, size.width.value, size.height.value)
+
+    override fun toString(): String = "Seed = $seed x Width = $width x Height=$height"
+
+    fun getSimpleWidth() = width.toInt()
+
+    fun getSimpleHeight() = height.toInt()
+
+    companion object {
+        const val DEFAULT_SEED = "seed"
+    }
 }
 
 class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout) {
@@ -44,16 +58,35 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
 
     companion object {
 
-        internal val sourceUrlKey = stringPreferencesKey("image_source_url")
-        internal val refreshableImageWidgetKey = ActionParameters.Key<ParametersSize>("refreshableImageWidgetKey")
+        internal val sourceUrlPreferenceKey = stringPreferencesKey("image_source_url")
+        internal val seedPreferenceKey = stringPreferencesKey("image_seed")
 
-        internal fun getImageUriKey(size: DpSize) = createPreferenceKey(size.width.value, size.height.value)
+        internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameters>("refreshableImageWidgetKey")
 
-        context(CoroutineWorker)
-        internal fun getImageUriKey(width: Float, height: Float) = createPreferenceKey(width, height)
+        internal fun getImageUriKey(imageParameters: ImageParameters) = createPreferenceKey(imageParameters)
 
-        private fun createPreferenceKey(width: Float, height: Float) =
-            stringPreferencesKey("uri - size(w:$width; h:$height)")
+        private fun createPreferenceKey(imageParameters: ImageParameters) =
+            stringPreferencesKey("uri" +
+                    "/seed - ${imageParameters.seed}" +
+                    "/size - w:${imageParameters.getSimpleWidth()}, h:${imageParameters.getSimpleHeight()}")
+
+
+        internal suspend fun updatePreferences(
+            context: Context,
+            url: String,
+            uri: String,
+            parameters: ImageParameters,
+        ) {
+            val manager = GlanceAppWidgetManager(context)
+            manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {
+                updateAppWidgetState(context, it) { prefs ->
+                    prefs[sourceUrlPreferenceKey] = url
+                    prefs[getImageUriKey(parameters)] = uri
+                    prefs[seedPreferenceKey] = parameters.seed
+                }
+            }
+            RefreshableImageWidget().updateAll(context)
+        }
 
         /**
          * https://github.com/android/platform-samples/blob/main/samples/user-interface/appwidgets/src/main/java/com/example/platform/ui/appwidgets/glance/image/ImageGlanceWidget.kt
@@ -73,11 +106,6 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
              * UriImageProvider doesn't work
              * Always return ImageProvider with bitmap inside
              */
-//            if (path.startsWith("content://"))
-//                return ImageProvider(path.toUri())
-//           Also doesn't work
-//            val bitmap = BitmapFactory.decodeFile(path)
-//            ImageProvider(bitmap)
 
             val bitmap = context.contentResolver.openInputStream(path.toUri()).use { data ->
                 BitmapFactory.decodeStream(data)
@@ -94,12 +122,12 @@ internal class RefreshCallback : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        val newSize: ParametersSize = requireNotNull(parameters[RefreshableImageWidget.refreshableImageWidgetKey]) {
+        val newParameters: ImageParameters = requireNotNull(parameters[RefreshableImageWidget.refreshableImageWidgetKey]) {
             "Missing refreshableImageWidgetKey"
         }
-        Log.d("RefreshableImageWidget", "RefreshCallback.onAction: $glanceId; Size: $newSize")
+        Log.d("RefreshableImageWidget", "RefreshCallback.onAction: $glanceId; Size: $newParameters")
 
-        RefreshableImageWidgetWorker.enqueue(context, glanceId, newSize, force = true)
+        RefreshableImageWidgetWorker.enqueue(context, glanceId, newParameters, force = true)
     }
 }
 

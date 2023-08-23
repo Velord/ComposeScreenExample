@@ -3,9 +3,6 @@ package com.example.widgetnewimage
 import android.content.Context
 import android.util.Log
 import androidx.glance.GlanceId
-import androidx.glance.appwidget.GlanceAppWidgetManager
-import androidx.glance.appwidget.state.updateAppWidgetState
-import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
@@ -18,13 +15,13 @@ import coil.memory.MemoryCache
 import coil.request.ErrorResult
 import coil.request.ImageRequest
 import java.util.concurrent.TimeUnit
-import kotlin.math.roundToInt
 
+private const val SEED_KEY = "seed"
 private const val WIDTH_KEY = "width"
 private const val HEIGHT_KEY = "height"
 private const val FORCE_KEY = "force"
 
-private const val PICSUM_BASE_URL = "https://picsum.photos/"
+private const val PICSUM_BASE_URL = "https://picsum.photos"
 
 class RefreshableImageWidgetWorker(
     private val context: Context,
@@ -38,7 +35,7 @@ class RefreshableImageWidgetWorker(
         internal fun enqueue(
             context: Context,
             glanceId: GlanceId,
-            size: ParametersSize,
+            parameters: ImageParameters,
             force: Boolean = false
         ) {
             val manager = WorkManager.getInstance(context)
@@ -47,8 +44,9 @@ class RefreshableImageWidgetWorker(
                 setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 setInputData(
                     Data.Builder()
-                        .putFloat(WIDTH_KEY, size.width)
-                        .putFloat(HEIGHT_KEY, size.height)
+                        .putString(SEED_KEY, parameters.seed)
+                        .putFloat(WIDTH_KEY, parameters.width)
+                        .putFloat(HEIGHT_KEY, parameters.height)
                         .putBoolean(FORCE_KEY, force)
                         .build()
                 )
@@ -59,7 +57,7 @@ class RefreshableImageWidgetWorker(
                 ExistingWorkPolicy.KEEP
             }
 
-            val workName = uniqueWorkName + size.width + size.height
+            val workName = uniqueWorkName + parameters.seed + parameters.width + parameters.height
             manager.enqueueUniqueWork(
                 workName,
                 workPolicy,
@@ -84,12 +82,22 @@ class RefreshableImageWidgetWorker(
 
     override suspend fun doWork(): Result {
         return try {
+            val seed: String = inputData.getString(SEED_KEY) ?: ImageParameters.DEFAULT_SEED
             val width: Float = inputData.getFloat(WIDTH_KEY, 0f)
             val height: Float = inputData.getFloat(HEIGHT_KEY, 0f)
             val force: Boolean = inputData.getBoolean(FORCE_KEY, false)
-            val uri = getRandomImage(width, height, force)
-            Log.d("RefreshableImageWidget", "uri: $uri")
-            updateRefreshableImageWidget(width, height, uri)
+
+            val parameters = ImageParameters(seed, width, height)
+            val url = createUrl(parameters)
+            val uri = fetchImage(url, force)
+            Log.d("RefreshableImageWidget", "doWork url: $url\nuri: $uri")
+
+            RefreshableImageWidget.updatePreferences(
+                context = context,
+                url = url,
+                uri = uri,
+                parameters = parameters
+            )
             Result.success()
         } catch (e: Exception) {
             Result.failure()
@@ -100,13 +108,11 @@ class RefreshableImageWidgetWorker(
      * Use Coil and Picsum Photos to randomly load images into the cache based on the provided
      * size. This method returns the path of the cached image, which you can send to the widget.
      */
-    private suspend fun getRandomImage(
-        width: Float,
-        height: Float,
+    private suspend fun fetchImage(
+        url: String,
         force: Boolean
     ) : String {
-        val url = createUrl(width, height)
-        Log.d("RefreshableImageWidget", "url: $url")
+        Log.d("RefreshableImageWidget", "doWork url: $url")
         executeRequest(url, force)
         val path = context.getUriForFileThanGrantPermissionThanGetUriPath(url)
 
@@ -115,8 +121,10 @@ class RefreshableImageWidgetWorker(
         }
     }
 
-    private fun createUrl(width: Float, height: Float): String =
-        "$PICSUM_BASE_URL${width.roundToInt()}/${height.roundToInt()}"
+    private fun createUrl(imageParameters: ImageParameters): String =
+        PICSUM_BASE_URL +
+                "/seed/${imageParameters.seed}" +
+                "/${imageParameters.getSimpleWidth()}/${imageParameters.getSimpleHeight()}"
 
     private suspend fun executeRequest(url: String, force: Boolean) {
         val request = ImageRequest.Builder(context)
@@ -134,20 +142,5 @@ class RefreshableImageWidgetWorker(
             if (result is ErrorResult)
                 throw result.throwable
         }
-    }
-
-    private suspend fun updateRefreshableImageWidget(
-        width: Float,
-        height: Float,
-        uri: String
-    ) {
-        val manager = GlanceAppWidgetManager(context)
-        manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {
-            updateAppWidgetState(context, it) { prefs ->
-                prefs[RefreshableImageWidget.getImageUriKey(width, height)] = uri
-                prefs[RefreshableImageWidget.sourceUrlKey] = createUrl(width, height)
-            }
-        }
-        RefreshableImageWidget().updateAll(context)
     }
 }
