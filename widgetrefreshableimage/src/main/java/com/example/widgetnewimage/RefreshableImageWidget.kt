@@ -6,6 +6,7 @@ import android.os.Parcelable
 import android.util.Log
 import androidx.compose.ui.unit.DpSize
 import androidx.core.net.toUri
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.GlanceId
 import androidx.glance.ImageProvider
@@ -29,7 +30,8 @@ internal class ImageParameters(
     val height: Float
 ) : Parcelable {
 
-    constructor(seed: String, size: DpSize) : this(seed, size.width.value, size.height.value)
+    constructor(seed: String, size: DpSize) :
+            this(seed, width = size.width.value, height = size.height.value)
 
     override fun toString(): String = "Seed = $seed x Width = $width x Height=$height"
 
@@ -60,6 +62,7 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
 
         internal val sourceUrlPreferenceKey = stringPreferencesKey("image_source_url")
         internal val seedPreferenceKey = stringPreferencesKey("image_seed")
+        internal val isDownloadingPreferenceKey = booleanPreferencesKey("image_is_downloading")
 
         internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameters>("refreshableImageWidgetKey")
 
@@ -83,6 +86,7 @@ class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refresha
                     prefs[sourceUrlPreferenceKey] = url
                     prefs[getImageUriKey(parameters)] = uri
                     prefs[seedPreferenceKey] = parameters.seed
+                    prefs[isDownloadingPreferenceKey] = false
                 }
             }
             RefreshableImageWidget().updateAll(context)
@@ -127,6 +131,13 @@ internal class RefreshCallback : ActionCallback {
         }
         Log.d("RefreshableImageWidget", "RefreshCallback.onAction: $glanceId; Size: $newParameters")
 
+        val manager = GlanceAppWidgetManager(context)
+        manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {
+            updateAppWidgetState(context, it) { prefs ->
+                prefs[RefreshableImageWidget.isDownloadingPreferenceKey] = true
+            }
+        }
+        RefreshableImageWidget().update(context, glanceId)
         RefreshableImageWidgetWorker.enqueue(context, glanceId, newParameters, force = true)
     }
 }
