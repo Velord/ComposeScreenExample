@@ -11,7 +11,9 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
    * [BlinkingShadow](#blinking-shadow)
    * [Hanging](#hanging)
    * [Swoling](#swoling)
-* [Glance Widgets](glance-widget-demo)
+* [Glance Widget Demo](glance-widget-demo)
+    * [Counter](#counter)
+    * [Refreshable Image](#refreshable-image)
 
 ## Shape Demo
 [ShapeDemo.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/c5cbd5ca-8cb3-4efb-8601-10994eb011a5)
@@ -275,3 +277,17 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 )
 ```
 ![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/adb556b2-2c0c-46de-ac09-55efa9145ee8)
+
+
+
+## Glance Widget Demo
+
+* ### Counter
+
+[Counter](https://github.com/Velord/ComposeScreenExample/assets/33905170/72aa7732-4763-41eb-b778-01ba09958fd7)
+
+
+* ### Refreshable Image
+
+[Refreshable Image](https://github.com/Velord/ComposeScreenExample/assets/33905170/52762849-2d09-4445-85f1-4975d22ff52e)
+
