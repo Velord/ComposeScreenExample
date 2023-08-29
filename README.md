@@ -12,6 +12,7 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
    * [Hanging](#hanging)
    * [Swoling](#swoling)
 * [Glance Widget Demo](#glance-widget-demo)
+    * [Synced Theme](#synced-theme-with-app)
     * [Counter](#counter)
     * [Refreshable Image](#refreshable-image)
 
@@ -281,6 +282,10 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 
 
 ## Glance Widget Demo
+[Glance Widgets](https://github.com/Velord/ComposeScreenExample/assets/33905170/0f5f81a7-f81f-4d1f-89a6-40f7cd0d0eba)
+
+* ### Synced Theme with App
+[Synced Theme](https://github.com/Velord/ComposeScreenExample/assets/33905170/d8aa6172-3a6a-427d-a03d-be7e6d4d69c4)
 
 * ### Counter
 
