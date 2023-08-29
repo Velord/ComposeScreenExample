@@ -1,0 +1,8 @@
+<resources>
+    <string name="error">Error</string>
+    <string name="loading">Loading</string>
+    <string name="count">Count: %d</string>
+    <string name="counter_widget">Counter Widget</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
+</resources>

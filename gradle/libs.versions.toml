@@ -55,14 +55,23 @@ androidxCustomViewPollingContainer = "1.0.0"
 androidxDatastore = "1.0.0"
 androidxExifInterface = "1.3.6"
 androidxFragment = "1.6.0"
+## Glance
+androidxGlance = "1.0.0-rc01"  # For Glance, AppWidgets
+androidxGlanceWearTiles = "1.0.0-alpha05"
+## L
 androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.6.1"
+## M
 androidxMedia3 = "1.1.0"
+## N
 androidxNavigation = "2.6.0"
-androidxPreference = "1.2.0"
 # AndroidX Paging
 androidxPaging = "3.1.1"
 androidxPagingCompose = "3.2.0-rc01"
+# P
+androidxPreference = "1.2.0"
+## W
+androidxWorkManager = "2.8.1"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.9.1"
@@ -81,6 +90,10 @@ coil = "2.2.1"
 sagarCororutinePermission = "2.0.2"
 # Navigation
 velordMultipleBackstack = "0.3.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+material = "1.9.0"
 
 
 [libraries]
@@ -126,15 +139,10 @@ androidx-credentials-below13 = { module = "androidx.credentials:credentials-play
 # AndroidX CustomView
 androidx-customview = { module = "androidx.customview:customview", version.ref = "androidxCustomView" }
 androidx-customview-pollingcontainer = { module = "androidx.customview:customview-poolingcontainer", version.ref = "androidxCustomViewPollingContainer" }
-# AndroidX KTX
-androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragment" }
-androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
-androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreference" }
-androidx-collection = { module = "androidx.collection:collection-ktx", version.ref = "androidxCollection" }
-androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
-# AndroidX Paging
-androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
-androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
+# AndroidX Glance
+androidx-glance = { module = "androidx.glance:glance", version.ref = "androidxGlance" }
+androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidxGlance" }
+androidx-glance-weartiles = { module = "androidx.glance:glance-wear-tiles", version.ref = "androidxGlanceWearTiles" }
 # AndroidX Lifecycle
 androidx-lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "androidxLifecycle" }
 androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidxLifecycle" }
@@ -152,6 +160,19 @@ androidx-navigation-dynamicfeature = { module = "androidx.navigation:navigation-
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
 # AndroidX Media3
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
+# AndroidX Paging
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
+# AndroidX WorkManager
+androidx-workmanager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxWorkManager" }
+androidx-workmanager-gcm = { module = "androidx.work:work-gcm", version.ref = "androidxWorkManager" }
+androidx-workmanager-multiprocess = { module = "androidx.work:work-multiprocess", version.ref = "androidxWorkManager" }
+# AndroidX KTX
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragment" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
+androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreference" }
+androidx-collection = { module = "androidx.collection:collection-ktx", version.ref = "androidxCollection" }
+androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
@@ -213,6 +234,10 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 # Navigation
 velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [bundles]
@@ -244,14 +269,8 @@ androidx-constraint = ["androidx-constraint", "androidx-constraint-compose"]
 androidx-credentials = ["androidx-credentials", "androidx-credentials-below13"]
 # AndroidX CustomView
 androidx-customview = ["androidx-customview", "androidx-customview-pollingcontainer"]
-# AndroidX KTX
-androidx-ktx = [
-    "androidx-fragment", "androidx-core",
-    "androidx-preference", "androidx-collection",
-    "androidx-concurrent"
-]
-# AndroidX Paging
-androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
+# AndroidX Glance
+androidx-glance = ["androidx-glance", "androidx-glance-appwidget", "androidx-glance-weartiles"]
 # AndroidX Lifecycle
 androidx-lifecycle-other = [
     "androidx-lifecycle-service", "androidx-lifecycle-process"
@@ -278,6 +297,19 @@ androidx-navigation = [
 ]
 # AndroidX Media3
 androidx-media3 = ["androidx-media3-exoplayer"]
+# AndroidX Paging
+androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
+# AndroidX WorkManager
+androidx-workmanager = [
+    "androidx-workmanager-runtime", "androidx-workmanager-gcm",
+    "androidx-workmanager-multiprocess"
+]
+# AndroidX KTX
+androidx-ktx = [
+    "androidx-fragment", "androidx-core",
+    "androidx-preference", "androidx-collection",
+    "androidx-concurrent"
+]
 # AndroidX Module
 androidx-module = [
     "androidx-activity-ktx", "androidx-activity-compose",
@@ -317,11 +349,8 @@ androidx-all = [
     "androidx-credentials", "androidx-credentials-below13",
     # AndroidX CustomView
     "androidx-customview", "androidx-customview-pollingcontainer",
-    # AdnroidX KTX
-    "androidx-fragment", "androidx-core",
-    "androidx-preference", "androidx-collection", "androidx-concurrent",
-    # AndroidX Paging
-    "androidx-paging-runtime", "androidx-paging-compose",
+    # AndroidX Glance
+    "androidx-glance", "androidx-glance-appwidget", "androidx-glance-weartiles",
     # AndroidX Lifecycle
     "androidx-lifecycle-service", "androidx-lifecycle-process",
     "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose",
@@ -332,7 +361,15 @@ androidx-all = [
     "androidx-navigation-fragment", "androidx-navigation-ui",
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
     # AndroidX Media3
-    "androidx-media3-exoplayer"
+    "androidx-media3-exoplayer",
+    # AndroidX Paging
+    "androidx-paging-runtime", "androidx-paging-compose",
+    # AndroidX WorkManager
+    "androidx-workmanager-runtime", "androidx-workmanager-gcm",
+    "androidx-workmanager-multiprocess",
+    # AdnroidX KTX
+    "androidx-fragment", "androidx-core",
+    "androidx-preference", "androidx-collection", "androidx-concurrent",
 ]
 # Kotlin
 kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
