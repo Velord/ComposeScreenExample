@@ -3,15 +3,14 @@
 Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Architecture
 
 ## UI Features:
-* [Shape Demo](shape-demo)
-    * [TicketPath](ticket-path-represents-that)
-    * [ArcAtBottomCenterPath](arcAtBottomCenterPath)
-* [Modifier Demo](modifier-demo)
-    * [Shimmering](modifier.shimmering())
-    * [BlinkingShadow](modifier.blinkingShadow())
+* [Shape Demo](#shape-demo)
+    * [TicketPath](#ticketpath)
+    * [ArcAtBottomCenterPath](#arcatbottomcenterpath)
+* [Modifier Demo](#modifier-demo)
+    * [Shimmering](#modifier.shimmering())
+    * [BlinkingShadow](#modifier.blinkingShadow())
 * [Glance Widget Demo](glance-widget-demo)
 
-<a name="shape-demo"></a>
 ## Shape Demo
 [ShapeDemo.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/c5cbd5ca-8cb3-4efb-8601-10994eb011a5)
 
@@ -19,11 +18,11 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
 #### 1. TicketShape 2. ArcAtBottomCenterShape 3. PervasiveArcFromBottomLayout
 
 ### Paths used:
-#### 1. TicketPath represents that
+* #### TicketPath
 ![246669480-b7bf28f2-5e1e-4eb9-ae53-fe3e8ecffd16](https://github.com/Velord/ComposeScreenExample/assets/33905170/64e99cdf-4c2d-4e6a-bdc4-7ab81ac4734d)
 
-
-#### 2. ArcAtBottomCenterPath is the arc placed in the bottom center of the layout dependent on the progress
+* #### ArcAtBottomCenterPath 
+It is the arc placed in the bottom center of the layout dependent on the progress
 ![246670194-fd752fb4-8e3c-49e8-b1bb-f860138600e8](https://github.com/Velord/ComposeScreenExample/assets/33905170/75dc1cdc-b9f8-4bff-8b98-4ff675ef2617) 
 
 
