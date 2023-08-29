@@ -1,39 +1,36 @@
 # ComposeScreenExample
 ## Architecture:
-Single Activity
+Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Architecture
 
-Multi-module
+## UI Features:
+* [Shape Demo](shape-demo)
+    * [TicketPath](ticket-path-represents-that)
+    * [ArcAtBottomCenterPath](arcAtBottomCenterPath)
+* [Modifier Demo](modifier-demo)
+    * [Shimmering](modifier.shimmering())
+    * [BlinkingShadow](modifier.blinkingShadow())
+* [Glance Widget Demo](glance-widget-demo)
 
-Multiple Backstack
-
-MVVM
-
-Clean Architecture
 ## Shape Demo
 [ShapeDemo.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/c5cbd5ca-8cb3-4efb-8601-10994eb011a5)
 
-### Custom crafted paths:
+### Shapes and layouts used:
+#### 1. TicketShape 2. ArcAtBottomCenterShape 3. PervasiveArcFromBottomLayout
 
-#### 1. TicketPath represents that kind of shape
-![Ticket](https://github.com/Velord/ComposeScreenExample/assets/33905170/b7bf28f2-5e1e-4eb9-ae53-fe3e8ecffd16)
+### Paths used:
+#### 1. TicketPath represents that
+![246669480-b7bf28f2-5e1e-4eb9-ae53-fe3e8ecffd16](https://github.com/Velord/ComposeScreenExample/assets/33905170/64e99cdf-4c2d-4e6a-bdc4-7ab81ac4734d)
+
 
 #### 2. ArcAtBottomCenterPath is the arc placed in the bottom center of the layout dependent on the progress
-![Shape path in percent](https://github.com/Velord/ComposeScreenExample/assets/33905170/fd752fb4-8e3c-49e8-b1bb-f860138600e8)
-
-### Custom crafted shapes based on mentioned paths:
-#### 1. TicketShape 2. ArcAtBottomCenterShape
-
-### Custom crafted 'Compose' components:
-
-#### 1. PervasiveArcFromBottomLayout 
-That component brings animation that devastating layout based on ArcAtBottomCenterShape and his path ArcAtBottomCenterPath:
+![246670194-fd752fb4-8e3c-49e8-b1bb-f860138600e8](https://github.com/Velord/ComposeScreenExample/assets/33905170/75dc1cdc-b9f8-4bff-8b98-4ff675ef2617) 
 
 
 ## Modifier Demo
 [Modifier Demo 2023.6.28.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/6cab883e-895a-4f35-93ee-c56fafd17980)
 
 
-### You can find custom crafted Modifiers:
+### Custom Modifiers used:
 #### 1. Modifier.shimmering()
 #### 2. Modifier.blinkingShadow()
 #### 3. Modifier.hanging()
