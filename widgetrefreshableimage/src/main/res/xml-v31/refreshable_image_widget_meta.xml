@@ -7,4 +7,6 @@
     android:previewImage="@drawable/refreshable_image_widget_preview"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
+    android:targetCellWidth="3"
+    android:targetCellHeight="3"
     />
