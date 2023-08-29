@@ -11,6 +11,7 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
     * [BlinkingShadow](modifier.blinkingShadow())
 * [Glance Widget Demo](glance-widget-demo)
 
+<a name="shape-demo"></a>
 ## Shape Demo
 [ShapeDemo.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/c5cbd5ca-8cb3-4efb-8601-10994eb011a5)
 
