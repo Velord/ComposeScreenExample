@@ -25,6 +25,7 @@ val calculatedVersionNumber = globalVersion * 100000 + majorVersion * 10000 + mi
 
 android {
     namespace = "com.velord.composescreenexample"
+
     compileSdk = libs.versions.targetApi.get().toInt()
 
     defaultConfig {
@@ -128,6 +129,8 @@ dependencies {
     implementation(project(":modifierdemo"))
     implementation(project(":flowsummator"))
     implementation(project(":settings"))
+    implementation(project(":widgetrefreshableimage"))
+    implementation(project(":widgetcounter"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
@@ -138,6 +141,7 @@ dependencies {
     implementation(libs.bundles.compose.all)
     // DI
     implementation(libs.bundles.dagger.all)
+    implementation(libs.androidx.glance.appwidget)
     kapt(libs.bundles.dagger.kapt)
     kapt(libs.hilt.compiler)
     // Permission

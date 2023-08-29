@@ -16,12 +16,14 @@
             <option value="$PROJECT_DIR$/bottomnavigation" />
             <option value="$PROJECT_DIR$/camerarecording" />
             <option value="$PROJECT_DIR$/datastore" />
+            <option value="$PROJECT_DIR$/flowsummator" />
             <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/modifierdemo" />
+            <option value="$PROJECT_DIR$/settings" />
             <option value="$PROJECT_DIR$/shapedemo" />
             <option value="$PROJECT_DIR$/uicore" />
             <option value="$PROJECT_DIR$/util" />
-            <option value="$PROJECT_DIR$/windyappflowsummator" />
+            <option value="$PROJECT_DIR$/widgetnewimage" />
           </set>
         </option>
       </GradleProjectSettings>
