@@ -3,13 +3,15 @@
 Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Architecture
 
 ## UI Features:
-* [Shape Demo](#shape-demo)
-    * [TicketPath](#ticketpath)
-    * [ArcAtBottomCenterPath](#arcatbottomcenterpath)
-* [Modifier Demo](#modifier-demo)
-    * [Shimmering](#modifier.shimmering())
-    * [BlinkingShadow](#modifier.blinkingShadow())
-* [Glance Widget Demo](glance-widget-demo)
+* [Compose Shapes](#shape-demo)
+   * [TicketPath](#ticketpath)
+   * [ArcAtBottomCenterPath](#arcatbottomcenterpath)
+* [Compose Modifiers](#modifier-demo)
+   * [Shimmering](#shimmering)
+   * [BlinkingShadow](#blinking-shadow)
+   * [Hanging](#hanging)
+   * [Swoling](#swoling)
+* [Glance Widgets](glance-widget-demo)
 
 ## Shape Demo
 [ShapeDemo.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/c5cbd5ca-8cb3-4efb-8601-10994eb011a5)
@@ -36,7 +38,7 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 #### 3. Modifier.hanging()
 #### 4. Modifier.swoling()
 
-### Modifier.shimmering()
+### Shimmering
 1. Rainbow
 ```
 .shimmering(
@@ -137,7 +139,7 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 ```
 ![ezgif com-gif-maker](https://github.com/Velord/ComposeScreenExample/assets/33905170/d975f4c6-7027-4c02-8a41-08154263654e)
 
-### Modifier.blinkingShadow()
+### Blinking Shadow
 1. GreenReverse
 ```
 .blinkingShadow(
@@ -171,7 +173,7 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 ```
 ![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/01927ade-1920-4558-9afe-62a2adae8c97)
 
-### Modifier.hanging()
+### Hanging
 1. Default
 ```
 .hanging()
@@ -240,7 +242,7 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 ```
 ![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/42720e4d-724d-440b-9c5d-c4f5a259aa54)
 
-### Modifier.hanging()
+### Swoling
 1. Default
 ```
 .swoling()
