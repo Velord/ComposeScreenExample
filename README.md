@@ -11,7 +11,7 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
    * [BlinkingShadow](#blinking-shadow)
    * [Hanging](#hanging)
    * [Swoling](#swoling)
-* [Glance Widget Demo](glance-widget-demo)
+* [Glance Widget Demo](#glance-widget-demo)
     * [Counter](#counter)
     * [Refreshable Image](#refreshable-image)
 
