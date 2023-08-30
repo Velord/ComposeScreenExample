@@ -34,6 +34,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -234,6 +235,8 @@ private fun CameraRecordingPreview(
     // and it allows us to start recording.
     val videoCaptureState: MutableState<VideoCapture<Recorder>?> = remember { mutableStateOf(null) }
 
+    val isRecordingStartedState = remember { mutableStateOf(false) }
+
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(cameraSelector) {
         videoCaptureState.value = context.createVideoCapture(
@@ -250,22 +253,28 @@ private fun CameraRecordingPreview(
     )
 
     Adjustments(
-        videoCapture = videoCaptureState.value,
+        isRecordingStartedState = isRecordingStartedState,
+        onStartStopClick = {
+            if (isRecordingStartedState.value) {
+                isRecordingStartedState.value = false
+                onStopRecording()
+            } else {
+                videoCaptureState.value?.let {
+                    isRecordingStartedState.value = true
+                    onNewRecording(it)
+                }
+            }
+        },
         onChangeCameraSelector = onChangeCameraSelector,
-        onNewRecording = onNewRecording,
-        onStopRecording = onStopRecording,
     )
 }
 
 @Composable
 private fun Adjustments(
-    videoCapture: VideoCapture<Recorder>?,
+    isRecordingStartedState: State<Boolean>,
+    onStartStopClick: () -> Unit,
     onChangeCameraSelector: () -> Unit,
-    onNewRecording: (VideoCapture<Recorder>) -> Unit,
-    onStopRecording: () -> Unit
 ) {
-    val isRecordingStartedState = remember { mutableStateOf(false) }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -280,17 +289,7 @@ private fun Adjustments(
         ) {
             StartStop(
                 isRecordingStarted = isRecordingStartedState.value,
-                onClick = {
-                    if (isRecordingStartedState.value.not()) {
-                        videoCapture?.let {
-                            isRecordingStartedState.value = true
-                            onNewRecording(it)
-                        }
-                    } else {
-                        isRecordingStartedState.value = false
-                        onStopRecording()
-                    }
-                }
+                onClick = onStartStopClick
             )
             CameraSelector(
                 isRecordingStarted = isRecordingStartedState.value,
