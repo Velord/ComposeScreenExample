@@ -3,7 +3,14 @@ package com.velord.camerarecording
 import android.content.Context
 import android.net.Uri
 import androidx.camera.core.CameraSelector
-import androidx.camera.video.*
+import androidx.camera.video.FileDescriptorOutputOptions
+import androidx.camera.video.FileOutputOptions
+import androidx.camera.video.MediaStoreOutputOptions
+import androidx.camera.video.Quality
+import androidx.camera.video.Recorder
+import androidx.camera.video.Recording
+import androidx.camera.video.VideoCapture
+import androidx.camera.video.VideoRecordEvent
 import com.velord.camerarecording.model.createRecordingViaMediaStore
 import com.velord.model.file.FileName
 import com.velord.model.profile.UserProfile
@@ -78,7 +85,7 @@ class CameraRecordingViewModel @Inject constructor(
 
     fun onNewRecording(newCapture: VideoCapture<Recorder>) {
         val newRecording = context.createRecordingViaMediaStore(
-            fileName = FileName(),
+            fileName = FileName.invoke(),
             videoCapture = newCapture,
             audioEnabled = videoIsAudioEnabledFlow.value,
             consumer = ::onVideoRecordEvent,
@@ -93,18 +100,18 @@ class CameraRecordingViewModel @Inject constructor(
     private fun onVideoRecordEvent(newEvent: VideoRecordEvent) {
         if (newEvent is VideoRecordEvent.Finalize) {
             val isNone = newEvent.error == VideoRecordEvent.Finalize.ERROR_NONE
-            if (isNone.not()) {
-                when(val options = newEvent.outputOptions) {
-                    is FileOutputOptions -> options.file.delete()
-                    is MediaStoreOutputOptions -> {
-                        val uri: Uri = newEvent.outputResults.outputUri
-                        if (uri != Uri.EMPTY) {
-                            context.contentResolver.delete(uri, null, null)
-                        }
+            if (isNone) return
+
+            when(val options = newEvent.outputOptions) {
+                is FileOutputOptions -> options.file.delete()
+                is MediaStoreOutputOptions -> {
+                    val uri: Uri = newEvent.outputResults.outputUri
+                    if (uri != Uri.EMPTY) {
+                        context.contentResolver.delete(uri, null, null)
                     }
-                    is FileDescriptorOutputOptions -> {
-                        // User has to clean up the referenced target of the file descriptor.
-                    }
+                }
+                is FileDescriptorOutputOptions -> {
+                    // User has to clean up the referenced target of the file descriptor.
                 }
             }
         }
