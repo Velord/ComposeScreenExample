@@ -101,7 +101,7 @@ class CameraRecordingViewModel @Inject constructor(
         if (newEvent is VideoRecordEvent.Finalize) {
             val isNone = newEvent.error == VideoRecordEvent.Finalize.ERROR_NONE
             if (isNone) return
-
+            // When error delete the file
             when(val options = newEvent.outputOptions) {
                 is FileOutputOptions -> options.file.delete()
                 is MediaStoreOutputOptions -> {
