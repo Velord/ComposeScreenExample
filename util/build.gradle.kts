@@ -11,7 +11,6 @@ android {
     compileSdk = libs.versions.targetApi.get().toInt()
 
     defaultConfig {
-        targetSdk = libs.versions.targetApi.get().toInt()
         minSdk = libs.versions.minApi.get().toInt()
     }
 

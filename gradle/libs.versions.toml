@@ -4,14 +4,14 @@ minApi = "29"
 targetApi = "34"
 # Build
 buildTools = "30.0.3"
-gradle = "8.0.2"
+gradle = "8.2.0-beta04"
 jvmTarget = "1.8"
 # DI
 dagger = "2.46.1"
 hilt = "2.46.1"
 hiltNavigation = "1.0.0"
 # Kotlin
-kotlin = "1.8.22"
+kotlin = "1.9.10"
 coroutine = "1.7.1"
 # Kotlin Serialization
 kotlinJsonSerialization = "1.5.0"
@@ -22,7 +22,7 @@ googleGuava = "32.0.0-android"
 ## A
 androidxActivity = "1.7.2"
 androidxAds = "1.0.0-alpha05"
-androidxAnnotation = "1.6.0"
+androidxAnnotation = "1.7.0"
 androidxAppCompat = "1.6.1"
 androidxAppSearch = "1.1.0-alpha03"
 androidxArchCore = "2.2.0"
@@ -31,7 +31,8 @@ androidxAutoFill = "1.1.0"
 ## B
 androidxBenchmark = "1.1.1"
 androidxBiometric = "1.1.0"
-androidxBrowser = "1.5.0"
+androidxBluetooth = "1.0.0-alpha01"
+androidxBrowser = "1.6.0"
 ## C
 androidxCamera = "1.2.3"
 androidxCarApp = "1.2.0"
@@ -40,48 +41,58 @@ androidxCollection = "1.2.0"
 androidxConcurrent = "1.1.0"
 # AndroidX Constraint
 androidxConstraint = "2.1.4"
-androidxConstraintCompose = "1.1.0-alpha10"
+androidxConstraintCompose = "1.1.0-alpha12"
 ## C
 androidxContentPager = "1.0.0"
-androidXCoordinatorLayout = "1.2.0"
-androidxCore = "1.10.1"
-androidxCoreUWB = "1.0.0-alpha05"
-androidxCredentials = "1.2.0-alpha05"
+androidxCoordinatorLayout = "1.2.0"
+androidxCore = "1.12.0"
+androidxCoreUWB = "1.0.0-alpha07"
+androidxCredentials = "1.2.0-beta04"
 androidxCursorAdapter = "1.0.0"
 # AndroidX CustomView
 androidxCustomView = "1.1.0"
 androidxCustomViewPollingContainer = "1.0.0"
 ## D
+androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
 androidxDatastore = "1.0.0"
+androidxDocumentFile = "1.0.1"
+androidxDragAndDrop = "1.0.0"
+androidxDrawerLayout = "1.2.0"
+androidxDynamicAnimation = "1.1.0-alpha03"
+## Emoji
+androidxEmoji = "1.1.0"
+androidxEmoji2 = "1.4.0"
+## E
 androidxExifInterface = "1.3.6"
-androidxFragment = "1.6.0"
+androidxEnterprise = "1.1.0"
+androidxFragment = "1.6.1"
 ## Glance
-androidxGlance = "1.0.0-rc01"  # For Glance, AppWidgets
+androidxGlance = "1.0.0"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha05"
 ## L
 androidxLegacySupport = "1.0.0"
-androidxLifecycle = "2.6.1"
+androidxLifecycle = "2.6.2"
 ## M
-androidxMedia3 = "1.1.0"
+androidxMedia3 = "1.1.1"
 ## N
-androidxNavigation = "2.6.0"
+androidxNavigation = "2.7.3"
 # AndroidX Paging
-androidxPaging = "3.1.1"
-androidxPagingCompose = "3.2.0-rc01"
+androidxPaging = "3.2.1"
+androidxPagingCompose = "3.3.0-alpha02"
 # P
-androidxPreference = "1.2.0"
+androidxPreference = "1.2.1"
 ## W
 androidxWorkManager = "2.8.1"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.9.1"
 # Compose
-composeDefault = "1.4.3" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.5.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeActivity = "1.7.2"
 composeAccompanist = "0.31.3-beta"
-composeCompiler = "1.4.8"
+composeCompiler = "1.5.3"
 composeLifecycle = "2.6.1"
-composeMaterial3 = "1.1.1"
+composeMaterial3 = "1.1.2"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
 # Image loader
@@ -90,10 +101,6 @@ coil = "2.2.1"
 sagarCororutinePermission = "2.0.2"
 # Navigation
 velordMultipleBackstack = "0.3.0"
-junit = "4.13.2"
-androidx-test-ext-junit = "1.1.5"
-espresso-core = "3.5.1"
-material = "1.9.0"
 
 
 [libraries]
@@ -107,13 +114,18 @@ androidx-asynclayoutinflater = { module = "androidx.asynclayoutinflater:asynclay
 androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidxAutoFill" }
 androidx-benchmark = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidxBenchmark" }
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "androidxBiometric" }
+androidx-bluetooth = { module = "androidx.bluetooth:bluetooth", version.ref = "androidxBluetooth" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "androidXCardView" }
 androidx-contentpager = { module = "androidx.contentpager:contentpager", version.ref = "androidxContentPager" }
-androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "androidXCoordinatorLayout" }
+androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "androidxCoordinatorLayout" }
 androidx-core-uwb = { module = "androidx.core.uwb:uwb", version.ref = "androidxCoreUWB" }
 androidx-cursoradapter = { module = "androidx.cursoradapter:cursoradapter", version.ref = "androidxCursorAdapter" }
-androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
+androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
+androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "androidxDocumentFile" }
+androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
+androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "androidxDrawerLayout" }
+androidx-enterprise = { module = "androidx.enterprise:enterprise-feedback", version.ref = "androidxEnterprise" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
 # AndroidX Activity
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
@@ -139,6 +151,13 @@ androidx-credentials-below13 = { module = "androidx.credentials:credentials-play
 # AndroidX CustomView
 androidx-customview = { module = "androidx.customview:customview", version.ref = "androidxCustomView" }
 androidx-customview-pollingcontainer = { module = "androidx.customview:customview-poolingcontainer", version.ref = "androidxCustomViewPollingContainer" }
+# AndroidX Emoji
+androidx-emoji = { module = "androidx.emoji:emoji", version.ref = "androidxEmoji" }
+androidx-emoji-appcompat = { module = "androidx.emoji:emoji-appcompat", version.ref = "androidxEmoji" }
+androidx-emoji-bundled = { module = "androidx.emoji:emoji-bundled", version.ref = "androidxEmoji" }
+androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "androidxEmoji2" }
+androidx-emoji2-views = { module = "androidx.emoji2:emoji2-views", version.ref = "androidxEmoji2" }
+androidx-emoji2-views-helper = { module = "androidx.emoji2:emoji2-views-helper", version.ref = "androidxEmoji2" }
 # AndroidX Glance
 androidx-glance = { module = "androidx.glance:glance", version.ref = "androidxGlance" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidxGlance" }
@@ -173,6 +192,7 @@ androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore
 androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreference" }
 androidx-collection = { module = "androidx.collection:collection-ktx", version.ref = "androidxCollection" }
 androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
+androidx-dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation-ktx", version.ref = "androidxDynamicAnimation" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
@@ -234,10 +254,6 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 # Navigation
 velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [bundles]
@@ -246,11 +262,13 @@ androidx-other = [
     "androidx-ads-identifier", "androidx-annotation",
     "androidx-appcompat", "androidx-appsearch",
     "androidx-asynclayoutinflater", "androidx-autofill",
-    "androidx-benchmark", "androidx-biometric", "androidx-browser",
+    "androidx-benchmark", "androidx-biometric",
+    "androidx-bluetooth", "androidx-browser",
     "androidx-cardview", "androidx-contentpager",
-    "androidx-coordinatorlayout", "androidx-core-uwb",
-    "androidx-cursoradapter",
-    "androidx-datastore-preferences", "androidx-exifinterface",
+    "androidx-coordinatorlayout", "androidx-core-uwb", "androidx-cursoradapter",
+    "androidx-datastore", "androidx-documentfile",
+    "androidx-draganddrop", "androidx-drawerlayout",
+    "androidx-enterprise", "androidx-exifinterface",
 ]
 # AndroidX Activity
 androidx-activity = ["androidx-activity-ktx", "androidx-activity-compose"]
@@ -269,6 +287,13 @@ androidx-constraint = ["androidx-constraint", "androidx-constraint-compose"]
 androidx-credentials = ["androidx-credentials", "androidx-credentials-below13"]
 # AndroidX CustomView
 androidx-customview = ["androidx-customview", "androidx-customview-pollingcontainer"]
+# AndroidX Emoji
+androidx-emoji = ["androidx-emoji", "androidx-emoji-appcompat", "androidx-emoji-bundled"]
+androidx-emoji2 = ["androidx-emoji2", "androidx-emoji2-views", "androidx-emoji2-views-helper"]
+androidx-emoji-all = [
+    "androidx-emoji", "androidx-emoji-appcompat", "androidx-emoji-bundled",
+    "androidx-emoji2", "androidx-emoji2-views", "androidx-emoji2-views-helper"
+]
 # AndroidX Glance
 androidx-glance = ["androidx-glance", "androidx-glance-appwidget", "androidx-glance-weartiles"]
 # AndroidX Lifecycle
@@ -295,8 +320,6 @@ androidx-navigation = [
     "androidx-navigation-fragment", "androidx-navigation-ui",
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose"
 ]
-# AndroidX Media3
-androidx-media3 = ["androidx-media3-exoplayer"]
 # AndroidX Paging
 androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
 # AndroidX WorkManager
@@ -308,7 +331,8 @@ androidx-workmanager = [
 androidx-ktx = [
     "androidx-fragment", "androidx-core",
     "androidx-preference", "androidx-collection",
-    "androidx-concurrent"
+    "androidx-concurrent",
+    # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
 ]
 # AndroidX Module
 androidx-module = [
@@ -323,21 +347,27 @@ androidx-module = [
 ]
 # AndroidX All
 androidx-all = [
-    # AndroidX Activity
-    "androidx-activity-ktx", "androidx-activity-compose",
-    # AndroidX Arch Core
-    "androidx-arch-common", "androidx-arch-runtime", "androidx-arch-testing",
     # AndroidX Other
     "androidx-ads-identifier", "androidx-annotation",
     "androidx-appcompat", "androidx-appsearch",
     "androidx-asynclayoutinflater", "androidx-autofill",
-    "androidx-benchmark", "androidx-biometric", "androidx-browser",
+    "androidx-benchmark", "androidx-biometric",
+    # "androidx-bluetooth", uses-sdk:minSdkVersion cannot be smaller than version 33 declared
+    "androidx-browser",
     "androidx-cardview", "androidx-contentpager",
     "androidx-coordinatorlayout",
-    # Manifest merger failed : uses-sdk:minSdkVersion 29 cannot be smaller than version 31 declared in library [androidx.core.uwb:uwb:1.0.0-alpha05]
-    #"androidx-core-uwb",
+    "androidx-core-uwb",
     "androidx-cursoradapter",
-    "androidx-datastore-preferences", "androidx-exifinterface",
+    "androidx-datastore", "androidx-documentfile",
+    "androidx-draganddrop", "androidx-drawerlayout",
+    "androidx-enterprise", "androidx-exifinterface",
+    "androidx-media3-exoplayer",
+
+
+    # AndroidX Activity
+    "androidx-activity-ktx", "androidx-activity-compose",
+    # AndroidX Arch Core
+    "androidx-arch-common", "androidx-arch-runtime", "androidx-arch-testing",
     # AndroidX Camera
     "androidx-camera-lifecycle", "androidx-camera-video",
     "androidx-camera-view", "androidx-camera-extension",
@@ -349,6 +379,9 @@ androidx-all = [
     "androidx-credentials", "androidx-credentials-below13",
     # AndroidX CustomView
     "androidx-customview", "androidx-customview-pollingcontainer",
+    # AndroidX Emoji
+    "androidx-emoji", "androidx-emoji-appcompat", "androidx-emoji-bundled",
+    "androidx-emoji2", "androidx-emoji2-views", "androidx-emoji2-views-helper",
     # AndroidX Glance
     "androidx-glance", "androidx-glance-appwidget", "androidx-glance-weartiles",
     # AndroidX Lifecycle
@@ -360,8 +393,6 @@ androidx-all = [
     # AndroidX Navigation
     "androidx-navigation-fragment", "androidx-navigation-ui",
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
-    # AndroidX Media3
-    "androidx-media3-exoplayer",
     # AndroidX Paging
     "androidx-paging-runtime", "androidx-paging-compose",
     # AndroidX WorkManager
@@ -369,7 +400,9 @@ androidx-all = [
     "androidx-workmanager-multiprocess",
     # AdnroidX KTX
     "androidx-fragment", "androidx-core",
-    "androidx-preference", "androidx-collection", "androidx-concurrent",
+    "androidx-preference", "androidx-collection",
+    "androidx-concurrent",
+    # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
 ]
 # Kotlin
 kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
