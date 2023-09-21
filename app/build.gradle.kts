@@ -43,6 +43,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        resourceConfigurations += listOf("en")
     }
 
     buildTypes {
@@ -134,18 +136,19 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.androidx.datastore.preferences)
     implementation(libs.bundles.network)
     implementation(libs.bundles.coil)
     // Compose
     implementation(libs.bundles.compose.all)
     // DI
     implementation(libs.bundles.dagger.all)
-    implementation(libs.androidx.glance.appwidget)
     kapt(libs.bundles.dagger.kapt)
     kapt(libs.hilt.compiler)
-    // Permission
-    implementation(libs.sagar.coroutine.permission)
+    // Other
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.glance.appwidget)
+
+    implementation(libs.bundles.androidx.all)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
