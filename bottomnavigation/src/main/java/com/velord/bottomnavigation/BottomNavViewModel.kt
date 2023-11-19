@@ -1,13 +1,13 @@
 package com.velord.bottomnavigation
 
 import androidx.navigation.NavDestination
+import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.multiplebackstackapplier.utils.isCurrentStartDestination
-import com.velord.util.viewModel.BaseViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class BottomNavViewModel : BaseViewModel() {
+class BottomNavViewModel : CoroutineScopeViewModel() {
 
     val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)
     val isBackHandlingEnabledFlow = MutableStateFlow(false)

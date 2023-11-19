@@ -120,17 +120,22 @@ android {
 
 dependencies {
     // Module
-    implementation(project(":backend"))
     implementation(project(":model"))
-    implementation(project(":datastore"))
     implementation(project(":util"))
+
+    implementation(project(":backend"))
+    implementation(project(":datastore"))
+
+    implementation(project(":sharedviewmodel"))
     implementation(project(":uicore"))
+
     implementation(project(":camerarecording"))
     implementation(project(":bottomnavigation"))
     implementation(project(":shapedemo"))
     implementation(project(":modifierdemo"))
     implementation(project(":flowsummator"))
     implementation(project(":settings"))
+
     implementation(project(":widgetrefreshableimage"))
     implementation(project(":widgetcounter"))
     // Templates

@@ -22,12 +22,12 @@
 
     <fragment
         android:id="@+id/modifierDemoFragment"
-        android:name="com.example.modifierdemo.ModifierDemoFragment"
+        android:name="com.velord.modifierdemo.ModifierDemoFragment"
         android:label="ModifierDemoFragment" />
 
     <fragment
         android:id="@+id/flowSummatorFragment"
-        android:name="com.example.windyappflowsummator.FlowSummatorFragment"
+        android:name="com.velord.windyappflowsummator.FlowSummatorFragment"
         android:label="FlowSummatorFragment" />
 
     <fragment

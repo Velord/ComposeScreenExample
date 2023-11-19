@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.widgetnewimage"
+    namespace = "com.velord.refreshableimage"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 

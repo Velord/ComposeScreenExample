@@ -4,7 +4,7 @@ import android.content.Context
 import com.velord.util.context.createDirInCacheOrFilesDir
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 private const val DEFAULT_DIR_NAME = "videos"
 private const val DEFAULT_DATE_FORMAT_PATTERN = "yyyy-MM-dd-HH-mm-ss-SSS"
@@ -24,11 +24,11 @@ value class FileName(val value: String) {
         simpleDateFormatPattern: String = DEFAULT_DATE_FORMAT_PATTERN,
         extension: String = DEFAULT_EXT,
     ) : this(
-        createFileName(simpleDateFormatPattern, extension)
+        invoke(simpleDateFormatPattern, extension)
     )
 
     companion object {
-        fun createFileName(
+        fun invoke(
             simpleDateFormatPattern: String,
             extension: String,
         ): String = SimpleDateFormat(
@@ -55,7 +55,7 @@ value class NewFile(val value: File) {
     ) : this(
         File(
             dir.value,
-            FileName.createFileName(simpleDateFormatPattern, extension)
+            FileName.invoke(simpleDateFormatPattern, extension)
         )
     )
 }

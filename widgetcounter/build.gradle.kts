@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.widgetcounter"
+    namespace = "com.velord.widgetcounter"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 

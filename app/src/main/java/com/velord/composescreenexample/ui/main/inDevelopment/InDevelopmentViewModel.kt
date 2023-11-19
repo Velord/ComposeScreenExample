@@ -1,12 +1,12 @@
 package com.velord.composescreenexample.ui.main.inDevelopment
 
+import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.composescreenexample.R
 import com.velord.util.navigation.NavigationData
-import com.velord.util.viewModel.BaseViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
-class InDevelopmentViewModel : BaseViewModel() {
+class InDevelopmentViewModel : CoroutineScopeViewModel() {
 
     val navigationEvent = MutableSharedFlow<NavigationData>()
 
