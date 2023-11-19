@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":uicore"))
     implementation(project(":settings"))
+    implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)

@@ -25,8 +25,6 @@ android {
 }
 
 dependencies {
-    // Module
-    implementation(project(":util"))
     // Templates
     implementation(libs.bundles.androidx.activity)
     implementation(libs.bundles.kotlin.core)

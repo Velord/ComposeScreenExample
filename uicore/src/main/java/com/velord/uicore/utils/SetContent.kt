@@ -15,10 +15,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.sharedviewmodel.Theme
+import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.compose.theme.MainTheme
 import com.velord.util.context.getActivity
-import com.velord.util.viewModel.ThemeSwitcher
-import com.velord.util.viewModel.ThemeViewModel
+import com.velord.util.settings.ThemeConfig
 
 fun ComponentActivity.setContentWithTheme(
     screen: @Composable ComposeView.() -> Unit
@@ -37,15 +38,15 @@ fun ComposeView.setContentWithTheme(
     setContent {
         val activity = LocalContext.current.getActivity()
         val themeViewModel = viewModel<ThemeViewModel>(activity as ViewModelStoreOwner)
-        val themeSwitcherState: State<ThemeSwitcher?> = themeViewModel.themeSwitcherFlow
+        val themeState: State<Theme?> = themeViewModel.themeFlow
             .collectAsStateWithLifecycle()
 
-        val themeSwitcher = themeSwitcherState.value ?: ThemeSwitcher.considerSystem()
-        CompositionLocalProvider(LocalThemeSwitcher provides themeSwitcher) {
-            val localThemeSwitcher = LocalThemeSwitcher.current
+        val theme = themeState.value ?: Theme.considerSystem()
+        CompositionLocalProvider(LocalTheme provides theme) {
+            val localThemeSwitcher = LocalTheme.current
             MainTheme(
-                useDarkTheme = localThemeSwitcher.useDarkTheme,
-                dynamicColor = localThemeSwitcher.useDynamicColor
+                useDarkTheme = localThemeSwitcher.config.useDarkTheme,
+                dynamicColor = localThemeSwitcher.config.useDynamicColor
             ) {
                 screen()
             }
@@ -54,9 +55,12 @@ fun ComposeView.setContentWithTheme(
 }
 
 @Composable
-fun ThemeSwitcher.Companion.considerSystem(): ThemeSwitcher = ThemeSwitcher(
-    useDarkTheme = isSystemInDarkTheme(),
-    useDynamicColor = false
+private fun Theme.Companion.considerSystem(): Theme = Theme(
+    config = ThemeConfig(
+        useDarkTheme = isSystemInDarkTheme(),
+        useDynamicColor = false
+    ),
+    isSystemDynamicColorAvailable = false
 )
 
-val LocalThemeSwitcher = staticCompositionLocalOf { ThemeSwitcher.DEFAULT }
+val LocalTheme = staticCompositionLocalOf { Theme.DEFAULT }

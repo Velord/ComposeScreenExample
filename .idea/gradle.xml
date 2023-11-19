@@ -4,10 +4,8 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="corretto-17" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -21,11 +19,14 @@
             <option value="$PROJECT_DIR$/modifierdemo" />
             <option value="$PROJECT_DIR$/settings" />
             <option value="$PROJECT_DIR$/shapedemo" />
+            <option value="$PROJECT_DIR$/sharedviewmodel" />
             <option value="$PROJECT_DIR$/uicore" />
             <option value="$PROJECT_DIR$/util" />
-            <option value="$PROJECT_DIR$/widgetnewimage" />
+            <option value="$PROJECT_DIR$/widgetcounter" />
+            <option value="$PROJECT_DIR$/widgetrefreshableimage" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

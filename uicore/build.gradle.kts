@@ -41,6 +41,7 @@ dependencies {
     // Modules
     implementation(project(":util"))
     implementation(project(":model"))
+    implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.androidx.module)

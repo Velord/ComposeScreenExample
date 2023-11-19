@@ -11,12 +11,12 @@ import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
+import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.camerarecording.model.createRecordingViaMediaStore
-import com.velord.model.file.FileName
 import com.velord.model.profile.UserProfile
+import com.velord.util.file.FileName
 import com.velord.util.navigation.NavigationData
 import com.velord.util.permission.PermissionState
-import com.velord.util.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CameraRecordingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-) : BaseViewModel() {
+) : CoroutineScopeViewModel() {
     // Permission
     val permissionFlow = MutableStateFlow(PermissionState.NotAsked)
     // User interaction
@@ -85,7 +85,7 @@ class CameraRecordingViewModel @Inject constructor(
 
     fun onNewRecording(newCapture: VideoCapture<Recorder>) {
         val newRecording = context.createRecordingViaMediaStore(
-            fileName = FileName.invoke(),
+            fileName = FileName(),
             videoCapture = newCapture,
             audioEnabled = videoIsAudioEnabledFlow.value,
             consumer = ::onVideoRecordEvent,

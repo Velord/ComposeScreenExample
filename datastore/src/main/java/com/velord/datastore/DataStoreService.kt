@@ -1,32 +1,39 @@
 package com.velord.datastore
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
+import com.velord.util.settings.AppSettings
+import com.velord.util.settings.ThemeConfig
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 interface DataStoreService {
     suspend fun checkAppFirstLaunch(): Boolean
-}
-
-private object Keys {
-    val FIRST_LAUNCH = booleanPreferencesKey("compose_screen_example.first_launch")
+    suspend fun setThemeConfig(theme: ThemeConfig)
+    suspend fun getThemeConfig(): ThemeConfig
 }
 
 class DataStoreServiceImpl(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<AppSettings>
 ) : DataStoreService {
 
     private suspend fun setFirstLaunch() {
-        dataStore.edit { preferences ->
-            preferences[Keys.FIRST_LAUNCH] = false
+        dataStore.updateData {
+            it.copy(isAppFirstLaunch = true)
         }
     }
 
-    override suspend fun checkAppFirstLaunch(): Boolean = dataStore.data.map { preferences ->
-        val isFirstLaunch = (preferences[Keys.FIRST_LAUNCH] ?: true)
+    override suspend fun checkAppFirstLaunch(): Boolean = dataStore.data.map {
+        val isFirstLaunch = it.isAppFirstLaunch
         if (isFirstLaunch) setFirstLaunch()
 
         isFirstLaunch
     }.first()
+
+    override suspend fun setThemeConfig(theme: ThemeConfig) {
+       dataStore.updateData {
+           it.copy(theme = theme)
+       }
+    }
+
+    override suspend fun getThemeConfig(): ThemeConfig = dataStore.data.first().theme
 }

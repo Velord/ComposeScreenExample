@@ -6,7 +6,7 @@ import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
-import com.velord.util.viewModel.ThemeSwitcher
+import com.velord.util.settings.ThemeConfig
 
 interface GlanceWidgetThemeSustainer <T : GlanceAppWidget> {
     val name: Class<T>
@@ -15,13 +15,13 @@ interface GlanceWidgetThemeSustainer <T : GlanceAppWidget> {
 
 suspend fun List<GlanceWidgetThemeSustainer<*>>.updateAll(
     context: Context,
-    themeSwitcher: ThemeSwitcher
+    themeConfig: ThemeConfig
 ) {
     val manager = GlanceAppWidgetManager(context)
     this.forEach { kClassGlanceWidget ->
         manager.getGlanceIds(kClassGlanceWidget.name).forEach {
             updateAppWidgetState(context, it) { prefs ->
-                prefs[kClassGlanceWidget.useDarkThemePreferenceKey] = themeSwitcher.useDarkTheme
+                prefs[kClassGlanceWidget.useDarkThemePreferenceKey] = themeConfig.useDarkTheme
             }
         }
         (kClassGlanceWidget as GlanceAppWidget).updateAll(context)

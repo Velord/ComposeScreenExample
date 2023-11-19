@@ -6,13 +6,16 @@ include(":model")
 include(":backend")
 include(":datastore")
 
+include(":sharedviewmodel")
 include(":uicore")
+
 include(":camerarecording")
 include(":bottomnavigation")
 include(":shapedemo")
 include(":modifierdemo")
 include(":flowsummator")
 include(":settings")
+
 include(":widgetrefreshableimage")
 include(":widgetcounter")
 

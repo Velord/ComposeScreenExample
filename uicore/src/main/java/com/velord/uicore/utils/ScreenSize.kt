@@ -4,7 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.velord.model.utils.ScreenSize
+
+data class ScreenSize(
+    val width: Number,
+    val height: Number
+)
 
 @Composable
 fun getScreenWidthAndHeightInDp(): ScreenSize {

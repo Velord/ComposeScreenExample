@@ -2,6 +2,7 @@ plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
     id(libs.plugins.kotlin.kapt.get().pluginId)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
@@ -30,8 +31,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":model"))
+    // Modules
+    implementation(project(":util"))
+    // Templates
     implementation(libs.androidx.datastore)
+    implementation(libs.kotlin.serialization.json)
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo

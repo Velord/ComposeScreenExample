@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.modifierdemo"
+    namespace = "com.velord.modifierdemo"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 

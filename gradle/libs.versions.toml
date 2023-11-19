@@ -4,12 +4,12 @@ minApi = "29"
 targetApi = "34"
 # Build
 buildTools = "30.0.3"
-gradle = "8.2.0-beta04"
+gradle = "8.2.0-rc03"
 jvmTarget = "1.8"
 # DI
 dagger = "2.46.1"
 hilt = "2.46.1"
-hiltNavigation = "1.0.0"
+hiltNavigation = "1.1.0"
 # Kotlin
 kotlin = "1.9.10"
 coroutine = "1.7.1"
@@ -20,7 +20,7 @@ kotlinJsonSerializationRetrofitConverter = "1.0.0"
 googleGuava = "32.0.0-android"
 # AndroidX
 ## A
-androidxActivity = "1.7.2"
+androidxActivity = "1.8.1"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.7.0"
 androidxAppCompat = "1.6.1"
@@ -29,19 +29,19 @@ androidxArchCore = "2.2.0"
 androidxAsyncLayoutInflater = "1.0.0"
 androidxAutoFill = "1.1.0"
 ## B
-androidxBenchmark = "1.1.1"
+androidxBenchmark = "1.2.1"
 androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha01"
-androidxBrowser = "1.6.0"
+androidxBrowser = "1.7.0"
 ## C
 androidxCamera = "1.2.3"
 androidxCarApp = "1.2.0"
 androidXCardView = "1.0.0"
-androidxCollection = "1.2.0"
+androidxCollection = "1.3.0"
 androidxConcurrent = "1.1.0"
 # AndroidX Constraint
 androidxConstraint = "2.1.4"
-androidxConstraintCompose = "1.1.0-alpha12"
+androidxConstraintCompose = "1.1.0-alpha13"
 ## C
 androidxContentPager = "1.0.0"
 androidxCoordinatorLayout = "1.2.0"
@@ -65,7 +65,7 @@ androidxEmoji2 = "1.4.0"
 ## E
 androidxExifInterface = "1.3.6"
 androidxEnterprise = "1.1.0"
-androidxFragment = "1.6.1"
+androidxFragment = "1.6.2"
 ## Glance
 androidxGlance = "1.0.0"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha05"
@@ -73,7 +73,7 @@ androidxGlanceWearTiles = "1.0.0-alpha05"
 androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.6.2"
 ## M
-androidxMedia3 = "1.1.1"
+androidxMedia3 = "1.2.0"
 ## N
 androidxNavigation = "2.7.3"
 # AndroidX Paging
@@ -85,7 +85,7 @@ androidxPreference = "1.2.1"
 androidxWorkManager = "2.8.1"
 # Network
 squareRetrofit = "2.9.0"
-squareOkhttp3Interceptor = "4.9.1"
+squareOkhttp3Interceptor = "4.10.0"
 # Compose
 composeDefault = "1.5.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeActivity = "1.7.2"

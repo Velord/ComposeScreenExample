@@ -12,9 +12,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
+import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
-import com.velord.util.viewModel.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -94,8 +94,8 @@ class MainActivity : AppCompatActivity() {
     private fun initObserving() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                themeViewModel.themeSwitcherFlow.collect { themeSwitcher ->
-                    viewModel.updateTheme(themeSwitcher)
+                themeViewModel.themeFlow.collect { theme ->
+                    viewModel.updateTheme(theme?.config)
                 }
             }
         }

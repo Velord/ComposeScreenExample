@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.settings"
+    namespace = "com.velord.settings"
     compileSdk = 33
 
     compileSdk = libs.versions.targetApi.get().toInt()
@@ -38,6 +38,7 @@ dependencies {
     // Modules
     implementation(project(":util"))
     implementation(project(":uicore"))
+    implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.ktx)
