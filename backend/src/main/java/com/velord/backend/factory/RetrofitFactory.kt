@@ -37,11 +37,11 @@ fun OkHttpClient(
     }
     .build()
 
-fun LoggingInterceptor(): Interceptor = HttpLoggingInterceptor().apply {
+fun createLoggingInterceptor(): Interceptor = HttpLoggingInterceptor().apply {
     level = HttpLoggingInterceptor.Level.BODY
 }
 
-fun ConverterFactory(): Converter.Factory {
+fun createConverterFactory(): Converter.Factory {
     val media: MediaType = "application/json; charset=utf-8".toMediaType()
     return json.asConverterFactory(media)
 }

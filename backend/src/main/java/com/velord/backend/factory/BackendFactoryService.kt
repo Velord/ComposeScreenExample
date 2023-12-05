@@ -25,12 +25,12 @@ class BackendFactoryServiceImpl(
             HeaderInterceptor(context) as Interceptor
         ).also {
             if (enableLogging) {
-                it.add(LoggingInterceptor())
+                it.add(createLoggingInterceptor())
             }
         }
         OkHttpClient(*interceptors.toTypedArray())
     }
-    private val retrofit = Retrofit(baseUrl, okHttpClient, ConverterFactory())
+    private val retrofit = Retrofit(baseUrl, okHttpClient, createConverterFactory())
 
     override fun authService(): AuthService = AuthServiceImpl(retrofit.create())
 }

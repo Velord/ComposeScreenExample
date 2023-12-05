@@ -35,14 +35,16 @@ fun AnimatableLabeledIcon(
         animationSpec = TweenSpec(
             durationMillis = animateDuration,
             easing = FastOutSlowInEasing
-        )
+        ),
+        label = "AnimatableLabeledIcon scale"
     )
     val animatedColor by animateColorAsState(
         targetValue = color,
         animationSpec = TweenSpec(
             durationMillis = animateDuration,
             easing = FastOutSlowInEasing
-        )
+        ),
+        label = "AnimatableLabeledIcon color"
     )
 
     Column(

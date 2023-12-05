@@ -24,11 +24,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.velord.bottomnavigation.databinding.FragmentBottomNavBinding
-import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.MultipleBackstack
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
+import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
@@ -127,7 +127,7 @@ private fun Content(
             .navigationBarsPadding()
             .height(72.dp),
     ) {
-        BottomNavigationItem.values().forEach {
+        BottomNavigationItem.entries.forEach {
             val isSelected = selectedItem == it
             NavigationBarItem(
                 selected = isSelected,

@@ -15,7 +15,7 @@ interface NavigationBundleDelegate<out T, in R> {
     operator fun provideDelegate(thisRef: R, prop: KProperty<*>): Lazy<T>
 }
 
-inline fun <reified T, R: LifecycleOwner> R.createNavigationBundleDelegate(
+inline fun <reified T, R: LifecycleOwner> createNavigationBundleDelegate(
     crossinline getBundle: R.() -> Bundle
 ): NavigationBundleDelegate<T, R> = object : NavigationBundleDelegate<T, R> {
     override fun provideDelegate(thisRef: R, prop: KProperty<*>): Lazy<T> = lazy {

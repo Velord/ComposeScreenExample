@@ -1,6 +1,4 @@
-package com.velord.composescreenexample.ui.compose.preview
-
-import com.velord.uicore.compose.preview.PreviewDevice
+package com.velord.uicore.compose.preview
 
 @PreviewFontScale
 @PreviewDevice
