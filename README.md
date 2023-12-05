@@ -10,7 +10,7 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
    * [Shimmering](#shimmering)
    * [BlinkingShadow](#blinking-shadow)
    * [Hanging](#hanging)
-   * [Swoling](#swoling)
+   * [Swelling](#swelling)
 * [Glance Widget Demo](#glance-widget-demo)
     * [Synced Theme](#synced-theme-with-app)
     * [Counter](#counter)
@@ -39,7 +39,7 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 #### 1. Modifier.shimmering()
 #### 2. Modifier.blinkingShadow()
 #### 3. Modifier.hanging()
-#### 4. Modifier.swoling()
+#### 4. Modifier.swelling()
 
 ### Shimmering
 1. Rainbow
@@ -245,22 +245,22 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 ```
 ![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/42720e4d-724d-440b-9c5d-c4f5a259aa54)
 
-### Swoling
+### Swelling
 1. Default
 ```
-.swoling()
+.swelling()
 ```
 ![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/4cc02032-f7f9-442c-9c25-de3bf128242f)
 
 2. OneAndAHalf
 ```
-.swoling(targetScale = 1.5f)
+.swelling(targetScale = 1.5f)
 ```
 ![ezgif com-crop](https://github.com/Velord/ComposeScreenExample/assets/33905170/037f85aa-deef-433e-abe3-6e0b0dd8c99c)
 
 3. HalfToOnePointTwo
 ```
-.swoling(
+.swelling(
     initialScale = 0.5f,
     targetScale = 1.2f,
     duration = 2000
@@ -270,7 +270,7 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 
 4. Bounce
 ```
-.swoling(
+.swelling(
     initialScale = 0.7f,
     targetScale = 1.1f,
     duration = 3000,
