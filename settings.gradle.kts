@@ -1,5 +1,7 @@
 include(":app")
 
+include(":resource")
+
 include(":util")
 include(":model")
 

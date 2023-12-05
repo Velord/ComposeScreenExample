@@ -14,6 +14,7 @@ import androidx.camera.video.VideoRecordEvent
 import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.camerarecording.model.createRecordingViaMediaStore
 import com.velord.model.profile.UserProfile
+import com.velord.resource.R
 import com.velord.util.file.FileName
 import com.velord.util.navigation.NavigationData
 import com.velord.util.permission.PermissionState
