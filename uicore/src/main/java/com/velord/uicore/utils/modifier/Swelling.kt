@@ -11,14 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 
-fun Modifier.swoling(
+fun Modifier.swelling(
     initialScale: Float = 1f,
     targetScale: Float = 1.3f,
     duration: Int = 1000,
     easing: Easing = LinearEasing,
     repeatMode: RepeatMode = RepeatMode.Reverse,
 ): Modifier = composed {
-    val valueState = rememberInfiniteTransition(label = "swoling").animateFloat(
+    val valueState = rememberInfiniteTransition(label = "swelling").animateFloat(
         initialValue = initialScale,
         targetValue = targetScale,
         animationSpec = infiniteRepeatable(
@@ -28,7 +28,7 @@ fun Modifier.swoling(
             ),
             repeatMode = repeatMode
         ),
-        label = "swoling animated value"
+        label = "swelling animated value"
     )
 
     this.then(

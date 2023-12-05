@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.windyappflowsummator.FlowSummatorViewModel.Companion.mapToCumulativeStringEachNumberByLine
 import kotlinx.coroutines.launch

@@ -16,10 +16,9 @@ val MainShapes = Shapes(
     extraLarge = RoundedCornerShape(24.dp)
 )
 
-fun TicketShape(cornerRadius: Float): Shape =
-    GenericShape { size, _ ->
-        addPath(ticketPath(cornerRadius, size))
-    }
+fun TicketShape(cornerRadius: Float): Shape = GenericShape { size, _ ->
+    addPath(ticketPath(cornerRadius, size))
+}
 
 fun ArcAtBottomCenterShape(
     progress: Int,

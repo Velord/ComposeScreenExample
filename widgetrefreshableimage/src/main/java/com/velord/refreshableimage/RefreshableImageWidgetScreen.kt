@@ -33,6 +33,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
+import com.velord.resource.R
 import com.velord.uicore.compose.glance.MainGlanceTheme
 import kotlin.math.roundToInt
 

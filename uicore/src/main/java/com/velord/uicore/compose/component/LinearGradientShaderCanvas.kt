@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName", "FunctionName")
+
 package com.velord.uicore.compose.component
 
 import android.graphics.RectF

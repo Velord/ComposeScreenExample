@@ -68,7 +68,7 @@ class FlowSummatorViewModel : CoroutineScopeViewModel() {
                 sumFlow.emit(BigInteger.ZERO)
                 launchSumJob = FlowCreator(
                     countOfFlowToCreate = flowCount,
-                    paralellism = true,
+                    parallelism = true,
                     onEmit = {
                         // The summing Flow must return a value after updating each of the N Flows
                         val newValue = getPrevEmittedValue() + it.toBigInteger()

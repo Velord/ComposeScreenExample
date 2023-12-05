@@ -49,7 +49,7 @@ private fun Content() {
         ShimmeringDemo()
         BlinkingShadowDemo()
         HangingDemo()
-        SwolingDemo()
+        SwellingDemo()
     }
 }
 
