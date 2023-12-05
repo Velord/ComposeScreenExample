@@ -13,7 +13,7 @@ class BottomNavViewModel : CoroutineScopeViewModel() {
     val isBackHandlingEnabledFlow = MutableStateFlow(false)
     val finishAppEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
 
-    fun getNavigationItems() = BottomNavigationItem.values().toList()
+    fun getNavigationItems() = BottomNavigationItem.entries
 
     fun onTabClick(newTab: BottomNavigationItem) {
         if (newTab == currentTabFlow.value) return

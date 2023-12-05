@@ -20,11 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.utils.modifier.swoling
+import com.velord.uicore.utils.modifier.swelling
 
 @Composable
-internal fun ColumnScope.SwolingDemo() {
-    Title(text = "Modifier.swoling")
+internal fun ColumnScope.SwellingDemo() {
+    Title(text = "Modifier.swelling")
     Default()
     OneAndAHalf()
     HalfToOnePointTwo()
@@ -40,7 +40,7 @@ private fun ColumnScope.Default() {
         modifier = Modifier
             .padding(8.dp)
             .align(Alignment.CenterHorizontally)
-            .swoling(),
+            .swelling(),
         tint = MaterialTheme.colorScheme.onSurface
     )
 }
@@ -53,7 +53,7 @@ private fun OneAndAHalf() {
             .fillMaxWidth()
             .padding(top = 16.dp)
             .padding(horizontal = 32.dp)
-            .swoling(targetScale = 1.5f),
+            .swelling(targetScale = 1.5f),
     ) {
         Text(
             text = "1.5X",
@@ -69,7 +69,7 @@ private fun HalfToOnePointTwo() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .swoling(
+            .swelling(
                 initialScale = 0.5f,
                 targetScale = 1.2f,
                 duration = 2000
@@ -90,7 +90,7 @@ private fun TitleWithBounce() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .swoling(
+            .swelling(
                 initialScale = 0.7f,
                 targetScale = 1.1f,
                 duration = 3000,
@@ -108,8 +108,8 @@ private fun TitleWithBounce() {
 
 @Preview
 @Composable
-private fun SwolingDemoPreview() {
+private fun SwellingDemoPreview() {
     Column {
-        SwolingDemo()
+        SwellingDemo()
     }
 }

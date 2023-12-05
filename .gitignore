@@ -1,13 +1,5 @@
-*.iml
 .gradle
-/local.properties
-.DS_Store
 /build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
-
 
 # Idea
 /.idea/caches
@@ -53,9 +45,3 @@ google-services.json
 
 # Android Profiling
 *.hprof
-
-# Other
-.DS_Store
-/captures
-.externalNativeBuild
-.cxx

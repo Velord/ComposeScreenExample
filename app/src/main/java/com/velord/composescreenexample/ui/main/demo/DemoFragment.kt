@@ -1,7 +1,6 @@
 package com.velord.composescreenexample.ui.main.demo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.findNavController
 import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
@@ -36,12 +34,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DemoFragment : Fragment() {
 
-    //private val viewModel by viewModels<DemoViewModel>()
-
-    private val viewModel by viewModels<DemoViewModel>(ownerProducer = {
-        Log.d("!!!", "ownerProducer: $parentFragment")
-        parentFragment as ViewModelStoreOwner
-    })
+    private val viewModel by viewModels<DemoViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
