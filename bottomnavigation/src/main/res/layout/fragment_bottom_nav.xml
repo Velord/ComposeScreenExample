@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav_bar_view"
-        app:navGraph="@id/bottom_nav_graph" />
+        app:navGraph="@navigation/bottom_nav_graph" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/bottom_nav_bar_view"

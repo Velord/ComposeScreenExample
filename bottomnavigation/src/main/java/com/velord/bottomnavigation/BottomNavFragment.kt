@@ -27,13 +27,14 @@ import com.velord.bottomnavigation.databinding.FragmentBottomNavBinding
 import com.velord.composescreenexample.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.MultipleBackstack
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
+import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
-import com.velord.uicore.R as RString
+import com.velord.bottomnavigation.R as RLayout
 
-class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
+class BottomNavFragment : Fragment(RLayout.layout.fragment_bottom_nav) {
 
     private val navController by lazy {
         childFragmentManager.fragments.first().findNavController()
@@ -103,7 +104,7 @@ private fun BottomNavScreen(viewModel: BottomNavViewModel) {
         onClick = viewModel::onTabClick,
     )
 
-    val str = stringResource(id = RString.string.press_again_to_exit)
+    val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),
