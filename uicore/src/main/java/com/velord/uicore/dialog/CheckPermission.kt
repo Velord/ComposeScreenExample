@@ -6,7 +6,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.velord.uicore.R
+import com.velord.resource.R
 import com.velord.util.context.createSettingsIntent
 
 private fun Fragment.showRationalePermission(

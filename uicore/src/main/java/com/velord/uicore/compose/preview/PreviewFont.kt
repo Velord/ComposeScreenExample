@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.compose.preview
+package com.velord.uicore.compose.preview
 
 import androidx.compose.ui.tooling.preview.Preview
 

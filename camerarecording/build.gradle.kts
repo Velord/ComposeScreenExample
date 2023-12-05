@@ -41,6 +41,7 @@ kapt {
 
 dependencies {
     // Modules
+    implementation(project(":resource"))
     implementation(project(":model"))
     implementation(project(":util"))
     implementation(project(":uicore"))

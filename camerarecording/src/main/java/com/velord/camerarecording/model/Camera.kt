@@ -11,7 +11,7 @@ import androidx.camera.video.*
 import androidx.camera.view.PreviewView
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
-import com.velord.uicore.R
+import com.velord.resource.R
 import com.velord.util.file.FileName
 import com.velord.util.file.NewFile
 import kotlin.coroutines.resume

@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val NAVIGATION_EXTRA = "navigation_extra"
-        val fragmentContainer = R.id.navHostFragment
+        val fragmentContainer = R.id.mainNavHostFragment
 
         fun startIntent(context: Context, bundle: Bundle) = Intent(
             context, MainActivity::class.java

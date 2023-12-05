@@ -52,15 +52,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.velord.camerarecording.model.createVideoCapture
-import com.velord.uicore.R
 import com.velord.uicore.dialog.checkRecordVideoPermission
 import com.velord.uicore.utils.setContentWithTheme
-import com.velord.util.context.createSettingsIntent
 import com.velord.util.fragment.navigate
 import com.velord.util.fragment.viewLifecycleScope
 import com.velord.util.permission.PermissionState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.velord.resource.R as Rres
 
 @AndroidEntryPoint
 class CameraRecordingFragment : Fragment() {
@@ -92,13 +91,6 @@ class CameraRecordingFragment : Fragment() {
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                     checkRecordVideoPermission()
-                }
-            }
-            launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.goToSettingsEvent.collect {
-                        startActivity(requireContext().createSettingsIntent())
-                    }
                 }
             }
             launch {
@@ -207,7 +199,7 @@ private fun PermissionIsNotGrantedState(onClick: () -> Unit) {
                 tint = MaterialTheme.colorScheme.error
             )
             Text(
-                text = stringResource(id = R.string.can_not_get_permission),
+                text = stringResource(id = Rres.string.can_not_get_permission),
                 modifier = Modifier
                     .padding(horizontal = 8.dp),
                 color = MaterialTheme.colorScheme.onPrimaryContainer,

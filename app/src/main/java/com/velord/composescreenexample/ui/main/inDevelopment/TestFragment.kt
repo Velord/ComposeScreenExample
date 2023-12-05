@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.velord.composescreenexample.ui.compose.screen.TestScreen
+import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
-import com.velord.uicore.R as RString
 
 @AndroidEntryPoint
 class TestFragment : Fragment() {
@@ -18,6 +18,6 @@ class TestFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        TestScreen(RString.string.test)
+        TestScreen(R.string.test)
     }
 }

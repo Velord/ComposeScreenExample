@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.velord.composescreenexample.R
 import com.velord.composescreenexample.ui.compose.screen.TestScreen
+import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
-import com.velord.uicore.R as RString
+import com.velord.composescreenexample.R as RNav
 
 @AndroidEntryPoint
 class CameraGraphFragment : Fragment() {
@@ -20,8 +20,8 @@ class CameraGraphFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        TestScreen(RString.string.open_new_camera) {
-            findNavController().navigate(R.id.toCameraRecordingFragment)
+        TestScreen(R.string.open_new_camera) {
+            findNavController().navigate(RNav.id.toCameraRecordingFragment)
         }
     }
 }

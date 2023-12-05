@@ -120,6 +120,8 @@ android {
 
 dependencies {
     // Module
+    implementation(project(":resource"))
+
     implementation(project(":model"))
     implementation(project(":util"))
 

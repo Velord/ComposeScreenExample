@@ -14,6 +14,7 @@ import androidx.camera.video.VideoRecordEvent
 import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.camerarecording.model.createRecordingViaMediaStore
 import com.velord.model.profile.UserProfile
+import com.velord.resource.R
 import com.velord.util.file.FileName
 import com.velord.util.navigation.NavigationData
 import com.velord.util.permission.PermissionState
@@ -31,7 +32,6 @@ class CameraRecordingViewModel @Inject constructor(
     // Permission
     val permissionFlow = MutableStateFlow(PermissionState.NotAsked)
     // User interaction
-    val goToSettingsEvent = MutableSharedFlow<Unit>()
     val checkPermissionEvent = MutableSharedFlow<Unit>()
     val navigationEvent = MutableSharedFlow<NavigationData>()
     // Adjustments
@@ -52,14 +52,9 @@ class CameraRecordingViewModel @Inject constructor(
         navigationEvent.emit(nav)
     }
 
-    fun onGoToSettingsClick() = launch {
-        goToSettingsEvent.emit(Unit)
-    }
-
     fun updatePermissionState(state: PermissionState) {
         permissionFlow.value = state
     }
-
 
     fun onCheckPermission() = launch {
         checkPermissionEvent.emit(Unit)

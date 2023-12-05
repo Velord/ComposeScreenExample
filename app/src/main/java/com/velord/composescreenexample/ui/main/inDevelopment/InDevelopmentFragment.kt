@@ -18,11 +18,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.activityNavController
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
-import com.velord.uicore.R as RString
 
 class InDevelopmentFragment : Fragment() {
 
@@ -75,7 +75,7 @@ private fun Content(
                 .align(Alignment.BottomCenter)
                 .padding(32.dp)
         ) {
-            Text(text = stringResource(id = RString.string.open_new))
+            Text(text = stringResource(id = R.string.open_new))
         }
     }
 }

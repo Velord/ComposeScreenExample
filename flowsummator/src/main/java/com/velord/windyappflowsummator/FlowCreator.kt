@@ -18,14 +18,14 @@ private const val DELAY_BEFORE_EMIT = 100L
 class FlowCreator(
     private val countOfFlowToCreate: Int,
     private val splitCreatingBy: Int = SPLIT_FLOW_CREATION_BY_CHUNK,
-    private val paralellism: Boolean = true,
+    private val parallelism: Boolean = true,
     private val onEmit: suspend (Int) -> Unit,
 ) {
     // It is necessary to create an array of Flow<Int> of N.
     private val flows = mutableListOf<Flow<Int>>()
 
     fun start(scope: CoroutineScope): Job = scope.launch {
-        val ranges = if (paralellism) {
+        val ranges = if (parallelism) {
             createRanges()
         } else {
             listOf(IntRange(0, countOfFlowToCreate))

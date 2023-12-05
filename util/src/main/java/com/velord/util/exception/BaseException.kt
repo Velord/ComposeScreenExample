@@ -2,8 +2,8 @@ package com.velord.util.exception
 
 sealed class BaseException(override val message: String? = null) : Exception(message) {
 
-    object Unknown : BaseException()
-    object NoInternet : BaseException()
+    data object Unknown : BaseException()
+    data object NoInternet : BaseException()
 
     sealed class Http(
         open val value: String
