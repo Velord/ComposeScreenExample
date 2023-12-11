@@ -46,7 +46,9 @@ internal class ImageParameters(
     }
 }
 
-class RefreshableImageWidget : GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout), GlanceWidgetThemeSustainer<RefreshableImageWidget> {
+class RefreshableImageWidget :
+    GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout),
+    GlanceWidgetThemeSustainer<RefreshableImageWidget> {
     // GlanceAppWidget
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
     override val sizeMode: SizeMode = SizeMode.Exact

@@ -143,7 +143,6 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.network)
     implementation(libs.bundles.coil)
     // Compose
     implementation(libs.bundles.compose.all)
@@ -154,7 +153,7 @@ dependencies {
     // Other
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)
-
+    // Only for test
     implementation(libs.bundles.androidx.all)
 }
 

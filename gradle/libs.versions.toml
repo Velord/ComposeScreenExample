@@ -7,11 +7,11 @@ buildTools = "30.0.3"
 gradle = "8.2.0"
 jvmTarget = "1.8"
 # DI
-dagger = "2.47"
-hilt = "2.46.1"
+dagger = "2.48"
+hilt = "2.48"
 hiltNavigation = "1.1.0"
 # Kotlin
-kotlin = "1.9.10"
+kotlin = "1.9.21"
 coroutine = "1.7.1"
 # Kotlin Serialization
 kotlinJsonSerialization = "1.5.0"
@@ -39,7 +39,7 @@ androidxCarApp = "1.2.0"
 androidXCardView = "1.0.0"
 androidxCollection = "1.3.0"
 androidxConcurrent = "1.1.0"
-# AndroidX Constraint
+## AndroidX Constraint
 androidxConstraint = "2.1.4"
 androidxConstraintCompose = "1.1.0-alpha13"
 ## C
@@ -76,11 +76,17 @@ androidxLifecycle = "2.6.2"
 androidxMedia3 = "1.2.0"
 ## N
 androidxNavigation = "2.7.5"
-# AndroidX Paging
+## AndroidX Paging
 androidxPaging = "3.2.1"
 androidxPagingCompose = "3.3.0-alpha02"
-# P
+## P
+androidXPalette = "1.0.0"
+androidXPercentLayout = "1.0.0"
 androidxPreference = "1.2.1"
+androidXPrint = "1.1.0-beta01"
+## Privacy Sandbox
+androidXPrivacySandboxActivity = "1.0.0-alpha01"
+androidXPrivacySandboxAds = "1.1.0-beta03"
 ## W
 androidxWorkManager = "2.9.0"
 # Network
@@ -88,10 +94,8 @@ squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.10.0"
 # Compose
 composeDefault = "1.5.4" # Foundation, Material, Animation, Ui, UiTooling, Runtime
-composeActivity = "1.7.2"
 composeAccompanist = "0.31.3-beta"
-composeCompiler = "1.5.3"
-composeLifecycle = "2.6.1"
+composeCompiler = "1.5.6"
 composeMaterial3 = "1.1.2"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
@@ -101,12 +105,6 @@ coil = "2.2.1"
 sagarCororutinePermission = "2.0.2"
 # Navigation
 velordMultipleBackstack = "0.3.0"
-junit = "4.13.2"
-androidx-test-ext-junit = "1.1.5"
-espresso-core = "3.5.1"
-material = "1.10.0"
-navigationFragmentKtx = "2.7.5"
-navigationUiKtx = "2.7.5"
 
 
 [libraries]
@@ -133,6 +131,8 @@ androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.re
 androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "androidxDrawerLayout" }
 androidx-enterprise = { module = "androidx.enterprise:enterprise-feedback", version.ref = "androidxEnterprise" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
+androidx-percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref = "androidXPercentLayout" }
+androidx-print =  { module = "androidx.print:print", version.ref = "androidXPrint" }
 # AndroidX Activity
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
@@ -174,7 +174,7 @@ androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", 
 # AndroidX Lifecycle Runtime
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
-# AndroidX Lifecycle Viemodel
+# AndroidX Lifecycle ViewModel
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidxLifecycle" }
@@ -188,6 +188,15 @@ androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", versi
 # AndroidX Paging
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
+# AndroidX Privacy Sandbox Activity
+# Could not find !!!
+androidx-privacysandbox-activity = { module = "androidx.privacysandbox.activity:activity", version.ref = "androidXPrivacySandboxActivity" }
+androidx-privacysandbox-activity-complications-datasource = { module = "androidx.privacysandbox.activity:activity-complications-data-source", version.ref = "androidXPrivacySandboxActivity" }
+androidx-privacysandbox-activity-complications-rendering = { module = "androidx.privacysandbox.activity:activity-complications-rendering", version.ref = "androidXPrivacySandboxActivity" }
+androidx-privacysandbox-activity-editor = { module = "androidx.privacysandbox.activity:activity-editor", version.ref = "androidXPrivacySandboxActivity" }
+# AndroidX Privacy Sandbox Ads
+androidx-privacysandbox-ads = { module = "androidx.privacysandbox.ads:ads-adservices", version.ref = "androidXPrivacySandboxAds" }
+androidx-privacysandbox-ads-java = { module = "androidx.privacysandbox.ads:ads-adservices-java", version.ref = "androidXPrivacySandboxAds" }
 # AndroidX WorkManager
 androidx-workmanager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxWorkManager" }
 androidx-workmanager-gcm = { module = "androidx.work:work-gcm", version.ref = "androidxWorkManager" }
@@ -199,6 +208,8 @@ androidx-preference = { module = "androidx.preference:preference-ktx", version.r
 androidx-collection = { module = "androidx.collection:collection-ktx", version.ref = "androidxCollection" }
 androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
 androidx-dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation-ktx", version.ref = "androidxDynamicAnimation" }
+# Could not find !!!
+androidx-privacysandbox-activity-complications-ktx = { module = "androidx.privacysandbox.activity:activity-complications-data-source-ktx", version.ref = "androidXPrivacySandboxActivity" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
@@ -223,16 +234,16 @@ compose-accompanist-pager-indicator = { module = "com.google.accompanist:accompa
 # Compose Foundation
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeDefault" }
 compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "composeDefault" }
-# Compose Ui
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeDefault" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeDefault" }
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeDefault" }
 # Compose Material
 compose-material = { module = "androidx.compose.material:material", version.ref = "composeDefault" }
 compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeDefault" }
 # Compose Material 3
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 compose-material3-window = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "composeMaterial3" }
+# Compose Ui
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeDefault" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeDefault" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeDefault" }
 # Compose 3-rd party
 compose-html = { module = "com.github.ireward:compose-html", version.ref = "composeHtmlIreward" }
 # DI Dagger ----------------------------------------------------------------------------------------
@@ -260,28 +271,10 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 # Navigation
 velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
-androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 
 
 [bundles]
 # AndroidX
-androidx-other = [
-    "androidx-ads-identifier", "androidx-annotation",
-    "androidx-appcompat", "androidx-appsearch",
-    "androidx-asynclayoutinflater", "androidx-autofill",
-    "androidx-benchmark", "androidx-biometric",
-    "androidx-bluetooth", "androidx-browser",
-    "androidx-cardview", "androidx-contentpager",
-    "androidx-coordinatorlayout", "androidx-core-uwb", "androidx-cursoradapter",
-    "androidx-datastore", "androidx-documentfile",
-    "androidx-draganddrop", "androidx-drawerlayout",
-    "androidx-enterprise", "androidx-exifinterface",
-]
 # AndroidX Activity
 androidx-activity = ["androidx-activity-ktx", "androidx-activity-compose"]
 # AndroidX Arch Core
@@ -334,6 +327,11 @@ androidx-navigation = [
 ]
 # AndroidX Paging
 androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
+# AndroidX Privacy Sandbox
+androidx-privacysandbox-all = [
+    "androidx-privacysandbox-activity", "androidx-privacysandbox-activity-editor",
+    "androidx-privacysandbox-activity-complications-datasource", "androidx-privacysandbox-activity-complications-rendering"
+]
 # AndroidX WorkManager
 androidx-workmanager = [
     "androidx-workmanager-runtime", "androidx-workmanager-gcm",
@@ -345,6 +343,7 @@ androidx-ktx = [
     "androidx-preference", "androidx-collection",
     "androidx-concurrent",
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
+    # Could not find !!!"androidx-privacysandbox-activity-complications-ktx"
 ]
 # AndroidX Module
 androidx-module = [
@@ -374,7 +373,8 @@ androidx-all = [
     "androidx-draganddrop", "androidx-drawerlayout",
     "androidx-enterprise", "androidx-exifinterface",
     "androidx-media3-exoplayer",
-
+    "androidx-percentlayout",
+    "androidx-print",
     # AndroidX Activity
     "androidx-activity-ktx", "androidx-activity-compose",
     # AndroidX Arch Core
@@ -406,6 +406,10 @@ androidx-all = [
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
     # AndroidX Paging
     "androidx-paging-runtime", "androidx-paging-compose",
+    # AndroidX Privacy Sandbox
+    # Could not find !!!
+#    "androidx-privacysandbox-activity", "androidx-privacysandbox-activity-editor",
+#    "androidx-privacysandbox-activity-complications-datasource", "androidx-privacysandbox-activity-complications-rendering",
     # AndroidX WorkManager
     "androidx-workmanager-runtime", "androidx-workmanager-gcm",
     "androidx-workmanager-multiprocess",
@@ -414,6 +418,7 @@ androidx-all = [
     "androidx-preference", "androidx-collection",
     "androidx-concurrent",
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
+    # Could not find !!! "androidx-privacysandbox-activity-complications-ktx"
 ]
 # Kotlin
 kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
