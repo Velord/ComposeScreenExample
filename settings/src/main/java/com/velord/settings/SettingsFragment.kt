@@ -45,7 +45,7 @@ class SettingsFragment : Fragment() {
 }
 
 @Composable
-private fun SettingsScreen(viewModel: ThemeViewModel) {
+internal fun SettingsScreen(viewModel: ThemeViewModel) {
     val themeSwitcher = LocalTheme.current
     Content(
         onChangeSystemTheme = { viewModel.changeSystemTheme(themeSwitcher) },
