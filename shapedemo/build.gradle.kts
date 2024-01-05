@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.bundles.androidx.activity)
     implementation(libs.bundles.androidx.lifecycle.runtime)
     implementation(libs.bundles.androidx.ktx)
+    implementation(libs.bundles.voyager)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)

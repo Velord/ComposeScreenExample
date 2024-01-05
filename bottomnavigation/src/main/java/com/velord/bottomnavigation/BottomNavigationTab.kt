@@ -57,7 +57,7 @@ sealed class BottomNavigationTab : Tab {
 
                 return remember {
                     TabOptions(
-                        index = 0u,
+                        index = 1u,
                         title = title,
                         icon = icon
                     )
@@ -66,11 +66,8 @@ sealed class BottomNavigationTab : Tab {
 
         @Composable
         override fun Content() {
-            Text(
-                text = stringResource(id = R.string.demo),
-                modifier = Modifier.padding(16.dp),
-                color = Color.Blue
-            )
+            val screen = rememberScreen(SharedScreen.BottomNavigationTab.Demo)
+            Navigator(screen)
         }
     }
 
@@ -83,7 +80,7 @@ sealed class BottomNavigationTab : Tab {
 
                 return remember {
                     TabOptions(
-                        index = 0u,
+                        index = 2u,
                         title = title,
                         icon = icon
                     )

@@ -1,9 +1,5 @@
-package com.velord.composescreenexample.ui.main.demo
+package com.velord.feature.demo
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,44 +18,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.velord.resource.R
-import com.velord.uicore.utils.setContentWithTheme
-import com.velord.util.fragment.viewLifecycleScope
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class DemoFragment : Fragment() {
-
-    private val viewModel by viewModels<DemoViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = setContentWithTheme {
-        DemoScreen(viewModel)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initObserving()
-    }
-
-    private fun initObserving() {
-        viewLifecycleScope.launch {
-            viewModel.navigationEvent.collect {
-                findNavController().navigate(it.id)
-            }
-        }
-    }
-}
+//@AndroidEntryPoint
+//class DemoFragment : Fragment() {
+//
+//    private val viewModel by viewModels<com.velord.feature.demo.DemoViewModel>()
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View = setContentWithTheme {
+//        DemoScreen(viewModel)
+//    }
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        initObserving()
+//    }
+//
+//    private fun initObserving() {
+//        viewLifecycleScope.launch {
+//            viewModel.navigationEvent.collect {
+//                findNavController().navigate(it.id)
+//            }
+//        }
+//    }
+//}
 
 @Composable
-private fun DemoScreen(viewModel: DemoViewModel) {
+internal fun DemoScreen(viewModel: DemoViewModel) {
     Content(
         onOpenShape = viewModel::onOpenShape,
         onOpenModifier = viewModel::onOpenModifier,

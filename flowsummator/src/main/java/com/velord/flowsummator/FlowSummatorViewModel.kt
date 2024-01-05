@@ -1,4 +1,4 @@
-package com.velord.windyappflowsummator
+package com.velord.flowsummator
 
 import com.example.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.Dispatchers

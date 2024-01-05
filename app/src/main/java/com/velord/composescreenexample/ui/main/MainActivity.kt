@@ -16,8 +16,12 @@ import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.composescreenexample.databinding.ActivityMainBinding
 import com.velord.composescreenexample.ui.compose.screen.TestScreen
+import com.velord.feature.demo.DemoScreen
+import com.velord.flowsummator.FlowSummatorScreen
+import com.velord.modifierdemo.ModifierDemoScreen
 import com.velord.navigation.SharedScreen
 import com.velord.settings.SettingsScreen
+import com.velord.shapedemo.ShapeDemoScreen
 import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -40,14 +44,23 @@ class MainActivity : ComponentActivity() {
 //            register<SharedScreen.BottomNavigationTab.Camera> {
 //                BottomNavigationTab.Camera
 //            }
-//            register<SharedScreen.BottomNavigationTab.Demo> {
-//                BottomNavigationTab.Demo
-//            }
+            register<SharedScreen.BottomNavigationTab.Demo> {
+                DemoScreen
+            }
             register<SharedScreen.BottomNavigationTab.Settings> {
                 SettingsScreen()
             }
             register<SharedScreen.Test> {
                 TestScreen(it.title, it.modifier, it.onClick)
+            }
+            register<SharedScreen.Demo.Shape> {
+                ShapeDemoScreen
+            }
+            register<SharedScreen.Demo.Modifier> {
+                ModifierDemoScreen
+            }
+            register<SharedScreen.Demo.FlowSummator> {
+                FlowSummatorScreen
             }
         }
     }

@@ -33,7 +33,7 @@ class ModifierDemoFragment : Fragment() {
 }
 
 @Composable
-private fun ModifierDemoScreen() {
+internal fun ModifierDemoScreen() {
     Content()
 }
 
