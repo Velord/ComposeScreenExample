@@ -38,10 +38,10 @@ android {
 dependencies {
     // Modules
     implementation(project(":resource"))
-    implementation(project(":navigation-core"))
+    implementation(project(":core-navigation"))
     implementation(project(":util"))
-    implementation(project(":uicore"))
-    implementation(project(":settings"))
+    implementation(project(":core-ui"))
+    implementation(project(":feature-settings"))
     implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)

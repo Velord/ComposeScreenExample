@@ -38,7 +38,7 @@ dependencies {
     // Modules
     implementation(project(":resource"))
     implementation(project(":util"))
-    implementation(project(":uicore"))
+    implementation(project(":core-ui"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.ktx)

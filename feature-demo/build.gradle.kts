@@ -39,7 +39,7 @@ dependencies {
     implementation(project(":sharedviewmodel"))
     implementation(project(":util"))
     implementation(project(":resource"))
-    implementation(project(":navigation-core"))
+    implementation(project(":core-navigation"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)
