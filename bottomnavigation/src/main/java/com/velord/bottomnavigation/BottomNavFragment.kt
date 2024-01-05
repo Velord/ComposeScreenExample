@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -137,9 +138,10 @@ private fun Content(
                     val color = MaterialTheme.colorScheme.run {
                         if (isSelected) secondary else onSurface
                     }
+                    val painter = rememberVectorPainter(image = it.icon)
                     AnimatableLabeledIcon(
                         label = it.name,
-                        imageVector = it.icon,
+                        painter = painter,
                         scale = if (isSelected) 1.5f else 1f,
                         color = color,
                         modifier = Modifier,

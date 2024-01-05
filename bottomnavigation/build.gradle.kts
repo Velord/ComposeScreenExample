@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.bundles.androidx.ktx)
     implementation(libs.bundles.androidx.navigation)
     implementation(libs.google.guava)
+    implementation(libs.bundles.voyager)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
@@ -60,11 +61,4 @@ dependencies {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
     kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
-}
-
-// https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
-    }
 }
