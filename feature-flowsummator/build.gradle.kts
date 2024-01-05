@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.modifierdemo"
+    namespace = "com.velord.windyappflowsummator"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -35,18 +35,21 @@ android {
 
 dependencies {
     // Modules
+    implementation(project(":resource"))
     implementation(project(":util"))
-    implementation(project(":uicore"))
+    implementation(project(":core-ui"))
+    implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)
     implementation(libs.bundles.androidx.lifecycle.runtime)
+    implementation(libs.bundles.androidx.lifecycle.viewmodel)
     implementation(libs.bundles.androidx.ktx)
     implementation(libs.bundles.voyager)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material.all)
+    implementation(libs.bundles.compose.material.third)
     implementation(libs.bundles.compose.ui)
     implementation(libs.bundles.compose.accompanist.core)
 }

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.widgetcounter"
+    namespace = "com.velord.shapedemo"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -35,16 +35,20 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":resource"))
     implementation(project(":util"))
-    implementation(project(":uicore"))
+    implementation(project(":core-ui"))
     // Templates
     implementation(libs.bundles.kotlin.module)
+    implementation(libs.bundles.androidx.activity)
+    implementation(libs.bundles.androidx.lifecycle.runtime)
     implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.glance)
-    implementation(libs.bundles.androidx.workmanager)
+    implementation(libs.bundles.voyager)
     // Compose
+    implementation(libs.bundles.compose.core)
+    implementation(libs.bundles.compose.foundation)
+    implementation(libs.bundles.compose.material.all)
     implementation(libs.bundles.compose.ui)
+    implementation(libs.bundles.compose.accompanist.core)
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo

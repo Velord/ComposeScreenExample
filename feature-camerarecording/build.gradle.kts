@@ -6,8 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.settings"
-    compileSdk = 33
+    namespace = "com.velord.camerarecording"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -36,18 +35,23 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     // Modules
     implementation(project(":resource"))
-    implementation(project(":navigation-core"))
+    implementation(project(":model"))
     implementation(project(":util"))
-    implementation(project(":uicore"))
+    implementation(project(":core-ui"))
     implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.lifecycle.viewmodel)
-    implementation(libs.bundles.voyager)
+    implementation(libs.bundles.androidx.activity)
+    implementation(libs.bundles.androidx.camera)
+    implementation(libs.bundles.androidx.lifecycle.runtime)
+    implementation(libs.google.guava)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
