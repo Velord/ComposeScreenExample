@@ -1,4 +1,4 @@
-package com.velord.windyappflowsummator
+package com.velord.flowsummator
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

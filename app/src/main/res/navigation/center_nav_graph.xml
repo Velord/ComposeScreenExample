@@ -27,12 +27,12 @@
 
     <fragment
         android:id="@+id/flowSummatorFragment"
-        android:name="com.velord.windyappflowsummator.FlowSummatorFragment"
+        android:name="com.velord.flowsummator.FlowSummatorFragment"
         android:label="FlowSummatorFragment" />
 
     <fragment
         android:id="@+id/demoFragment"
-        android:name="com.velord.composescreenexample.ui.main.demo.DemoFragment"
+        android:name="com.velord.feature.demo.DemoFragment"
         android:label="DemoFragment" >
 
         <action

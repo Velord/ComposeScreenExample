@@ -1,4 +1,4 @@
-package com.velord.windyappflowsummator
+package com.velord.flowsummator
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -43,9 +43,9 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.flowsummator.FlowSummatorViewModel.Companion.mapToCumulativeStringEachNumberByLine
 import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
-import com.velord.windyappflowsummator.FlowSummatorViewModel.Companion.mapToCumulativeStringEachNumberByLine
 import kotlinx.coroutines.launch
 
 class FlowSummatorFragment : Fragment() {
@@ -62,7 +62,7 @@ class FlowSummatorFragment : Fragment() {
 }
 
 @Composable
-private fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
+internal fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
     val currentTextState = viewModel.sumFlow
         .mapToCumulativeStringEachNumberByLine()
         .collectAsStateWithLifecycle(initialValue = "")

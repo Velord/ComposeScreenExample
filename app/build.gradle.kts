@@ -132,6 +132,7 @@ dependencies {
     implementation(project(":sharedviewmodel"))
     implementation(project(":uicore"))
 
+    implementation(project(":feature-demo"))
     implementation(project(":camerarecording"))
     implementation(project(":bottomnavigation"))
     implementation(project(":shapedemo"))

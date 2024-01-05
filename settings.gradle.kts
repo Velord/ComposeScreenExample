@@ -12,6 +12,7 @@ include(":datastore")
 include(":sharedviewmodel")
 include(":uicore")
 
+include(":feature-demo")
 include(":camerarecording")
 include(":bottomnavigation")
 include(":shapedemo")
@@ -21,7 +22,6 @@ include(":settings")
 
 include(":widgetrefreshableimage")
 include(":widgetcounter")
-
 
 rootProject.name = "ComposeScreenExample"
 

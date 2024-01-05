@@ -43,7 +43,9 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)
     implementation(libs.bundles.androidx.lifecycle.runtime)
+    implementation(libs.bundles.androidx.lifecycle.viewmodel)
     implementation(libs.bundles.androidx.ktx)
+    implementation(libs.bundles.voyager)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
