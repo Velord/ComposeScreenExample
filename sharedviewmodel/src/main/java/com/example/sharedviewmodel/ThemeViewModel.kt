@@ -1,6 +1,7 @@
 package com.example.sharedviewmodel
 
 import android.os.Build
+import android.util.Log
 import com.velord.datastore.DataStoreService
 import com.velord.util.settings.ThemeConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +29,8 @@ class ThemeViewModel @Inject constructor(
     val themeFlow = MutableStateFlow<Theme?>(null)
 
     init {
+        Log.d("@@@", "ThemeViewModel init: ${this::class.java.hashCode()}")
+
         launch {
             themeFlow.value = Theme(
                 config = dataStore.getThemeConfig(),

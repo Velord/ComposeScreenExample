@@ -3,16 +3,20 @@ package com.velord.composescreenexample.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import cafe.adriel.voyager.core.registry.screenModule
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.composescreenexample.databinding.ActivityMainBinding
+import com.velord.navigation.SharedScreen
+import com.velord.settings.SettingsScreen
 import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,6 +32,19 @@ class MainActivity : ComponentActivity() {
         ).apply {
             putExtra(NAVIGATION_EXTRA, bundle)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+
+        internal val featureBottomNavigationModule = screenModule {
+            // TODO: uncomment when you need to use this screen
+//            register<SharedScreen.BottomNavigationTab.Camera> {
+//                BottomNavigationTab.Camera
+//            }
+//            register<SharedScreen.BottomNavigationTab.Demo> {
+//                BottomNavigationTab.Demo
+//            }
+            register<SharedScreen.BottomNavigationTab.Settings> {
+                SettingsScreen()
+            }
         }
     }
 
@@ -72,6 +89,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
     private fun setNavGraph() {
         binding?.mainNavHost?.setContentWithTheme {
             Navigator(BottomNavScreen)
@@ -82,6 +100,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 themeViewModel.themeFlow.collect { theme ->
+                    Log.d("@@@", "MainActivity theme: ${theme?.config}")
                     viewModel.updateTheme(theme?.config)
                 }
             }

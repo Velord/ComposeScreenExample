@@ -121,6 +121,7 @@ android {
 dependencies {
     // Module
     implementation(project(":resource"))
+    implementation(project(":navigation-core"))
 
     implementation(project(":model"))
     implementation(project(":util"))

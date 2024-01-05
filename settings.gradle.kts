@@ -1,6 +1,7 @@
 include(":app")
 
 include(":resource")
+include(":navigation-core")
 
 include(":util")
 include(":model")

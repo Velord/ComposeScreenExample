@@ -1,14 +1,10 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
-    id(libs.plugins.dagger.hilt.get().pluginId)
 }
 
 android {
-    namespace = "com.velord.settings"
-    compileSdk = 33
-
+    namespace = "com.velord.navigation"
     compileSdk = libs.versions.targetApi.get().toInt()
 
     defaultConfig {
@@ -37,26 +33,11 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":resource"))
-    implementation(project(":util"))
-    implementation(project(":uicore"))
-    implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.lifecycle.viewmodel)
     implementation(libs.bundles.voyager)
     // Compose
-    implementation(libs.bundles.compose.core)
-    implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material.all)
-    implementation(libs.bundles.compose.ui)
-    implementation(libs.bundles.compose.accompanist.core)
-    // DI
-    implementation(libs.bundles.dagger.all)
-    kapt(libs.bundles.dagger.kapt)
-    kapt(libs.hilt.compiler)
+    implementation(libs.bundles.compose.all)
 }
 
 // https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo

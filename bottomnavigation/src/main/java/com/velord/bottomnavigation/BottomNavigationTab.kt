@@ -13,8 +13,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.registry.rememberScreen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.velord.navigation.SharedScreen
 import com.velord.resource.R
 
 sealed class BottomNavigationTab : Tab {
@@ -89,11 +93,10 @@ sealed class BottomNavigationTab : Tab {
 
         @Composable
         override fun Content() {
-            Text(
-                text = stringResource(id = R.string.settings),
-                modifier = Modifier.padding(16.dp),
-                color = Color.Blue
-            )
+            val navigator = LocalNavigator.currentOrThrow
+            val screen = rememberScreen(SharedScreen.BottomNavigationTab.Settings)
+
+            navigator.push(screen)
         }
     }
 }

@@ -21,8 +21,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.hilt.getViewModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
@@ -38,7 +38,7 @@ object BottomNavScreen : Screen {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     override fun Content() {
-        val viewModel = getViewModel<BottomNavViewModel>()
+        val viewModel = viewModel<BottomNavViewModel>()
         val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
         val isBackHandlingEnabledState = viewModel.isBackHandlingEnabledFlow.collectAsStateWithLifecycle()
         val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = false)
@@ -71,7 +71,7 @@ object BottomNavScreen : Screen {
                 },
                 bottomBar = {
                     BottomBar(
-                        items = viewModel.getNavigationItems(),
+                        tabs = viewModel.getNavigationItems(),
                         selectedItem = tabState.value,
                         onClick = viewModel::onTabClick,
                     )
@@ -94,7 +94,7 @@ object BottomNavScreen : Screen {
 
     @Composable
     private fun BottomBar(
-        items: List<BottomNavigationTab>,
+        tabs: List<BottomNavigationTab>,
         selectedItem: BottomNavigationTab,
         onClick: (BottomNavigationTab) -> Unit,
     ) {
@@ -103,7 +103,7 @@ object BottomNavScreen : Screen {
                 .navigationBarsPadding()
                 .height(72.dp),
         ) {
-            items.forEach {
+            tabs.forEach {
                 val isSelected = selectedItem == it
                 NavigationBarItem(
                     selected = isSelected,
