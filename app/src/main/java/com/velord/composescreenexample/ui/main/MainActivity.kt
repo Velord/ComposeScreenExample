@@ -15,6 +15,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.composescreenexample.databinding.ActivityMainBinding
+import com.velord.composescreenexample.ui.compose.screen.TestScreen
 import com.velord.navigation.SharedScreen
 import com.velord.settings.SettingsScreen
 import com.velord.uicore.utils.setContentWithTheme
@@ -44,6 +45,9 @@ class MainActivity : ComponentActivity() {
 //            }
             register<SharedScreen.BottomNavigationTab.Settings> {
                 SettingsScreen()
+            }
+            register<SharedScreen.Test> {
+                TestScreen(it.title, it.modifier, it.onClick)
             }
         }
     }

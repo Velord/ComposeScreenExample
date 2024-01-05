@@ -12,9 +12,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import cafe.adriel.voyager.core.screen.Screen
+
+data class TestScreen(
+    @StringRes val title: Int,
+    val modifier: Modifier = Modifier,
+    val onClick: () -> Unit = {},
+) : Screen {
+    @Composable
+    override fun Content() {
+        c(title, modifier, onClick)
+    }
+}
 
 @Composable
-fun TestScreen(
+private fun c(
     @StringRes title: Int,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},

@@ -2,6 +2,8 @@ package com.velord.bottomnavigation
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -16,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -79,6 +82,7 @@ object BottomNavScreen : Screen {
             )
         }
 
+
         val str = stringResource(id = R.string.press_again_to_exit)
         SnackBarOnBackPressHandler(
             message = str,
@@ -86,8 +90,16 @@ object BottomNavScreen : Screen {
             enabled = isBackHandlingEnabledState.value,
             onBackClickLessThanDuration = viewModel::onBackDoubleClick,
         ) {
-            Snackbar {
-                Text(text = it.visuals.message)
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .navigationBarsPadding()
+                    .padding(bottom = 24.dp),
+                contentAlignment = Alignment.BottomCenter,
+            ) {
+                Snackbar {
+                    Text(text = it.visuals.message)
+                }
             }
         }
     }

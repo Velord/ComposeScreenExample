@@ -39,6 +39,7 @@ android {
 dependencies {
     // Modules
     implementation(project(":resource"))
+    implementation(project(":navigation-core"))
     implementation(project(":util"))
     implementation(project(":uicore"))
     implementation(project(":sharedviewmodel"))

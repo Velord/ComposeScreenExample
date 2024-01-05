@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -26,7 +27,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import cafe.adriel.voyager.core.registry.rememberScreen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.sharedviewmodel.ThemeViewModel
+import com.velord.navigation.SharedScreen
 import com.velord.resource.R
 import com.velord.uicore.utils.LocalTheme
 import com.velord.uicore.utils.setContentWithTheme
@@ -87,6 +92,18 @@ private fun Content(
                 isChecked = themeSwitcher.config.useDarkTheme,
                 onChange = onChangeDarkTheme
             )
+        }
+
+        val navigator = LocalNavigator.currentOrThrow
+        val screen = rememberScreen(
+            SharedScreen.Test(
+                title = R.string.test,
+                modifier = Modifier.padding(top = 16.dp),
+                onClick = {}
+            )
+        )
+        Button(onClick = { navigator.push(screen)}) {
+            Text(text = "Open Test")
         }
     }
 }
