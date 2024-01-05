@@ -1,32 +1,69 @@
 package com.velord.bottomnavigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.hilt.getViewModel
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
+import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
+import com.velord.util.context.getActivity
 
 object BottomNavScreen : Screen {
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     override fun Content() {
-        TabNavigator(BottomNavigationTab.Camera) { tab ->
+        val viewModel = getViewModel<BottomNavViewModel>()
+        val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
+        val isBackHandlingEnabledState = viewModel.isBackHandlingEnabledFlow.collectAsStateWithLifecycle()
+        val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = false)
+
+        val context = LocalContext.current
+        LaunchedEffect(finishAppEventState.value) {
+            Log.d("@@@", "finishAppEventState.value = ${finishAppEventState.value}")
+            if (finishAppEventState.value) {
+                context.getActivity()?.finish()
+            }
+        }
+
+        val navigator = LocalNavigator.current
+        val lastItem = navigator?.lastItemOrNull
+        LaunchedEffect(lastItem) {
+            Log.d("@@@", "navigator.lastItemOrNull = $lastItem")
+            viewModel.updateBackHandling(lastItem)
+        }
+
+        TabNavigator(tabState.value) {
             val tabNavigator = LocalTabNavigator.current
+            LaunchedEffect(tabState.value) {
+                Log.d("@@@", "tabState.value = ${tabState.value}")
+                tabNavigator.current = tabState.value
+            }
 
             Scaffold(
                 content = {
@@ -34,18 +71,30 @@ object BottomNavScreen : Screen {
                 },
                 bottomBar = {
                     BottomBar(
-                        selectedItem = tabNavigator.current as BottomNavigationTab,
-                        onClick = { tab ->
-                            tabNavigator.current = tab
-                        }
+                        items = viewModel.getNavigationItems(),
+                        selectedItem = tabState.value,
+                        onClick = viewModel::onTabClick,
                     )
                 }
             )
+        }
+
+        val str = stringResource(id = R.string.press_again_to_exit)
+        SnackBarOnBackPressHandler(
+            message = str,
+            modifier = Modifier.padding(horizontal = 8.dp),
+            enabled = isBackHandlingEnabledState.value,
+            onBackClickLessThanDuration = viewModel::onBackDoubleClick,
+        ) {
+            Snackbar {
+                Text(text = it.visuals.message)
+            }
         }
     }
 
     @Composable
     private fun BottomBar(
+        items: List<BottomNavigationTab>,
         selectedItem: BottomNavigationTab,
         onClick: (BottomNavigationTab) -> Unit,
     ) {
@@ -54,8 +103,7 @@ object BottomNavScreen : Screen {
                 .navigationBarsPadding()
                 .height(72.dp),
         ) {
-            BottomNavigationTab::class.sealedSubclasses.forEach { subClass ->
-                val it = subClass.objectInstance as BottomNavigationTab
+            items.forEach {
                 val isSelected = selectedItem == it
                 NavigationBarItem(
                     selected = isSelected,
