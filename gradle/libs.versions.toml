@@ -4,7 +4,7 @@ minApi = "29"
 targetApi = "34"
 # Build
 buildTools = "30.0.3"
-gradle = "8.2.0"
+gradle = "8.2.1"
 jvmTarget = "1.8"
 # DI
 dagger = "2.48"
@@ -20,9 +20,9 @@ kotlinJsonSerializationRetrofitConverter = "1.0.0"
 googleGuava = "32.0.0-android"
 # AndroidX
 ## A
-androidxActivity = "1.8.1"
+androidxActivity = "1.9.0-alpha01"
 androidxAds = "1.0.0-alpha05"
-androidxAnnotation = "1.7.0"
+androidxAnnotation = "1.7.1"
 androidxAppCompat = "1.6.1"
 androidxAppSearch = "1.1.0-alpha03"
 androidxArchCore = "2.2.0"
@@ -34,7 +34,7 @@ androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha02"
 androidxBrowser = "1.7.0"
 ## C
-androidxCamera = "1.3.0"
+androidxCamera = "1.3.1"
 androidxCarApp = "1.2.0"
 androidXCardView = "1.0.0"
 androidxCollection = "1.3.0"
@@ -63,9 +63,9 @@ androidxDynamicAnimation = "1.1.0-alpha03"
 androidxEmoji = "1.1.0"
 androidxEmoji2 = "1.4.0"
 ## E
-androidxExifInterface = "1.3.6"
+androidxExifInterface = "1.3.7"
 androidxEnterprise = "1.1.0"
-androidxFragment = "1.6.2"
+androidxFragment = "1.7.0-alpha07"
 ## Glance
 androidxGlance = "1.0.0"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha05"
@@ -75,18 +75,34 @@ androidxLifecycle = "2.6.2"
 ## M
 androidxMedia3 = "1.2.0"
 ## N
-androidxNavigation = "2.7.5"
+androidxNavigation = "2.7.6"
 ## AndroidX Paging
 androidxPaging = "3.2.1"
 androidxPagingCompose = "3.3.0-alpha02"
 ## P
-androidXPalette = "1.0.0"
-androidXPercentLayout = "1.0.0"
+androidxPalette = "1.0.0"
+androidxPercentLayout = "1.0.0"
 androidxPreference = "1.2.1"
-androidXPrint = "1.1.0-beta01"
+androidxPrint = "1.1.0-beta01"
 ## Privacy Sandbox
-androidXPrivacySandboxActivity = "1.0.0-alpha01"
-androidXPrivacySandboxAds = "1.1.0-beta03"
+androidxPrivacySandboxActivity = "1.0.0-alpha01"
+androidxPrivacySandboxAds = "1.1.0-beta03"
+androidxPrivacySandboxPlugins = "1.0.0-alpha02"
+androidxPrivacySandboxSdkRuntime = "1.0.0-alpha11"
+androidxPrivacySandboxTools = "1.0.0-alpha06"
+androidxPrivacySandboxUi = "1.0.0-alpha07"
+## P
+androidxProfileInstaller = "1.3.1"
+## R
+androidxRecommendation = "1.0.0"
+## Recycler View
+androidxRecyclerView = "1.3.2"
+androidxRecyclerViewSelection = "1.1.0"
+## R
+androidxRemoteCallback = "1.0.0-alpha02"
+androidxResourceInspection = "1.0.1"
+## Room
+androidxRoom = "2.6.1"
 ## W
 androidxWorkManager = "2.9.0"
 # Network
@@ -100,7 +116,7 @@ composeMaterial3 = "1.1.2"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
 # Image loader
-coil = "2.2.1"
+coil = "2.2.2"
 # Permission
 sagarCororutinePermission = "2.0.2"
 # Navigation
@@ -131,8 +147,11 @@ androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.re
 androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "androidxDrawerLayout" }
 androidx-enterprise = { module = "androidx.enterprise:enterprise-feedback", version.ref = "androidxEnterprise" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
-androidx-percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref = "androidXPercentLayout" }
-androidx-print =  { module = "androidx.print:print", version.ref = "androidXPrint" }
+androidx-percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref = "androidxPercentLayout" }
+androidx-print = { module = "androidx.print:print", version.ref = "androidxPrint" }
+androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidxProfileInstaller" }
+androidx-recommendation = { module = "androidx.recommendation:recommendation", version.ref = "androidxRecommendation" }
+androidx-remotecallback = { module = "androidx.remotecallback:remotecallback", version.ref = "androidxRemoteCallback" }
 # AndroidX Activity
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
@@ -190,13 +209,42 @@ androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.r
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
 # AndroidX Privacy Sandbox Activity
 # Could not find !!!
-androidx-privacysandbox-activity = { module = "androidx.privacysandbox.activity:activity", version.ref = "androidXPrivacySandboxActivity" }
-androidx-privacysandbox-activity-complications-datasource = { module = "androidx.privacysandbox.activity:activity-complications-data-source", version.ref = "androidXPrivacySandboxActivity" }
-androidx-privacysandbox-activity-complications-rendering = { module = "androidx.privacysandbox.activity:activity-complications-rendering", version.ref = "androidXPrivacySandboxActivity" }
-androidx-privacysandbox-activity-editor = { module = "androidx.privacysandbox.activity:activity-editor", version.ref = "androidXPrivacySandboxActivity" }
+androidx-privacysandbox-activity = { module = "androidx.privacysandbox.activity:activity", version.ref = "androidxPrivacySandboxActivity" }
+androidx-privacysandbox-activity-complications-datasource = { module = "androidx.privacysandbox.activity:activity-complications-data-source", version.ref = "androidxPrivacySandboxActivity" }
+androidx-privacysandbox-activity-complications-ktx = { module = "androidx.privacysandbox.activity:activity-complications-data-source-ktx", version.ref = "androidxPrivacySandboxActivity" }
+androidx-privacysandbox-activity-complications-rendering = { module = "androidx.privacysandbox.activity:activity-complications-rendering", version.ref = "androidxPrivacySandboxActivity" }
+androidx-privacysandbox-activity-editor = { module = "androidx.privacysandbox.activity:activity-editor", version.ref = "androidxPrivacySandboxActivity" }
 # AndroidX Privacy Sandbox Ads
-androidx-privacysandbox-ads = { module = "androidx.privacysandbox.ads:ads-adservices", version.ref = "androidXPrivacySandboxAds" }
-androidx-privacysandbox-ads-java = { module = "androidx.privacysandbox.ads:ads-adservices-java", version.ref = "androidXPrivacySandboxAds" }
+androidx-privacysandbox-ads = { module = "androidx.privacysandbox.ads:ads-adservices", version.ref = "androidxPrivacySandboxAds" }
+androidx-privacysandbox-ads-java = { module = "androidx.privacysandbox.ads:ads-adservices-java", version.ref = "androidxPrivacySandboxAds" }
+# AndroidX Privacy Sandbox Plugins
+androidx-privacysandbox-plugins = { module = "androidx.privacysandbox.plugins:plugins-privacysandbox-library", version.ref = "androidxPrivacySandboxPlugins" }
+# AndroidX Privacy Sandbox SDK Runtime
+androidx-privacysandbox-sdkruntime-core = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-core", version.ref = "androidxPrivacySandboxSdkRuntime" }
+androidx-privacysandbox-sdkruntime-client = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-client", version.ref = "androidxPrivacySandboxSdkRuntime" }
+# AndroidX Privacy Sandbox Tools
+androidx-privacysandbox-tools = { module = "androidx.privacysandbox.tools:tools", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-apicompiler = { module = "androidx.privacysandbox.tools:tools-apicompiler", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-apigenerator = { module = "androidx.privacysandbox.tools:tools-apigenerator", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-core = { module = "androidx.privacysandbox.tools:tools-core", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-testing = { module = "androidx.privacysandbox.tools:tools-testing", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-apipackager = { module = "androidx.privacysandbox.tools:tools-apipackager", version.ref = "androidxPrivacySandboxTools" }
+# AndroidX Privacy Sandbox UI
+androidx-privacysandbox-ui = { module = "androidx.privacysandbox.ui:ui", version.ref = "androidxPrivacySandboxUi" }
+androidx-privacysandbox-ui-core = { module = "androidx.privacysandbox.ui:ui-core", version.ref = "androidxPrivacySandboxUi" }
+androidx-privacysandbox-ui-provider = { module = "androidx.privacysandbox.ui:ui-provider", version.ref = "androidxPrivacySandboxUi" }
+# AndroidX Recycler View
+androidx-recylerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerView" }
+androidx-recylerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "androidxRecyclerViewSelection" }
+# AndroidX Resource Inspection
+androidx-resourceinspection-annotation = { module = "androidx.resourceinspection:resourceinspection-annotation", version.ref = "androidxResourceInspection" }
+androidx-resourceinspection-processor = { module = "androidx.resourceinspection:resourceinspection-processor", version.ref = "androidxResourceInspection" }
+# AndroidX Room
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
+androidx-room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "androidxRoom" }
+androidx-room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "androidxRoom" }
+androidx-room-guava = { module = "androidx.room:room-guava", version.ref = "androidxRoom" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "androidxRoom" }
 # AndroidX WorkManager
 androidx-workmanager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxWorkManager" }
 androidx-workmanager-gcm = { module = "androidx.work:work-gcm", version.ref = "androidxWorkManager" }
@@ -208,8 +256,6 @@ androidx-preference = { module = "androidx.preference:preference-ktx", version.r
 androidx-collection = { module = "androidx.collection:collection-ktx", version.ref = "androidxCollection" }
 androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
 androidx-dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation-ktx", version.ref = "androidxDynamicAnimation" }
-# Could not find !!!
-androidx-privacysandbox-activity-complications-ktx = { module = "androidx.privacysandbox.activity:activity-complications-data-source-ktx", version.ref = "androidXPrivacySandboxActivity" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
@@ -329,8 +375,33 @@ androidx-navigation = [
 androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
 # AndroidX Privacy Sandbox
 androidx-privacysandbox-all = [
-    "androidx-privacysandbox-activity", "androidx-privacysandbox-activity-editor",
-    "androidx-privacysandbox-activity-complications-datasource", "androidx-privacysandbox-activity-complications-rendering"
+    "androidx-privacysandbox-activity",
+    "androidx-privacysandbox-activity-complications-datasource",
+    "androidx-privacysandbox-activity-complications-ktx",
+    "androidx-privacysandbox-activity-complications-rendering",
+    "androidx-privacysandbox-activity-editor",
+    "androidx-privacysandbox-ads", "androidx-privacysandbox-ads-java",
+    "androidx-privacysandbox-plugins",
+    "androidx-privacysandbox-sdkruntime-core", "androidx-privacysandbox-sdkruntime-client",
+    "androidx-privacysandbox-tools", "androidx-privacysandbox-tools-apicompiler",
+    "androidx-privacysandbox-tools-apigenerator", "androidx-privacysandbox-tools-core",
+    "androidx-privacysandbox-tools-testing", "androidx-privacysandbox-tools-apipackager",
+    "androidx-privacysandbox-ui",
+    "androidx-privacysandbox-ui-core", "androidx-privacysandbox-ui-provider"
+]
+# AndroidX Recycler View
+androidx-recyclerview = [
+    "androidx-recylerview", "androidx-recylerview-selection"
+]
+# AndroidX Resource Inspection
+androidx-resourceinspection = [
+    "androidx-resourceinspection-annotation", "androidx-resourceinspection-processor"
+]
+# AndroidX Room
+androidx-room = [
+    "androidx-room-ktx",
+    "androidx-room-rxjava2", "androidx-room-rxjava3",
+    "google-guava", "androidx-room-paging"
 ]
 # AndroidX WorkManager
 androidx-workmanager = [
@@ -348,13 +419,12 @@ androidx-ktx = [
 # AndroidX Module
 androidx-module = [
     "androidx-activity-ktx", "androidx-activity-compose",
-    "androidx-lifecycle-service", "androidx-lifecycle-process",
-    "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose",
+    "androidx-appcompat",
+    "androidx-lifecycle-runtime-compose",
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-viewmodel-compose",
-    "androidx-lifecycle-viewmodel-savedstate",
-    "androidx-navigation-fragment", "androidx-navigation-ui",
-    "androidx-navigation-dynamicfeature", "androidx-navigation-compose"
+    "androidx-navigation-fragment",
+    "androidx-navigation-ui",
 ]
 # AndroidX All
 androidx-all = [
@@ -375,6 +445,9 @@ androidx-all = [
     "androidx-media3-exoplayer",
     "androidx-percentlayout",
     "androidx-print",
+    "androidx-profileinstaller",
+    "androidx-recommendation",
+    "androidx-remotecallback",
     # AndroidX Activity
     "androidx-activity-ktx", "androidx-activity-compose",
     # AndroidX Arch Core
@@ -408,8 +481,22 @@ androidx-all = [
     "androidx-paging-runtime", "androidx-paging-compose",
     # AndroidX Privacy Sandbox
     # Could not find !!!
-#    "androidx-privacysandbox-activity", "androidx-privacysandbox-activity-editor",
-#    "androidx-privacysandbox-activity-complications-datasource", "androidx-privacysandbox-activity-complications-rendering",
+    #"androidx-privacysandbox-ads", "androidx-privacysandbox-ads-java",
+    #"androidx-privacysandbox-plugins",
+    #"androidx-privacysandbox-sdkruntime-core", "androidx-privacysandbox-sdkruntime-client",
+    #"androidx-privacysandbox-tools", "androidx-privacysandbox-tools-apicompiler",
+    #"androidx-privacysandbox-tools-apigenerator", "androidx-privacysandbox-tools-core",
+    #"androidx-privacysandbox-tools-testing", "androidx-privacysandbox-tools-apipackager",
+    #"androidx-privacysandbox-ui",
+    #"androidx-privacysandbox-ui-core", "androidx-privacysandbox-ui-provider"
+    # AndroidX Recycler View
+    "androidx-recylerview", "androidx-recylerview-selection",
+    # AndroidX Resource Inspection
+    "androidx-resourceinspection-annotation", "androidx-resourceinspection-processor",
+    # AndroidX Room
+    "androidx-room-ktx",
+    "androidx-room-rxjava2", "androidx-room-rxjava3",
+    "google-guava", "androidx-room-paging",
     # AndroidX WorkManager
     "androidx-workmanager-runtime", "androidx-workmanager-gcm",
     "androidx-workmanager-multiprocess",
@@ -418,7 +505,6 @@ androidx-all = [
     "androidx-preference", "androidx-collection",
     "androidx-concurrent",
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
-    # Could not find !!! "androidx-privacysandbox-activity-complications-ktx"
 ]
 # Kotlin
 kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
