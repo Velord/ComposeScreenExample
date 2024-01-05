@@ -121,6 +121,7 @@ coil = "2.2.2"
 sagarCororutinePermission = "2.0.2"
 # Navigation
 velordMultipleBackstack = "0.3.0"
+voyager = "1.0.0"
 
 
 [libraries]
@@ -317,6 +318,13 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 # Navigation
 velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
+# Voyager
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyager" }
+voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
+voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
 
 
 [bundles]
@@ -569,6 +577,12 @@ hilt = ["hilt", "hilt-navigation"]
 dagger-all = ["dagger", "dagger-android", "dagger-android-support", "hilt", "hilt-navigation"]
 # Image Loader
 coil = ["coil", "coil-compose"]
+# Voyager
+voyager = [
+    "voyager-navigator", "voyager-screenModel",
+    "voyager-bottomSheetNavigator", "voyager-tabNavigator",
+    "voyager-transitions", "voyager-hilt",
+]
 
 
 [plugins]
