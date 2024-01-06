@@ -13,7 +13,9 @@ class App : Application() {
 
         // Navigation
         ScreenRegistry {
+            (MainActivity.featureMainModule)()
             (MainActivity.featureBottomNavigationModule)()
+            (MainActivity.featureDemoModule)()
         }
     }
 }

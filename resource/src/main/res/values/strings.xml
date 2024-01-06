@@ -10,7 +10,8 @@
     <string name="require_camera_permission">Require camera permission</string>
     <string name="give_access_to_microphone">Give access to microphone to proceed</string>
     <string name="give_access_to_camera">Give access to camera to proceed</string>
-    <string name="can_not_get_permission">Can not get permission, seems like you declined it. Click to check again</string>
+    <string name="can_not_get_permission_for_mic">Can not get permission for Microphone, seems like you declined it. Click to check again</string>
+    <string name="can_not_get_permission_for_camera">Can not get permission for Camera, seems like you declined it. Click to check again</string>
     <string name="open_new">Open new</string>
     <string name="open_new_camera">Open new Camera</string>
     <string name="test">Test</string>
@@ -52,4 +53,6 @@
     <string name="widget_size">Widget Size:\nW: %1f x H: %2f</string>
     <string name="image_widget">Image Widget</string>
     <string name="downloaded_from">Downloaded from:\n%s</string>
+    <string name="rear">Rear</string>
+    <string name="front">Front</string>
 </resources>

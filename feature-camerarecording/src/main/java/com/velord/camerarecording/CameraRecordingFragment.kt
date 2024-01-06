@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Quality
 import androidx.camera.video.Recorder
@@ -15,17 +16,21 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddPhotoAlternate
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.PermCameraMic
 import androidx.compose.material.icons.filled.SettingsApplications
 import androidx.compose.material.icons.filled.Stop
@@ -39,6 +44,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -50,14 +56,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.uicore.dialog.checkRecordVideoPermission
 import com.velord.uicore.utils.setContentWithTheme
-import com.velord.util.fragment.navigate
 import com.velord.util.fragment.viewLifecycleScope
-import com.velord.util.permission.PermissionState
+import com.velord.util.permission.AndroidPermissionState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import com.velord.resource.R as Rres
 
@@ -70,7 +75,7 @@ class CameraRecordingFragment : Fragment() {
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
         val areGranted = it.values.reduce { acc, next -> acc && next }
-        viewModel.updatePermissionState(PermissionState.invoke(areGranted))
+        viewModel.updatePermissionState(AndroidPermissionState.invoke(areGranted))
     }
 
     override fun onCreateView(
@@ -102,8 +107,9 @@ class CameraRecordingFragment : Fragment() {
             }
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.navigationEvent.collect {
-                        findNavController().navigate(it)
+                    viewModel.navigationEvent.filterNotNull().collect {
+                        // Obsolete for Voyager
+                        //findNavController().navigate(it)
                     }
                 }
             }
@@ -114,24 +120,26 @@ class CameraRecordingFragment : Fragment() {
         checkRecordVideoPermission(
             actionLauncher = requestRecordVideoPermissionLauncher,
             onGranted = {
-                viewModel.updatePermissionState(PermissionState.Granted)
+                viewModel.updatePermissionState(AndroidPermissionState.Granted)
             },
             onDecline = {
-                viewModel.updatePermissionState(PermissionState.Denied)
+                viewModel.updatePermissionState(AndroidPermissionState.Denied)
             }
         )
     }
 }
 
 @Composable
-private fun CameraRecordingScreen(viewModel: CameraRecordingViewModel) {
-    val permissionState = viewModel.permissionFlow.collectAsStateWithLifecycle()
+internal fun CameraRecordingScreen(viewModel: CameraRecordingViewModel) {
+    val permissionCameraState = viewModel.permissionCameraFlow.collectAsStateWithLifecycle()
+    val permissionAudioState = viewModel.permissionAudioFlow.collectAsStateWithLifecycle()
     val qualityState = viewModel.videoQualityFlow.collectAsStateWithLifecycle()
     val cameraSelectorState = viewModel.videoCameraSelectorFlow.collectAsStateWithLifecycle()
-    val isAudioEnabledState = viewModel.videoIsAudioEnabledFlow.collectAsStateWithLifecycle()
+    val isAudioEnabledState = viewModel.isAudioEnabledFlow.collectAsStateWithLifecycle()
 
     Content(
-        permission = permissionState.value,
+        permissionCamera = permissionCameraState.value,
+        permissionAudio = permissionAudioState.value,
         quality = qualityState.value,
         cameraSelector = cameraSelectorState.value,
         isAudioEnabled = isAudioEnabledState.value,
@@ -145,7 +153,8 @@ private fun CameraRecordingScreen(viewModel: CameraRecordingViewModel) {
 
 @Composable
 private fun Content(
-    permission: PermissionState,
+    permissionCamera: AndroidPermissionState,
+    permissionAudio: AndroidPermissionState,
     quality: Quality,
     cameraSelector: CameraSelector,
     isAudioEnabled: Boolean,
@@ -155,57 +164,76 @@ private fun Content(
     onStopRecording: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
-    if (permission.isDenied()) {
-        PermissionIsNotGrantedState(onCheckPermissionClick)
-    } else {
-        CameraRecordingPreview(
-            quality = quality,
-            cameraSelector = cameraSelector,
-            onChangeCameraSelector = onChangeCameraSelector,
-            onNewRecording = onNewRecording,
-            onStopRecording = onStopRecording
-        )
-    }
+    Box(Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center
+        ) {
+            if (permissionCamera.isForbidden) {
+                PermissionIsNotGrantedState(
+                    icon = Icons.Filled.CameraAlt,
+                    label = Rres.string.can_not_get_permission_for_camera,
+                    onClick = onCheckPermissionClick
+                )
+            }
+            if (permissionAudio.isForbidden && isAudioEnabled) {
+                Spacer(modifier = Modifier.size(32.dp))
+                PermissionIsNotGrantedState(
+                    icon = Icons.Filled.PermCameraMic,
+                    label = Rres.string.can_not_get_permission_for_mic,
+                    onClick = onCheckPermissionClick
+                )
+            }
+        }
 
-    Box {
+        if (permissionCamera.isGranted && permissionAudio.isGranted) {
+            CameraRecordingPreview(
+                quality = quality,
+                cameraSelector = cameraSelector,
+                onNewRecording = onNewRecording,
+                onStopRecording = onStopRecording
+            )
+        }
+
+        CameraSelector(
+            cameraSelector = cameraSelector,
+            onChangeCameraSelector = onChangeCameraSelector
+        )
+
         SettingsIcon(onSettingsClick)
     }
 }
 
 @Composable
-private fun PermissionIsNotGrantedState(onClick: () -> Unit) {
-    Box(
+private fun PermissionIsNotGrantedState(
+    icon: ImageVector,
+    @StringRes label: Int,
+    onClick: () -> Unit
+) {
+    Row(
         modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
+            .padding(horizontal = 32.dp)
+            .background(
+                MaterialTheme.colorScheme.surfaceVariant,
+                shape = MaterialTheme.shapes.medium
+            )
+            .clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
             modifier = Modifier
-                .align(Alignment.Center)
-                .padding(horizontal = 32.dp)
-                .background(
-                    MaterialTheme.colorScheme.surfaceVariant,
-                    shape = MaterialTheme.shapes.medium
-                )
-                .clickable { onClick() },
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = Icons.Default.PermCameraMic,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(64.dp)
-                    .padding(4.dp),
-                tint = MaterialTheme.colorScheme.error
-            )
-            Text(
-                text = stringResource(id = Rres.string.can_not_get_permission),
-                modifier = Modifier
-                    .padding(horizontal = 8.dp),
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        }
+                .size(64.dp)
+                .padding(4.dp),
+            tint = MaterialTheme.colorScheme.error
+        )
+        Text(
+            text = stringResource(id = label),
+            modifier = Modifier.padding(8.dp),
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            style = MaterialTheme.typography.bodyMedium,
+        )
     }
 }
 
@@ -213,7 +241,6 @@ private fun PermissionIsNotGrantedState(onClick: () -> Unit) {
 private fun CameraRecordingPreview(
     quality: Quality,
     cameraSelector: CameraSelector,
-    onChangeCameraSelector: () -> Unit,
     onNewRecording: (VideoCapture<Recorder>) -> Unit,
     onStopRecording: () -> Unit
 ) {
@@ -256,8 +283,7 @@ private fun CameraRecordingPreview(
                     onNewRecording(it)
                 }
             }
-        },
-        onChangeCameraSelector = onChangeCameraSelector,
+        }
     )
 }
 
@@ -265,7 +291,6 @@ private fun CameraRecordingPreview(
 private fun Adjustments(
     isRecordingStartedState: State<Boolean>,
     onStartStopClick: () -> Unit,
-    onChangeCameraSelector: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -282,10 +307,6 @@ private fun Adjustments(
             StartStop(
                 isRecordingStarted = isRecordingStartedState.value,
                 onClick = onStartStopClick
-            )
-            CameraSelector(
-                isRecordingStarted = isRecordingStartedState.value,
-                onChangeCameraSelector = onChangeCameraSelector
             )
         }
     }
@@ -310,20 +331,40 @@ private fun StartStop(
 }
 
 @Composable
-private fun CameraSelector(
-    isRecordingStarted: Boolean,
+private fun BoxScope.CameraSelector(
+    cameraSelector: CameraSelector,
     onChangeCameraSelector: () -> Unit
 ) {
-    if (isRecordingStarted.not()) {
+    Column(
+        modifier = Modifier
+            .align(Alignment.BottomStart)
+            .navigationBarsPadding()
+            .padding(bottom = 100.dp, start = 8.dp)
+            .background(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = MaterialTheme.shapes.small
+            ),
+        horizontalAlignment = Alignment.Start
+    ) {
+        val label = if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
+            Rres.string.rear
+        } else {
+            Rres.string.front
+        }
+        Text(
+            text = stringResource(label),
+            modifier = Modifier.padding(start = 8.dp),
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            style = MaterialTheme.typography.bodyMedium,
+        )
         IconButton(
-            onClick = onChangeCameraSelector,
-            modifier = Modifier
+            onClick = onChangeCameraSelector
         ) {
             Icon(
                 imageVector = Icons.Filled.SwitchVideo,
                 contentDescription = null,
                 modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.onSurface
             )
         }
     }
@@ -336,9 +377,11 @@ private fun BoxScope.SettingsIcon(onClick: () -> Unit) {
         contentDescription = null,
         modifier = Modifier
             .align(Alignment.TopEnd)
+            .statusBarsPadding()
             .padding(16.dp)
             .size(40.dp)
-            .clickable { onClick() }
+            .clickable { onClick() },
+        tint = MaterialTheme.colorScheme.surfaceVariant
     )
 }
 
@@ -346,7 +389,8 @@ private fun BoxScope.SettingsIcon(onClick: () -> Unit) {
 @Composable
 private fun CameraRecordingPreview() {
     Content(
-        permission = PermissionState.Denied,
+        permissionCamera = AndroidPermissionState.Denied,
+        permissionAudio = AndroidPermissionState.Denied,
         quality = Quality.SD,
         cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
         isAudioEnabled = true,

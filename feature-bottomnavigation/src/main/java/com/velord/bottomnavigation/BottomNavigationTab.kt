@@ -1,18 +1,13 @@
 package com.velord.bottomnavigation
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Camera
 import androidx.compose.material.icons.outlined.Hexagon
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
@@ -40,11 +35,8 @@ sealed class BottomNavigationTab : Tab {
 
         @Composable
         override fun Content() {
-            Text(
-                text = stringResource(id = R.string.camera),
-                modifier = Modifier.padding(16.dp),
-                color = Color.Blue
-            )
+            val screen = rememberScreen(SharedScreen.BottomNavigationTab.Camera)
+            Navigator(screen)
         }
     }
 

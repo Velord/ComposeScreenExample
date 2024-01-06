@@ -8,7 +8,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.util.context.getActivity
 
-class SettingsScreen : Screen {
+object SettingsScreen : Screen {
     @Composable
     override fun Content() {
         val activity = LocalContext.current.getActivity()

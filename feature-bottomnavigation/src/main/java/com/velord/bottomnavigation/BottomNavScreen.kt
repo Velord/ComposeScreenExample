@@ -1,7 +1,6 @@
 package com.velord.bottomnavigation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -48,7 +47,6 @@ object BottomNavScreen : Screen {
 
         val context = LocalContext.current
         LaunchedEffect(finishAppEventState.value) {
-            Log.d("@@@", "finishAppEventState.value = ${finishAppEventState.value}")
             if (finishAppEventState.value) {
                 context.getActivity()?.finish()
             }
@@ -57,14 +55,12 @@ object BottomNavScreen : Screen {
         val navigator = LocalNavigator.current
         val lastItem = navigator?.lastItemOrNull
         LaunchedEffect(lastItem) {
-            Log.d("@@@", "navigator.lastItemOrNull = $lastItem")
             viewModel.updateBackHandling(lastItem)
         }
 
         TabNavigator(tabState.value) {
             val tabNavigator = LocalTabNavigator.current
             LaunchedEffect(tabState.value) {
-                Log.d("@@@", "tabState.value = ${tabState.value}")
                 tabNavigator.current = tabState.value
             }
 

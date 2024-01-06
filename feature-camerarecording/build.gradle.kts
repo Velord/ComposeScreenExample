@@ -45,19 +45,21 @@ dependencies {
     implementation(project(":model"))
     implementation(project(":util"))
     implementation(project(":core-ui"))
+    implementation(project(":core-navigation"))
     implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)
     implementation(libs.bundles.androidx.camera)
     implementation(libs.bundles.androidx.lifecycle.runtime)
-    implementation(libs.google.guava)
+    implementation(libs.bundles.androidx.lifecycle.viewmodel)
+    implementation(libs.bundles.voyager)
     // Compose
     implementation(libs.bundles.compose.core)
     implementation(libs.bundles.compose.foundation)
     implementation(libs.bundles.compose.material.all)
     implementation(libs.bundles.compose.ui)
-    implementation(libs.bundles.compose.accompanist.core)
+    implementation(libs.bundles.compose.accompanist.all)
     // DI
     implementation(libs.bundles.dagger.all)
     kapt(libs.bundles.dagger.kapt)

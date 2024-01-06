@@ -13,11 +13,10 @@ import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
 import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.camerarecording.model.createRecordingViaMediaStore
-import com.velord.model.profile.UserProfile
-import com.velord.resource.R
+import com.velord.navigation.NavigationData
+import com.velord.navigation.SharedScreen
 import com.velord.util.file.FileName
-import com.velord.util.navigation.NavigationData
-import com.velord.util.permission.PermissionState
+import com.velord.util.permission.AndroidPermissionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,14 +29,15 @@ class CameraRecordingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : CoroutineScopeViewModel() {
     // Permission
-    val permissionFlow = MutableStateFlow(PermissionState.NotAsked)
+    val permissionCameraFlow = MutableStateFlow(AndroidPermissionState.NotAsked)
+    val permissionAudioFlow = MutableStateFlow(AndroidPermissionState.NotAsked)
     // User interaction
     val checkPermissionEvent = MutableSharedFlow<Unit>()
-    val navigationEvent = MutableSharedFlow<NavigationData>()
+    val navigationEvent = MutableSharedFlow<NavigationData?>()
     // Adjustments
     val videoQualityFlow = MutableStateFlow(Quality.HIGHEST)
     val videoCameraSelectorFlow = MutableStateFlow(CameraSelector.DEFAULT_FRONT_CAMERA)
-    val videoIsAudioEnabledFlow = MutableStateFlow(true)
+    val isAudioEnabledFlow = MutableStateFlow(true)
     // Video control
     // A Recording is an object that allows us to control current active recording.
     // It will allow us to stop, pause and resume the current recording.
@@ -46,14 +46,22 @@ class CameraRecordingViewModel @Inject constructor(
 
     fun onSettingsClick() = launch {
         val nav = NavigationData(
-            R.id.from_cameraRecordingFragment_to_settingsFragment,
-            UserProfile(234, "sdfsd")
+            screen = SharedScreen.BottomNavigationTab.Settings,
+            useRoot = true
         )
         navigationEvent.emit(nav)
     }
 
-    fun updatePermissionState(state: PermissionState) {
-        permissionFlow.value = state
+    fun updatePermissionState(state: AndroidPermissionState) {
+        updateCameraPermissionState(state)
+        updateAudioPermissionState(state)
+    }
+
+    fun updateCameraPermissionState(state: AndroidPermissionState) {
+        permissionCameraFlow.value = state
+    }
+    fun updateAudioPermissionState(state: AndroidPermissionState) {
+        permissionAudioFlow.value = state
     }
 
     fun onCheckPermission() = launch {
@@ -74,15 +82,15 @@ class CameraRecordingViewModel @Inject constructor(
         videoCameraSelectorFlow.value = newCamera
     }
 
-    fun onChangeVideoIsAudioEnabled(enabled: Boolean) {
-        videoIsAudioEnabledFlow.value = enabled
+    fun onChangeIsAudioEnabled(enabled: Boolean) {
+        isAudioEnabledFlow.value = enabled
     }
 
     fun onNewRecording(newCapture: VideoCapture<Recorder>) {
         val newRecording = context.createRecordingViaMediaStore(
             fileName = FileName(),
             videoCapture = newCapture,
-            audioEnabled = videoIsAudioEnabledFlow.value,
+            audioEnabled = isAudioEnabledFlow.value,
             consumer = ::onVideoRecordEvent,
         )
         recordingFlow.value = newRecording
