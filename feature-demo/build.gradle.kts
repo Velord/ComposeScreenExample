@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":resource"))
     implementation(project(":core-navigation"))
+    implementation(project(":core-ui"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)

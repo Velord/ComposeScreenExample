@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class DemoViewModel : CoroutineScopeViewModel() {
 
-    val navigationEvent = MutableSharedFlow<NavigationData?>()
+    val navigationEvent = MutableSharedFlow<NavigationData>()
 
     fun onOpenShape() = launch {
         navigationEvent.emit(NavigationData(SharedScreen.Demo.Shape))
