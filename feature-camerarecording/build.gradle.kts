@@ -30,8 +30,8 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -64,11 +64,4 @@ dependencies {
     implementation(libs.bundles.dagger.all)
     kapt(libs.bundles.dagger.kapt)
     kapt(libs.hilt.compiler)
-}
-
-// https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
-    }
 }

@@ -97,11 +97,7 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
