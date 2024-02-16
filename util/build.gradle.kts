@@ -24,10 +24,6 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    compileOptions {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
@@ -40,7 +36,7 @@ dependencies {
     implementation(libs.bundles.androidx.ktx)
     implementation(libs.bundles.androidx.navigation)
     implementation(libs.androidx.glance.appwidget)
-    implementation(libs.bundles.network)
+    implementation(libs.bundles.network.all)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

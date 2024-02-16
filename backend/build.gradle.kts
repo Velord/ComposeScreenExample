@@ -35,7 +35,7 @@ dependencies {
     // Templates
     implementation(libs.androidx.core)
     implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.network)
+    implementation(libs.bundles.network.all)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
