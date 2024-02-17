@@ -1,0 +1,619 @@
+[versions]
+# API
+minApi = "29"
+targetApi = "34"
+# Build
+buildTools = "30.0.3"
+gradle = "8.2.2"
+jvmTarget = "17"
+# DI
+dagger = "2.49"
+hilt = "2.49"
+hiltNavigation = "1.1.0"
+hiltNavigationCompose = "1.1.0"
+# Kotlin
+kotlin = "1.9.21"
+coroutine = "1.7.3"
+# Kotlin Serialization
+kotlinJsonSerialization = "1.5.0"
+kotlinJsonSerializationRetrofitConverter = "1.0.0"
+# Google
+googleGuava = "32.0.0-android"
+# AndroidX
+## A
+androidxActivity = "1.9.0-alpha03"
+androidxAds = "1.0.0-alpha05"
+androidxAnnotation = "1.7.1"
+androidxAppCompat = "1.6.1"
+androidxAppSearch = "1.1.0-alpha03"
+androidxArchCore = "2.2.0"
+androidxAsyncLayoutInflater = "1.0.0"
+androidxAutoFill = "1.1.0"
+## B
+androidxBenchmark = "1.2.3"
+androidxBiometric = "1.1.0"
+androidxBluetooth = "1.0.0-alpha02"
+androidxBrowser = "1.7.0"
+## C
+androidxCamera = "1.3.1"
+androidxCarApp = "1.2.0"
+androidXCardView = "1.0.0"
+androidxCollection = "1.4.0"
+androidxConcurrent = "1.1.0"
+## AndroidX Constraint
+androidxConstraint = "2.1.4"
+androidxConstraintCompose = "1.1.0-alpha13"
+## C
+androidxContentPager = "1.0.0"
+androidxCoordinatorLayout = "1.2.0"
+androidxCore = "1.12.0"
+androidxCoreUWB = "1.0.0-alpha08"
+androidxCredentials = "1.2.0"
+androidxCursorAdapter = "1.0.0"
+# AndroidX CustomView
+androidxCustomView = "1.1.0"
+androidxCustomViewPollingContainer = "1.0.0"
+## D
+androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
+androidxDatastore = "1.0.0"
+androidxDocumentFile = "1.0.1"
+androidxDragAndDrop = "1.0.0"
+androidxDrawerLayout = "1.2.0"
+androidxDynamicAnimation = "1.1.0-alpha03"
+## Emoji
+androidxEmoji = "1.1.0"
+androidxEmoji2 = "1.4.0"
+## E
+androidxExifInterface = "1.3.7"
+androidxEnterprise = "1.1.0"
+androidxFragment = "1.7.0-alpha10"
+## Glance
+androidxGlance = "1.0.0"  # For Glance, AppWidgets
+androidxGlanceWearTiles = "1.0.0-alpha05"
+## L
+androidxLegacySupport = "1.0.0"
+androidxLifecycle = "2.7.0"
+## M
+androidxMedia3 = "1.2.1"
+## N
+androidxNavigation = "2.7.7"
+## AndroidX Paging
+androidxPaging = "3.2.1"
+androidxPagingCompose = "3.3.0-alpha03"
+## P
+androidxPalette = "1.0.0"
+androidxPercentLayout = "1.0.0"
+androidxPreference = "1.2.1"
+androidxPrint = "1.1.0-beta01"
+## Privacy Sandbox
+androidxPrivacySandboxActivity = "1.0.0-alpha01"
+androidxPrivacySandboxAds = "1.1.0-beta04"
+androidxPrivacySandboxPlugins = "1.0.0-alpha02"
+androidxPrivacySandboxSdkRuntime = "1.0.0-alpha12"
+androidxPrivacySandboxTools = "1.0.0-alpha07"
+androidxPrivacySandboxUi = "1.0.0-alpha07"
+## P
+androidxProfileInstaller = "1.3.1"
+## R
+androidxRecommendation = "1.0.0"
+## Recycler View
+androidxRecyclerView = "1.3.2"
+androidxRecyclerViewSelection = "1.1.0"
+## R
+androidxRemoteCallback = "1.0.0-alpha02"
+androidxResourceInspection = "1.0.1"
+## Room
+androidxRoom = "2.6.1"
+## W
+androidxWorkManager = "2.9.0"
+# Network
+squareRetrofit = "2.9.0"
+squareOkhttp3Interceptor = "4.10.0"
+ktor = "2.3.8"
+# Compose
+composeDefault = "1.6.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeAccompanist = "0.33.2-alpha"
+composeCompiler = "1.5.6"
+composeMaterial3 = "1.2.0"
+# Compose 3-rd party
+composeHtmlIreward = "1.0.2"
+# Image loader
+coil = "2.2.2"
+# Permission
+sagarCororutinePermission = "2.0.2"
+# Navigation
+voyager = "1.1.0-alpha02"
+velordMultipleBackstack = "0.5.9.1"
+
+
+[libraries]
+# AndroidX -----------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
+androidx-ads-identifier = { module = "androidx.ads:ads-identifier", version.ref = "androidxAds" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
+androidx-appsearch = { module = "androidx.appsearch:appsearch", version.ref = "androidxAppSearch" }
+androidx-asynclayoutinflater = { module = "androidx.asynclayoutinflater:asynclayoutinflater", version.ref = "androidxAsyncLayoutInflater" }
+androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidxAutoFill" }
+androidx-benchmark = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidxBenchmark" }
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "androidxBiometric" }
+androidx-bluetooth = { module = "androidx.bluetooth:bluetooth", version.ref = "androidxBluetooth" }
+androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
+androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "androidXCardView" }
+androidx-contentpager = { module = "androidx.contentpager:contentpager", version.ref = "androidxContentPager" }
+androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "androidxCoordinatorLayout" }
+androidx-core-uwb = { module = "androidx.core.uwb:uwb", version.ref = "androidxCoreUWB" }
+androidx-cursoradapter = { module = "androidx.cursoradapter:cursoradapter", version.ref = "androidxCursorAdapter" }
+androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
+androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "androidxDocumentFile" }
+androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
+androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "androidxDrawerLayout" }
+androidx-enterprise = { module = "androidx.enterprise:enterprise-feedback", version.ref = "androidxEnterprise" }
+androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
+androidx-percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref = "androidxPercentLayout" }
+androidx-print = { module = "androidx.print:print", version.ref = "androidxPrint" }
+androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidxProfileInstaller" }
+androidx-recommendation = { module = "androidx.recommendation:recommendation", version.ref = "androidxRecommendation" }
+androidx-remotecallback = { module = "androidx.remotecallback:remotecallback", version.ref = "androidxRemoteCallback" }
+# AndroidX Activity
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
+# AndroidX Arch
+androidx-arch-common = { module = "androidx.arch.core:core-common", version.ref = "androidxArchCore" }
+androidx-arch-runtime = { module = "androidx.arch.core:core-runtime", version.ref = "androidxArchCore" }
+androidx-arch-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidxArchCore" }
+# AndroidX Camera
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidxCamera" }
+androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "androidxCamera" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidxCamera" }
+androidx-camera-extension = { module = "androidx.camera:camera-extensions", version.ref = "androidxCamera" }
+# AndroidX Car App
+androidx-carapp-automotive = { module = "androidx.car.app:app-automotive", version.ref = "androidxCarApp" }
+androidx-carapp-testing = { module = "androidx.car.app:app-testing", version.ref = "androidxCarApp" }
+# AndroidX Constraint
+androidx-constraint = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraint" }
+androidx-constraint-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "androidxConstraintCompose" }
+# AndroidX Credentials
+androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "androidxCredentials" }
+androidx-credentials-below13 = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidxCredentials" }
+# AndroidX CustomView
+androidx-customview = { module = "androidx.customview:customview", version.ref = "androidxCustomView" }
+androidx-customview-pollingcontainer = { module = "androidx.customview:customview-poolingcontainer", version.ref = "androidxCustomViewPollingContainer" }
+# AndroidX Emoji
+androidx-emoji = { module = "androidx.emoji:emoji", version.ref = "androidxEmoji" }
+androidx-emoji-appcompat = { module = "androidx.emoji:emoji-appcompat", version.ref = "androidxEmoji" }
+androidx-emoji-bundled = { module = "androidx.emoji:emoji-bundled", version.ref = "androidxEmoji" }
+androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "androidxEmoji2" }
+androidx-emoji2-views = { module = "androidx.emoji2:emoji2-views", version.ref = "androidxEmoji2" }
+androidx-emoji2-views-helper = { module = "androidx.emoji2:emoji2-views-helper", version.ref = "androidxEmoji2" }
+# AndroidX Glance
+androidx-glance = { module = "androidx.glance:glance", version.ref = "androidxGlance" }
+androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidxGlance" }
+androidx-glance-weartiles = { module = "androidx.glance:glance-wear-tiles", version.ref = "androidxGlanceWearTiles" }
+# AndroidX Lifecycle
+androidx-lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "androidxLifecycle" }
+androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidxLifecycle" }
+# AndroidX Lifecycle Runtime
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+# AndroidX Lifecycle ViewModel
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidxLifecycle" }
+# AndroidX Navigation
+androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
+androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
+androidx-navigation-dynamicfeature = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "androidxNavigation" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
+# AndroidX Media3
+androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
+# AndroidX Paging
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
+# AndroidX Privacy Sandbox Activity
+# Could not find !!!
+androidx-privacysandbox-activity = { module = "androidx.privacysandbox.activity:activity", version.ref = "androidxPrivacySandboxActivity" }
+androidx-privacysandbox-activity-complications-datasource = { module = "androidx.privacysandbox.activity:activity-complications-data-source", version.ref = "androidxPrivacySandboxActivity" }
+androidx-privacysandbox-activity-complications-ktx = { module = "androidx.privacysandbox.activity:activity-complications-data-source-ktx", version.ref = "androidxPrivacySandboxActivity" }
+androidx-privacysandbox-activity-complications-rendering = { module = "androidx.privacysandbox.activity:activity-complications-rendering", version.ref = "androidxPrivacySandboxActivity" }
+androidx-privacysandbox-activity-editor = { module = "androidx.privacysandbox.activity:activity-editor", version.ref = "androidxPrivacySandboxActivity" }
+# AndroidX Privacy Sandbox Ads
+androidx-privacysandbox-ads = { module = "androidx.privacysandbox.ads:ads-adservices", version.ref = "androidxPrivacySandboxAds" }
+androidx-privacysandbox-ads-java = { module = "androidx.privacysandbox.ads:ads-adservices-java", version.ref = "androidxPrivacySandboxAds" }
+# AndroidX Privacy Sandbox Plugins
+androidx-privacysandbox-plugins = { module = "androidx.privacysandbox.plugins:plugins-privacysandbox-library", version.ref = "androidxPrivacySandboxPlugins" }
+# AndroidX Privacy Sandbox SDK Runtime
+androidx-privacysandbox-sdkruntime-core = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-core", version.ref = "androidxPrivacySandboxSdkRuntime" }
+androidx-privacysandbox-sdkruntime-client = { module = "androidx.privacysandbox.sdkruntime:sdkruntime-client", version.ref = "androidxPrivacySandboxSdkRuntime" }
+# AndroidX Privacy Sandbox Tools
+androidx-privacysandbox-tools = { module = "androidx.privacysandbox.tools:tools", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-apicompiler = { module = "androidx.privacysandbox.tools:tools-apicompiler", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-apigenerator = { module = "androidx.privacysandbox.tools:tools-apigenerator", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-core = { module = "androidx.privacysandbox.tools:tools-core", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-testing = { module = "androidx.privacysandbox.tools:tools-testing", version.ref = "androidxPrivacySandboxTools" }
+androidx-privacysandbox-tools-apipackager = { module = "androidx.privacysandbox.tools:tools-apipackager", version.ref = "androidxPrivacySandboxTools" }
+# AndroidX Privacy Sandbox UI
+androidx-privacysandbox-ui = { module = "androidx.privacysandbox.ui:ui", version.ref = "androidxPrivacySandboxUi" }
+androidx-privacysandbox-ui-core = { module = "androidx.privacysandbox.ui:ui-core", version.ref = "androidxPrivacySandboxUi" }
+androidx-privacysandbox-ui-provider = { module = "androidx.privacysandbox.ui:ui-provider", version.ref = "androidxPrivacySandboxUi" }
+# AndroidX Recycler View
+androidx-recylerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerView" }
+androidx-recylerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "androidxRecyclerViewSelection" }
+# AndroidX Resource Inspection
+androidx-resourceinspection-annotation = { module = "androidx.resourceinspection:resourceinspection-annotation", version.ref = "androidxResourceInspection" }
+androidx-resourceinspection-processor = { module = "androidx.resourceinspection:resourceinspection-processor", version.ref = "androidxResourceInspection" }
+# AndroidX Room
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
+androidx-room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "androidxRoom" }
+androidx-room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "androidxRoom" }
+androidx-room-guava = { module = "androidx.room:room-guava", version.ref = "androidxRoom" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "androidxRoom" }
+# AndroidX WorkManager
+androidx-workmanager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxWorkManager" }
+androidx-workmanager-gcm = { module = "androidx.work:work-gcm", version.ref = "androidxWorkManager" }
+androidx-workmanager-multiprocess = { module = "androidx.work:work-multiprocess", version.ref = "androidxWorkManager" }
+# AndroidX KTX
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragment" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
+androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreference" }
+androidx-collection = { module = "androidx.collection:collection-ktx", version.ref = "androidxCollection" }
+androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
+androidx-dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation-ktx", version.ref = "androidxDynamicAnimation" }
+# Kotlin --------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+# Kotlin Coroutine
+kotlin-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine" }
+kotlin-coroutine-play-service = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutine" }
+# Kotlin Serialization
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinJsonSerialization" }
+kotlin-serialization-json-retrofit-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlinJsonSerializationRetrofitConverter" }
+# Compose Core  -------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
+compose-animation = { module = "androidx.compose.animation:animation", version.ref = "composeDefault" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeDefault" }
+# Compose Accompanist
+compose-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "composeAccompanist" }
+compose-accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "composeAccompanist" }
+compose-accompanist-drawable = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "composeAccompanist" }
+compose-accompanist-permission = { module = "com.google.accompanist:accompanist-permissions", version.ref = "composeAccompanist" }
+# Compose Accompanist Pager
+compose-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "composeAccompanist" }
+compose-accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "composeAccompanist" }
+# Compose Foundation
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeDefault" }
+compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "composeDefault" }
+# Compose Material
+compose-material = { module = "androidx.compose.material:material", version.ref = "composeDefault" }
+compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeDefault" }
+# Compose Material 3
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
+compose-material3-window = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "composeMaterial3" }
+# Compose Ui
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeDefault" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeDefault" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeDefault" }
+# Compose 3-rd party
+compose-html = { module = "com.github.ireward:compose-html", version.ref = "composeHtmlIreward" }
+# DI Dagger ----------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "dagger" }
+dagger-android-support = { module = "com.google.dagger:dagger-android-support", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+dagger-android-processor = { module = "com.google.dagger:dagger-android-processor", version.ref = "dagger" }
+# DI Hilt
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-navigation = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigation" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+# Network SquareUp ---------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
+square-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "squareRetrofit" }
+square-okhttp3-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "squareOkhttp3Interceptor" }
+# Network Ktor ---------------------------------------------------------------------------------
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" } # For iOS
+# ---------------------------------------------------------------------------------------------------
+# Permission
+sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", version.ref = "sagarCororutinePermission" }
+# Image loader
+coil = { module = "io.coil-kt:coil", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+# Google
+google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
+# Navigation
+velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
+# Voyager
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyager" }
+voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
+voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
+
+
+[bundles]
+# AndroidX
+# AndroidX Activity
+androidx-activity = ["androidx-activity-ktx", "androidx-activity-compose"]
+# AndroidX Arch Core
+androidx-arch = ["androidx-arch-common", "androidx-arch-runtime", "androidx-arch-testing"]
+# AndroidX Camera
+androidx-camera = [
+    "androidx-camera-lifecycle", "androidx-camera-video",
+    "androidx-camera-view", "androidx-camera-extension",
+]
+# AndroidX Car App
+androidx-carapp = ["androidx-carapp-automotive" ,"androidx-carapp-testing"]
+# AndroidX Constraint
+androidx-constraint = ["androidx-constraint", "androidx-constraint-compose"]
+# AndroidX Credentials
+androidx-credentials = ["androidx-credentials", "androidx-credentials-below13"]
+# AndroidX CustomView
+androidx-customview = ["androidx-customview", "androidx-customview-pollingcontainer"]
+# AndroidX Emoji
+androidx-emoji = ["androidx-emoji", "androidx-emoji-appcompat", "androidx-emoji-bundled"]
+androidx-emoji2 = ["androidx-emoji2", "androidx-emoji2-views", "androidx-emoji2-views-helper"]
+androidx-emoji-all = [
+    "androidx-emoji", "androidx-emoji-appcompat", "androidx-emoji-bundled",
+    "androidx-emoji2", "androidx-emoji2-views", "androidx-emoji2-views-helper"
+]
+# AndroidX Glance
+androidx-glance = ["androidx-glance", "androidx-glance-appwidget", "androidx-glance-weartiles"]
+# AndroidX Lifecycle
+androidx-lifecycle-other = [
+    "androidx-lifecycle-service", "androidx-lifecycle-process"
+]
+androidx-lifecycle-runtime = [
+    "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose"
+]
+androidx-lifecycle-viewmodel = [
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-viewmodel-savedstate"
+]
+androidx-lifecycle-all = [
+    "androidx-lifecycle-service", "androidx-lifecycle-process",
+    "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-viewmodel-savedstate"
+]
+# AndroidX Navigation
+androidx-navigation = [
+    "androidx-navigation-fragment", "androidx-navigation-ui",
+    "androidx-navigation-dynamicfeature", "androidx-navigation-compose"
+]
+# AndroidX Paging
+androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
+# AndroidX Privacy Sandbox
+androidx-privacysandbox-all = [
+    "androidx-privacysandbox-activity",
+    "androidx-privacysandbox-activity-complications-datasource",
+    "androidx-privacysandbox-activity-complications-ktx",
+    "androidx-privacysandbox-activity-complications-rendering",
+    "androidx-privacysandbox-activity-editor",
+    "androidx-privacysandbox-ads", "androidx-privacysandbox-ads-java",
+    "androidx-privacysandbox-plugins",
+    "androidx-privacysandbox-sdkruntime-core", "androidx-privacysandbox-sdkruntime-client",
+    "androidx-privacysandbox-tools", "androidx-privacysandbox-tools-apicompiler",
+    "androidx-privacysandbox-tools-apigenerator", "androidx-privacysandbox-tools-core",
+    "androidx-privacysandbox-tools-testing", "androidx-privacysandbox-tools-apipackager",
+    "androidx-privacysandbox-ui",
+    "androidx-privacysandbox-ui-core", "androidx-privacysandbox-ui-provider"
+]
+# AndroidX Recycler View
+androidx-recyclerview = [
+    "androidx-recylerview", "androidx-recylerview-selection"
+]
+# AndroidX Resource Inspection
+androidx-resourceinspection = [
+    "androidx-resourceinspection-annotation", "androidx-resourceinspection-processor"
+]
+# AndroidX Room
+androidx-room = [
+    "androidx-room-ktx",
+    "androidx-room-rxjava2", "androidx-room-rxjava3",
+    "google-guava", "androidx-room-paging"
+]
+# AndroidX WorkManager
+androidx-workmanager = [
+    "androidx-workmanager-runtime", "androidx-workmanager-gcm",
+    "androidx-workmanager-multiprocess"
+]
+# AndroidX KTX
+androidx-ktx = [
+    "androidx-fragment", "androidx-core",
+    "androidx-preference", "androidx-collection",
+    "androidx-concurrent",
+    # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
+    # Could not find !!!"androidx-privacysandbox-activity-complications-ktx"
+]
+# AndroidX Module
+androidx-module = [
+    "androidx-activity-ktx", "androidx-activity-compose",
+    "androidx-appcompat",
+    "androidx-lifecycle-runtime-compose",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-navigation-fragment",
+    "androidx-navigation-ui",
+]
+# AndroidX All
+androidx-all = [
+    # AndroidX Other
+    "androidx-ads-identifier", "androidx-annotation",
+    "androidx-appcompat", "androidx-appsearch",
+    "androidx-asynclayoutinflater", "androidx-autofill",
+    "androidx-benchmark", "androidx-biometric",
+    # "androidx-bluetooth", uses-sdk:minSdkVersion cannot be smaller than version 33 declared
+    "androidx-browser",
+    "androidx-cardview", "androidx-contentpager",
+    "androidx-coordinatorlayout",
+    "androidx-core-uwb",
+    "androidx-cursoradapter",
+    "androidx-datastore", "androidx-documentfile",
+    "androidx-draganddrop", "androidx-drawerlayout",
+    "androidx-enterprise", "androidx-exifinterface",
+    "androidx-media3-exoplayer",
+    "androidx-percentlayout",
+    "androidx-print",
+    "androidx-profileinstaller",
+    "androidx-recommendation",
+    "androidx-remotecallback",
+    # AndroidX Activity
+    "androidx-activity-ktx", "androidx-activity-compose",
+    # AndroidX Arch Core
+    "androidx-arch-common", "androidx-arch-runtime", "androidx-arch-testing",
+    # AndroidX Camera
+    "androidx-camera-lifecycle", "androidx-camera-video",
+    "androidx-camera-view", "androidx-camera-extension",
+    # AndroidX Car App
+    "androidx-carapp-automotive" ,"androidx-carapp-testing",
+    # AndroidX Constraint
+    "androidx-constraint", "androidx-constraint-compose",
+    # AndroidX Credentials
+    "androidx-credentials", "androidx-credentials-below13",
+    # AndroidX CustomView
+    "androidx-customview", "androidx-customview-pollingcontainer",
+    # AndroidX Emoji
+    "androidx-emoji", "androidx-emoji-appcompat", "androidx-emoji-bundled",
+    "androidx-emoji2", "androidx-emoji2-views", "androidx-emoji2-views-helper",
+    # AndroidX Glance
+    "androidx-glance", "androidx-glance-appwidget", "androidx-glance-weartiles",
+    # AndroidX Lifecycle
+    "androidx-lifecycle-service", "androidx-lifecycle-process",
+    "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-viewmodel-savedstate",
+    # AndroidX Navigation
+    "androidx-navigation-fragment", "androidx-navigation-ui",
+    "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
+    # AndroidX Paging
+    "androidx-paging-runtime", "androidx-paging-compose",
+    # AndroidX Privacy Sandbox
+    # Could not find !!!
+    #"androidx-privacysandbox-ads", "androidx-privacysandbox-ads-java",
+    #"androidx-privacysandbox-plugins",
+    #"androidx-privacysandbox-sdkruntime-core", "androidx-privacysandbox-sdkruntime-client",
+    #"androidx-privacysandbox-tools", "androidx-privacysandbox-tools-apicompiler",
+    #"androidx-privacysandbox-tools-apigenerator", "androidx-privacysandbox-tools-core",
+    #"androidx-privacysandbox-tools-testing", "androidx-privacysandbox-tools-apipackager",
+    #"androidx-privacysandbox-ui",
+    #"androidx-privacysandbox-ui-core", "androidx-privacysandbox-ui-provider"
+    # AndroidX Recycler View
+    "androidx-recylerview", "androidx-recylerview-selection",
+    # AndroidX Resource Inspection
+    "androidx-resourceinspection-annotation", "androidx-resourceinspection-processor",
+    # AndroidX Room
+    "androidx-room-ktx",
+    "androidx-room-rxjava2", "androidx-room-rxjava3",
+    "google-guava", "androidx-room-paging",
+    # AndroidX WorkManager
+    "androidx-workmanager-runtime", "androidx-workmanager-gcm",
+    "androidx-workmanager-multiprocess",
+    # AdnroidX KTX
+    "androidx-fragment", "androidx-core",
+    "androidx-preference", "androidx-collection",
+    "androidx-concurrent",
+    # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
+]
+# Kotlin
+kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
+kotlin-coroutine = ["kotlin-coroutine-core", "kotlin-coroutine-play-service"]
+kotlin-serialization-json = [
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+]
+kotlin-all = [
+    "kotlin-stdlib", "kotlin-reflect",
+    "kotlin-coroutine-core", "kotlin-coroutine-play-service",
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+]
+kotlin-module = [
+    "kotlin-stdlib", "kotlin-reflect",
+    "kotlin-coroutine-play-service", "kotlin-coroutine-core"
+]
+# Compose
+compose-core = ["compose-runtime", "compose-animation"]
+# Compose Accompanist
+compose-accompanist-core = [
+    "compose-accompanist-flowlayout", "compose-accompanist-systemui", "compose-accompanist-drawable"
+]
+compose-accompanist-pager = ["compose-accompanist-pager", "compose-accompanist-pager-indicator"]
+compose-accompanist-all = [
+    "compose-accompanist-flowlayout", "compose-accompanist-systemui",
+    "compose-accompanist-drawable",
+    "compose-accompanist-pager", "compose-accompanist-pager-indicator",
+    "compose-accompanist-permission"
+]
+# Compose Foundation
+compose-foundation = ["compose-foundation", "compose-foundation-layout"]
+# Compose Ui
+compose-ui = ["compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview"]
+# Compose Material
+compose-material = ["compose-material", "compose-material-icons"]
+compose-material-third = ["compose-material3", "compose-material3-window"]
+compose-material-all = [
+    "compose-material", "compose-material-icons",
+    "compose-material3", "compose-material3-window",
+]
+# Compose All
+compose-all = [
+    "compose-runtime", "compose-animation",
+    "compose-accompanist-flowlayout", "compose-accompanist-systemui", "compose-accompanist-drawable",
+    "compose-accompanist-pager", "compose-accompanist-pager-indicator",
+    "compose-accompanist-permission",
+    "compose-foundation", "compose-foundation-layout",
+    "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
+    "compose-material", "compose-material-icons",
+    "compose-material3", "compose-material3-window"
+]
+# Compose Third Party
+compose-thirdparty = ["compose-html"]
+# DI
+dagger = ["dagger", "dagger-android", "dagger-android-support"]
+dagger-kapt = ["dagger-compiler", "dagger-android-processor"]
+hilt = ["hilt", "hilt-navigation", "hilt-navigation-compose"]
+dagger-all = [
+    "dagger", "dagger-android", "dagger-android-support",
+    "hilt", "hilt-navigation", "hilt-navigation-compose"
+]
+# Network
+retrofit = ["square-retrofit", "square-okhttp3-interceptor"]
+ktor-android = ["ktor-client-core", "ktor-client-okhttp"]
+ktor-ios = ["ktor-client-core", "ktor-client-darwin"]
+network-retrofit = [
+    "square-retrofit", "square-okhttp3-interceptor",
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+]
+network-ktor = [
+    "ktor-client-core", "ktor-client-okhttp",
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+]
+network-all = [
+    "square-retrofit", "square-okhttp3-interceptor",
+    "ktor-client-core", "ktor-client-okhttp",
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+]
+# Image Loader
+coil = ["coil", "coil-compose"]
+# Voyager
+voyager = [
+    "voyager-navigator", "voyager-screenModel",
+    "voyager-bottomSheetNavigator", "voyager-tabNavigator",
+    "voyager-transitions", "voyager-hilt",
+]
+
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "gradle" }
+android-library = { id = "com.android.library", version.ref = "gradle" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
