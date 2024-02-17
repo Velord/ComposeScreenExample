@@ -97,11 +97,7 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
@@ -111,16 +107,12 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
     // Module
     implementation(project(":resource"))
+    implementation(project(":core-navigation"))
 
     implementation(project(":model"))
     implementation(project(":util"))
@@ -129,21 +121,23 @@ dependencies {
     implementation(project(":datastore"))
 
     implementation(project(":sharedviewmodel"))
-    implementation(project(":uicore"))
+    implementation(project(":core-ui"))
 
-    implementation(project(":camerarecording"))
-    implementation(project(":bottomnavigation"))
-    implementation(project(":shapedemo"))
-    implementation(project(":modifierdemo"))
-    implementation(project(":flowsummator"))
-    implementation(project(":settings"))
+    implementation(project(":feature-demo"))
+    implementation(project(":feature-camerarecording"))
+    implementation(project(":feature-bottomnavigation"))
+    implementation(project(":feature-demo-shape"))
+    implementation(project(":feature-demo-modifier"))
+    implementation(project(":feature-flowsummator"))
+    implementation(project(":feature-settings"))
+    implementation(project(":widget-refreshableimage"))
 
-    implementation(project(":widgetrefreshableimage"))
-    implementation(project(":widgetcounter"))
+    implementation(project(":widget-counter"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.coil)
+    implementation(libs.bundles.voyager)
     // Compose
     implementation(libs.bundles.compose.all)
     // DI

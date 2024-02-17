@@ -3,33 +3,71 @@ package com.velord.composescreenexample.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
-import androidx.annotation.IdRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.NavHostFragment
+import cafe.adriel.voyager.core.registry.screenModule
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.sharedviewmodel.ThemeViewModel
-import com.velord.composescreenexample.R
+import com.velord.bottomnavigation.BottomNavScreen
+import com.velord.camerarecording.CameraRecordingScreen
 import com.velord.composescreenexample.databinding.ActivityMainBinding
+import com.velord.composescreenexample.ui.compose.screen.TestScreen
+import com.velord.feature.demo.DemoScreen
+import com.velord.flowsummator.FlowSummatorScreen
+import com.velord.modifierdemo.ModifierDemoScreen
+import com.velord.navigation.SharedScreen
+import com.velord.settings.SettingsScreen
+import com.velord.shapedemo.ShapeDemoScreen
+import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     companion object {
         private const val NAVIGATION_EXTRA = "navigation_extra"
-        val fragmentContainer = R.id.mainNavHostFragment
 
         fun startIntent(context: Context, bundle: Bundle) = Intent(
             context, MainActivity::class.java
         ).apply {
             putExtra(NAVIGATION_EXTRA, bundle)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+
+        internal val featureMainModule = screenModule {
+            register<SharedScreen.Test> {
+                TestScreen(it.title, it.modifier, it.onClick)
+            }
+        }
+
+        internal val featureBottomNavigationModule = screenModule {
+            register<SharedScreen.BottomNavigationTab.Camera> {
+               CameraRecordingScreen
+            }
+            register<SharedScreen.BottomNavigationTab.Demo> {
+                DemoScreen
+            }
+            register<SharedScreen.BottomNavigationTab.Settings> {
+                SettingsScreen
+            }
+        }
+
+        internal val featureDemoModule = screenModule {
+            register<SharedScreen.Demo.Shape> {
+                ShapeDemoScreen
+            }
+            register<SharedScreen.Demo.Modifier> {
+                ModifierDemoScreen
+            }
+            register<SharedScreen.Demo.FlowSummator> {
+                FlowSummatorScreen
+            }
         }
     }
 
@@ -49,8 +87,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        handleIntent(savedInstanceState)
 
+        handleIntent(savedInstanceState)
         initObserving()
     }
 
@@ -74,20 +112,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setNavGraph(
-        @IdRes destination: Int? = null,
-        bundle: Bundle? = bundleOf()
-    ) {
-        val navHostFragment =
-            (supportFragmentManager.findFragmentById(fragmentContainer) as? NavHostFragment)
-                ?: supportFragmentManager.fragments[0] as NavHostFragment
 
-        val controller = navHostFragment.navController
-        val graph = controller.navInflater.inflate(R.navigation.main_nav_graph)
-        controller.graph = graph
-
-        if (destination != null) {
-            controller.navigate(destination, bundle)
+    private fun setNavGraph() {
+        binding?.mainNavHost?.setContentWithTheme {
+            Navigator(BottomNavScreen) {
+                SlideTransition(it)
+            }
         }
     }
 
