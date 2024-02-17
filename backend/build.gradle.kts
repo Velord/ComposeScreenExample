@@ -22,6 +22,9 @@ android {
             )
         }
     }
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 
 dependencies {
@@ -32,16 +35,9 @@ dependencies {
     // Templates
     implementation(libs.androidx.core)
     implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.network)
+    implementation(libs.bundles.network.all)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
     kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
-}
-
-// https://slack-chats.kotlinlang.org/t/9025044/after-updating-my-project-to-kotlin-1-8-0-i-m-getting-the-fo
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
-    }
 }

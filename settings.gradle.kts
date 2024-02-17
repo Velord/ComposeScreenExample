@@ -1,6 +1,7 @@
 include(":app")
 
 include(":resource")
+include(":core-navigation")
 
 include(":util")
 include(":model")
@@ -9,18 +10,18 @@ include(":backend")
 include(":datastore")
 
 include(":sharedviewmodel")
-include(":uicore")
+include(":core-ui")
 
-include(":camerarecording")
-include(":bottomnavigation")
-include(":shapedemo")
-include(":modifierdemo")
-include(":flowsummator")
-include(":settings")
+include(":feature-demo")
+include(":feature-camerarecording")
+include(":feature-bottomnavigation")
+include(":feature-demo-shape")
+include(":feature-demo-modifier")
+include(":feature-flowsummator")
+include(":feature-settings")
 
-include(":widgetrefreshableimage")
-include(":widgetcounter")
-
+include(":widget-refreshableimage")
+include(":widget-counter")
 
 rootProject.name = "ComposeScreenExample"
 
