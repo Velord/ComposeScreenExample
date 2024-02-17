@@ -61,6 +61,7 @@ fun AnimatableLabeledIcon(
         )
         Text(
             text = label,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(top = 4.dp),
             style = MaterialTheme.typography.labelSmall
         )

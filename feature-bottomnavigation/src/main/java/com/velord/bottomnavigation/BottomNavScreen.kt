@@ -116,7 +116,9 @@ object BottomNavScreen : Screen {
                 NavigationBarItem(
                     selected = isSelected,
                     onClick = { onClick(it) },
-                    label = {},
+                    label = {
+
+                    },
                     icon = {
                         val color = MaterialTheme.colorScheme.run {
                             if (isSelected) secondary else onSurface
