@@ -3,17 +3,28 @@ package com.velord.camerarecording.model
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.os.Environment
 import android.provider.MediaStore
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.*
+import androidx.camera.video.FallbackStrategy
+import androidx.camera.video.FileOutputOptions
+import androidx.camera.video.MediaStoreOutputOptions
+import androidx.camera.video.Quality
+import androidx.camera.video.QualitySelector
+import androidx.camera.video.Recorder
+import androidx.camera.video.Recording
+import androidx.camera.video.VideoCapture
+import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.PreviewView
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
 import com.velord.resource.R
 import com.velord.util.file.FileName
 import com.velord.util.file.NewFile
+import com.velord.util.file.OutputDirectory
+import java.io.File
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -66,12 +77,20 @@ suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutin
 
 @SuppressLint("MissingPermission")
 fun Context.createRecordingViaFileSystem(
-    file: NewFile,
+    fileName: FileName,
     videoCapture: VideoCapture<Recorder>,
     audioEnabled: Boolean,
     consumer: Consumer<VideoRecordEvent>
 ): Recording {
-    val outputOptions = FileOutputOptions.Builder(file.value).build()
+    val appDirName = getString(R.string.app_name)
+    val moviesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)
+    val fullDirName = File(moviesDir, appDirName)
+    val newFile = NewFile(
+        dir = OutputDirectory(fullDirName),
+        name = fileName
+    )
+
+    val outputOptions = FileOutputOptions.Builder(newFile.value).build()
 
     return videoCapture.output
         .prepareRecording(this, outputOptions)
@@ -86,11 +105,11 @@ fun Context.createRecordingViaMediaStore(
     audioEnabled: Boolean,
     consumer: Consumer<VideoRecordEvent>
 ): Recording {
-    val folder = FOLDER_MOVIES + this.getString(R.string.app_name)
+    val appDirName = FOLDER_MOVIES + this.getString(R.string.app_name)
     val contentValues = ContentValues().apply {
         put(MediaStore.MediaColumns.DISPLAY_NAME, fileName.value)
         put(MediaStore.MediaColumns.MIME_TYPE, MIME_TYPE)
-        put(MediaStore.Video.Media.RELATIVE_PATH, folder)
+        put(MediaStore.Video.Media.RELATIVE_PATH, appDirName)
     }
     val mediaStoreOutputOptions = MediaStoreOutputOptions
         .Builder(this.contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)

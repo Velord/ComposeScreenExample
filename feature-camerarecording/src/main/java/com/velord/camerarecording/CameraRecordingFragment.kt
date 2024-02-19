@@ -1,5 +1,6 @@
 package com.velord.camerarecording
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,17 +26,17 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.PermCameraMic
 import androidx.compose.material.icons.filled.SettingsApplications
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.filled.SwitchVideo
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -136,71 +137,87 @@ internal fun CameraRecordingScreen(viewModel: CameraRecordingViewModel) {
     val qualityState = viewModel.videoQualityFlow.collectAsStateWithLifecycle()
     val cameraSelectorState = viewModel.videoCameraSelectorFlow.collectAsStateWithLifecycle()
     val isAudioEnabledState = viewModel.isAudioEnabledFlow.collectAsStateWithLifecycle()
+    val isRecordingStartedState = viewModel.isRecordingStartedFlow.collectAsStateWithLifecycle()
 
     Content(
-        permissionCamera = permissionCameraState.value,
-        permissionAudio = permissionAudioState.value,
-        quality = qualityState.value,
-        cameraSelector = cameraSelectorState.value,
-        isAudioEnabled = isAudioEnabledState.value,
-        onCheckPermissionClick = viewModel::onCheckPermission,
-        onChangeCameraSelector = viewModel::onChangeVideoCameraSelector,
-        onNewRecording = viewModel::onNewRecording,
-        onStopRecording = viewModel::onStopRecording,
-        onSettingsClick = viewModel::onSettingsClick
+        permissionCameraState = permissionCameraState,
+        permissionAudioState = permissionAudioState,
+        qualityState = qualityState,
+        cameraSelectorState = cameraSelectorState,
+        isAudioEnabledState = isAudioEnabledState,
+        isRecordingStartedState = isRecordingStartedState,
+        onCheckPermissionClick = remember { viewModel::onCheckPermission },
+        onChangeCameraSelector = remember { viewModel::onChangeVideoCameraSelector },
+        onSettingsClick = remember { viewModel::onSettingsClick },
+        onStartStopRecording = remember { viewModel::onStartStopRecording },
     )
 }
 
 @Composable
 private fun Content(
-    permissionCamera: AndroidPermissionState,
-    permissionAudio: AndroidPermissionState,
-    quality: Quality,
-    cameraSelector: CameraSelector,
-    isAudioEnabled: Boolean,
+    permissionCameraState: State<AndroidPermissionState>,
+    permissionAudioState: State<AndroidPermissionState>,
+    qualityState: State<Quality>,
+    cameraSelectorState: State<CameraSelector>,
+    isAudioEnabledState: State<Boolean>,
+    isRecordingStartedState: State<Boolean>,
     onCheckPermissionClick: () -> Unit,
     onChangeCameraSelector: () -> Unit,
-    onNewRecording: (VideoCapture<Recorder>) -> Unit,
-    onStopRecording: () -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onStartStopRecording: (VideoCapture<Recorder>?) -> Unit
 ) {
     Box(Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center
-        ) {
-            if (permissionCamera.isForbidden) {
-                PermissionIsNotGrantedState(
-                    icon = Icons.Filled.CameraAlt,
-                    label = Rres.string.can_not_get_permission_for_camera,
-                    onClick = onCheckPermissionClick
-                )
-            }
-            if (permissionAudio.isForbidden && isAudioEnabled) {
-                Spacer(modifier = Modifier.size(32.dp))
-                PermissionIsNotGrantedState(
-                    icon = Icons.Filled.PermCameraMic,
-                    label = Rres.string.can_not_get_permission_for_mic,
-                    onClick = onCheckPermissionClick
-                )
-            }
-        }
+        PermissionInfo(
+            permissionCameraState = permissionCameraState,
+            permissionAudioState = permissionAudioState,
+            isAudioEnabledState = isAudioEnabledState,
+            onCheckPermissionClick = onCheckPermissionClick
+        )
 
-        if (permissionCamera.isGranted && permissionAudio.isGranted) {
-            CameraRecordingPreview(
-                quality = quality,
-                cameraSelector = cameraSelector,
-                onNewRecording = onNewRecording,
-                onStopRecording = onStopRecording
-            )
-        }
+        Recording(
+            permissionCameraState = permissionCameraState,
+            permissionAudioState = permissionAudioState,
+            qualityState = qualityState,
+            cameraSelectorState = cameraSelectorState,
+            isRecordingStartedState = isRecordingStartedState,
+            onStartStopRecording = onStartStopRecording
+        )
 
         CameraSelector(
-            cameraSelector = cameraSelector,
+            cameraSelectorState = cameraSelectorState,
             onChangeCameraSelector = onChangeCameraSelector
         )
 
         SettingsIcon(onSettingsClick)
+    }
+}
+
+@Composable
+private fun PermissionInfo(
+    permissionCameraState: State<AndroidPermissionState>,
+    permissionAudioState: State<AndroidPermissionState>,
+    isAudioEnabledState: State<Boolean>,
+    onCheckPermissionClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
+        if (permissionCameraState.value.isForbidden) {
+            PermissionIsNotGrantedState(
+                icon = Icons.Filled.CameraAlt,
+                label = Rres.string.can_not_get_permission_for_camera,
+                onClick = onCheckPermissionClick
+            )
+        }
+        if (permissionAudioState.value.isForbidden && isAudioEnabledState.value) {
+            Spacer(modifier = Modifier.size(32.dp))
+            PermissionIsNotGrantedState(
+                icon = Icons.Filled.PermCameraMic,
+                label = Rres.string.can_not_get_permission_for_mic,
+                onClick = onCheckPermissionClick
+            )
+        }
     }
 }
 
@@ -238,64 +255,71 @@ private fun PermissionIsNotGrantedState(
 }
 
 @Composable
+private fun BoxScope.Recording(
+    permissionCameraState: State<AndroidPermissionState>,
+    permissionAudioState: State<AndroidPermissionState>,
+    qualityState: State<Quality>,
+    cameraSelectorState: State<CameraSelector>,
+    isRecordingStartedState: State<Boolean>,
+    onStartStopRecording: (VideoCapture<Recorder>?) -> Unit
+) {
+    // VideoCapture is a generic class that provides a camera stream suitable for video applications.
+    // Here we pass the Recorder class which is an implementation of the VideoOutput interface
+    // and it allows us to start recording.
+    val videoCaptureState: MutableState<VideoCapture<Recorder>?> = remember { mutableStateOf(null) }
+
+    if (permissionCameraState.value.isGranted && permissionAudioState.value.isGranted) {
+        CameraRecordingPreview(
+            qualityState = qualityState,
+            cameraSelectorState = cameraSelectorState,
+            onNewVideoCapture = { videoCaptureState.value = it }
+        )
+        Adjustments(
+            isRecordingStartedState = isRecordingStartedState,
+            onStartStopClick = { onStartStopRecording(videoCaptureState.value) }
+        )
+    }
+}
+
+@Composable
 private fun CameraRecordingPreview(
-    quality: Quality,
-    cameraSelector: CameraSelector,
-    onNewRecording: (VideoCapture<Recorder>) -> Unit,
-    onStopRecording: () -> Unit
+    qualityState: State<Quality>,
+    cameraSelectorState: State<CameraSelector>,
+    onNewVideoCapture: (VideoCapture<Recorder>) -> Unit
 ) {
     val context = LocalContext.current
     // PreviewView is a custom view that will display the camera feed.
     // We will bind it to the lifecycle, add it to the AndroidView
     // and it will show us what we are currently recording.
     val previewView = remember { PreviewView(context) }
-    // VideoCapture is a generic class that provides a camera stream suitable for video applications.
-    // Here we pass the Recorder class which is an implementation of the VideoOutput interface
-    // and it allows us to start recording.
-    val videoCaptureState: MutableState<VideoCapture<Recorder>?> = remember { mutableStateOf(null) }
-
-    val isRecordingStartedState = remember { mutableStateOf(false) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(cameraSelector) {
-        videoCaptureState.value = context.createVideoCapture(
+    LaunchedEffect(cameraSelectorState.value, qualityState.value) {
+        val newVideoCapture = context.createVideoCapture(
             lifecycleOwner = lifecycleOwner,
-            cameraSelector = cameraSelector,
+            cameraSelector = cameraSelectorState.value,
             previewView = previewView,
-            preferredQuality = quality
+            preferredQuality = qualityState.value
         )
+        onNewVideoCapture(newVideoCapture)
     }
 
     AndroidView(
         factory = { previewView },
         modifier = Modifier.fillMaxSize()
     )
-
-    Adjustments(
-        isRecordingStartedState = isRecordingStartedState,
-        onStartStopClick = {
-            if (isRecordingStartedState.value) {
-                isRecordingStartedState.value = false
-                onStopRecording()
-            } else {
-                videoCaptureState.value?.let {
-                    isRecordingStartedState.value = true
-                    onNewRecording(it)
-                }
-            }
-        }
-    )
 }
 
 @Composable
-private fun Adjustments(
+private fun BoxScope.Adjustments(
     isRecordingStartedState: State<Boolean>,
     onStartStopClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .align(Alignment.BottomEnd)
             .navigationBarsPadding()
+            .padding(bottom = 100.dp, end = 8.dp)
     ) {
         Row(
             modifier = Modifier
@@ -305,7 +329,7 @@ private fun Adjustments(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             StartStop(
-                isRecordingStarted = isRecordingStartedState.value,
+                isRecordingStartedState = isRecordingStartedState.value,
                 onClick = onStartStopClick
             )
         }
@@ -314,12 +338,12 @@ private fun Adjustments(
 
 @Composable
 private fun StartStop(
-    isRecordingStarted: Boolean,
+    isRecordingStartedState: Boolean,
     onClick: () -> Unit
 ) {
     IconButton(onClick = onClick) {
         val icon =  Icons.Filled.run {
-            if (isRecordingStarted) Stop else AddPhotoAlternate
+            if (isRecordingStartedState) Stop else Circle
         }
         Icon(
             imageVector = icon,
@@ -332,7 +356,7 @@ private fun StartStop(
 
 @Composable
 private fun BoxScope.CameraSelector(
-    cameraSelector: CameraSelector,
+    cameraSelectorState: State<CameraSelector>,
     onChangeCameraSelector: () -> Unit
 ) {
     Column(
@@ -346,7 +370,7 @@ private fun BoxScope.CameraSelector(
             ),
         horizontalAlignment = Alignment.Start
     ) {
-        val label = if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
+        val label = if (cameraSelectorState.value == CameraSelector.DEFAULT_BACK_CAMERA) {
             Rres.string.rear
         } else {
             Rres.string.front
@@ -357,21 +381,30 @@ private fun BoxScope.CameraSelector(
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             style = MaterialTheme.typography.bodyMedium,
         )
-        IconButton(
+        CameraSelectorIcon(
             onClick = onChangeCameraSelector
-        ) {
-            Icon(
-                imageVector = Icons.Filled.SwitchVideo,
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.onSurface
-            )
-        }
+        )
     }
 }
 
 @Composable
-private fun BoxScope.SettingsIcon(onClick: () -> Unit) {
+private fun CameraSelectorIcon(
+    onClick: () -> Unit
+) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Filled.SwitchVideo,
+            contentDescription = null,
+            modifier = Modifier.size(64.dp),
+            tint = MaterialTheme.colorScheme.onSurface
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.SettingsIcon(
+    onClick: () -> Unit
+) {
     Icon(
         imageVector = Icons.Filled.SettingsApplications,
         contentDescription = null,
@@ -385,19 +418,20 @@ private fun BoxScope.SettingsIcon(onClick: () -> Unit) {
     )
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Preview
 @Composable
 private fun CameraRecordingPreview() {
     Content(
-        permissionCamera = AndroidPermissionState.Denied,
-        permissionAudio = AndroidPermissionState.Denied,
-        quality = Quality.SD,
-        cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
-        isAudioEnabled = true,
+        permissionCameraState = mutableStateOf(AndroidPermissionState.Denied),
+        permissionAudioState = mutableStateOf(AndroidPermissionState.Denied),
+        qualityState = mutableStateOf(Quality.SD),
+        cameraSelectorState = mutableStateOf(CameraSelector.DEFAULT_BACK_CAMERA),
+        isAudioEnabledState = mutableStateOf(true),
+        isRecordingStartedState = mutableStateOf(false),
         onCheckPermissionClick = {},
         onChangeCameraSelector = {},
-        onNewRecording = {},
-        onStopRecording = {},
-        onSettingsClick = {}
+        onSettingsClick = {},
+        onStartStopRecording = {}
     )
 }
