@@ -11,10 +11,13 @@ import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
+import androidx.core.os.bundleOf
 import com.velord.camerarecording.model.createRecordingViaFileSystem
 import com.velord.navigation.NavigationDataJetpack
 import com.velord.navigation.NavigationDataVoyager
 import com.velord.navigation.SharedScreen
+import com.velord.navigation.entryPoint.SETTINGS_SOURCE
+import com.velord.navigation.entryPoint.SettingsSource
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.util.file.FileName
 import com.velord.util.permission.AndroidPermissionState
@@ -53,7 +56,8 @@ class CameraRecordingViewModel constructor(
             )
             navigationEventVoyager.emit(nav)
 
-            val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment)
+            val bundle = bundleOf(SETTINGS_SOURCE to SettingsSource.CameraRecording)
+            val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment, bundle)
             navigationEventJetpack.emit(data)
         }
     }

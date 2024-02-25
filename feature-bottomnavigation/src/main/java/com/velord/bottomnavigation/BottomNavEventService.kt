@@ -14,9 +14,16 @@ interface BottomNavEventServiceStub
 
 @Single
 class BottomNavEventService : BottomNavEventServiceStub {
+
     val backHandlingStateFlow = MutableStateFlow(BottomNavBackHandlingState())
+    val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)
 
     fun updateBackHandlingState(newState: BottomNavBackHandlingState) {
         backHandlingStateFlow.value =  newState
+    }
+
+    fun updateTab(newTab: BottomNavigationItem) {
+        if (newTab == currentTabFlow.value) return
+        currentTabFlow.value = newTab
     }
 }

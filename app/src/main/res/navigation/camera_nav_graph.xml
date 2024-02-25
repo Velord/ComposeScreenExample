@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/cameraRecordingFragment"
         android:name="com.velord.camerarecording.CameraRecordingFragment"
-        android:label="CameraRecordingFragment" >
+        android:label="CameraRecordingFragment">
 
         <action
             android:id="@id/from_cameraRecordingFragment_to_settingsFragment"
@@ -35,6 +35,12 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.velord.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+
+        <argument
+            android:name="source"
+            app:argType="com.velord.navigation.entryPoint.SettingsSource"
+            />
+    </fragment>
 
 </navigation>

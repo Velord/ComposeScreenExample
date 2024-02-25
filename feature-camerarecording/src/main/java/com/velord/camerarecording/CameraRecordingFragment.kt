@@ -121,7 +121,7 @@ class CameraRecordingFragment : Fragment() {
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                     viewModel.navigationEventJetpack.filterNotNull().collect {
-                        findNavController().navigate(it.id)
+                        findNavController().navigate(it.id, it.bundle)
                     }
                 }
             }

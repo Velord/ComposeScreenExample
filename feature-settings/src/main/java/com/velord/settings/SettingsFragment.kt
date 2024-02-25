@@ -26,14 +26,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.velord.bottomnavigation.BottomNavViewModelJetpack
+import com.velord.bottomnavigation.addTestCallback
+import com.velord.navigation.entryPoint.SETTINGS_SOURCE
+import com.velord.navigation.entryPoint.SettingsSource
 import com.velord.resource.R
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.utils.LocalTheme
 import com.velord.uicore.utils.setContentWithTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : Fragment() {
 
     private val viewModel by activityViewModels<ThemeViewModel>()
+    private val viewModelBottom by viewModel<BottomNavViewModelJetpack>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +47,14 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
         SettingsScreen(viewModel)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val isActivated = this.arguments?.get(SETTINGS_SOURCE) == SettingsSource.SettingsGraph
+        if (isActivated.not()) return
+        addTestCallback("SettingsFragment", viewModelBottom)
     }
 }
 

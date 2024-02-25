@@ -40,7 +40,6 @@ dependencies {
     implementation(project(":core-navigation"))
     implementation(project(":util"))
     implementation(project(":core-ui"))
-    implementation(project(":feature-settings"))
     implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
