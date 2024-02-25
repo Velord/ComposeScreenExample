@@ -5,10 +5,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
-import com.example.sharedviewmodel.ThemeViewModel
+import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.util.context.getActivity
 
 object SettingsScreen : Screen {
+
     @Composable
     override fun Content() {
         val activity = LocalContext.current.getActivity()

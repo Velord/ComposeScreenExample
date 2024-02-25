@@ -1,9 +1,9 @@
 package com.velord.feature.demo
 
-import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.navigation.NavigationDataJetpack
 import com.velord.navigation.NavigationDataVoyager
 import com.velord.navigation.SharedScreen
+import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 

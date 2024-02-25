@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.resource.R
+import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.utils.LocalTheme
 import com.velord.uicore.utils.setContentWithTheme
 

@@ -21,12 +21,12 @@ data class TestScreen(
 ) : Screen {
     @Composable
     override fun Content() {
-        c(title, modifier, onClick)
+        Content(title, modifier, onClick)
     }
 }
 
 @Composable
-private fun c(
+private fun Content(
     @StringRes title: Int,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},

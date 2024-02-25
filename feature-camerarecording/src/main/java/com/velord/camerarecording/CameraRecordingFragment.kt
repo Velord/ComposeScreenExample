@@ -54,7 +54,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
@@ -64,15 +63,14 @@ import com.velord.uicore.dialog.checkRecordVideoPermission
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import com.velord.util.permission.AndroidPermissionState
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.velord.resource.R as Rres
 
-@AndroidEntryPoint
 class CameraRecordingFragment : Fragment() {
 
-    private val viewModel by viewModels<CameraRecordingViewModel>()
+    private val viewModel by viewModel<CameraRecordingViewModel>()
 
     private val requestRecordVideoPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
