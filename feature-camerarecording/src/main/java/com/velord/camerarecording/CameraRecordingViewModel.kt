@@ -12,7 +12,7 @@ import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
 import com.example.sharedviewmodel.CoroutineScopeViewModel
-import com.velord.camerarecording.model.createRecordingViaMediaStore
+import com.velord.camerarecording.model.createRecordingViaFileSystem
 import com.velord.navigation.NavigationDataJetpack
 import com.velord.navigation.NavigationDataVoyager
 import com.velord.navigation.SharedScreen
@@ -40,21 +40,24 @@ class CameraRecordingViewModel @Inject constructor(
     val videoQualityFlow = MutableStateFlow(Quality.HIGHEST)
     val videoCameraSelectorFlow = MutableStateFlow(CameraSelector.DEFAULT_FRONT_CAMERA)
     val isAudioEnabledFlow = MutableStateFlow(true)
+    val isRecordingStartedFlow = MutableStateFlow(false)
     // Video control
     // A Recording is an object that allows us to control current active recording.
     // It will allow us to stop, pause and resume the current recording.
     // We create that object when we start recording.
     val recordingFlow: MutableStateFlow<Recording?> = MutableStateFlow(null)
 
-    fun onSettingsClick() = launch {
-        val nav = NavigationDataVoyager(
-            screen = SharedScreen.BottomNavigationTab.Settings,
-            useRoot = true
-        )
-        navigationEventVoyager.emit(nav)
+    fun onSettingsClick() {
+        launch {
+            val nav = NavigationDataVoyager(
+                screen = SharedScreen.BottomNavigationTab.Settings,
+                useRoot = true
+            )
+            navigationEventVoyager.emit(nav)
 
-        val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment)
-        navigationEventJetpack.emit(data)
+            val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment)
+            navigationEventJetpack.emit(data)
+        }
     }
 
     fun updatePermissionState(state: AndroidPermissionState) {
@@ -70,8 +73,10 @@ class CameraRecordingViewModel @Inject constructor(
         permissionAudioFlow.value = state
     }
 
-    fun onCheckPermission() = launch {
-        checkPermissionEvent.emit(Unit)
+    fun onCheckPermission() {
+        launch {
+            checkPermissionEvent.emit(Unit)
+        }
     }
 
     fun onChangeVideoQuality(quality: Quality) {
@@ -92,8 +97,20 @@ class CameraRecordingViewModel @Inject constructor(
         isAudioEnabledFlow.value = enabled
     }
 
-    fun onNewRecording(newCapture: VideoCapture<Recorder>) {
-        val newRecording = context.createRecordingViaMediaStore(
+    fun onStartStopRecording(newCapture: VideoCapture<Recorder>?) {
+        if (isRecordingStartedFlow.value) {
+            isRecordingStartedFlow.value = false
+            onStopRecording()
+        } else {
+            newCapture?.let {
+                isRecordingStartedFlow.value = true
+                onNewRecording(it)
+            }
+        }
+    }
+
+    private fun onNewRecording(newCapture: VideoCapture<Recorder>) {
+        val newRecording = context.createRecordingViaFileSystem(
             fileName = FileName(),
             videoCapture = newCapture,
             audioEnabled = isAudioEnabledFlow.value,
@@ -102,7 +119,7 @@ class CameraRecordingViewModel @Inject constructor(
         recordingFlow.value = newRecording
     }
 
-    fun onStopRecording() {
+    private fun onStopRecording() {
         recordingFlow.value?.stop()
     }
 
