@@ -38,9 +38,8 @@ import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.velord.bottomnavigation.R as RLayout
 
-const val TAG = "BottomNav"
+private const val TAG = "BottomNav"
 
 private fun Context.fireToast(text: String) {
     val description = "I am at the first at $text"
@@ -65,7 +64,7 @@ fun Fragment.addTestCallback(
     }
 }
 
-class BottomNavFragment : Fragment(RLayout.layout.fragment_bottom_nav) {
+class BottomNavFragment : Fragment(com.velord.bottomnavigation.R.layout.fragment_bottom_nav) {
 
     private val navController by lazy {
         childFragmentManager.fragments.first().findNavController()
@@ -135,6 +134,7 @@ private fun BottomNavScreen(viewModel: BottomNavViewModelJetpack) {
         onClick = viewModel::onTabClick,
     )
 
+    Log.d(TAG, "BottomNavScreen: ${backHandlingState.value}")
     if (backHandlingState.value.isEnabled) {
         val str = stringResource(id = R.string.press_again_to_exit)
         SnackBarOnBackPressHandler(

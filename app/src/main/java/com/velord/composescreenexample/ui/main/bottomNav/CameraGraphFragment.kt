@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.velord.bottomnavigation.BottomNavViewModelJetpack
-import com.velord.bottomnavigation.TAG
 import com.velord.bottomnavigation.addTestCallback
 import com.velord.uicore.utils.setContentWithTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val TAG = "camera"
 
 class CameraGraphFragment : Fragment() {
 
