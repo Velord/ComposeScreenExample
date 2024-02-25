@@ -6,11 +6,11 @@
 
     <fragment
         android:id="@id/bottom_nav_graph_right_start_destination"
-        android:name="com.velord.composescreenexample.ui.main.bottomNav.settingsGraph.SettingsGraphFragment"
+        android:name="com.velord.composescreenexample.ui.main.bottomNav.SettingsGraphFragment"
         android:label="SettingsGraphFragment" >
 
         <action
-            android:id="@+id/toSettingsFragment"
+            android:id="@+id/from_settingsGraphFragment_to_SettingsFragment"
             app:destination="@id/settingsFragment"
             />
     </fragment>

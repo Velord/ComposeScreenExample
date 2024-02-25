@@ -40,7 +40,7 @@ object BottomNavScreen : Screen {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     override fun Content() {
-        val viewModel = viewModel<BottomNavViewModel>()
+        val viewModel = viewModel<BottomNavViewModelVoyager>()
         val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
         val isBackHandlingEnabledState = viewModel.isBackHandlingEnabledFlow.collectAsStateWithLifecycle()
         val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = false)
@@ -77,7 +77,6 @@ object BottomNavScreen : Screen {
                 }
             )
         }
-
 
         val str = stringResource(id = R.string.press_again_to_exit)
         SnackBarOnBackPressHandler(

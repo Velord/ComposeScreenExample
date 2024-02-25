@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.main.bottomNav.centerGraph
+package com.velord.composescreenexample.ui.main.bottomNav
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CenterGraphFragment : Fragment() {
+class SettingsGraphFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,6 +21,6 @@ class CenterGraphFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findNavController().navigate(R.id.from_addGraphFragment_to_demoFragment)
+        view.findNavController().navigate(R.id.from_settingsGraphFragment_to_SettingsFragment)
     }
 }
