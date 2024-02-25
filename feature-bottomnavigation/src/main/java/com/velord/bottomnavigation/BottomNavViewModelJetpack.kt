@@ -1,16 +1,20 @@
 package com.velord.bottomnavigation
 
 import androidx.navigation.NavDestination
-import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.multiplebackstackapplier.utils.isCurrentStartDestination
+import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
-class BottomNavViewModelJetpack : CoroutineScopeViewModel() {
+@KoinViewModel
+class BottomNavViewModelJetpack(
+    private val bottomNavEventService: BottomNavEventService
+): CoroutineScopeViewModel() {
 
     val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)
-    val isBackHandlingEnabledFlow = MutableStateFlow(false)
+    val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
     val finishAppEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     fun getNavigationItems() = BottomNavigationItem.entries
@@ -26,6 +30,20 @@ class BottomNavViewModelJetpack : CoroutineScopeViewModel() {
 
     fun updateBackHandling(currentNavigationDestination: NavDestination?) {
         val isStart = currentNavigationDestination.isCurrentStartDestination(getNavigationItems())
-        isBackHandlingEnabledFlow.value = isStart
+        val newState = backHandlingStateFlow.value.copy(isAtStartGraphDestination = isStart)
+        bottomNavEventService.updateBackHandlingState(newState)
+    }
+
+    private fun changeGrantedToProceed(isGranted: Boolean) {
+        val newState = backHandlingStateFlow.value.copy(isGrantedToProceed = isGranted)
+        bottomNavEventService.updateBackHandlingState(newState)
+    }
+
+    fun graphCompletedHandling() {
+        changeGrantedToProceed(true)
+    }
+
+    fun graphTakeResponsibility() {
+        changeGrantedToProceed(false)
     }
 }

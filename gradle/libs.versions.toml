@@ -21,7 +21,7 @@ kotlinJsonSerialization = "1.5.0"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
 # Google
 googleGuava = "32.0.0-android"
-ksp = "1.9.21" #"1.9.22-1.0.17"
+ksp = "1.9.22-1.0.17"
 # AndroidX
 ## A
 androidxActivity = "1.9.0-alpha03"
@@ -593,10 +593,9 @@ dagger-all = [
     "hilt", "hilt-navigation", "hilt-navigation-compose"
 ]
 ## Koin
-koin-all = [
+koin-core = [
     "koin-core", "koin-android",
-    "koin-navigation", "koin-annotation",
-    "koin-ksp"
+    "koin-navigation", "koin-annotation"
 ]
 # Network
 retrofit = ["square-retrofit", "square-okhttp3-interceptor"]

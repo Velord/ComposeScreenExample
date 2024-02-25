@@ -1,7 +1,7 @@
 package com.velord.composescreenexample.ui.main.inDevelopment
 
-import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.composescreenexample.R
+import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.util.navigation.NavigationData
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
