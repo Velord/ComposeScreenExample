@@ -14,7 +14,7 @@ object DemoScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel = viewModel<DemoViewModel>()
-        val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle(initialValue = null)
+        val navigationEvent = viewModel.navigationEventVoyager.collectAsStateWithLifecycle(initialValue = null)
 
         val navigator = LocalNavigator.currentOrThrow
         val screen: Screen? = navigationEvent.value?.let {

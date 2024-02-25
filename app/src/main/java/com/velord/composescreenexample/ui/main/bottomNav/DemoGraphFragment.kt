@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.main.bottomNav.cameraGraph
+package com.velord.composescreenexample.ui.main.bottomNav
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,22 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.velord.composescreenexample.ui.compose.screen.TestScreen
-import com.velord.resource.R
+import com.velord.composescreenexample.R
 import com.velord.uicore.utils.setContentWithTheme
 import dagger.hilt.android.AndroidEntryPoint
-import com.velord.composescreenexample.R as RNav
 
 @AndroidEntryPoint
-class CameraGraphFragment : Fragment() {
+class DemoGraphFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = setContentWithTheme {
-        TestScreen(R.string.open_new_camera) {
-            findNavController().navigate(RNav.id.toCameraRecordingFragment)
-        }
+    ): View = setContentWithTheme {}
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findNavController().navigate(R.id.from_demoGraphFragment_to_demoFragment)
     }
 }

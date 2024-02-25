@@ -40,7 +40,7 @@ class BottomNavFragment : Fragment(RLayout.layout.fragment_bottom_nav) {
     private val navController by lazy {
         childFragmentManager.fragments.first().findNavController()
     }
-    private val viewModel by viewModels<BottomNavViewModelOld>()
+    private val viewModel by viewModels<BottomNavViewModelJetpack>()
     private var binding: FragmentBottomNavBinding? = null
 
     private val multipleBackStack by lazy {
@@ -96,7 +96,7 @@ class BottomNavFragment : Fragment(RLayout.layout.fragment_bottom_nav) {
 }
 
 @Composable
-private fun BottomNavScreen(viewModel: BottomNavViewModelOld) {
+private fun BottomNavScreen(viewModel: BottomNavViewModelJetpack) {
     val tabFlow = viewModel.currentTabFlow.collectAsStateWithLifecycle()
     val isBackHandlingEnabledState = viewModel.isBackHandlingEnabledFlow.collectAsStateWithLifecycle()
 

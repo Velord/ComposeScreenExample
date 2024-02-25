@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class BottomNavViewModelOld : CoroutineScopeViewModel() {
+class BottomNavViewModelJetpack : CoroutineScopeViewModel() {
 
     val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)
     val isBackHandlingEnabledFlow = MutableStateFlow(false)

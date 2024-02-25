@@ -14,7 +14,7 @@ object CameraRecordingScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel = getViewModel<CameraRecordingViewModel>()
-        ObserveNavigation(viewModel.navigationEvent)
+        ObserveNavigation(viewModel.navigationEventVoyager)
 
         CheckCameraAndAudioRecordPermission(
             triggerCheckEvent = viewModel.checkPermissionEvent,
