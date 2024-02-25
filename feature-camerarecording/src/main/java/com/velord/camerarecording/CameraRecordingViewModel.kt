@@ -13,7 +13,8 @@ import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
 import com.example.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.camerarecording.model.createRecordingViaMediaStore
-import com.velord.navigation.NavigationData
+import com.velord.navigation.NavigationDataJetpack
+import com.velord.navigation.NavigationDataVoyager
 import com.velord.navigation.SharedScreen
 import com.velord.util.file.FileName
 import com.velord.util.permission.AndroidPermissionState
@@ -33,7 +34,8 @@ class CameraRecordingViewModel @Inject constructor(
     val permissionAudioFlow = MutableStateFlow(AndroidPermissionState.NotAsked)
     // User interaction
     val checkPermissionEvent = MutableSharedFlow<Unit>()
-    val navigationEvent = MutableSharedFlow<NavigationData?>()
+    val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager?>()
+    val navigationEventJetpack = MutableSharedFlow<NavigationDataJetpack?>()
     // Adjustments
     val videoQualityFlow = MutableStateFlow(Quality.HIGHEST)
     val videoCameraSelectorFlow = MutableStateFlow(CameraSelector.DEFAULT_FRONT_CAMERA)
@@ -45,11 +47,14 @@ class CameraRecordingViewModel @Inject constructor(
     val recordingFlow: MutableStateFlow<Recording?> = MutableStateFlow(null)
 
     fun onSettingsClick() = launch {
-        val nav = NavigationData(
+        val nav = NavigationDataVoyager(
             screen = SharedScreen.BottomNavigationTab.Settings,
             useRoot = true
         )
-        navigationEvent.emit(nav)
+        navigationEventVoyager.emit(nav)
+
+        val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment)
+        navigationEventJetpack.emit(data)
     }
 
     fun updatePermissionState(state: AndroidPermissionState) {
@@ -60,6 +65,7 @@ class CameraRecordingViewModel @Inject constructor(
     fun updateCameraPermissionState(state: AndroidPermissionState) {
         permissionCameraFlow.value = state
     }
+
     fun updateAudioPermissionState(state: AndroidPermissionState) {
         permissionAudioFlow.value = state
     }

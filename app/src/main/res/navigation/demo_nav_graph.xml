@@ -6,11 +6,11 @@
 
     <fragment
         android:id="@id/bottom_nav_graph_center_start_destination"
-        android:name="com.velord.composescreenexample.ui.main.bottomNav.centerGraph.CenterGraphFragment"
+        android:name="com.velord.composescreenexample.ui.main.bottomNav.DemoGraphFragment"
         android:label="CenterGraphFragment">
 
         <action
-            android:id="@+id/from_addGraphFragment_to_demoFragment"
+            android:id="@+id/from_demoGraphFragment_to_demoFragment"
             app:destination="@id/demoFragment"
             />
     </fragment>
@@ -33,7 +33,7 @@
     <fragment
         android:id="@+id/demoFragment"
         android:name="com.velord.feature.demo.DemoFragment"
-        android:label="DemoFragment" >
+        android:label="DemoFragment">
 
         <action
             android:id="@+id/from_demoFragment_to_shapeDemoFragment"

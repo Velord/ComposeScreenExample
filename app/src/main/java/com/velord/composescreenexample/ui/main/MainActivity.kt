@@ -3,18 +3,24 @@ package com.velord.composescreenexample.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.NavHostFragment
 import cafe.adriel.voyager.core.registry.screenModule
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.camerarecording.CameraRecordingScreen
+import com.velord.composescreenexample.BuildConfig
+import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
 import com.velord.composescreenexample.ui.compose.screen.TestScreen
 import com.velord.feature.demo.DemoScreen
@@ -28,10 +34,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val NAVIGATION_EXTRA = "navigation_extra"
+        private val fragmentContainer = R.id.navHostFragment
 
         fun startIntent(context: Context, bundle: Bundle) = Intent(
             context, MainActivity::class.java
@@ -112,12 +119,43 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
     private fun setNavGraph() {
-        binding?.mainNavHost?.setContentWithTheme {
-            Navigator(BottomNavScreen) {
-                SlideTransition(it)
+        if (BuildConfig.USE_VOYAGER) {
+            setNavGraphViaVoyager()
+        } else {
+            setNavGraphViaJetpack()
+        }
+    }
+
+    private fun setNavGraphViaVoyager() {
+        binding?.apply {
+            navHostFragment.isVisible = false
+            mainNavHost.apply {
+                isVisible = true
+
+                setContentWithTheme {
+                    Navigator(BottomNavScreen) {
+                        SlideTransition(it)
+                    }
+                }
             }
+        }
+    }
+
+    private fun setNavGraphViaJetpack(
+        @IdRes destination: Int? = null,
+        bundle: Bundle? = bundleOf()
+    ) {
+        val navHostFragment =
+            (supportFragmentManager.findFragmentById(fragmentContainer) as? NavHostFragment)
+                ?: supportFragmentManager.fragments[0] as NavHostFragment
+
+        val controller = navHostFragment.navController
+        val graph = controller.navInflater.inflate(R.navigation.main_nav_graph)
+        controller.graph = graph
+
+        if (destination != null) {
+            controller.navigate(destination, bundle)
         }
     }
 

@@ -30,10 +30,10 @@ fun CheckCameraAndAudioRecordPermission(
             Manifest.permission.RECORD_AUDIO,
         )
     )
-    Log.d("@@@", "permissionsState: ${permissionsState}")
+    Log.d("CheckCameraAndAudioRecordPermission", "permissionsState: ${permissionsState}")
 
     SideEffect {
-        Log.d("@@@", "SideEffect")
+        Log.d("CheckCameraAndAudioRecordPermission", "SideEffect")
         permissionsState.launchMultiplePermissionRequest()
     }
 
@@ -52,27 +52,27 @@ fun CheckCameraAndAudioRecordPermission(
         }
     }
     cameraState.value?.let {
-        Log.d("@@@", "Camera: ${it.status}")
+        Log.d("CheckCameraAndAudioRecordPermission", "Camera: ${it.status}")
         onCameraUpdateState(it)
     }
     microState.value?.let {
-        Log.d("@@@", "Micro: ${it.status}")
+        Log.d("CheckCameraAndAudioRecordPermission", "Micro: ${it.status}")
         onMicroUpdateState(it)
     }
 
     val context = LocalContext.current
     ObserveTrigger(triggerCheckEvent = triggerCheckEvent) {
-        Log.d("@@@", "ObserveTrigger != null")
+        Log.d("CheckCameraAndAudioRecordPermission", "ObserveTrigger != null")
         permissionsState.launchMultiplePermissionRequest()
         cameraState.value?.let {
-            Log.d("@@@", "AndroidCamera: ${it.status}")
+            Log.d("CheckCameraAndAudioRecordPermission", "AndroidCamera: ${it.status}")
             if (it.status.isGranted.not() && it.status.shouldShowRationale.not()) {
                 context.showRationalePermissionForCamera {}
             }
         }
 
         microState.value?.let {
-            Log.d("@@@", "AndroidMicro: ${it.status}")
+            Log.d("CheckCameraAndAudioRecordPermission", "AndroidMicro: ${it.status}")
             if (it.status.isGranted.not() && it.status.shouldShowRationale.not()) {
                 context.showRationalePermissionForMic {}
             }

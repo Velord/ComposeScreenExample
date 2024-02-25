@@ -1,6 +1,7 @@
 package com.velord.camerarecording
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.uicore.dialog.checkRecordVideoPermission
 import com.velord.uicore.utils.setContentWithTheme
@@ -73,9 +75,19 @@ class CameraRecordingFragment : Fragment() {
 
     private val requestRecordVideoPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ) {
-        val areGranted = it.values.reduce { acc, next -> acc && next }
-        viewModel.updatePermissionState(AndroidPermissionState.invoke(areGranted))
+    ) { result ->
+        Log.d("CameraRecordingFragment", "requestRecordVideoPermissionLauncher: $result")
+        val isCameraGranted = result.getOrDefault(
+            key = android.Manifest.permission.CAMERA,
+            defaultValue = false
+        )
+        val isAudioGranted = result.getOrDefault(
+            key = android.Manifest.permission.RECORD_AUDIO,
+            defaultValue = false
+        )
+
+        viewModel.updateCameraPermissionState(AndroidPermissionState.invoke(isCameraGranted))
+        viewModel.updateAudioPermissionState(AndroidPermissionState.invoke(isAudioGranted))
     }
 
     override fun onCreateView(
@@ -94,22 +106,23 @@ class CameraRecordingFragment : Fragment() {
     private fun initObserving() {
         viewLifecycleScope.launch {
             launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    Log.d("CameraRecordingFragment", "Lifecycle.State.STARTED")
                     checkRecordVideoPermission()
                 }
             }
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                     viewModel.checkPermissionEvent.collect {
+                        Log.d("CameraRecordingFragment", "checkPermissionEvent: $it")
                         checkRecordVideoPermission()
                     }
                 }
             }
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.navigationEvent.filterNotNull().collect {
-                        // Obsolete for Voyager
-                        //findNavController().navigate(it)
+                    viewModel.navigationEventJetpack.filterNotNull().collect {
+                        findNavController().navigate(it.id)
                     }
                 }
             }
@@ -137,6 +150,8 @@ internal fun CameraRecordingScreen(viewModel: CameraRecordingViewModel) {
     val cameraSelectorState = viewModel.videoCameraSelectorFlow.collectAsStateWithLifecycle()
     val isAudioEnabledState = viewModel.isAudioEnabledFlow.collectAsStateWithLifecycle()
 
+    Log.d("CameraRecordingFragment", "permissionCameraState: ${permissionCameraState.value}")
+    Log.d("CameraRecordingFragment", "permissionAudioState: ${permissionAudioState.value}")
     Content(
         permissionCamera = permissionCameraState.value,
         permissionAudio = permissionAudioState.value,

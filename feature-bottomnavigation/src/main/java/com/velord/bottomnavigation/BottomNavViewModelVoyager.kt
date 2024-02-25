@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BottomNavViewModel @Inject constructor(): CoroutineScopeViewModel() {
+class BottomNavViewModelVoyager @Inject constructor(): CoroutineScopeViewModel() {
 
     val currentTabFlow = MutableStateFlow<BottomNavigationTab>(BottomNavigationTab.Camera)
     val isBackHandlingEnabledFlow = MutableStateFlow(true)
