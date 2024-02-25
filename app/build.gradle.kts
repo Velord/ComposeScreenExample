@@ -50,12 +50,14 @@ android {
     buildTypes {
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
+            buildConfigField("Boolean", "USE_VOYAGER", "false")
         }
         named("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
+            buildConfigField("Boolean", "USE_VOYAGER", "false")
         }
     }
 

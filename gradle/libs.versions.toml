@@ -11,6 +11,8 @@ dagger = "2.49"
 hilt = "2.49"
 hiltNavigation = "1.1.0"
 hiltNavigationCompose = "1.1.0"
+koin = "3.6.0-wasm-alpha2"
+koinKsp = "1.3.1"
 # Kotlin
 kotlin = "1.9.21"
 coroutine = "1.7.3"
@@ -19,7 +21,7 @@ kotlinJsonSerialization = "1.5.0"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
 # Google
 googleGuava = "32.0.0-android"
-ksp = "1.9.21"
+ksp = "1.9.21" #"1.9.22-1.0.17"
 # AndroidX
 ## A
 androidxActivity = "1.9.0-alpha03"
@@ -309,6 +311,12 @@ hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-navigation = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigation" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+# DI koin
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.ref = "koin" }
+koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koinKsp" }
+koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKsp" }
 # Network SquareUp ---------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 square-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "squareRetrofit" }
@@ -575,13 +583,20 @@ compose-all = [
 ]
 # Compose Third Party
 compose-thirdparty = ["compose-html"]
-# DI
+# DI Dagger
+## Dagger
 dagger = ["dagger", "dagger-android", "dagger-android-support"]
 dagger-kapt = ["dagger-compiler", "dagger-android-processor"]
 hilt = ["hilt", "hilt-navigation", "hilt-navigation-compose"]
 dagger-all = [
     "dagger", "dagger-android", "dagger-android-support",
     "hilt", "hilt-navigation", "hilt-navigation-compose"
+]
+## Koin
+koin-all = [
+    "koin-core", "koin-android",
+    "koin-navigation", "koin-annotation",
+    "koin-ksp"
 ]
 # Network
 retrofit = ["square-retrofit", "square-okhttp3-interceptor"]
@@ -618,3 +633,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

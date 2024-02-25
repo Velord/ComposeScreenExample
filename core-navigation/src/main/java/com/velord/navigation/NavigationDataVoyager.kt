@@ -7,13 +7,13 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import kotlinx.coroutines.flow.Flow
 
-data class NavigationData(
+data class NavigationDataVoyager(
     val screen: SharedScreen,
     val useRoot: Boolean = false
 )
 
 @Composable
-fun ObserveNavigation(eventFlow: Flow<NavigationData?>) {
+fun ObserveNavigation(eventFlow: Flow<NavigationDataVoyager?>) {
     val navigator = LocalNavigator.current
     val navigationDataState = eventFlow.collectAsStateWithLifecycle(initialValue = null)
     navigationDataState.value?.let {

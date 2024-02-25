@@ -11,4 +11,8 @@
     <item name="bottom_nav_graph_right_start_destination" type="id" />
 
     <item name="from_cameraRecordingFragment_to_settingsFragment" type="id" />
+
+    <item name="from_demoFragment_to_shapeDemoFragment" type="id" />
+    <item name="from_demoFragment_to_modifierDemoFragment" type="id" />
+    <item name="from_demoFragment_to_flowSummatorFragment" type="id" />
 </resources>

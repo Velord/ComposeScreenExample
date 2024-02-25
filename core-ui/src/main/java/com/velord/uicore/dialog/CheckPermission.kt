@@ -48,24 +48,6 @@ fun Context.showRationalePermissionForCamera(
     )
 }
 
-fun Fragment.checkRecordAudioPermission(
-    actionLauncher: ActivityResultLauncher<String>,
-    onGranted: () -> Unit
-) {
-    val permRecordAudio = Manifest.permission.RECORD_AUDIO
-    val isGranted = ContextCompat.checkSelfPermission(
-        requireContext(),
-        permRecordAudio
-    ) == PackageManager.PERMISSION_GRANTED
-
-    when {
-        isGranted -> onGranted()
-        shouldShowRequestPermissionRationale(permRecordAudio) ->
-            requireContext().showRationalePermissionForMic {}
-        else -> actionLauncher.launch(permRecordAudio)
-    }
-}
-
 fun Fragment.checkRecordVideoPermission(
     actionLauncher: ActivityResultLauncher<Array<String>>,
     onGranted: () -> Unit,
