@@ -1,8 +1,7 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
-    id(libs.plugins.dagger.hilt.get().pluginId)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -35,10 +34,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     // Modules
     implementation(project(":resource"))
@@ -61,7 +56,11 @@ dependencies {
     implementation(libs.bundles.compose.ui)
     implementation(libs.bundles.compose.accompanist.all)
     // DI
-    implementation(libs.bundles.dagger.all)
-    kapt(libs.bundles.dagger.kapt)
-    kapt(libs.hilt.compiler)
+    implementation(libs.bundles.koin.core)
+    ksp(libs.koin.ksp)
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_DEFAULT_MODULE","false")
 }

@@ -31,7 +31,7 @@
         android:label="FlowSummatorFragment" />
 
     <fragment
-        android:id="@+id/demoFragment"
+        android:id="@id/demoFragment"
         android:name="com.velord.feature.demo.DemoFragment"
         android:label="DemoFragment">
 

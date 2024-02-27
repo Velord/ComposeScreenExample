@@ -1,6 +1,6 @@
 package com.velord.flowsummator
 
-import com.example.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow

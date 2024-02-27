@@ -1,8 +1,8 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -36,4 +36,12 @@ dependencies {
     // Templates
     implementation(libs.androidx.datastore)
     implementation(libs.kotlin.serialization.json)
+    // DI
+    implementation(libs.bundles.koin.core)
+    ksp(libs.koin.ksp)
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_DEFAULT_MODULE","false")
 }

@@ -3,7 +3,6 @@ package com.velord.composescreenexample.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -16,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment
 import cafe.adriel.voyager.core.registry.screenModule
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.example.sharedviewmodel.ThemeViewModel
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.camerarecording.CameraRecordingScreen
 import com.velord.composescreenexample.BuildConfig
@@ -29,11 +27,11 @@ import com.velord.modifierdemo.ModifierDemoScreen
 import com.velord.navigation.SharedScreen
 import com.velord.settings.SettingsScreen
 import com.velord.shapedemo.ShapeDemoScreen
+import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.utils.setContentWithTheme
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -78,8 +76,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val viewModel: MainViewModel by viewModels()
-    private val themeViewModel: ThemeViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModel<MainViewModel>()
+    private val themeViewModel: ThemeViewModel by viewModel()
     private var binding: ActivityMainBinding? = null
 
     override fun onDestroy() {

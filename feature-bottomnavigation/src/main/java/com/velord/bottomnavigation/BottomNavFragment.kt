@@ -1,7 +1,12 @@
 package com.velord.bottomnavigation
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -19,7 +24,6 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
@@ -33,14 +37,39 @@ import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
-import com.velord.bottomnavigation.R as RLayout
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BottomNavFragment : Fragment(RLayout.layout.fragment_bottom_nav) {
+private const val TAG = "BottomNav"
+
+private fun Context.fireToast(text: String) {
+    val description = "I am at the first at $text"
+    Toast.makeText(this, description, Toast.LENGTH_SHORT).apply {
+        setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+        show()
+    }
+}
+
+fun Fragment.addTestCallback(
+    tag: String,
+    viewModel: BottomNavViewModelJetpack
+) {
+    requireActivity().onBackPressedDispatcher.addCallback(
+        this,
+        true
+    ) {
+        requireContext().fireToast(tag)
+        isEnabled = false
+        viewModel.graphCompletedHandling()
+        Log.d(TAG, "onBackPressedDispatcher")
+    }
+}
+
+class BottomNavFragment : Fragment(com.velord.bottomnavigation.R.layout.fragment_bottom_nav) {
 
     private val navController by lazy {
         childFragmentManager.fragments.first().findNavController()
     }
-    private val viewModel by viewModels<BottomNavViewModelJetpack>()
+    private val viewModel by viewModel<BottomNavViewModelJetpack>()
     private var binding: FragmentBottomNavBinding? = null
 
     private val multipleBackStack by lazy {
@@ -98,22 +127,25 @@ class BottomNavFragment : Fragment(RLayout.layout.fragment_bottom_nav) {
 @Composable
 private fun BottomNavScreen(viewModel: BottomNavViewModelJetpack) {
     val tabFlow = viewModel.currentTabFlow.collectAsStateWithLifecycle()
-    val isBackHandlingEnabledState = viewModel.isBackHandlingEnabledFlow.collectAsStateWithLifecycle()
+    val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
 
     Content(
         selectedItem = tabFlow.value,
         onClick = viewModel::onTabClick,
     )
 
-    val str = stringResource(id = R.string.press_again_to_exit)
-    SnackBarOnBackPressHandler(
-        message = str,
-        modifier = Modifier.padding(horizontal = 8.dp),
-        enabled = isBackHandlingEnabledState.value,
-        onBackClickLessThanDuration = viewModel::onBackDoubleClick,
-    ) {
-        Snackbar {
-            Text(text = it.visuals.message)
+    Log.d(TAG, "BottomNavScreen: ${backHandlingState.value}")
+    if (backHandlingState.value.isEnabled) {
+        val str = stringResource(id = R.string.press_again_to_exit)
+        SnackBarOnBackPressHandler(
+            message = str,
+            modifier = Modifier.padding(horizontal = 8.dp),
+            enabled = backHandlingState.value.isEnabled,
+            onBackClickLessThanDuration = viewModel::onBackDoubleClick,
+        ) {
+            Snackbar {
+                Text(text = it.visuals.message)
+            }
         }
     }
 }

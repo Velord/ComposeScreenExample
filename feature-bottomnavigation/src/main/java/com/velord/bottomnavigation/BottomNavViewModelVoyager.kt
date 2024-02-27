@@ -1,14 +1,13 @@
 package com.velord.bottomnavigation
 
 import cafe.adriel.voyager.core.screen.Screen
-import com.example.sharedviewmodel.CoroutineScopeViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-class BottomNavViewModelVoyager @Inject constructor(): CoroutineScopeViewModel() {
+@KoinViewModel
+class BottomNavViewModelVoyager : CoroutineScopeViewModel() {
 
     val currentTabFlow = MutableStateFlow<BottomNavigationTab>(BottomNavigationTab.Camera)
     val isBackHandlingEnabledFlow = MutableStateFlow(true)

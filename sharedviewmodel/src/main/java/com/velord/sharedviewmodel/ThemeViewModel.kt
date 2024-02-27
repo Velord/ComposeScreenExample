@@ -1,12 +1,11 @@
-package com.example.sharedviewmodel
+package com.velord.sharedviewmodel
 
 import android.os.Build
 import com.velord.datastore.DataStoreService
 import com.velord.util.settings.ThemeConfig
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.annotation.KoinViewModel
 
 data class Theme(
     val config: ThemeConfig,
@@ -20,9 +19,9 @@ data class Theme(
     }
 }
 
-@HiltViewModel
-class ThemeViewModel @Inject constructor(
-    private val dataStore: DataStoreService
+@KoinViewModel
+class ThemeViewModel(
+    private val dataStoreService: DataStoreService
 ): CoroutineScopeViewModel() {
 
     val themeFlow = MutableStateFlow<Theme?>(null)
@@ -30,14 +29,14 @@ class ThemeViewModel @Inject constructor(
     init {
         launch {
             themeFlow.value = Theme(
-                config = dataStore.getThemeConfig(),
+                config = dataStoreService.getThemeConfig(),
                 isSystemDynamicColorAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             )
         }
     }
 
     private fun saveNewTheme(newTheme: Theme) = launch {
-        dataStore.setThemeConfig(newTheme.config)
+        dataStoreService.setThemeConfig(newTheme.config)
         themeFlow.emit(newTheme)
     }
 

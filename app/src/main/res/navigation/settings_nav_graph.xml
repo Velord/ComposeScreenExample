@@ -18,6 +18,12 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.velord.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+
+        <argument
+            android:name="source"
+            app:argType="com.velord.navigation.entryPoint.SettingsSource"
+            />
+    </fragment>
 
 </navigation>
