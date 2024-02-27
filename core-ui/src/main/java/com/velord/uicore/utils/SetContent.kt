@@ -15,8 +15,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.sharedviewmodel.Theme
-import com.example.sharedviewmodel.ThemeViewModel
+import com.velord.sharedviewmodel.Theme
+import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.compose.theme.MainTheme
 import com.velord.util.context.getActivity
 import com.velord.util.settings.ThemeConfig

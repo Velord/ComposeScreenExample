@@ -1,4 +1,4 @@
-package com.velord.datastore
+package com.velord.datastore.appSettings
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer

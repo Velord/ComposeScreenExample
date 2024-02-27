@@ -10,6 +10,10 @@
     <item name="bottom_nav_graph_center_start_destination" type="id" />
     <item name="bottom_nav_graph_right_start_destination" type="id" />
 
+    <item name="settingsFragment" type="id" />
+    <item name="demoFragment" type="id" />
+    <item name="cameraRecordingFragment" type="id" />
+
     <item name="from_cameraRecordingFragment_to_settingsFragment" type="id" />
 
     <item name="from_demoFragment_to_shapeDemoFragment" type="id" />

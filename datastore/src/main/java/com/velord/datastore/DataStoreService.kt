@@ -1,10 +1,10 @@
 package com.velord.datastore
 
-import androidx.datastore.core.DataStore
-import com.velord.util.settings.AppSettings
+import com.velord.datastore.appSettings.AppSettingsDataStore
 import com.velord.util.settings.ThemeConfig
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import org.koin.core.annotation.Single
 
 interface DataStoreService {
     suspend fun checkAppFirstLaunch(): Boolean
@@ -12,8 +12,9 @@ interface DataStoreService {
     suspend fun getThemeConfig(): ThemeConfig
 }
 
+@Single
 class DataStoreServiceImpl(
-    private val dataStore: DataStore<AppSettings>
+    private val dataStore: AppSettingsDataStore
 ) : DataStoreService {
 
     private suspend fun setFirstLaunch() {

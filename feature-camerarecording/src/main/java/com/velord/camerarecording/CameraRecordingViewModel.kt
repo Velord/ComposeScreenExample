@@ -11,23 +11,24 @@ import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
-import com.example.sharedviewmodel.CoroutineScopeViewModel
+import androidx.core.os.bundleOf
 import com.velord.camerarecording.model.createRecordingViaFileSystem
 import com.velord.navigation.NavigationDataJetpack
 import com.velord.navigation.NavigationDataVoyager
 import com.velord.navigation.SharedScreen
+import com.velord.navigation.entryPoint.SETTINGS_SOURCE
+import com.velord.navigation.entryPoint.SettingsSource
+import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.util.file.FileName
 import com.velord.util.permission.AndroidPermissionState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-class CameraRecordingViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+@KoinViewModel
+class CameraRecordingViewModel constructor(
+    private val context: Context,
 ) : CoroutineScopeViewModel() {
     // Permission
     val permissionCameraFlow = MutableStateFlow(AndroidPermissionState.NotAsked)
@@ -55,7 +56,8 @@ class CameraRecordingViewModel @Inject constructor(
             )
             navigationEventVoyager.emit(nav)
 
-            val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment)
+            val bundle = bundleOf(SETTINGS_SOURCE to SettingsSource.CameraRecording)
+            val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment, bundle)
             navigationEventJetpack.emit(data)
         }
     }

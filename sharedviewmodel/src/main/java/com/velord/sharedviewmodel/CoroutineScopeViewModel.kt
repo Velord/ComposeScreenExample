@@ -1,4 +1,4 @@
-package com.example.sharedviewmodel
+package com.velord.sharedviewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
