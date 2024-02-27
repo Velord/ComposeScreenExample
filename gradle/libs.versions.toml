@@ -122,6 +122,7 @@ androidxSliceKtx = "1.0.0-alpha08"
 androidxSlidingPaneLayout = "1.2.0"
 androidxSqlite = "2.4.0"
 androidxStartup = "1.1.1"
+androidxSwipeRefreshLayout = "1.1.0"
 ## W
 androidxWorkManager = "2.9.0"
 # Network
@@ -176,6 +177,8 @@ androidx-remotecallback = { module = "androidx.remotecallback:remotecallback", v
 androidx-sharetarget = { module = "androidx.sharetarget:sharetarget", version.ref = "androidxShareTarget" }
 androidx-slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "androidxSlidingPaneLayout" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
+# If you are using Material Library version 1.2.0 (like com.google.android.material:material:1.2.0-alpha03) , than you must import swipe refresh layout library too.
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidxSwipeRefreshLayout" }
 # AndroidX Activity
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
@@ -526,6 +529,8 @@ androidx-all = [
     "androidx-sharetarget",
     "androidx-slidingpanelayout",
     "androidx-startup",
+    # If you are using Material Library version 1.2.0 (like com.google.android.material:material:1.2.0-alpha03) , than you must import swipe refresh layout library too.
+    #"androidx-swiperefreshlayout",
     # AndroidX Activity
     "androidx-activity-ktx", "androidx-activity-compose",
     # AndroidX Arch Core
@@ -534,7 +539,7 @@ androidx-all = [
     "androidx-camera-lifecycle", "androidx-camera-video",
     "androidx-camera-view", "androidx-camera-extension",
     # AndroidX Car App
-    "androidx-carapp-automotive" ,"androidx-carapp-testing",
+    "androidx-carapp-automotive", "androidx-carapp-testing",
     # AndroidX Constraint
     "androidx-constraint", "androidx-constraint-compose",
     # AndroidX Credentials
