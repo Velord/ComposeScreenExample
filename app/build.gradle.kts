@@ -131,8 +131,8 @@ dependencies {
     implementation(project(":feature-demo-modifier"))
     implementation(project(":feature-flowsummator"))
     implementation(project(":feature-settings"))
-    implementation(project(":widget-refreshableimage"))
 
+    implementation(project(":widget-refreshableimage"))
     implementation(project(":widget-counter"))
     // Templates
     implementation(libs.bundles.kotlin.all)
@@ -147,6 +147,9 @@ dependencies {
     // Other
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)
+
+    // Test libs.versions.toml
+    implementation(libs.bundles.androidx.all)
 }
 
 ksp {

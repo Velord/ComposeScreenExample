@@ -179,7 +179,11 @@ private fun Content(
     onSettingsClick: () -> Unit,
     onStartStopRecording: (VideoCapture<Recorder>?) -> Unit
 ) {
-    Box(Modifier.fillMaxSize()) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
         PermissionInfo(
             permissionCameraState = permissionCameraState,
             permissionAudioState = permissionAudioState,

@@ -1,5 +1,6 @@
 package com.velord.uicore.compose.theme
 
+import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -11,11 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.core.view.ViewCompat
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.core.view.WindowCompat
 import com.velord.uicore.compose.theme.color.DarkColorScheme
 import com.velord.uicore.compose.theme.color.LightColorScheme
-import com.velord.util.context.getActivity
 
 @Composable
 fun MainTheme(
@@ -35,14 +34,12 @@ fun MainTheme(
     val view = LocalView.current
     if (view.isInEditMode.not()) {
         SideEffect {
-            (view.context.getActivity())?.window?.statusBarColor = colorScheme.primary.toArgb()
-            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = useDarkTheme
+            val window = (view.context as Activity).window
+            window.statusBarColor = Color.Transparent.toArgb()
+            window.navigationBarColor = Color.Transparent.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = useDarkTheme.not()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = useDarkTheme.not()
         }
-    }
-
-    val systemUiController = rememberSystemUiController()
-    SideEffect {
-        systemUiController.setStatusBarColor(color = Color.Transparent)
     }
 
     MaterialTheme(
