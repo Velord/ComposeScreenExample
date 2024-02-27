@@ -9,12 +9,12 @@ jvmTarget = "17"
 # DI
 dagger = "2.49"
 hilt = "2.49"
-hiltNavigation = "1.1.0"
-hiltNavigationCompose = "1.1.0"
+hiltNavigation = "1.2.0"
+hiltNavigationCompose = "1.2.0"
 koin = "3.6.0-wasm-alpha2"
 koinKsp = "1.3.1"
 # Kotlin
-kotlin = "1.9.21"
+kotlin = "1.9.22"
 coroutine = "1.7.3"
 # Kotlin Serialization
 kotlinJsonSerialization = "1.5.0"
@@ -105,8 +105,24 @@ androidxRecyclerViewSelection = "1.1.0"
 ## R
 androidxRemoteCallback = "1.0.0-alpha02"
 androidxResourceInspection = "1.0.1"
-## Room
+## R
 androidxRoom = "2.6.1"
+## S
+androidxSavedState = "1.2.1"
+## Security
+androidxSecurityCrypto = "1.1.0-alpha06"
+androidxSecurityAppAuthenticator = "1.0.0-alpha03"
+androidxSecurityIdentityCredential = "1.0.0-alpha03"
+## S
+androidxShareTarget = "1.2.0"
+## Slice
+androidxSlice = "1.1.0-alpha02"
+androidxSliceKtx = "1.0.0-alpha08"
+## S
+androidxSlidingPaneLayout = "1.2.0"
+androidxSqlite = "2.4.0"
+androidxStartup = "1.1.1"
+androidxSwipeRefreshLayout = "1.1.0"
 ## W
 androidxWorkManager = "2.9.0"
 # Network
@@ -114,9 +130,9 @@ squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.10.0"
 ktor = "2.3.8"
 # Compose
-composeDefault = "1.6.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.6.2" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeAccompanist = "0.33.2-alpha"
-composeCompiler = "1.5.6"
+composeCompiler = "1.5.9"
 composeMaterial3 = "1.2.0"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
@@ -158,6 +174,11 @@ androidx-print = { module = "androidx.print:print", version.ref = "androidxPrint
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidxProfileInstaller" }
 androidx-recommendation = { module = "androidx.recommendation:recommendation", version.ref = "androidxRecommendation" }
 androidx-remotecallback = { module = "androidx.remotecallback:remotecallback", version.ref = "androidxRemoteCallback" }
+androidx-sharetarget = { module = "androidx.sharetarget:sharetarget", version.ref = "androidxShareTarget" }
+androidx-slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "androidxSlidingPaneLayout" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
+# If you are using Material Library version 1.2.0 (like com.google.android.material:material:1.2.0-alpha03) , than you must import swipe refresh layout library too.
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidxSwipeRefreshLayout" }
 # AndroidX Activity
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
@@ -247,10 +268,25 @@ androidx-resourceinspection-annotation = { module = "androidx.resourceinspection
 androidx-resourceinspection-processor = { module = "androidx.resourceinspection:resourceinspection-processor", version.ref = "androidxResourceInspection" }
 # AndroidX Room
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidx-room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "androidxRoom" }
 androidx-room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "androidxRoom" }
 androidx-room-guava = { module = "androidx.room:room-guava", version.ref = "androidxRoom" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "androidxRoom" }
+# AndroidX Security
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "androidxSecurityCrypto" }
+androidx-security-crypto-ktx = { module = "androidx.security:security-crypto-ktx", version.ref = "androidxSecurityCrypto" }
+androidx-security-appauthenticator = { module = "androidx.security:security-app-authenticator", version.ref = "androidxSecurityAppAuthenticator" }
+androidx-security-identitycredential = { module = "androidx.security:security-identity-credential", version.ref = "androidxSecurityIdentityCredential" }
+# AndroidX Slice
+androidx-slice-builders = { module = "androidx.slice:slice-builders", version.ref = "androidxSlice" } # Do not use if you would use builders-ktx
+androidx-slice-builders-ktx = { module = "androidx.slice:slice-builders-ktx", version.ref = "androidxSliceKtx" }
+androidx-slice-core = { module = "androidx.slice:slice-core", version.ref = "androidxSlice" }
+androidx-slice-view = { module = "androidx.slice:slice-view", version.ref = "androidxSlice" }
+# AndroidX Sqlite
+androidx-sqlite-java = { module = "androidx.sqlite:sqlite", version.ref = "androidxSqlite" }  # Java implementation. Do not use if you would use sqlite-ktx
+androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "androidxSqlite" } # Could not resolve
+androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", version.ref = "androidxSqlite" }
 # AndroidX WorkManager
 androidx-workmanager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxWorkManager" }
 androidx-workmanager-gcm = { module = "androidx.work:work-gcm", version.ref = "androidxWorkManager" }
@@ -262,6 +298,7 @@ androidx-preference = { module = "androidx.preference:preference-ktx", version.r
 androidx-collection = { module = "androidx.collection:collection-ktx", version.ref = "androidxCollection" }
 androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
 androidx-dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation-ktx", version.ref = "androidxDynamicAnimation" }
+androidx-savedstate = { module = "androidx.savedstate:savedstate-ktx", version.ref = "androidxSavedState" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
@@ -275,6 +312,7 @@ kotlin-serialization-json-retrofit-converter = { module = "com.jakewharton.retro
 # Compose Core  -------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 compose-animation = { module = "androidx.compose.animation:animation", version.ref = "composeDefault" }
+# Compose Runtime
 compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeDefault" }
 # Compose Accompanist
 compose-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "composeAccompanist" }
@@ -287,9 +325,10 @@ compose-accompanist-pager-indicator = { module = "com.google.accompanist:accompa
 # Compose Foundation
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeDefault" }
 compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "composeDefault" }
-# Compose Material
+# Compose Material 2
 compose-material = { module = "androidx.compose.material:material", version.ref = "composeDefault" }
-compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeDefault" }
+compose-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "composeDefault" }
+compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeDefault" }
 # Compose Material 3
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 compose-material3-window = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "composeMaterial3" }
@@ -428,6 +467,19 @@ androidx-room = [
     "androidx-room-rxjava2", "androidx-room-rxjava3",
     "google-guava", "androidx-room-paging"
 ]
+# AndroidX Security
+androidx-security-crypto = [
+    "androidx-security-crypto", "androidx-security-crypto-ktx",
+]
+androidx-security-all = [
+    "androidx-security-crypto", "androidx-security-crypto-ktx",
+    "androidx-security-appauthenticator", "androidx-security-identitycredential"
+]
+# AndroidX Slice
+androidx-slice = [
+    "androidx-slice-builders-ktx",
+    "androidx-slice-core", "androidx-slice-view"
+]
 # AndroidX WorkManager
 androidx-workmanager = [
     "androidx-workmanager-runtime", "androidx-workmanager-gcm",
@@ -440,6 +492,7 @@ androidx-ktx = [
     "androidx-concurrent",
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
     # Could not find !!!"androidx-privacysandbox-activity-complications-ktx"
+    "androidx-savedstate"
 ]
 # AndroidX Module
 androidx-module = [
@@ -473,6 +526,11 @@ androidx-all = [
     "androidx-profileinstaller",
     "androidx-recommendation",
     "androidx-remotecallback",
+    "androidx-sharetarget",
+    "androidx-slidingpanelayout",
+    "androidx-startup",
+    # If you are using Material Library version 1.2.0 (like com.google.android.material:material:1.2.0-alpha03) , than you must import swipe refresh layout library too.
+    #"androidx-swiperefreshlayout",
     # AndroidX Activity
     "androidx-activity-ktx", "androidx-activity-compose",
     # AndroidX Arch Core
@@ -481,7 +539,7 @@ androidx-all = [
     "androidx-camera-lifecycle", "androidx-camera-video",
     "androidx-camera-view", "androidx-camera-extension",
     # AndroidX Car App
-    "androidx-carapp-automotive" ,"androidx-carapp-testing",
+    "androidx-carapp-automotive", "androidx-carapp-testing",
     # AndroidX Constraint
     "androidx-constraint", "androidx-constraint-compose",
     # AndroidX Credentials
@@ -522,6 +580,14 @@ androidx-all = [
     "androidx-room-ktx",
     "androidx-room-rxjava2", "androidx-room-rxjava3",
     "google-guava", "androidx-room-paging",
+    # AndroidX Security
+    "androidx-security-crypto", "androidx-security-crypto-ktx",
+    "androidx-security-appauthenticator", "androidx-security-identitycredential",
+    # AndroidX Slice
+    "androidx-slice-builders-ktx", "androidx-slice-core", "androidx-slice-view",
+    # AndroidX Sqlite
+    #"androidx-sqlite-ktx", could not resolve
+    "androidx-sqlite-framework",
     # AndroidX WorkManager
     "androidx-workmanager-runtime", "androidx-workmanager-gcm",
     "androidx-workmanager-multiprocess",
@@ -530,6 +596,7 @@ androidx-all = [
     "androidx-preference", "androidx-collection",
     "androidx-concurrent",
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
+    "androidx-savedstate",
 ]
 # Kotlin
 kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
@@ -564,10 +631,10 @@ compose-foundation = ["compose-foundation", "compose-foundation-layout"]
 # Compose Ui
 compose-ui = ["compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview"]
 # Compose Material
-compose-material = ["compose-material", "compose-material-icons"]
+compose-material = ["compose-material", "compose-material-icons-core", "compose-material-icons-extended"]
 compose-material-third = ["compose-material3", "compose-material3-window"]
 compose-material-all = [
-    "compose-material", "compose-material-icons",
+    "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window",
 ]
 # Compose All
@@ -578,7 +645,7 @@ compose-all = [
     "compose-accompanist-permission",
     "compose-foundation", "compose-foundation-layout",
     "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
-    "compose-material", "compose-material-icons",
+    "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window"
 ]
 # Compose Third Party

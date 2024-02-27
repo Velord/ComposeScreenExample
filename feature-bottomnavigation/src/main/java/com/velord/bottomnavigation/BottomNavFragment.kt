@@ -7,8 +7,6 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
@@ -155,11 +153,7 @@ private fun Content(
     selectedItem: BottomNavigationItem,
     onClick: (BottomNavigationItem) -> Unit,
 ) {
-    NavigationBar(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .height(72.dp),
-    ) {
+    NavigationBar {
         BottomNavigationItem.entries.forEach {
             val isSelected = selectedItem == it
             NavigationBarItem(
