@@ -118,6 +118,10 @@ androidxShareTarget = "1.2.0"
 ## Slice
 androidxSlice = "1.1.0-alpha02"
 androidxSliceKtx = "1.0.0-alpha08"
+## S
+androidxSlidingPaneLayout = "1.2.0"
+androidxSqlite = "2.4.0"
+androidxStartup = "1.1.1"
 ## W
 androidxWorkManager = "2.9.0"
 # Network
@@ -170,6 +174,8 @@ androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstall
 androidx-recommendation = { module = "androidx.recommendation:recommendation", version.ref = "androidxRecommendation" }
 androidx-remotecallback = { module = "androidx.remotecallback:remotecallback", version.ref = "androidxRemoteCallback" }
 androidx-sharetarget = { module = "androidx.sharetarget:sharetarget", version.ref = "androidxShareTarget" }
+androidx-slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "androidxSlidingPaneLayout" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
 # AndroidX Activity
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
@@ -270,10 +276,14 @@ androidx-security-crypto-ktx = { module = "androidx.security:security-crypto-ktx
 androidx-security-appauthenticator = { module = "androidx.security:security-app-authenticator", version.ref = "androidxSecurityAppAuthenticator" }
 androidx-security-identitycredential = { module = "androidx.security:security-identity-credential", version.ref = "androidxSecurityIdentityCredential" }
 # AndroidX Slice
-androidx-slice-builders = { module = "androidx.slice:slice-builders", version.ref = "androidxSlice" } # do not use if you would use builders-ktx
+androidx-slice-builders = { module = "androidx.slice:slice-builders", version.ref = "androidxSlice" } # Do not use if you would use builders-ktx
 androidx-slice-builders-ktx = { module = "androidx.slice:slice-builders-ktx", version.ref = "androidxSliceKtx" }
 androidx-slice-core = { module = "androidx.slice:slice-core", version.ref = "androidxSlice" }
 androidx-slice-view = { module = "androidx.slice:slice-view", version.ref = "androidxSlice" }
+# AndroidX Sqlite
+androidx-sqlite-java = { module = "androidx.sqlite:sqlite", version.ref = "androidxSqlite" }  # Java implementation. Do not use if you would use sqlite-ktx
+androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "androidxSqlite" } # Could not resolve
+androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", version.ref = "androidxSqlite" }
 # AndroidX WorkManager
 androidx-workmanager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxWorkManager" }
 androidx-workmanager-gcm = { module = "androidx.work:work-gcm", version.ref = "androidxWorkManager" }
@@ -514,6 +524,8 @@ androidx-all = [
     "androidx-recommendation",
     "androidx-remotecallback",
     "androidx-sharetarget",
+    "androidx-slidingpanelayout",
+    "androidx-startup",
     # AndroidX Activity
     "androidx-activity-ktx", "androidx-activity-compose",
     # AndroidX Arch Core
@@ -568,6 +580,9 @@ androidx-all = [
     "androidx-security-appauthenticator", "androidx-security-identitycredential",
     # AndroidX Slice
     "androidx-slice-builders-ktx", "androidx-slice-core", "androidx-slice-view",
+    # AndroidX Sqlite
+    #"androidx-sqlite-ktx", could not resolve
+    "androidx-sqlite-framework",
     # AndroidX WorkManager
     "androidx-workmanager-runtime", "androidx-workmanager-gcm",
     "androidx-workmanager-multiprocess",
