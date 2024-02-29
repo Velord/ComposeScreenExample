@@ -49,12 +49,7 @@ dependencies {
     implementation(libs.bundles.androidx.navigation)
     implementation(libs.google.guava)
     implementation(libs.bundles.voyager)
-    // Compose
-    implementation(libs.bundles.compose.core)
-    implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material.all)
-    implementation(libs.bundles.compose.ui)
-    implementation(libs.bundles.compose.accompanist.core)
+    implementation(libs.bundles.compose.module)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)
