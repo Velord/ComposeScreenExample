@@ -67,12 +67,25 @@ androidxDynamicAnimation = "1.1.0-alpha03"
 androidxEmoji = "1.1.0"
 androidxEmoji2 = "1.4.0"
 ## E
-androidxExifInterface = "1.3.7"
 androidxEnterprise = "1.1.0"
+androidxExifInterface = "1.3.7"
 androidxFragment = "1.7.0-alpha10"
+## Games
+androidxGamesActivity = "2.0.2"
+androidxGamesController = "2.0.1"
+androidxGamesFramePacing = "2.1.0"
+androidxGamesMemoryAdvice = "2.0.1"
+androidxGamesTextInput = "2.0.0"
+androidxGamesPerformanceTuner = "2.0.0-beta01"
 ## Glance
-androidxGlance = "1.0.0"  # For Glance, AppWidgets
+androidxGlance = "1.1.0-alpha01"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha05"
+## Graphics
+androidxGraphicsCore = "1.0.0-beta01"
+androidxGraphicsPath = "1.0.0-rc01"
+androidxGraphicsShapes = "1.0.0-alpha05"
+## G
+androidxGridlayout = "1.1.0-beta01"
 ## L
 androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.7.0"
@@ -143,6 +156,10 @@ sagarCororutinePermission = "2.0.2"
 # Navigation
 voyager = "1.1.0-alpha02"
 velordMultipleBackstack = "0.5.9.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+material = "1.11.0"
 
 
 [libraries]
@@ -169,6 +186,7 @@ androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.re
 androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "androidxDrawerLayout" }
 androidx-enterprise = { module = "androidx.enterprise:enterprise-feedback", version.ref = "androidxEnterprise" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
+androidx-gridlayout = { module = "androidx.gridlayout:gridlayout", version.ref = "androidxGridlayout" }
 androidx-percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref = "androidxPercentLayout" }
 androidx-print = { module = "androidx.print:print", version.ref = "androidxPrint" }
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidxProfileInstaller" }
@@ -210,10 +228,21 @@ androidx-emoji-bundled = { module = "androidx.emoji:emoji-bundled", version.ref 
 androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "androidxEmoji2" }
 androidx-emoji2-views = { module = "androidx.emoji2:emoji2-views", version.ref = "androidxEmoji2" }
 androidx-emoji2-views-helper = { module = "androidx.emoji2:emoji2-views-helper", version.ref = "androidxEmoji2" }
+# AndroidX Games
+androidx-games-activity = { module = "androidx.games:games-activity", version.ref = "androidxGamesActivity" }
+androidx-games-controller = { module = "androidx.games:games-controller", version.ref = "androidxGamesController" }
+androidx-games-framepacing = { module = "androidx.games:games-frame-pacing", version.ref = "androidxGamesFramePacing" }
+androidx-games-memoryadvice = { module = "androidx.games:games-memory-advice", version.ref = "androidxGamesMemoryAdvice" }
+androidx-games-textinput = { module = "androidx.games:games-text-input", version.ref = "androidxGamesTextInput" }
+androidx-games-performancetuner = { module = "androidx.games:games-performance-tuner", version.ref = "androidxGamesPerformanceTuner" }
 # AndroidX Glance
 androidx-glance = { module = "androidx.glance:glance", version.ref = "androidxGlance" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidxGlance" }
 androidx-glance-weartiles = { module = "androidx.glance:glance-wear-tiles", version.ref = "androidxGlanceWearTiles" }
+# AndroidX Graphics
+androidx-graphics-core = { module = "androidx.graphics:graphics-core", version.ref = "androidxGraphicsCore" }
+androidx-graphics-path = { module = "androidx.graphics:graphics-path", version.ref = "androidxGraphicsPath" }
+androidx-graphics-shapes = { module = "androidx.graphics:graphics-shapes", version.ref = "androidxGraphicsShapes" }
 # AndroidX Lifecycle
 androidx-lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "androidxLifecycle" }
 androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidxLifecycle" }
@@ -381,6 +410,10 @@ voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sh
 voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [bundles]
@@ -409,8 +442,17 @@ androidx-emoji-all = [
     "androidx-emoji", "androidx-emoji-appcompat", "androidx-emoji-bundled",
     "androidx-emoji2", "androidx-emoji2-views", "androidx-emoji2-views-helper"
 ]
+# AndroidX Games
+androidx-games = [
+    "androidx-games-activity", "androidx-games-controller",
+    "androidx-games-framepacing", "androidx-games-memoryadvice",
+    #"androidx-games-textinput", do not need if you are using androidx-games-activity
+    "androidx-games-performancetuner"
+]
 # AndroidX Glance
 androidx-glance = ["androidx-glance", "androidx-glance-appwidget", "androidx-glance-weartiles"]
+# AndroidX Graphics
+androidx-graphics = ["androidx-graphics-core", "androidx-graphics-path", "androidx-graphics-shapes"]
 # AndroidX Lifecycle
 androidx-lifecycle-other = [
     "androidx-lifecycle-service", "androidx-lifecycle-process"
@@ -520,6 +562,7 @@ androidx-all = [
     "androidx-datastore", "androidx-documentfile",
     "androidx-draganddrop", "androidx-drawerlayout",
     "androidx-enterprise", "androidx-exifinterface",
+    "androidx-gridlayout",
     "androidx-media3-exoplayer",
     "androidx-percentlayout",
     "androidx-print",
@@ -549,8 +592,15 @@ androidx-all = [
     # AndroidX Emoji
     "androidx-emoji", "androidx-emoji-appcompat", "androidx-emoji-bundled",
     "androidx-emoji2", "androidx-emoji2-views", "androidx-emoji2-views-helper",
+    # AndroidX Games
+    "androidx-games-activity", "androidx-games-controller",
+    "androidx-games-framepacing", "androidx-games-memoryadvice",
+    #"androidx-games-textinput", do not need if you are using androidx-games-activity
+    "androidx-games-performancetuner",
     # AndroidX Glance
     "androidx-glance", "androidx-glance-appwidget", "androidx-glance-weartiles",
+    # AndroidX Graphics
+    "androidx-graphics-core", "androidx-graphics-path", "androidx-graphics-shapes",
     # AndroidX Lifecycle
     "androidx-lifecycle-service", "androidx-lifecycle-process",
     "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose",
@@ -631,11 +681,12 @@ compose-foundation = ["compose-foundation", "compose-foundation-layout"]
 # Compose Ui
 compose-ui = ["compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview"]
 # Compose Material
-compose-material = ["compose-material", "compose-material-icons-core", "compose-material-icons-extended"]
+compose-material = ["compose-material"]
+compose-material-icons = ["compose-material", "compose-material-icons-core", "compose-material-icons-extended"]
 compose-material-third = ["compose-material3", "compose-material3-window"]
 compose-material-all = [
     "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
-    "compose-material3", "compose-material3-window",
+    "compose-material3", "compose-material3-window"
 ]
 # Compose All
 compose-all = [
@@ -648,9 +699,21 @@ compose-all = [
     "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window"
 ]
+
+ui = [
+    "compose-runtime", "compose-animation",
+    "compose-accompanist-flowlayout", "compose-accompanist-systemui", "compose-accompanist-drawable",
+    "compose-accompanist-pager", "compose-accompanist-pager-indicator",
+    "compose-accompanist-permission",
+    "compose-foundation", "compose-foundation-layout",
+    "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
+    "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
+    "compose-material3", "compose-material3-window",
+    "androidx-graphics-core", "androidx-graphics-path", "androidx-graphics-shapes"
+]
 # Compose Third Party
 compose-thirdparty = ["compose-html"]
-# DI Dagger
+# DI
 ## Dagger
 dagger = ["dagger", "dagger-android", "dagger-android-support"]
 dagger-kapt = ["dagger-compiler", "dagger-android-processor"]

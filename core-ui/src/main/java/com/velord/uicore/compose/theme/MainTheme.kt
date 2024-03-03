@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.velord.uicore.compose.theme.color.DarkColorScheme
 import com.velord.uicore.compose.theme.color.LightColorScheme
+import com.velord.uicore.compose.theme.shape.MainShapes
 
 @Composable
 fun MainTheme(
