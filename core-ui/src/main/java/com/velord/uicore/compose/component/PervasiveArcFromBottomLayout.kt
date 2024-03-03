@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.compose.theme.ArcAtBottomCenterShape
+import com.velord.uicore.compose.theme.shape.ArcAtBottomCenterShape
 
 @Composable
 fun PervasiveArcFromBottomLayout(

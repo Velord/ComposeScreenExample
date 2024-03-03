@@ -31,12 +31,17 @@
         android:label="FlowSummatorFragment" />
 
     <fragment
+        android:id="@+id/morphDemoFragment"
+        android:name="com.velord.morphdemo.MorphDemoFragment"
+        android:label="MorphDemoFragment" />
+
+    <fragment
         android:id="@id/demoFragment"
         android:name="com.velord.feature.demo.DemoFragment"
         android:label="DemoFragment">
 
         <action
-            android:id="@+id/from_demoFragment_to_shapeDemoFragment"
+            android:id="@id/from_demoFragment_to_shapeDemoFragment"
             app:destination="@id/shapeDemoFragment"
             app:enterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_in_down"
@@ -45,7 +50,7 @@
             />
 
         <action
-            android:id="@+id/from_demoFragment_to_modifierDemoFragment"
+            android:id="@id/from_demoFragment_to_modifierDemoFragment"
             app:destination="@id/modifierDemoFragment"
             app:enterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_in_down"
@@ -54,8 +59,17 @@
             />
 
         <action
-            android:id="@+id/from_demoFragment_to_flowSummatorFragment"
+            android:id="@id/from_demoFragment_to_flowSummatorFragment"
             app:destination="@id/flowSummatorFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/do_not_slide"
+            app:popEnterAnim="@anim/do_not_slide"
+            />
+
+        <action
+            android:id="@id/from_demoFragment_to_morphDemoFragment"
+            app:destination="@id/morphDemoFragment"
             app:enterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_in_down"
             app:exitAnim="@anim/do_not_slide"

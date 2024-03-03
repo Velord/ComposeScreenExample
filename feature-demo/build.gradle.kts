@@ -48,7 +48,7 @@ dependencies {
     implementation(libs.bundles.androidx.ktx)
     implementation(libs.bundles.androidx.navigation)
     implementation(libs.bundles.voyager)
-    implementation(libs.bundles.compose.module)
+    implementation(libs.bundles.compose.all)
     // DI
     implementation(libs.bundles.dagger.all)
     kapt(libs.bundles.dagger.kapt)

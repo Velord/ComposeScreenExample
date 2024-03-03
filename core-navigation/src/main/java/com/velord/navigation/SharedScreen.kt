@@ -22,5 +22,6 @@ sealed class SharedScreen : ScreenProvider {
         data object Shape : Demo()
         data object Modifier : Demo()
         data object FlowSummator : Demo()
+        data object Morph : Demo()
     }
 }
