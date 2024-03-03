@@ -46,10 +46,5 @@ dependencies {
     implementation(libs.bundles.androidx.lifecycle.viewmodel)
     implementation(libs.bundles.androidx.ktx)
     implementation(libs.bundles.voyager)
-    // Compose
-    implementation(libs.bundles.compose.core)
-    implementation(libs.bundles.compose.foundation)
-    implementation(libs.bundles.compose.material.third)
-    implementation(libs.bundles.compose.ui)
-    implementation(libs.bundles.compose.accompanist.core)
+    implementation(libs.bundles.compose.all)
 }

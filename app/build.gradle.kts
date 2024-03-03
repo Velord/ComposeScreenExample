@@ -129,6 +129,7 @@ dependencies {
     implementation(project(":feature-bottomnavigation"))
     implementation(project(":feature-demo-shape"))
     implementation(project(":feature-demo-modifier"))
+    implementation(project(":feature-demo-morph"))
     implementation(project(":feature-flowsummator"))
     implementation(project(":feature-settings"))
 
