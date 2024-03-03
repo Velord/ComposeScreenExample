@@ -32,4 +32,11 @@ class DemoViewModel : CoroutineScopeViewModel() {
             NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_flowSummatorFragment)
         )
     }
+
+    fun onOpenMorph() = launch {
+        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreen.Demo.Morph))
+        navigationEventJetpack.emit(
+            NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_morphDemoFragment)
+        )
+    }
 }

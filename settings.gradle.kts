@@ -17,6 +17,7 @@ include(":feature-camerarecording")
 include(":feature-bottomnavigation")
 include(":feature-demo-shape")
 include(":feature-demo-modifier")
+include(":feature-demo-morph")
 include(":feature-flowsummator")
 include(":feature-settings")
 

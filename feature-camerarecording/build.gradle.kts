@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.bundles.androidx.lifecycle.runtime)
     implementation(libs.bundles.androidx.lifecycle.viewmodel)
     implementation(libs.bundles.voyager)
-    implementation(libs.bundles.compose.module)
+    implementation(libs.bundles.compose.all)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)

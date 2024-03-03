@@ -44,7 +44,7 @@ dependencies {
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.coil)
     // Compose
-    implementation(libs.bundles.compose.module)
+    implementation(libs.bundles.ui)
     implementation(libs.androidx.glance)
     implementation(libs.androidx.glance.appwidget)
 }

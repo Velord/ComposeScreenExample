@@ -61,7 +61,8 @@ internal fun DemoScreen(viewModel: DemoViewModel) {
     Content(
         onOpenShape = viewModel::onOpenShape,
         onOpenModifier = viewModel::onOpenModifier,
-        onOpenSummator = viewModel::onOpenSummator
+        onOpenSummator = viewModel::onOpenSummator,
+        onOpenMorph = viewModel::onOpenMorph
     )
 }
 
@@ -69,7 +70,8 @@ internal fun DemoScreen(viewModel: DemoViewModel) {
 private fun Content(
     onOpenShape: () -> Unit,
     onOpenModifier: () -> Unit,
-    onOpenSummator: () -> Unit
+    onOpenSummator: () -> Unit,
+    onOpenMorph: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -81,6 +83,7 @@ private fun Content(
         OpenButton(text = stringResource(id = R.string.open_shape_demo), onClick = onOpenShape)
         OpenButton(text = stringResource(id = R.string.open_modifier_demo), onClick = onOpenModifier)
         OpenButton(text = stringResource(id = R.string.open_flow_summator), onClick = onOpenSummator)
+        OpenButton(text = stringResource(id = R.string.open_morph_demo), onClick = onOpenMorph)
     }
 }
 
@@ -112,6 +115,7 @@ private fun DemoPreview() {
     Content(
         onOpenShape = {},
         onOpenModifier = {},
-        onOpenSummator = {}
+        onOpenSummator = {},
+        onOpenMorph = {}
     )
 }
