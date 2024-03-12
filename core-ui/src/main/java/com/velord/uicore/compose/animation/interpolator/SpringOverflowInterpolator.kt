@@ -1,8 +1,12 @@
 package com.velord.uicore.compose.animation.interpolator
 
 import android.view.animation.Interpolator
+import androidx.compose.animation.core.Easing
 import kotlin.math.pow
 import kotlin.math.sin
+
+fun SpringOverflowInterpolatorEasing(stiffness: Float = 0.35f): Easing =
+    SpringOverflowInterpolator(stiffness).toEasing()
 
 class SpringOverflowInterpolator(
     private val stiffness: Float = 0.35f

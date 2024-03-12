@@ -1,11 +1,11 @@
 package com.velord.uicore.compose.animation.interpolator
 
-import android.animation.TimeInterpolator
 import android.view.animation.Interpolator
 import androidx.compose.animation.core.Easing
 import kotlin.math.sin
 
-fun TimeInterpolator.toEasing() = Easing { x -> getInterpolation(x) }
+fun CircularSpringInterpolatorEasing(tension: Float = 50f): Easing =
+    CircularSpringInterpolator(tension).toEasing()
 
 class CircularSpringInterpolator(private val tension: Float = 50f) : Interpolator {
     override fun getInterpolation(input: Float): Float {
