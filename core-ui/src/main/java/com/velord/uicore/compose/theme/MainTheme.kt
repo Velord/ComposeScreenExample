@@ -1,21 +1,32 @@
 package com.velord.uicore.compose.theme
 
-import android.app.Activity
 import android.os.Build
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
 import com.velord.uicore.compose.theme.color.DarkColorScheme
 import com.velord.uicore.compose.theme.color.LightColorScheme
 import com.velord.uicore.compose.theme.shape.MainShapes
+import com.velord.uicore.utils.inverseColor
+
+private fun defineScrimAndDarkScrimColorForSystemBar(
+    colorScheme: ColorScheme,
+    makeTransparent: Boolean = true
+): Pair<Int, Int> {
+    val scrim = if (makeTransparent) Color.Transparent.toArgb() else colorScheme.surface.toArgb()
+    val darkScrim = if (makeTransparent) Color.Transparent.toArgb() else scrim.inverseColor()
+    return scrim to darkScrim
+}
 
 @Composable
 fun MainTheme(
@@ -24,7 +35,7 @@ fun MainTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
+    val colorScheme: ColorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (useDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
@@ -32,15 +43,23 @@ fun MainTheme(
         useDarkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-    val view = LocalView.current
-    if (view.isInEditMode.not()) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = Color.Transparent.toArgb()
-            window.navigationBarColor = Color.Transparent.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = useDarkTheme.not()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = useDarkTheme.not()
-        }
+
+    val context = LocalContext.current as ComponentActivity
+    DisposableEffect(key1 = useDarkTheme, key2 = dynamicColor) {
+        val (scrim, darkScrim) = defineScrimAndDarkScrimColorForSystemBar(
+            colorScheme = colorScheme,
+            makeTransparent = true
+        )
+        val light = SystemBarStyle.light(
+            scrim = scrim,
+            darkScrim = darkScrim
+        )
+        val dark = SystemBarStyle.dark(scrim = scrim)
+        context.enableEdgeToEdge(
+            statusBarStyle = if (useDarkTheme) dark else light,
+            navigationBarStyle = if (useDarkTheme) dark else light
+        )
+        onDispose { }
     }
 
     MaterialTheme(

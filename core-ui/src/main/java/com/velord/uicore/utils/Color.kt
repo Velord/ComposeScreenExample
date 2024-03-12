@@ -11,3 +11,5 @@ fun Color.toBlackOrWhite(): Color {
 
     return if (lum < 0.5) Color.Black else Color.White
 }
+
+fun Int.inverseColor(): Int = this xor 0x00ffffff
