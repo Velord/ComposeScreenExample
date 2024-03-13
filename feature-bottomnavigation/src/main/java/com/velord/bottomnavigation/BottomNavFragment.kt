@@ -52,6 +52,7 @@ fun Fragment.addTestCallback(
     viewModel: BottomNavViewModelJetpack
 ) {
     // Android 13+
+    // With fragments does not work March 2024
 //    requireActivity().onBackInvokedDispatcher.registerOnBackInvokedCallback(
 //        OnBackInvokedDispatcher.PRIORITY_DEFAULT
 //    ) {
