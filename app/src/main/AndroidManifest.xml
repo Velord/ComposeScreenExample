@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComposeScreenExample"
         android:largeHeap="true"
-        android:enableOnBackInvokedCallback="true"
+        android:enableOnBackInvokedCallback="false"
         tools:targetApi="34">
 
         <activity

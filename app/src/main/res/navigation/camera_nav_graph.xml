@@ -23,6 +23,7 @@
             android:id="@id/from_cameraRecordingFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/do_not_slide"
             app:popExitAnim="@anim/slide_out_right"
             />
     </fragment>
