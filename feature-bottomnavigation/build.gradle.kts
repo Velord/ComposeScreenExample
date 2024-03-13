@@ -43,11 +43,7 @@ dependencies {
     implementation(project(":sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.activity)
-    implementation(libs.bundles.androidx.lifecycle.runtime)
-    implementation(libs.bundles.androidx.lifecycle.viewmodel)
-    implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.navigation)
+    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.voyager)
     implementation(libs.bundles.compose.all)
     // DI
