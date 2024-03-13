@@ -51,6 +51,14 @@ fun Fragment.addTestCallback(
     tag: String,
     viewModel: BottomNavViewModelJetpack
 ) {
+    // Android 13+
+//    requireActivity().onBackInvokedDispatcher.registerOnBackInvokedCallback(
+//        OnBackInvokedDispatcher.PRIORITY_DEFAULT
+//    ) {
+//        requireContext().fireToast(tag)
+//        viewModel.graphCompletedHandling()
+//        Log.d(TAG, "onBackPressedDispatcher")
+//    }
     requireActivity().onBackPressedDispatcher.addCallback(
         this,
         true
