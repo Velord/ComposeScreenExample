@@ -7,7 +7,7 @@
     <fragment
         android:id="@id/bottom_nav_graph_center_start_destination"
         android:name="com.velord.composescreenexample.ui.main.bottomNav.DemoGraphFragment"
-        android:label="CenterGraphFragment">
+        android:label="DemoGraphFragment">
 
         <action
             android:id="@+id/from_demoGraphFragment_to_demoFragment"

@@ -5,18 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import com.velord.bottomnavigation.BottomNavViewModelJetpack
-import com.velord.bottomnavigation.addTestCallback
+import androidx.navigation.fragment.findNavController
 import com.velord.composescreenexample.R
 import com.velord.uicore.utils.setContentWithTheme
-import org.koin.androidx.viewmodel.ext.android.viewModel
-
-private const val TAG = "demo"
 
 class DemoGraphFragment : Fragment() {
-
-    private val viewModel by viewModel<BottomNavViewModelJetpack>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,11 +19,6 @@ class DemoGraphFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findNavController().navigate(R.id.from_demoGraphFragment_to_demoFragment)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addTestCallback(TAG, viewModel)
+        this.findNavController().navigate(R.id.from_demoGraphFragment_to_demoFragment)
     }
 }

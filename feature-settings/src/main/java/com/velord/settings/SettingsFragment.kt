@@ -54,7 +54,7 @@ class SettingsFragment : Fragment() {
 
         val isActivated = this.arguments?.get(SETTINGS_SOURCE) == SettingsSource.SettingsGraph
         if (isActivated.not()) return
-        addTestCallback("SettingsFragment", viewModelBottom)
+        addTestCallback("Settings graph", viewModelBottom)
     }
 }
 

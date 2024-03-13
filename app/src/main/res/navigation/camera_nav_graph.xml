@@ -11,11 +11,7 @@
 
         <action
             android:id="@+id/from_cameraGraphFragment_to_CameraRecordingFragment"
-            app:destination="@id/cameraRecordingFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:popExitAnim="@anim/slide_in_down"
-            app:exitAnim="@anim/do_not_slide"
-            />
+            app:destination="@id/cameraRecordingFragment" />
     </fragment>
 
     <fragment
@@ -28,7 +24,6 @@
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:exitAnim="@anim/do_not_slide"
             />
     </fragment>
 
