@@ -40,7 +40,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 private const val TAG = "BottomNav"
 
 private fun Context.fireToast(text: String) {
-    val description = "I am at the first at $text"
+    val description = "I am the first at $text"
     Toast.makeText(this, description, Toast.LENGTH_SHORT).apply {
         setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         show()
