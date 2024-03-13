@@ -45,13 +45,10 @@ dependencies {
     implementation(project(":feature-bottomnavigation"))
     // Templates
     implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.activity)
-    implementation(libs.bundles.androidx.camera)
-    implementation(libs.bundles.androidx.lifecycle.runtime)
-    implementation(libs.bundles.androidx.lifecycle.viewmodel)
-    implementation(libs.bundles.androidx.ktx)
+    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.voyager)
     implementation(libs.bundles.compose.all)
+    implementation(libs.bundles.androidx.camera)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)

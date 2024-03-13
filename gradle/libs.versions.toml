@@ -118,7 +118,6 @@ androidxRecyclerViewSelection = "1.1.0"
 ## R
 androidxRemoteCallback = "1.0.0-alpha02"
 androidxResourceInspection = "1.0.1"
-## R
 androidxRoom = "2.6.1"
 ## S
 androidxSavedState = "1.2.1"
@@ -136,6 +135,8 @@ androidxSlidingPaneLayout = "1.2.0"
 androidxSqlite = "2.4.0"
 androidxStartup = "1.1.1"
 androidxSwipeRefreshLayout = "1.1.0"
+## T
+androidxTransition = "1.5.0-alpha06"
 ## W
 androidxWorkManager = "2.9.0"
 # Network
@@ -324,6 +325,7 @@ androidx-collection = { module = "androidx.collection:collection-ktx", version.r
 androidx-concurrent = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "androidxConcurrent" }
 androidx-dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation-ktx", version.ref = "androidxDynamicAnimation" }
 androidx-savedstate = { module = "androidx.savedstate:savedstate-ktx", version.ref = "androidxSavedState" }
+androidx-transition = { module = "androidx.transition:transition-ktx", version.ref = "androidxTransition" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
@@ -521,22 +523,27 @@ androidx-workmanager = [
 ]
 # AndroidX KTX
 androidx-ktx = [
-    "androidx-fragment", "androidx-core",
+    "androidx-core",
+    "androidx-fragment",
     "androidx-preference", "androidx-collection",
     "androidx-concurrent",
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
     # Could not find !!!"androidx-privacysandbox-activity-complications-ktx"
-    "androidx-savedstate"
+    "androidx-savedstate",
+    "androidx-transition"
 ]
 # AndroidX Module
 androidx-module = [
     "androidx-activity-ktx", "androidx-activity-compose",
     "androidx-appcompat",
+    "androidx-core",
+    "androidx-fragment",
     "androidx-lifecycle-runtime-compose",
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-viewmodel-compose",
     "androidx-navigation-fragment",
     "androidx-navigation-ui",
+    "androidx-transition"
 ]
 # AndroidX All
 androidx-all = [
@@ -639,6 +646,7 @@ androidx-all = [
     "androidx-concurrent",
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
     "androidx-savedstate",
+    "androidx-transition"
 ]
 # Kotlin
 kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
