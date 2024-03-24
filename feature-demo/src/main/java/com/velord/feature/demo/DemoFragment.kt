@@ -25,14 +25,18 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.velord.bottomnavigation.BottomNavViewModelJetpack
+import com.velord.bottomnavigation.addTestCallback
 import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DemoFragment : Fragment() {
 
     private val viewModel by viewModels<DemoViewModel>()
+    private val viewModelBottom by viewModel<BottomNavViewModelJetpack>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +44,11 @@ class DemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
         DemoScreen(viewModel)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addTestCallback("Demo graph", viewModelBottom)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

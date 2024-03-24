@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.velord.composescreenexample.R
 import com.velord.navigation.entryPoint.SETTINGS_SOURCE
 import com.velord.navigation.entryPoint.SettingsSource
@@ -24,6 +24,6 @@ class SettingsGraphFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val bundle = bundleOf(SETTINGS_SOURCE to SettingsSource.SettingsGraph)
-        view.findNavController().navigate(R.id.from_settingsGraphFragment_to_SettingsFragment, bundle)
+        this.findNavController().navigate(R.id.from_settingsGraphFragment_to_SettingsFragment, bundle)
     }
 }
