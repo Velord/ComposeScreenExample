@@ -44,8 +44,7 @@ dependencies {
     implementation(project(":feature-bottomnavigation"))
     // Templates
     implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.lifecycle.viewmodel)
+    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.voyager)
     implementation(libs.bundles.compose.all)
     // DI

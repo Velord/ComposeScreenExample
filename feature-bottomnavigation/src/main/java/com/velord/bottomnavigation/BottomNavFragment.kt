@@ -40,7 +40,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 private const val TAG = "BottomNav"
 
 private fun Context.fireToast(text: String) {
-    val description = "I am at the first at $text"
+    val description = "I am the first at $text"
     Toast.makeText(this, description, Toast.LENGTH_SHORT).apply {
         setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         show()
@@ -51,6 +51,15 @@ fun Fragment.addTestCallback(
     tag: String,
     viewModel: BottomNavViewModelJetpack
 ) {
+    // Android 13+
+    // With fragments does not work March 2024
+//    requireActivity().onBackInvokedDispatcher.registerOnBackInvokedCallback(
+//        OnBackInvokedDispatcher.PRIORITY_DEFAULT
+//    ) {
+//        requireContext().fireToast(tag)
+//        viewModel.graphCompletedHandling()
+//        Log.d(TAG, "onBackPressedDispatcher")
+//    }
     requireActivity().onBackPressedDispatcher.addCallback(
         this,
         true

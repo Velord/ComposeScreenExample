@@ -1,8 +1,7 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
-    id(libs.plugins.dagger.hilt.get().pluginId)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -41,16 +40,13 @@ dependencies {
     implementation(project(":resource"))
     implementation(project(":core-navigation"))
     implementation(project(":core-ui"))
+    implementation(project(":feature-bottomnavigation"))
     // Templates
     implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.activity)
-    implementation(libs.bundles.androidx.lifecycle.runtime)
-    implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.navigation)
+    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.voyager)
     implementation(libs.bundles.compose.all)
     // DI
-    implementation(libs.bundles.dagger.all)
-    kapt(libs.bundles.dagger.kapt)
-    kapt(libs.hilt.compiler)
+    implementation(libs.bundles.koin.core)
+    ksp(libs.koin.ksp)
 }

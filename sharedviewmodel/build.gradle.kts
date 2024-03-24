@@ -34,12 +34,8 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":datastore"))
     // Templates
-    implementation(libs.androidx.core)
     implementation(libs.bundles.kotlin.core)
-    // AndroidX
-    implementation(libs.bundles.androidx.activity)
-    implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.navigation)
+    implementation(libs.bundles.androidx.module)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)

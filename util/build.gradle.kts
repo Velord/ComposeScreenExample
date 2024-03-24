@@ -30,11 +30,8 @@ android {
 
 dependencies {
     // Templates
-    implementation(libs.androidx.core)
-    implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.activity)
-    implementation(libs.bundles.androidx.ktx)
-    implementation(libs.bundles.androidx.navigation)
+    implementation(libs.bundles.kotlin.module)
+    implementation(libs.bundles.androidx.module)
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.bundles.network.all)
 }
