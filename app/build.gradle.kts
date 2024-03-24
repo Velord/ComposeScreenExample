@@ -14,7 +14,7 @@ val minorVersion = 0
 // When you create fix change this value
 val fixVersion = 0
 // When you create quick fix from master branch change this value
-val hotfixVersion = 0
+val hotfixVersion = 1
 // Based on current CI BUILD_NUMBER
 val buildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull() ?: hotfixVersion
 // Doc says: max number is 2100000000
@@ -150,7 +150,7 @@ dependencies {
     implementation(libs.androidx.glance.appwidget)
 
     // Test libs.versions.toml
-    implementation(libs.bundles.androidx.all)
+    //implementation(libs.bundles.androidx.all)
 }
 
 ksp {
