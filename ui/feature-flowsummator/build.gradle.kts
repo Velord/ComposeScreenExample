@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.uicore"
+    namespace = "com.velord.windyappflowsummator"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -36,19 +36,15 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":model"))
     implementation(project(":data:resource"))
+    implementation(project(":core-ui"))
     implementation(project(":ui:sharedviewmodel"))
     // Templates
-    implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.coil)
-    // Compose
-    implementation(libs.bundles.ui)
-    implementation(libs.androidx.glance)
-    implementation(libs.androidx.glance.appwidget)
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+    implementation(libs.bundles.kotlin.module)
+    implementation(libs.bundles.androidx.activity)
+    implementation(libs.bundles.androidx.lifecycle.runtime)
+    implementation(libs.bundles.androidx.lifecycle.viewmodel)
+    implementation(libs.bundles.androidx.ktx)
+    implementation(libs.bundles.voyager)
+    implementation(libs.bundles.compose.all)
 }

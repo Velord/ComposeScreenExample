@@ -112,29 +112,28 @@ android {
 
 dependencies {
     // Module
-    implementation(project(":resource"))
-    implementation(project(":core-navigation"))
-
     implementation(project(":model"))
     implementation(project(":util"))
 
-    implementation(project(":backend"))
-    implementation(project(":datastore"))
+    implementation(project(":data:resource"))
+    implementation(project(":data:backend"))
+    implementation(project(":data:datastore"))
 
-    implementation(project(":sharedviewmodel"))
+    implementation(project(":ui:sharedviewmodel"))
     implementation(project(":core-ui"))
+    implementation(project(":core-navigation"))
 
-    implementation(project(":feature-demo"))
-    implementation(project(":feature-camerarecording"))
-    implementation(project(":feature-bottomnavigation"))
-    implementation(project(":feature-demo-shape"))
-    implementation(project(":feature-demo-modifier"))
-    implementation(project(":feature-demo-morph"))
-    implementation(project(":feature-flowsummator"))
-    implementation(project(":feature-settings"))
+    implementation(project(":ui:feature-demo"))
+    implementation(project(":ui:feature-camerarecording"))
+    implementation(project(":ui:feature-bottomnavigation"))
+    implementation(project(":ui:feature-demo-shape"))
+    implementation(project(":ui:feature-demo-modifier"))
+    implementation(project(":ui:feature-demo-morph"))
+    implementation(project(":ui:feature-flowsummator"))
+    implementation(project(":ui:feature-settings"))
 
-    implementation(project(":widget-refreshableimage"))
-    implementation(project(":widget-counter"))
+    implementation(project(":ui:widget-refreshableimage"))
+    implementation(project(":ui:widget-counter"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
