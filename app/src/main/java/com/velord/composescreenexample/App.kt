@@ -7,6 +7,7 @@ import com.velord.camerarecording.CameraRecordingModule
 import com.velord.composescreenexample.ui.main.MainActivity
 import com.velord.datastore.DataStoreModule
 import com.velord.sharedviewmodel.SharedViewModelModule
+import com.velord.usecase.setting.SettingUseCaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.annotation.ComponentScan
@@ -38,6 +39,7 @@ class App : Application() {
             modules(CameraRecordingModule().module)
             modules(SharedViewModelModule().module)
             modules(DataStoreModule().module)
+            modules(SettingUseCaseModule().module)
         }
     }
 }

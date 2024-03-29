@@ -114,17 +114,20 @@ dependencies {
     // Module
     implementation(project(":model"))
     implementation(project(":util"))
-    
+    // Module Core
     implementation(project(":core-ui"))
     implementation(project(":core-navigation"))
-
+    // Module Domain
     implementation(project(":domain:usecase-setting"))
-
+    // Module Data Source
     implementation(project(":data:resource"))
     implementation(project(":data:backend"))
     implementation(project(":data:datastore"))
-
+    // Module Data Gateway
+    implementation(project(":data:gatewaysetting"))
+    // Module UI
     implementation(project(":ui:sharedviewmodel"))
+    // Module UI Feature
     implementation(project(":ui:feature-demo"))
     implementation(project(":ui:feature-camerarecording"))
     implementation(project(":ui:feature-bottomnavigation"))
@@ -133,7 +136,7 @@ dependencies {
     implementation(project(":ui:feature-demo-morph"))
     implementation(project(":ui:feature-flowsummator"))
     implementation(project(":ui:feature-settings"))
-
+    // Module UI Widget
     implementation(project(":ui:widget-refreshableimage"))
     implementation(project(":ui:widget-counter"))
     // Templates
