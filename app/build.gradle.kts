@@ -114,15 +114,17 @@ dependencies {
     // Module
     implementation(project(":model"))
     implementation(project(":util"))
+    
+    implementation(project(":core-ui"))
+    implementation(project(":core-navigation"))
+
+    implementation(project(":domain:usecase-setting"))
 
     implementation(project(":data:resource"))
     implementation(project(":data:backend"))
     implementation(project(":data:datastore"))
 
     implementation(project(":ui:sharedviewmodel"))
-    implementation(project(":core-ui"))
-    implementation(project(":core-navigation"))
-
     implementation(project(":ui:feature-demo"))
     implementation(project(":ui:feature-camerarecording"))
     implementation(project(":ui:feature-bottomnavigation"))
