@@ -1,12 +1,11 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
-    alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.velord.datastore"
+    namespace = "com.velord.gateway.setting"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -31,9 +30,10 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
+    implementation(project(":domain:usecase-setting"))
+    implementation(project(":data:datastore"))
     // Templates
-    implementation(libs.androidx.datastore)
-    implementation(libs.kotlin.serialization.json)
+
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)

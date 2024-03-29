@@ -5,10 +5,12 @@ include(":model")
 // Core
 include(":core-ui")
 include(":core-navigation")
-// Data
+// Data Source
 include(":data:resource")
 include(":data:backend")
 include(":data:datastore")
+// Data Gateway
+include(":data:gatewaysetting")
 // Domain
 include(":domain:usecase-setting")
 // UI
