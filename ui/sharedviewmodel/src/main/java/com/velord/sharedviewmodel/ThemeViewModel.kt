@@ -1,11 +1,10 @@
 package com.velord.sharedviewmodel
 
 import android.os.Build
-import com.velord.datastore.DataStoreService
+import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.util.settings.ThemeConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 
 data class Theme(
     val config: ThemeConfig,
@@ -19,9 +18,9 @@ data class Theme(
     }
 }
 
-@KoinViewModel
+//@KoinViewModel
 class ThemeViewModel(
-    private val dataStoreService: DataStoreService
+    private val getThemeConfigUC: GetThemeConfigUC
 ): CoroutineScopeViewModel() {
 
     val themeFlow = MutableStateFlow<Theme?>(null)
@@ -29,14 +28,14 @@ class ThemeViewModel(
     init {
         launch {
             themeFlow.value = Theme(
-                config = dataStoreService.getThemeConfig(),
+                config = getThemeConfigUC.getConfig(),
                 isSystemDynamicColorAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             )
         }
     }
 
     private fun saveNewTheme(newTheme: Theme) = launch {
-        dataStoreService.setThemeConfig(newTheme.config)
+        getThemeConfigUC.saveConfig(newTheme.config)
         themeFlow.emit(newTheme)
     }
 

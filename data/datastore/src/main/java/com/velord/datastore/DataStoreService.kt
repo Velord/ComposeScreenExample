@@ -2,6 +2,7 @@ package com.velord.datastore
 
 import com.velord.datastore.appSettings.AppSettingsDataStore
 import com.velord.util.settings.ThemeConfig
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Single
@@ -9,7 +10,7 @@ import org.koin.core.annotation.Single
 interface DataStoreService {
     suspend fun checkAppFirstLaunch(): Boolean
     suspend fun setThemeConfig(theme: ThemeConfig)
-    suspend fun getThemeConfig(): ThemeConfig
+    suspend fun getThemeConfigFlow(): Flow<ThemeConfig>
 }
 
 @Single
@@ -36,5 +37,5 @@ class DataStoreServiceImpl(
        }
     }
 
-    override suspend fun getThemeConfig(): ThemeConfig = dataStore.data.first().theme
+    override suspend fun getThemeConfigFlow(): Flow<ThemeConfig> = dataStore.data.map { it.theme }
 }

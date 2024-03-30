@@ -32,7 +32,7 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":data:datastore"))
+    implementation(project(":domain:usecase-setting"))
     // Templates
     implementation(libs.androidx.core)
     implementation(libs.bundles.kotlin.core)
