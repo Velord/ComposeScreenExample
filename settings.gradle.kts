@@ -1,28 +1,33 @@
 include(":app")
-
-include(":resource")
-include(":core-navigation")
-
+// Universal
 include(":util")
 include(":model")
-
-include(":backend")
-include(":datastore")
-
-include(":sharedviewmodel")
+// Core
 include(":core-ui")
-
-include(":feature-demo")
-include(":feature-camerarecording")
-include(":feature-bottomnavigation")
-include(":feature-demo-shape")
-include(":feature-demo-modifier")
-include(":feature-demo-morph")
-include(":feature-flowsummator")
-include(":feature-settings")
-
-include(":widget-refreshableimage")
-include(":widget-counter")
+include(":core-navigation")
+// Data Source
+include(":data:resource")
+include(":data:backend")
+include(":data:datastore")
+include(":data:appstate")
+// Data Gateway
+include(":data:gatewaysetting")
+// Domain
+include(":domain:usecase-setting")
+// UI
+include(":ui:sharedviewmodel")
+// UI Feature
+include(":ui:feature-demo")
+include(":ui:feature-camerarecording")
+include(":ui:feature-bottomnavigation")
+include(":ui:feature-demo-shape")
+include(":ui:feature-demo-modifier")
+include(":ui:feature-demo-morph")
+include(":ui:feature-flowsummator")
+include(":ui:feature-settings")
+// UI Widget
+include(":ui:widget-refreshableimage")
+include(":ui:widget-counter")
 
 rootProject.name = "ComposeScreenExample"
 
