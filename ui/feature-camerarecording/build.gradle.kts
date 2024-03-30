@@ -1,10 +1,11 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.velord.uicore"
+    namespace = "com.velord.camerarecording"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -35,20 +36,26 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
     implementation(project(":model"))
+    implementation(project(":util"))
     implementation(project(":data:resource"))
+    implementation(project(":core-ui"))
+    implementation(project(":core-navigation"))
     implementation(project(":ui:sharedviewmodel"))
     // Templates
-    implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.coil)
-    // Compose
-    implementation(libs.bundles.ui)
-    implementation(libs.androidx.glance)
-    implementation(libs.androidx.glance.appwidget)
+    implementation(libs.bundles.kotlin.module)
+    implementation(libs.bundles.androidx.activity)
+    implementation(libs.bundles.androidx.camera)
+    implementation(libs.bundles.androidx.lifecycle.runtime)
+    implementation(libs.bundles.androidx.lifecycle.viewmodel)
+    implementation(libs.bundles.voyager)
+    implementation(libs.bundles.compose.all)
+    // DI
+    implementation(libs.bundles.koin.core)
+    ksp(libs.koin.ksp)
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_DEFAULT_MODULE","false")
 }

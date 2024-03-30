@@ -10,24 +10,30 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/backend" />
             <option value="$PROJECT_DIR$/core-navigation" />
             <option value="$PROJECT_DIR$/core-ui" />
-            <option value="$PROJECT_DIR$/datastore" />
-            <option value="$PROJECT_DIR$/feature-bottomnavigation" />
-            <option value="$PROJECT_DIR$/feature-camerarecording" />
-            <option value="$PROJECT_DIR$/feature-demo" />
-            <option value="$PROJECT_DIR$/feature-demo-modifier" />
-            <option value="$PROJECT_DIR$/feature-demo-morph" />
-            <option value="$PROJECT_DIR$/feature-demo-shape" />
-            <option value="$PROJECT_DIR$/feature-flowsummator" />
-            <option value="$PROJECT_DIR$/feature-settings" />
+            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/data/appstate" />
+            <option value="$PROJECT_DIR$/data/backend" />
+            <option value="$PROJECT_DIR$/data/datastore" />
+            <option value="$PROJECT_DIR$/data/gatewaysetting" />
+            <option value="$PROJECT_DIR$/data/resource" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/usecase-setting" />
             <option value="$PROJECT_DIR$/model" />
-            <option value="$PROJECT_DIR$/resource" />
-            <option value="$PROJECT_DIR$/sharedviewmodel" />
+            <option value="$PROJECT_DIR$/ui" />
+            <option value="$PROJECT_DIR$/ui/feature-bottomnavigation" />
+            <option value="$PROJECT_DIR$/ui/feature-camerarecording" />
+            <option value="$PROJECT_DIR$/ui/feature-demo" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-modifier" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-morph" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-shape" />
+            <option value="$PROJECT_DIR$/ui/feature-flowsummator" />
+            <option value="$PROJECT_DIR$/ui/feature-settings" />
+            <option value="$PROJECT_DIR$/ui/sharedviewmodel" />
+            <option value="$PROJECT_DIR$/ui/widget-counter" />
+            <option value="$PROJECT_DIR$/ui/widget-refreshableimage" />
             <option value="$PROJECT_DIR$/util" />
-            <option value="$PROJECT_DIR$/widget-counter" />
-            <option value="$PROJECT_DIR$/widget-refreshableimage" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

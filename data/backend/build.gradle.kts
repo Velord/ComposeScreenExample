@@ -1,10 +1,11 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
-    namespace = "com.velord.uicore"
+    namespace = "com.velord.backend"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -13,7 +14,7 @@ android {
     }
 
     buildTypes {
-        release {
+        named("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -21,32 +22,20 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-        viewBinding = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 dependencies {
-    // Modules
-    implementation(project(":util"))
+    // Module
     implementation(project(":model"))
-    implementation(project(":data:resource"))
-    implementation(project(":ui:sharedviewmodel"))
+    implementation(project(":util"))
+    implementation(project(":data:datastore"))
     // Templates
+    implementation(libs.androidx.core)
     implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.coil)
-    // Compose
-    implementation(libs.bundles.ui)
-    implementation(libs.androidx.glance)
-    implementation(libs.androidx.glance.appwidget)
+    implementation(libs.bundles.network.all)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
