@@ -9,6 +9,7 @@ include(":core-navigation")
 include(":data:resource")
 include(":data:backend")
 include(":data:datastore")
+include(":data:appstate")
 // Data Gateway
 include(":data:gatewaysetting")
 // Domain

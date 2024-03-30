@@ -1,11 +1,12 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
+    alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.velord.gateway.setting"
+    namespace = "com.velord.appstate"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -30,9 +31,6 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":domain:usecase-setting"))
-    implementation(project(":data:datastore"))
-    implementation(project(":data:appstate"))
     // Templates
 
     // DI

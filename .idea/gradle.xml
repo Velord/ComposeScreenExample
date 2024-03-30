@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/core-navigation" />
             <option value="$PROJECT_DIR$/core-ui" />
             <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/data/appstate" />
             <option value="$PROJECT_DIR$/data/backend" />
             <option value="$PROJECT_DIR$/data/datastore" />
             <option value="$PROJECT_DIR$/data/gatewaysetting" />

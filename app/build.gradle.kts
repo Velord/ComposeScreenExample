@@ -123,6 +123,7 @@ dependencies {
     implementation(project(":data:resource"))
     implementation(project(":data:backend"))
     implementation(project(":data:datastore"))
+    implementation(project(":data:appstate"))
     // Module Data Gateway
     implementation(project(":data:gatewaysetting"))
     // Module UI
