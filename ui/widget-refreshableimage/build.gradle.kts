@@ -1,10 +1,11 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
 }
 
 android {
-    namespace = "com.velord.uicore"
+    namespace = "com.velord.refreshableimage"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -36,17 +37,16 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":model"))
     implementation(project(":data:resource"))
-    implementation(project(":ui:sharedviewmodel"))
+    implementation(project(":core-ui"))
     // Templates
-    implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.module)
+    implementation(libs.bundles.kotlin.module)
+    implementation(libs.bundles.androidx.ktx)
+    implementation(libs.bundles.androidx.glance)
+    implementation(libs.bundles.androidx.workmanager)
     implementation(libs.bundles.coil)
     // Compose
-    implementation(libs.bundles.ui)
-    implementation(libs.androidx.glance)
-    implementation(libs.androidx.glance.appwidget)
+    implementation(libs.bundles.compose.ui)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

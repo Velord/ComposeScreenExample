@@ -112,29 +112,34 @@ android {
 
 dependencies {
     // Module
-    implementation(project(":resource"))
-    implementation(project(":core-navigation"))
-
     implementation(project(":model"))
     implementation(project(":util"))
-
-    implementation(project(":backend"))
-    implementation(project(":datastore"))
-
-    implementation(project(":sharedviewmodel"))
+    // Module Core
     implementation(project(":core-ui"))
-
-    implementation(project(":feature-demo"))
-    implementation(project(":feature-camerarecording"))
-    implementation(project(":feature-bottomnavigation"))
-    implementation(project(":feature-demo-shape"))
-    implementation(project(":feature-demo-modifier"))
-    implementation(project(":feature-demo-morph"))
-    implementation(project(":feature-flowsummator"))
-    implementation(project(":feature-settings"))
-
-    implementation(project(":widget-refreshableimage"))
-    implementation(project(":widget-counter"))
+    implementation(project(":core-navigation"))
+    // Module Domain
+    implementation(project(":domain:usecase-setting"))
+    // Module Data Source
+    implementation(project(":data:resource"))
+    implementation(project(":data:backend"))
+    implementation(project(":data:datastore"))
+    implementation(project(":data:appstate"))
+    // Module Data Gateway
+    implementation(project(":data:gatewaysetting"))
+    // Module UI
+    implementation(project(":ui:sharedviewmodel"))
+    // Module UI Feature
+    implementation(project(":ui:feature-demo"))
+    implementation(project(":ui:feature-camerarecording"))
+    implementation(project(":ui:feature-bottomnavigation"))
+    implementation(project(":ui:feature-demo-shape"))
+    implementation(project(":ui:feature-demo-modifier"))
+    implementation(project(":ui:feature-demo-morph"))
+    implementation(project(":ui:feature-flowsummator"))
+    implementation(project(":ui:feature-settings"))
+    // Module UI Widget
+    implementation(project(":ui:widget-refreshableimage"))
+    implementation(project(":ui:widget-counter"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
