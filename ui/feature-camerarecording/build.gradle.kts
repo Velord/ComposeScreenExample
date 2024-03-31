@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":core-navigation"))
     implementation(project(":ui:sharedviewmodel"))
+    implementation(project(":ui:feature-bottomnavigation"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)
