@@ -37,9 +37,9 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":data:resource"))
-    implementation(project(":core-navigation"))
-    implementation(project(":core-ui"))
+    implementation(project(":core:core-resource"))
+    implementation(project(":core:core-navigation"))
+    implementation(project(":core:core-ui"))
     implementation(project(":ui:sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)

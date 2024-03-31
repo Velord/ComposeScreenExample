@@ -3,10 +3,10 @@ include(":app")
 include(":util")
 include(":model")
 // Core
-include(":core-ui")
-include(":core-navigation")
+include(":core:core-ui")
+include(":core:core-navigation")
+include(":core:core-resource")
 // Data Source
-include(":data:resource")
 include(":data:backend")
 include(":data:datastore")
 include(":data:appstate")

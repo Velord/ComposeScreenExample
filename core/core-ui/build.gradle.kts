@@ -37,7 +37,7 @@ dependencies {
     // Modules
     implementation(project(":util"))
     implementation(project(":model"))
-    implementation(project(":data:resource"))
+    implementation(project(":core:core-resource"))
     implementation(project(":ui:sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.core)
