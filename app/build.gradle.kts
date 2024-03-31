@@ -115,12 +115,12 @@ dependencies {
     implementation(project(":model"))
     implementation(project(":util"))
     // Module Core
-    implementation(project(":core-ui"))
-    implementation(project(":core-navigation"))
+    implementation(project(":core:core-ui"))
+    implementation(project(":core:core-navigation"))
+    implementation(project(":core:core-resource"))
     // Module Domain
     implementation(project(":domain:usecase-setting"))
     // Module Data Source
-    implementation(project(":data:resource"))
     implementation(project(":data:backend"))
     implementation(project(":data:datastore"))
     implementation(project(":data:appstate"))

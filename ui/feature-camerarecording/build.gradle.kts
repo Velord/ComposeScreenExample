@@ -38,10 +38,11 @@ dependencies {
     // Modules
     implementation(project(":model"))
     implementation(project(":util"))
-    implementation(project(":data:resource"))
-    implementation(project(":core-ui"))
-    implementation(project(":core-navigation"))
+    implementation(project(":core:core-resource"))
+    implementation(project(":core:core-ui"))
+    implementation(project(":core:core-navigation"))
     implementation(project(":ui:sharedviewmodel"))
+    implementation(project(":ui:feature-bottomnavigation"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)

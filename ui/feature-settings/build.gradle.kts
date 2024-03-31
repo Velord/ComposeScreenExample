@@ -37,9 +37,9 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":core-navigation"))
-    implementation(project(":core-ui"))
-    implementation(project(":data:resource"))
+    implementation(project(":core:core-navigation"))
+    implementation(project(":core:core-ui"))
+    implementation(project(":core:core-resource"))
     implementation(project(":ui:sharedviewmodel"))
     implementation(project(":ui:feature-bottomnavigation"))
     // Templates
