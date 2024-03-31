@@ -1,8 +1,7 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
-    id(libs.plugins.dagger.hilt.get().pluginId)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -37,10 +36,11 @@ android {
 dependencies {
     // Modules
     implementation(project(":util"))
-    implementation(project(":data:resource"))
-    implementation(project(":core-navigation"))
-    implementation(project(":core-ui"))
+    implementation(project(":core:core-resource"))
+    implementation(project(":core:core-navigation"))
+    implementation(project(":core:core-ui"))
     implementation(project(":ui:sharedviewmodel"))
+    implementation(project(":ui:feature-bottomnavigation"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)
@@ -50,7 +50,11 @@ dependencies {
     implementation(libs.bundles.voyager)
     implementation(libs.bundles.compose.all)
     // DI
-    implementation(libs.bundles.dagger.all)
-    kapt(libs.bundles.dagger.kapt)
-    kapt(libs.hilt.compiler)
+    implementation(libs.bundles.koin.core)
+    ksp(libs.koin.ksp)
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_DEFAULT_MODULE","false")
 }

@@ -10,14 +10,15 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/core-navigation" />
-            <option value="$PROJECT_DIR$/core-ui" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/core-navigation" />
+            <option value="$PROJECT_DIR$/core/core-resource" />
+            <option value="$PROJECT_DIR$/core/core-ui" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/appstate" />
             <option value="$PROJECT_DIR$/data/backend" />
             <option value="$PROJECT_DIR$/data/datastore" />
             <option value="$PROJECT_DIR$/data/gatewaysetting" />
-            <option value="$PROJECT_DIR$/data/resource" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/usecase-setting" />
             <option value="$PROJECT_DIR$/model" />

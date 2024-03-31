@@ -7,18 +7,13 @@ interface GetThemeConfigDS {
     suspend fun save(config: ThemeConfig)
 }
 
-interface GetThemeConfigUC {
-    suspend fun getConfig(): ThemeConfig
-    suspend fun saveConfig(config: ThemeConfig)
-}
-
-class GetThemeConfigUCImpl(
+class GetThemeConfigUC(
     private val dataSource: GetThemeConfigDS
-) : GetThemeConfigUC {
+) {
 
-    override suspend fun getConfig(): ThemeConfig = dataSource.get()
+    suspend fun getConfig(): ThemeConfig = dataSource.get()
 
-    override suspend fun saveConfig(config: ThemeConfig) {
+    suspend fun saveConfig(config: ThemeConfig) {
         dataSource.save(config)
     }
 }
