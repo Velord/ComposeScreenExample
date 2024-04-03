@@ -26,7 +26,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.velord.bottomnavigation.databinding.FragmentBottomNavBinding
+import com.velord.bottomnavigation.databinding.FragmentBottomNavigationBinding
 import com.velord.multiplebackstackapplier.MultipleBackstack
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.resource.R
@@ -71,13 +71,13 @@ fun Fragment.addTestCallback(
     }
 }
 
-class BottomNavFragment : Fragment(com.velord.bottomnavigation.R.layout.fragment_bottom_nav) {
+class BottomNavigationFragment : Fragment(com.velord.bottomnavigation.R.layout.fragment_bottom_navigation) {
 
     private val navController by lazy {
         childFragmentManager.fragments.first().findNavController()
     }
     private val viewModel by viewModel<BottomNavViewModelJetpack>()
-    private var binding: FragmentBottomNavBinding? = null
+    private var binding: FragmentBottomNavigationBinding? = null
 
     private val multipleBackStack by lazy {
         MultipleBackstack(
@@ -107,13 +107,13 @@ class BottomNavFragment : Fragment(com.velord.bottomnavigation.R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentBottomNavBinding.bind(view).apply {
+        binding = FragmentBottomNavigationBinding.bind(view).apply {
             initView()
         }
         initObserving()
     }
 
-    context(FragmentBottomNavBinding)
+    context(FragmentBottomNavigationBinding)
     private fun initView() {
         bottomNavBarView.setContentWithTheme {
             BottomNavScreen(viewModel)

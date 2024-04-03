@@ -47,6 +47,9 @@ android {
     }
 
     buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("debug")
+        }
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
             buildConfigField("Boolean", "USE_VOYAGER", "false")
