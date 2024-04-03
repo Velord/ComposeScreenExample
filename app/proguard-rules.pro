@@ -20,3 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -dontwarn org.robolectric.shadows.CoreShadowsAdapter
+
+-keep class com.velord.navigation.** { *; }
