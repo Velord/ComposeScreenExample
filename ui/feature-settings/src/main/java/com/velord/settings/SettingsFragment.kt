@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.velord.bottomnavigation.BottomNavViewModelJetpack
 import com.velord.bottomnavigation.addTestCallback
+import com.velord.bottomnavigation.viewmodel.BottomNavViewModelJetpack
 import com.velord.navigation.entryPoint.SETTINGS_SOURCE
 import com.velord.navigation.entryPoint.SettingsSource
 import com.velord.resource.R

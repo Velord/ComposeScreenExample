@@ -1,6 +1,8 @@
-package com.velord.bottomnavigation
+package com.velord.bottomnavigation.viewmodel
 
 import cafe.adriel.voyager.core.screen.Screen
+import com.velord.bottomnavigation.BottomNavScreen
+import com.velord.bottomnavigation.BottomNavigationTab
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
