@@ -147,12 +147,17 @@ dependencies {
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.coil)
-    implementation(libs.bundles.voyager)
     // Compose
     implementation(libs.bundles.compose.all)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)
+    // Navigation
+    // Navigation Voyager
+    implementation(libs.bundles.voyager)
+    // Navigation Compose Destinations
+    implementation(libs.bundles.compose.destinations)
+    ksp(libs.compose.destinations.ksp)
     // Other
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)

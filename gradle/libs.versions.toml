@@ -4,7 +4,7 @@ minApi = "29"
 targetApi = "34"
 # Build
 buildTools = "30.0.3"
-gradle = "8.3.0"
+gradle = "8.3.1"
 jvmTarget = "17"
 # DI
 dagger = "2.49"
@@ -24,7 +24,7 @@ googleGuava = "32.0.0-android"
 ksp = "1.9.22-1.0.17"
 # AndroidX
 ## A
-androidxActivity = "1.9.0-alpha03"
+androidxActivity = "1.9.0-beta01"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.7.1"
 androidxAppCompat = "1.6.1"
@@ -69,13 +69,13 @@ androidxEmoji2 = "1.4.0"
 ## E
 androidxEnterprise = "1.1.0"
 androidxExifInterface = "1.3.7"
-androidxFragment = "1.7.0-alpha10"
+androidxFragment = "1.7.0-beta01"
 ## Games
-androidxGamesActivity = "3.0.0"
+androidxGamesActivity = "3.0.1"
 androidxGamesController = "2.0.1"
 androidxGamesFramePacing = "2.1.0"
 androidxGamesMemoryAdvice = "2.0.1"
-androidxGamesTextInput = "3.0.0"
+androidxGamesTextInput = "3.0.1"
 androidxGamesPerformanceTuner = "2.0.0-beta01"
 ## Glance
 androidxGlance = "1.1.0-alpha01"  # For Glance, AppWidgets
@@ -95,7 +95,7 @@ androidxMedia3 = "1.3.0"
 androidxNavigation = "2.7.7"
 ## AndroidX Paging
 androidxPaging = "3.2.1"
-androidxPagingCompose = "3.3.0-alpha04"
+androidxPagingCompose = "3.3.0-alpha05"
 ## P
 androidxPalette = "1.0.0"
 androidxPercentLayout = "1.0.0"
@@ -136,7 +136,7 @@ androidxSqlite = "2.4.0"
 androidxStartup = "1.1.1"
 androidxSwipeRefreshLayout = "1.1.0"
 ## T
-androidxTransition = "1.5.0-alpha06"
+androidxTransition = "1.5.0-beta01"
 ## W
 androidxWorkManager = "2.9.0"
 # Network
@@ -144,7 +144,7 @@ squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.10.0"
 ktor = "2.3.8"
 # Compose
-composeDefault = "1.6.3" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.6.4" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeAccompanist = "0.33.2-alpha"
 composeCompiler = "1.5.9"
 composeMaterial3 = "1.2.1"
@@ -155,12 +155,9 @@ coil = "2.2.2"
 # Permission
 sagarCororutinePermission = "2.0.2"
 # Navigation
+composeDestinations = "2.1.0-beta01"
 voyager = "1.1.0-alpha02"
 velordMultipleBackstack = "0.5.9.1"
-junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-material = "1.11.0"
 
 
 [libraries]
@@ -405,17 +402,17 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 # Navigation
 velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
-# Voyager
+## Compose Destinations
+compose-destinations = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "composeDestinations" }
+compose-destinations-bottomsheet = { module = "io.github.raamcosta.compose-destinations:bottom-sheet", version.ref = "composeDestinations" }
+compose-destinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinations" }
+## Voyager
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyager" }
 voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [bundles]
@@ -760,6 +757,8 @@ voyager = [
     "voyager-bottomSheetNavigator", "voyager-tabNavigator",
     "voyager-transitions", "voyager-hilt",
 ]
+# Compose Destinations
+compose-destinations = ["compose-destinations", "compose-destinations-bottomsheet"]
 
 
 [plugins]
