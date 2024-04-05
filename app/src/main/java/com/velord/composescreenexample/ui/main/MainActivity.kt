@@ -5,16 +5,30 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.fragment.NavHostFragment
 import cafe.adriel.voyager.core.registry.screenModule
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
+import com.ramcosta.composedestinations.annotation.ExternalNavGraph
+import com.ramcosta.composedestinations.annotation.NavHostGraph
+import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
+import com.ramcosta.composedestinations.generated.navgraphs.BottomNavigationNavGraph
+import com.ramcosta.composedestinations.generated.navgraphs.MainNavGraph
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.camerarecording.CameraRecordingScreen
 import com.velord.composescreenexample.BuildConfig
@@ -31,6 +45,12 @@ import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.utils.setContentWithTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+enum class NavigationLib {
+    Voyager,
+    Jetpack,
+    Destinations
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -118,10 +138,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNavGraph() {
-        if (BuildConfig.USE_VOYAGER) {
-            setNavGraphViaVoyager()
-        } else {
-            setNavGraphViaJetpack()
+        when(BuildConfig.NAVIGATION_LIB) {
+            NavigationLib.Voyager -> setNavGraphViaVoyager()
+            NavigationLib.Jetpack -> setNavGraphViaJetpack()
+            NavigationLib.Destinations -> setNavGraphViaComposeDestinations()
+            else -> setNavGraphViaJetpack()
         }
     }
 
@@ -157,6 +178,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setNavGraphViaComposeDestinations() {
+        binding?.apply {
+            navHostFragment.isVisible = false
+            mainNavHost.apply {
+                isVisible = true
+
+                setContentWithTheme {
+                    DestinationsNavHost(navGraph = MainNavGraph)
+                }
+            }
+        }
+    }
+
     private fun initObserving() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -166,4 +200,46 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+}
+
+object DefaultTransitions : NavHostAnimatedDestinationStyle() {
+
+    override val enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
+        slideInHorizontally(
+            initialOffsetX = { 1000 },
+            animationSpec = tween(700)
+        )
+    }
+
+    override val exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
+        slideOutHorizontally(
+            targetOffsetX = { -1000 },
+            animationSpec = tween(700)
+        )
+    }
+
+    override val popEnterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
+        slideInHorizontally(
+            initialOffsetX = { -1000 },
+            animationSpec = tween(700)
+        )
+    }
+
+    override val popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
+        slideOutHorizontally(
+            targetOffsetX = { 1000 },
+            animationSpec = tween(700)
+        )
+    }
+}
+
+private const val MAIN_GRAPH = "main_nav_graph"
+@NavHostGraph(
+    defaultTransitions = DefaultTransitions::class,
+    route = MAIN_GRAPH,
+    visibility = CodeGenVisibility.INTERNAL
+)
+annotation class MainGraph {
+   @ExternalNavGraph<BottomNavigationNavGraph>(start = true)
+    companion object Includes
 }
