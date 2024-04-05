@@ -3,7 +3,7 @@ package com.velord.composescreenexample
 import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import com.velord.appstate.AppStateModule
-import com.velord.bottomnavigation.BottomNavModule
+import com.velord.bottomnavigation.BottomNavigationModule
 import com.velord.camerarecording.CameraRecordingModule
 import com.velord.composescreenexample.ui.main.MainActivity
 import com.velord.datastore.DataStoreModule
@@ -48,7 +48,7 @@ class App : Application() {
             androidContext(this@App)
 
             modules(AppModule().module)
-            modules(BottomNavModule().module)
+            modules(BottomNavigationModule().module)
             modules(CameraRecordingModule().module)
             modules(DataStoreModule().module)
             modules(SettingGatewayModule().module)

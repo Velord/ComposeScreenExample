@@ -132,7 +132,7 @@ class BottomNavigationFragment : Fragment(com.velord.bottomnavigation.R.layout.f
 }
 
 @Composable
-private fun BottomNavScreen(viewModel: BottomNavViewModelJetpack) {
+fun BottomNavScreen(viewModel: BottomNavViewModelJetpack) {
     val tabFlow = viewModel.currentTabFlow.collectAsStateWithLifecycle()
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
 
