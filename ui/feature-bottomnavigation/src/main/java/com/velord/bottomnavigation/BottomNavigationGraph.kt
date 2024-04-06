@@ -1,25 +1,255 @@
 package com.velord.bottomnavigation
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.LocalAbsoluteTonalElevation
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
-import com.ramcosta.composedestinations.annotation.NavGraph
-import com.velord.bottomnavigation.screen.BottomNavigationVoyagerScreen
-import com.velord.bottomnavigation.viewmodel.BottomNavViewModelVoyager
+import com.ramcosta.composedestinations.annotation.NavHostGraph
+import com.ramcosta.composedestinations.generated.NavGraphs
+import com.ramcosta.composedestinations.generated.destinations.CameraScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.DemoScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.SettingsScreenDestination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.navigate
+import com.ramcosta.composedestinations.navigation.popBackStack
+import com.ramcosta.composedestinations.navigation.popUpTo
+import com.velord.bottomnavigation.viewmodel.BottomNavigationDestination
+import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
+import com.velord.resource.R
+import com.velord.uicore.compose.component.AnimatableLabeledIcon
+import com.velord.util.context.getActivity
 import org.koin.androidx.compose.koinViewModel
+import kotlin.random.Random
 
 private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
-@NavGraph<ExternalModuleGraph>(
+@NavHostGraph(
     route = BOTTOM_NAVIGATION_GRAPH,
-    start = true,
-    navArgs = Nothing::class,
-    deepLinks = []
 )
 internal annotation class BottomNavigationGraph
 
 @Destination<BottomNavigationGraph>(start = true)
 @Composable
-internal fun BottomNavigationDestination() {
-    val viewModel = koinViewModel<BottomNavViewModelVoyager>()
-    BottomNavigationVoyagerScreen(viewModel)
+fun SettingsScreen(
+    navigator: DestinationsNavigator
+) {
+    val digit = remember {
+        Random.nextInt(0, 100)
+    }
+    Button(
+        onClick = {
+            navigator.navigate(SettingsScreenDestination)
+        }
+    ) {
+        Text(text = "Settings $digit")
+    }
+}
+
+@Destination<BottomNavigationGraph>
+@Composable
+fun DemoScreen(
+    screenNumber: Int = 0,
+    navigator: DestinationsNavigator
+) {
+    val digit = remember {
+        Random.nextInt(0, 100)
+    }
+    Button(
+        onClick = {
+            navigator.navigate(DemoScreenDestination(digit))
+        }
+    ) {
+        Text(text = "Demo $screenNumber")
+    }
+}
+
+@Destination<BottomNavigationGraph>()
+@Composable
+fun CameraScreen(
+    navigator: DestinationsNavigator
+) {
+    val digit = remember {
+        Random.nextInt(0, 100)
+    }
+    Button(
+        onClick = {
+            navigator.navigate(CameraScreenDestination)
+        }
+    ) {
+        Text(text = "Camera $digit")
+    }
+}
+
+@Destination<ExternalModuleGraph>(start = true)
+@Composable
+fun BottomNavigationScreen() {
+    val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
+    Screen(viewModel)
+}
+
+@Composable
+private fun Screen(viewModel: BottomNavigationDestinationsVM) {
+    val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
+    val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
+    val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = false)
+
+    val context = LocalContext.current
+    LaunchedEffect(finishAppEventState) {
+        if (finishAppEventState.value) {
+            context.getActivity()?.finish()
+        }
+    }
+
+//    val lastItem = navigator?.lastItemOrNull
+//    LaunchedEffect(lastItem) {
+//        viewModel.updateBackHandling(lastItem)
+//    }
+
+    Content(
+        tab = tabState.value,
+        getNavigationItems = viewModel::getNavigationItems,
+        onTabClick = viewModel::onTabClick,
+    )
+
+    val str = stringResource(id = R.string.press_again_to_exit)
+    SnackBarOnBackPressHandler(
+        message = str,
+        modifier = Modifier.padding(horizontal = 8.dp),
+        enabled = backHandlingState.value.isEnabled,
+        onBackClickLessThanDuration = viewModel::onBackDoubleClick,
+    ) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .navigationBarsPadding()
+                .padding(bottom = 24.dp),
+            contentAlignment = Alignment.BottomCenter,
+        ) {
+            Snackbar {
+                Text(text = it.visuals.message)
+            }
+        }
+    }
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+private fun Content(
+    tab: BottomNavigationDestination,
+    getNavigationItems: () -> List<BottomNavigationDestination>,
+    onTabClick: (BottomNavigationDestination) -> Unit,
+) {
+    val navController = rememberNavController()
+    Scaffold(
+        bottomBar = {
+            BottomBar(
+                navController = navController,
+                tabs = getNavigationItems(),
+                selectedItem = tab,
+                onClick = onTabClick,
+            )
+        },
+        content = {
+            DestinationsNavHost(
+                navController = navController,
+                navGraph = NavGraphs.bottomNavigationGraph,
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxSize(),
+                startRoute = DemoScreenDestination,
+            )
+        },
+    )
+}
+
+@Composable
+private fun BottomBar(
+    navController: NavController,
+    tabs: List<BottomNavigationDestination>,
+    selectedItem: BottomNavigationDestination,
+    onClick: (BottomNavigationDestination) -> Unit,
+) {
+    NavigationBar (
+        modifier = Modifier
+            .navigationBarsPadding()
+            .height(72.dp),
+    ) {
+        tabs.forEach { item ->
+            val isSelected = selectedItem == item
+            //val isCurrentDestOnBackStack = navController.isRouteOnBackStack(item.direction)
+            NavigationBarItem(
+                selected = isSelected,
+                onClick = {
+                    if (isSelected) {
+                        // When we click again on a bottom bar item and it was already selected
+                        // we want to pop the back stack until the initial destination of this bottom bar item
+                        navController.popBackStack(item.direction, false)
+                        return@NavigationBarItem
+                    }
+
+                    navController.navigate(item.direction) {
+                        // Pop up to the root of the graph to
+                        // avoid building up a large stack of destinations
+                        // on the back stack as users select items
+                        popUpTo(NavGraphs.bottomNavigationGraph) {
+                            saveState = true
+                        }
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
+                    }
+                    onClick(item)
+                },
+                label = {},
+                icon = {
+                    val color = MaterialTheme.colorScheme.run {
+                        if (isSelected) secondary else onSurface
+                    }
+                    val painter = rememberVectorPainter(image = item.icon)
+                    AnimatableLabeledIcon(
+                        label = item.name,
+                        painter = painter,
+                        scale = if (isSelected) 1.5f else 1f,
+                        color = color,
+                        modifier = Modifier,
+                        iconSize = 28.dp,
+                    )
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.surfaceColorAtElevation(
+                        LocalAbsoluteTonalElevation.current
+                    )
+                )
+            )
+        }
+    }
 }

@@ -26,7 +26,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.velord.bottomnavigation.addTestCallback
-import com.velord.bottomnavigation.viewmodel.BottomNavViewModelJetpack
+import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
@@ -36,7 +36,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class DemoFragment : Fragment() {
 
     private val viewModel by viewModels<DemoViewModel>()
-    private val viewModelBottom by viewModel<BottomNavViewModelJetpack>()
+    private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

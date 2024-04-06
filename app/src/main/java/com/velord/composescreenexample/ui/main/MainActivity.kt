@@ -24,10 +24,10 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
-import com.ramcosta.composedestinations.annotation.ExternalNavGraph
+import com.ramcosta.composedestinations.annotation.ExternalDestination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
-import com.ramcosta.composedestinations.generated.navgraphs.BottomNavigationNavGraph
+import com.ramcosta.composedestinations.generated.destinations.BottomNavigationScreenDestination
 import com.ramcosta.composedestinations.generated.navgraphs.MainNavGraph
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.camerarecording.CameraRecordingScreen
@@ -240,6 +240,6 @@ private const val MAIN_GRAPH = "main_nav_graph"
     visibility = CodeGenVisibility.INTERNAL
 )
 annotation class MainGraph {
-   @ExternalNavGraph<BottomNavigationNavGraph>(start = true)
+    @ExternalDestination<BottomNavigationScreenDestination>(start = true)
     companion object Includes
 }

@@ -13,7 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.velord.bottomnavigation.databinding.FragmentBottomNavigationBinding
 import com.velord.bottomnavigation.screen.BottomNavigationJetpackScreen
-import com.velord.bottomnavigation.viewmodel.BottomNavViewModelJetpack
+import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.multiplebackstackapplier.MultipleBackstack
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
@@ -32,7 +32,7 @@ private fun Context.fireToast(text: String) {
 
 fun Fragment.addTestCallback(
     tag: String,
-    viewModel: BottomNavViewModelJetpack
+    viewModel: BottomNavigationJetpackVM
 ) {
     // Android 13+
     // With fragments does not work March 2024
@@ -59,7 +59,7 @@ class BottomNavigationFragment : Fragment(com.velord.bottomnavigation.R.layout.f
     private val navController by lazy {
         childFragmentManager.fragments.first().findNavController()
     }
-    private val viewModel by viewModel<BottomNavViewModelJetpack>()
+    private val viewModel by viewModel<BottomNavigationJetpackVM>()
     private var binding: FragmentBottomNavigationBinding? = null
 
     private val multipleBackStack by lazy {
