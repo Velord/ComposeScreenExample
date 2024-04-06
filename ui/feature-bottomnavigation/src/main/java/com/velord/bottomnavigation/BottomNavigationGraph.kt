@@ -1,6 +1,7 @@
 package com.velord.bottomnavigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -27,6 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
@@ -37,8 +40,6 @@ import com.ramcosta.composedestinations.generated.destinations.CameraScreenDesti
 import com.ramcosta.composedestinations.generated.destinations.DemoScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.navigate
-import com.ramcosta.composedestinations.navigation.popBackStack
 import com.ramcosta.composedestinations.navigation.popUpTo
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestination
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
@@ -58,52 +59,53 @@ internal annotation class BottomNavigationGraph
 @Destination<BottomNavigationGraph>(start = true)
 @Composable
 fun SettingsScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    screenNumber: Int = 0,
 ) {
     val digit = remember {
         Random.nextInt(0, 100)
     }
-    Button(
-        onClick = {
-            navigator.navigate(SettingsScreenDestination)
-        }
-    ) {
-        Text(text = "Settings $digit")
+    TestStackScreen(number = screenNumber, title = "Settings") {
+        navigator.navigate(SettingsScreenDestination(digit))
     }
 }
 
 @Destination<BottomNavigationGraph>
 @Composable
 fun DemoScreen(
+    navigator: DestinationsNavigator,
     screenNumber: Int = 0,
-    navigator: DestinationsNavigator
 ) {
     val digit = remember {
         Random.nextInt(0, 100)
     }
-    Button(
-        onClick = {
-            navigator.navigate(DemoScreenDestination(digit))
-        }
-    ) {
-        Text(text = "Demo $screenNumber")
+    TestStackScreen(number = screenNumber, title = "Demo") {
+        navigator.navigate(DemoScreenDestination(digit))
     }
 }
 
 @Destination<BottomNavigationGraph>()
 @Composable
 fun CameraScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    screenNumber: Int = 0,
 ) {
     val digit = remember {
         Random.nextInt(0, 100)
     }
-    Button(
-        onClick = {
-            navigator.navigate(CameraScreenDestination)
-        }
-    ) {
-        Text(text = "Camera $digit")
+    TestStackScreen(number = screenNumber, title = "Camera") {
+       navigator.navigate(CameraScreenDestination(digit))
+    }
+}
+
+@Composable
+private fun TestStackScreen(
+    number: Int,
+    title: String,
+    onClick: () -> Unit
+) {
+    Button(onClick = onClick) {
+        Text(text = "$title $number")
     }
 }
 
@@ -111,11 +113,7 @@ fun CameraScreen(
 @Composable
 fun BottomNavigationScreen() {
     val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
-    Screen(viewModel)
-}
 
-@Composable
-private fun Screen(viewModel: BottomNavigationDestinationsVM) {
     val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
     val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = false)
@@ -127,12 +125,16 @@ private fun Screen(viewModel: BottomNavigationDestinationsVM) {
         }
     }
 
-//    val lastItem = navigator?.lastItemOrNull
-//    LaunchedEffect(lastItem) {
-//        viewModel.updateBackHandling(lastItem)
-//    }
+    val navController = rememberNavController()
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry.value?.destination
+    Log.d("@@@", "currentDestination: $currentDestination")
+    LaunchedEffect(currentDestination) {
+        viewModel.updateBackHandling(currentDestination)
+    }
 
     Content(
+        navigator = navController,
         tab = tabState.value,
         getNavigationItems = viewModel::getNavigationItems,
         onTabClick = viewModel::onTabClick,
@@ -162,15 +164,15 @@ private fun Screen(viewModel: BottomNavigationDestinationsVM) {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun Content(
+    navigator: NavHostController,
     tab: BottomNavigationDestination,
     getNavigationItems: () -> List<BottomNavigationDestination>,
     onTabClick: (BottomNavigationDestination) -> Unit,
 ) {
-    val navController = rememberNavController()
     Scaffold(
         bottomBar = {
             BottomBar(
-                navController = navController,
+                navController = navigator,
                 tabs = getNavigationItems(),
                 selectedItem = tab,
                 onClick = onTabClick,
@@ -178,7 +180,7 @@ private fun Content(
         },
         content = {
             DestinationsNavHost(
-                navController = navController,
+                navController = navigator,
                 navGraph = NavGraphs.bottomNavigationGraph,
                 modifier = Modifier
                     .padding(it)
@@ -253,3 +255,4 @@ private fun BottomBar(
         }
     }
 }
+
