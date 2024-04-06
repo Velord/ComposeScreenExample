@@ -18,14 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.bottomnavigation.BottomNavigationItem
 import com.velord.bottomnavigation.TAG
-import com.velord.bottomnavigation.viewmodel.BottomNavViewModelJetpack
+import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
 import com.velord.uicore.compose.preview.PreviewCombined
 
 @Composable
-fun BottomNavigationJetpackScreen(viewModel: BottomNavViewModelJetpack) {
+fun BottomNavigationJetpackScreen(viewModel: BottomNavigationJetpackVM) {
     val tabFlow = viewModel.currentTabFlow.collectAsStateWithLifecycle()
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
 

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.velord.bottomnavigation.addTestCallback
-import com.velord.bottomnavigation.viewmodel.BottomNavViewModelJetpack
+import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.navigation.entryPoint.SETTINGS_SOURCE
 import com.velord.navigation.entryPoint.SettingsSource
 import com.velord.resource.R
@@ -39,7 +39,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SettingsFragment : Fragment() {
 
     private val viewModel by activityViewModels<ThemeViewModel>()
-    private val viewModelBottom by viewModel<BottomNavViewModelJetpack>()
+    private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

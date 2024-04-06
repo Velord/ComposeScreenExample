@@ -23,29 +23,39 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.velord.bottomnavigation.BottomNavigationTab
-import com.velord.bottomnavigation.viewmodel.BottomNavViewModelVoyager
+import com.velord.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
 import com.velord.util.context.getActivity
 
 @Composable
-fun BottomNavigationVoyagerScreen(viewModel: BottomNavViewModelVoyager) {
+fun BottomNavigationVoyagerScreen(viewModel: BottomNavigationVoyagerVM) {
     val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
     val isBackHandlingEnabledState = viewModel.isBackHandlingEnabledFlow.collectAsStateWithLifecycle()
     val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = false)
 
+    val context = LocalContext.current
+    LaunchedEffect(finishAppEventState.value) {
+        //if (finishAppEventState.value) {
+            context.getActivity()?.finish()
+       // }
+    }
+
+    val navigator = LocalNavigator.current
+    val lastItem = navigator?.lastItemOrNull
+    LaunchedEffect(lastItem) {
+        viewModel.updateBackHandling(lastItem)
+    }
+
     Content(
-        finishAppEvent = finishAppEventState.value,
         tab = tabState.value,
-        updateBackHandling = viewModel::updateBackHandling,
         getNavigationItems = viewModel::getNavigationItems,
         onTabClick = viewModel::onTabClick,
     )
@@ -74,25 +84,10 @@ fun BottomNavigationVoyagerScreen(viewModel: BottomNavViewModelVoyager) {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun Content(
-    finishAppEvent: Boolean,
     tab: BottomNavigationTab,
-    updateBackHandling: (Screen?) -> Unit,
     getNavigationItems: () -> List<BottomNavigationTab>,
     onTabClick: (BottomNavigationTab) -> Unit,
 ) {
-    val context = LocalContext.current
-    LaunchedEffect(finishAppEvent) {
-        if (finishAppEvent) {
-            context.getActivity()?.finish()
-        }
-    }
-
-    val navigator = LocalNavigator.current
-    val lastItem = navigator?.lastItemOrNull
-    LaunchedEffect(lastItem) {
-        updateBackHandling(lastItem)
-    }
-
     TabNavigator(tab) {
         val tabNavigator = LocalTabNavigator.current
         LaunchedEffect(tab) {

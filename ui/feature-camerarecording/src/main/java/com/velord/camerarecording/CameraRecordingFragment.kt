@@ -59,7 +59,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.velord.bottomnavigation.addTestCallback
-import com.velord.bottomnavigation.viewmodel.BottomNavViewModelJetpack
+import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.uicore.dialog.checkRecordVideoPermission
 import com.velord.uicore.utils.setContentWithTheme
@@ -73,7 +73,7 @@ import com.velord.resource.R as Rres
 class CameraRecordingFragment : Fragment() {
 
     private val viewModel by viewModel<CameraRecordingViewModel>()
-    private val viewModelBottom by viewModel<BottomNavViewModelJetpack>()
+    private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     private val requestRecordVideoPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
