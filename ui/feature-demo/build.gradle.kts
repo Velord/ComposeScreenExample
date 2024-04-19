@@ -45,7 +45,6 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.activity)
     implementation(libs.bundles.androidx.lifecycle.runtime)
-    implementation(libs.bundles.androidx.ktx)
     implementation(libs.bundles.androidx.navigation)
     implementation(libs.bundles.voyager)
     implementation(libs.bundles.compose.all)
