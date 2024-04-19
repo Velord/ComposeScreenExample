@@ -163,7 +163,7 @@ dependencies {
     implementation(libs.androidx.glance.appwidget)
 
     // Test libs.versions.toml
-    //implementation(libs.bundles.androidx.all)
+    implementation(libs.bundles.androidx.all)
 }
 
 ksp {
