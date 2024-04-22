@@ -31,6 +31,7 @@ android {
 
 dependencies {
     // Modules
+    implementation(project(":model"))
     implementation(project(":util"))
     implementation(project(":domain:usecase-setting"))
     // Templates

@@ -15,10 +15,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.velord.sharedviewmodel.Theme
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.compose.theme.MainTheme
 import com.velord.util.context.getActivity
+import com.velord.util.settings.AndroidThemeConfig
 import com.velord.util.settings.ThemeConfig
 
 fun ComponentActivity.setContentWithTheme(
@@ -38,10 +38,10 @@ fun ComposeView.setContentWithTheme(
     setContent {
         val activity = LocalContext.current.getActivity()
         val themeViewModel = viewModel<ThemeViewModel>(activity as ViewModelStoreOwner)
-        val themeState: State<Theme?> = themeViewModel.themeFlow
+        val themeState: State<AndroidThemeConfig?> = themeViewModel.themeFlow
             .collectAsStateWithLifecycle()
 
-        val theme = themeState.value ?: Theme.considerSystem()
+        val theme = themeState.value ?: AndroidThemeConfig.considerSystem()
         CompositionLocalProvider(LocalTheme provides theme) {
             val localThemeSwitcher = LocalTheme.current
             MainTheme(
@@ -55,12 +55,12 @@ fun ComposeView.setContentWithTheme(
 }
 
 @Composable
-private fun Theme.Companion.considerSystem(): Theme = Theme(
+private fun AndroidThemeConfig.Companion.considerSystem(): AndroidThemeConfig = AndroidThemeConfig(
     config = ThemeConfig(
         useDarkTheme = isSystemInDarkTheme(),
-        useDynamicColor = false
+        useDynamicColor = isSystemDynamicColorAvailable()
     ),
     isSystemDynamicColorAvailable = false
 )
 
-val LocalTheme = staticCompositionLocalOf { Theme.DEFAULT }
+val LocalTheme = staticCompositionLocalOf { AndroidThemeConfig.DEFAULT }
