@@ -14,7 +14,7 @@ class BottomNavigationVoyagerVM : CoroutineScopeViewModel() {
 
     val currentTabFlow = MutableStateFlow<BottomNavigationTab>(BottomNavigationTab.Camera)
     val isBackHandlingEnabledFlow = MutableStateFlow(true)
-    val finishAppEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
+    val finishAppEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
 
     fun getNavigationItems(): List<BottomNavigationTab> = BottomNavigationTab::class
         .sealedSubclasses
@@ -26,7 +26,7 @@ class BottomNavigationVoyagerVM : CoroutineScopeViewModel() {
     }
 
     fun onBackDoubleClick() = launch {
-        finishAppEvent.emit(Unit)
+        finishAppEvent.emit(true)
     }
 
     fun updateBackHandling(currentNavigationDestination: Screen?) {
