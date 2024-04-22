@@ -43,9 +43,9 @@ fun BottomNavigationVoyagerScreen(viewModel: BottomNavigationVoyagerVM) {
 
     val context = LocalContext.current
     LaunchedEffect(finishAppEventState.value) {
-        //if (finishAppEventState.value) {
+        if (finishAppEventState.value) {
             context.getActivity()?.finish()
-       // }
+        }
     }
 
     val navigator = LocalNavigator.current
@@ -125,9 +125,7 @@ private fun BottomBar(
             NavigationBarItem(
                 selected = isSelected,
                 onClick = { onClick(it) },
-                label = {
-
-                },
+                label = {},
                 icon = {
                     val color = MaterialTheme.colorScheme.run {
                         if (isSelected) secondary else onSurface

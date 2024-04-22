@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class CameraRecordingViewModel constructor(
+class CameraRecordingViewModel(
     private val context: Context,
 ) : CoroutineScopeViewModel() {
     // Permission
