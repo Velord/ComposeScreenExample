@@ -27,7 +27,7 @@ import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationSty
 import com.ramcosta.composedestinations.annotation.ExternalDestination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
-import com.ramcosta.composedestinations.generated.destinations.BottomNavigationScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.BottomNavigationDestinationsScreenDestination
 import com.ramcosta.composedestinations.generated.navgraphs.MainNavGraph
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.camerarecording.CameraRecordingScreen
@@ -240,6 +240,6 @@ private const val MAIN_GRAPH = "main_nav_graph"
     visibility = CodeGenVisibility.INTERNAL
 )
 annotation class MainGraph {
-    @ExternalDestination<BottomNavigationScreenDestination>(start = true)
+    @ExternalDestination<BottomNavigationDestinationsScreenDestination>(start = true)
     companion object Includes
 }
