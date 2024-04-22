@@ -146,9 +146,8 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.coil)
-    // Compose
     implementation(libs.bundles.compose.all)
+    implementation(libs.bundles.coil)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)

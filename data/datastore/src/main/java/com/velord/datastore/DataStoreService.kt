@@ -16,7 +16,7 @@ interface DataStoreService {
 
 @Single
 class DataStoreServiceImpl(
-    private val settings: AppSettingsDataStore
+    private val settings: AppSettingsDataStore,
 ) : DataStoreService {
 
     private suspend fun setFirstLaunch() {

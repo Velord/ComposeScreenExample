@@ -4,6 +4,7 @@ import android.os.Build
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.util.settings.ThemeConfig
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 data class Theme(
@@ -27,16 +28,19 @@ class ThemeViewModel(
 
     init {
         launch {
-            themeFlow.value = Theme(
-                config = getThemeConfigUC.getConfig(),
-                isSystemDynamicColorAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-            )
+            getThemeConfigUC.getConfigFlow().map {
+                Theme(
+                    config = it,
+                    isSystemDynamicColorAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                )
+            }.collect {
+                themeFlow.value = it
+            }
         }
     }
 
     private fun saveNewTheme(newTheme: Theme) = launch {
         getThemeConfigUC.saveConfig(newTheme.config)
-        themeFlow.emit(newTheme)
     }
 
     fun changeSystemTheme(currentTheme: Theme) = launch {
