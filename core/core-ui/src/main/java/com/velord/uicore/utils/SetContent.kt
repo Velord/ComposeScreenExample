@@ -1,7 +1,6 @@
 package com.velord.uicore.utils
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
@@ -49,7 +48,6 @@ fun ComposeView.setContentWithTheme(
             } else {
                 localThemeConfig.config.useDarkTheme
             }
-            Log.d("@@@", "config: ${theme}")
             MainTheme(
                 abideToOsTheme = localThemeConfig.config.abideToOs,
                 useDarkTheme = isDark,

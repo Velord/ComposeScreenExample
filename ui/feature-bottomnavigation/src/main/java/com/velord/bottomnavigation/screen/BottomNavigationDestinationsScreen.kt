@@ -1,7 +1,6 @@
 package com.velord.bottomnavigation.screen
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -62,7 +61,6 @@ fun BottomNavigationDestinationsScreen() {
     val navController = rememberNavController()
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry.value?.destination
-    Log.d("@@@", "currentDestination: $currentDestination")
     LaunchedEffect(currentDestination) {
         viewModel.updateBackHandling(currentDestination)
     }
