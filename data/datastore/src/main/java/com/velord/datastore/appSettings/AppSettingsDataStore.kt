@@ -2,6 +2,7 @@ package com.velord.datastore.appSettings
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import com.velord.util.settings.AppSettings
 import kotlinx.coroutines.flow.Flow
@@ -15,9 +16,9 @@ class AppSettingsDataStoreImpl(private val context: Context) : AppSettingsDataSt
     private val Context.dataStore by dataStore(
         fileName = "settings",
         serializer = AppSettingsDataStoreSerializer,
-//        corruptionHandler = ReplaceFileCorruptionHandler {
-//            AppSettings.DEFAULT
-//        }
+        corruptionHandler = ReplaceFileCorruptionHandler {
+            AppSettings.DEFAULT
+        }
     )
 
     override val data: Flow<AppSettings>
