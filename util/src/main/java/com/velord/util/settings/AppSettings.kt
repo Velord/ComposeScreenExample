@@ -4,6 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppSettings(
-    val isAppFirstLaunch: Boolean = false,
-    val theme: ThemeConfig = ThemeConfig.DEFAULT
-)
+    val isAppFirstLaunch: Boolean,
+    val theme: ThemeConfig
+) {
+    companion object {
+        val DEFAULT = AppSettings(
+            isAppFirstLaunch = false,
+            theme = ThemeConfig.DEFAULT
+        )
+    }
+}

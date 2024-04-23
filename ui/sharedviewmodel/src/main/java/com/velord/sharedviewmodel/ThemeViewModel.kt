@@ -1,6 +1,5 @@
 package com.velord.sharedviewmodel
 
-import android.os.Build
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.util.settings.AndroidThemeConfig
 import com.velord.util.settings.ThemeConfig
@@ -17,10 +16,7 @@ class ThemeViewModel(
     init {
         launch {
             getThemeConfigUC.getConfigFlow().map {
-                AndroidThemeConfig(
-                    config = it,
-                    isSystemDynamicColorAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-                )
+                AndroidThemeConfig.invoke(it)
             }.collect {
                 themeFlow.value = it
             }
@@ -31,19 +27,33 @@ class ThemeViewModel(
         getThemeConfigUC.saveConfig(newTheme.config)
     }
 
-    fun changeSystemTheme(currentTheme: AndroidThemeConfig) = launch {
-        val newConfig = ThemeConfig(
-            useDarkTheme = currentTheme.config.useDarkTheme,
-            useDynamicColor = currentTheme.config.useDynamicColor.not()
-        )
-        saveNewTheme(currentTheme.copy(config = newConfig))
+    fun onSwitchToOsTheme() = launch {
+        themeFlow.value?.let {
+            val newConfig = it.config.copy(abideToOs = it.config.abideToOs.not())
+            saveNewTheme(it.copy(config = newConfig))
+        }
     }
 
-    fun changeDarkTheme(currentTheme: AndroidThemeConfig) = launch {
-        val newConfig = ThemeConfig(
-            useDarkTheme = currentTheme.config.useDarkTheme.not(),
-            useDynamicColor = currentTheme.config.useDynamicColor
-        )
-        saveNewTheme(currentTheme.copy(config = newConfig))
+    fun onChangeDynamicTheme() = launch {
+        themeFlow.value?.let {
+            if (it.config.abideToOs) return@launch
+
+            val newConfig = it.config.copy(
+                useDynamicColor = it.config.useDynamicColor.not()
+            )
+            saveNewTheme(it.copy(config = newConfig))
+        }
+    }
+
+    fun onChangeDarkTheme() = launch {
+        themeFlow.value?.let {
+            if (it.config.abideToOs) return@launch
+
+            val newConfig = it.config.copy(
+                useDarkTheme = it.config.useDarkTheme.not(),
+                current = ThemeConfig.getOppositeTheme(it.config.current),
+            )
+            saveNewTheme(it.copy(config = newConfig))
+        }
     }
 }

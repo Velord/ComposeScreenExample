@@ -1,6 +1,7 @@
 package com.velord.uicore.utils
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
@@ -19,7 +20,6 @@ import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.compose.theme.MainTheme
 import com.velord.util.context.getActivity
 import com.velord.util.settings.AndroidThemeConfig
-import com.velord.util.settings.ThemeConfig
 
 fun ComponentActivity.setContentWithTheme(
     screen: @Composable ComposeView.() -> Unit
@@ -43,10 +43,18 @@ fun ComposeView.setContentWithTheme(
 
         val theme = themeState.value ?: AndroidThemeConfig.considerSystem()
         CompositionLocalProvider(LocalTheme provides theme) {
-            val localThemeSwitcher = LocalTheme.current
+            val localThemeConfig = LocalTheme.current
+            val isDark = if (localThemeConfig.config.abideToOs) {
+                isSystemInDarkTheme()
+            } else {
+                localThemeConfig.config.useDarkTheme
+            }
+            Log.d("@@@", "config: ${theme}")
             MainTheme(
-                useDarkTheme = localThemeSwitcher.config.useDarkTheme,
-                dynamicColor = localThemeSwitcher.config.useDynamicColor
+                abideToOsTheme = localThemeConfig.config.abideToOs,
+                useDarkTheme = isDark,
+                dynamicColor = localThemeConfig.config.useDynamicColor,
+                specialTheme = localThemeConfig.config.current
             ) {
                 screen()
             }
@@ -55,12 +63,6 @@ fun ComposeView.setContentWithTheme(
 }
 
 @Composable
-private fun AndroidThemeConfig.Companion.considerSystem(): AndroidThemeConfig = AndroidThemeConfig(
-    config = ThemeConfig(
-        useDarkTheme = isSystemInDarkTheme(),
-        useDynamicColor = isSystemDynamicColorAvailable()
-    ),
-    isSystemDynamicColorAvailable = false
-)
+private fun AndroidThemeConfig.Companion.considerSystem(): AndroidThemeConfig = DEFAULT
 
 val LocalTheme = staticCompositionLocalOf { AndroidThemeConfig.DEFAULT }
