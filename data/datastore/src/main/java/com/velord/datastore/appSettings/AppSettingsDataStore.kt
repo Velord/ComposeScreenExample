@@ -14,7 +14,10 @@ class AppSettingsDataStoreImpl(private val context: Context) : AppSettingsDataSt
 
     private val Context.dataStore by dataStore(
         fileName = "settings",
-        serializer = AppSettingsDataStoreSerializer
+        serializer = AppSettingsDataStoreSerializer,
+//        corruptionHandler = ReplaceFileCorruptionHandler {
+//            AppSettings.DEFAULT
+//        }
     )
 
     override val data: Flow<AppSettings>
