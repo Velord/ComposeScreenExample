@@ -13,6 +13,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
@@ -99,11 +100,13 @@ private fun Content(
                 CurrentTab()
             },
             bottomBar = {
-                BottomBar(
-                    tabs = getNavigationItems(),
-                    selectedItem = tab,
-                    onClick = onTabClick,
-                )
+                Surface {
+                    BottomBar(
+                        tabs = getNavigationItems(),
+                        selectedItem = tab,
+                        onClick = onTabClick,
+                    )
+                }
             }
         )
     }

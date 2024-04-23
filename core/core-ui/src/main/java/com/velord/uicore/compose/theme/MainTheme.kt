@@ -43,7 +43,8 @@ fun MainTheme(
 
     val context = LocalContext.current as ComponentActivity
     DisposableEffect(key1 = useDarkTheme, key2 = dynamicColor) {
-        val (scrim, darkScrim) = colorScheme.defineScrimAndDarkScrimColorForSystemBar(makeTransparent = true)
+        val (scrim, darkScrim) = colorScheme
+            .defineScrimAndDarkScrimColorForSystemBar(makeTransparent = true)
         val light = SystemBarStyle.light(
             scrim = scrim,
             darkScrim = darkScrim
