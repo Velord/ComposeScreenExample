@@ -10,6 +10,9 @@ import com.velord.datastore.DataStoreModule
 import com.velord.gateway.setting.SettingGatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.usecase.setting.GetThemeConfigUC
+import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
+import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
+import com.velord.usecase.setting.SwitchThemeConfigUC
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -21,6 +24,9 @@ import org.koin.ksp.generated.module
 
 private val useCaseModule = module {
     factory<GetThemeConfigUC> { GetThemeConfigUC(get()) }
+    factory<SwitchThemeConfigUC> { SwitchThemeConfigUC(get()) }
+    factory<SwitchAbideToOsThemeConfigUC> { SwitchAbideToOsThemeConfigUC(get()) }
+    factory<SwitchDynamicColorThemeConfigUC> { SwitchDynamicColorThemeConfigUC(get()) }
 }
 
 private val viewModelModule = module {
