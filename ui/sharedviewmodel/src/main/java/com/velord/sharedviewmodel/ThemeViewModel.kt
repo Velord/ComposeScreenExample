@@ -21,7 +21,7 @@ class ThemeViewModel(
     init {
         launch {
             getThemeConfigUC.getConfigFlow().map {
-                AndroidThemeConfig.invoke(it)
+                themeFlow.value?.copy(config = it) ?: AndroidThemeConfig.invoke(it)
             }.collect {
                 themeFlow.value = it
             }
