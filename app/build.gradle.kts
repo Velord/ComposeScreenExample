@@ -160,7 +160,7 @@ dependencies {
     // Other
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)
-
+    implementation(libs.androidx.core.splashscreen)
     // Test libs.versions.toml
     implementation(libs.bundles.androidx.all)
 }
