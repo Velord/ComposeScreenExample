@@ -1,6 +1,7 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -36,6 +37,7 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.lifecycle.runtime)
+    // Navigation
     implementation(libs.bundles.voyager)
     // Compose
     implementation(libs.bundles.compose.all)

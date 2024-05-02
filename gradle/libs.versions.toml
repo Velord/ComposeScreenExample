@@ -25,7 +25,7 @@ googleGuava = "32.0.0-android"
 ksp = "1.9.22-1.0.17"
 # AndroidX
 ## A
-androidxActivity = "1.9.0-rc01"
+androidxActivity = "1.9.0"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.7.1"
 androidxAppCompat = "1.6.1"
@@ -209,7 +209,7 @@ coil = "2.2.2"
 # Permission
 sagarCororutinePermission = "2.0.2"
 # Navigation
-composeDestinations = "2.1.0-beta01"
+composeDestinations = "2.1.0-beta02"
 voyager = "1.1.0-alpha02"
 velordMultipleBackstack = "0.5.9.1"
 # Code quality

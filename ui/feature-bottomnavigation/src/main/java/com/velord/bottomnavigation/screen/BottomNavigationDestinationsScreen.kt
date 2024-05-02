@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Camera
+import androidx.compose.material.icons.outlined.Hexagon
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -19,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -31,10 +36,8 @@ import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
-import com.ramcosta.composedestinations.generated.NavGraphs
-import com.ramcosta.composedestinations.generated.destinations.DemoScreenDestination
-import com.ramcosta.composedestinations.navigation.popUpTo
-import com.velord.bottomnavigation.viewmodel.BottomNavigationDestination
+import com.ramcosta.composedestinations.spec.DestinationSpec
+import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.resource.R
@@ -42,9 +45,22 @@ import com.velord.uicore.compose.component.AnimatableLabeledIcon
 import com.velord.util.context.getActivity
 import org.koin.androidx.compose.koinViewModel
 
-@Destination<ExternalModuleGraph>(start = true)
+interface BottomNavigator {
+    fun getRoute(route: BottomNavigationDestination): DestinationSpec
+    fun getGraph(): NavHostGraphSpec
+}
+
+enum class BottomNavigationDestination {
+    Camera,
+    Demo,
+    Settings;
+}
+
+@Destination<ExternalModuleGraph>()
 @Composable
-fun BottomNavigationDestinationsScreen() {
+fun BottomNavigationDestinationsScreen(
+    navigator: BottomNavigator
+) {
     val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
 
     val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
@@ -66,7 +82,8 @@ fun BottomNavigationDestinationsScreen() {
     }
 
     Content(
-        navigator = navController,
+        navigator = navigator,
+        controller = navController,
         tab = tabState.value,
         getNavigationItems = viewModel::getNavigationItems,
         onTabClick = viewModel::onTabClick,
@@ -96,7 +113,8 @@ fun BottomNavigationDestinationsScreen() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun Content(
-    navigator: NavHostController,
+    navigator: BottomNavigator,
+    controller: NavHostController,
     tab: BottomNavigationDestination,
     getNavigationItems: () -> List<BottomNavigationDestination>,
     onTabClick: (BottomNavigationDestination) -> Unit,
@@ -104,7 +122,8 @@ private fun Content(
     Scaffold(
         bottomBar = {
             BottomBar(
-                navController = navigator,
+                navigator = navigator,
+                navController = controller,
                 tabs = getNavigationItems(),
                 selectedItem = tab,
                 onClick = onTabClick,
@@ -112,12 +131,9 @@ private fun Content(
         },
         content = {
             DestinationsNavHost(
-                navController = navigator,
-                navGraph = NavGraphs.bottomNavigationGraph,
-                modifier = Modifier
-                    .padding(it)
-                    .fillMaxSize(),
-                startRoute = DemoScreenDestination,
+                navController = controller,
+                navGraph = navigator.getGraph(),
+                modifier = Modifier.padding(it).fillMaxSize()
             )
         },
     )
@@ -125,6 +141,7 @@ private fun Content(
 
 @Composable
 private fun BottomBar(
+    navigator: BottomNavigator,
     navController: NavController,
     tabs: List<BottomNavigationDestination>,
     selectedItem: BottomNavigationDestination,
@@ -144,15 +161,15 @@ private fun BottomBar(
                     if (isSelected) {
                         // When we click again on a bottom bar item and it was already selected
                         // we want to pop the back stack until the initial destination of this bottom bar item
-                        navController.popBackStack(item.direction, false)
+                        navController.popBackStack(navigator.getRoute(item).route, false)
                         return@NavigationBarItem
                     }
 
-                    navController.navigate(item.direction) {
+                    navController.navigate(navigator.getRoute(item).route) {
                         // Pop up to the root of the graph to
                         // avoid building up a large stack of destinations
                         // on the back stack as users select items
-                        popUpTo(NavGraphs.bottomNavigationGraph) {
+                        popUpTo(navigator.getGraph().route) {
                             saveState = true
                         }
                         // Avoid multiple copies of the same destination when
@@ -168,7 +185,7 @@ private fun BottomBar(
                     val color = MaterialTheme.colorScheme.run {
                         if (isSelected) secondary else onSurface
                     }
-                    val painter = rememberVectorPainter(image = item.icon)
+                    val painter = rememberVectorPainter(image = item.getIcon())
                     AnimatableLabeledIcon(
                         label = item.name,
                         painter = painter,
@@ -186,4 +203,11 @@ private fun BottomBar(
             )
         }
     }
+}
+
+@Composable
+private fun BottomNavigationDestination.getIcon(): ImageVector = when (this) {
+    BottomNavigationDestination.Camera -> Icons.Outlined.Camera
+    BottomNavigationDestination.Demo -> Icons.Outlined.Hexagon
+    BottomNavigationDestination.Settings -> Icons.Outlined.Settings
 }
