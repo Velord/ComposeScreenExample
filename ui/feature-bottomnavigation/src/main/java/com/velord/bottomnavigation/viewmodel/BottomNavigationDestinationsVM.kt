@@ -1,37 +1,12 @@
 package com.velord.bottomnavigation.viewmodel
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Camera
-import androidx.compose.material.icons.outlined.Hexagon
-import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination
-import com.ramcosta.composedestinations.generated.destinations.CameraScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.DemoScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.SettingsScreenDestination
 import com.velord.bottomnavigation.BottomNavEventService
+import com.velord.bottomnavigation.screen.BottomNavigationDestination
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
-
-enum class BottomNavigationDestination(
-    val direction: String,
-    val icon: ImageVector
-)  {
-    Camera(
-        CameraScreenDestination.route,
-        Icons.Outlined.Camera
-    ),
-    Demo(
-        DemoScreenDestination.route,
-        Icons.Outlined.Hexagon
-    ),
-    Settings(
-        SettingsScreenDestination.route,
-        Icons.Outlined.Settings
-    );
-}
 
 @KoinViewModel
 class BottomNavigationDestinationsVM(
