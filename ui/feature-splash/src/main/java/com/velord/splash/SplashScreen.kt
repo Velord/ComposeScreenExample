@@ -2,6 +2,7 @@ package com.velord.splash
 
 import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.StartOffset
@@ -24,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -33,17 +35,17 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.resource.R
 import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.LocalTheme
 import com.velord.util.settings.SpecialTheme
 
-private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 3000
-private const val ROTATE_AFTER = 2000
+private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 2000
+private const val ROTATE_AFTER = ANIMATION_TRANSITION_TO_CURRENT_THEME + 1000
 /*
 Splash screen is the most refined copy representation of the OS splash screen.
 When app renders first frame, it will show this screen.
@@ -71,7 +73,7 @@ fun SplashScreen(
 @Composable
 private fun Content() {
     // Original background color is defined in the theme from Splash Api
-    val splashWindowBackground = colorResource(id = com.velord.resource.R.color.splash_background)
+    val splashWindowBackground = colorResource(id = R.color.splash_background)
     // If you need to change color to your own, you can use this state
     // Thus smooth color transition will be provided
     val colorState = remember { mutableStateOf(splashWindowBackground) }
@@ -89,34 +91,48 @@ private fun Content() {
         colorState.value = themeBackground
     }
 
-    val isAppHasNativeSplashScreen = remember {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-    }
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = backgroundColorState.value
     ) {
-        Box {
-            CenterIcon()
-            if (isAppHasNativeSplashScreen) {
-                BrandIcon()
-            }
+        Box(Modifier.fillMaxSize()) {
+            SplashImitate()
         }
     }
 }
-// If icon has ONLY ONE color need to use transition color
+
 @Composable
-private fun BoxScope.CenterIcon() {
+private fun BoxScope.SplashImitate() {
     // Original icon color used by Splash Api
-    val colorState = remember { mutableStateOf(Color.Unspecified) }
+    val originalIconColor = colorResource(id = R.color.splash_icon_brand)
+    val colorState = remember { mutableStateOf(originalIconColor) }
     val tintColorState = animateColorAsState(
         targetValue = colorState.value,
         animationSpec = tween(
-            durationMillis = 200,
+            durationMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME,
             easing = LinearEasing
         ),
         label = "CenterIcon color state"
     )
+
+    val isAppHasNativeSplashScreen = remember {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    }
+
+    // Current(Os or user) theme icon color
+    val iconTint = MaterialTheme.colorScheme.onSurface
+    SideEffect {
+        colorState.value = iconTint
+    }
+
+    CenterIcon()
+    if (isAppHasNativeSplashScreen) {
+        BrandIcon(tintColorState)
+    }
+}
+
+@Composable
+private fun BoxScope.CenterIcon() {
     // Define any animation you need specifically for this icon
     val infiniteTransition = rememberInfiniteTransition(label = "icon angle transition")
     val angleState = infiniteTransition.animateFloat(
@@ -126,88 +142,113 @@ private fun BoxScope.CenterIcon() {
             animation = tween(500, easing = LinearEasing),
             initialStartOffset = StartOffset(ROTATE_AFTER)
         ),
-        label = ""
+        label = "rotation angle"
     )
-    // Current(Os or user) theme icon color
-    val iconTint = MaterialTheme.colorScheme.onSurface
-    SideEffect {
-        colorState.value = iconTint
-    }
 
-    Box(
-        modifier = Modifier
-            .align(Alignment.Center)
-            .size(192.dp)
-            .clip(CircleShape)
-    ) {
-        Icon(
-            painter = painterResource(id = com.velord.resource.R.drawable.ic_launcher_foreground),
-            contentDescription = "Logo",
-            modifier = Modifier
-                .align(Alignment.Center)
-                .scale(2.65f)
-                .rotate(angleState.value)
-            ,
-            tint = tintColorState.value
-        )
-    }
+    val modifier = Modifier
+        .align(Alignment.Center)
+        .padding(bottom = 4.dp)
+    IconMultipleColor(
+        content = {
+            Box(
+                modifier = modifier
+                    .size(192.dp)
+                    .clip(CircleShape)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    contentDescription = "Logo",
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .scale(2.65f)
+                        .rotate(angleState.value)
+                )
+            }
+        },
+        tailoredForThemeContent = {
+            Box(
+                modifier = modifier
+            ) {
+                Image(
+                    painter = getIconPainter(),
+                    contentDescription = "Logo",
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .scale(2.65f)
+                        .rotate(angleState.value)
+                )
+            }
+        }
+    )
 }
+
+// If icon has ONLY ONE color need to use transition color
+@Composable
+private fun BoxScope.BrandIcon(colorState: State<Color>) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_brand),
+        contentDescription = "Brand logo",
+        modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .padding(bottom = 60.dp)
+            .size(width = 200.dp, height = 80.dp)
+
+        ,
+        tint = colorState.value
+    )
+}
+
 // If icon has several colors need to use animated visibility
 // as there is no animation between painters in Compose.
 @Composable
-private fun BoxScope.BrandIcon() {
+private fun BoxScope.IconMultipleColor(
+    content: @Composable AnimatedVisibilityScope.() -> Unit,
+    tailoredForThemeContent: @Composable AnimatedVisibilityScope.() -> Unit
+) {
     val visibleState = remember { mutableStateOf(false) }
     SideEffect {
         visibleState.value = true
     }
-    // Original brand icon color used by Splash Api
-    BrandIconAnimated(
+    // Original icon color used by Splash Api
+    IconAnimated(
         isVisible = visibleState.value.not(),
-        painter = getBrandIconPainter()
+        content = content
     )
-    // Our own brand icon based on current theme
-    BrandIconAnimated(
+    // Our own icon based on current theme
+    IconAnimated(
         isVisible = visibleState.value,
-        painter = getBrandIconPainter()
+        content = tailoredForThemeContent
     )
 }
 
 @Composable
-private fun BoxScope.BrandIconAnimated(
+private fun BoxScope.IconAnimated(
     isVisible: Boolean,
-    painter: Painter
+    content: @Composable AnimatedVisibilityScope.() -> Unit
 ) {
     AnimatedVisibility(
         visible = isVisible,
-        modifier = Modifier.align(Alignment.BottomCenter),
-        enter = fadeIn(initialAlpha = 1f),
-        exit = fadeOut(animationSpec = tween(durationMillis = 300))
+        modifier = Modifier.align(Alignment.Center),
+        enter = fadeIn(animationSpec = tween(durationMillis = 50, delayMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME / 4)),
+        exit = fadeOut(animationSpec = tween(durationMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME))
     ) {
-        Image(
-            painter = painter,
-            contentDescription = "Brand Logo",
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 60.dp)
-                .size(width = 200.dp, height = 80.dp),
-            contentScale = ContentScale.FillBounds,
-        )
+        content()
     }
 }
 
 @Composable
-private fun getBrandIconPainter(): Painter {
+private fun getIconPainter(): Painter {
     val themeConfig = LocalTheme.current
     val res = if (themeConfig.config.abideToOs)  {
         if (isSystemInDarkTheme()) {
-            com.velord.resource.R.drawable.ic_brand
+            R.drawable.ic_launcher_foreground_light
         } else {
-            com.velord.resource.R.drawable.ic_brand
+            R.drawable.ic_launcher_foreground_dark
         }
     } else {
         when (themeConfig.config.current) {
-            SpecialTheme.LIGHT -> com.velord.resource.R.drawable.ic_brand
-            SpecialTheme.DARK -> com.velord.resource.R.drawable.ic_brand
+            SpecialTheme.LIGHT -> R.drawable.ic_launcher_foreground_light
+            SpecialTheme.DARK -> R.drawable.ic_launcher_foreground_dark
         }
     }
     return painterResource(res)

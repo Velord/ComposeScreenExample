@@ -52,14 +52,14 @@ android {
         }
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
-            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations")
+            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Voyager")
         }
         named("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
-            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations")
+            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Voyager")
         }
     }
 

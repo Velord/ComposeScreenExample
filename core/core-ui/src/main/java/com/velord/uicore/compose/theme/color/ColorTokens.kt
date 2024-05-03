@@ -71,13 +71,13 @@ object ColorLightTokens {
     val Background: Color get() = Color(0xFFfafcff)
     val OnBackground: Color get() = Color(0xFF001f2a)
     // Surface
-    val Surface: Color get() = Color(0xFFfafcff)
+    val Surface: Color get() = Color(0xFFfafcff) // splash_background
     val SurfaceBright: Color = Color(0xFFFAFFFF)
     val SurfaceDim: Color = Color(0xFFAAAAAA)
     val OnSurface: Color get() = Color(0xFF001f2a) // splash_icon_brand
     val SurfaceVariant: Color get() = Color(0xFFe5e1ec)
     val OnSurfaceVariant: Color get() = Color(0xFF47464f)
-    val SurfaceTint: Color get() = Color(0xFF5A54A8) // splash_background
+    val SurfaceTint: Color get() = Color(0xFF5A54A8)
     val InverseSurface: Color get() = Color(0xFF003547)
     val InverseOnSurface: Color get() = Color(0xFFE1F4FF)
     // Surface Container
