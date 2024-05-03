@@ -52,14 +52,14 @@ android {
         }
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
-            buildConfigField("com.velord.composescreenexample.ui.main.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.NavigationLib.Destinations")
+            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations")
         }
         named("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
-            buildConfigField("com.velord.composescreenexample.ui.main.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.NavigationLib.Destinations")
+            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations")
         }
     }
 
@@ -140,6 +140,7 @@ dependencies {
     implementation(project(":ui:feature-demo-morph"))
     implementation(project(":ui:feature-flowsummator"))
     implementation(project(":ui:feature-settings"))
+    implementation(project(":ui:feature-splash"))
     // Module UI Widget
     implementation(project(":ui:widget-refreshableimage"))
     implementation(project(":ui:widget-counter"))
