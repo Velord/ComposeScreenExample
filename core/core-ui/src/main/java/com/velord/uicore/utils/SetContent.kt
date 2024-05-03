@@ -40,7 +40,7 @@ fun ComposeView.setContentWithTheme(
         val themeState: State<AndroidThemeConfig?> = themeViewModel.themeFlow
             .collectAsStateWithLifecycle()
 
-        val theme = themeState.value ?: AndroidThemeConfig.considerSystem()
+        val theme = themeState.value ?: AndroidThemeConfig.DEFAULT
         CompositionLocalProvider(LocalTheme provides theme) {
             val localThemeConfig = LocalTheme.current
             val isDark = if (localThemeConfig.config.abideToOs) {
@@ -59,8 +59,5 @@ fun ComposeView.setContentWithTheme(
         }
     }
 }
-
-@Composable
-private fun AndroidThemeConfig.Companion.considerSystem(): AndroidThemeConfig = DEFAULT
 
 val LocalTheme = staticCompositionLocalOf { AndroidThemeConfig.DEFAULT }

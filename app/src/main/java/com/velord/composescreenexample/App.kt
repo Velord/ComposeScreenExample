@@ -6,9 +6,13 @@ import com.velord.appstate.AppStateModule
 import com.velord.bottomnavigation.BottomNavigationModule
 import com.velord.camerarecording.CameraRecordingModule
 import com.velord.composescreenexample.ui.main.MainActivity
+import com.velord.composescreenexample.ui.main.navigation.featureBottomNavigationModule
+import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
+import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
 import com.velord.gateway.setting.SettingGatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
+import com.velord.splash.SplashViewModel
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
@@ -31,6 +35,7 @@ private val useCaseModule = module {
 
 private val viewModelModule = module {
     viewModelOf(::ThemeViewModel)
+    viewModelOf(::SplashViewModel)
 }
 
 @Module
