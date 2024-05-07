@@ -18,7 +18,7 @@ import androidx.navigation.fragment.NavHostFragment
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.generated.NavGraphs
+import com.ramcosta.composedestinations.generated.app.navgraphs.MainNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.composescreenexample.BuildConfig
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
 
                 setContentAfterSplash {
                     DestinationsNavHost(
-                        navGraph = NavGraphs.mainNavGraph,
+                        navGraph = MainNavGraph,
                         dependenciesContainerBuilder = {
                             dependency(SupremeNavigator(navController = navController))
                         }

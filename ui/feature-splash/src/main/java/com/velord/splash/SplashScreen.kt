@@ -44,7 +44,7 @@ import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.LocalTheme
 import com.velord.util.settings.SpecialTheme
 
-private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 2000
+private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 1000
 private const val ROTATE_AFTER = ANIMATION_TRANSITION_TO_CURRENT_THEME + 1000
 /*
 Splash screen is the most refined copy representation of the OS splash screen.
@@ -61,7 +61,7 @@ fun SplashScreen(
     viewModel: SplashViewModel,
     contentWhenAppIsReady: @Composable () -> Unit
 ) {
-    val isAppReadyState = viewModel.iaAppReadyFlow.collectAsStateWithLifecycle()
+    val isAppReadyState = viewModel.isAppReadyFlow.collectAsStateWithLifecycle()
 
     if (isAppReadyState.value) {
         contentWhenAppIsReady()

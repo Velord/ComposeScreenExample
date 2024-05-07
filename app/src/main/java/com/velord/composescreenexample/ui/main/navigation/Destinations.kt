@@ -14,13 +14,11 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.ExternalDestination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
-import com.ramcosta.composedestinations.generated.NavGraphs
-import com.ramcosta.composedestinations.generated.destinations.BottomNavigationDestinationsScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.CameraScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.DemoScreenDestination
+import com.ramcosta.composedestinations.generated.app.destinations.CameraScreenDestination
+import com.ramcosta.composedestinations.generated.app.destinations.DemoScreenDestination
+import com.ramcosta.composedestinations.generated.app.navgraphs.BottomNavigationNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
@@ -66,12 +64,16 @@ private const val MAIN_GRAPH = "main_nav_graph"
     visibility = CodeGenVisibility.INTERNAL
 )
 annotation class MainGraph {
-    @ExternalDestination<BottomNavigationDestinationsScreenDestination>(start = true)
-    companion object Includes
+//    @ExternalDestination<BottomNavigationDestinationsScreenDestination>(start = true)
+//    companion object Includes
 }
 
+@Destination<MainGraph>(start = true)
+@Composable
+fun FakeScreen() {}
+
 class SupremeNavigator(
-    private val navController: NavController
+    private val navController: NavController? = null
 ) : BottomNavigator {
 
     override fun getRoute(route: BottomNavigationDestination): DestinationSpec = when(route) {
@@ -80,12 +82,15 @@ class SupremeNavigator(
         BottomNavigationDestination.Settings -> DemoScreenDestination
     }
 
-    override fun getGraph(): NavHostGraphSpec = NavGraphs.bottomNavigationGraph
+    override fun getGraph(): NavHostGraphSpec = BottomNavigationNavGraph
 }
 
 private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
 @NavHostGraph(route = BOTTOM_NAVIGATION_GRAPH)
-annotation class BottomNavigationGraph
+annotation class BottomNavigationGraph {
+//    @ExternalDestination<DemoScreenDestination>()
+//    companion object Includes
+}
 
 @Composable
 private fun TestStackScreen(
