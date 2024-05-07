@@ -8,12 +8,12 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel : ViewModel() {
 
-    val iaAppReadyFlow = MutableStateFlow(false)
+    val isAppReadyFlow = MutableStateFlow(false)
 
     init {
         viewModelScope.launch {
-            delay(4000)
-            iaAppReadyFlow.value = true
+            delay(2000)
+            isAppReadyFlow.value = true
         }
     }
 }

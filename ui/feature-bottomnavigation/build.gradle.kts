@@ -60,6 +60,7 @@ dependencies {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")
+    arg("compose-destinations.moduleName", "moduleBottomNavigation")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

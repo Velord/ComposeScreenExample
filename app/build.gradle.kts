@@ -52,14 +52,14 @@ android {
         }
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
-            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Voyager")
+            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations")
         }
         named("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
-            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Voyager")
+            buildConfigField("com.velord.composescreenexample.ui.main.navigation.NavigationLib", "NAVIGATION_LIB", "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations")
         }
     }
 
@@ -169,6 +169,7 @@ dependencies {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")
+    arg("compose-destinations.moduleName", "moduleapp")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

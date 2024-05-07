@@ -58,7 +58,7 @@ enum class BottomNavigationDestination {
 
 @Destination<ExternalModuleGraph>()
 @Composable
-fun BottomNavigationDestinationsScreen(
+fun BottomNavigationDestination(
     navigator: BottomNavigator
 ) {
     val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
