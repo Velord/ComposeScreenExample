@@ -13,7 +13,7 @@ class BottomNavigationDestinationsVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeViewModel() {
 
-    val currentTabFlow = MutableStateFlow(BottomNavigationDestination.Demo)
+    val currentTabFlow = MutableStateFlow(BottomNavigationDestination.Camera)
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
     val finishAppEvent: MutableStateFlow<Boolean> = MutableStateFlow(false)
 

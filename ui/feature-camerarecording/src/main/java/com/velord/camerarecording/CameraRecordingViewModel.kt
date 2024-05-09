@@ -37,6 +37,7 @@ class CameraRecordingViewModel(
     val checkPermissionEvent = MutableSharedFlow<Unit>()
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager?>()
     val navigationEventJetpack = MutableSharedFlow<NavigationDataJetpack?>()
+    val navigationEventDestination = MutableSharedFlow<Unit>()
     // Adjustments
     val videoQualityFlow = MutableStateFlow(Quality.HIGHEST)
     val videoCameraSelectorFlow = MutableStateFlow(CameraSelector.DEFAULT_FRONT_CAMERA)
@@ -59,6 +60,7 @@ class CameraRecordingViewModel(
             val bundle = bundleOf(SETTINGS_SOURCE to SettingsSource.CameraRecording)
             val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment, bundle)
             navigationEventJetpack.emit(data)
+            navigationEventDestination.emit(Unit)
         }
     }
 

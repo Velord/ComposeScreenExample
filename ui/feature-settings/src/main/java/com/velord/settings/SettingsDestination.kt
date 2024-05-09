@@ -1,8 +1,21 @@
 package com.velord.settings
 
-//@Destination<ExternalModuleGraph>
-//@Composable
-//fun SettingsDestination() {
-//    val viewModel = koinViewModel<ThemeViewModel>()
-//    SettingsScreen(viewModel)
-//}
+import androidx.compose.runtime.Composable
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
+import com.velord.sharedviewmodel.ThemeViewModel
+import org.koin.androidx.compose.koinViewModel
+
+@Destination<ExternalModuleGraph>
+@Composable
+fun SettingsBottomGraphDestination() {
+    val viewModel = koinViewModel<ThemeViewModel>()
+    SettingsScreen(viewModel)
+}
+
+@Destination<ExternalModuleGraph>
+@Composable
+fun SettingsCameraRecordingGraphDestination() {
+    val viewModel = koinViewModel<ThemeViewModel>()
+    SettingsScreen(viewModel)
+}

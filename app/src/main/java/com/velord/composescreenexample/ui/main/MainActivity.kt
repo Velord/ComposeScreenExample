@@ -14,11 +14,13 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.fragment.NavHostFragment
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.generated.app.navgraphs.MainNavGraph
+import com.ramcosta.composedestinations.generated.navgraphs.MainNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
 import com.velord.bottomnavigation.BottomNavScreen
 import com.velord.composescreenexample.BuildConfig
@@ -147,6 +149,7 @@ class MainActivity : AppCompatActivity() {
                 isVisible = true
 
                 setContentAfterSplash {
+                    val navController: NavHostController = rememberNavController()
                     DestinationsNavHost(
                         navGraph = MainNavGraph,
                         dependenciesContainerBuilder = {

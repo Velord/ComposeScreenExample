@@ -10,6 +10,7 @@ import com.velord.composescreenexample.ui.main.navigation.featureBottomNavigatio
 import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
 import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
+import com.velord.feature.demo.DemoViewModel
 import com.velord.gateway.setting.SettingGatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashViewModel
@@ -36,6 +37,7 @@ private val useCaseModule = module {
 private val viewModelModule = module {
     viewModelOf(::ThemeViewModel)
     viewModelOf(::SplashViewModel)
+    viewModelOf(::DemoViewModel)
 }
 
 @Module
