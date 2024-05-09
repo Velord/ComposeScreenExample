@@ -6,25 +6,31 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
-import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.ExternalDestination
+import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
-import com.ramcosta.composedestinations.generated.app.destinations.CameraScreenDestination
-import com.ramcosta.composedestinations.generated.app.destinations.DemoScreenDestination
-import com.ramcosta.composedestinations.generated.app.navgraphs.BottomNavigationNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.generated.modulebottomnavigation.destinations.BottomNavigationDestinationDestination
+import com.ramcosta.composedestinations.generated.moduledemo.destinations.DemoDestinationDestination
+import com.ramcosta.composedestinations.generated.modulefeaturecamerarecording.destinations.CameraRecordingDestinationDestination
+import com.ramcosta.composedestinations.generated.modulefeaturesettings.destinations.SettingsBottomGraphDestinationDestination
+import com.ramcosta.composedestinations.generated.modulefeaturesettings.destinations.SettingsCameraRecordingGraphDestinationDestination
+import com.ramcosta.composedestinations.generated.navgraphs.BottomNavigationNavGraph
+import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
+import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.bottomnavigation.screen.BottomNavigationDestination
 import com.velord.bottomnavigation.screen.BottomNavigator
-import kotlin.random.Random
+import com.velord.camerarecording.CameraRecordingNavigator
+import com.velord.feature.demo.DemoDest
+import com.velord.feature.demo.DemoNavigator
 
 object DefaultTransitions : NavHostAnimatedDestinationStyle() {
 
@@ -64,69 +70,77 @@ private const val MAIN_GRAPH = "main_nav_graph"
     visibility = CodeGenVisibility.INTERNAL
 )
 annotation class MainGraph {
-//    @ExternalDestination<BottomNavigationDestinationsScreenDestination>(start = true)
-//    companion object Includes
+    @ExternalDestination<BottomNavigationDestinationDestination>(start = true)
+    companion object Includes
 }
 
-@Destination<MainGraph>(start = true)
-@Composable
-fun FakeScreen() {}
-
 class SupremeNavigator(
-    private val navController: NavController? = null
-) : BottomNavigator {
+    private val navController: NavHostController
+) : BottomNavigator, DemoNavigator, CameraRecordingNavigator {
 
     override fun getRoute(route: BottomNavigationDestination): DestinationSpec = when(route) {
-        BottomNavigationDestination.Camera -> CameraScreenDestination
-        BottomNavigationDestination.Demo -> DemoScreenDestination
-        BottomNavigationDestination.Settings -> DemoScreenDestination
+        BottomNavigationDestination.Camera -> CameraRecordingDestinationDestination
+        BottomNavigationDestination.Demo -> DemoDestinationDestination
+        BottomNavigationDestination.Settings -> SettingsBottomGraphDestinationDestination
     }
 
     override fun getGraph(): NavHostGraphSpec = BottomNavigationNavGraph
+
+    @Composable
+    override fun CreateDestinationsNavHostForBottom(
+        navController: NavHostController,
+        modifier: Modifier
+    ) {
+        DestinationsNavHost(
+            navController = navController,
+            navGraph = BottomNavigationNavGraph,
+            modifier = modifier,
+            dependenciesContainerBuilder = {
+                dependency(SupremeNavigator(navController = navController))
+            }
+        )
+    }
+
+    override fun goTo(dest: DemoDest) {
+        when(dest) {
+            DemoDest.Shape -> {
+                navController?.navigate("from_demoFragment_to_shapeDemoFragment")
+            }
+
+            DemoDest.Modifier -> {
+                navController?.navigate("from_demoFragment_to_modifierDemoFragment")
+            }
+
+            DemoDest.FlowSummator -> {
+                navController?.navigate("from_demoFragment_to_flowSummatorFragment")
+            }
+
+            DemoDest.Morph -> {
+                navController?.navigate("from_demoFragment_to_morphDemoFragment")
+            }
+        }
+    }
+
+    override fun goToSettingsFromCameraRecording() {
+        navController.toDestinationsNavigator().navigate(SettingsCameraRecordingGraphDestinationDestination)
+    }
 }
 
 private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
 @NavHostGraph(route = BOTTOM_NAVIGATION_GRAPH)
 annotation class BottomNavigationGraph {
-//    @ExternalDestination<DemoScreenDestination>()
-//    companion object Includes
+    @ExternalDestination<DemoDestinationDestination>()
+    @ExternalDestination<SettingsBottomGraphDestinationDestination>()
+    companion object Includes
 }
 
-@Composable
-private fun TestStackScreen(
-    number: Int,
-    title: String,
-    onClick: () -> Unit
-) {
-    Button(onClick = onClick) {
-        Text(text = "$title $number")
-    }
-}
-
-@Destination<BottomNavigationGraph>(start = true)
-@Composable
-fun CameraScreen(
-    navigator: DestinationsNavigator,
-    screenNumber: Int = 0,
-) {
-    val digit = remember {
-        Random.nextInt(0, 100)
-    }
-    TestStackScreen(number = screenNumber, title = "Camera") {
-        navigator.navigate(CameraScreenDestination(digit))
-    }
-}
-
-@Destination<BottomNavigationGraph>()
-@Composable
-fun DemoScreen(
-    navigator: DestinationsNavigator,
-    screenNumber: Int = 0,
-) {
-    val digit = remember {
-        Random.nextInt(0, 100)
-    }
-    TestStackScreen(number = screenNumber, title = "Demo") {
-        navigator.navigate(DemoScreenDestination(digit))
-    }
+private const val CAMERA_RECORDING_GRAPH = "camera_recording_graph"
+@NavGraph<BottomNavigationGraph>(
+    route = CAMERA_RECORDING_GRAPH,
+    start = true
+)
+annotation class CameraRecordingGraph {
+    @ExternalDestination<CameraRecordingDestinationDestination>(start = true)
+    @ExternalDestination<SettingsBottomGraphDestinationDestination>()
+    companion object Includes
 }

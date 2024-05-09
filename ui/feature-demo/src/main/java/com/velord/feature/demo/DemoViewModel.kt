@@ -11,12 +11,14 @@ class DemoViewModel : CoroutineScopeViewModel() {
 
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager>()
     val navigationEventJetpack = MutableSharedFlow<NavigationDataJetpack>()
+    val navigationEventDestination = MutableSharedFlow<DemoDest>()
 
     fun onOpenShape() = launch {
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreen.Demo.Shape))
         navigationEventJetpack.emit(
             NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_shapeDemoFragment)
         )
+        navigationEventDestination.emit(DemoDest.Shape)
     }
 
     fun onOpenModifier() = launch {
@@ -24,6 +26,7 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventJetpack.emit(
             NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_modifierDemoFragment)
         )
+        navigationEventDestination.emit(DemoDest.Modifier)
     }
 
     fun onOpenSummator() = launch {
@@ -31,6 +34,7 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventJetpack.emit(
             NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_flowSummatorFragment)
         )
+        navigationEventDestination.emit(DemoDest.FlowSummator)
     }
 
     fun onOpenMorph() = launch {
@@ -38,5 +42,6 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventJetpack.emit(
             NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_morphDemoFragment)
         )
+        navigationEventDestination.emit(DemoDest.Morph)
     }
 }

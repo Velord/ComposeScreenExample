@@ -106,7 +106,7 @@ private fun Content(
             }
             if (themeSwitcher.isSystemDynamicColorAvailable.not()) {
                 val android11Str = stringResource(id = R.string.not_available_on_android_11)
-                disabledText.append(android11Str)
+                disabledText.append("\n" + android11Str)
             }
             ThemeSwitcher(
                 title = stringResource(id = R.string.use_system_dynamic_theme),

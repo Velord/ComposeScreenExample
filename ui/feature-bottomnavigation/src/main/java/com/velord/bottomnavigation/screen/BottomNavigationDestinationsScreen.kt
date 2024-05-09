@@ -2,6 +2,7 @@ package com.velord.bottomnavigation.screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -33,7 +34,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
 import com.ramcosta.composedestinations.spec.DestinationSpec
@@ -48,6 +48,10 @@ import org.koin.androidx.compose.koinViewModel
 interface BottomNavigator {
     fun getRoute(route: BottomNavigationDestination): DestinationSpec
     fun getGraph(): NavHostGraphSpec
+    @Composable fun CreateDestinationsNavHostForBottom(
+        navController: NavHostController,
+        modifier: Modifier
+    )
 }
 
 enum class BottomNavigationDestination {
@@ -85,6 +89,12 @@ fun BottomNavigationDestination(
         navigator = navigator,
         controller = navController,
         tab = tabState.value,
+        createNavHost = {
+            navigator.CreateDestinationsNavHostForBottom(
+                navController = navController,
+                modifier = Modifier.padding(it).fillMaxSize()
+            )
+        },
         getNavigationItems = viewModel::getNavigationItems,
         onTabClick = viewModel::onTabClick,
     )
@@ -116,6 +126,7 @@ private fun Content(
     navigator: BottomNavigator,
     controller: NavHostController,
     tab: BottomNavigationDestination,
+    createNavHost: @Composable (PaddingValues) -> Unit,
     getNavigationItems: () -> List<BottomNavigationDestination>,
     onTabClick: (BottomNavigationDestination) -> Unit,
 ) {
@@ -130,11 +141,7 @@ private fun Content(
             )
         },
         content = {
-            DestinationsNavHost(
-                navController = controller,
-                navGraph = navigator.getGraph(),
-                modifier = Modifier.padding(it).fillMaxSize()
-            )
+            createNavHost(it)
         },
     )
 }
