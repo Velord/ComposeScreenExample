@@ -59,7 +59,7 @@ class SettingsFragment : Fragment() {
 }
 
 @Composable
-internal fun SettingsScreen(viewModel: ThemeViewModel) {
+fun SettingsScreen(viewModel: ThemeViewModel) {
     Content(
         onChangeAbideToOsTheme = { viewModel.onSwitchToOsTheme() },
         onChangeSystemTheme = { viewModel.onChangeDynamicTheme() },

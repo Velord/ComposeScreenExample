@@ -4,6 +4,7 @@ import androidx.navigation.NavDestination
 import com.velord.bottomnavigation.BottomNavEventService
 import com.velord.bottomnavigation.screen.BottomNavigationDestination
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
@@ -15,7 +16,7 @@ class BottomNavigationDestinationsVM(
 
     val currentTabFlow = MutableStateFlow(BottomNavigationDestination.Camera)
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
-    val finishAppEvent: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val finishAppEvent = MutableSharedFlow<Unit>()
 
     fun onTabClick(newTab: BottomNavigationDestination) {
         if (newTab == currentTabFlow.value) return
@@ -23,14 +24,30 @@ class BottomNavigationDestinationsVM(
     }
 
     fun onBackDoubleClick() = launch {
-        finishAppEvent.emit(true)
+        finishAppEvent.emit(Unit)
     }
 
     fun getNavigationItems() = BottomNavigationDestination.entries
 
-    fun updateBackHandling(dest: NavDestination?) {
-       // val isStart = currentNavigationDestination.isCurrentStartDestination(graphBackHandlerToTab)
-        val newState = backHandlingStateFlow.value.copy(isAtStartGraphDestination = false)
+    fun updateBackHandling(
+        startDestinationRoster: List<String?>,
+        dest: NavDestination?
+    ) {
+        val isStart = startDestinationRoster.contains(dest?.route)
+        val newState = backHandlingStateFlow.value.copy(isAtStartGraphDestination = isStart)
+        bottomNavEventService.updateBackHandlingState(newState)
+    }
+
+    fun graphCompletedHandling() {
+        changeGrantedToProceed(true)
+    }
+
+    fun graphTakeResponsibility() {
+        changeGrantedToProceed(false)
+    }
+
+    private fun changeGrantedToProceed(isGranted: Boolean) {
+        val newState = backHandlingStateFlow.value.copy(isGrantedToProceed = isGranted)
         bottomNavEventService.updateBackHandlingState(newState)
     }
 }

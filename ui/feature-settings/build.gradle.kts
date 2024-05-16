@@ -48,9 +48,6 @@ dependencies {
     implementation(libs.bundles.compose.all)
     // Navigation
     implementation(libs.bundles.voyager)
-    // Navigation Compose Destinations
-    implementation(libs.bundles.compose.destinations)
-    ksp(libs.compose.destinations.ksp)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)
@@ -59,5 +56,4 @@ dependencies {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")
-    arg("compose-destinations.moduleName", "moduleFeatureSettings")
 }

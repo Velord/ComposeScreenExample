@@ -26,6 +26,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
+interface CameraRecordingNavigator {
+    fun goToSettingsFromCameraRecording()
+}
+
 @KoinViewModel
 class CameraRecordingViewModel(
     private val context: Context,
