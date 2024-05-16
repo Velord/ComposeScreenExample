@@ -1,6 +1,8 @@
 package com.velord.bottomnavigation.screen
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.collection.forEach
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +24,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -31,22 +35,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
-import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
 import com.velord.util.context.getActivity
+import kotlinx.coroutines.flow.filterNotNull
 import org.koin.androidx.compose.koinViewModel
 
 interface BottomNavigator {
-    fun getRoute(route: BottomNavigationDestination): DestinationSpec
+    fun getRoute(route: BottomNavigationDestination): String
     fun getGraph(): NavHostGraphSpec
     @Composable fun CreateDestinationsNavHostForBottom(
         navController: NavHostController,
@@ -69,20 +75,37 @@ fun BottomNavigationDestination(
 
     val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
-    val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = false)
+    val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = null)
 
     val context = LocalContext.current
     LaunchedEffect(finishAppEventState) {
-        if (finishAppEventState.value) {
-            context.getActivity()?.finish()
-        }
+        snapshotFlow { finishAppEventState.value }
+            .filterNotNull()
+            .collect {
+                context.getActivity()?.finish()
+            }
     }
 
+    SideEffect {
+        // When the graph is completed, we can proceed with the back handling
+        // Current logic is simple, we just allow the back handling
+        viewModel.graphCompletedHandling()
+    }
     val navController = rememberNavController()
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry.value?.destination
     LaunchedEffect(currentDestination) {
-        viewModel.updateBackHandling(currentDestination)
+        val nodes = mutableListOf<NavDestination>()
+        navController.graph.nodes.forEach { _, value ->
+            nodes.add(value)
+        }
+        val startDestinationRoster = nodes.map {
+            when(it) {
+                is NavGraph -> it.startDestinationRoute
+                else -> it.route
+            }
+        }
+        viewModel.updateBackHandling(startDestinationRoster, currentDestination)
     }
 
     Content(
@@ -92,13 +115,16 @@ fun BottomNavigationDestination(
         createNavHost = {
             navigator.CreateDestinationsNavHostForBottom(
                 navController = navController,
-                modifier = Modifier.padding(it).fillMaxSize()
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxSize()
             )
         },
         getNavigationItems = viewModel::getNavigationItems,
         onTabClick = viewModel::onTabClick,
     )
 
+    Log.d("@@@", "startRouteRoster: ${backHandlingState.value}")
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
@@ -168,11 +194,11 @@ private fun BottomBar(
                     if (isSelected) {
                         // When we click again on a bottom bar item and it was already selected
                         // we want to pop the back stack until the initial destination of this bottom bar item
-                        navController.popBackStack(navigator.getRoute(item).route, false)
+                        navController.popBackStack(navigator.getRoute(item), false)
                         return@NavigationBarItem
                     }
 
-                    navController.navigate(navigator.getRoute(item).route) {
+                    navController.navigate(navigator.getRoute(item)) {
                         // Pop up to the root of the graph to
                         // avoid building up a large stack of destinations
                         // on the back stack as users select items

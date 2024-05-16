@@ -58,10 +58,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.velord.bottomnavigation.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.uicore.dialog.checkRecordVideoPermission
+import com.velord.uicore.utils.permission.CheckCameraAndAudioRecordPermission
+import com.velord.uicore.utils.permission.toPermissionState
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import com.velord.util.permission.AndroidPermissionState
@@ -149,14 +152,32 @@ class CameraRecordingFragment : Fragment() {
     }
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
-internal fun CameraRecordingScreen(viewModel: CameraRecordingViewModel) {
+fun CameraRecordingScreen(
+    viewModel: CameraRecordingViewModel,
+    needToHandlePermission: Boolean = false
+) {
     val permissionCameraState = viewModel.permissionCameraFlow.collectAsStateWithLifecycle()
     val permissionAudioState = viewModel.permissionAudioFlow.collectAsStateWithLifecycle()
     val qualityState = viewModel.videoQualityFlow.collectAsStateWithLifecycle()
     val cameraSelectorState = viewModel.videoCameraSelectorFlow.collectAsStateWithLifecycle()
     val isAudioEnabledState = viewModel.isAudioEnabledFlow.collectAsStateWithLifecycle()
     val isRecordingStartedState = viewModel.isRecordingStartedFlow.collectAsStateWithLifecycle()
+
+    if (needToHandlePermission) {
+        CheckCameraAndAudioRecordPermission(
+            triggerCheckEvent = viewModel.checkPermissionEvent,
+            onCameraUpdateState = {
+                val state = it.status.toPermissionState()
+                viewModel.updateCameraPermissionState(state)
+            },
+            onMicroUpdateState = {
+                val state = it.status.toPermissionState()
+                viewModel.updateAudioPermissionState(state)
+            }
+        )
+    }
 
     Log.d("CameraRecordingFragment", "permissionCameraState: ${permissionCameraState.value}")
     Log.d("CameraRecordingFragment", "permissionAudioState: ${permissionAudioState.value}")

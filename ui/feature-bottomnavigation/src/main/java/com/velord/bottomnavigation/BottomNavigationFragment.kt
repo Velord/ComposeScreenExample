@@ -54,7 +54,7 @@ fun Fragment.addTestCallback(
     }
 }
 
-class BottomNavigationFragment : Fragment(com.velord.bottomnavigation.R.layout.fragment_bottom_navigation) {
+class BottomNavigationFragment : Fragment(R.layout.fragment_bottom_navigation) {
 
     private val navController by lazy {
         childFragmentManager.fragments.first().findNavController()

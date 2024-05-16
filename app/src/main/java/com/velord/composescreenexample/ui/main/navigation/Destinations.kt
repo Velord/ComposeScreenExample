@@ -7,30 +7,41 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
+import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalDestination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
+import com.ramcosta.composedestinations.generated.destinations.BottomNavigationSettingsDestinationDestination
+import com.ramcosta.composedestinations.generated.destinations.CameraRecordingSettingsDestinationDestination
+import com.ramcosta.composedestinations.generated.destinations.DemoDestinationDestination
 import com.ramcosta.composedestinations.generated.modulebottomnavigation.destinations.BottomNavigationDestinationDestination
-import com.ramcosta.composedestinations.generated.moduledemo.destinations.DemoDestinationDestination
-import com.ramcosta.composedestinations.generated.modulefeaturecamerarecording.destinations.CameraRecordingDestinationDestination
-import com.ramcosta.composedestinations.generated.modulefeaturesettings.destinations.SettingsBottomGraphDestinationDestination
-import com.ramcosta.composedestinations.generated.modulefeaturesettings.destinations.SettingsCameraRecordingGraphDestinationDestination
 import com.ramcosta.composedestinations.generated.navgraphs.BottomNavigationNavGraph
+import com.ramcosta.composedestinations.generated.navgraphs.CameraRecordingNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
-import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.bottomnavigation.screen.BottomNavigationDestination
 import com.velord.bottomnavigation.screen.BottomNavigator
 import com.velord.camerarecording.CameraRecordingNavigator
+import com.velord.camerarecording.CameraRecordingScreen
+import com.velord.camerarecording.CameraRecordingViewModel
 import com.velord.feature.demo.DemoDest
 import com.velord.feature.demo.DemoNavigator
+import com.velord.feature.demo.DemoScreen
+import com.velord.feature.demo.DemoViewModel
+import com.velord.settings.SettingsScreen
+import com.velord.sharedviewmodel.ThemeViewModel
+import kotlinx.coroutines.flow.filterNotNull
+import org.koin.androidx.compose.koinViewModel
 
 object DefaultTransitions : NavHostAnimatedDestinationStyle() {
 
@@ -78,10 +89,10 @@ class SupremeNavigator(
     private val navController: NavHostController
 ) : BottomNavigator, DemoNavigator, CameraRecordingNavigator {
 
-    override fun getRoute(route: BottomNavigationDestination): DestinationSpec = when(route) {
-        BottomNavigationDestination.Camera -> CameraRecordingDestinationDestination
-        BottomNavigationDestination.Demo -> DemoDestinationDestination
-        BottomNavigationDestination.Settings -> SettingsBottomGraphDestinationDestination
+    override fun getRoute(route: BottomNavigationDestination): String = when(route) {
+        BottomNavigationDestination.Camera -> CameraRecordingNavGraph.route
+        BottomNavigationDestination.Demo -> DemoDestinationDestination.route
+        BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination.route
     }
 
     override fun getGraph(): NavHostGraphSpec = BottomNavigationNavGraph
@@ -122,25 +133,68 @@ class SupremeNavigator(
     }
 
     override fun goToSettingsFromCameraRecording() {
-        navController.toDestinationsNavigator().navigate(SettingsCameraRecordingGraphDestinationDestination)
+        navController.toDestinationsNavigator().navigate(
+            CameraRecordingSettingsDestinationDestination
+        )
     }
 }
 
 private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
 @NavHostGraph(route = BOTTOM_NAVIGATION_GRAPH)
-annotation class BottomNavigationGraph {
-    @ExternalDestination<DemoDestinationDestination>()
-    @ExternalDestination<SettingsBottomGraphDestinationDestination>()
-    companion object Includes
-}
+annotation class BottomNavigationGraph
 
 private const val CAMERA_RECORDING_GRAPH = "camera_recording_graph"
 @NavGraph<BottomNavigationGraph>(
     route = CAMERA_RECORDING_GRAPH,
     start = true
 )
-annotation class CameraRecordingGraph {
-    @ExternalDestination<CameraRecordingDestinationDestination>(start = true)
-    @ExternalDestination<SettingsBottomGraphDestinationDestination>()
-    companion object Includes
+annotation class CameraRecordingGraph
+
+@Destination<BottomNavigationGraph>
+@Destination<CameraRecordingGraph>
+@Composable
+fun SettingsDestination() {
+    val viewModel = koinViewModel<ThemeViewModel>()
+    SettingsScreen(viewModel)
+}
+
+@Destination<CameraRecordingGraph>(start = true)
+@Composable
+fun CameraRecordingDestination(
+    navigator: CameraRecordingNavigator
+) {
+    val viewModel = koinViewModel<CameraRecordingViewModel>()
+
+    val navigationState = viewModel.navigationEventDestination
+        .collectAsStateWithLifecycle(initialValue = null)
+
+    LaunchedEffect(key1 = navigationState) {
+        snapshotFlow { navigationState.value }
+            .filterNotNull()
+            .collect {
+                navigator.goToSettingsFromCameraRecording()
+            }
+    }
+
+    CameraRecordingScreen(viewModel, true)
+}
+
+@Destination<BottomNavigationGraph>
+@Composable
+fun DemoDestination(
+    navigator: DemoNavigator
+) {
+    val viewModel = koinViewModel<DemoViewModel>()
+    val destinationEventState = viewModel.navigationEventDestination
+        .collectAsStateWithLifecycle(initialValue = null)
+
+    LaunchedEffect(key1 = destinationEventState) {
+        snapshotFlow { destinationEventState.value }
+            .filterNotNull()
+            .collect {
+                navigator.goTo(it)
+            }
+    }
+
+    DemoScreen(viewModel)
 }
