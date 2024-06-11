@@ -86,6 +86,8 @@ androidxGamesFramePacing = "2.1.0"
 androidxGamesMemoryAdvice = "2.0.1"
 androidxGamesTextInput = "3.0.3"
 androidxGamesPerformanceTuner = "2.0.0-beta01"
+## G
+androidxGmsAuth = "21.2.0"
 ## Glance
 androidxGlance = "1.1.0-beta02"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha05"
@@ -214,6 +216,8 @@ voyager = "1.1.0-alpha02"
 velordMultipleBackstack = "0.5.9.1"
 # Code quality
 detekt = "1.23.5"
+junit = "4.13.2"
+material = "1.12.0"
 
 [libraries]
 # AndroidX -----------------------------------------------------------------------------------------
@@ -243,6 +247,7 @@ androidx-dynamicanimation-ktx = { module = "androidx.dynamicanimation:dynamicani
 androidx-enterprise = { module = "androidx.enterprise:enterprise-feedback", version.ref = "androidxEnterprise" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragment" }
+androidx-gms-auth = { module = "com.google.android.gms:play-services-auth", version = "androidxGmsAuth" }
 androidx-gridlayout = { module = "androidx.gridlayout:gridlayout", version.ref = "androidxGridlayout" }
 androidx-percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref = "androidxPercentLayout" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreference" }
@@ -552,6 +557,8 @@ voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sh
 voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 # Do not mix testing library with implementation in one bundle. Create separate bundle for testing library
@@ -584,6 +591,7 @@ androidx-core = [
 ]
 # AndroidX Credentials
 androidx-credentials = ["androidx-credentials", "androidx-credentials-below13"]
+androidx-credentials-all = ["androidx-credentials", "androidx-credentials-below13", "androidx-gms-auth"]
 # AndroidX CustomView
 androidx-customview = ["androidx-customview", "androidx-customview-pollingcontainer"]
 # AndroidX Emoji
@@ -794,6 +802,7 @@ androidx-all = [
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
     "androidx-enterprise", "androidx-exifinterface",
     "androidx-fragment-ktx",
+    "androidx-gms-auth",
     "androidx-gridlayout",
     "androidx-media3-exoplayer",
     "androidx-percentlayout", "androidx-preference-ktx",

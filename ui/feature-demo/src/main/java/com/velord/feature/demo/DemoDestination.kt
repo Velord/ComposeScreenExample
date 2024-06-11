@@ -4,7 +4,8 @@ enum class DemoDest {
     Shape,
     Modifier,
     FlowSummator,
-    Morph
+    Morph,
+    HintPhoneNumber
 }
 
 interface DemoNavigator {

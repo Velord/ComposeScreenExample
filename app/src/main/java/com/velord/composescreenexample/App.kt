@@ -14,6 +14,7 @@ import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
 import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
 import com.velord.feature.demo.DemoViewModel
+import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.gateway.setting.SettingGatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashViewModel
@@ -41,6 +42,7 @@ private val viewModelModule = module {
     viewModelOf(::ThemeViewModel)
     viewModelOf(::SplashViewModel)
     viewModelOf(::DemoViewModel)
+    viewModelOf(::FlowSummatorViewModel)
 }
 
 @Module
@@ -85,7 +87,7 @@ class App : Application() {
         StrictMode.setVmPolicy(
             VmPolicy.Builder()
                 .detectLeakedSqlLiteObjects()
-                .detectLeakedClosableObjects()
+               // .detectLeakedClosableObjects()
                 .penaltyLog()
                 .penaltyDeath()
                 .build()

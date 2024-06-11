@@ -17,9 +17,11 @@ include(":domain:usecase-setting")
 // UI
 include(":ui:sharedviewmodel")
 // UI Feature
-include(":ui:feature-demo")
+include(":ui:feature-splash")
 include(":ui:feature-camerarecording")
 include(":ui:feature-bottomnavigation")
+include(":ui:feature-demo-hintphonenumber")
+include(":ui:feature-demo")
 include(":ui:feature-demo-shape")
 include(":ui:feature-demo-modifier")
 include(":ui:feature-demo-morph")
@@ -42,4 +44,3 @@ dependencyResolutionManagement {
         }
     }
 }
-include(":ui:feature-splash")

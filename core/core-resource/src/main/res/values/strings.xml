@@ -19,6 +19,7 @@
     <string name="open_modifier_demo">Open Modifier Demo</string>
     <string name="open_flow_summator">Open Flow Summator</string>
     <string name="open_morph_demo">Open Morph Demo</string>
+    <string name="open_hint_phone_number">Open Hint Phone Number</string>
     <string name="flow_summator">Flow Summator</string>
     <string name="launch">Launch</string>
     <string name="please_enter_the_number">Please, enter the number</string>
@@ -59,4 +60,6 @@
     <string name="downloaded_from">Downloaded from:\n%s</string>
     <string name="rear">Rear</string>
     <string name="front">Front</string>
+    <string name="waiting">Waiting</string>
+    <string name="invoke_again">Invoke again</string>
 </resources>

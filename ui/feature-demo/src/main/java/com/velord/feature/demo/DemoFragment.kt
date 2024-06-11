@@ -71,7 +71,8 @@ fun DemoScreen(viewModel: DemoViewModel) {
         onOpenShape = viewModel::onOpenShape,
         onOpenModifier = viewModel::onOpenModifier,
         onOpenSummator = viewModel::onOpenSummator,
-        onOpenMorph = viewModel::onOpenMorph
+        onOpenMorph = viewModel::onOpenMorph,
+        onOpenHintPhoneNumber = viewModel::onOpenHintPhoneNumber
     )
 }
 
@@ -80,7 +81,8 @@ private fun Content(
     onOpenShape: () -> Unit,
     onOpenModifier: () -> Unit,
     onOpenSummator: () -> Unit,
-    onOpenMorph: () -> Unit
+    onOpenMorph: () -> Unit,
+    onOpenHintPhoneNumber: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -93,6 +95,7 @@ private fun Content(
         OpenButton(text = stringResource(id = R.string.open_modifier_demo), onClick = onOpenModifier)
         OpenButton(text = stringResource(id = R.string.open_flow_summator), onClick = onOpenSummator)
         OpenButton(text = stringResource(id = R.string.open_morph_demo), onClick = onOpenMorph)
+        OpenButton(text = stringResource(id = R.string.open_hint_phone_number), onClick = onOpenHintPhoneNumber)
     }
 }
 
@@ -125,6 +128,7 @@ private fun DemoPreview() {
         onOpenShape = {},
         onOpenModifier = {},
         onOpenSummator = {},
-        onOpenMorph = {}
+        onOpenMorph = {},
+        onOpenHintPhoneNumber = {}
     )
 }
