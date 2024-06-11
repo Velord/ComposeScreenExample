@@ -1,6 +1,9 @@
 package com.velord.composescreenexample
 
 import android.app.Application
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.os.StrictMode.VmPolicy
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import com.velord.appstate.AppStateModule
 import com.velord.bottomnavigation.BottomNavigationModule
@@ -69,5 +72,23 @@ class App : Application() {
             modules(useCaseModule)
             modules(viewModelModule)
         }
+
+        StrictMode.setThreadPolicy(
+            ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyFlashScreen()
+                .penaltyLog()
+                .build()
+        )
+        StrictMode.setVmPolicy(
+            VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build()
+        )
     }
 }
