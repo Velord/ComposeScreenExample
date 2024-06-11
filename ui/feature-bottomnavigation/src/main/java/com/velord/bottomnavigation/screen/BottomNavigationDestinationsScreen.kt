@@ -116,7 +116,7 @@ fun BottomNavigationDestination(
             navigator.CreateDestinationsNavHostForBottom(
                 navController = navController,
                 modifier = Modifier
-                    .padding(it)
+                    .padding(bottom = it.calculateBottomPadding())
                     .fillMaxSize()
             )
         },

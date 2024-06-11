@@ -83,10 +83,10 @@ fun CheckCameraAndAudioRecordPermission(
 @Composable
 private fun ObserveTrigger(
     triggerCheckEvent: Flow<Unit?>,
-    ons: () -> Unit
+    on: () -> Unit
 ) {
     val checkPermissionTriggerState = triggerCheckEvent.simulateTriggerStateAsSharedFlow(before = {})
     if (checkPermissionTriggerState.value != null) {
-        ons()
+        on()
     }
 }

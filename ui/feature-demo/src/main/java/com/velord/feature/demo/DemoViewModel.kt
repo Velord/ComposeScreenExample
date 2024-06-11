@@ -44,4 +44,13 @@ class DemoViewModel : CoroutineScopeViewModel() {
         )
         navigationEventDestination.emit(DemoDest.Morph)
     }
+
+    fun onOpenHintPhoneNumber() = launch {
+//        TODO: Add for Voyager and Jetpack
+//        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreen.Demo.HintPhoneNumber))
+//        navigationEventJetpack.emit(
+//            NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_hintPhoneNumberFragment)
+//        )
+        navigationEventDestination.emit(DemoDest.HintPhoneNumber)
+    }
 }
