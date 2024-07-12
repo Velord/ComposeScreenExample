@@ -1,17 +1,20 @@
-package com.velord.bottomnavigation
+package com.velord.bottomnavigation.viewmodel
 
 import cafe.adriel.voyager.core.screen.Screen
+import com.velord.bottomnavigation.BottomNavScreen
+import com.velord.bottomnavigation.BottomNavigationTab
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class BottomNavViewModelVoyager : CoroutineScopeViewModel() {
+class BottomNavigationVoyagerVM : CoroutineScopeViewModel() {
 
     val currentTabFlow = MutableStateFlow<BottomNavigationTab>(BottomNavigationTab.Camera)
     val isBackHandlingEnabledFlow = MutableStateFlow(true)
-    val finishAppEvent = MutableStateFlow(false)
+    val finishAppEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
 
     fun getNavigationItems(): List<BottomNavigationTab> = BottomNavigationTab::class
         .sealedSubclasses

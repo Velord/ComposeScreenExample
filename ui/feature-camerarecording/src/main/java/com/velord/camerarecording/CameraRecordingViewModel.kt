@@ -26,8 +26,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
+interface CameraRecordingNavigator {
+    fun goToSettingsFromCameraRecording()
+}
+
 @KoinViewModel
-class CameraRecordingViewModel constructor(
+class CameraRecordingViewModel(
     private val context: Context,
 ) : CoroutineScopeViewModel() {
     // Permission
@@ -37,6 +41,7 @@ class CameraRecordingViewModel constructor(
     val checkPermissionEvent = MutableSharedFlow<Unit>()
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager?>()
     val navigationEventJetpack = MutableSharedFlow<NavigationDataJetpack?>()
+    val navigationEventDestination = MutableSharedFlow<Unit>()
     // Adjustments
     val videoQualityFlow = MutableStateFlow(Quality.HIGHEST)
     val videoCameraSelectorFlow = MutableStateFlow(CameraSelector.DEFAULT_FRONT_CAMERA)
@@ -59,6 +64,7 @@ class CameraRecordingViewModel constructor(
             val bundle = bundleOf(SETTINGS_SOURCE to SettingsSource.CameraRecording)
             val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment, bundle)
             navigationEventJetpack.emit(data)
+            navigationEventDestination.emit(Unit)
         }
     }
 

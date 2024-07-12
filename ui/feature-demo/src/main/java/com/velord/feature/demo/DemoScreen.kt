@@ -3,17 +3,17 @@ package com.velord.feature.demo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import org.koin.androidx.compose.koinViewModel
 
 object DemoScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel = viewModel<DemoViewModel>()
+        val viewModel = koinViewModel<DemoViewModel>()
         val navigationEvent = viewModel.navigationEventVoyager.collectAsStateWithLifecycle(initialValue = null)
 
         val navigator = LocalNavigator.currentOrThrow

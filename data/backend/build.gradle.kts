@@ -33,7 +33,7 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":data:datastore"))
     // Templates
-    implementation(libs.androidx.core)
+    implementation(libs.androidx.core.ktx)
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.network.all)
 }

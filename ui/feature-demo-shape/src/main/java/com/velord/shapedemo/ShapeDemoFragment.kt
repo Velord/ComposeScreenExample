@@ -29,7 +29,7 @@ class ShapeDemoFragment : Fragment() {
 }
 
 @Composable
-internal fun ShapeDemoScreen() {
+fun ShapeDemoScreen() {
     Content()
 }
 

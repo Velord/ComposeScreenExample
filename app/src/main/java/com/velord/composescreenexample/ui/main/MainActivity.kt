@@ -5,29 +5,32 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.fragment.NavHostFragment
-import cafe.adriel.voyager.core.registry.screenModule
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.generated.navgraphs.MainNavGraph
+import com.ramcosta.composedestinations.navigation.dependency
 import com.velord.bottomnavigation.BottomNavScreen
-import com.velord.camerarecording.CameraRecordingScreen
 import com.velord.composescreenexample.BuildConfig
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
-import com.velord.composescreenexample.ui.compose.screen.TestScreen
-import com.velord.feature.demo.DemoScreen
-import com.velord.flowsummator.FlowSummatorScreen
-import com.velord.modifierdemo.ModifierDemoScreen
-import com.velord.navigation.SharedScreen
-import com.velord.settings.SettingsScreen
-import com.velord.shapedemo.ShapeDemoScreen
+import com.velord.composescreenexample.ui.main.navigation.NavigationLib
+import com.velord.composescreenexample.ui.main.navigation.SupremeNavigator
 import com.velord.sharedviewmodel.ThemeViewModel
+import com.velord.splash.SplashScreen
+import com.velord.splash.SplashViewModel
 import com.velord.uicore.utils.setContentWithTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -44,40 +47,11 @@ class MainActivity : AppCompatActivity() {
             putExtra(NAVIGATION_EXTRA, bundle)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
-
-        internal val featureMainModule = screenModule {
-            register<SharedScreen.Test> {
-                TestScreen(it.title, it.modifier, it.onClick)
-            }
-        }
-
-        internal val featureBottomNavigationModule = screenModule {
-            register<SharedScreen.BottomNavigationTab.Camera> {
-               CameraRecordingScreen
-            }
-            register<SharedScreen.BottomNavigationTab.Demo> {
-                DemoScreen
-            }
-            register<SharedScreen.BottomNavigationTab.Settings> {
-                SettingsScreen
-            }
-        }
-
-        internal val featureDemoModule = screenModule {
-            register<SharedScreen.Demo.Shape> {
-                ShapeDemoScreen
-            }
-            register<SharedScreen.Demo.Modifier> {
-                ModifierDemoScreen
-            }
-            register<SharedScreen.Demo.FlowSummator> {
-                FlowSummatorScreen
-            }
-        }
     }
 
-    private val viewModel: MainViewModel by viewModel<MainViewModel>()
+    private val viewModel: MainViewModel by viewModel()
     private val themeViewModel: ThemeViewModel by viewModel()
+    private val splashViewModel: SplashViewModel by viewModel()
     private var binding: ActivityMainBinding? = null
 
     override fun onDestroy() {
@@ -86,6 +60,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -117,11 +93,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun ComposeView.setContentAfterSplash(content: @Composable ComposeView.() -> Unit) {
+        setContentWithTheme {
+            SplashScreen(viewModel = splashViewModel) {
+                content()
+            }
+        }
+    }
+
     private fun setNavGraph() {
-        if (BuildConfig.USE_VOYAGER) {
-            setNavGraphViaVoyager()
-        } else {
-            setNavGraphViaJetpack()
+        when(BuildConfig.NAVIGATION_LIB) {
+            NavigationLib.Voyager -> setNavGraphViaVoyager()
+            NavigationLib.Jetpack -> setNavGraphViaJetpack()
+            NavigationLib.Destinations -> setNavGraphViaComposeDestinations()
+            else -> setNavGraphViaJetpack()
         }
     }
 
@@ -131,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             mainNavHost.apply {
                 isVisible = true
 
-                setContentWithTheme {
+                setContentAfterSplash {
                     Navigator(BottomNavScreen) {
                         SlideTransition(it)
                     }
@@ -154,6 +139,25 @@ class MainActivity : AppCompatActivity() {
 
         if (destination != null) {
             controller.navigate(destination, bundle)
+        }
+    }
+
+    private fun setNavGraphViaComposeDestinations() {
+        binding?.apply {
+            navHostFragment.isVisible = false
+            mainNavHost.apply {
+                isVisible = true
+
+                setContentAfterSplash {
+                    val navController: NavHostController = rememberNavController()
+                    DestinationsNavHost(
+                        navGraph = MainNavGraph,
+                        dependenciesContainerBuilder = {
+                            dependency(SupremeNavigator(navController = navController))
+                        }
+                    )
+                }
+            }
         }
     }
 

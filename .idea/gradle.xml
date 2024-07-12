@@ -26,11 +26,13 @@
             <option value="$PROJECT_DIR$/ui/feature-bottomnavigation" />
             <option value="$PROJECT_DIR$/ui/feature-camerarecording" />
             <option value="$PROJECT_DIR$/ui/feature-demo" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-hintphonenumber" />
             <option value="$PROJECT_DIR$/ui/feature-demo-modifier" />
             <option value="$PROJECT_DIR$/ui/feature-demo-morph" />
             <option value="$PROJECT_DIR$/ui/feature-demo-shape" />
             <option value="$PROJECT_DIR$/ui/feature-flowsummator" />
             <option value="$PROJECT_DIR$/ui/feature-settings" />
+            <option value="$PROJECT_DIR$/ui/feature-splash" />
             <option value="$PROJECT_DIR$/ui/sharedviewmodel" />
             <option value="$PROJECT_DIR$/ui/widget-counter" />
             <option value="$PROJECT_DIR$/ui/widget-refreshableimage" />

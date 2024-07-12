@@ -1,57 +1,50 @@
 package com.velord.sharedviewmodel
 
-import android.os.Build
 import com.velord.usecase.setting.GetThemeConfigUC
-import com.velord.util.settings.ThemeConfig
+import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
+import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
+import com.velord.usecase.setting.SwitchThemeConfigUC
+import com.velord.util.settings.AndroidThemeConfig
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-data class Theme(
-    val config: ThemeConfig,
-    val isSystemDynamicColorAvailable: Boolean
-) {
-    companion object {
-        val DEFAULT: Theme = Theme(
-            config = ThemeConfig.DEFAULT,
-            isSystemDynamicColorAvailable = false
-        )
-    }
-}
-
-//@KoinViewModel
 class ThemeViewModel(
-    private val getThemeConfigUC: GetThemeConfigUC
+    private val getThemeConfigUC: GetThemeConfigUC,
+    private val switchDynamicColorThemeConfigUC: SwitchDynamicColorThemeConfigUC,
+    private val switchAbideToOsThemeConfigUC: SwitchAbideToOsThemeConfigUC,
+    private val switchThemeConfigUC: SwitchThemeConfigUC
 ): CoroutineScopeViewModel() {
 
-    val themeFlow = MutableStateFlow<Theme?>(null)
+    val themeFlow = MutableStateFlow<AndroidThemeConfig?>(null)
 
     init {
         launch {
-            themeFlow.value = Theme(
-                config = getThemeConfigUC.getConfig(),
-                isSystemDynamicColorAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-            )
+            getThemeConfigUC.getConfigFlow().map {
+                themeFlow.value?.copy(config = it) ?: AndroidThemeConfig.invoke(it)
+            }.collect {
+                themeFlow.value = it
+            }
         }
     }
 
-    private fun saveNewTheme(newTheme: Theme) = launch {
-        getThemeConfigUC.saveConfig(newTheme.config)
-        themeFlow.emit(newTheme)
+    fun onSwitchToOsTheme() = launch {
+        themeFlow.value?.let {
+            switchAbideToOsThemeConfigUC.invoke(it.config)
+        }
     }
 
-    fun changeSystemTheme(currentTheme: Theme) = launch {
-        val newConfig = ThemeConfig(
-            useDarkTheme = currentTheme.config.useDarkTheme,
-            useDynamicColor = currentTheme.config.useDynamicColor.not()
-        )
-        saveNewTheme(currentTheme.copy(config = newConfig))
+    fun onChangeDynamicTheme() = launch {
+        themeFlow.value?.let {
+            if (it.config.abideToOs) return@launch
+            switchDynamicColorThemeConfigUC.invoke(it.config)
+        }
     }
 
-    fun changeDarkTheme(currentTheme: Theme) = launch {
-        val newConfig = ThemeConfig(
-            useDarkTheme = currentTheme.config.useDarkTheme.not(),
-            useDynamicColor = currentTheme.config.useDynamicColor
-        )
-        saveNewTheme(currentTheme.copy(config = newConfig))
+    fun onChangeDarkTheme() = launch {
+        themeFlow.value?.let {
+            if (it.config.abideToOs) return@launch
+            switchThemeConfigUC.invoke(it.config)
+        }
     }
 }
