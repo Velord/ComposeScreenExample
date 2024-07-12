@@ -1,15 +1,27 @@
 package com.velord.composescreenexample
 
 import android.app.Application
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.os.StrictMode.VmPolicy
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import com.velord.appstate.AppStateModule
-import com.velord.bottomnavigation.BottomNavModule
+import com.velord.bottomnavigation.BottomNavigationModule
 import com.velord.camerarecording.CameraRecordingModule
 import com.velord.composescreenexample.ui.main.MainActivity
+import com.velord.composescreenexample.ui.main.navigation.featureBottomNavigationModule
+import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
+import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
+import com.velord.feature.demo.DemoViewModel
+import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.gateway.setting.SettingGatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
+import com.velord.splash.SplashViewModel
 import com.velord.usecase.setting.GetThemeConfigUC
+import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
+import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
+import com.velord.usecase.setting.SwitchThemeConfigUC
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -21,10 +33,16 @@ import org.koin.ksp.generated.module
 
 private val useCaseModule = module {
     factory<GetThemeConfigUC> { GetThemeConfigUC(get()) }
+    factory<SwitchThemeConfigUC> { SwitchThemeConfigUC(get()) }
+    factory<SwitchAbideToOsThemeConfigUC> { SwitchAbideToOsThemeConfigUC(get()) }
+    factory<SwitchDynamicColorThemeConfigUC> { SwitchDynamicColorThemeConfigUC(get()) }
 }
 
 private val viewModelModule = module {
     viewModelOf(::ThemeViewModel)
+    viewModelOf(::SplashViewModel)
+    viewModelOf(::DemoViewModel)
+    viewModelOf(::FlowSummatorViewModel)
 }
 
 @Module
@@ -48,7 +66,7 @@ class App : Application() {
             androidContext(this@App)
 
             modules(AppModule().module)
-            modules(BottomNavModule().module)
+            modules(BottomNavigationModule().module)
             modules(CameraRecordingModule().module)
             modules(DataStoreModule().module)
             modules(SettingGatewayModule().module)
@@ -56,5 +74,23 @@ class App : Application() {
             modules(useCaseModule)
             modules(viewModelModule)
         }
+
+        StrictMode.setThreadPolicy(
+            ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyFlashScreen()
+                .penaltyLog()
+                .build()
+        )
+        StrictMode.setVmPolicy(
+            VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+               // .detectLeakedClosableObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build()
+        )
     }
 }

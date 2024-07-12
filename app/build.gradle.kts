@@ -52,14 +52,22 @@ android {
         }
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
-            buildConfigField("Boolean", "USE_VOYAGER", "false")
+            buildConfigField(
+                "com.velord.composescreenexample.ui.main.navigation.NavigationLib",
+                "NAVIGATION_LIB",
+                "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations"
+            )
         }
         named("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
-            buildConfigField("Boolean", "USE_VOYAGER", "false")
+            buildConfigField(
+                "com.velord.composescreenexample.ui.main.navigation.NavigationLib",
+                "NAVIGATION_LIB",
+                "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations"
+            )
         }
     }
 
@@ -135,28 +143,34 @@ dependencies {
     implementation(project(":ui:feature-demo"))
     implementation(project(":ui:feature-camerarecording"))
     implementation(project(":ui:feature-bottomnavigation"))
+    implementation(project(":ui:feature-settings"))
+    implementation(project(":ui:feature-splash"))
     implementation(project(":ui:feature-demo-shape"))
     implementation(project(":ui:feature-demo-modifier"))
     implementation(project(":ui:feature-demo-morph"))
+    implementation(project(":ui:feature-demo-hintphonenumber"))
     implementation(project(":ui:feature-flowsummator"))
-    implementation(project(":ui:feature-settings"))
     // Module UI Widget
     implementation(project(":ui:widget-refreshableimage"))
     implementation(project(":ui:widget-counter"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.coil)
-    implementation(libs.bundles.voyager)
-    // Compose
     implementation(libs.bundles.compose.all)
+    implementation(libs.bundles.coil)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)
+    // Navigation
+    // Navigation Voyager
+    implementation(libs.bundles.voyager)
+    // Navigation Compose Destinations
+    implementation(libs.bundles.compose.destinations)
+    ksp(libs.compose.destinations.ksp)
     // Other
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)
-
+    implementation(libs.androidx.core.splashscreen)
     // Test libs.versions.toml
     //implementation(libs.bundles.androidx.all)
 }
@@ -164,6 +178,7 @@ dependencies {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")
+    //arg("compose-destinations.moduleName", "moduleapp")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

@@ -40,7 +40,6 @@ dependencies {
     implementation(project(":core:core-ui"))
     // Templates
     implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.ktx)
     implementation(libs.bundles.androidx.glance)
     implementation(libs.bundles.androidx.workmanager)
     // Compose

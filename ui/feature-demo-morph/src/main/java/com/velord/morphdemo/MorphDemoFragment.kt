@@ -66,7 +66,7 @@ class MorphDemoFragment : Fragment() {
 }
 
 @Composable
-internal fun MorphDemoScreen() {
+fun MorphDemoScreen() {
     Content()
 }
 

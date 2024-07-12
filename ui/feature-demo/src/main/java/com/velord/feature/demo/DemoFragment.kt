@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.velord.bottomnavigation.BottomNavViewModelJetpack
 import com.velord.bottomnavigation.addTestCallback
+import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
@@ -36,7 +36,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class DemoFragment : Fragment() {
 
     private val viewModel by viewModels<DemoViewModel>()
-    private val viewModelBottom by viewModel<BottomNavViewModelJetpack>()
+    private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,12 +66,13 @@ class DemoFragment : Fragment() {
 }
 
 @Composable
-internal fun DemoScreen(viewModel: DemoViewModel) {
+fun DemoScreen(viewModel: DemoViewModel) {
     Content(
         onOpenShape = viewModel::onOpenShape,
         onOpenModifier = viewModel::onOpenModifier,
         onOpenSummator = viewModel::onOpenSummator,
-        onOpenMorph = viewModel::onOpenMorph
+        onOpenMorph = viewModel::onOpenMorph,
+        onOpenHintPhoneNumber = viewModel::onOpenHintPhoneNumber
     )
 }
 
@@ -80,7 +81,8 @@ private fun Content(
     onOpenShape: () -> Unit,
     onOpenModifier: () -> Unit,
     onOpenSummator: () -> Unit,
-    onOpenMorph: () -> Unit
+    onOpenMorph: () -> Unit,
+    onOpenHintPhoneNumber: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -93,6 +95,7 @@ private fun Content(
         OpenButton(text = stringResource(id = R.string.open_modifier_demo), onClick = onOpenModifier)
         OpenButton(text = stringResource(id = R.string.open_flow_summator), onClick = onOpenSummator)
         OpenButton(text = stringResource(id = R.string.open_morph_demo), onClick = onOpenMorph)
+        OpenButton(text = stringResource(id = R.string.open_hint_phone_number), onClick = onOpenHintPhoneNumber)
     }
 }
 
@@ -125,6 +128,7 @@ private fun DemoPreview() {
         onOpenShape = {},
         onOpenModifier = {},
         onOpenSummator = {},
-        onOpenMorph = {}
+        onOpenMorph = {},
+        onOpenHintPhoneNumber = {}
     )
 }

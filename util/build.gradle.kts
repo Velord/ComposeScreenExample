@@ -26,14 +26,22 @@ android {
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+    }
 }
 
 dependencies {
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.androidx.glance.appwidget)
     implementation(libs.bundles.network.all)
+    implementation(libs.bundles.androidx.credentials.all)
+    implementation(libs.androidx.glance.appwidget)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

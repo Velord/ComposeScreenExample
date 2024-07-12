@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.velord.bottomnavigation.BottomNavViewModelJetpack
 import com.velord.bottomnavigation.addTestCallback
+import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.navigation.entryPoint.SETTINGS_SOURCE
 import com.velord.navigation.entryPoint.SettingsSource
 import com.velord.resource.R
@@ -39,7 +39,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SettingsFragment : Fragment() {
 
     private val viewModel by activityViewModels<ThemeViewModel>()
-    private val viewModelBottom by viewModel<BottomNavViewModelJetpack>()
+    private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,18 +59,19 @@ class SettingsFragment : Fragment() {
 }
 
 @Composable
-internal fun SettingsScreen(viewModel: ThemeViewModel) {
-    val themeSwitcher = LocalTheme.current
+fun SettingsScreen(viewModel: ThemeViewModel) {
     Content(
-        onChangeSystemTheme = { viewModel.changeSystemTheme(themeSwitcher) },
-        onChangeDarkTheme = { viewModel.changeDarkTheme(themeSwitcher) }
+        onChangeAbideToOsTheme = { viewModel.onSwitchToOsTheme() },
+        onChangeSystemTheme = { viewModel.onChangeDynamicTheme() },
+        onChangeDarkTheme = { viewModel.onChangeDarkTheme() }
     )
 }
 
 @Composable
 private fun Content(
+    onChangeAbideToOsTheme: () -> Unit = {},
     onChangeSystemTheme: () -> Unit = {},
-    onChangeDarkTheme: () -> Unit = {}
+    onChangeDarkTheme: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -91,14 +92,35 @@ private fun Content(
         ) {
             val themeSwitcher = LocalTheme.current
             ThemeSwitcher(
+                title = stringResource(id = R.string.abide_to_os_theme),
+                isChecked = themeSwitcher.config.abideToOs,
+                isEnabled = themeSwitcher.isSystemOsSwitchAvailable,
+                textWhenNotEnabled = stringResource(id = R.string.os_does_not_support_theme_switching),
+                onChange = onChangeAbideToOsTheme
+            )
+
+            val disableOsStr = stringResource(id = R.string.disable_os_theme_switcher)
+            val disabledText = StringBuilder()
+            if (themeSwitcher.config.abideToOs) {
+                disabledText.append(disableOsStr)
+            }
+            if (themeSwitcher.isSystemDynamicColorAvailable.not()) {
+                val android11Str = stringResource(id = R.string.not_available_on_android_11)
+                disabledText.append("\n" + android11Str)
+            }
+            ThemeSwitcher(
                 title = stringResource(id = R.string.use_system_dynamic_theme),
                 isChecked = themeSwitcher.config.useDynamicColor,
-                isEnabled = themeSwitcher.isSystemDynamicColorAvailable,
+                isEnabled = themeSwitcher.isSystemDynamicColorAvailable && themeSwitcher.config.abideToOs.not(),
+                textWhenNotEnabled = disabledText.toString(),
                 onChange = onChangeSystemTheme
             )
+
             ThemeSwitcher(
                 title = stringResource(id = R.string.use_dark_theme),
                 isChecked = themeSwitcher.config.useDarkTheme,
+                isEnabled = themeSwitcher.config.abideToOs.not(),
+                textWhenNotEnabled = disableOsStr,
                 onChange = onChangeDarkTheme
             )
         }
@@ -111,6 +133,7 @@ private fun ThemeSwitcher(
     isChecked: Boolean,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
+    textWhenNotEnabled: String,
     onChange: () -> Unit
 ) {
     Column(modifier = modifier) {
@@ -120,7 +143,7 @@ private fun ThemeSwitcher(
         )
         if (isEnabled.not()) {
             Text(
-                text = stringResource(id = R.string.not_available_on_android_11),
+                text = textWhenNotEnabled,
                 modifier = Modifier.padding(top = 8.dp, start = 16.dp),
                 color = MaterialTheme.colorScheme.error
             )

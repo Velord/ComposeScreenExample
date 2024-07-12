@@ -62,7 +62,7 @@ class FlowSummatorFragment : Fragment() {
 }
 
 @Composable
-internal fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
+fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
     val currentTextState = viewModel.sumFlow
         .mapToCumulativeStringEachNumberByLine()
         .collectAsStateWithLifecycle(initialValue = "")
@@ -109,9 +109,7 @@ private fun Content(
         )
         Result(text = currentTextState.value)
     }
-    Info(
-
-    )
+    Info()
 }
 
 @Composable

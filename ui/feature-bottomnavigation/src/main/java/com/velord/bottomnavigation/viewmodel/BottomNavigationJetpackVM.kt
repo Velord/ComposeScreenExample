@@ -1,13 +1,15 @@
-package com.velord.bottomnavigation
+package com.velord.bottomnavigation.viewmodel
 
 import androidx.navigation.NavDestination
+import com.velord.bottomnavigation.BottomNavEventService
+import com.velord.bottomnavigation.BottomNavigationItem
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class BottomNavViewModelJetpack(
+class BottomNavigationJetpackVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeViewModel() {
 
