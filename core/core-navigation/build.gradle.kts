@@ -1,6 +1,7 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
+    alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.ksp)
 }
 
@@ -24,9 +25,6 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_17

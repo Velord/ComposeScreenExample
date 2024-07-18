@@ -67,6 +67,7 @@ class DemoFragment : Fragment() {
 
 @Composable
 fun DemoScreen(viewModel: DemoViewModel) {
+
     Content(
         onOpenShape = viewModel::onOpenShape,
         onOpenModifier = viewModel::onOpenModifier,
