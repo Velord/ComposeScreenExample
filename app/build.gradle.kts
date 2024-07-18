@@ -3,6 +3,7 @@ plugins {
     id(libs.plugins.kotlin.android.get().pluginId)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
 // When app incompatible with previous version change this value
@@ -115,9 +116,6 @@ android {
         compose = true
         viewBinding = true
         buildConfig = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 }
 

@@ -62,4 +62,12 @@
     <string name="front">Front</string>
     <string name="waiting">Waiting</string>
     <string name="invoke_again">Invoke again</string>
+    <string name="all">All</string>
+    <string name="favorite">Favorite</string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort_by_date_ascending">Sort by date ascending</string>
+    <string name="sort_by_date_descending">Sort by date descending</string>
+    <string name="filter_by">Filter by</string>
+    <string name="filter_by_title_over_10_char">Filter by title over 10 char</string>
+    <string name="filter_by_description_over_50_char">Filter by description over 50 char</string>
 </resources>
