@@ -18,8 +18,9 @@
             <option value="$PROJECT_DIR$/data/appstate" />
             <option value="$PROJECT_DIR$/data/backend" />
             <option value="$PROJECT_DIR$/data/datastore" />
-            <option value="$PROJECT_DIR$/data/gatewaysetting" />
+            <option value="$PROJECT_DIR$/data/gateway" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/usecase-movie" />
             <option value="$PROJECT_DIR$/domain/usecase-setting" />
             <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/ui" />
