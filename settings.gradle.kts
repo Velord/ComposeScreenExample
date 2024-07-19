@@ -14,6 +14,7 @@ include(":data:appstate")
 include(":data:gatewaysetting")
 // Domain
 include(":domain:usecase-setting")
+include(":domain:usecase-movie")
 // UI
 include(":ui:sharedviewmodel")
 // UI Feature

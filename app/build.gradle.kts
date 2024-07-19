@@ -129,6 +129,7 @@ dependencies {
     implementation(project(":core:core-resource"))
     // Module Domain
     implementation(project(":domain:usecase-setting"))
+    implementation(project(":domain:usecase-movie"))
     // Module Data Source
     implementation(project(":data:backend"))
     implementation(project(":data:datastore"))

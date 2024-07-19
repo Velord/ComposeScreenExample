@@ -33,10 +33,10 @@ import org.koin.dsl.module
 import org.koin.ksp.generated.module
 
 private val useCaseModule = module {
-    factory<GetThemeConfigUC> { GetThemeConfigUC(get()) }
-    factory<SwitchThemeConfigUC> { SwitchThemeConfigUC(get()) }
-    factory<SwitchAbideToOsThemeConfigUC> { SwitchAbideToOsThemeConfigUC(get()) }
-    factory<SwitchDynamicColorThemeConfigUC> { SwitchDynamicColorThemeConfigUC(get()) }
+    factory { GetThemeConfigUC(get()) }
+    factory { SwitchThemeConfigUC(get()) }
+    factory { SwitchAbideToOsThemeConfigUC(get()) }
+    factory { SwitchDynamicColorThemeConfigUC(get()) }
 }
 
 private val viewModelModule = module {
