@@ -2,8 +2,8 @@ package com.velord.gateway.setting
 
 import com.velord.appstate.AppStateService
 import com.velord.datastore.DataStoreService
+import com.velord.model.settings.ThemeConfig
 import com.velord.usecase.setting.GetThemeConfigDS
-import com.velord.util.settings.ThemeConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map

@@ -1,7 +1,7 @@
 package com.velord.usecase.movie
 
-import com.velord.model.profile.movie.Movie
-import com.velord.model.profile.movie.SortType
+import com.velord.model.movie.Movie
+import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieDS
 import com.velord.usecase.movie.dataSource.MovieSortDS
 import kotlinx.coroutines.flow.Flow

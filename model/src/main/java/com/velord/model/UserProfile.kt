@@ -1,4 +1,4 @@
-package com.velord.model.profile
+package com.velord.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

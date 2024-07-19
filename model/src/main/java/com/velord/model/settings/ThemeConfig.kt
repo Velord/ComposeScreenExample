@@ -1,4 +1,4 @@
-package com.velord.util.settings
+package com.velord.model.settings
 
 import kotlinx.serialization.Serializable
 

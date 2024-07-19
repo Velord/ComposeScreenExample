@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
-import com.velord.util.settings.AppSettings
+import com.velord.model.settings.AppSettings
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.annotation.Single
 

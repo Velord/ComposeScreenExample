@@ -1,6 +1,6 @@
 package com.velord.usecase.movie
 
-import com.velord.model.profile.movie.MovieSortOption
+import com.velord.model.movie.MovieSortOption
 import com.velord.usecase.movie.dataSource.MovieSortDS
 
 class SetMovieSortOptionUC(

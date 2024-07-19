@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.gateway.setting"
+    namespace = "com.velord.gateway"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -29,12 +29,14 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
-    implementation(project(":domain:usecase-setting"))
+    implementation(project(":model"))
+    // Data
     implementation(project(":data:datastore"))
     implementation(project(":data:appstate"))
+    // Use case
+    implementation(project(":domain:usecase-setting"))
+    implementation(project(":domain:usecase-movie"))
     // Templates
-
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)

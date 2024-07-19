@@ -29,7 +29,6 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
     implementation(project(":model"))
     // Templates
     // DI

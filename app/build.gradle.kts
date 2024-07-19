@@ -134,8 +134,8 @@ dependencies {
     implementation(project(":data:backend"))
     implementation(project(":data:datastore"))
     implementation(project(":data:appstate"))
+    implementation(project(":data:gateway"))
     // Module Data Gateway
-    implementation(project(":data:gatewaysetting"))
     // Module UI
     implementation(project(":ui:sharedviewmodel"))
     // Module UI Feature
