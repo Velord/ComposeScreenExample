@@ -4,8 +4,9 @@ import com.velord.model.movie.Movie
 import com.velord.usecase.movie.dataSource.MovieDS
 
 class UpdateMovieLikeUC(private val dataSource: MovieDS) {
+
     operator fun invoke(movie: Movie) {
-        val updated = movie.copy(isLiked = !movie.isLiked)
+        val updated = movie.copy(isLiked = movie.isLiked.not())
         dataSource.update(updated)
     }
 }
