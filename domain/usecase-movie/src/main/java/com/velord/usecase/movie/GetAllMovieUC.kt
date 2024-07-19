@@ -11,7 +11,7 @@ class GetAllMovieUC(
     private val movieDS: MovieDS,
     private val movieSortDS: MovieSortDS
 ) {
-    suspend operator fun invoke(): Flow<List<Movie>> {
+    operator fun invoke(): Flow<List<Movie>> {
         val all = movieDS.getAll()
         val sort = movieSortDS.getSelectedFlow()
 

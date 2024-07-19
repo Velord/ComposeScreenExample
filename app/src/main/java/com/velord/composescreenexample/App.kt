@@ -19,6 +19,11 @@ import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.gateway.GatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashViewModel
+import com.velord.usecase.movie.GetAllMovieUC
+import com.velord.usecase.movie.GetFavoriteMovieUC
+import com.velord.usecase.movie.GetMovieSortOptionUC
+import com.velord.usecase.movie.SetMovieSortOptionUC
+import com.velord.usecase.movie.UpdateMovieLikeUC
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
@@ -37,6 +42,11 @@ private val useCaseModule = module {
     factory { SwitchThemeConfigUC(get()) }
     factory { SwitchAbideToOsThemeConfigUC(get()) }
     factory { SwitchDynamicColorThemeConfigUC(get()) }
+    factory { GetAllMovieUC(get(), get()) }
+    factory { GetFavoriteMovieUC(get()) }
+    factory { GetMovieSortOptionUC(get()) }
+    factory { SetMovieSortOptionUC(get()) }
+    factory { UpdateMovieLikeUC(get()) }
 }
 
 private val viewModelModule = module {

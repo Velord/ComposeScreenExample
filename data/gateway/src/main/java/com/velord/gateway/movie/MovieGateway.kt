@@ -348,7 +348,7 @@ class MovieGateway(
         )
     )
 
-    override suspend fun getAll(): Flow<List<Movie>> = roster
+    override fun getAll(): Flow<List<Movie>> = roster
 
     override fun update(movie: Movie) {
         roster.update { roster ->

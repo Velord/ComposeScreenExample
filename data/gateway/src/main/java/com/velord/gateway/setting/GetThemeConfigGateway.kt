@@ -17,7 +17,7 @@ class GetThemeConfigGateway(
 
     private var isInitialized = false
 
-    override suspend fun get(): Flow<ThemeConfig> {
+    override suspend fun getFlow(): Flow<ThemeConfig> {
         if (isInitialized.not()) {
             isInitialized = true
             runCatching {

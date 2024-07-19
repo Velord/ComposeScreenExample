@@ -1,4 +1,4 @@
-package com.velord.backend.factory.interceptor
+package com.velord.backend.retrorfit.factory.interceptor
 
 import android.content.Context
 import com.velord.util.packageManager.getPackageInfoCompat

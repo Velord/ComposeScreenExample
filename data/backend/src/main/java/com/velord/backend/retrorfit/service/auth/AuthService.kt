@@ -1,4 +1,4 @@
-package com.velord.backend.service.auth
+package com.velord.backend.retrorfit.service.auth
 
 interface AuthService {
     suspend fun login(username: String, password: String)

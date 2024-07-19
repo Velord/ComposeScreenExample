@@ -1,10 +1,10 @@
-package com.velord.backend.factory
+package com.velord.backend.retrorfit.factory
 
 import android.content.Context
-import com.velord.backend.factory.interceptor.HeaderInterceptor
 import com.velord.backend.model.BaseUrl
-import com.velord.backend.service.auth.AuthService
-import com.velord.backend.service.auth.AuthServiceImpl
+import com.velord.backend.retrorfit.factory.interceptor.HeaderInterceptor
+import com.velord.backend.retrorfit.service.auth.AuthService
+import com.velord.backend.retrorfit.service.auth.AuthServiceImpl
 import com.velord.datastore.DataStoreService
 import okhttp3.Interceptor
 import retrofit2.create

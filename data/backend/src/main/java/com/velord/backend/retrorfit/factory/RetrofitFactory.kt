@@ -1,4 +1,4 @@
-package com.velord.backend.factory
+package com.velord.backend.retrorfit.factory
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.velord.backend.model.BaseUrl
