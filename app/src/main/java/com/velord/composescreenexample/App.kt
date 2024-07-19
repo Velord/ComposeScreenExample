@@ -16,7 +16,7 @@ import com.velord.datastore.DataStoreModule
 import com.velord.feature.demo.DemoViewModel
 import com.velord.feature.movie.MovieViewModel
 import com.velord.flowsummator.FlowSummatorViewModel
-import com.velord.gateway.setting.SettingGatewayModule
+import com.velord.gateway.GatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashViewModel
 import com.velord.usecase.setting.GetThemeConfigUC
@@ -71,7 +71,7 @@ class App : Application() {
             modules(BottomNavigationModule().module)
             modules(CameraRecordingModule().module)
             modules(DataStoreModule().module)
-            modules(SettingGatewayModule().module)
+            modules(GatewayModule().module)
             modules(AppStateModule().module)
             modules(useCaseModule)
             modules(viewModelModule)

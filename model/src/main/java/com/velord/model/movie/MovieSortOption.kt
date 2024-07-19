@@ -1,4 +1,4 @@
-package com.velord.model.profile.movie
+package com.velord.model.movie
 
 enum class SortType {
     DateAscending,

@@ -1,6 +1,6 @@
 package com.velord.usecase.movie
 
-import com.velord.model.profile.movie.Movie
+import com.velord.model.movie.Movie
 import com.velord.usecase.movie.dataSource.MovieDS
 
 class UpdateMovieLikeUC(private val dataSource: MovieDS) {

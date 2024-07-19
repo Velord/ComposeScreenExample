@@ -34,7 +34,7 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
+    implementation(project(":model"))
     implementation(project(":core:core-navigation"))
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-resource"))

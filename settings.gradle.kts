@@ -11,7 +11,7 @@ include(":data:backend")
 include(":data:datastore")
 include(":data:appstate")
 // Data Gateway
-include(":data:gatewaysetting")
+include(":data:gateway")
 // Domain
 include(":domain:usecase-setting")
 include(":domain:usecase-movie")

@@ -6,7 +6,7 @@ import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
-import com.velord.util.settings.ThemeConfig
+import com.velord.model.settings.ThemeConfig
 
 interface GlanceWidgetThemeSustainer <T : GlanceAppWidget> {
     val name: Class<T>

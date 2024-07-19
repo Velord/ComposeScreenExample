@@ -1,6 +1,6 @@
 package com.velord.usecase.movie.dataSource
 
-import com.velord.model.profile.movie.MovieSortOption
+import com.velord.model.movie.MovieSortOption
 import kotlinx.coroutines.flow.Flow
 
 interface MovieSortDS {
