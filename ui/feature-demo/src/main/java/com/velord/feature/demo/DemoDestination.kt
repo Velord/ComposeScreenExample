@@ -5,7 +5,8 @@ enum class DemoDest {
     Modifier,
     FlowSummator,
     Morph,
-    HintPhoneNumber
+    HintPhoneNumber,
+    Movie
 }
 
 interface DemoNavigator {

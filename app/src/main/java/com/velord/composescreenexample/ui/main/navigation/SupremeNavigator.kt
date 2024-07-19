@@ -11,6 +11,7 @@ import com.ramcosta.composedestinations.generated.destinations.FlowSummatorDesti
 import com.ramcosta.composedestinations.generated.destinations.HintPhoneNumberDestinationDestination
 import com.ramcosta.composedestinations.generated.destinations.ModifierDemoDestinationDestination
 import com.ramcosta.composedestinations.generated.destinations.MorphDemoDestinationDestination
+import com.ramcosta.composedestinations.generated.destinations.MovieDestinationDestination
 import com.ramcosta.composedestinations.generated.destinations.ShapeDemoDestinationDestination
 import com.ramcosta.composedestinations.generated.navgraphs.BottomNavigationNavGraph
 import com.ramcosta.composedestinations.generated.navgraphs.CameraRecordingNavGraph
@@ -57,6 +58,7 @@ class SupremeNavigator(
             DemoDest.FlowSummator -> FlowSummatorDestinationDestination
             DemoDest.Morph -> MorphDemoDestinationDestination
             DemoDest.HintPhoneNumber -> HintPhoneNumberDestinationDestination
+            DemoDest.Movie -> MovieDestinationDestination
         }
         navController.toDestinationsNavigator().navigate(dest)
     }

@@ -148,6 +148,7 @@ dependencies {
     implementation(project(":ui:feature-demo-morph"))
     implementation(project(":ui:feature-demo-hintphonenumber"))
     implementation(project(":ui:feature-flowsummator"))
+    implementation(project(":ui:feature-movie"))
     // Module UI Widget
     implementation(project(":ui:widget-refreshableimage"))
     implementation(project(":ui:widget-counter"))

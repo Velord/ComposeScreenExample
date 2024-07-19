@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -17,9 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
@@ -28,6 +28,7 @@ import androidx.navigation.fragment.findNavController
 import com.velord.bottomnavigation.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.resource.R
+import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
@@ -67,13 +68,13 @@ class DemoFragment : Fragment() {
 
 @Composable
 fun DemoScreen(viewModel: DemoViewModel) {
-
     Content(
         onOpenShape = viewModel::onOpenShape,
         onOpenModifier = viewModel::onOpenModifier,
         onOpenSummator = viewModel::onOpenSummator,
         onOpenMorph = viewModel::onOpenMorph,
-        onOpenHintPhoneNumber = viewModel::onOpenHintPhoneNumber
+        onOpenHintPhoneNumber = viewModel::onOpenHintPhoneNumber,
+        onOpenMovie = viewModel::onOpenMovie
     )
 }
 
@@ -83,13 +84,15 @@ private fun Content(
     onOpenModifier: () -> Unit,
     onOpenSummator: () -> Unit,
     onOpenMorph: () -> Unit,
-    onOpenHintPhoneNumber: () -> Unit
+    onOpenHintPhoneNumber: () -> Unit,
+    onOpenMovie: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
-            .statusBarsPadding(),
+            .statusBarsPadding()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OpenButton(text = stringResource(id = R.string.open_shape_demo), onClick = onOpenShape)
@@ -97,6 +100,7 @@ private fun Content(
         OpenButton(text = stringResource(id = R.string.open_flow_summator), onClick = onOpenSummator)
         OpenButton(text = stringResource(id = R.string.open_morph_demo), onClick = onOpenMorph)
         OpenButton(text = stringResource(id = R.string.open_hint_phone_number), onClick = onOpenHintPhoneNumber)
+        OpenButton(text = stringResource(id = R.string.open_movie), onClick = onOpenMovie)
     }
 }
 
@@ -107,9 +111,8 @@ private fun OpenButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .padding(top = 32.dp)
-            .clip(RoundedCornerShape(16.dp)),
+        modifier = Modifier.padding(top = 32.dp),
+        shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.tertiaryContainer
         )
@@ -122,7 +125,7 @@ private fun OpenButton(
     }
 }
 
-@Preview
+@PreviewCombined
 @Composable
 private fun DemoPreview() {
     Content(
@@ -130,6 +133,7 @@ private fun DemoPreview() {
         onOpenModifier = {},
         onOpenSummator = {},
         onOpenMorph = {},
-        onOpenHintPhoneNumber = {}
+        onOpenHintPhoneNumber = {},
+        onOpenMovie = {}
     )
 }
