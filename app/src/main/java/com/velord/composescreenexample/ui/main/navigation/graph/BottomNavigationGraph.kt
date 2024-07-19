@@ -10,7 +10,7 @@ import com.velord.feature.demo.DemoNavigator
 import com.velord.feature.demo.DemoScreen
 import com.velord.feature.demo.DemoViewModel
 import com.velord.feature.movie.MovieScreen
-import com.velord.feature.movie.MovieViewModel
+import com.velord.feature.movie.viewModel.MovieViewModel
 import com.velord.flowsummator.FlowSummatorScreen
 import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.hintphonenumber.HintPhoneNumberScreen
