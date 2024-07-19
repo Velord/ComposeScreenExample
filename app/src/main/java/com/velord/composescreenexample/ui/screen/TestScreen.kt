@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.compose.screen
+package com.velord.composescreenexample.ui.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

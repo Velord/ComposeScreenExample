@@ -14,6 +14,7 @@ import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
 import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
 import com.velord.feature.demo.DemoViewModel
+import com.velord.feature.movie.MovieViewModel
 import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.gateway.setting.SettingGatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
@@ -43,6 +44,7 @@ private val viewModelModule = module {
     viewModelOf(::SplashViewModel)
     viewModelOf(::DemoViewModel)
     viewModelOf(::FlowSummatorViewModel)
+    viewModelOf(::MovieViewModel)
 }
 
 @Module

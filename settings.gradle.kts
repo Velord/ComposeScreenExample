@@ -27,6 +27,7 @@ include(":ui:feature-demo-modifier")
 include(":ui:feature-demo-morph")
 include(":ui:feature-flowsummator")
 include(":ui:feature-settings")
+include(":ui:feature-movie")
 // UI Widget
 include(":ui:widget-refreshableimage")
 include(":ui:widget-counter")

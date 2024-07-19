@@ -9,7 +9,7 @@ jvmTarget = "17"
 jetifier = "1.0.0-beta10"
 # DI
 dagger = "2.49"
-hilt = "2.49"
+hilt = "2.51.1"
 hiltNavigation = "1.2.0"
 hiltNavigationCompose = "1.2.0"
 koin = "3.6.0-wasm-alpha2"
@@ -18,7 +18,7 @@ koinKsp = "1.3.1"
 kotlin = "2.0.0"
 coroutine = "1.7.3"
 # Kotlin Serialization
-kotlinJsonSerialization = "1.5.0"
+kotlinJsonSerialization = "1.6.3"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
 # Google
 googleGuava = "32.0.0-android"
@@ -27,8 +27,8 @@ ksp = "2.0.0-1.0.22"
 ## A
 androidxActivity = "1.9.0"
 androidxAds = "1.0.0-alpha05"
-androidxAnnotation = "1.7.1"
-androidxAppCompat = "1.6.1"
+androidxAnnotation = "1.8.0"
+androidxAppCompat = "1.7.0"
 androidxAppSearch = "1.1.0-alpha03"
 androidxArchCore = "2.2.0"
 androidxAsyncLayoutInflater = "1.0.0"
@@ -39,11 +39,11 @@ androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha02"
 androidxBrowser = "1.8.0"
 ## C
-androidxCamera = "1.3.3"
-androidxCarApp = "1.2.0"
+androidxCamera = "1.3.4"
+androidxCarApp = "1.4.0"
 androidXCardView = "1.0.0"
-androidxCollection = "1.4.0"
-androidxConcurrent = "1.1.0"
+androidxCollection = "1.4.1"
+androidxConcurrent = "1.2.0"
 ## AndroidX Constraint
 androidxConstraint = "2.1.4"
 androidxConstraintCompose = "1.1.0-alpha13"
@@ -51,11 +51,11 @@ androidxConstraintCompose = "1.1.0-alpha13"
 androidxContentPager = "1.0.0"
 androidxCoordinatorLayout = "1.2.0"
 ## Core
-androidxCore = "1.13.0"
-androidxCoreAnimation = "1.0.0-rc01"
+androidxCore = "1.13.1"
+androidxCoreAnimation = "1.0.0"
 androidxCoreGoogleShortcuts = "1.1.0"
 androidxCorePerformance = "1.0.0"
-androidxCoreRomoteViews = "1.0.0"
+androidxCoreRomoteViews = "1.1.0"
 androidxCoreRole = "1.0.0"
 androidxCoreSplashScreen = "1.0.1"
 ## C
@@ -67,7 +67,7 @@ androidxCustomView = "1.1.0"
 androidxCustomViewPollingContainer = "1.0.0"
 ## D
 androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
-androidxDatastore = "1.1.0"
+androidxDatastore = "1.1.1"
 androidxDocumentFile = "1.0.1"
 androidxDragAndDrop = "1.0.0"
 androidxDrawerLayout = "1.2.0"
@@ -78,35 +78,35 @@ androidxEmoji2 = "1.4.0"
 ## E
 androidxEnterprise = "1.1.0"
 androidxExifInterface = "1.3.7"
-androidxFragment = "1.7.0-rc02"
+androidxFragment = "1.8.1"
 ## Games
-androidxGamesActivity = "3.0.3"
-androidxGamesController = "2.0.1"
-androidxGamesFramePacing = "2.1.0"
+androidxGamesActivity = "3.0.4"
+androidxGamesController = "2.0.2"
+androidxGamesFramePacing = "2.1.1"
 androidxGamesMemoryAdvice = "2.0.1"
 androidxGamesTextInput = "3.0.3"
 androidxGamesPerformanceTuner = "2.0.0-beta01"
 ## G
 androidxGmsAuth = "21.2.0"
 ## Glance
-androidxGlance = "1.1.0-beta02"  # For Glance, AppWidgets
+androidxGlance = "1.1.0"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha05"
 ## Graphics
-androidxGraphicsCore = "1.0.0-rc01"
-androidxGraphicsPath = "1.0.0"
-androidxGraphicsShapes = "1.0.0-alpha05"
+androidxGraphicsCore = "1.0.0"
+androidxGraphicsPath = "1.0.1"
+androidxGraphicsShapes = "1.0.0-beta01"
 ## G
 androidxGridlayout = "1.1.0-beta01"
 ## L
 androidxLegacySupport = "1.0.0"
-androidxLifecycle = "2.7.0"
+androidxLifecycle = "2.8.3"
 ## M
 androidxMedia3 = "1.3.1"
 ## N
 androidxNavigation = "2.7.7"
 ## AndroidX Paging
-androidxPaging = "3.2.1"
-androidxPagingCompose = "3.3.0-beta01"
+androidxPaging = "3.3.0"
+androidxPagingCompose = "3.3.0"
 ## P
 androidxPalette = "1.0.0"
 androidxPercentLayout = "1.0.0"
@@ -114,11 +114,11 @@ androidxPreference = "1.2.1"
 androidxPrint = "1.1.0-beta01"
 ## Privacy Sandbox
 androidxPrivacySandboxActivity = "1.0.0-alpha01"
-androidxPrivacySandboxAds = "1.1.0-beta06"
+androidxPrivacySandboxAds = "1.1.0-beta09"
 androidxPrivacySandboxPlugins = "1.0.0-alpha02"
 androidxPrivacySandboxSdkRuntime = "1.0.0-alpha13"
-androidxPrivacySandboxTools = "1.0.0-alpha08"
-androidxPrivacySandboxUi = "1.0.0-alpha07"
+androidxPrivacySandboxTools = "1.0.0-alpha09"
+androidxPrivacySandboxUi = "1.0.0-alpha09"
 ## P
 androidxProfileInstaller = "1.3.1"
 ## R
@@ -149,34 +149,34 @@ androidxSwipeRefreshLayout = "1.1.0"
 ## T
 ## Test
 androidxTestAnnotation = "1.0.1"
-androidxTestCore = "1.5.0"
-androidxTestEspresso = "3.5.1"
-androidxTestEspressoDevice = "1.0.0-alpha08"
-androidxTestExtJunit = "1.1.5"
+androidxTestCore = "1.6.1"
+androidxTestEspresso = "3.6.1"
+androidxTestEspressoDevice = "1.0.1"
+androidxTestExtJunit = "1.2.1"
 androidxTestExtJunitGtest = "1.0.0-alpha02"
-androidxTestExtTruth = "1.5.0"
-androidxTestMonitor = "1.6.1"
-androidxTestOrchestrator = "1.4.2"
-androidxTestRunner = "1.5.2"
-androidxTestRules = "1.5.0"
-androidxTestServices = "1.4.2"
+androidxTestExtTruth = "1.6.0"
+androidxTestMonitor = "1.7.1"
+androidxTestOrchestrator = "1.5.0"
+androidxTestRunner = "1.6.1"
+androidxTestRules = "1.6.1"
+androidxTestServices = "1.5.0"
 androidxTestUiAutomator = "2.3.0"
 ## T
 androidxTextClassifier = "1.0.0-alpha04"
 androidxTracing = "1.2.0"
-androidxTransition = "1.5.0-rc02"
+androidxTransition = "1.5.0"
 ## TV
-androidxTv = "1.0.0-alpha10"
+androidxTv = "1.0.0-alpha11"
 androidxTvProvider = "1.1.0-alpha01"
 ## V
 ## Vector Drawable
-androidxVectorDrawable = "1.1.0"
-androidxVectorDrawableSeekable = "1.0.0-beta01"
+androidxVectorDrawable = "1.2.0"
+androidxVectorDrawableSeekable = "1.0.0"
 ## V
 androidxVersionedParcelable = "1.2.0"
 ## ViewPager
 androidxViewPager = "1.1.0-alpha01"
-androidxViewPager2 = "1.1.0-beta02"
+androidxViewPager2 = "1.1.0"
 ## W
 ## Wear
 androidxWear = "1.3.0"
@@ -184,21 +184,21 @@ androidxWearInput = "1.1.0" # For Input, Input Testing
 androidxWearOngoing = "1.0.0"
 androidxWearPhone = "1.0.1"
 androidxWearRemote = "1.1.0-alpha02"
-androidxWearCompose = "1.4.0-alpha07"
+androidxWearCompose = "1.4.0-beta03"
 androidxWearProtoLayout = "1.1.0"
 androidxWearTiles = "1.3.0"
 androidxWearWatchface = "1.2.1"
 ## W
-androidxWebkit = "1.10.0"
+androidxWebkit = "1.11.0"
 ## Window
-androidxWindow = "1.2.0"
+androidxWindow = "1.3.0"
 androidxWindowExtension = "1.0.0"
 ## W
 androidxWorkManager = "2.9.0"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.10.0"
-ktor = "2.3.8"
+ktor = "2.3.11"
 # Compose
 composeDefault = "1.7.0-beta05" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeAccompanist = "0.33.2-alpha"
@@ -215,9 +215,14 @@ composeDestinations = "2.1.0-beta05"
 voyager = "1.1.0-alpha02"
 velordMultipleBackstack = "0.5.9.1"
 # Code quality
-detekt = "1.23.5"
+detekt = "1.23.6"
+# Logging
+slf4j = "1.7.32"
 junit = "4.13.2"
 material = "1.12.0"
+
+
+
 
 [libraries]
 # AndroidX -----------------------------------------------------------------------------------------
@@ -536,6 +541,10 @@ square-okhttp3-interceptor = { module = "com.squareup.okhttp3:logging-intercepto
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" } # For iOS
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 # ---------------------------------------------------------------------------------------------------
 # Permission
 sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", version.ref = "sagarCororutinePermission" }
@@ -557,8 +566,12 @@ voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sh
 voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
+# Logging
+slf4j-android = { module = "org.slf4j:slf4j-android", version.ref = "slf4j" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+
 
 
 # Do not mix testing library with implementation in one bundle. Create separate bundle for testing library
@@ -949,14 +962,15 @@ compose-foundation = ["compose-foundation", "compose-foundation-layout"]
 # Compose Ui
 compose-ui = ["compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview"]
 # Compose Material
-compose-material = ["compose-material"]
-compose-material-icons = ["compose-material", "compose-material-icons-core", "compose-material-icons-extended"]
+compose-material-icons = ["compose-material-icons-core", "compose-material-icons-extended"]
 compose-material-third = ["compose-material3", "compose-material3-window"]
 compose-material-all = [
-    "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
+    "compose-material",
+    "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window"
 ]
 # Compose All
+# Material 2 excluded
 compose-all = [
     "compose-runtime", "compose-animation",
     "compose-accompanist-flowlayout", "compose-accompanist-systemui", "compose-accompanist-drawable",
@@ -964,7 +978,7 @@ compose-all = [
     "compose-accompanist-permission",
     "compose-foundation", "compose-foundation-layout",
     "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
-    "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
+    "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window"
 ]
 
@@ -1006,12 +1020,17 @@ network-retrofit = [
 ]
 network-ktor = [
     "ktor-client-core", "ktor-client-okhttp",
-    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+    "ktor-client-logging", "ktor-client-negotiation",
+    "ktor-serialization", "kotlin-serialization-json",
+    "ktor-client-auth", "slf4j-android"
 ]
 network-all = [
     "square-retrofit", "square-okhttp3-interceptor",
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter",
     "ktor-client-core", "ktor-client-okhttp",
-    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+    "ktor-client-logging", "ktor-client-negotiation",
+    "ktor-serialization", "kotlin-serialization-json",
+    "ktor-client-auth", "slf4j-android"
 ]
 # Image Loader
 coil = ["coil", "coil-compose"]
@@ -1023,6 +1042,8 @@ voyager = [
 ]
 # Compose Destinations
 compose-destinations = ["compose-destinations", "compose-destinations-bottomsheet"]
+
+
 
 
 [plugins]
