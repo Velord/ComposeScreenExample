@@ -7,14 +7,16 @@ import android.os.StrictMode.VmPolicy
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import com.velord.appstate.AppStateModule
 import com.velord.bottomnavigation.BottomNavigationModule
-import com.velord.camerarecording.CameraRecordingModule
+import com.velord.camerarecording.CameraRecordingViewModel
 import com.velord.composescreenexample.ui.main.MainActivity
 import com.velord.composescreenexample.ui.main.navigation.featureBottomNavigationModule
 import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
 import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
 import com.velord.feature.demo.DemoViewModel
-import com.velord.feature.movie.MovieViewModel
+import com.velord.feature.movie.viewModel.AllMovieViewModel
+import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
+import com.velord.feature.movie.viewModel.MovieViewModel
 import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.gateway.GatewayModule
 import com.velord.sharedviewmodel.ThemeViewModel
@@ -50,11 +52,15 @@ private val useCaseModule = module {
 }
 
 private val viewModelModule = module {
+    // VieModel that can not be instantiated there has their own module DI
     viewModelOf(::ThemeViewModel)
     viewModelOf(::SplashViewModel)
     viewModelOf(::DemoViewModel)
     viewModelOf(::FlowSummatorViewModel)
     viewModelOf(::MovieViewModel)
+    viewModelOf(::AllMovieViewModel)
+    viewModelOf(::FavoriteMovieViewModel)
+    viewModelOf(::CameraRecordingViewModel)
 }
 
 @Module
@@ -79,7 +85,6 @@ class App : Application() {
 
             modules(AppModule().module)
             modules(BottomNavigationModule().module)
-            modules(CameraRecordingModule().module)
             modules(DataStoreModule().module)
             modules(GatewayModule().module)
             modules(AppStateModule().module)

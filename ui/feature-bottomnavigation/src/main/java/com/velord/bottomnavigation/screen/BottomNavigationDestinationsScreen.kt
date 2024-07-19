@@ -124,7 +124,7 @@ fun BottomNavigationDestination(
         onTabClick = viewModel::onTabClick,
     )
 
-    Log.d("@@@", "startRouteRoster: ${backHandlingState.value}")
+    Log.d("Navigation", "startRouteRoster: ${backHandlingState.value}")
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
