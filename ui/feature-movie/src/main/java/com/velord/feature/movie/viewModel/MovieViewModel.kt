@@ -1,14 +1,8 @@
 package com.velord.feature.movie.viewModel
 
-import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Favorite
-import androidx.compose.material.icons.rounded.List
-import androidx.compose.ui.graphics.vector.ImageVector
-import com.velord.model.movie.FilterOption
-import com.velord.model.movie.MovieSortOption
-import com.velord.model.movie.SortType
-import com.velord.resource.R
+import com.velord.feature.movie.model.MovieFilterOptionUI
+import com.velord.feature.movie.model.MoviePage
+import com.velord.feature.movie.model.MovieSortOptionUI
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetMovieSortOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
@@ -16,42 +10,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-enum class MoviePage(
-    @StringRes val titleRes: Int,
-    val imageRes: ImageVector
-) {
-    All(
-        titleRes = com.velord.resource.R.string.all,
-        imageRes = Icons.Rounded.List
-    ),
-    Favorite(
-        titleRes = com.velord.resource.R.string.favorite,
-        imageRes = Icons.Rounded.Favorite
-    )
-}
-
 data class MovieUiState(
     val initialPage: Int,
     val pageCount: Int,
     val currentPage: Int,
-    val sortOptionRoster: List<MovieSortOption>,
-    val filterOptionRoster: List<FilterOption>
+    val sortOptionRoster: List<MovieSortOptionUI>,
+    val movieFilterOptionRoster: List<MovieFilterOptionUI>
 ) {
     val pageRoster = MoviePage.entries
+
+    fun getSelectedSortOption(): MovieSortOptionUI? =
+        sortOptionRoster.firstOrNull { it.isSelected }
 
     companion object {
         val DEFAULT: MovieUiState = MovieUiState(
             initialPage = 0,
             pageCount = 2,
             currentPage = 0,
-            sortOptionRoster = listOf(
-                MovieSortOption(SortType.DateDescending, isSelected = true),
-                MovieSortOption(SortType.DateAscending, isSelected = false),
-            ),
-            filterOptionRoster = listOf(
-                FilterOption(R.string.filter_by_title_over_10_char, isSelected = false),
-                FilterOption(R.string.filter_by_description_over_50_char, isSelected = false),
-            )
+            sortOptionRoster = listOf(),
+            movieFilterOptionRoster = listOf()
         )
     }
 }
@@ -73,21 +50,22 @@ class MovieViewModel(
         }
     }
 
-    fun onSortOptionClick(newOption: MovieSortOption) {
+    fun onSortOptionClick(newOption: MovieSortOptionUI) {
         if (newOption.isSelected) return
 
-        setMovieSortOptionUC(newOption)
+        val domain = newOption.toDomain()
+        setMovieSortOptionUC(domain)
     }
 
-    fun onFilterOptionClick(newOption: FilterOption) {
+    fun onFilterOptionClick(newOption: MovieFilterOptionUI) {
         // TODO
     }
 
     private fun observe() {
         launch {
             getMovieSortOptionUC().collect { newValue ->
-                uiState.update {
-                    it.copy(sortOptionRoster = newValue)
+                uiState.update { state ->
+                    state.copy(sortOptionRoster = newValue.map { MovieSortOptionUI.fromDomain(it) })
                 }
             }
         }
