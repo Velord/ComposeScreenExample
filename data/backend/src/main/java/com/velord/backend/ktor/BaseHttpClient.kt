@@ -19,10 +19,12 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.annotation.Single
 
 private const val DEVICE_TIME_HEADER = "deviceTime"
 private const val TIMEOUT = 20000L
 
+@Single
 class BaseHttpClient(
     context: Context,
     private val baseUrl: String

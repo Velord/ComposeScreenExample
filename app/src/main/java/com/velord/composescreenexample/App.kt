@@ -6,6 +6,8 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import com.velord.appstate.AppStateModule
+import com.velord.backend.ktor.BackendModule
+import com.velord.backend.ktor.httpModule
 import com.velord.bottomnavigation.BottomNavigationModule
 import com.velord.camerarecording.CameraRecordingViewModel
 import com.velord.composescreenexample.ui.main.MainActivity
@@ -83,13 +85,15 @@ class App : Application() {
             androidLogger()
             androidContext(this@App)
 
+            modules(useCaseModule)
+            modules(viewModelModule)
+            modules(httpModule)
             modules(AppModule().module)
             modules(BottomNavigationModule().module)
             modules(DataStoreModule().module)
             modules(GatewayModule().module)
             modules(AppStateModule().module)
-            modules(useCaseModule)
-            modules(viewModelModule)
+            modules(BackendModule().module)
         }
 
         StrictMode.setThreadPolicy(

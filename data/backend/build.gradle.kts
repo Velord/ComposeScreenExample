@@ -2,6 +2,7 @@ plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -36,8 +37,16 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.network.all)
+    // DI
+    implementation(libs.bundles.koin.core)
+    ksp(libs.koin.ksp)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
     kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_DEFAULT_MODULE","false")
 }
