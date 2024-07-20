@@ -19,7 +19,7 @@ fun Retrofit(
     client: OkHttpClient,
     converterFactory: Converter.Factory
 ): Retrofit = Retrofit.Builder()
-    .baseUrl(baseUrl.value)
+    .baseUrl(baseUrl.full)
     .addConverterFactory(converterFactory)
     .client(client)
     .build()
