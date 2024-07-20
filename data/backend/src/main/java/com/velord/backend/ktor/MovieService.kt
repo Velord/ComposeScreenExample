@@ -3,6 +3,7 @@ package com.velord.backend.ktor
 import com.velord.model.movie.Movie
 import io.ktor.client.call.body
 import io.ktor.http.path
+import kotlinx.coroutines.delay
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.koin.core.annotation.Provided
@@ -64,6 +65,7 @@ class MovieServiceImpl(
 
     override suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse {
         val sdf = "3/discover/movie"
+        delay(5000)
         return client.get {
             url {
                 path(sdf)
