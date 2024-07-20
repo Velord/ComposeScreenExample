@@ -1,6 +1,7 @@
 package com.velord.gateway.movie
 
 import android.util.Log
+import com.velord.backend.ktor.MoviePageRequest
 import com.velord.backend.ktor.MovieService
 import com.velord.model.movie.Movie
 import com.velord.usecase.movie.dataSource.MovieDS
@@ -46,7 +47,10 @@ class MovieGateway(
 
         scope.launch {
             try {
-                service.getMovie()
+                val movieRoster = service.getMovie(MoviePageRequest(1))
+                roster.value = movieRoster.results.map {
+                    it.toDomain()
+                }
             } catch (e: Exception) {
                 Log.d("@@@", "Error: ${e.message}")
             }

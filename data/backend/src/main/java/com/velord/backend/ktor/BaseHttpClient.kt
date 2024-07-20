@@ -11,6 +11,7 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
@@ -19,12 +20,11 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.annotation.Single
 
 private const val DEVICE_TIME_HEADER = "deviceTime"
+private const val AUTHORIZATION_HEADER = "Authorization"
 private const val TIMEOUT = 20000L
 
-@Single
 class BaseHttpClient(
     context: Context,
     private val baseUrl: String
@@ -41,7 +41,7 @@ class BaseHttpClient(
             logger = Logger.DEFAULT
             level = LogLevel.BODY
             filter { request ->
-                request.url.host.contains("fora")
+                request.url.host.contains("api.themoviedb.org")
             }
         }
         expectSuccess = true
@@ -66,6 +66,7 @@ class BaseHttpClient(
             url(baseUrl)
 
             header(DEVICE_TIME_HEADER, System.currentTimeMillis().toString())
+            header(AUTHORIZATION_HEADER, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiOGJhNDk4ZGFiOTUzYmZhYzVhMTI4YzQ0ZWM2ZSIsIm5iZiI6MTcyMTMzNTMzOC4yMDgxMzYsInN1YiI6IjY2OTk3ZDE0OTU3YjM2NWNjOGZkNzIwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VoVoq1XiABNy-3i8BUe-WXvg7Sp5AjDfrF-yFMmh1eM")
         }
     }
 
@@ -76,4 +77,6 @@ class BaseHttpClient(
     fun getClient() = client
 
     suspend fun post(block: HttpRequestBuilder.() -> Unit): HttpResponse = client.post { block() }
+
+    suspend fun get(block: HttpRequestBuilder.() -> Unit): HttpResponse = client.get { block() }
 }

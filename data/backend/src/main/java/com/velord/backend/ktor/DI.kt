@@ -13,5 +13,3 @@ val httpModule  = module {
 @Module
 @ComponentScan("com.velord.backend.ktor")
 class BackendModule
-
-
