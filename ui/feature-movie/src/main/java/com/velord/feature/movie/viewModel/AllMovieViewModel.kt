@@ -4,6 +4,8 @@ import android.util.Log
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetAllMovieUC
+import com.velord.usecase.movie.LoadNewPageMovieUC
+import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -18,7 +20,9 @@ data class AllMovieUiState(val roster: List<Movie>) {
 
 class AllMovieViewModel(
     private val getAllMovieUC: GetAllMovieUC,
-    private val updateMovieLikeUC: UpdateMovieLikeUC
+    private val updateMovieLikeUC: UpdateMovieLikeUC,
+    private val loadNewPageMovieUC: LoadNewPageMovieUC,
+    private val refreshMovieUC: RefreshMovieUC
 ) : CoroutineScopeViewModel() {
 
     val uiState: MutableStateFlow<AllMovieUiState> = MutableStateFlow(AllMovieUiState.DEFAULT)
@@ -34,5 +38,13 @@ class AllMovieViewModel(
 
     fun onLikeClick(movie: Movie) {
         updateMovieLikeUC(movie)
+    }
+
+    fun onEndList() {
+        loadNewPageMovieUC()
+    }
+
+    fun onRefresh() {
+        refreshMovieUC()
     }
 }

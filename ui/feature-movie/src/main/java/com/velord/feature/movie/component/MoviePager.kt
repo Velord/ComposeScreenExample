@@ -1,5 +1,6 @@
 package com.velord.feature.movie.component
 
+import android.util.Log
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
@@ -62,7 +64,9 @@ internal fun ColumnScope.MoviePager(
             0 -> Page(
                 roster = allMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption(),
-                onLike = allMovieViewModel::onLikeClick
+                onLike = allMovieViewModel::onLikeClick,
+                onEndList = allMovieViewModel::onEndList,
+                onRefresh = allMovieViewModel::onRefresh
             )
             1 -> Page(
                 roster = favoriteMovieUiState.value.roster,
@@ -77,12 +81,19 @@ internal fun ColumnScope.MoviePager(
 private fun Page(
     roster: List<Movie>,
     selectedSortOption: MovieSortOptionUI?,
-    onLike: (Movie) -> Unit
+    onLike: (Movie) -> Unit,
+    onEndList: () -> Unit = {},
+    onRefresh: () -> Unit = {}
 ) {
     val sortOptionState = remember {
         mutableStateOf(selectedSortOption)
     }
     val state = rememberLazyListState()
+    val isAtBottomState = remember {
+        derivedStateOf {
+            state.canScrollForward.not()
+        }
+    }
 
     LaunchedEffect(key1 = selectedSortOption) {
         snapshotFlow { sortOptionState.value }
@@ -91,6 +102,15 @@ private fun Page(
                 sortOptionState.value = selectedSortOption
                 delay(300)
                 state.scrollToItem(0)
+            }
+    }
+
+    LaunchedEffect(isAtBottomState) {
+        snapshotFlow { isAtBottomState.value }
+            .filter { it }
+            .collect {
+                Log.d("@@@", "onEndList")
+                onEndList()
             }
     }
 
