@@ -26,5 +26,11 @@ data class MovieSortOptionUI(
                 SortType.DateDescending -> R.string.sort_by_date_descending
             }
         )
+
+        val Default: MovieSortOptionUI = MovieSortOptionUI(
+            type = SortType.DateDescending,
+            isSelected = true,
+            name = R.string.sort_by_date_descending
+        )
     }
 }
