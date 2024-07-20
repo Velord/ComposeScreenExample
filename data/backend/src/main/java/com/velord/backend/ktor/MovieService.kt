@@ -5,6 +5,8 @@ import io.ktor.client.call.body
 import io.ktor.client.request.setBody
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Provided
 
 @Serializable
 data class MovieRequest(
@@ -27,8 +29,9 @@ interface MovieService {
     suspend fun getMovie(): MovieRosterResponse
 }
 
+@Factory
 class MovieServiceImpl(
-    private val client: BaseHttpClient
+    @Provided private val client: BaseHttpClient
 ) : MovieService {
 
     override suspend fun getMovie(): MovieRosterResponse {

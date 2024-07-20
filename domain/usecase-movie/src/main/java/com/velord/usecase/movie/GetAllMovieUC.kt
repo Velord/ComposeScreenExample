@@ -12,7 +12,7 @@ class GetAllMovieUC(
     private val movieSortDS: MovieSortDS
 ) {
     operator fun invoke(): Flow<List<Movie>> {
-        val all = movieDS.getAll()
+        val all = movieDS.getFlow()
         val sort = movieSortDS.getSelectedFlow()
 
         return all.combine(sort) { movies, sortOption ->
