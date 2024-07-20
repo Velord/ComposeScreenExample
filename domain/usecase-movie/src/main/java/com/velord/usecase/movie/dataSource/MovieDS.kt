@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieDS {
     fun getFlow(): Flow<List<Movie>>
+    fun get(): List<Movie>
     fun update(movie: Movie)
-    fun loadNewPage()
-    fun refresh()
+    suspend fun loadNewPage()
+    suspend fun refresh()
+    suspend fun loadFromDB()
 }

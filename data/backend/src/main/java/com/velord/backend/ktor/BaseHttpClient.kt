@@ -1,6 +1,7 @@
 package com.velord.backend.ktor
 
 import android.content.Context
+import com.velord.backend.model.BaseUrl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpTimeout
@@ -22,12 +23,11 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 private const val DEVICE_TIME_HEADER = "deviceTime"
-private const val AUTHORIZATION_HEADER = "Authorization"
 private const val TIMEOUT = 20000L
 
 class BaseHttpClient(
     context: Context,
-    private val baseUrl: String
+    private val baseUrl: BaseUrl
 ) {
 
     private val client: HttpClient
@@ -41,7 +41,7 @@ class BaseHttpClient(
             logger = Logger.DEFAULT
             level = LogLevel.BODY
             filter { request ->
-                request.url.host.contains("api.themoviedb.org")
+                request.url.host.contains(baseUrl.host)
             }
         }
         expectSuccess = true
@@ -63,10 +63,9 @@ class BaseHttpClient(
             contentType(ContentType.Application.Json)
 
             url.protocol = URLProtocol.HTTPS
-            url(baseUrl)
+            url(baseUrl.full)
 
             header(DEVICE_TIME_HEADER, System.currentTimeMillis().toString())
-            header(AUTHORIZATION_HEADER, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiOGJhNDk4ZGFiOTUzYmZhYzVhMTI4YzQ0ZWM2ZSIsIm5iZiI6MTcyMTMzNTMzOC4yMDgxMzYsInN1YiI6IjY2OTk3ZDE0OTU3YjM2NWNjOGZkNzIwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VoVoq1XiABNy-3i8BUe-WXvg7Sp5AjDfrF-yFMmh1eM")
         }
     }
 

@@ -1,62 +1,20 @@
 package com.velord.backend.ktor
 
-import com.velord.model.movie.Movie
+import com.velord.backend.model.MoviePageRequest
+import com.velord.backend.model.MovieRosterResponse
 import io.ktor.client.call.body
+import io.ktor.client.request.header
 import io.ktor.http.path
 import kotlinx.coroutines.delay
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import org.koin.core.annotation.Provided
 import org.koin.core.annotation.Single
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
-
-@Serializable
-data class MovieResponse(
-    val id: Int,
-    @SerialName("original_title")
-    val title: String,
-    @SerialName("release_date")
-    val date: String,
-    @SerialName("poster_path")
-    val imagePath: String,
-    @SerialName("overview")
-    val description: String
-) {
-    private fun parseDate(): Calendar {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val date: Date? = sdf.parse(date)
-        val calendar = Calendar.getInstance()
-        if (date != null) {
-            calendar.time = date
-        }
-
-        return calendar
-    }
-
-    fun toDomain() = Movie(
-        id = id,
-        title = title,
-        description = description,
-        isLiked = false,
-        date = parseDate(),
-    )
-}
-
-@Serializable
-data class MovieRosterResponse(
-    val page: Int,
-    val results: List<MovieResponse>,
-)
 
 interface MovieService {
     suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse
 }
 
-@JvmInline
-value class MoviePageRequest(val page: Int)
+private const val AUTHORIZATION_HEADER = "Authorization"
+private const val BEARER = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiOGJhNDk4ZGFiOTUzYmZhYzVhMTI4YzQ0ZWM2ZSIsIm5iZiI6MTcyMTMzNTMzOC4yMDgxMzYsInN1YiI6IjY2OTk3ZDE0OTU3YjM2NWNjOGZkNzIwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VoVoq1XiABNy-3i8BUe-WXvg7Sp5AjDfrF-yFMmh1eM"
 
 @Single
 class MovieServiceImpl(
@@ -67,6 +25,7 @@ class MovieServiceImpl(
         val sdf = "3/discover/movie"
         delay(5000)
         return client.get {
+            header(AUTHORIZATION_HEADER, BEARER)
             url {
                 path(sdf)
                 parameters.append("vote_average.gte", "7")

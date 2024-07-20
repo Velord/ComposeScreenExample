@@ -4,7 +4,9 @@ import android.util.Log
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetAllMovieUC
+import com.velord.usecase.movie.GetMovieResult
 import com.velord.usecase.movie.LoadNewPageMovieUC
+import com.velord.usecase.movie.MovieResult
 import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import kotlinx.coroutines.FlowPreview
@@ -13,10 +15,18 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
-data class AllMovieUiState(val roster: List<Movie>) {
+data class AllMovieUiState(
+    val roster: List<Movie>,
+    val isLoading: Boolean,
+    val isRefreshing: Boolean,
+    val error: String?
+) {
     companion object {
         val DEFAULT: AllMovieUiState = AllMovieUiState(
-            roster = emptyList()
+            roster = emptyList(),
+            isLoading = false,
+            isRefreshing = false,
+            error = null
         )
     }
 }
@@ -54,14 +64,29 @@ class AllMovieViewModel(
     }
 
     fun onRefresh() {
-        refreshMovieUC()
+        if (uiState.value.isRefreshing) return
+
+        launch {
+            uiState.value = uiState.value.copy(isRefreshing = true)
+            when(refreshMovieUC()) {
+                MovieResult.Success -> uiState.value = uiState.value.copy(error = null)
+                is MovieResult.LoadPageFailed -> uiState.value = uiState.value.copy(error = "Error")
+            }
+        }.invokeOnCompletion {
+            uiState.value = uiState.value.copy(isRefreshing = false)
+        }
     }
 
     @OptIn(FlowPreview::class)
     private fun observe() {
         launch {
-            getAllMovieUC().collect { roster ->
-                uiState.value = AllMovieUiState(roster)
+            val result = getAllMovieUC()
+            when(result) {
+                is GetMovieResult.Success -> uiState.value = uiState.value.copy(error = null)
+                is GetMovieResult.DBError -> uiState.value = uiState.value.copy(error = "Error")
+            }
+            result.flow.collect { roster ->
+                uiState.value = uiState.value.copy(roster = roster)
             }
         }
 
@@ -72,8 +97,23 @@ class AllMovieViewModel(
                 .debounce(300)
                 .collect {
                     Log.d("@@@", "loadNewPageMovieUC: $it")
-                    loadNewPageMovieUC()
+                    loadNewPage()
                 }
+        }
+    }
+
+    private fun loadNewPage() {
+        if (uiState.value.isLoading) return
+        if (uiState.value.isRefreshing) return
+
+        launch {
+            uiState.value = uiState.value.copy(isLoading = true)
+            when(loadNewPageMovieUC()) {
+                MovieResult.Success -> uiState.value = uiState.value.copy(error = null)
+                is MovieResult.LoadPageFailed -> uiState.value = uiState.value.copy(error = "Error")
+            }
+        }.invokeOnCompletion {
+            uiState.value = uiState.value.copy(isLoading = false)
         }
     }
 }
