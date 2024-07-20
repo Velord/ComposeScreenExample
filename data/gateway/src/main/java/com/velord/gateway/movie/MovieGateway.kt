@@ -34,7 +34,7 @@ class MovieGateway(
     }
 
     override suspend fun loadNewPage() {
-        val movieRoster = service.getMovie(MoviePageRequest(++currentPage))
+        val movieRoster = service.getMovie(MoviePageRequest(currentPage++))
         roster.update { movies ->
             movies + movieRoster.results.map {
                 it.toDomain()
@@ -43,6 +43,8 @@ class MovieGateway(
     }
 
     override suspend fun refresh() {
+        roster.value = emptyList()
+
         currentPage = 1
         val movieRoster = service.getMovie(MoviePageRequest(currentPage))
         roster.value = movieRoster.results.map {

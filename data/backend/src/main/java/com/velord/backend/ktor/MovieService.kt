@@ -22,8 +22,8 @@ class MovieServiceImpl(
 ) : MovieService {
 
     override suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse {
-        val sdf = "3/discover/movie"
-        delay(5000)
+        val sdf = "/3/discover/movie"
+        delay(3000)
         return client.get {
             header(AUTHORIZATION_HEADER, BEARER)
             url {

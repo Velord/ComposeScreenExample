@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,11 +13,16 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
@@ -76,6 +82,7 @@ internal fun ColumnScope.MoviePager(
                 onLike = allMovieViewModel::onLikeClick,
                 isPaginationAvailable = true,
                 onEndList = allMovieViewModel::onEndList,
+                isRefreshing = allMovieUiState.value.isRefreshing,
                 onRefresh = allMovieViewModel::onRefresh
             )
             1 -> Page(
@@ -87,6 +94,7 @@ internal fun ColumnScope.MoviePager(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun Page(
     roster: List<Movie>,
@@ -94,26 +102,70 @@ private fun Page(
     onLike: (Movie) -> Unit,
     isPaginationAvailable: Boolean = false,
     onEndList: (lastVisibleIndex: Int) -> Unit = {},
+    isRefreshing: Boolean = false,
     onRefresh: () -> Unit = {}
 ) {
+    val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
+    ) {
+        Pager(
+            roster = roster,
+            selectedSortOption = selectedSortOption,
+            onLike = onLike,
+            isPaginationAvailable = isPaginationAvailable,
+            onEndList = onEndList
+        )
+
+        if (isPaginationAvailable) {
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
+    }
+}
+
+@Composable
+private fun Pager(
+    roster: List<Movie>,
+    selectedSortOption: MovieSortOptionUI?,
+    onLike: (Movie) -> Unit,
+    isPaginationAvailable: Boolean = false,
+    onEndList: (lastVisibleIndex: Int) -> Unit = {},
+) {
+    val pagerState = rememberLazyListState()
     val sortOptionState = remember {
         mutableStateOf(selectedSortOption)
     }
     val rosterSizeState = remember {
-        mutableStateOf(roster.size)
+        mutableIntStateOf(roster.size)
     }
-    rosterSizeState.value = roster.size
-    val state = rememberLazyListState()
+    rosterSizeState.intValue = roster.size
+
     val isAtBottomState = remember {
         derivedStateOf {
-            val lastVisibleIndex = state.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
+            val lastVisibleIndex = pagerState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
 //            Log.d("@@@", "derivedStateOf: $lastVisibleIndex")
 //            Log.d("@@@", "derivedStateOf Roster: ${rosterSizeState.value}")
-            // Can be Movie or CircularProgressIndicator
-            lastVisibleIndex >= rosterSizeState.value - PRELOAD_BEFORE_END
+            lastVisibleIndex >= rosterSizeState.intValue - PRELOAD_BEFORE_END
         }
     }
     Log.d("@@@", "isAtBottomState: ${isAtBottomState.value}")
+
+    LaunchedEffect(isAtBottomState) {
+        snapshotFlow { isAtBottomState.value }
+            .filter { it }
+            .collect {
+                val lastVisibleIndex = pagerState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
+                Log.d("@@@", "onEndList: $lastVisibleIndex")
+                onEndList(lastVisibleIndex)
+            }
+    }
 
     LaunchedEffect(key1 = selectedSortOption) {
         snapshotFlow { sortOptionState.value }
@@ -121,21 +173,11 @@ private fun Page(
             .collect {
                 sortOptionState.value = selectedSortOption
                 delay(300)
-                state.scrollToItem(0)
+                pagerState.scrollToItem(0)
             }
     }
 
-    LaunchedEffect(isAtBottomState) {
-        snapshotFlow { isAtBottomState.value }
-            .filter { it }
-            .collect {
-                val lastVisibleIndex = state.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
-                Log.d("@@@", "onEndList: $lastVisibleIndex")
-                onEndList(lastVisibleIndex)
-            }
-    }
-
-    LazyColumn(state = state) {
+    LazyColumn(state = pagerState) {
         itemsIndexed(
             items = roster,
             key = { _, item -> item.id }
@@ -155,7 +197,7 @@ private fun Page(
 
         if (isPaginationAvailable) {
             item {
-                AnimatedVisibility(visible = isAtBottomState.value) {
+                AnimatedVisibility(visible = isAtBottomState.value && roster.isNotEmpty()) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
