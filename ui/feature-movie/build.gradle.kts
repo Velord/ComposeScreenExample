@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
+    implementation(libs.bundles.coil)
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)
