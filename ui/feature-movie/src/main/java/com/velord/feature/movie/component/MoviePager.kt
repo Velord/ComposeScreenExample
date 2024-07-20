@@ -1,6 +1,5 @@
 package com.velord.feature.movie.component
 
-import android.util.Log
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,12 +15,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.feature.movie.model.MovieSortOptionUI
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.model.movie.Movie
 import com.velord.uicore.compose.preview.PreviewCombined
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filter
 import org.koin.androidx.compose.koinViewModel
 import java.util.Calendar
 
@@ -51,16 +52,6 @@ internal fun ColumnScope.MoviePager(
         }
     }
 
-    val sortOptionState = remember {
-        mutableStateOf(uiState.getSelectedSortOption())
-    }
-    Log.d("@@@", "sortOptionState: ${sortOptionState.value}")
-    Log.d("@@@", "uiState: ${uiState.getSelectedSortOption()}")
-    val isChanged = sortOptionState.value != uiState.getSelectedSortOption()
-    sortOptionState.value = uiState.getSelectedSortOption()
-    Log.d("@@@", "isChanged: ${isChanged}")
-
-
     HorizontalPager(
         state = pagerState,
         modifier = Modifier
@@ -70,12 +61,12 @@ internal fun ColumnScope.MoviePager(
         when(index) {
             0 -> Page(
                 roster = allMovieUiState.value.roster,
-                isSortChanged = isChanged,
+                selectedSortOption = uiState.getSelectedSortOption(),
                 onLike = allMovieViewModel::onLikeClick
             )
             1 -> Page(
                 roster = favoriteMovieUiState.value.roster,
-                isSortChanged = isChanged,
+                selectedSortOption = uiState.getSelectedSortOption(),
                 onLike = favoriteMovieViewModel::onLikeClick
             )
         }
@@ -85,17 +76,22 @@ internal fun ColumnScope.MoviePager(
 @Composable
 private fun Page(
     roster: List<Movie>,
-    isSortChanged: Boolean,
+    selectedSortOption: MovieSortOptionUI?,
     onLike: (Movie) -> Unit
 ) {
+    val sortOptionState = remember {
+        mutableStateOf(selectedSortOption)
+    }
     val state = rememberLazyListState()
 
-
-    LaunchedEffect(key1 = isSortChanged) {
-        if (isSortChanged) {
-            delay(3000)
-            state.scrollToItem(0)
-        }
+    LaunchedEffect(key1 = selectedSortOption) {
+        snapshotFlow { sortOptionState.value }
+            .filter { it != selectedSortOption }
+            .collect {
+                sortOptionState.value = selectedSortOption
+                delay(300)
+                state.scrollToItem(0)
+            }
     }
 
     LazyColumn(
@@ -169,7 +165,7 @@ private fun MoviePagerPreview() {
                 date = Calendar.getInstance()
             ),
         ),
-        isSortChanged = false,
+        selectedSortOption = MovieSortOptionUI.Default,
         onLike = {}
     )
 }
