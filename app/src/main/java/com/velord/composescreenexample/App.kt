@@ -26,6 +26,8 @@ import com.velord.splash.SplashViewModel
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetFavoriteMovieUC
 import com.velord.usecase.movie.GetMovieSortOptionUC
+import com.velord.usecase.movie.LoadNewPageMovieUC
+import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import com.velord.usecase.setting.GetThemeConfigUC
@@ -51,6 +53,8 @@ private val useCaseModule = module {
     factory { GetMovieSortOptionUC(get()) }
     factory { SetMovieSortOptionUC(get()) }
     factory { UpdateMovieLikeUC(get()) }
+    factory { LoadNewPageMovieUC(get()) }
+    factory { RefreshMovieUC(get()) }
 }
 
 private val viewModelModule = module {

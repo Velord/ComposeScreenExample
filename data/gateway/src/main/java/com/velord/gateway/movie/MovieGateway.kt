@@ -19,8 +19,8 @@ class MovieGateway(
 ) : MovieDS {
 
     private val scope = CoroutineScope(Dispatchers.IO)
-
     private val roster = MutableStateFlow<List<Movie>>(emptyList())
+    private var currentPage: Int = 1
 
     init {
         initialize()
@@ -40,6 +40,26 @@ class MovieGateway(
         }
     }
 
+    override fun loadNewPage() {
+        scope.launch {
+            try {
+                val movieRoster = service.getMovie(MoviePageRequest(++currentPage))
+                roster.update { movies ->
+                    movies + movieRoster.results.map {
+                        it.toDomain()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d("@@@", "Error: ${e.message}")
+            }
+        }
+    }
+
+    override fun refresh() {
+        currentPage = 1
+        initialize()
+    }
+
     private fun initialize() {
         if (roster.value.isEmpty()) {
             roster.value = testMovieRoster
@@ -47,7 +67,7 @@ class MovieGateway(
 
         scope.launch {
             try {
-                val movieRoster = service.getMovie(MoviePageRequest(1))
+                val movieRoster = service.getMovie(MoviePageRequest(currentPage))
                 roster.value = movieRoster.results.map {
                     it.toDomain()
                 }
