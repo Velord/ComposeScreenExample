@@ -1,9 +1,9 @@
 package com.velord.feature.movie.component
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,6 +34,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import org.koin.androidx.compose.koinViewModel
 import java.util.Calendar
+
+private const val PRELOAD_BEFORE_END = 10
 
 @Composable
 internal fun ColumnScope.MoviePager(
@@ -72,6 +74,7 @@ internal fun ColumnScope.MoviePager(
                 roster = allMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption(),
                 onLike = allMovieViewModel::onLikeClick,
+                isPaginationAvailable = true,
                 onEndList = allMovieViewModel::onEndList,
                 onRefresh = allMovieViewModel::onRefresh
             )
@@ -89,18 +92,28 @@ private fun Page(
     roster: List<Movie>,
     selectedSortOption: MovieSortOptionUI?,
     onLike: (Movie) -> Unit,
+    isPaginationAvailable: Boolean = false,
     onEndList: (lastVisibleIndex: Int) -> Unit = {},
     onRefresh: () -> Unit = {}
 ) {
     val sortOptionState = remember {
         mutableStateOf(selectedSortOption)
     }
+    val rosterSizeState = remember {
+        mutableStateOf(roster.size)
+    }
+    rosterSizeState.value = roster.size
     val state = rememberLazyListState()
     val isAtBottomState = remember {
         derivedStateOf {
-            state.canScrollForward.not()
+            val lastVisibleIndex = state.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
+//            Log.d("@@@", "derivedStateOf: $lastVisibleIndex")
+//            Log.d("@@@", "derivedStateOf Roster: ${rosterSizeState.value}")
+            // Can be Movie or CircularProgressIndicator
+            lastVisibleIndex >= rosterSizeState.value - PRELOAD_BEFORE_END
         }
     }
+    Log.d("@@@", "isAtBottomState: ${isAtBottomState.value}")
 
     LaunchedEffect(key1 = selectedSortOption) {
         snapshotFlow { sortOptionState.value }
@@ -122,10 +135,7 @@ private fun Page(
             }
     }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = state
-    ) {
+    LazyColumn(state = state) {
         itemsIndexed(
             items = roster,
             key = { _, item -> item.id }
@@ -142,20 +152,22 @@ private fun Page(
                 onLike = { onLike(item) }
             )
         }
-        if (isAtBottomState.value) {
+
+        if (isPaginationAvailable) {
             item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp)
-                ) {
-                    CircularProgressIndicator(
+                AnimatedVisibility(visible = isAtBottomState.value) {
+                    Box(
                         modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(64.dp)
-                        ,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp)
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .size(64.dp),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 }
             }
         }
