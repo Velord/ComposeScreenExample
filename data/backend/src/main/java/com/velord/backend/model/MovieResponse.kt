@@ -16,7 +16,7 @@ data class MovieResponse(
     @SerialName("release_date")
     val date: String,
     @SerialName("poster_path")
-    val imagePath: String,
+    val imageUrl: String,
     @SerialName("overview")
     val description: String
 ) {
@@ -37,5 +37,6 @@ data class MovieResponse(
         description = description,
         isLiked = false,
         date = parseDate(),
+        imagePath = imageUrl
     )
 }

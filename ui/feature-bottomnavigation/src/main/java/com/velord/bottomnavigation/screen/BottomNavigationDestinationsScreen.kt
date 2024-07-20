@@ -42,6 +42,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
+import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
@@ -56,8 +57,10 @@ interface BottomNavigator {
     fun getGraph(): NavHostGraphSpec
     @Composable fun CreateDestinationsNavHostForBottom(
         navController: NavHostController,
-        modifier: Modifier
+        modifier: Modifier,
+        startRoute: BottomNavigationDestination
     )
+    fun getDestinationSpec(route: BottomNavigationDestination): DestinationSpec
 }
 
 enum class BottomNavigationDestination {
@@ -91,9 +94,11 @@ fun BottomNavigationDestination(
         // Current logic is simple, we just allow the back handling
         viewModel.graphCompletedHandling()
     }
+
     val navController = rememberNavController()
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry.value?.destination
+
     LaunchedEffect(currentDestination) {
         val nodes = mutableListOf<NavDestination>()
         navController.graph.nodes.forEach { _, value ->
@@ -108,16 +113,27 @@ fun BottomNavigationDestination(
         viewModel.updateBackHandling(startDestinationRoster, currentDestination)
     }
 
+    LaunchedEffect(key1 = tabState) {
+        snapshotFlow { tabState.value }.collect { tab ->
+            onTabClick(
+                isSelected = tab.isSame,
+                item = tab.current,
+                navController = navController,
+                navigator = navigator,
+                onClick = {}
+            )
+        }
+    }
+
     Content(
-        navigator = navigator,
-        controller = navController,
-        tab = tabState.value,
+        tab = tabState.value.current,
         createNavHost = {
             navigator.CreateDestinationsNavHostForBottom(
                 navController = navController,
                 modifier = Modifier
                     .padding(bottom = it.calculateBottomPadding())
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                startRoute = tabState.value.current
             )
         },
         getNavigationItems = viewModel::getNavigationItems,
@@ -149,8 +165,6 @@ fun BottomNavigationDestination(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun Content(
-    navigator: BottomNavigator,
-    controller: NavHostController,
     tab: BottomNavigationDestination,
     createNavHost: @Composable (PaddingValues) -> Unit,
     getNavigationItems: () -> List<BottomNavigationDestination>,
@@ -159,8 +173,6 @@ private fun Content(
     Scaffold(
         bottomBar = {
             BottomBar(
-                navigator = navigator,
-                navController = controller,
                 tabs = getNavigationItems(),
                 selectedItem = tab,
                 onClick = onTabClick,
@@ -172,10 +184,38 @@ private fun Content(
     )
 }
 
+private fun onTabClick(
+    isSelected: Boolean,
+    item: BottomNavigationDestination,
+    navController: NavController,
+    navigator: BottomNavigator,
+    onClick: (BottomNavigationDestination) -> Unit
+) {
+    if (isSelected) {
+        // When we click again on a bottom bar item and it was already selected
+        // we want to pop the back stack until the initial destination of this bottom bar item
+        navController.popBackStack(navigator.getRoute(item), false)
+        return
+    }
+
+    navController.navigate(navigator.getRoute(item)) {
+        // Pop up to the root of the graph to
+        // avoid building up a large stack of destinations
+        // on the back stack as users select items
+        popUpTo(navigator.getGraph().route) {
+            saveState = true
+        }
+        // Avoid multiple copies of the same destination when
+        // reselecting the same item
+        launchSingleTop = true
+        // Restore state when reselecting a previously selected item
+        restoreState = true
+    }
+    onClick(item)
+}
+
 @Composable
 private fun BottomBar(
-    navigator: BottomNavigator,
-    navController: NavController,
     tabs: List<BottomNavigationDestination>,
     selectedItem: BottomNavigationDestination,
     onClick: (BottomNavigationDestination) -> Unit,
@@ -190,29 +230,7 @@ private fun BottomBar(
             //val isCurrentDestOnBackStack = navController.isRouteOnBackStack(item.direction)
             NavigationBarItem(
                 selected = isSelected,
-                onClick = {
-                    if (isSelected) {
-                        // When we click again on a bottom bar item and it was already selected
-                        // we want to pop the back stack until the initial destination of this bottom bar item
-                        navController.popBackStack(navigator.getRoute(item), false)
-                        return@NavigationBarItem
-                    }
-
-                    navController.navigate(navigator.getRoute(item)) {
-                        // Pop up to the root of the graph to
-                        // avoid building up a large stack of destinations
-                        // on the back stack as users select items
-                        popUpTo(navigator.getGraph().route) {
-                            saveState = true
-                        }
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
-                        restoreState = true
-                    }
-                    onClick(item)
-                },
+                onClick = { onClick(item) },
                 label = {},
                 icon = {
                     val color = MaterialTheme.colorScheme.run {

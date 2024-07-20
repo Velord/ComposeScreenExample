@@ -6,21 +6,41 @@ import com.velord.bottomnavigation.screen.BottomNavigationDestination
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
+
+data class TabState(
+    val previous: BottomNavigationDestination,
+    val current: BottomNavigationDestination
+) {
+    val isSame: Boolean get() = previous == current
+
+    companion object {
+        val Default = TabState(
+            previous = BottomNavigationDestination.Demo,
+            current = BottomNavigationDestination.Demo
+        )
+    }
+}
 
 @KoinViewModel
 class BottomNavigationDestinationsVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeViewModel() {
 
-    val currentTabFlow = MutableStateFlow(BottomNavigationDestination.Camera)
+    // Prev Curr
+    val currentTabFlow = MutableStateFlow(TabState.Default)
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
     val finishAppEvent = MutableSharedFlow<Unit>()
 
     fun onTabClick(newTab: BottomNavigationDestination) {
-        if (newTab == currentTabFlow.value) return
-        currentTabFlow.value = newTab
+        currentTabFlow.update {
+            it.copy(
+                previous = it.current,
+                current = newTab
+            )
+        }
     }
 
     fun onBackDoubleClick() = launch {
