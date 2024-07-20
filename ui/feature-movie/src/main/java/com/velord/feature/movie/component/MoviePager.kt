@@ -1,21 +1,28 @@
 package com.velord.feature.movie.component
 
 import android.util.Log
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.feature.movie.model.MovieSortOptionUI
 import com.velord.feature.movie.viewModel.AllMovieViewModel
@@ -82,7 +89,7 @@ private fun Page(
     roster: List<Movie>,
     selectedSortOption: MovieSortOptionUI?,
     onLike: (Movie) -> Unit,
-    onEndList: () -> Unit = {},
+    onEndList: (lastVisibleIndex: Int) -> Unit = {},
     onRefresh: () -> Unit = {}
 ) {
     val sortOptionState = remember {
@@ -109,8 +116,9 @@ private fun Page(
         snapshotFlow { isAtBottomState.value }
             .filter { it }
             .collect {
-                Log.d("@@@", "onEndList")
-                onEndList()
+                val lastVisibleIndex = state.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
+                Log.d("@@@", "onEndList: $lastVisibleIndex")
+                onEndList(lastVisibleIndex)
             }
     }
 
@@ -133,6 +141,23 @@ private fun Page(
                 movie = item,
                 onLike = { onLike(item) }
             )
+        }
+        if (isAtBottomState.value) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(64.dp)
+                        ,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
         }
     }
 }

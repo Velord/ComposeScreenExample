@@ -1,6 +1,5 @@
 package com.velord.feature.movie.viewModel
 
-import android.util.Log
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetFavoriteMovieUC
@@ -26,7 +25,6 @@ class FavoriteMovieViewModel(
     init {
         launch {
             getFavoriteMovieUC().collect { roster ->
-                Log.d("@@@", "FavoriteMovieViewModel $roster")
                 uiState.value = FavoriteMovieUiState(roster)
             }
         }
