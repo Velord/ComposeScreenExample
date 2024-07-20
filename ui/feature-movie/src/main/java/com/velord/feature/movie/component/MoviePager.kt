@@ -35,6 +35,7 @@ import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.model.movie.Movie
+import com.velord.model.movie.PICSUM_HOST
 import com.velord.uicore.compose.preview.PreviewCombined
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
@@ -196,7 +197,7 @@ private fun Pager(
         }
 
         if (isPaginationAvailable) {
-            item {
+            item("Pager CircularProgressIndicator") {
                 AnimatedVisibility(visible = isAtBottomState.value && roster.isNotEmpty()) {
                     Box(
                         modifier = Modifier
@@ -226,42 +227,48 @@ private fun MoviePagerPreview() {
                 title = "Star Wars",
                 description = "A long time ago in a galaxy far, far away...",
                 isLiked = true,
-                date = Calendar.getInstance()
+                date = Calendar.getInstance(),
+                imagePath = "$PICSUM_HOST/200/300"
             ),
             Movie(
                 id = 2,
                 title = "The Lord of the Rings",
                 description = "One ring",
                 isLiked = false,
-                date = Calendar.getInstance()
+                date = Calendar.getInstance(),
+                imagePath = "$PICSUM_HOST/200/300"
             ),
             Movie(
                 id = 3,
                 title = "Shawshank Redemption",
                 description = "Two imprisoned",
                 isLiked = true,
-                date = Calendar.getInstance()
+                date = Calendar.getInstance(),
+                imagePath = "$PICSUM_HOST/200/300"
             ),
             Movie(
                 id = 4,
                 title = "The Godfather",
                 description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
                 isLiked = false,
-                date = Calendar.getInstance()
+                date = Calendar.getInstance(),
+                imagePath = "$PICSUM_HOST/200/300"
             ),
             Movie(
                 id = 5,
                 title = "The Dark Knight",
                 description = "When the menace known as the Joker wreaks havoc and chaos on the",
                 isLiked = true,
-                date = Calendar.getInstance()
+                date = Calendar.getInstance(),
+                imagePath = "$PICSUM_HOST/200/300"
             ),
             Movie(
                 id = 6,
                 title = "The Matrix",
                 description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
                 isLiked = false,
-                date = Calendar.getInstance()
+                date = Calendar.getInstance(),
+                imagePath = "$PICSUM_HOST/200/300"
             ),
         ),
         selectedSortOption = MovieSortOptionUI.Default,

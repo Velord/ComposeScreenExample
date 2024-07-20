@@ -4,23 +4,22 @@ import android.view.animation.AnticipateOvershootInterpolator
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.HeartBroken
-import androidx.compose.material.icons.rounded.ImageSearch
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -41,6 +40,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.velord.model.movie.Movie
 import com.velord.uicore.compose.animation.interpolator.toEasing
 import com.velord.uicore.compose.preview.PreviewCombined
@@ -58,35 +58,25 @@ internal fun MovieCard(
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
         ),
-        elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = 8.dp
-        )
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max)
+            ,
             verticalAlignment = Alignment.Top
         ) {
-            Column(
-                modifier = Modifier.sizeIn(maxWidth = 64.dp),
-                verticalArrangement = Arrangement.Top
-            ) {
-                Image(
-                    imageVector = Icons.Rounded.ImageSearch,
-                    contentDescription = "Movie Image",
-                    modifier = Modifier.defaultMinSize(64.dp),
-                    contentScale = ContentScale.Crop
-                )
-                Text(
-                    text = movie.formattedDateForCard,
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .padding(vertical = 8.dp),
-                    style = MaterialTheme.typography.labelSmall,
-                    fontSize = 10.sp
-                )
-            }
+            AsyncImage(
+                model = movie.imageUrl,
+                contentDescription = "Movie Image",
+                modifier = Modifier
+                    .sizeIn(maxWidth = 64.dp)
+                ,
+                contentScale = ContentScale.FillBounds
+            )
 
             Box(
                 modifier = Modifier
@@ -95,7 +85,7 @@ internal fun MovieCard(
                     .fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.align(Alignment.CenterStart),
+                    modifier = Modifier.align(Alignment.TopStart),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -110,6 +100,14 @@ internal fun MovieCard(
                         modifier = Modifier.padding(end = 16.dp),
                         color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.bodySmall,
+                    )
+
+                    Text(
+                        text = movie.formattedDateForCard,
+                        modifier = Modifier.padding(bottom = 36.dp),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        style = MaterialTheme.typography.labelSmall,
+                        fontSize = 10.sp
                     )
                 }
 
@@ -231,13 +229,14 @@ private fun PreviewCard() {
         movie = Movie(
             id = 1,
             title = "Title sdsdfdssdfsd ddd",
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            description = "Lorem ipsum dolor sit amet, consectetur adipLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et discing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             isLiked = true,
             date = Calendar.getInstance().apply {
                 set(Calendar.YEAR, 2021)
                 set(Calendar.MONTH, 1)
                 set(Calendar.DAY_OF_MONTH, 1)
-            }
+            },
+            imagePath = "https://picsum.photos/200/300"
         ),
         onLike = {}
     )

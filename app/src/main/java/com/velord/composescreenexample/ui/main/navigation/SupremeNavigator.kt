@@ -16,7 +16,9 @@ import com.ramcosta.composedestinations.generated.destinations.ShapeDemoDestinat
 import com.ramcosta.composedestinations.generated.navgraphs.BottomNavigationNavGraph
 import com.ramcosta.composedestinations.generated.navgraphs.CameraRecordingNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
+import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
+import com.ramcosta.composedestinations.utils.startDestination
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.bottomnavigation.screen.BottomNavigationDestination
 import com.velord.bottomnavigation.screen.BottomNavigator
@@ -39,12 +41,14 @@ class SupremeNavigator(
     @Composable
     override fun CreateDestinationsNavHostForBottom(
         navController: NavHostController,
-        modifier: Modifier
+        modifier: Modifier,
+        startRoute: BottomNavigationDestination
     ) {
         DestinationsNavHost(
-            navController = navController,
             navGraph = BottomNavigationNavGraph,
             modifier = modifier,
+            startRoute = getDestinationSpec(startRoute),
+            navController = navController,
             dependenciesContainerBuilder = {
                 dependency(SupremeNavigator(navController = navController))
             }
@@ -67,5 +71,11 @@ class SupremeNavigator(
         navController.toDestinationsNavigator().navigate(
             CameraRecordingSettingsDestinationDestination
         )
+    }
+
+    override fun getDestinationSpec(route: BottomNavigationDestination): DestinationSpec = when(route) {
+        BottomNavigationDestination.Camera -> CameraRecordingNavGraph.startDestination
+        BottomNavigationDestination.Demo -> DemoDestinationDestination
+        BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination
     }
 }

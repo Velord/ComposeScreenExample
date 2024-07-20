@@ -52,7 +52,7 @@ class AllMovieViewModel(
         updateMovieLikeUC(movie)
     }
 
-    fun onEndList(lastVisibleIndex: Int) {
+    fun onEndList(triggerIndex: Int) {
         // TODO: Add Additional logic
         // if (lastVisibleIndex < uiState.value.roster.lastIndex) return
 
@@ -66,6 +66,7 @@ class AllMovieViewModel(
     fun onRefresh() {
         if (uiState.value.isRefreshing) return
 
+        lastListIndexFlow.tryEmit(INIT_INDEX)
         launch {
             uiState.value = uiState.value.copy(isRefreshing = true)
             when(refreshMovieUC()) {

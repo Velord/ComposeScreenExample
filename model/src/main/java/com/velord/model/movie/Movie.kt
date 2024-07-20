@@ -3,12 +3,15 @@ package com.velord.model.movie
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
+const val PICSUM_HOST = "https://picsum.photos"
+
 data class Movie(
     val id: Int,
     val title: String,
     val description: String,
     val isLiked: Boolean,
     val date: Calendar,
+    val imagePath: String
 ) {
 
     val formattedDateForCard: String get() {
@@ -20,7 +23,7 @@ data class Movie(
         val month = formatterMonth.format(date.time)
         val day = formatterDay.format(date.time)
 
-        return "$year\n$month $day"
+        return "$year $month $day"
     }
 
     val formattedDateForDivider: String get() {
@@ -36,4 +39,10 @@ data class Movie(
     fun isAnotherMonthOrYear(calendar: Calendar?): Boolean =
         date.get(Calendar.MONTH) != calendar?.get(Calendar.MONTH) ||
                 date.get(Calendar.YEAR) != calendar.get(Calendar.YEAR)
+
+    val imageUrl: String get() = if (imagePath.contains(PICSUM_HOST)) {
+        imagePath
+    } else {
+        "https://image.tmdb.org/t/p/original$imagePath"
+    }
 }

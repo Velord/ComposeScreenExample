@@ -44,7 +44,7 @@ import com.velord.resource.R
 import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.LocalTheme
 
-private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 1000
+private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 500
 private const val ROTATE_AFTER = ANIMATION_TRANSITION_TO_CURRENT_THEME + 1000
 /*
 Splash screen is the most refined copy representation of the OS splash screen.
