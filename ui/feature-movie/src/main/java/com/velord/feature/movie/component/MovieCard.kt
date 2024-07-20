@@ -58,7 +58,7 @@ internal fun MovieCard(
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
         ),
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 8.dp

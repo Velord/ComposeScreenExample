@@ -43,7 +43,8 @@ class AllMovieViewModel(
     }
 
     fun onEndList(lastVisibleIndex: Int) {
-        if (lastVisibleIndex != uiState.value.roster.lastIndex) return
+        // TODO: Add Additional logic
+        // if (lastVisibleIndex < uiState.value.roster.lastIndex) return
 
         val lastIndex = uiState.value.roster.lastIndex
         val isEndList = lastListIndexFlow.value == lastIndex

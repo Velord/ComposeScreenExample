@@ -43,7 +43,6 @@ internal fun MovieHeader(
             .statusBarsPadding()
             .fillMaxWidth()
             .clip(RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
-            .background(MaterialTheme.colorScheme.surfaceContainer)
         ,
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
@@ -66,8 +65,8 @@ private fun RowScope.HeaderButton(
     isActive: Boolean,
     onClick: () -> Unit
 ) {
-    val high = MaterialTheme.colorScheme.surfaceContainerHighest
-    val low = MaterialTheme.colorScheme.surfaceContainerLow
+    val high = MaterialTheme.colorScheme.primaryContainer
+    val low = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
     val containerColor = remember {
         Animatable(high)
     }
