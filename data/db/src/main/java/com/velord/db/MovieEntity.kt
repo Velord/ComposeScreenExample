@@ -18,10 +18,13 @@ data class MovieEntity(
     @ColumnInfo
     val date: String,
     @ColumnInfo
-    val imagePath: String,
+    val rating: Float,
     @ColumnInfo
-    val rating: Float
+    val voteCount: Int,
+    @ColumnInfo
+    val imagePath: String?,
 ) {
+
     fun toDomain(): Movie {
         return Movie(
             id = id,
@@ -29,8 +32,22 @@ data class MovieEntity(
             description = description,
             isLiked = isLiked,
             date = Movie.toCalendar(date),
+            rating = rating,
+            voteCount = voteCount,
             imagePath = imagePath,
-            rating = rating
+        )
+    }
+
+    companion object {
+        operator fun invoke(movie: Movie): MovieEntity = MovieEntity(
+            id = movie.id,
+            title = movie.title,
+            description = movie.description,
+            isLiked = movie.isLiked,
+            date = Movie.toRaw(movie.date),
+            rating = movie.rating,
+            voteCount = movie.voteCount,
+            imagePath = movie.imagePath,
         )
     }
 }

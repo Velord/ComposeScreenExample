@@ -8,4 +8,8 @@ enum class SortType {
 data class MovieSortOption(
     val type: SortType,
     val isSelected: Boolean
-)
+) {
+    companion object {
+        val Default = MovieSortOption(SortType.DateDescending, true)
+    }
+}

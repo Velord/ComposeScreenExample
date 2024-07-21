@@ -15,6 +15,7 @@ data class Movie(
     val isLiked: Boolean,
     val date: Calendar,
     val rating: Float,
+    val voteCount: Int,
     val imagePath: String? = null,
 ) {
 
@@ -63,7 +64,7 @@ data class Movie(
             return calendar
         }
 
-        fun toString(calendar: Calendar): String {
+        fun toRaw(calendar: Calendar): String {
             val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
             return sdf.format(calendar.time)
         }

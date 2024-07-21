@@ -16,7 +16,9 @@ data class MovieResponse(
     @SerialName("overview")
     val description: String,
     @SerialName("vote_average")
-    val rating: Float
+    val rating: Float,
+    @SerialName("vote_count")
+    val voteCount: Int,
 ) {
     fun toDomain() = Movie(
         id = id,
@@ -24,7 +26,8 @@ data class MovieResponse(
         description = description,
         isLiked = false,
         date = Movie.toCalendar(date),
+        rating = rating,
+        voteCount = voteCount,
         imagePath = imageUrl,
-        rating = rating
     )
 }

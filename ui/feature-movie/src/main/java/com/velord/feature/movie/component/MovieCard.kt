@@ -283,6 +283,7 @@ private fun PreviewCard() {
                 set(Calendar.DAY_OF_MONTH, 1)
             },
             rating = 4.5f,
+            voteCount = 100,
         ),
         onLike = {}
     )
