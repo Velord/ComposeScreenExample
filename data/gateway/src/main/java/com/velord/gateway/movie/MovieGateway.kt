@@ -3,6 +3,7 @@ package com.velord.gateway.movie
 import com.velord.appstate.AppStateService
 import com.velord.backend.ktor.MovieService
 import com.velord.backend.model.MoviePageRequest
+import com.velord.bd.MoviePersistentStorageService
 import com.velord.model.movie.Movie
 import com.velord.usecase.movie.dataSource.MovieDS
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +13,8 @@ import org.koin.core.annotation.Single
 @Single
 class MovieGateway(
     private val appState: AppStateService,
-    private val service: MovieService
+    private val http: MovieService,
+    private val storage: MoviePersistentStorageService
 ) : MovieDS {
 
     private var currentPage: Int = 1
@@ -34,7 +36,7 @@ class MovieGateway(
     }
 
     override suspend fun loadNewPage(): Int {
-        val movieRoster = service.getMovie(MoviePageRequest(currentPage++))
+        val movieRoster = http.getMovie(MoviePageRequest(currentPage++))
         val newRoster = movieRoster.results.map { it.toDomain() }
         appState.movieRosterFlow.update { movies ->
             (movies + newRoster).toSet().toList()
