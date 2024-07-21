@@ -38,7 +38,7 @@ private fun LazyListState.getLastVisibleIndex(): Int {
 }
 
 @Composable
-fun MoviePage(
+internal fun MoviePage(
     roster: List<Movie>,
     selectedSortOption: SortType?,
     onLike: (Movie) -> Unit,

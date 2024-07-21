@@ -26,7 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun MovieSortAndFilter(
+internal fun MovieSortAndFilter(
     uiState: MovieUiState,
     isSortShowing: Boolean,
     isFilterShowing: Boolean,

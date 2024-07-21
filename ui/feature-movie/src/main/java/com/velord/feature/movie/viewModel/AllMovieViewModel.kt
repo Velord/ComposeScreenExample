@@ -4,11 +4,11 @@ import android.util.Log
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetAllMovieUC
-import com.velord.usecase.movie.GetMovieResult
 import com.velord.usecase.movie.LoadNewPageMovieUC
-import com.velord.usecase.movie.MovieLoadNewPageResult
 import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
+import com.velord.usecase.movie.result.GetMovieResult
+import com.velord.usecase.movie.result.MovieLoadNewPageResult
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce

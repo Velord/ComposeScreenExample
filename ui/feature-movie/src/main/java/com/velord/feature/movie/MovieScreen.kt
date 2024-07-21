@@ -3,6 +3,7 @@ package com.velord.feature.movie
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -61,29 +62,42 @@ private fun Content(
                 )
             }
 
-            val showSortBottomSheetState = remember { mutableStateOf(false) }
-            val showFilterBottomSheetState = remember { mutableStateOf(false) }
-
-            MovieAction(
-                onSortClick = {
-                    showSortBottomSheetState.value = true
-                },
-                onFilterClick = {
-                    showFilterBottomSheetState.value = true
-                },
-            )
-
-            MovieSortAndFilter(
+            FloatingAction(
                 uiState = uiState,
-                isSortShowing = showSortBottomSheetState.value,
-                isFilterShowing = showFilterBottomSheetState.value,
-                onHideSort = { showSortBottomSheetState.value = false },
-                onHideFilter = { showFilterBottomSheetState.value = false },
                 onSortOptionClick = onSortOptionClick,
-                onFilterOptionClick = onFilterOptionClick
+                onFilterOptionClick = onFilterOptionClick,
             )
         }
     }
+}
+
+@Composable
+private fun BoxScope.FloatingAction(
+    uiState: MovieUiState,
+    onSortOptionClick: (MovieSortOptionUI) -> Unit,
+    onFilterOptionClick: (MovieFilterOptionUI) -> Unit,
+) {
+    val showSortBottomSheetState = remember { mutableStateOf(false) }
+    val showFilterBottomSheetState = remember { mutableStateOf(false) }
+
+    MovieAction(
+        onSortClick = {
+            showSortBottomSheetState.value = true
+        },
+        onFilterClick = {
+            showFilterBottomSheetState.value = true
+        },
+    )
+
+    MovieSortAndFilter(
+        uiState = uiState,
+        isSortShowing = showSortBottomSheetState.value,
+        isFilterShowing = showFilterBottomSheetState.value,
+        onHideSort = { showSortBottomSheetState.value = false },
+        onHideFilter = { showFilterBottomSheetState.value = false },
+        onSortOptionClick = onSortOptionClick,
+        onFilterOptionClick = onFilterOptionClick
+    )
 }
 
 @PreviewCombined

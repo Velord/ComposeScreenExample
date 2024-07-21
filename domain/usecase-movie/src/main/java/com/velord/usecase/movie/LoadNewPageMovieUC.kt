@@ -3,12 +3,7 @@ package com.velord.usecase.movie
 import android.util.Log
 import com.velord.model.movie.MoviePagination
 import com.velord.usecase.movie.dataSource.MovieDS
-
-sealed class MovieLoadNewPageResult {
-    data object Success : MovieLoadNewPageResult()
-    data object Exausted : MovieLoadNewPageResult()
-    class LoadPageFailed(val message: String) : MovieLoadNewPageResult()
-}
+import com.velord.usecase.movie.result.MovieLoadNewPageResult
 
 class LoadNewPageMovieUC(private val dataSource: MovieDS) {
 

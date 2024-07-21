@@ -3,8 +3,8 @@ package com.velord.feature.movie.viewModel
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetFavoriteMovieUC
-import com.velord.usecase.movie.GetMovieResult
 import com.velord.usecase.movie.UpdateMovieLikeUC
+import com.velord.usecase.movie.result.GetMovieResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 

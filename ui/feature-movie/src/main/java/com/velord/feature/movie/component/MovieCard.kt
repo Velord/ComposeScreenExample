@@ -64,24 +64,12 @@ internal fun MovieCard(
         ),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
     ) {
-
-
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min)
         ) {
-
-//        }
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//            ,
-//            verticalAlignment = Alignment.Top
-//        ) {
-
             val (asyncImage, text) = createRefs()
-
             AsyncImage(
                 model = movie.imageUrl,
                 contentDescription = "Movie Image",
@@ -112,53 +100,8 @@ internal fun MovieCard(
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(
-                        text = movie.title,
-                        modifier = Modifier.padding(end = 24.dp),
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                    Text(
-                        text = movie.description,
-                        modifier = Modifier.padding(end = 16.dp),
-                        color = MaterialTheme.colorScheme.onSurface,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 4.dp)
-                        ,
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = movie.formattedDateForCard,
-                            modifier = Modifier,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            style = MaterialTheme.typography.labelSmall,
-                            fontSize = 10.sp
-                        )
-
-                        Row(
-                            modifier = Modifier.padding(end = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.Star,
-                                contentDescription = "Movie rating",
-                                modifier = Modifier.size(16.dp),
-                                tint = Color.Yellow,
-                            )
-                            Text(
-                                text = movie.rating.toString(),
-                                modifier = Modifier.padding(start = 4.dp),
-                                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                                style = MaterialTheme.typography.labelMedium,
-                            )
-                        }
-                    }
+                    TitleAndDescription(movie = movie)
+                    DateAndRating(movie = movie)
                 }
 
                 Heart(
@@ -166,6 +109,59 @@ internal fun MovieCard(
                     onLike = onLike
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun TitleAndDescription(movie: Movie) {
+    Text(
+        text = movie.title,
+        modifier = Modifier.padding(end = 24.dp),
+        color = MaterialTheme.colorScheme.onSecondaryContainer,
+        style = MaterialTheme.typography.bodyLarge,
+    )
+    Text(
+        text = movie.description,
+        modifier = Modifier.padding(end = 16.dp),
+        color = MaterialTheme.colorScheme.onSurface,
+        style = MaterialTheme.typography.bodySmall,
+    )
+}
+
+@Composable
+private fun DateAndRating(movie: Movie) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = movie.formattedDateForCard,
+            modifier = Modifier,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            style = MaterialTheme.typography.labelSmall,
+            fontSize = 10.sp
+        )
+
+        Row(
+            modifier = Modifier.padding(end = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Star,
+                contentDescription = "Movie rating",
+                modifier = Modifier.size(16.dp),
+                tint = Color.Yellow,
+            )
+            Text(
+                text = movie.rating.toString(),
+                modifier = Modifier.padding(start = 4.dp),
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                style = MaterialTheme.typography.labelMedium,
+            )
         }
     }
 }

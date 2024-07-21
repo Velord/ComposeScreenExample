@@ -5,20 +5,9 @@ import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieDS
 import com.velord.usecase.movie.dataSource.MovieSortDS
+import com.velord.usecase.movie.result.GetMovieResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-
-sealed class GetMovieResult(open val flow: Flow<List<Movie>>) {
-
-    data class Success(
-        override val flow: Flow<List<Movie>>
-    ) : GetMovieResult(flow)
-
-    data class DBError(
-        override val flow: Flow<List<Movie>>,
-        val message: String
-    ) : GetMovieResult(flow)
-}
 
 class GetAllMovieUC(
     private val movieDS: MovieDS,
