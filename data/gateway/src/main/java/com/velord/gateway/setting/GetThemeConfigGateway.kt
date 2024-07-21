@@ -21,17 +21,17 @@ class GetThemeConfigGateway(
         if (isInitialized.not()) {
             isInitialized = true
             runCatching {
-                appState.flow.value = dataStore.getAppSettingsFlow().map { it.theme }.first()
+                appState.themeConfigFlow.value = dataStore.getAppSettingsFlow().map { it.theme }.first()
             }
         }
 
-        return appState.flow
+        return appState.themeConfigFlow
     }
 
     override suspend fun save(config: ThemeConfig) {
         runCatching {
             dataStore.setThemeConfig(config)
         }
-        appState.flow.value = config
+        appState.themeConfigFlow.value = config
     }
 }
