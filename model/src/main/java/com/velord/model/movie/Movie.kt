@@ -47,3 +47,15 @@ data class Movie(
         "https://image.tmdb.org/t/p/original$imagePath"
     }
 }
+
+data object MoviePagination {
+    const val PRELOAD_BEFORE_END = 10
+
+    fun shouldLoadMore(
+        lastVisibleIndex: Int,
+        totalItemCount: Int,
+    ): Boolean = lastVisibleIndex >= totalItemCount - PRELOAD_BEFORE_END
+}
+
+fun List<Movie>.findRecentTimeInMilli(): Long =
+    maxByOrNull { it.date.timeInMillis }?.date?.timeInMillis ?: 0

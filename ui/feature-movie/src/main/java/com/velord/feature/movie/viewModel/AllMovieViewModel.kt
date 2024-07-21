@@ -13,6 +13,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 data class AllMovieUiState(
@@ -33,6 +34,12 @@ data class AllMovieUiState(
 
 private const val INIT_INDEX = -1
 
+sealed class PaginationStatus  {
+    data object Init: PaginationStatus()
+    data class Trigger(val index: Int): PaginationStatus()
+    data object Exausted : PaginationStatus()
+}
+
 class AllMovieViewModel(
     private val getAllMovieUC: GetAllMovieUC,
     private val updateMovieLikeUC: UpdateMovieLikeUC,
@@ -42,7 +49,7 @@ class AllMovieViewModel(
 
     val uiState: MutableStateFlow<AllMovieUiState> = MutableStateFlow(AllMovieUiState.DEFAULT)
 
-    private val lastListIndexFlow = MutableStateFlow(INIT_INDEX)
+    private val paginationStatusFlow = MutableStateFlow<PaginationStatus>(PaginationStatus.Init)
 
     init {
         observe()
@@ -53,6 +60,8 @@ class AllMovieViewModel(
     }
 
     fun onEndList(triggerIndex: Int) {
+        if (uiState.value.isLoading) return
+        if (uiState.value.isRefreshing) return
         // TODO: Add Additional logic
         // if (lastVisibleIndex < uiState.value.roster.lastIndex) return
 //
@@ -61,18 +70,21 @@ class AllMovieViewModel(
 //        if (isEndList.not()) {
 //            lastListIndexFlow.tryEmit(lastIndex)
 //        }
-        lastListIndexFlow.tryEmit(triggerIndex)
+        paginationStatusFlow.value = PaginationStatus.Trigger(triggerIndex)
     }
 
     fun onRefresh() {
         if (uiState.value.isRefreshing) return
 
-        lastListIndexFlow.tryEmit(INIT_INDEX)
+        paginationStatusFlow.value = PaginationStatus.Init
         launch {
             uiState.value = uiState.value.copy(isRefreshing = true)
             when(refreshMovieUC()) {
                 MovieResult.Success -> uiState.value = uiState.value.copy(error = null)
-                is MovieResult.LoadPageFailed -> uiState.value = uiState.value.copy(error = "Error")
+                is MovieResult.LoadPageFailed -> {
+                    uiState.value = uiState.value.copy(error = "Error")
+                    paginationStatusFlow.value = PaginationStatus.Init
+                }
             }
         }.invokeOnCompletion {
             uiState.value = uiState.value.copy(isRefreshing = false)
@@ -93,9 +105,21 @@ class AllMovieViewModel(
         }
 
         launch {
-            lastListIndexFlow
-                .filter { it != INIT_INDEX }
-                .filter { it > 0 }
+            paginationStatusFlow
+                .onEach {
+                    Log.d("@@@", "paginationStatusFlow: $it")
+                }
+                .filter { it != PaginationStatus.Init }
+                .filter { it !is PaginationStatus.Exausted }
+                .filter {
+//                    if (it is PaginationStatus.Trigger) {
+//                        it.index > 0
+//                    } else {
+//                        true
+//                    }
+
+                    true
+                }
                 .debounce(300)
                 .collect {
                     Log.d("@@@", "loadNewPageMovieUC: $it")
@@ -105,14 +129,14 @@ class AllMovieViewModel(
     }
 
     private fun loadNewPage() {
-        if (uiState.value.isLoading) return
-        if (uiState.value.isRefreshing) return
-
         launch {
             uiState.value = uiState.value.copy(isLoading = true)
             when(loadNewPageMovieUC()) {
                 MovieResult.Success -> uiState.value = uiState.value.copy(error = null)
-                is MovieResult.LoadPageFailed -> uiState.value = uiState.value.copy(error = "Error")
+                is MovieResult.LoadPageFailed -> {
+                    uiState.value = uiState.value.copy(error = "Error")
+                    paginationStatusFlow.value = PaginationStatus.Init
+                }
             }
         }.invokeOnCompletion {
             uiState.value = uiState.value.copy(isLoading = false)
