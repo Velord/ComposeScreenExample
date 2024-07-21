@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.update
 import org.koin.core.annotation.Single
 
+private const val INITIAL_PAGE = 1
+
 @Single
 class MovieGateway(
     private val appState: AppStateService,
@@ -17,7 +19,7 @@ class MovieGateway(
     private val db: MovieDbService
 ) : MovieDS {
 
-    private var currentPage: Int = 1
+    private var currentPage: Int = INITIAL_PAGE
 
     override fun getFlow(): Flow<List<Movie>> = appState.movieRosterFlow
 
@@ -48,7 +50,7 @@ class MovieGateway(
     override suspend fun refresh(): Int {
         appState.movieRosterFlow.value = emptyList()
 
-        currentPage = 1
+        currentPage = INITIAL_PAGE
         return loadNewPage()
     }
 

@@ -1,6 +1,7 @@
 package com.velord.usecase.movie
 
 import com.velord.model.movie.Movie
+import com.velord.usecase.movie.result.GetMovieResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

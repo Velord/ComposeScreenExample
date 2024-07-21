@@ -29,7 +29,6 @@ class BottomNavigationDestinationsVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeViewModel() {
 
-    // Prev Curr
     val currentTabFlow = MutableStateFlow(TabState.Default)
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
     val finishAppEvent = MutableSharedFlow<Unit>()
