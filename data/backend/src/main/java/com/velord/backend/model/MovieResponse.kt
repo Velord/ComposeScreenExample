@@ -18,7 +18,9 @@ data class MovieResponse(
     @SerialName("poster_path")
     val imageUrl: String,
     @SerialName("overview")
-    val description: String
+    val description: String,
+    @SerialName("vote_average")
+    val rating: Float
 ) {
     private fun parseDate(): Calendar {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
@@ -37,6 +39,7 @@ data class MovieResponse(
         description = description,
         isLiked = false,
         date = parseDate(),
-        imagePath = imageUrl
+        imagePath = imageUrl,
+        rating = rating
     )
 }

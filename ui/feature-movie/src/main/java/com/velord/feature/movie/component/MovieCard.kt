@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.HeartBroken
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -40,6 +41,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.velord.model.movie.Movie
 import com.velord.uicore.compose.animation.interpolator.toEasing
@@ -62,26 +64,47 @@ internal fun MovieCard(
         ),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
     ) {
-        Row(
+
+
+        ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Max)
-            ,
-            verticalAlignment = Alignment.Top
+                .height(IntrinsicSize.Min)
         ) {
+
+//        }
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//            ,
+//            verticalAlignment = Alignment.Top
+//        ) {
+
+            val (asyncImage, text) = createRefs()
+
             AsyncImage(
                 model = movie.imageUrl,
                 contentDescription = "Movie Image",
                 modifier = Modifier
                     .sizeIn(maxWidth = 64.dp)
+                    .constrainAs(asyncImage) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        bottom.linkTo(parent.bottom)
+                    }
                 ,
                 contentScale = ContentScale.FillBounds
             )
 
             Box(
                 modifier = Modifier
-                    .padding(start = 8.dp)
+                    .padding(start = 72.dp)
                     .padding(vertical = 8.dp)
+                    .constrainAs(text) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    }
                     .fillMaxWidth()
             ) {
                 Column(
@@ -102,13 +125,40 @@ internal fun MovieCard(
                         style = MaterialTheme.typography.bodySmall,
                     )
 
-                    Text(
-                        text = movie.formattedDateForCard,
-                        modifier = Modifier.padding(bottom = 36.dp),
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        style = MaterialTheme.typography.labelSmall,
-                        fontSize = 10.sp
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 4.dp)
+                        ,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = movie.formattedDateForCard,
+                            modifier = Modifier,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 10.sp
+                        )
+
+                        Row(
+                            modifier = Modifier.padding(end = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Star,
+                                contentDescription = "Movie rating",
+                                modifier = Modifier.size(16.dp),
+                                tint = Color.Yellow,
+                            )
+                            Text(
+                                text = movie.rating.toString(),
+                                modifier = Modifier.padding(start = 4.dp),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                style = MaterialTheme.typography.labelMedium,
+                            )
+                        }
+                    }
                 }
 
                 Heart(
@@ -236,7 +286,7 @@ private fun PreviewCard() {
                 set(Calendar.MONTH, 1)
                 set(Calendar.DAY_OF_MONTH, 1)
             },
-            imagePath = "https://picsum.photos/200/300"
+            rating = 4.5f,
         ),
         onLike = {}
     )

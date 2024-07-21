@@ -55,12 +55,13 @@ class AllMovieViewModel(
     fun onEndList(triggerIndex: Int) {
         // TODO: Add Additional logic
         // if (lastVisibleIndex < uiState.value.roster.lastIndex) return
-
-        val lastIndex = uiState.value.roster.lastIndex
-        val isEndList = lastListIndexFlow.value == lastIndex
-        if (isEndList.not()) {
-            lastListIndexFlow.tryEmit(lastIndex)
-        }
+//
+//        val lastIndex = uiState.value.roster.lastIndex
+//        val isEndList = lastListIndexFlow.value == lastIndex
+//        if (isEndList.not()) {
+//            lastListIndexFlow.tryEmit(lastIndex)
+//        }
+        lastListIndexFlow.tryEmit(triggerIndex)
     }
 
     fun onRefresh() {
