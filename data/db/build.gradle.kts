@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.bd"
+    namespace = "com.velord.db"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
