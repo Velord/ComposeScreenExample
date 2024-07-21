@@ -16,6 +16,7 @@ import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
 import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
 import com.velord.db.DbModule
+import com.velord.db.databaseModule
 import com.velord.feature.demo.DemoViewModel
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
@@ -93,6 +94,7 @@ class App : Application() {
             modules(useCaseModule)
             modules(viewModelModule)
             modules(httpModule)
+            modules(databaseModule)
             modules(AppModule().module)
             modules(BottomNavigationModule().module)
             modules(DataStoreModule().module)
