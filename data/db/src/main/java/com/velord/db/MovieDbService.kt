@@ -1,6 +1,7 @@
 package com.velord.db
 
 import com.velord.model.movie.Movie
+import org.koin.core.annotation.Provided
 import org.koin.core.annotation.Single
 import java.util.Calendar
 
@@ -9,7 +10,10 @@ interface MovieDbService {
 }
 
 @Single
-class MovieDbServiceImpl : MovieDbService {
+class MovieDbServiceImpl(
+    @Provided private val db: MovieDao
+) : MovieDbService {
+
     override suspend fun getMovie(page: Int): Movie {
         return Movie(
             id = 23,

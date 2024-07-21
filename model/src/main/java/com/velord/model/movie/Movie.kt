@@ -2,8 +2,11 @@ package com.velord.model.movie
 
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 private const val PICSUM_HOST = "https://picsum.photos/200/300"
+private const val DATE_FORMAT = "yyyy-MM-dd"
 
 data class Movie(
     val id: Int,
@@ -45,6 +48,25 @@ data class Movie(
         PICSUM_HOST
     } else {
         "https://image.tmdb.org/t/p/original$imagePath"
+    }
+
+    companion object {
+
+        fun toCalendar(date: String): Calendar {
+            val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
+            val date: Date? = sdf.parse(date)
+            val calendar = Calendar.getInstance()
+            if (date != null) {
+                calendar.time = date
+            }
+
+            return calendar
+        }
+
+        fun toString(calendar: Calendar): String {
+            val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
+            return sdf.format(calendar.time)
+        }
     }
 }
 
