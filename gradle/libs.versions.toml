@@ -512,6 +512,8 @@ compose-material3-window = { module = "androidx.compose.material3:material3-wind
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeDefault" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeDefault" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeDefault" }
+compose-ui-geometry = { module = "androidx.compose.ui:ui-geometry", version.ref = "composeDefault" }
+compose-ui-geometry-android = { module = "androidx.compose.ui:ui-geometry-android", version.ref = "composeDefault" }
 # Compose 3-rd party
 compose-html = { module = "com.github.ireward:compose-html", version.ref = "composeHtmlIreward" }
 # DI Dagger ----------------------------------------------------------------------------------------
@@ -959,7 +961,10 @@ compose-accompanist-all = [
 # Compose Foundation
 compose-foundation = ["compose-foundation", "compose-foundation-layout"]
 # Compose Ui
-compose-ui = ["compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview"]
+compose-ui = [
+    "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
+    "compose-ui-geometry", "compose-ui-geometry-android"
+]
 # Compose Material
 compose-material-icons = ["compose-material-icons-core", "compose-material-icons-extended"]
 compose-material-third = ["compose-material3", "compose-material3-window"]
@@ -977,6 +982,7 @@ compose-all = [
     "compose-accompanist-permission",
     "compose-foundation", "compose-foundation-layout",
     "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
+    "compose-ui-geometry", "compose-ui-geometry-android",
     "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window"
 ]
@@ -988,6 +994,7 @@ ui = [
     "compose-accompanist-permission",
     "compose-foundation", "compose-foundation-layout",
     "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
+    "compose-ui-geometry", "compose-ui-geometry-android",
     "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window",
     "androidx-graphics-core", "androidx-graphics-path", "androidx-graphics-shapes"

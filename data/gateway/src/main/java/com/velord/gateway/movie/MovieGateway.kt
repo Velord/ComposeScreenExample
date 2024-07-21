@@ -33,21 +33,21 @@ class MovieGateway(
         }
     }
 
-    override suspend fun loadNewPage() {
+    override suspend fun loadNewPage(): Int {
         val movieRoster = service.getMovie(MoviePageRequest(currentPage++))
+        val newRoster = movieRoster.results.map { it.toDomain() }
         roster.update { movies ->
-            (movies + movieRoster.results.map { it.toDomain() }).toSet().toList()
+            (movies + newRoster).toSet().toList()
         }
+
+        return newRoster.size
     }
 
-    override suspend fun refresh() {
+    override suspend fun refresh(): Int {
         roster.value = emptyList()
 
         currentPage = 1
-        val movieRoster = service.getMovie(MoviePageRequest(currentPage))
-        roster.value = movieRoster.results.map {
-            it.toDomain()
-        }
+        return loadNewPage()
     }
 
     override suspend fun loadFromDB() {
