@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.gateway"
+    namespace = "com.velord.bd"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -30,18 +30,13 @@ android {
 dependencies {
     // Modules
     implementation(project(":model"))
-    // Data
-    implementation(project(":data:datastore"))
-    implementation(project(":data:appstate"))
-    implementation(project(":data:backend"))
-    implementation(project(":data:bd"))
-    // Use case
-    implementation(project(":domain:usecase-setting"))
-    implementation(project(":domain:usecase-movie"))
     // Templates
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)
+    // Room
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.bundles.androidx.room.coroutines)
 }
 
 ksp {

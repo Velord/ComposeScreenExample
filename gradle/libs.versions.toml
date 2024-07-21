@@ -676,7 +676,10 @@ androidx-resourceinspection = [
     "androidx-resourceinspection-annotation", "androidx-resourceinspection-processor"
 ]
 # AndroidX Room
-androidx-room = [
+androidx-room-coroutines = [
+    "androidx-room-ktx", "androidx-room-paging"
+]
+androidx-room-all = [
     "androidx-room-ktx",
     "androidx-room-rxjava2", "androidx-room-rxjava3",
     "google-guava", "androidx-room-paging"

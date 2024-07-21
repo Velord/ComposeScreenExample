@@ -107,7 +107,6 @@ private fun RefreshPage(
             .fillMaxSize()
             .pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
     ) {
-
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,

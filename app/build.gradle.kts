@@ -135,6 +135,7 @@ dependencies {
     implementation(project(":data:datastore"))
     implementation(project(":data:appstate"))
     implementation(project(":data:gateway"))
+    implementation(project(":data:bd"))
     // Module Data Gateway
     // Module UI
     implementation(project(":ui:sharedviewmodel"))
@@ -167,6 +168,9 @@ dependencies {
     // Navigation Compose Destinations
     implementation(libs.bundles.compose.destinations)
     ksp(libs.compose.destinations.ksp)
+    // Room
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.bundles.androidx.room.coroutines)
     // Other
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)
@@ -178,7 +182,6 @@ dependencies {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")
-    //arg("compose-destinations.moduleName", "moduleapp")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

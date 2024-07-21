@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/appstate" />
             <option value="$PROJECT_DIR$/data/backend" />
+            <option value="$PROJECT_DIR$/data/bd" />
             <option value="$PROJECT_DIR$/data/datastore" />
             <option value="$PROJECT_DIR$/data/gateway" />
             <option value="$PROJECT_DIR$/domain" />
