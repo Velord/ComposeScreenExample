@@ -7,7 +7,7 @@ interface MovieDS {
     fun getFlow(): Flow<List<Movie>>
     fun get(): List<Movie>
     fun update(movie: Movie)
-    suspend fun loadNewPage()
-    suspend fun refresh()
+    suspend fun loadNewPage(): Int
+    suspend fun refresh(): Int
     suspend fun loadFromDB()
 }

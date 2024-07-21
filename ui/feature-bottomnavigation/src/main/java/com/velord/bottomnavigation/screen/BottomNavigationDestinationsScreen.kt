@@ -100,7 +100,9 @@ fun BottomNavigationDestination(
     val currentDestination = navBackStackEntry.value?.destination
 
     LaunchedEffect(currentDestination) {
+        if (currentDestination == null) return@LaunchedEffect
         val nodes = mutableListOf<NavDestination>()
+
         navController.graph.nodes.forEach { _, value ->
             nodes.add(value)
         }

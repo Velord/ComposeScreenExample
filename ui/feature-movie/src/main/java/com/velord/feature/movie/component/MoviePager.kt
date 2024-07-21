@@ -1,20 +1,29 @@
 package com.velord.feature.movie.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
@@ -63,7 +72,8 @@ internal fun ColumnScope.MoviePager(
                 roster = allMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
                 onLike = allMovieViewModel::onLikeClick,
-                isPaginationAvailable = true,
+                isDataExausted = allMovieUiState.value.paginationStatus.isExausted,
+                isPaginationAvailable = allMovieUiState.value.isPaginationAvailable,
                 onEndList = allMovieViewModel::onEndList,
                 isRefreshing = allMovieUiState.value.isRefreshing,
                 onRefresh = allMovieViewModel::onRefresh
@@ -77,12 +87,14 @@ internal fun ColumnScope.MoviePager(
     }
 }
 
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun RefreshPage(
     roster: List<Movie>,
     selectedSortOption: SortType?,
     onLike: (Movie) -> Unit,
+    isDataExausted: Boolean = false,
     isPaginationAvailable: Boolean = false,
     onEndList: (lastVisibleIndex: Int) -> Unit = {},
     isRefreshing: Boolean = false,
@@ -95,13 +107,38 @@ private fun RefreshPage(
             .fillMaxSize()
             .pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
     ) {
-        MoviePage(
-            roster = roster,
-            selectedSortOption = selectedSortOption,
-            onLike = onLike,
-            isPaginationAvailable = isPaginationAvailable,
-            onEndList = onEndList
-        )
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            if (isDataExausted) {
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = stringResource(id = com.velord.resource.R.string.all_movies),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp)
+                            .shadow(
+                                shape = RoundedCornerShape(16.dp),
+                                elevation = 30.dp,
+                                ambientColor = Color.Green,
+                                spotColor = Color.Green
+                            )
+                        ,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+
+            MoviePage(
+                roster = roster,
+                selectedSortOption = selectedSortOption,
+                onLike = onLike,
+                isPaginationAvailable = isPaginationAvailable,
+                onEndList = onEndList
+            )
+        }
 
         if (isPaginationAvailable) {
             PullRefreshIndicator(
@@ -169,6 +206,7 @@ private fun MoviePagerPreview() {
             ),
         ),
         selectedSortOption = SortType.DateAscending,
-        onLike = {}
+        onLike = {},
+        isDataExausted = true
     )
 }
