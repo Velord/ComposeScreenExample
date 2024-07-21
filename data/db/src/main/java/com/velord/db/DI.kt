@@ -1,8 +1,8 @@
-package com.velord.bd
+package com.velord.db
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 
 @Module
-@ComponentScan("com.velord.bd")
-class BDModule
+@ComponentScan("com.velord.db")
+class DbModule

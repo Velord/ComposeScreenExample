@@ -8,7 +8,6 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import com.velord.appstate.AppStateModule
 import com.velord.backend.ktor.BackendModule
 import com.velord.backend.ktor.httpModule
-import com.velord.bd.BDModule
 import com.velord.bottomnavigation.BottomNavigationModule
 import com.velord.camerarecording.CameraRecordingViewModel
 import com.velord.composescreenexample.ui.main.MainActivity
@@ -16,6 +15,7 @@ import com.velord.composescreenexample.ui.main.navigation.featureBottomNavigatio
 import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
 import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
+import com.velord.db.DbModule
 import com.velord.feature.demo.DemoViewModel
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
@@ -96,10 +96,10 @@ class App : Application() {
             modules(AppModule().module)
             modules(BottomNavigationModule().module)
             modules(DataStoreModule().module)
-            modules(GatewayModule().module)
             modules(AppStateModule().module)
             modules(BackendModule().module)
-            modules(BDModule().module)
+            modules(DbModule().module)
+            modules(GatewayModule().module)
         }
 
         StrictMode.setThreadPolicy(

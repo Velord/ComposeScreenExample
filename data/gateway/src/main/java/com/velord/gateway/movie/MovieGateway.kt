@@ -3,7 +3,7 @@ package com.velord.gateway.movie
 import com.velord.appstate.AppStateService
 import com.velord.backend.ktor.MovieService
 import com.velord.backend.model.MoviePageRequest
-import com.velord.bd.MoviePersistentStorageService
+import com.velord.db.MovieDbService
 import com.velord.model.movie.Movie
 import com.velord.usecase.movie.dataSource.MovieDS
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ import org.koin.core.annotation.Single
 class MovieGateway(
     private val appState: AppStateService,
     private val http: MovieService,
-    private val storage: MoviePersistentStorageService
+    private val db: MovieDbService
 ) : MovieDS {
 
     private var currentPage: Int = 1

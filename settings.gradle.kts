@@ -10,8 +10,7 @@ include(":core:core-resource")
 include(":data:backend")
 include(":data:datastore")
 include(":data:appstate")
-include(":data:bd")
-// Data Gateway
+include(":data:db")
 include(":data:gateway")
 // Domain
 include(":domain:usecase-setting")
