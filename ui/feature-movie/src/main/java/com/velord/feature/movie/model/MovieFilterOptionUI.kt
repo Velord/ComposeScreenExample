@@ -11,12 +11,13 @@ data class MovieFilterOptionUI(
     @StringRes val name: Int
 ) {
     companion object {
+        // TODO: make a real filter
         fun fromDomain(option: MovieFilterOption): MovieFilterOptionUI = MovieFilterOptionUI(
             type = option.type,
             isSelected = option.isSelected,
             name = when (option.type) {
-                FilterType.Title_10_Characters -> R.string.filter_by_title_over_10_char
-                FilterType.Description_50_Characters -> R.string.filter_by_description_over_50_char
+                is FilterType.Rating -> R.string.filter_by_title_over_10_char
+                is FilterType.VoteCount -> R.string.filter_by_description_over_50_char
             }
         )
     }

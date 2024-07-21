@@ -3,6 +3,7 @@ package com.velord.db
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
@@ -11,14 +12,34 @@ import kotlinx.coroutines.flow.Flow
 interface MovieDao {
 
     @Query("SELECT * FROM MovieEntity")
-    fun getAll(): Flow<List<MovieEntity>>
+    fun getAllFlow(): Flow<List<MovieEntity>>
+
+    @Query("SELECT * FROM MovieEntity")
+    suspend fun getAll(): List<MovieEntity>
+
+    @Query("SELECT * FROM MovieEntity WHERE " +
+            "rating BETWEEN :ratingStart AND :ratingEnd " +
+            "AND voteCount BETWEEN :voteCountStart AND :voteCountEnd " +
+            "ORDER BY " +
+            "CASE WHEN :orderBy = 'date' AND :sortOrder = 0 THEN date END DESC, " +
+            "CASE WHEN :orderBy = 'date' AND :sortOrder = 1 THEN date END ASC " +
+            "LIMIT :pageSize")
+    suspend fun getFirstPage(
+        ratingStart: Float,
+        ratingEnd: Float,
+        voteCountStart: Int,
+        voteCountEnd: Int,
+        orderBy: String,
+        sortOrder: Int,
+        pageSize: Int,
+    ): List<MovieEntity>
 
     @Update
-    fun update(movie: MovieEntity)
+    suspend fun update(movie: MovieEntity)
 
-    @Insert
-    fun insertAll(vararg movies: MovieEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAll(vararg movies: MovieEntity)
 
     @Delete
-    fun delete(movie: MovieEntity)
+    suspend fun delete(movie: MovieEntity)
 }

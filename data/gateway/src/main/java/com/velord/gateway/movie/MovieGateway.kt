@@ -1,10 +1,13 @@
 package com.velord.gateway.movie
 
+import android.util.Log
 import com.velord.appstate.AppStateService
 import com.velord.backend.ktor.MovieService
 import com.velord.backend.model.MoviePageRequest
 import com.velord.db.MovieDbService
+import com.velord.model.movie.FilterType
 import com.velord.model.movie.Movie
+import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieDS
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.update
@@ -16,7 +19,7 @@ private const val INITIAL_PAGE = 1
 class MovieGateway(
     private val appState: AppStateService,
     private val http: MovieService,
-    private val db: MovieDbService
+    private val db: MovieDbService,
 ) : MovieDS {
 
     private var currentPage: Int = INITIAL_PAGE
@@ -44,6 +47,8 @@ class MovieGateway(
             (movies + newRoster).toSet().toList()
         }
 
+        db.insertAll(newRoster)
+
         return newRoster.size
     }
 
@@ -55,6 +60,17 @@ class MovieGateway(
     }
 
     override suspend fun loadFromDB() {
-        appState.movieRosterFlow.value = testMovieRoster
+        val sortType = appState.movieSortFlow.value
+            .firstOrNull { it.isSelected }
+            ?.type
+            ?: SortType.DateDescending
+        val filterRoster = FilterType.createAll()
+
+        val fromDb = db.getFirstPage(
+            sortType = sortType,
+            filterRoster = filterRoster
+        )
+        Log.d("@@@", "fromDb: $fromDb")
+        appState.movieRosterFlow.value = fromDb
     }
 }

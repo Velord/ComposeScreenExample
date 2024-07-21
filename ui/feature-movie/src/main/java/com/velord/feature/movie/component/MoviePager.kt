@@ -161,7 +161,8 @@ private fun MoviePagerPreview() {
                 description = "A long time ago in a galaxy far, far away...",
                 isLiked = true,
                 date = Calendar.getInstance(),
-                rating = 7.66f
+                rating = 7.66f,
+                voteCount = 100
             ),
             Movie(
                 id = 2,
@@ -169,7 +170,8 @@ private fun MoviePagerPreview() {
                 description = "One ring",
                 isLiked = false,
                 date = Calendar.getInstance(),
-                rating = 7.66f
+                rating = 7.66f,
+                voteCount = 100
             ),
             Movie(
                 id = 3,
@@ -177,7 +179,8 @@ private fun MoviePagerPreview() {
                 description = "Two imprisoned",
                 isLiked = true,
                 date = Calendar.getInstance(),
-                rating = 7.66f
+                rating = 7.66f,
+                voteCount = 100
             ),
             Movie(
                 id = 4,
@@ -185,7 +188,8 @@ private fun MoviePagerPreview() {
                 description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
                 isLiked = false,
                 date = Calendar.getInstance(),
-                rating = 7.66f
+                rating = 7.66f,
+                voteCount = 100
             ),
             Movie(
                 id = 5,
@@ -193,7 +197,8 @@ private fun MoviePagerPreview() {
                 description = "When the menace known as the Joker wreaks havoc and chaos on the",
                 isLiked = true,
                 date = Calendar.getInstance(),
-                rating = 7.66f
+                rating = 7.66f,
+                voteCount = 100
             ),
             Movie(
                 id = 6,
@@ -201,7 +206,8 @@ private fun MoviePagerPreview() {
                 description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
                 isLiked = false,
                 date = Calendar.getInstance(),
-                rating = 7.66f
+                rating = 7.66f,
+                voteCount = 100
             ),
         ),
         selectedSortOption = SortType.DateAscending,
