@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -101,12 +103,24 @@ private fun RefreshPage(
     onRefresh: () -> Unit = {}
 ) {
     val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
+    val scrollState = rememberScrollState()
 
+    val scrollOrNot: Modifier.() -> Modifier = {
+        if (roster.isEmpty()) verticalScroll(scrollState) else this
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
             .pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
+            .scrollOrNot()
     ) {
+        if (isPaginationAvailable) {
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -123,28 +137,20 @@ private fun RefreshPage(
                                 elevation = 30.dp,
                                 ambientColor = Color.Green,
                                 spotColor = Color.Green
-                            )
-                        ,
+                            ),
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
-
-            MoviePage(
-                roster = roster,
-                selectedSortOption = selectedSortOption,
-                onLike = onLike,
-                isPaginationAvailable = isPaginationAvailable,
-                onEndList = onEndList
-            )
-        }
-
-        if (isPaginationAvailable) {
-            PullRefreshIndicator(
-                refreshing = isRefreshing,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
+            if (roster.isNotEmpty()) {
+                MoviePage(
+                    roster = roster,
+                    selectedSortOption = selectedSortOption,
+                    onLike = onLike,
+                    isPaginationAvailable = isPaginationAvailable,
+                    onEndList = onEndList
+                )
+            }
         }
     }
 }
@@ -153,63 +159,64 @@ private fun RefreshPage(
 @PreviewCombined
 @Composable
 private fun MoviePagerPreview() {
-    RefreshPage(
-        roster = listOf(
-            Movie(
-                id = 1,
-                title = "Star Wars",
-                description = "A long time ago in a galaxy far, far away...",
-                isLiked = true,
-                date = Calendar.getInstance(),
-                rating = 7.66f,
-                voteCount = 100
-            ),
-            Movie(
-                id = 2,
-                title = "The Lord of the Rings",
-                description = "One ring",
-                isLiked = false,
-                date = Calendar.getInstance(),
-                rating = 7.66f,
-                voteCount = 100
-            ),
-            Movie(
-                id = 3,
-                title = "Shawshank Redemption",
-                description = "Two imprisoned",
-                isLiked = true,
-                date = Calendar.getInstance(),
-                rating = 7.66f,
-                voteCount = 100
-            ),
-            Movie(
-                id = 4,
-                title = "The Godfather",
-                description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
-                isLiked = false,
-                date = Calendar.getInstance(),
-                rating = 7.66f,
-                voteCount = 100
-            ),
-            Movie(
-                id = 5,
-                title = "The Dark Knight",
-                description = "When the menace known as the Joker wreaks havoc and chaos on the",
-                isLiked = true,
-                date = Calendar.getInstance(),
-                rating = 7.66f,
-                voteCount = 100
-            ),
-            Movie(
-                id = 6,
-                title = "The Matrix",
-                description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
-                isLiked = false,
-                date = Calendar.getInstance(),
-                rating = 7.66f,
-                voteCount = 100
-            ),
+    val roster = listOf(
+        Movie(
+            id = 1,
+            title = "Star Wars",
+            description = "A long time ago in a galaxy far, far away...",
+            isLiked = true,
+            date = Calendar.getInstance(),
+            rating = 7.66f,
+            voteCount = 100
         ),
+        Movie(
+            id = 2,
+            title = "The Lord of the Rings",
+            description = "One ring",
+            isLiked = false,
+            date = Calendar.getInstance(),
+            rating = 7.66f,
+            voteCount = 100
+        ),
+        Movie(
+            id = 3,
+            title = "Shawshank Redemption",
+            description = "Two imprisoned",
+            isLiked = true,
+            date = Calendar.getInstance(),
+            rating = 7.66f,
+            voteCount = 100
+        ),
+        Movie(
+            id = 4,
+            title = "The Godfather",
+            description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+            isLiked = false,
+            date = Calendar.getInstance(),
+            rating = 7.66f,
+            voteCount = 100
+        ),
+        Movie(
+            id = 5,
+            title = "The Dark Knight",
+            description = "When the menace known as the Joker wreaks havoc and chaos on the",
+            isLiked = true,
+            date = Calendar.getInstance(),
+            rating = 7.66f,
+            voteCount = 100
+        ),
+        Movie(
+            id = 6,
+            title = "The Matrix",
+            description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+            isLiked = false,
+            date = Calendar.getInstance(),
+            rating = 7.66f,
+            voteCount = 100
+        ),
+    )
+    RefreshPage(
+        roster = emptyList(),
         selectedSortOption = SortType.DateAscending,
         onLike = {},
         isDataExausted = true
