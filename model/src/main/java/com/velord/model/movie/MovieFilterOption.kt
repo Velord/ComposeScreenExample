@@ -10,7 +10,7 @@ sealed class FilterType {
 
     data class VoteCount(val start: Int, val end: Int) : FilterType() {
         companion object {
-            val Default = VoteCount(5000, 60000)
+            val Default = VoteCount(100, 200)
         }
     }
 
