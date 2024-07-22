@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Filter
 import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,14 +26,22 @@ import com.velord.uicore.compose.preview.PreviewCombined
 internal fun BoxScope.MovieAction(
     onSortClick: () -> Unit,
     onFilterClick: () -> Unit,
+    onInfoClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
             .align(Alignment.BottomEnd)
             .padding(end = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.End
     ) {
+        FloatingActionButton(onClick = onInfoClick) {
+            Icon(
+                Icons.Outlined.Info,
+                "Floating action button info",
+                tint = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
         ExtendedFloatingActionButton(
             onClick = onSortClick,
             modifier = Modifier,

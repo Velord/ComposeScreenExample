@@ -184,7 +184,7 @@ private fun Info() {
             windowInsets = WindowInsets(top = 0.dp),
         ) {
             Text(
-                text = stringResource(id = R.string.info_description),
+                text = stringResource(id = R.string.info_description_flow_summator),
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 8.dp)

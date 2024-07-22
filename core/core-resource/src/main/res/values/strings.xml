@@ -23,7 +23,7 @@
     <string name="flow_summator">Flow Summator</string>
     <string name="launch">Launch</string>
     <string name="please_enter_the_number">Please, enter the number</string>
-    <string name="info_description">Develop Flow that sums values of other flows.
+    <string name="info_description_flow_summator">Develop Flow that sums values of other flows.
         \n"     "1. UI - must consist of 3 items. Enter field, ‘launch’ Button and Text field for output. On press ‘launch’ app handle N - digit has been entered in the Enter field. Result of the work should be rendered to the Text field. Every new update should be on the new line.
         \n"     "2. It is necessary to create an array of Flow of Int of N. Each after a delay of (index + 1) * 100, emits the value index + 1. I.e. Flow with index 0 emits value 1 with delay 100, Flow with index 1 emits value 2 with delay 200.
         \n"     "3. The resulting Flow must sum the values of all N Flows. The summing Flow must return a value after updating each of the N Flows.
@@ -72,4 +72,23 @@
     <string name="filter_by_description_over_50_char">Filter by description over 50 char</string>
     <string name="open_movie">Open movie</string>
     <string name="all_movies">All movies with this filters are loaded</string>
+    <string name="info_description_movie">Develop Flow that sums values of other flows.
+        \n"     "1. UI - must consist of 3 items. Enter field, ‘launch’ Button and Text field for output. On press ‘launch’ app handle N - digit has been entered in the Enter field. Result of the work should be rendered to the Text field. Every new update should be on the new line.
+        \n"     "2. It is necessary to create an array of Flow of Int of N. Each after a delay of (index + 1) * 100, emits the value index + 1. I.e. Flow with index 0 emits value 1 with delay 100, Flow with index 1 emits value 2 with delay 200.
+        \n"     "3. The resulting Flow must sum the values of all N Flows. The summing Flow must return a value after updating each of the N Flows.
+        \nImportant: The value on the screen must be added every 100ms.
+        \n
+        \nExample:
+        \nN entered: 1
+        \nResult: 1
+        \n
+        \nN entered: 2
+        \nResult: 1\n3
+        \n
+        \nN entered: 3
+        \nResult: 1\n3\n6
+        \n
+        \nN entered: 7
+        \nResult: 1\n3\n6\n10\n15\n21\n28
+    </string>
 </resources>

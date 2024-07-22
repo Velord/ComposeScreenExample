@@ -79,6 +79,7 @@ private fun BoxScope.FloatingAction(
 ) {
     val showSortBottomSheetState = remember { mutableStateOf(false) }
     val showFilterBottomSheetState = remember { mutableStateOf(false) }
+    val showInfoBottomSheetState = remember { mutableStateOf(false) }
 
     MovieAction(
         onSortClick = {
@@ -87,14 +88,19 @@ private fun BoxScope.FloatingAction(
         onFilterClick = {
             showFilterBottomSheetState.value = true
         },
+        onInfoClick = {
+            showInfoBottomSheetState.value = true
+        }
     )
 
     MovieSortAndFilter(
         uiState = uiState,
         isSortShowing = showSortBottomSheetState.value,
         isFilterShowing = showFilterBottomSheetState.value,
+        isInfoShowing = showInfoBottomSheetState.value,
         onHideSort = { showSortBottomSheetState.value = false },
         onHideFilter = { showFilterBottomSheetState.value = false },
+        onHideInfo = { showInfoBottomSheetState.value = false },
         onSortOptionClick = onSortOptionClick,
         onFilterOptionClick = onFilterOptionClick
     )
