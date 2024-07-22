@@ -1,16 +1,20 @@
 package com.velord.feature.movie.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -31,6 +35,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
+import my.nanihadesuka.compose.LazyColumnScrollbar
+import my.nanihadesuka.compose.ScrollbarSettings
 import java.util.Calendar
 
 private fun LazyListState.getLastVisibleIndex(): Int {
@@ -45,7 +51,7 @@ internal fun MoviePage(
     isPaginationAvailable: Boolean = false,
     onEndList: (lastVisibleIndex: Int) -> Unit = {},
 ) {
-    val pagerState = rememberLazyListState()
+    val listState = rememberLazyListState()
     val sortOptionState = remember {
         mutableStateOf(selectedSortOption)
     }
@@ -55,7 +61,7 @@ internal fun MoviePage(
     val isAtBottomState = remember {
         derivedStateOf {
             MoviePagination.shouldLoadMore(
-                lastVisibleIndex = pagerState.getLastVisibleIndex(),
+                lastVisibleIndex = listState.getLastVisibleIndex(),
                 totalItemCount = rosterSizeState.intValue
             )
         }
@@ -69,7 +75,7 @@ internal fun MoviePage(
         snapshotFlow { isAtBottomState.value }
             .filter { it }
             .collect {
-                val lastVisibleIndex = pagerState.getLastVisibleIndex()
+                val lastVisibleIndex = listState.getLastVisibleIndex()
                 //Log.d("@@@", "onEndList: $lastVisibleIndex")
                 onEndList(lastVisibleIndex)
             }
@@ -82,7 +88,7 @@ internal fun MoviePage(
             .collect {
                 //Log.d("@@@", "sortChanged: $it")
                 delay(300)
-                pagerState.scrollToItem(0)
+                listState.scrollToItem(0)
             }
     }
 
@@ -92,7 +98,7 @@ internal fun MoviePage(
             .filter { it != null }
             .collect {
                 delay(300)
-                pagerState.scrollToItem(0)
+                listState.scrollToItem(0)
             }
     }
 
@@ -111,7 +117,7 @@ internal fun MoviePage(
         roster = roster,
         onLike = onLike,
         isPaginationAvailable = isPaginationAvailable,
-        pagerState = pagerState,
+        pagerState = listState,
         isAtBottomState = isAtBottomState.value
     )
 }
@@ -124,39 +130,82 @@ private fun PageContent(
     pagerState: LazyListState,
     isAtBottomState: Boolean,
 ) {
-    LazyColumn(state = pagerState) {
-        itemsIndexed(
-            items = roster,
-            key = { _, item -> item.id }
-        ) { index, item ->
-            val prevItem = roster.getOrNull(index - 1)
-            val isAnotherMonth = item.isAnotherMonthOrYear(prevItem?.date)
-            if (index == 0 || isAnotherMonth) {
-                MonthDivider(date = item.formattedDateForDivider)
-            }
-
-            MovieCard(
-                modifier = Modifier.animateItem(),
-                movie = item,
-                onLike = { onLike(item) }
+    LazyColumnScrollbar(
+        state = pagerState,
+        settings = ScrollbarSettings.Default.copy(
+            thumbThickness = 10.dp,
+            thumbShape = RoundedCornerShape(4.dp),
+            thumbUnselectedColor = MaterialTheme.colorScheme.secondary,
+            thumbSelectedColor = MaterialTheme.colorScheme.primary,
+        ),
+        indicatorContent =  { index, isThumbSelected ->
+            val date = roster.getOrNull(index)?.formattedDateForDivider ?: ""
+            val alpha = if (isThumbSelected) 0.9f else 0.3f
+            Text(
+                text = date,
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = alpha),
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                ,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
+    ) {
+        LazyColumn(state = pagerState) {
+            MovieCardItems(roster = roster, onLike = onLike)
+            ProgressItem(
+                roster = roster,
+                isPaginationAvailable = isPaginationAvailable,
+                isAtBottomState = isAtBottomState
+            )
+        }
+    }
+}
 
-        if (isPaginationAvailable) {
-            item("Pager CircularProgressIndicator") {
-                AnimatedVisibility(visible = isAtBottomState && roster.isNotEmpty()) {
-                    Box(
+private fun LazyListScope.MovieCardItems(
+    roster: List<Movie>,
+    onLike: (Movie) -> Unit
+) {
+    itemsIndexed(
+        items = roster,
+        key = { _, item -> item.id }
+    ) { index, item ->
+        val prevItem = roster.getOrNull(index - 1)
+        val isAnotherMonth = item.isAnotherMonthOrYear(prevItem?.date)
+        if (index == 0 || isAnotherMonth) {
+            MonthDivider(date = item.formattedDateForDivider)
+        }
+
+        MovieCard(
+            modifier = Modifier.animateItem(),
+            movie = item,
+            onLike = { onLike(item) }
+        )
+    }
+}
+
+private fun LazyListScope.ProgressItem(
+    roster: List<Movie>,
+    isPaginationAvailable: Boolean,
+    isAtBottomState: Boolean
+) {
+    if (isPaginationAvailable) {
+        item("Pager CircularProgressIndicator") {
+            AnimatedVisibility(visible = isAtBottomState && roster.isNotEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
+                ) {
+                    CircularProgressIndicator(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 16.dp)
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .size(64.dp),
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
+                            .align(Alignment.Center)
+                            .size(64.dp),
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
             }
         }

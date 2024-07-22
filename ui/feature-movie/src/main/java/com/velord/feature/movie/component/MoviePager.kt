@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -62,6 +63,8 @@ internal fun ColumnScope.MoviePager(
         }
     }
 
+
+
     HorizontalPager(
         state = pagerState,
         modifier = Modifier
@@ -108,12 +111,17 @@ private fun RefreshPage(
     val scrollOrNot: Modifier.() -> Modifier = {
         if (roster.isEmpty()) verticalScroll(scrollState) else this
     }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
             .scrollOrNot()
     ) {
+        val mod = Modifier
+            .width(width = 16.dp)
+            .align(Alignment.CenterEnd)
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,

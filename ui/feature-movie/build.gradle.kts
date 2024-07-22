@@ -48,6 +48,8 @@ dependencies {
     // DI
     implementation(libs.bundles.koin.core)
     ksp(libs.koin.ksp)
+    // 3-rd party
+    implementation(libs.compose.scrollbar.nanihadesuka)
 }
 
 ksp {
