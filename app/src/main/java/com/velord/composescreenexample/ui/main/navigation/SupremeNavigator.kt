@@ -16,8 +16,8 @@ import com.ramcosta.composedestinations.generated.destinations.ShapeDemoDestinat
 import com.ramcosta.composedestinations.generated.navgraphs.BottomNavigationNavGraph
 import com.ramcosta.composedestinations.generated.navgraphs.CameraRecordingNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
+import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
-import com.ramcosta.composedestinations.spec.Route
 import com.ramcosta.composedestinations.utils.startDestination
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.bottomnavigation.screen.BottomNavigationDestination
@@ -30,10 +30,10 @@ class SupremeNavigator(
     private val navController: NavHostController
 ) : BottomNavigator, DemoNavigator, CameraRecordingNavigator {
 
-    override fun getRoute(route: BottomNavigationDestination): String = when(route) {
-        BottomNavigationDestination.Camera -> CameraRecordingNavGraph.route
-        BottomNavigationDestination.Demo -> DemoDestinationDestination.route
-        BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination.route
+    override fun getDirection(route: BottomNavigationDestination): Direction = when(route) {
+        BottomNavigationDestination.Camera -> CameraRecordingNavGraph
+        BottomNavigationDestination.Demo -> DemoDestinationDestination
+        BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination
     }
 
     override fun getGraph(): NavHostGraphSpec = BottomNavigationNavGraph
@@ -42,12 +42,12 @@ class SupremeNavigator(
     override fun CreateDestinationsNavHostForBottom(
         navController: NavHostController,
         modifier: Modifier,
-        startRoute: BottomNavigationDestination
+        start: BottomNavigationDestination
     ) {
         DestinationsNavHost(
             navGraph = BottomNavigationNavGraph,
             modifier = modifier,
-            startRoute = CameraRecordingNavGraph,
+            start = getDirection(start),
             navController = navController,
             dependenciesContainerBuilder = {
                 dependency(SupremeNavigator(navController = navController))
@@ -77,11 +77,5 @@ class SupremeNavigator(
         BottomNavigationDestination.Camera -> CameraRecordingNavGraph.startDestination.route
         BottomNavigationDestination.Demo -> DemoDestinationDestination.route
         BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination.route
-    }
-
-    private fun getDestinationSpec(route: BottomNavigationDestination): Route = when(route) {
-        BottomNavigationDestination.Camera -> CameraRecordingNavGraph
-        BottomNavigationDestination.Demo -> DemoDestinationDestination
-        BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination
     }
 }
