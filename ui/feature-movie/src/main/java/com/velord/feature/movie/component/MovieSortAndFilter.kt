@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -18,9 +21,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.velord.feature.movie.model.MovieFilterOptionUI
 import com.velord.feature.movie.model.MovieSortOptionUI
 import com.velord.feature.movie.viewModel.MovieUiState
+import com.velord.resource.R
 import com.velord.uicore.compose.preview.PreviewCombined
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -30,8 +35,10 @@ internal fun MovieSortAndFilter(
     uiState: MovieUiState,
     isSortShowing: Boolean,
     isFilterShowing: Boolean,
+    isInfoShowing: Boolean,
     onHideSort: () -> Unit,
     onHideFilter: () -> Unit,
+    onHideInfo: () -> Unit,
     onSortOptionClick: (MovieSortOptionUI) -> Unit,
     onFilterOptionClick: (MovieFilterOptionUI) -> Unit
 ) {
@@ -53,6 +60,12 @@ internal fun MovieSortAndFilter(
             onOptionClick = {
                 onFilterOptionClick(it)
             }
+        )
+    }
+    if (isInfoShowing) {
+        Info(
+            isShowing = isInfoShowing,
+            onHide = onHideInfo
         )
     }
 }
@@ -130,6 +143,29 @@ private fun Filter(
     )
 }
 
+@Composable
+private fun Info(
+    isShowing: Boolean,
+    onHide: () -> Unit,
+) {
+    val scope = rememberCoroutineScope()
+
+    Sheet(
+        isShowing = isShowing,
+        onHide = { scope.hide(onHide) },
+        content = {
+            Text(
+                text = stringResource(id = R.string.info_description_movie),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp)
+                    .verticalScroll(rememberScrollState())
+            )
+        }
+    )
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Sheet(
@@ -159,10 +195,12 @@ private fun Sheet(
 private fun Preview() {
     MovieSortAndFilter(
         uiState = MovieUiState.DEFAULT,
-        isSortShowing = true,
+        isSortShowing = false,
         isFilterShowing = false,
+        isInfoShowing = false,
         onHideSort = {},
         onHideFilter = {},
+        onHideInfo = {},
         onSortOptionClick = {},
         onFilterOptionClick = {}
     )
