@@ -7,10 +7,13 @@ import com.velord.backend.model.MoviePageRequest
 import com.velord.db.MovieDbService
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.Movie
-import com.velord.model.movie.SortType
+import com.velord.model.movie.MoviePagination
 import com.velord.usecase.movie.dataSource.MovieDS
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.koin.core.annotation.Single
 
 private const val INITIAL_PAGE = 1
@@ -20,9 +23,15 @@ class MovieGateway(
     private val appState: AppStateService,
     private val http: MovieService,
     private val db: MovieDbService,
+    private val movieSortGateway: MovieSortGateway
 ) : MovieDS {
 
-    private var currentPage: Int = INITIAL_PAGE
+    private val scope = CoroutineScope(Dispatchers.IO)
+    private var currentPage = INITIAL_PAGE
+
+    init {
+        observe()
+    }
 
     override fun getFlow(): Flow<List<Movie>> = appState.movieRosterFlow
 
@@ -40,7 +49,6 @@ class MovieGateway(
             (movies + newRoster).toSet().toList()
         }
 
-
         db.insertAll(newRoster)
 
         return newRoster.size
@@ -53,11 +61,8 @@ class MovieGateway(
         return loadNewPage()
     }
 
-    override suspend fun loadFromDB() {
-        val sortType = appState.movieSortFlow.value
-            .firstOrNull { it.isSelected }
-            ?.type
-            ?: SortType.DateDescending
+    override suspend fun loadFromDb(): Int {
+        val sortType = movieSortGateway.getSelected().type
         val filterRoster = FilterType.createAll()
 
         val fromDb = db.getPage(
@@ -67,5 +72,14 @@ class MovieGateway(
         )
         Log.d("@@@", "fromDb: $fromDb")
         appState.movieRosterFlow.value = fromDb
+        return fromDb.size
+    }
+
+    private fun observe() {
+        scope.launch {
+            appState.movieRosterFlow.collect {
+                currentPage = MoviePagination.calculatePage(it.size)
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@ class GetAllMovieUCTest {
 
     private val movieDS = mockk<MovieDS> {
         coEvery { get() } returns movieList
-        coEvery { loadFromDB() } just Runs
+        coEvery { loadFromDb() } just Runs
         every { getFlow() } returns flowOf(movieList)
     }
     private val movieSortDS = mockk<MovieSortDS> {
@@ -79,7 +79,7 @@ class GetAllMovieUCTest {
     fun `invoke should return DBError when an exception occurs`() = runTest {
         val movieDS = mockk<MovieDS> {
             coEvery { get() } returns emptyList()
-            coEvery { loadFromDB() } throws Exception("Database error")
+            coEvery { loadFromDb() } throws Exception("Database error")
             every { getFlow() } returns flowOf(emptyList())
         }
 
@@ -95,7 +95,7 @@ class GetAllMovieUCTest {
     fun `invoke should load movies from DB when initially empty`() = runTest {
         val movieDS = mockk<MovieDS> {
             coEvery { get() } returns emptyList()
-            coEvery { loadFromDB() } just Runs
+            coEvery { loadFromDb() } just Runs
             every { getFlow() } returns flowOf(listOf(movie1))
         }
         val movieSortDS = mockk<MovieSortDS> {
@@ -105,14 +105,14 @@ class GetAllMovieUCTest {
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
         getAllMovieUC() // Call invoke to trigger loading from DB
 
-        coVerify { movieDS.loadFromDB() } // Verify that loadFromDB was called
+        coVerify { movieDS.loadFromDb() } // Verify that loadFromDB was called
     }
 
     @Test
     fun `invoke should handle empty movie list`() = runTest {
         val movieDS = mockk<MovieDS> {
             coEvery { get() } returns emptyList()
-            coEvery { loadFromDB() } just Runs
+            coEvery { loadFromDb() } just Runs
             every { getFlow() } returns flowOf(emptyList())
         }
 
@@ -132,7 +132,7 @@ class GetAllMovieUCTest {
                 Movie(1, "Movie 1", "Description 1", false, sameDate, 4.5f, 100),
                 Movie(2, "Movie 2", "Description 2", true, sameDate, 3.8f, 50)
             )
-            coEvery { loadFromDB() } just Runs
+            coEvery { loadFromDb() } just Runs
             every { getFlow() } returns flowOf(listOf(
                 Movie(1, "Movie 1", "Description 1", false, sameDate, 4.5f, 100),
                 Movie(2, "Movie 2", "Description 2", true, sameDate, 3.8f, 50)
@@ -169,7 +169,7 @@ class GetAllMovieUCTest {
         }
         val movieDS = mockk<MovieDS> {
             coEvery { get() } returns largeMovieList
-            coEvery { loadFromDB() } just Runs
+            coEvery { loadFromDb() } just Runs
             every { getFlow() } returns flowOf(largeMovieList)
         }
 
@@ -195,7 +195,7 @@ class GetAllMovieUCTest {
                 throw exception
             }
             coEvery { get() } returns emptyList() // Mock empty database to trigger loadFromDB
-            coEvery { loadFromDB() } just Runs
+            coEvery { loadFromDb() } just Runs
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
@@ -236,7 +236,7 @@ class GetAllMovieUCTest {
         val exception = RuntimeException("Database error")
         val movieDS = mockk<MovieDS> {
             coEvery { get() } returns emptyList()
-            coEvery { loadFromDB() } throws exception
+            coEvery { loadFromDb() } throws exception
             every { getFlow() } returns flowOf(listOf(movie1)) // Non-empty flow
         }
 
@@ -255,7 +255,7 @@ class GetAllMovieUCTest {
                 delay(500) // Simulate a long-running operation
                 emit(listOf(movie1))
             }
-            coEvery { loadFromDB() } just Runs
+            coEvery { loadFromDb() } just Runs
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
@@ -286,7 +286,7 @@ class GetAllMovieUCTest {
                 emit(listOf(movie1, movie2))
             }
             coEvery { get() } returns listOf(movie1)
-            coEvery { loadFromDB() } just Runs
+            coEvery { loadFromDb() } just Runs
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
@@ -332,7 +332,7 @@ class GetAllMovieUCTest {
                 emit(listOf(movie3, movie4))
             }
             coEvery { get() } returns listOf(movie1)
-            coEvery { loadFromDB() } just Runs
+            coEvery { loadFromDb() } just Runs
         }
         val movieSortDS = mockk<MovieSortDS> {
             every { getSelectedFlow() } returns flow {

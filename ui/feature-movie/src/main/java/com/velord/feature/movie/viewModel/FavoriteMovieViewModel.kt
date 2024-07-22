@@ -1,9 +1,11 @@
 package com.velord.feature.movie.viewModel
 
+import android.util.Log
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetFavoriteMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
+import com.velord.usecase.movie.result.GetFavoriteMovieResult
 import com.velord.usecase.movie.result.UpdateMovieResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -34,16 +36,27 @@ class FavoriteMovieViewModel(
     fun onLikeClick(movie: Movie) {
         launch {
             val result = updateMovieLikeUC(movie)
-            when(result) {
-                is UpdateMovieResult.Success -> uiState.value = uiState.value.copy(error = null)
-                is UpdateMovieResult.DbError -> uiState.value = uiState.value.copy(error = "Error")
+            val newError = when(result) {
+                is UpdateMovieResult.Success -> null
+                is UpdateMovieResult.DbError -> result.message
             }
+            uiState.value = uiState.value.copy(error = newError)
         }
     }
 
     private fun observe() {
         launch {
-            getFavoriteMovieUC().collect { roster ->
+            val result = getFavoriteMovieUC()
+            val newError = when(result) {
+                is GetFavoriteMovieResult.Success -> null
+                is GetFavoriteMovieResult.MergeError -> result.message
+            }
+            uiState.value = uiState.value.copy(error = newError)
+            Log.d("@@@", "getFavoriteMovieUC: $result")
+            when(result) {
+                is GetFavoriteMovieResult.Success -> result.flow
+                is GetFavoriteMovieResult.MergeError -> null
+            }?.collect { roster ->
                 uiState.value = uiState.value.copy(roster = roster)
             }
         }

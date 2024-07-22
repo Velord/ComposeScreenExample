@@ -67,23 +67,16 @@ class AllMovieViewModel(
     fun onLikeClick(movie: Movie) {
         launch {
             val result = updateMovieLikeUC(movie)
-            when(result) {
-                is UpdateMovieResult.Success -> uiState.value = uiState.value.copy(error = null)
-                is UpdateMovieResult.DbError -> uiState.value = uiState.value.copy(error = "Error")
+            val newError = when(result) {
+                is UpdateMovieResult.Success -> null
+                is UpdateMovieResult.DbError -> result.message
             }
+            uiState.value = uiState.value.copy(error = newError)
         }
     }
 
     fun onEndList(triggerIndex: Int) {
         if (uiState.value.isLoadPageAvailable.not()) return
-        // TODO: Add Additional logic
-        // if (lastVisibleIndex < uiState.value.roster.lastIndex) return
-//
-//        val lastIndex = uiState.value.roster.lastIndex
-//        val isEndList = lastListIndexFlow.value == lastIndex
-//        if (isEndList.not()) {
-//            lastListIndexFlow.tryEmit(lastIndex)
-//        }
         uiState.update {
             it.copy(paginationStatus = PaginationStatus.Trigger(triggerIndex))
         }
@@ -107,11 +100,13 @@ class AllMovieViewModel(
     private fun observe() {
         launch {
             val result = getAllMovieUC()
-            when(result) {
-                is GetMovieResult.Success -> uiState.value = uiState.value.copy(error = null)
-                is GetMovieResult.DBError -> uiState.value = uiState.value.copy(error = result.message)
-                is GetMovieResult.MergeError -> uiState.value = uiState.value.copy(error = result.message)
+            val newError = when(result) {
+                is GetMovieResult.Success -> null
+                is GetMovieResult.DBError -> result.message
+                is GetMovieResult.MergeError -> result.message
             }
+            uiState.value = uiState.value.copy(error = newError)
+            Log.d("@@@", "getAllMovieUC: $result")
             when(result) {
                 is GetMovieResult.Success -> result.flow
                 is GetMovieResult.DBError -> result.flow

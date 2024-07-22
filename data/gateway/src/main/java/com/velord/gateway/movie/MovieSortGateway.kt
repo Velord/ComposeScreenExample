@@ -31,4 +31,8 @@ class MovieSortGateway(
             }
         }
     }
+
+    override fun getSelected(): MovieSortOption = appState.movieSortFlow.value
+        .firstOrNull { it.isSelected }
+        ?: MovieSortOption.Default
 }
