@@ -3,14 +3,16 @@ package com.velord.usecase.movie.result
 import com.velord.model.movie.Movie
 import kotlinx.coroutines.flow.Flow
 
-sealed class GetMovieResult(open val flow: Flow<List<Movie>>) {
+sealed class GetMovieResult {
 
     data class Success(
-        override val flow: Flow<List<Movie>>
-    ) : GetMovieResult(flow)
+        val flow: Flow<List<Movie>>
+    ) : GetMovieResult()
 
     data class DBError(
-        override val flow: Flow<List<Movie>>,
+        val flow: Flow<List<Movie>>,
         val message: String
-    ) : GetMovieResult(flow)
+    ) : GetMovieResult()
+
+    data class MergeError(val message: String) : GetMovieResult()
 }
