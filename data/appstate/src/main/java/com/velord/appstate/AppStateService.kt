@@ -10,6 +10,7 @@ import org.koin.core.annotation.Single
 interface AppStateService {
     val themeConfigFlow: MutableStateFlow<ThemeConfig>
     val movieRosterFlow: MutableStateFlow<List<Movie>>
+    val movieFavoriteRosterFlow: MutableStateFlow<List<Movie>>
     val movieSortFlow: MutableStateFlow<List<MovieSortOption>>
 }
 
@@ -17,6 +18,7 @@ interface AppStateService {
 class AppStateServiceImpl : AppStateService {
     override val themeConfigFlow = MutableStateFlow(ThemeConfig.DEFAULT)
     override val movieRosterFlow = MutableStateFlow<List<Movie>>(emptyList())
+    override val movieFavoriteRosterFlow = MutableStateFlow<List<Movie>>(emptyList())
     override val movieSortFlow = MutableStateFlow(listOf(
         MovieSortOption(SortType.DateDescending, isSelected = true),
         MovieSortOption(SortType.DateAscending, isSelected = false),

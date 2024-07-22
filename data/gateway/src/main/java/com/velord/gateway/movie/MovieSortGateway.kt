@@ -1,7 +1,6 @@
 package com.velord.gateway.movie
 
 import com.velord.appstate.AppStateService
-import com.velord.db.MovieDbService
 import com.velord.model.movie.MovieSortOption
 import com.velord.usecase.movie.dataSource.MovieSortDS
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +11,7 @@ import org.koin.core.annotation.Single
 
 @Single
 class MovieSortGateway(
-    private val appState: AppStateService,
-    private val db: MovieDbService
+    private val appState: AppStateService
 ) : MovieSortDS {
 
     override fun getFlow(): Flow<List<MovieSortOption>> = appState.movieSortFlow

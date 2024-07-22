@@ -4,7 +4,7 @@ import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetFavoriteMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
-import com.velord.usecase.movie.result.GetMovieResult
+import com.velord.usecase.movie.result.UpdateMovieResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -28,19 +28,24 @@ class FavoriteMovieViewModel(
     val uiState: MutableStateFlow<FavoriteMovieUiState> = MutableStateFlow(FavoriteMovieUiState.DEFAULT)
 
     init {
+        observe()
+    }
+
+    fun onLikeClick(movie: Movie) {
         launch {
-            val result = getFavoriteMovieUC()
+            val result = updateMovieLikeUC(movie)
             when(result) {
-                is GetMovieResult.Success -> uiState.value = uiState.value.copy(error = null)
-                is GetMovieResult.DBError -> uiState.value = uiState.value.copy(error = "Error")
-            }
-            result.flow.collect { roster ->
-                uiState.value = uiState.value.copy(roster = roster)
+                is UpdateMovieResult.Success -> uiState.value = uiState.value.copy(error = null)
+                is UpdateMovieResult.DbError -> uiState.value = uiState.value.copy(error = "Error")
             }
         }
     }
 
-    fun onLikeClick(movie: Movie) {
-        updateMovieLikeUC(movie)
+    private fun observe() {
+        launch {
+            getFavoriteMovieUC().collect { roster ->
+                uiState.value = uiState.value.copy(roster = roster)
+            }
+        }
     }
 }
