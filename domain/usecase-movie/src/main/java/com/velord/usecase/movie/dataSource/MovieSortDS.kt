@@ -7,4 +7,5 @@ interface MovieSortDS {
     fun getFlow(): Flow<List<MovieSortOption>>
     fun getSelectedFlow(): Flow<MovieSortOption>
     fun update(newOption: MovieSortOption)
+    fun getSelected(): MovieSortOption
 }

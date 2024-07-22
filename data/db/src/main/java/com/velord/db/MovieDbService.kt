@@ -23,7 +23,7 @@ interface MovieDbService {
     ): List<Movie>
     suspend fun insertAll(movies: List<Movie>)
     suspend fun update(movie: Movie)
-    fun getAllLikedFlow(): Flow<List<Movie>>
+    fun getAllLikedFlow(sortType: SortType): Flow<List<Movie>>
 }
 
 @Single
@@ -43,8 +43,16 @@ class MovieDbServiceImpl(
         val voteCount: FilterType.VoteCount = filterRoster
             .firstOrNull { it is FilterType.VoteCount } as? FilterType.VoteCount
             ?: FilterType.VoteCount.Default
-        val offset = page * MoviePagination.PAGE_COUNT
-        Log.d("@@@", "sortOrder: $sortOrder, rating: $rating, voteCount: $voteCount, offset: $offset")
+
+        val offset = MoviePagination.calculateOffset(page)
+        Log.d(
+            "@@@",
+            "rating: $rating, voteCount: $voteCount, sortOrder: $sortOrder, offset: $offset"
+        )
+        db.getAll().forEach {
+            Log.d("@@@", "ALL it: $it")
+        }
+
         val movieFromDbRoster = db.getFirstPage(
             ratingStart = rating.start,
             ratingEnd = rating.end,
@@ -67,6 +75,11 @@ class MovieDbServiceImpl(
         db.update(MovieEntity(movie))
     }
 
-    override fun getAllLikedFlow(): Flow<List<Movie>> =
-        db.getAllLikedFlow().map { it.map { entity -> entity.toDomain() } }
+    override fun getAllLikedFlow(sortType: SortType): Flow<List<Movie>> {
+        val sortOrder = sortType.toSortOrder()
+        return db.getAllLikedFlow(
+            sortOrder = sortOrder,
+            orderBy = "date",
+        ).map { it.map { entity -> entity.toDomain() } }
+    }
 }

@@ -17,8 +17,15 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntity")
     suspend fun getAll(): List<MovieEntity>
 
-    @Query("SELECT * FROM MovieEntity WHERE isLiked = 1")
-    fun getAllLikedFlow(): Flow<List<MovieEntity>>
+    @Query("SELECT * FROM MovieEntity WHERE isLiked = 1 " +
+            "ORDER BY " +
+            "CASE WHEN :orderBy = 'date' AND :sortOrder = 0 THEN date END DESC, " +
+            "CASE WHEN :orderBy = 'date' AND :sortOrder = 1 THEN date END ASC "
+    )
+    fun getAllLikedFlow(
+        orderBy: String,
+        sortOrder: Int,
+    ): Flow<List<MovieEntity>>
 
     @Query("SELECT * FROM MovieEntity WHERE " +
             "rating BETWEEN :ratingStart AND :ratingEnd " +

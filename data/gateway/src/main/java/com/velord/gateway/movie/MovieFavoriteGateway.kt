@@ -18,6 +18,7 @@ import org.koin.core.annotation.Single
 class MovieFavoriteGateway(
     private val appState: AppStateService,
     private val db: MovieDbService,
+    private val movieSortGateway: MovieSortGateway
 ) : MovieFavoriteDS {
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
@@ -27,7 +28,10 @@ class MovieFavoriteGateway(
 
     init {
         scope.launch {
-            db.getAllLikedFlow().collect {
+            // Do we need sorting here ?
+            // We always need full list of liked movies
+            val sortType = movieSortGateway.getSelected().type
+            db.getAllLikedFlow(sortType).collect {
                 appState.movieFavoriteRosterFlow.value = it
             }
         }

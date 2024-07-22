@@ -51,7 +51,7 @@ private val useCaseModule = module {
     factory { SwitchAbideToOsThemeConfigUC(get()) }
     factory { SwitchDynamicColorThemeConfigUC(get()) }
     factory { GetAllMovieUC(get(), get()) }
-    factory { GetFavoriteMovieUC(get()) }
+    factory { GetFavoriteMovieUC(get(), get()) }
     factory { GetMovieSortOptionUC(get()) }
     factory { SetMovieSortOptionUC(get()) }
     factory { UpdateMovieLikeUC(get()) }

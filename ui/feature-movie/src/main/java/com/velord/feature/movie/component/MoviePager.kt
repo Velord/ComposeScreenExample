@@ -114,13 +114,6 @@ private fun RefreshPage(
             .pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
             .scrollOrNot()
     ) {
-        if (isPaginationAvailable) {
-            PullRefreshIndicator(
-                refreshing = isRefreshing,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
-        }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -151,6 +144,14 @@ private fun RefreshPage(
                     onEndList = onEndList
                 )
             }
+        }
+
+        if (isPaginationAvailable) {
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
     }
 }

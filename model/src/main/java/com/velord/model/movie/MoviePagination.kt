@@ -12,4 +12,10 @@ data object MoviePagination {
 
         return lastVisibleIndex >= totalItemCount - PRELOAD_BEFORE_END
     }
+
+    fun calculateOffset(page: Int): Int =
+        if (page < 2) { 0 } else { (page - 1) * PAGE_COUNT }
+
+    fun calculatePage(collectionSize: Int): Int =
+        if (collectionSize < PAGE_COUNT) { 1 } else { collectionSize / PAGE_COUNT + 1 }
 }

@@ -1,6 +1,7 @@
 package com.velord.usecase.movie
 
 import com.velord.model.movie.Movie
+import com.velord.model.movie.MoviePagination
 import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieDS
 import com.velord.usecase.movie.dataSource.MovieSortDS
@@ -18,7 +19,10 @@ class GetAllMovieUC(
         val merged = mergeMovieWithSort()
         try {
             if (movieDS.get().isEmpty()) {
-                movieDS.loadFromDB()
+                val isPageFull = movieDS.loadFromDb() == MoviePagination.PAGE_COUNT
+                if (isPageFull.not()) {
+                    movieDS.loadNewPage()
+                }
             }
             GetMovieResult.Success(merged)
         } catch (e: Exception) {

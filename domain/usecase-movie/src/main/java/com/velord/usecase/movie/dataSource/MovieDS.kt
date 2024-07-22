@@ -8,5 +8,5 @@ interface MovieDS {
     fun get(): List<Movie>
     suspend fun loadNewPage(): Int
     suspend fun refresh(): Int
-    suspend fun loadFromDB()
+    suspend fun loadFromDb(): Int
 }
