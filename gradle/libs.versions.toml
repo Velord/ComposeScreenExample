@@ -207,6 +207,7 @@ composeAccompanist = "0.33.2-alpha"
 composeMaterial3 = "1.2.1"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
+composeScrollbarNanihadesuka = "2.2.0"
 # Image loader
 coil = "2.2.2"
 # Permission
@@ -221,8 +222,6 @@ detekt = "1.23.6"
 slf4j = "1.7.32"
 # Testing
 junit = "4.13.2"
-junitExt = "1.2.1"
-archCoreTesting = "2.2.0"
 mockk = "1.12.0"
 turbine = "0.7.0"
 # --------------------------------------------------------------------------------------------------
@@ -522,6 +521,7 @@ compose-ui-geometry = { module = "androidx.compose.ui:ui-geometry", version.ref 
 compose-ui-geometry-android = { module = "androidx.compose.ui:ui-geometry-android", version.ref = "composeDefault" }
 # Compose 3-rd party
 compose-html = { module = "com.github.ireward:compose-html", version.ref = "composeHtmlIreward" }
+compose-scrollbar-nanihadesuka = { module = "com.github.nanihadesuka:LazyColumnScrollbar", version.ref = "composeScrollbarNanihadesuka" }
 # DI Dagger ----------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
