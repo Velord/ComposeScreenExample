@@ -18,8 +18,8 @@ data class TabState(
 
     companion object {
         val Default = TabState(
-            previous = BottomNavigationDestination.Demo,
-            current = BottomNavigationDestination.Demo
+            previous = BottomNavigationDestination.Camera,
+            current = BottomNavigationDestination.Camera
         )
     }
 }
