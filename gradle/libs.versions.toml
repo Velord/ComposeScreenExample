@@ -212,7 +212,7 @@ coil = "2.2.2"
 # Permission
 sagarCororutinePermission = "2.0.2"
 # Navigation
-composeDestinations = "2.1.0-beta05"
+composeDestinations = "2.1.0-beta10"
 voyager = "1.1.0-alpha02"
 velordMultipleBackstack = "0.5.9.1"
 # Code quality

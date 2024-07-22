@@ -42,6 +42,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
+import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
@@ -52,7 +53,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import org.koin.androidx.compose.koinViewModel
 
 interface BottomNavigator {
-    fun getRoute(route: BottomNavigationDestination): String
+    fun getDirection(route: BottomNavigationDestination): Direction
     fun getStartRoute(route: BottomNavigationDestination): String
     fun getGraph(): NavHostGraphSpec
     @Composable fun CreateDestinationsNavHostForBottom(
@@ -200,7 +201,7 @@ private fun onTabClick(
         return
     }
 
-    navController.navigate(navigator.getRoute(item)) {
+    navController.navigate(navigator.getDirection(item).route) {
         // Pop up to the root of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items
