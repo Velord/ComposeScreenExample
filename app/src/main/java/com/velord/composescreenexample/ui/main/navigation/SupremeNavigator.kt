@@ -16,8 +16,8 @@ import com.ramcosta.composedestinations.generated.destinations.ShapeDemoDestinat
 import com.ramcosta.composedestinations.generated.navgraphs.BottomNavigationNavGraph
 import com.ramcosta.composedestinations.generated.navgraphs.CameraRecordingNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
-import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
+import com.ramcosta.composedestinations.spec.Route
 import com.ramcosta.composedestinations.utils.startDestination
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.bottomnavigation.screen.BottomNavigationDestination
@@ -47,7 +47,7 @@ class SupremeNavigator(
         DestinationsNavHost(
             navGraph = BottomNavigationNavGraph,
             modifier = modifier,
-            startRoute = getDestinationSpec(startRoute),
+            startRoute = CameraRecordingNavGraph,
             navController = navController,
             dependenciesContainerBuilder = {
                 dependency(SupremeNavigator(navController = navController))
@@ -73,8 +73,14 @@ class SupremeNavigator(
         )
     }
 
-    override fun getDestinationSpec(route: BottomNavigationDestination): DestinationSpec = when(route) {
-        BottomNavigationDestination.Camera -> CameraRecordingNavGraph.startDestination
+    override fun getStartRoute(route: BottomNavigationDestination): String = when(route) {
+        BottomNavigationDestination.Camera -> CameraRecordingNavGraph.startDestination.route
+        BottomNavigationDestination.Demo -> DemoDestinationDestination.route
+        BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination.route
+    }
+
+    private fun getDestinationSpec(route: BottomNavigationDestination): Route = when(route) {
+        BottomNavigationDestination.Camera -> CameraRecordingNavGraph
         BottomNavigationDestination.Demo -> DemoDestinationDestination
         BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination
     }

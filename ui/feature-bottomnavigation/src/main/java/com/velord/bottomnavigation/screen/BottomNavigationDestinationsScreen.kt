@@ -42,7 +42,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
-import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
@@ -54,13 +53,13 @@ import org.koin.androidx.compose.koinViewModel
 
 interface BottomNavigator {
     fun getRoute(route: BottomNavigationDestination): String
+    fun getStartRoute(route: BottomNavigationDestination): String
     fun getGraph(): NavHostGraphSpec
     @Composable fun CreateDestinationsNavHostForBottom(
         navController: NavHostController,
         modifier: Modifier,
         startRoute: BottomNavigationDestination
     )
-    fun getDestinationSpec(route: BottomNavigationDestination): DestinationSpec
 }
 
 enum class BottomNavigationDestination {
@@ -193,10 +192,11 @@ private fun onTabClick(
     navigator: BottomNavigator,
     onClick: (BottomNavigationDestination) -> Unit
 ) {
+    if (navController.currentDestination?.route == navigator.getStartRoute(item)) return
     if (isSelected) {
         // When we click again on a bottom bar item and it was already selected
         // we want to pop the back stack until the initial destination of this bottom bar item
-        navController.popBackStack(navigator.getRoute(item), false)
+        navController.popBackStack(navigator.getStartRoute(item), false)
         return
     }
 
@@ -207,8 +207,7 @@ private fun onTabClick(
         popUpTo(navigator.getGraph().route) {
             saveState = true
         }
-        // Avoid multiple copies of the same destination when
-        // reselecting the same item
+        // Avoid multiple copies of the same destination when reselecting the same item
         launchSingleTop = true
         // Restore state when reselecting a previously selected item
         restoreState = true
