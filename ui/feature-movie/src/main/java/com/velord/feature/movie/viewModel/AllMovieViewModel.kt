@@ -109,9 +109,14 @@ class AllMovieViewModel(
             val result = getAllMovieUC()
             when(result) {
                 is GetMovieResult.Success -> uiState.value = uiState.value.copy(error = null)
-                is GetMovieResult.DBError -> uiState.value = uiState.value.copy(error = "Error")
+                is GetMovieResult.DBError -> uiState.value = uiState.value.copy(error = result.message)
+                is GetMovieResult.MergeError -> uiState.value = uiState.value.copy(error = result.message)
             }
-            result.flow.collect { roster ->
+            when(result) {
+                is GetMovieResult.Success -> result.flow
+                is GetMovieResult.DBError -> result.flow
+                is GetMovieResult.MergeError -> null
+            }?.collect { roster ->
                 uiState.value = uiState.value.copy(roster = roster)
             }
         }
