@@ -45,7 +45,7 @@ data class Movie(
         date.get(Calendar.MONTH) != calendar?.get(Calendar.MONTH) ||
                 date.get(Calendar.YEAR) != calendar.get(Calendar.YEAR)
 
-    val imageUrl: String get() = if (imagePath == null) {
+    val imageUrl: String get() = if (imagePath.isNullOrEmpty()) {
         PICSUM_HOST
     } else {
         "https://image.tmdb.org/t/p/original$imagePath"
@@ -53,7 +53,7 @@ data class Movie(
 
     companion object {
 
-        fun toCalendar(date: String): Calendar {
+        fun toCalendar(date: String): Calendar = try {
             val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
             val date: Date? = sdf.parse(date)
             val calendar = Calendar.getInstance()
@@ -61,7 +61,9 @@ data class Movie(
                 calendar.time = date
             }
 
-            return calendar
+            calendar
+        } catch (e: Exception) {
+            Calendar.getInstance()
         }
 
         fun toRaw(calendar: Calendar): String {
@@ -72,4 +74,4 @@ data class Movie(
 }
 
 fun List<Movie>.findRecentTimeInMilli(): Long =
-    maxByOrNull { it.date.timeInMillis }?.date?.timeInMillis ?: 0
+    maxByOrNull { it.date.timeInMillis }?.date?.timeInMillis ?: 0L
