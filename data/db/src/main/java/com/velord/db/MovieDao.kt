@@ -17,13 +17,18 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntity")
     suspend fun getAll(): List<MovieEntity>
 
+    @Query("SELECT * FROM MovieEntity WHERE isLiked = 1")
+    fun getAllLikedFlow(): Flow<List<MovieEntity>>
+
     @Query("SELECT * FROM MovieEntity WHERE " +
             "rating BETWEEN :ratingStart AND :ratingEnd " +
             "AND voteCount BETWEEN :voteCountStart AND :voteCountEnd " +
             "ORDER BY " +
             "CASE WHEN :orderBy = 'date' AND :sortOrder = 0 THEN date END DESC, " +
             "CASE WHEN :orderBy = 'date' AND :sortOrder = 1 THEN date END ASC " +
-            "LIMIT :pageSize")
+            "LIMIT :pageSize " +
+            "OFFSET :offset"
+    )
     suspend fun getFirstPage(
         ratingStart: Float,
         ratingEnd: Float,
@@ -32,6 +37,7 @@ interface MovieDao {
         orderBy: String,
         sortOrder: Int,
         pageSize: Int,
+        offset: Int
     ): List<MovieEntity>
 
     @Update

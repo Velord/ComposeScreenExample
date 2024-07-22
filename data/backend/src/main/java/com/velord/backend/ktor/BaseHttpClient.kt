@@ -23,7 +23,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 private const val DEVICE_TIME_HEADER = "deviceTime"
-private const val TIMEOUT = 20000L
+private const val TIMEOUT = 2000L
 
 class BaseHttpClient(
     context: Context,

@@ -9,6 +9,7 @@ import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import com.velord.usecase.movie.result.GetMovieResult
 import com.velord.usecase.movie.result.MovieLoadNewPageResult
+import com.velord.usecase.movie.result.UpdateMovieResult
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
@@ -64,7 +65,13 @@ class AllMovieViewModel(
     }
 
     fun onLikeClick(movie: Movie) {
-        updateMovieLikeUC(movie)
+        launch {
+            val result = updateMovieLikeUC(movie)
+            when(result) {
+                is UpdateMovieResult.Success -> uiState.value = uiState.value.copy(error = null)
+                is UpdateMovieResult.DbError -> uiState.value = uiState.value.copy(error = "Error")
+            }
+        }
     }
 
     fun onEndList(triggerIndex: Int) {
@@ -92,7 +99,6 @@ class AllMovieViewModel(
             uiState.value = uiState.value.copy(isRefreshing = true)
             val result = refreshMovieUC()
             result.handleLoadPageResult()
-        }.invokeOnCompletion {
             uiState.value = uiState.value.copy(isRefreshing = false)
         }
     }
@@ -132,24 +138,28 @@ class AllMovieViewModel(
             uiState.value = uiState.value.copy(isLoading = true)
             val result = loadNewPageMovieUC()
             result.handleLoadPageResult()
-        }.invokeOnCompletion {
             uiState.value = uiState.value.copy(isLoading = false)
         }
     }
 
     private fun MovieLoadNewPageResult.handleLoadPageResult() {
+        Log.d("@@@", "handleLoadPageResult: $this")
         when(this) {
             MovieLoadNewPageResult.Success -> uiState.value = uiState.value.copy(error = null)
             is MovieLoadNewPageResult.LoadPageFailed -> {
-                uiState.value = uiState.value.copy(error = "Error")
                 uiState.update {
-                    it.copy(paginationStatus = PaginationStatus.Init)
+                    it.copy(
+                        error = this.message,
+                        paginationStatus = PaginationStatus.Init
+                    )
                 }
             }
             is MovieLoadNewPageResult.Exausted -> {
-                uiState.value = uiState.value.copy(error = null)
                 uiState.update {
-                    it.copy(paginationStatus = PaginationStatus.Exausted)
+                    it.copy(
+                        error = null,
+                        paginationStatus = PaginationStatus.Exausted
+                    )
                 }
             }
         }

@@ -1,17 +1,9 @@
 package com.velord.usecase.movie
 
 import com.velord.model.movie.Movie
-import com.velord.usecase.movie.result.GetMovieResult
+import com.velord.usecase.movie.dataSource.MovieFavoriteDS
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
-class GetFavoriteMovieUC(private val useCase: GetAllMovieUC) {
-
-    suspend operator fun invoke(): GetMovieResult = when(val result = useCase()) {
-        is GetMovieResult.Success -> result.copy(flow = result.flow.filter())
-        is GetMovieResult.DBError -> result.copy(flow = result.flow.filter())
-    }
-
-    private fun Flow<List<Movie>>.filter(): Flow<List<Movie>> =
-        map { roster -> roster.filter { it.isLiked } }
+class GetFavoriteMovieUC(private val dataSource: MovieFavoriteDS) {
+    operator fun invoke(): Flow<List<Movie>> = dataSource.getFlow()
 }

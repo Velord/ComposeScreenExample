@@ -23,16 +23,15 @@ class MovieServiceImpl(
 
     override suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse {
         val sdf = "/3/discover/movie"
-        delay(30000)
+        delay(3000)
         return client.get {
             header(AUTHORIZATION_HEADER, BEARER)
             url {
                 path(sdf)
-                parameters.append("vote_average.gte", "7")
-                parameters.append("vote_average.lte", "7.1")
-                parameters.append("vote_count.gte", "5000")
-                parameters.append("vote_count.lte", "6000")
-                parameters.append("sort_by", "primary_release_date.desc")
+                parameters.append("vote_average.gte", page.rating.start.toString())
+                parameters.append("vote_average.lte", page.rating.end.toString())
+                parameters.append("vote_count.gte", page.voteCount.start.toString())
+                parameters.append("vote_count.lte", page.voteCount.end.toString())
                 parameters.append("sort_by", "primary_release_date.desc")
                 parameters.append("page", page.page.toString())
             }

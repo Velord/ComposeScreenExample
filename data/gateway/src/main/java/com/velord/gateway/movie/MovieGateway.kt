@@ -28,24 +28,18 @@ class MovieGateway(
 
     override fun get(): List<Movie> = appState.movieRosterFlow.value
 
-    override fun update(movie: Movie) {
-        appState.movieRosterFlow.update { roster ->
-            roster.map {
-                if (it.id == movie.id) {
-                    movie
-                } else {
-                    it
-                }
-            }
-        }
-    }
-
     override suspend fun loadNewPage(): Int {
-        val movieRoster = http.getMovie(MoviePageRequest(currentPage++))
+        val newPage = MoviePageRequest(
+            page = currentPage++,
+            rating = FilterType.Rating.Default,
+            voteCount = FilterType.VoteCount.Default
+        )
+        val movieRoster = http.getMovie(newPage)
         val newRoster = movieRoster.results.map { it.toDomain() }
         appState.movieRosterFlow.update { movies ->
             (movies + newRoster).toSet().toList()
         }
+
 
         db.insertAll(newRoster)
 
@@ -66,7 +60,8 @@ class MovieGateway(
             ?: SortType.DateDescending
         val filterRoster = FilterType.createAll()
 
-        val fromDb = db.getFirstPage(
+        val fromDb = db.getPage(
+            page = INITIAL_PAGE,
             sortType = sortType,
             filterRoster = filterRoster
         )
