@@ -33,7 +33,10 @@ dependencies {
     // Templates
     // DI
     implementation(libs.bundles.koin.core)
+    testImplementation(libs.junit)
     ksp(libs.koin.ksp)
+
+    testImplementation(libs.bundles.test)
 }
 
 ksp {
