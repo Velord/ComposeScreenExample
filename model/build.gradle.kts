@@ -34,5 +34,7 @@ dependencies {
     implementation(libs.bundles.kotlin.core)
     // Json
     implementation(libs.kotlin.serialization.json)
+    // Test
+    testImplementation(libs.bundles.test)
 }
 

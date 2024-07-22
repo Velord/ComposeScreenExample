@@ -7,5 +7,9 @@ data object MoviePagination {
     fun shouldLoadMore(
         lastVisibleIndex: Int,
         totalItemCount: Int,
-    ): Boolean = lastVisibleIndex >= totalItemCount - PRELOAD_BEFORE_END
+    ): Boolean {
+        if (lastVisibleIndex == 0 && totalItemCount == 0) error("Invalid index and total count")
+
+        return lastVisibleIndex >= totalItemCount - PRELOAD_BEFORE_END
+    }
 }

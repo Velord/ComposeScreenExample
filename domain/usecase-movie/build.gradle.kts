@@ -35,7 +35,7 @@ dependencies {
     implementation(libs.bundles.koin.core)
     testImplementation(libs.junit)
     ksp(libs.koin.ksp)
-
+    // Test
     testImplementation(libs.bundles.test)
 }
 
