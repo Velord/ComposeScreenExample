@@ -203,7 +203,6 @@ private fun Filter(
 private fun Info(
     isShowing: Boolean,
     onHide: () -> Unit,
-    onLinkClick: (String) -> Unit = {}
 ) {
     val scope = rememberCoroutineScope()
 

@@ -96,6 +96,10 @@ class AllMovieViewModel(
         }
     }
 
+    fun onClick(movie: Movie) {
+
+    }
+
     @OptIn(FlowPreview::class)
     private fun observe() {
         launch {
