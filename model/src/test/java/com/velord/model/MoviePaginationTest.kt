@@ -1,4 +1,4 @@
-package com.velord
+package com.velord.model
 
 import com.velord.model.movie.MoviePagination
 import junit.framework.TestCase.assertEquals
