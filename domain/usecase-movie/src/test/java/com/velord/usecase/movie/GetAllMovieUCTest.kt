@@ -6,11 +6,9 @@ import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieDS
 import com.velord.usecase.movie.dataSource.MovieSortDS
 import com.velord.usecase.movie.result.GetMovieResult
-import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.delay
@@ -41,7 +39,7 @@ class GetAllMovieUCTest {
 
     private val movieDS = mockk<MovieDS> {
         coEvery { get() } returns movieList
-        coEvery { loadFromDb() } just Runs
+        coEvery { loadFromDb() } returns 0
         every { getFlow() } returns flowOf(movieList)
     }
     private val movieSortDS = mockk<MovieSortDS> {
@@ -95,7 +93,7 @@ class GetAllMovieUCTest {
     fun `invoke should load movies from DB when initially empty`() = runTest {
         val movieDS = mockk<MovieDS> {
             coEvery { get() } returns emptyList()
-            coEvery { loadFromDb() } just Runs
+            coEvery { loadFromDb() } returns 0
             every { getFlow() } returns flowOf(listOf(movie1))
         }
         val movieSortDS = mockk<MovieSortDS> {
@@ -112,14 +110,15 @@ class GetAllMovieUCTest {
     fun `invoke should handle empty movie list`() = runTest {
         val movieDS = mockk<MovieDS> {
             coEvery { get() } returns emptyList()
-            coEvery { loadFromDb() } just Runs
+            coEvery { loadFromDb() } returns 0
             every { getFlow() } returns flowOf(emptyList())
+            coEvery { loadNewPage() } returns 0
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
         val result = getAllMovieUC()
 
-        assertTrue(result is GetMovieResult.Success) // Success is expected even for empty list
+        assertTrue(result is GetMovieResult.Success) // Success is still expected
         val movies = (result as GetMovieResult.Success).flow.toList().flatten()
         assertTrue(movies.isEmpty()) // Verify that the resulting list is empty
     }
@@ -132,7 +131,7 @@ class GetAllMovieUCTest {
                 Movie(1, "Movie 1", "Description 1", false, sameDate, 4.5f, 100),
                 Movie(2, "Movie 2", "Description 2", true, sameDate, 3.8f, 50)
             )
-            coEvery { loadFromDb() } just Runs
+            coEvery { loadFromDb() } returns 0
             every { getFlow() } returns flowOf(listOf(
                 Movie(1, "Movie 1", "Description 1", false, sameDate, 4.5f, 100),
                 Movie(2, "Movie 2", "Description 2", true, sameDate, 3.8f, 50)
@@ -169,7 +168,7 @@ class GetAllMovieUCTest {
         }
         val movieDS = mockk<MovieDS> {
             coEvery { get() } returns largeMovieList
-            coEvery { loadFromDb() } just Runs
+            coEvery { loadFromDb() } returns 0
             every { getFlow() } returns flowOf(largeMovieList)
         }
 
@@ -187,22 +186,24 @@ class GetAllMovieUCTest {
 
     @Test
     fun `invoke should handle errors emitted by upstream flows and return Success with empty flow`() = runTest {
-        val exception= RuntimeException("Simulated error from movieDS")
+        val exception = RuntimeException("Simulated error from movieDS")
         val movieDS = mockk<MovieDS> {
             every { getFlow() } returns flow {
                 emit(emptyList())
-                delay(100)
                 throw exception
             }
-            coEvery { get() } returns emptyList() // Mock empty database to trigger loadFromDB
-            coEvery { loadFromDb() } just Runs
+            coEvery { get() } returns emptyList()
+            coEvery { loadFromDb() } returns 0
+            coEvery { loadNewPage() } returns 0 // Mock loadNewPage()
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
         val result = getAllMovieUC()
 
-        assertTrue(result is GetMovieResult.Success) // Assert Success
-        assertEquals(emptyList<Movie>(), (result as GetMovieResult.Success).flow.first()) // Assert empty flow
+        assertTrue(result is GetMovieResult.Success)
+        val movies = (result as GetMovieResult.Success).flow.first()
+        assertTrue(movies.isEmpty())
+        coVerify { movieDS.loadNewPage() } // Verify that loadNewPage() was called
     }
 
     @Test
@@ -255,7 +256,7 @@ class GetAllMovieUCTest {
                 delay(500) // Simulate a long-running operation
                 emit(listOf(movie1))
             }
-            coEvery { loadFromDb() } just Runs
+            coEvery { loadFromDb() } returns 0
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
@@ -286,7 +287,7 @@ class GetAllMovieUCTest {
                 emit(listOf(movie1, movie2))
             }
             coEvery { get() } returns listOf(movie1)
-            coEvery { loadFromDb() } just Runs
+            coEvery { loadFromDb() } returns 0
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
@@ -332,7 +333,7 @@ class GetAllMovieUCTest {
                 emit(listOf(movie3, movie4))
             }
             coEvery { get() } returns listOf(movie1)
-            coEvery { loadFromDb() } just Runs
+            coEvery { loadFromDb() } returns 0
         }
         val movieSortDS = mockk<MovieSortDS> {
             every { getSelectedFlow() } returns flow {
@@ -374,5 +375,41 @@ class GetAllMovieUCTest {
         val result = getAllMovieUC()
 
         assertTrue(result is GetMovieResult.MergeError) // Assert that the result is a MergeError
+    }
+
+    @Test
+    fun `invoke should handle movies with same date in both sort orders`() = runTest {
+        val sameDate = Calendar.getInstance()
+        val movie3 = Movie(3, "Movie 3", "Desc 3", false, sameDate, 4.2f,80, "imagePath3")
+        val movie4 = Movie(4, "Movie 4", "Desc 4", true, sameDate, 3.5f, 60, "imagePath4")
+        val movieListWithSameDate = listOf(movie3, movie4)
+
+        val movieDS = mockk<MovieDS> {
+            coEvery { get() } returns movieListWithSameDate
+            coEvery { loadFromDb() } returns 0
+            every { getFlow() } returns flowOf(movieListWithSameDate)
+        }
+
+        //Test with Descending order
+        val movieSortDSDescending = mockk<MovieSortDS> {
+            every { getSelectedFlow() } returns flowOf(Descending)
+        }
+        val getAllMovieUCDescending = GetAllMovieUC(movieDS, movieSortDSDescending)
+        val resultDescending = getAllMovieUCDescending()
+        assertTrue(resultDescending is GetMovieResult.Success)
+        val moviesDescending = (resultDescending as GetMovieResult.Success).flow.first()
+        assertEquals(movie3, moviesDescending[0]) // Order might be based on insertion order or another property
+        assertEquals(movie4, moviesDescending[1])
+
+        // Test with Ascending order
+        val movieSortDSAscending = mockk<MovieSortDS> {
+            every { getSelectedFlow() } returns flowOf(Ascending)
+        }
+        val getAllMovieUCAscending = GetAllMovieUC(movieDS, movieSortDSAscending)
+        val resultAscending = getAllMovieUCAscending()
+        assertTrue(resultAscending is GetMovieResult.Success)
+        val moviesAscending = (resultAscending as GetMovieResult.Success).flow.first()
+        assertEquals(movie3, moviesAscending[0]) // Assumingyou want to order by ID in ascending order
+        assertEquals(movie4, moviesAscending[1])
     }
 }
