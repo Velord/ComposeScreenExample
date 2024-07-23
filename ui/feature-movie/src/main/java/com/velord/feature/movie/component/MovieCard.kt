@@ -4,6 +4,7 @@ import android.view.animation.AnticipateOvershootInterpolator
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -53,12 +54,14 @@ import java.util.Calendar
 internal fun MovieCard(
     movie: Movie,
     modifier: Modifier = Modifier,
-    onLike: () -> Unit
+    onLike: () -> Unit,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer
         ),
@@ -285,6 +288,7 @@ private fun PreviewCard() {
             rating = 4.5f,
             voteCount = 100,
         ),
-        onLike = {}
+        onLike = {},
+        onClick = {}
     )
 }

@@ -48,6 +48,7 @@ internal fun MoviePage(
     roster: List<Movie>,
     selectedSortOption: SortType?,
     onLike: (Movie) -> Unit,
+    onClick: (Movie) -> Unit,
     isPaginationAvailable: Boolean = false,
     onEndList: (lastVisibleIndex: Int) -> Unit = {},
 ) {
@@ -116,6 +117,7 @@ internal fun MoviePage(
     PageContent(
         roster = roster,
         onLike = onLike,
+        onClick = onClick,
         isPaginationAvailable = isPaginationAvailable,
         pagerState = listState,
         isAtBottomState = isAtBottomState.value
@@ -126,6 +128,7 @@ internal fun MoviePage(
 private fun PageContent(
     roster: List<Movie>,
     onLike: (Movie) -> Unit,
+    onClick: (Movie) -> Unit,
     isPaginationAvailable: Boolean,
     pagerState: LazyListState,
     isAtBottomState: Boolean,
@@ -155,7 +158,11 @@ private fun PageContent(
         }
     ) {
         LazyColumn(state = pagerState) {
-            MovieCardItems(roster = roster, onLike = onLike)
+            MovieCardItems(
+                roster = roster,
+                onLike = onLike,
+                onClick = onClick,
+            )
             ProgressItem(
                 roster = roster,
                 isPaginationAvailable = isPaginationAvailable,
@@ -167,7 +174,8 @@ private fun PageContent(
 
 private fun LazyListScope.MovieCardItems(
     roster: List<Movie>,
-    onLike: (Movie) -> Unit
+    onLike: (Movie) -> Unit,
+    onClick: (Movie) -> Unit
 ) {
     itemsIndexed(
         items = roster,
@@ -182,7 +190,8 @@ private fun LazyListScope.MovieCardItems(
         MovieCard(
             modifier = Modifier.animateItem(),
             movie = item,
-            onLike = { onLike(item) }
+            onLike = { onLike(item) },
+            onClick = { onClick(item) }
         )
     }
 }
@@ -273,6 +282,7 @@ private fun MoviePagerPreview() {
             ),
         ),
         onLike = {},
+        onClick = {},
         isPaginationAvailable = true,
         pagerState = rememberLazyListState(),
         isAtBottomState = false

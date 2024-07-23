@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -64,7 +63,6 @@ internal fun ColumnScope.MoviePager(
     }
 
 
-
     HorizontalPager(
         state = pagerState,
         modifier = Modifier
@@ -77,6 +75,7 @@ internal fun ColumnScope.MoviePager(
                 roster = allMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
                 onLike = allMovieViewModel::onLikeClick,
+                onClick = allMovieViewModel::onClick,
                 isDataExausted = allMovieUiState.value.paginationStatus.isExausted,
                 isPaginationAvailable = allMovieUiState.value.isPaginationAvailable,
                 onEndList = allMovieViewModel::onEndList,
@@ -86,7 +85,8 @@ internal fun ColumnScope.MoviePager(
             1 -> RefreshPage(
                 roster = favoriteMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
-                onLike = favoriteMovieViewModel::onLikeClick
+                onLike = favoriteMovieViewModel::onLikeClick,
+                onClick = favoriteMovieViewModel::onClick,
             )
         }
     }
@@ -99,6 +99,7 @@ private fun RefreshPage(
     roster: List<Movie>,
     selectedSortOption: SortType?,
     onLike: (Movie) -> Unit,
+    onClick: (Movie) -> Unit,
     isDataExausted: Boolean = false,
     isPaginationAvailable: Boolean = false,
     onEndList: (lastVisibleIndex: Int) -> Unit = {},
@@ -118,10 +119,6 @@ private fun RefreshPage(
             .pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
             .scrollOrNot()
     ) {
-        val mod = Modifier
-            .width(width = 16.dp)
-            .align(Alignment.CenterEnd)
-
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -148,6 +145,7 @@ private fun RefreshPage(
                     roster = roster,
                     selectedSortOption = selectedSortOption,
                     onLike = onLike,
+                    onClick = onClick,
                     isPaginationAvailable = isPaginationAvailable,
                     onEndList = onEndList
                 )
@@ -228,6 +226,7 @@ private fun MoviePagerPreview() {
         roster = emptyList(),
         selectedSortOption = SortType.DateAscending,
         onLike = {},
+        onClick = {},
         isDataExausted = true
     )
 }
