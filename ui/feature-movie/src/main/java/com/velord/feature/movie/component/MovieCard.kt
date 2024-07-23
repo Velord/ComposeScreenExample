@@ -117,7 +117,7 @@ internal fun MovieCard(
 private fun TitleAndDescription(movie: Movie) {
     Text(
         text = movie.title,
-        modifier = Modifier.padding(end = 24.dp),
+        modifier = Modifier.padding(end = 28.dp),
         color = MaterialTheme.colorScheme.onSecondaryContainer,
         style = MaterialTheme.typography.bodyLarge,
     )
@@ -274,7 +274,7 @@ private fun PreviewCard() {
         modifier = Modifier,
         movie = Movie(
             id = 1,
-            title = "Title sdsdfdssdfsd ddd",
+            title = "Title sdsdfssdsfsd ddfd",
             description = "Lorem ipsum dolor sit amet, consectetur adipLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et discing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             isLiked = true,
             date = Calendar.getInstance().apply {
