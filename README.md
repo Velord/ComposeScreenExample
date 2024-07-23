@@ -3,6 +3,8 @@
 Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Architecture
 
 ## UI Features:
+* [Movie Demo](#movie-demo)
+* [Phone Number Hint Demo](#phone-number-hint-demo)
 * [Compose Shapes](#shape-demo)
    * [TicketPath](#ticketpath)
    * [ArcAtBottomCenterPath](#arcatbottomcenterpath)
@@ -15,6 +17,10 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
     * [Synced Theme](#synced-theme-with-app)
     * [Counter](#counter)
     * [Refreshable Image](#refreshable-image)
+
+## Movie Demo
+[MovieDemo.webm](https://github.com/user-attachments/assets/a28cdb94-214d-470e-95f7-6d0f7a40b488)
+
 
 ## Shape Demo
 [ShapeDemo.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/c5cbd5ca-8cb3-4efb-8601-10994eb011a5)
@@ -296,3 +302,6 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 
 [Refreshable Image](https://github.com/Velord/ComposeScreenExample/assets/33905170/52762849-2d09-4445-85f1-4975d22ff52e)
 
+
+## Phone Number Hint Demo
+[Phone Number](https://github.com/user-attachments/assets/dd2f97c7-2bc9-4bcd-9bfe-c74d624330e7)
