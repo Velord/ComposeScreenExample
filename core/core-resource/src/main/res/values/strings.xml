@@ -117,4 +117,5 @@
 \nMake sure that anyone can build your project.
     </string>
     <string name="range">Range: %1s</string>
+    <string name="info_description_movie_url">https://github.com/AppSci/android-test-task?tab=readme-ov-file</string>
 </resources>
