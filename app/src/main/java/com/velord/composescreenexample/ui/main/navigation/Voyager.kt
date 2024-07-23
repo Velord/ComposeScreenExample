@@ -3,8 +3,8 @@ package com.velord.composescreenexample.ui.main.navigation
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.registry.screenModule
 import com.velord.camerarecording.CameraRecordingScreen
-import com.velord.composescreenexample.ui.compose.screen.TestScreen
 import com.velord.composescreenexample.ui.main.MainActivity
+import com.velord.composescreenexample.ui.screen.TestScreen
 import com.velord.flowsummator.FlowSummatorScreen
 import com.velord.modifierdemo.ModifierDemoScreen
 import com.velord.navigation.SharedScreen

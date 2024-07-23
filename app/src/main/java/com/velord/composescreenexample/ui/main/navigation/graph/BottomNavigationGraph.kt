@@ -9,6 +9,8 @@ import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.velord.feature.demo.DemoNavigator
 import com.velord.feature.demo.DemoScreen
 import com.velord.feature.demo.DemoViewModel
+import com.velord.feature.movie.MovieScreen
+import com.velord.feature.movie.viewModel.MovieViewModel
 import com.velord.flowsummator.FlowSummatorScreen
 import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.hintphonenumber.HintPhoneNumberScreen
@@ -65,8 +67,8 @@ fun ModifierDemoDestination() {
 @Destination<BottomNavigationGraph>
 @Composable
 fun FlowSummatorDestination() {
-    val viewmodel = koinViewModel<FlowSummatorViewModel>()
-    FlowSummatorScreen(viewmodel)
+    val viewModel = koinViewModel<FlowSummatorViewModel>()
+    FlowSummatorScreen(viewModel)
 }
 
 @Destination<BottomNavigationGraph>
@@ -79,4 +81,11 @@ fun MorphDemoDestination() {
 @Composable
 fun HintPhoneNumberDestination() {
     HintPhoneNumberScreen()
+}
+
+@Destination<BottomNavigationGraph>
+@Composable
+fun MovieDestination() {
+    val viewModel = koinViewModel<MovieViewModel>()
+    MovieScreen(viewModel)
 }

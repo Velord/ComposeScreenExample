@@ -10,10 +10,11 @@ include(":core:core-resource")
 include(":data:backend")
 include(":data:datastore")
 include(":data:appstate")
-// Data Gateway
-include(":data:gatewaysetting")
+include(":data:db")
+include(":data:gateway")
 // Domain
 include(":domain:usecase-setting")
+include(":domain:usecase-movie")
 // UI
 include(":ui:sharedviewmodel")
 // UI Feature
@@ -27,6 +28,7 @@ include(":ui:feature-demo-modifier")
 include(":ui:feature-demo-morph")
 include(":ui:feature-flowsummator")
 include(":ui:feature-settings")
+include(":ui:feature-movie")
 // UI Widget
 include(":ui:widget-refreshableimage")
 include(":ui:widget-counter")

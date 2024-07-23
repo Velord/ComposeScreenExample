@@ -2,6 +2,7 @@ plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
 android {
@@ -26,9 +27,6 @@ android {
         compose = true
         viewBinding = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -36,7 +34,7 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
+    implementation(project(":model"))
     implementation(project(":core:core-navigation"))
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-resource"))

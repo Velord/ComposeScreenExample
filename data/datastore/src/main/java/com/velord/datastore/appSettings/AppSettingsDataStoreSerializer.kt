@@ -2,7 +2,7 @@ package com.velord.datastore.appSettings
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.velord.util.settings.AppSettings
+import com.velord.model.settings.AppSettings
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import java.io.InputStream

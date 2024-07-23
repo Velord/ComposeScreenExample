@@ -23,7 +23,7 @@
     <string name="flow_summator">Flow Summator</string>
     <string name="launch">Launch</string>
     <string name="please_enter_the_number">Please, enter the number</string>
-    <string name="info_description">Develop Flow that sums values of other flows.
+    <string name="info_description_flow_summator">Develop Flow that sums values of other flows.
         \n"     "1. UI - must consist of 3 items. Enter field, ‘launch’ Button and Text field for output. On press ‘launch’ app handle N - digit has been entered in the Enter field. Result of the work should be rendered to the Text field. Every new update should be on the new line.
         \n"     "2. It is necessary to create an array of Flow of Int of N. Each after a delay of (index + 1) * 100, emits the value index + 1. I.e. Flow with index 0 emits value 1 with delay 100, Flow with index 1 emits value 2 with delay 200.
         \n"     "3. The resulting Flow must sum the values of all N Flows. The summing Flow must return a value after updating each of the N Flows.
@@ -62,4 +62,60 @@
     <string name="front">Front</string>
     <string name="waiting">Waiting</string>
     <string name="invoke_again">Invoke again</string>
+    <string name="all">All</string>
+    <string name="favorite">Favorite</string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort_by_date_ascending">Sort by date ascending</string>
+    <string name="sort_by_date_descending">Sort by date descending</string>
+    <string name="filter_by">Filter by</string>
+    <string name="filter_by_rating">Filter by rating</string>
+    <string name="filter_by_vote_count">Filter by vote count</string>
+    <string name="open_movie">Open movie</string>
+    <string name="all_movies">All movies with this filters are loaded</string>
+    <string name="info_description_movie">Test Task for android candidates\n
+\n
+\nWrite the application that allows user to review the list of movies and add them to favorites. You should provide your solution as a link to public repository. Please make commits of logical units, so we can evaluate your progress and add comments as you see fit.
+\n
+\nFunctional requirements:
+\n\nThe main screen contains two tabs: All and Favorites.
+\nTab All should display a list of movies with pagination.
+ \nMovies should be grouped by month (take a look at design example)
+\nTab Favorites should display a list of bookmarked movies.
+\nUser can add / remove movie to / from his favorites.
+\nAll changes should be visible immediately on both tabs.
+\nBookmarks can be saved localy (without api call).
+\nUser can refresh movies list using pull-to-refresh.
+\nUser can see early loaded content without internet connection (only 1st page, without pagination)
+\n\nMovies list filter:
+\n
+\nvote average: 7+
+\nvote count: 100+
+\nsorted by primary release date, the newest movies should appear at the top of list
+\n\nScreen UI should display one of the following states:
+\n
+\nLoading
+\nRefreshing
+\nLoading More (pagination)
+\nError
+\nContent (just showing movies)
+\n\nOptional Requirements
+\nImplement sign-in with Google or Facebook
+\nImplement movie sharing via any existing provider
+\nTechnical requirements
+\nKotlin is required
+\nSqlite / Room is required
+\nOne of MVVM / MVI / Redux architecture is required;
+\nClean Architecture is required;
+\nDependency injection is required;
+\nJetpack Compose is required
+\nUnit-tests are required;
+\n\nNotes
+\n\nYour code should be testable, scalable and flexible
+\nThe most important parts of logic should be covered with unit tests (you are free to decide what parts)
+\nYou are free to use any libraries
+\nYou are free to implement your own design
+\nMake sure that anyone can build your project.
+    </string>
+    <string name="range">Range: %1s</string>
+    <string name="info_description_movie_url">https://github.com/AppSci/android-test-task?tab=readme-ov-file</string>
 </resources>

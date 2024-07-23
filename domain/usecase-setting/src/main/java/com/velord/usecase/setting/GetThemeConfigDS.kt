@@ -1,9 +1,9 @@
 package com.velord.usecase.setting
 
-import com.velord.util.settings.ThemeConfig
+import com.velord.model.settings.ThemeConfig
 import kotlinx.coroutines.flow.Flow
 
 interface GetThemeConfigDS {
-    suspend fun get(): Flow<ThemeConfig>
+    suspend fun getFlow(): Flow<ThemeConfig>
     suspend fun save(config: ThemeConfig)
 }
