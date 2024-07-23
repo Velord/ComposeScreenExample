@@ -304,4 +304,4 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 
 
 ## Phone Number Hint Demo
-[Phone Number](https://github.com/user-attachments/assets/dd2f97c7-2bc9-4bcd-9bfe-c74d624330e7)
+[Phone Number Hint Demo](https://github.com/user-attachments/assets/dd2f97c7-2bc9-4bcd-9bfe-c74d624330e7)
