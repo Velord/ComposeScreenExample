@@ -14,9 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.feature.movie.component.MovieAction
+import com.velord.feature.movie.component.MovieBottomSheet
 import com.velord.feature.movie.component.MovieHeader
 import com.velord.feature.movie.component.MoviePager
-import com.velord.feature.movie.component.MovieSortAndFilter
 import com.velord.feature.movie.model.MovieFilterOptionUI
 import com.velord.feature.movie.model.MovieSortOptionUI
 import com.velord.feature.movie.viewModel.MovieUiState
@@ -93,7 +93,7 @@ private fun BoxScope.FloatingAction(
         }
     )
 
-    MovieSortAndFilter(
+    MovieBottomSheet(
         uiState = uiState,
         isSortShowing = showSortBottomSheetState.value,
         isFilterShowing = showFilterBottomSheetState.value,

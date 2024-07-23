@@ -3,12 +3,15 @@ package com.velord.feature.movie.viewModel
 import com.velord.feature.movie.model.MovieFilterOptionUI
 import com.velord.feature.movie.model.MoviePage
 import com.velord.feature.movie.model.MovieSortOptionUI
+import com.velord.model.movie.MovieFilterOption
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetMovieSortOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+// TODO: Create Filter logic through layers. Use Default by now
 
 data class MovieUiState(
     val initialPage: Int,
@@ -28,7 +31,7 @@ data class MovieUiState(
             pageCount = 2,
             currentPage = 0,
             sortOptionRoster = listOf(),
-            movieFilterOptionRoster = listOf()
+            movieFilterOptionRoster = MovieFilterOption.createAll().map { MovieFilterOptionUI.fromDomain(it) }
         )
     }
 }
@@ -58,7 +61,7 @@ class MovieViewModel(
     }
 
     fun onFilterOptionClick(newOption: MovieFilterOptionUI) {
-        // TODO
+        // TODO: disabled for now
     }
 
     private fun observe() {
