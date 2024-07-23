@@ -1,5 +1,6 @@
 package com.velord.feature.movie.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,15 +9,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RangeSlider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +36,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun MovieSortAndFilter(
+internal fun MovieBottomSheet(
     uiState: MovieUiState,
     isSortShowing: Boolean,
     isFilterShowing: Boolean,
@@ -129,14 +134,57 @@ private fun Filter(
         onHide = { scope.hide(onHide) },
         content = {
             optionRoster.forEach { option ->
-                Button(
-                    onClick = { scope.hide(onHide) },
+                val sliderRangeState = remember {
+                    mutableStateOf(option.type.start.toFloat()..option.type.end.toFloat())
+                }
+                val sliderMinState = remember { mutableFloatStateOf(option.type.min.toFloat()) }
+                val sliderMaxState = remember { mutableFloatStateOf(option.type.max.toFloat()) }
+
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            shape = MaterialTheme.shapes.medium
+                        )
                 ) {
                     Text(
-                        text = stringResource(id = option.name)
+                        text = stringResource(id = option.name),
+                        modifier = Modifier
+                            .padding(horizontal = 12.dp)
+                            .padding(top = 8.dp),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
+                    RangeSlider(
+                        value = sliderRangeState.value,
+                        onValueChange = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 4.dp),
+                        enabled = false,
+                        valueRange = sliderMinState.floatValue..sliderMaxState.floatValue,
+                        steps = option.type.steps,
+                        colors = SliderDefaults.colors(
+                            inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                        ),
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp)
+                            .padding(bottom = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        val (minStr, maxStr) = option.getMinMaxStr(sliderMinState, sliderMaxState)
+                        Text(text = minStr)
+
+                        val rangeStr = option.getRangeStr(sliderRangeState)
+                        Text(text = stringResource(id = R.string.range, rangeStr))
+
+                        Text(text = maxStr)
+                    }
                 }
             }
         }
@@ -193,10 +241,10 @@ private fun Sheet(
 @PreviewCombined
 @Composable
 private fun Preview() {
-    MovieSortAndFilter(
+    MovieBottomSheet(
         uiState = MovieUiState.DEFAULT,
         isSortShowing = false,
-        isFilterShowing = false,
+        isFilterShowing = true,
         isInfoShowing = false,
         onHideSort = {},
         onHideFilter = {},

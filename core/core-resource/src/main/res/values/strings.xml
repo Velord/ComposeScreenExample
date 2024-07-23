@@ -68,8 +68,8 @@
     <string name="sort_by_date_ascending">Sort by date ascending</string>
     <string name="sort_by_date_descending">Sort by date descending</string>
     <string name="filter_by">Filter by</string>
-    <string name="filter_by_title_over_10_char">Filter by title over 10 char</string>
-    <string name="filter_by_description_over_50_char">Filter by description over 50 char</string>
+    <string name="filter_by_rating">Filter by rating</string>
+    <string name="filter_by_vote_count">Filter by vote count</string>
     <string name="open_movie">Open movie</string>
     <string name="all_movies">All movies with this filters are loaded</string>
     <string name="info_description_movie">Test Task for android candidates\n
@@ -116,4 +116,5 @@
 \nYou are free to implement your own design
 \nMake sure that anyone can build your project.
     </string>
+    <string name="range">Range: %1s</string>
 </resources>
