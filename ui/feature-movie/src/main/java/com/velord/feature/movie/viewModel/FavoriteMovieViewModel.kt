@@ -44,10 +44,6 @@ class FavoriteMovieViewModel(
         }
     }
 
-    fun onClick(movie: Movie) {
-
-    }
-
     private fun observe() {
         launch {
             val result = getFavoriteMovieUC()
