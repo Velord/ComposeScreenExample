@@ -70,14 +70,12 @@ internal fun MoviePage(
     val mostRecentDateState: MutableState<Long?> = remember {
         mutableStateOf(roster.findRecentTimeInMilli())
     }
-    //Log.d("@@@", "isAtBottomState: ${isAtBottomState.value}")
 
     LaunchedEffect(isAtBottomState.value) {
         snapshotFlow { isAtBottomState.value }
             .filter { it }
             .collect {
                 val lastVisibleIndex = listState.getLastVisibleIndex()
-                //Log.d("@@@", "onEndList: $lastVisibleIndex")
                 onEndList(lastVisibleIndex)
             }
     }
@@ -87,7 +85,6 @@ internal fun MoviePage(
             .filterNotNull()
             .distinctUntilChanged()
             .collect {
-                //Log.d("@@@", "sortChanged: $it")
                 delay(300)
                 listState.scrollToItem(0)
             }
@@ -103,14 +100,11 @@ internal fun MoviePage(
             }
     }
 
-    //Log.d("@@@", "sortOptionState.value : ${sortOptionState.value}")
     rosterSizeState.intValue = roster.size
     sortOptionState.value = selectedSortOption
 
     val rosterRecentTime = roster.findRecentTimeInMilli()
     if (rosterRecentTime > (mostRecentDateState.value ?: 0)) {
-        // Log.d("@@@", "rosterRecentTime: $rosterRecentTime")
-        //Log.d("@@@", "mostRecent: ${mostRecentDateState.value}")
         mostRecentDateState.value = rosterRecentTime
     }
 

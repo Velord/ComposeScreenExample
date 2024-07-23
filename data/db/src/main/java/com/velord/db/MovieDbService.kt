@@ -1,6 +1,5 @@
 package com.velord.db
 
-import android.util.Log
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MoviePagination
@@ -45,13 +44,6 @@ class MovieDbServiceImpl(
             ?: FilterType.VoteCount.Default
 
         val offset = MoviePagination.calculateOffset(page)
-        Log.d(
-            "@@@",
-            "rating: $rating, voteCount: $voteCount, sortOrder: $sortOrder, offset: $offset"
-        )
-        db.getAll().forEach {
-            Log.d("@@@", "ALL it: $it")
-        }
 
         val movieFromDbRoster = db.getFirstPage(
             ratingStart = rating.start,

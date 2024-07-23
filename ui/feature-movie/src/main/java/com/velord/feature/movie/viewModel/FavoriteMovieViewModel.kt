@@ -1,6 +1,5 @@
 package com.velord.feature.movie.viewModel
 
-import android.util.Log
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetFavoriteMovieUC
@@ -52,7 +51,6 @@ class FavoriteMovieViewModel(
                 is GetFavoriteMovieResult.MergeError -> result.message
             }
             uiState.value = uiState.value.copy(error = newError)
-            Log.d("@@@", "getFavoriteMovieUC: $result")
             when(result) {
                 is GetFavoriteMovieResult.Success -> result.flow
                 is GetFavoriteMovieResult.MergeError -> null

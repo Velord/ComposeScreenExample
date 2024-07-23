@@ -1,6 +1,5 @@
 package com.velord.gateway.movie
 
-import android.util.Log
 import com.velord.appstate.AppStateService
 import com.velord.backend.ktor.MovieService
 import com.velord.backend.model.MoviePageRequest
@@ -70,7 +69,6 @@ class MovieGateway(
             sortType = sortType,
             filterRoster = filterRoster
         )
-        Log.d("@@@", "fromDb: $fromDb")
         appState.movieRosterFlow.value = fromDb
         return fromDb.size
     }

@@ -1,12 +1,10 @@
 package com.velord.backend.ktor
 
-import android.util.Log
 import com.velord.backend.model.MoviePageRequest
 import com.velord.backend.model.MovieRosterResponse
 import io.ktor.client.call.body
 import io.ktor.client.request.header
 import io.ktor.http.path
-import kotlinx.coroutines.delay
 import org.koin.core.annotation.Provided
 import org.koin.core.annotation.Single
 
@@ -24,8 +22,6 @@ class MovieServiceImpl(
 
     override suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse {
         val url = "/3/discover/movie"
-        Log.d("@@@", "page: $page")
-        delay(300)
         return client.get {
             header(AUTHORIZATION_HEADER, BEARER)
             url {
