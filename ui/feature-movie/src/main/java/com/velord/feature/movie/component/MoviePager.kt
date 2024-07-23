@@ -1,5 +1,7 @@
 package com.velord.feature.movie.component
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -24,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,8 +36,14 @@ import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
 import com.velord.uicore.compose.preview.PreviewCombined
+import com.velord.uicore.utils.ObserveSharedFlow
+import com.velord.util.context.getActivity
 import org.koin.androidx.compose.koinViewModel
 import java.util.Calendar
+
+private fun Activity.onClick(intent: Intent) {
+    startActivity(intent, null)
+}
 
 @Composable
 internal fun ColumnScope.MoviePager(
@@ -47,10 +56,19 @@ internal fun ColumnScope.MoviePager(
     val allMovieUiState = allMovieViewModel.uiState.collectAsStateWithLifecycle()
     val favoriteMovieUiState = favoriteMovieViewModel.uiState.collectAsStateWithLifecycle()
 
+    val activity = LocalContext.current.getActivity()
+    ObserveSharedFlow(
+        flow = allMovieViewModel.shareEvent,
+        onEvent = {
+            activity?.onClick(it)
+        }
+    )
+
     val pagerState = rememberPagerState(
         initialPage = uiState.initialPage,
         pageCount = { uiState.pageCount },
     )
+
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collect {
             onSwipe(it)
@@ -61,7 +79,6 @@ internal fun ColumnScope.MoviePager(
             pagerState.animateScrollToPage(uiState.currentPage)
         }
     }
-
 
     HorizontalPager(
         state = pagerState,
@@ -86,12 +103,11 @@ internal fun ColumnScope.MoviePager(
                 roster = favoriteMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
                 onLike = favoriteMovieViewModel::onLikeClick,
-                onClick = favoriteMovieViewModel::onClick,
+                onClick = allMovieViewModel::onClick,
             )
         }
     }
 }
-
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

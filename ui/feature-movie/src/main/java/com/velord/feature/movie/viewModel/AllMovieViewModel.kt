@@ -1,5 +1,7 @@
 package com.velord.feature.movie.viewModel
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
@@ -11,6 +13,7 @@ import com.velord.usecase.movie.result.GetMovieResult
 import com.velord.usecase.movie.result.MovieLoadNewPageResult
 import com.velord.usecase.movie.result.UpdateMovieResult
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -55,10 +58,12 @@ class AllMovieViewModel(
     private val getAllMovieUC: GetAllMovieUC,
     private val updateMovieLikeUC: UpdateMovieLikeUC,
     private val loadNewPageMovieUC: LoadNewPageMovieUC,
-    private val refreshMovieUC: RefreshMovieUC
+    private val refreshMovieUC: RefreshMovieUC,
+    private val context: Context
 ) : CoroutineScopeViewModel() {
 
     val uiState: MutableStateFlow<AllMovieUiState> = MutableStateFlow(AllMovieUiState.DEFAULT)
+    val shareEvent = MutableSharedFlow<Intent>()
 
     init {
         observe()
@@ -97,7 +102,15 @@ class AllMovieViewModel(
     }
 
     fun onClick(movie: Movie) {
-
+        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_TEXT, movie.toString())
+            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        launch {
+            shareEvent.emit(shareIntent)
+        }
     }
 
     @OptIn(FlowPreview::class)
