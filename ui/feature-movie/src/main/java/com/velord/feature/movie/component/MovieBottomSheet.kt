@@ -25,8 +25,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.velord.feature.movie.model.MovieFilterOptionUI
 import com.velord.feature.movie.model.MovieSortOptionUI
 import com.velord.feature.movie.viewModel.MovieUiState
@@ -195,6 +203,7 @@ private fun Filter(
 private fun Info(
     isShowing: Boolean,
     onHide: () -> Unit,
+    onLinkClick: (String) -> Unit = {}
 ) {
     val scope = rememberCoroutineScope()
 
@@ -202,6 +211,26 @@ private fun Info(
         isShowing = isShowing,
         onHide = { scope.hide(onHide) },
         content = {
+            val url = stringResource(id = R.string.info_description_movie_url)
+            Text(
+                buildAnnotatedString {
+                    withLink(
+                        LinkAnnotation.Url(
+                            url = url,
+                            styles = TextLinkStyles(
+                                style = SpanStyle(
+                                    color = Color.Blue,
+                                    textDecoration = TextDecoration.Underline
+                                )
+                            ),
+                        )
+                    ) {
+                        append(url)
+                    }
+                },
+                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp, color = Color.White),
+                modifier = Modifier.padding(16.dp)
+            )
             Text(
                 text = stringResource(id = R.string.info_description_movie),
                 modifier = Modifier
