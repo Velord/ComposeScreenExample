@@ -1,6 +1,6 @@
 package com.velord.usecase.setting
 
-import com.velord.util.settings.ThemeConfig
+import com.velord.model.settings.ThemeConfig
 
 class SwitchThemeConfigUC(private val dataSource: GetThemeConfigDS) {
     suspend fun invoke(config: ThemeConfig) {

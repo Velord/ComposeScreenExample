@@ -14,13 +14,13 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.velord.uicore.dialog.showRationalePermissionForCamera
 import com.velord.uicore.dialog.showRationalePermissionForMic
-import com.velord.uicore.utils.simulateTriggerStateAsSharedFlow
-import kotlinx.coroutines.flow.Flow
+import com.velord.uicore.utils.ObserveSharedFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CheckCameraAndAudioRecordPermission(
-    triggerCheckEvent: Flow<Unit?>,
+    triggerCheckEvent: MutableSharedFlow<Unit>,
     onCameraUpdateState: (PermissionState) -> Unit,
     onMicroUpdateState: (PermissionState) -> Unit,
 ) {
@@ -61,7 +61,7 @@ fun CheckCameraAndAudioRecordPermission(
     }
 
     val context = LocalContext.current
-    ObserveTrigger(triggerCheckEvent = triggerCheckEvent) {
+    ObserveSharedFlow(flow = triggerCheckEvent) {
         Log.d("CheckCameraAndAudioRecordPermission", "ObserveTrigger != null")
         permissionsState.launchMultiplePermissionRequest()
         cameraState.value?.let {
@@ -77,16 +77,5 @@ fun CheckCameraAndAudioRecordPermission(
                 context.showRationalePermissionForMic {}
             }
         }
-    }
-}
-
-@Composable
-private fun ObserveTrigger(
-    triggerCheckEvent: Flow<Unit?>,
-    on: () -> Unit
-) {
-    val checkPermissionTriggerState = triggerCheckEvent.simulateTriggerStateAsSharedFlow(before = {})
-    if (checkPermissionTriggerState.value != null) {
-        on()
     }
 }

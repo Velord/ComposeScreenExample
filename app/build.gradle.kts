@@ -3,6 +3,7 @@ plugins {
     id(libs.plugins.kotlin.android.get().pluginId)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
 // When app incompatible with previous version change this value
@@ -116,9 +117,6 @@ android {
         viewBinding = true
         buildConfig = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
 }
 
 dependencies {
@@ -131,12 +129,14 @@ dependencies {
     implementation(project(":core:core-resource"))
     // Module Domain
     implementation(project(":domain:usecase-setting"))
+    implementation(project(":domain:usecase-movie"))
     // Module Data Source
     implementation(project(":data:backend"))
     implementation(project(":data:datastore"))
     implementation(project(":data:appstate"))
+    implementation(project(":data:gateway"))
+    implementation(project(":data:db"))
     // Module Data Gateway
-    implementation(project(":data:gatewaysetting"))
     // Module UI
     implementation(project(":ui:sharedviewmodel"))
     // Module UI Feature
@@ -150,6 +150,7 @@ dependencies {
     implementation(project(":ui:feature-demo-morph"))
     implementation(project(":ui:feature-demo-hintphonenumber"))
     implementation(project(":ui:feature-flowsummator"))
+    implementation(project(":ui:feature-movie"))
     // Module UI Widget
     implementation(project(":ui:widget-refreshableimage"))
     implementation(project(":ui:widget-counter"))
@@ -167,6 +168,9 @@ dependencies {
     // Navigation Compose Destinations
     implementation(libs.bundles.compose.destinations)
     ksp(libs.compose.destinations.ksp)
+    // Room
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.bundles.androidx.room.coroutines)
     // Other
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)
@@ -178,7 +182,6 @@ dependencies {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")
-    //arg("compose-destinations.moduleName", "moduleapp")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

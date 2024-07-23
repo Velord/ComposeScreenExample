@@ -1,7 +1,7 @@
 package com.velord.composescreenexample.mapper.backend
 
-import com.velord.backend.service.user.response.UserProfileResponse
-import com.velord.model.profile.UserProfile
+import com.velord.backend.retrorfit.service.user.response.UserProfileResponse
+import com.velord.model.UserProfile
 
 fun UserProfileResponse.toUserProfile() = UserProfile(
     id = id,

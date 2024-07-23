@@ -1,8 +1,8 @@
 package com.velord.datastore
 
 import com.velord.datastore.appSettings.AppSettingsDataStore
-import com.velord.util.settings.AppSettings
-import com.velord.util.settings.ThemeConfig
+import com.velord.model.settings.AppSettings
+import com.velord.model.settings.ThemeConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
