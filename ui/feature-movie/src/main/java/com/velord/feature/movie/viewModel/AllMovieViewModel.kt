@@ -2,7 +2,6 @@ package com.velord.feature.movie.viewModel
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetAllMovieUC
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -123,7 +121,6 @@ class AllMovieViewModel(
                 is GetMovieResult.MergeError -> result.message
             }
             uiState.value = uiState.value.copy(error = newError)
-            Log.d("@@@", "getAllMovieUC: $result")
             when(result) {
                 is GetMovieResult.Success -> result.flow
                 is GetMovieResult.DBError -> result.flow
@@ -137,14 +134,10 @@ class AllMovieViewModel(
             uiState
                 .map { it.paginationStatus }
                 .distinctUntilChanged()
-                .onEach {
-                    Log.d("@@@", "paginationStatusFlow: $it")
-                }
                 .filter { it != PaginationStatus.Init }
                 .filter { it !is PaginationStatus.Exausted }
                 .debounce(300)
                 .collect {
-                    Log.d("@@@", "loadNewPageMovieUC: $it")
                     loadNewPage()
                 }
         }
@@ -160,7 +153,6 @@ class AllMovieViewModel(
     }
 
     private fun MovieLoadNewPageResult.handleLoadPageResult() {
-        Log.d("@@@", "handleLoadPageResult: $this")
         when(this) {
             MovieLoadNewPageResult.Success -> uiState.value = uiState.value.copy(error = null)
             is MovieLoadNewPageResult.LoadPageFailed -> {
