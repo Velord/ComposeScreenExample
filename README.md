@@ -19,7 +19,7 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
     * [Refreshable Image](#refreshable-image)
 
 ## Movie Demo
-[MovieDemo.webm](https://github.com/user-attachments/assets/a28cdb94-214d-470e-95f7-6d0f7a40b488)
+[MovieDemo.webm](https://github.com/user-attachments/assets/32bfe923-977a-4803-a297-014d17cc9af9)
 
 
 ## Shape Demo
@@ -304,4 +304,4 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 
 
 ## Phone Number Hint Demo
-[Phone Number](https://github.com/user-attachments/assets/dd2f97c7-2bc9-4bcd-9bfe-c74d624330e7)
+[Phone Number Hint Demo](https://github.com/user-attachments/assets/041d7f78-7083-4640-a68e-04662335d250)
