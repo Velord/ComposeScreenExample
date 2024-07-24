@@ -18,7 +18,7 @@ fun <T> ObserveSharedFlow(
         flow.flowWithLifecycle(lifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(flow) {
         navigationEvents.collect {
             onEvent(it)
         }

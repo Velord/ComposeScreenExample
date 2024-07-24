@@ -34,7 +34,7 @@ fun SettingsDestination() {
     SettingsScreen(viewModel)
 }
 
-@Destination<BottomNavigationGraph>
+@Destination<BottomNavigationGraph>(start = true)
 @Composable
 fun DemoDestination(navigator: DemoNavigator) {
     val viewModel = koinViewModel<DemoViewModel>()

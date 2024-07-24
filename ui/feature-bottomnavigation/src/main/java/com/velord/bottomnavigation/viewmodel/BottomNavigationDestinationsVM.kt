@@ -4,9 +4,10 @@ import androidx.navigation.NavDestination
 import com.velord.bottomnavigation.BottomNavEventService
 import com.velord.bottomnavigation.screen.BottomNavigationDestination
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
@@ -29,16 +30,21 @@ class BottomNavigationDestinationsVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeViewModel() {
 
-    val currentTabFlow = MutableStateFlow(TabState.Default)
+    val currentTabFlow = MutableSharedFlow<TabState>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
     val finishAppEvent = MutableSharedFlow<Unit>()
 
+    init {
+        launch {
+            currentTabFlow.emit(TabState.Default)
+        }
+    }
+
     fun onTabClick(newTab: BottomNavigationDestination) {
-        currentTabFlow.update {
-            it.copy(
-                previous = it.current,
-                current = newTab
-            )
+        launch {
+            val current = currentTabFlow.take(1).first()
+            val new = current.copy(previous = current.current, current = newTab)
+            currentTabFlow.emit(new)
         }
     }
 

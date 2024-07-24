@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.BottomNavigationSettingsDestinationDestination
 import com.ramcosta.composedestinations.generated.destinations.CameraRecordingSettingsDestinationDestination
 import com.ramcosta.composedestinations.generated.destinations.DemoDestinationDestination
@@ -18,6 +19,7 @@ import com.ramcosta.composedestinations.generated.navgraphs.CameraRecordingNavGr
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
+import com.ramcosta.composedestinations.spec.TypedDestinationSpec
 import com.ramcosta.composedestinations.utils.startDestination
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.bottomnavigation.screen.BottomNavigationDestination
@@ -47,7 +49,7 @@ class SupremeNavigator(
         DestinationsNavHost(
             navGraph = BottomNavigationNavGraph,
             modifier = modifier,
-            start = getDirection(start),
+            //start = getDirection(start), // Fixme: this is not working
             navController = navController,
             dependenciesContainerBuilder = {
                 dependency(SupremeNavigator(navController = navController))
@@ -73,9 +75,11 @@ class SupremeNavigator(
         )
     }
 
-    override fun getStartRoute(route: BottomNavigationDestination): String = when(route) {
-        BottomNavigationDestination.Camera -> CameraRecordingNavGraph.startDestination.route
-        BottomNavigationDestination.Demo -> DemoDestinationDestination.route
-        BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination.route
+    override fun getStartRoute(route: BottomNavigationDestination): TypedDestinationSpec<*> = when(route) {
+        BottomNavigationDestination.Camera -> CameraRecordingNavGraph.startDestination
+        BottomNavigationDestination.Demo -> DemoDestinationDestination
+        BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination
     }
+
+    override fun getSupremeRoute(): Direction = NavGraphs.bottomNavigationGraph
 }

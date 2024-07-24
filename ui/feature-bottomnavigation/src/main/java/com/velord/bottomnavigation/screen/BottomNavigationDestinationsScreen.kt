@@ -42,31 +42,77 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
+import com.ramcosta.composedestinations.spec.RouteOrDirection
+import com.ramcosta.composedestinations.spec.TypedDestinationSpec
+import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
+import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
+import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.util.context.getActivity
 import kotlinx.coroutines.flow.filterNotNull
 import org.koin.androidx.compose.koinViewModel
 
 interface BottomNavigator {
     fun getDirection(route: BottomNavigationDestination): Direction
-    fun getStartRoute(route: BottomNavigationDestination): String
+    fun getStartRoute(route: BottomNavigationDestination): TypedDestinationSpec<*>
     fun getGraph(): NavHostGraphSpec
     @Composable fun CreateDestinationsNavHostForBottom(
         navController: NavHostController,
         modifier: Modifier,
         startRoute: BottomNavigationDestination
     )
+    fun getSupremeRoute(): Direction
 }
 
 enum class BottomNavigationDestination {
     Camera,
     Demo,
     Settings;
+}
+
+fun NavController.isRouteOnBackStack(route: RouteOrDirection): Boolean {
+    return toDestinationsNavigator().getBackStackEntry(route) != null
+}
+
+private fun onTabClick(
+    isSelected: Boolean,
+    item: BottomNavigationDestination,
+    destinationNavigator: DestinationsNavigator,
+    navController: NavController,
+    navigator: BottomNavigator,
+    onClick: (BottomNavigationDestination) -> Unit
+) {
+    val isCurrentDestOnBackStack = destinationNavigator.getBackStackEntry(navigator.getDirection(item)) != null
+    if (isCurrentDestOnBackStack) {
+        // When we click again on a bottom bar item and it was already selected
+        // we want to pop the back stack until the initial destination of this bottom bar item
+        destinationNavigator.popBackStack(navigator.getStartRoute(item), false)
+        return
+    }
+
+    val direction = navigator.getDirection(item)
+    val sdf = navController.graph.nodes
+    Log.d("@@@", "direction: ${direction}\n Nodes: ${sdf}")
+    destinationNavigator.navigate(direction) {
+        // Pop up to the root of the graph to
+        // avoid building up a large stack of destinations
+        // on the back stack as users select items
+        popUpTo(navigator.getSupremeRoute()) {
+            saveState = true
+        }
+        // Avoid multiple copies of the same destination when reselecting the same item
+        launchSingleTop = true
+        // Restore state when reselecting a previously selected item
+        restoreState = true
+    }
+    onClick(item)
 }
 
 @Destination<ExternalModuleGraph>()
@@ -76,9 +122,10 @@ fun BottomNavigationDestination(
 ) {
     val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
 
-    val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
+    val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle(TabState.Default)
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
-    val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = null)
+    val finishAppEventState =
+        viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = null)
 
     val context = LocalContext.current
     LaunchedEffect(finishAppEventState) {
@@ -96,6 +143,7 @@ fun BottomNavigationDestination(
     }
 
     val navController = rememberNavController()
+    val destinationNavigator = navController.rememberDestinationsNavigator()
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry.value?.destination
 
@@ -107,7 +155,7 @@ fun BottomNavigationDestination(
             nodes.add(value)
         }
         val startDestinationRoster = nodes.map {
-            when(it) {
+            when (it) {
                 is NavGraph -> it.startDestinationRoute
                 else -> it.route
             }
@@ -115,16 +163,16 @@ fun BottomNavigationDestination(
         viewModel.updateBackHandling(startDestinationRoster, currentDestination)
     }
 
-    LaunchedEffect(key1 = tabState) {
-        snapshotFlow { tabState.value }.collect { tab ->
-            onTabClick(
-                isSelected = tab.isSame,
-                item = tab.current,
-                navController = navController,
-                navigator = navigator,
-                onClick = {}
-            )
-        }
+    ObserveSharedFlow(flow = viewModel.currentTabFlow) { tab ->
+        Log.d("@@@", "onTabClick: ${tab}")
+        onTabClick(
+            isSelected = tab.isSame,
+            item = tab.current,
+            destinationNavigator = destinationNavigator,
+            navController = navController,
+            navigator = navigator,
+            onClick = {}
+        )
     }
 
     Content(
@@ -184,36 +232,6 @@ private fun Content(
             createNavHost(it)
         },
     )
-}
-
-private fun onTabClick(
-    isSelected: Boolean,
-    item: BottomNavigationDestination,
-    navController: NavController,
-    navigator: BottomNavigator,
-    onClick: (BottomNavigationDestination) -> Unit
-) {
-    if (navController.currentDestination?.route == navigator.getStartRoute(item)) return
-    if (isSelected) {
-        // When we click again on a bottom bar item and it was already selected
-        // we want to pop the back stack until the initial destination of this bottom bar item
-        navController.popBackStack(navigator.getStartRoute(item), false)
-        return
-    }
-
-    navController.navigate(navigator.getDirection(item).route) {
-        // Pop up to the root of the graph to
-        // avoid building up a large stack of destinations
-        // on the back stack as users select items
-        popUpTo(navigator.getGraph().route) {
-            saveState = true
-        }
-        // Avoid multiple copies of the same destination when reselecting the same item
-        launchSingleTop = true
-        // Restore state when reselecting a previously selected item
-        restoreState = true
-    }
-    onClick(item)
 }
 
 @Composable

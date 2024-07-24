@@ -14,8 +14,7 @@ import org.koin.androidx.compose.koinViewModel
 
 private const val CAMERA_RECORDING_GRAPH = "camera_recording_graph"
 @NavGraph<BottomNavigationGraph>(
-    route = CAMERA_RECORDING_GRAPH,
-    start = true
+    route = CAMERA_RECORDING_GRAPH
 )
 annotation class CameraRecordingGraph
 
