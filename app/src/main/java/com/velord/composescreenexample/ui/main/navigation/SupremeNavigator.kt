@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.BottomNavigationSettingsDestinationDestination
 import com.ramcosta.composedestinations.generated.destinations.CameraRecordingSettingsDestinationDestination
 import com.ramcosta.composedestinations.generated.destinations.DemoDestinationDestination
@@ -80,6 +79,4 @@ class SupremeNavigator(
         BottomNavigationDestination.Demo -> DemoDestinationDestination
         BottomNavigationDestination.Settings -> BottomNavigationSettingsDestinationDestination
     }
-
-    override fun getSupremeRoute(): Direction = NavGraphs.bottomNavigationGraph
 }
