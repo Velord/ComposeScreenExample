@@ -85,12 +85,10 @@ private fun onTabClick(
     isSelected: Boolean,
     item: BottomNavigationDestination,
     destinationNavigator: DestinationsNavigator,
-    navController: NavController,
     navigator: BottomNavigator,
     onClick: (BottomNavigationDestination) -> Unit
 ) {
-    val isCurrentDestOnBackStack = destinationNavigator.getBackStackEntry(navigator.getDirection(item)) != null
-    if (isCurrentDestOnBackStack) {
+    if (isSelected) {
         // When we click again on a bottom bar item and it was already selected
         // we want to pop the back stack until the initial destination of this bottom bar item
         destinationNavigator.popBackStack(navigator.getStartRoute(item), false)
@@ -98,8 +96,6 @@ private fun onTabClick(
     }
 
     val direction = navigator.getDirection(item)
-    val sdf = navController.graph.nodes
-    Log.d("@@@", "direction: ${direction}\n Nodes: ${sdf}")
     destinationNavigator.navigate(direction) {
         // Pop up to the root of the graph to
         // avoid building up a large stack of destinations
@@ -164,12 +160,10 @@ fun BottomNavigationDestination(
     }
 
     ObserveSharedFlow(flow = viewModel.currentTabFlow) { tab ->
-        Log.d("@@@", "onTabClick: ${tab}")
         onTabClick(
             isSelected = tab.isSame,
             item = tab.current,
             destinationNavigator = destinationNavigator,
-            navController = navController,
             navigator = navigator,
             onClick = {}
         )
