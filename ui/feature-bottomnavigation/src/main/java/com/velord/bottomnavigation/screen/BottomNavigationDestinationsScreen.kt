@@ -34,7 +34,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
@@ -45,10 +44,8 @@ import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
-import com.ramcosta.composedestinations.spec.RouteOrDirection
 import com.ramcosta.composedestinations.spec.TypedDestinationSpec
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
-import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
@@ -68,17 +65,12 @@ interface BottomNavigator {
         modifier: Modifier,
         startRoute: BottomNavigationDestination
     )
-    fun getSupremeRoute(): Direction
 }
 
 enum class BottomNavigationDestination {
     Camera,
     Demo,
     Settings;
-}
-
-fun NavController.isRouteOnBackStack(route: RouteOrDirection): Boolean {
-    return toDestinationsNavigator().getBackStackEntry(route) != null
 }
 
 private fun onTabClick(
@@ -100,7 +92,7 @@ private fun onTabClick(
         // Pop up to the root of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items
-        popUpTo(navigator.getSupremeRoute()) {
+        popUpTo(navigator.getGraph()) {
             saveState = true
         }
         // Avoid multiple copies of the same destination when reselecting the same item
