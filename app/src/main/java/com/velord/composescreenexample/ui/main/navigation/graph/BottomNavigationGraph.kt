@@ -1,9 +1,6 @@
 package com.velord.composescreenexample.ui.main.navigation.graph
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.velord.feature.demo.DemoNavigator
@@ -19,7 +16,6 @@ import com.velord.morphdemo.MorphDemoScreen
 import com.velord.settings.SettingsScreen
 import com.velord.shapedemo.ShapeDemoScreen
 import com.velord.sharedviewmodel.ThemeViewModel
-import kotlinx.coroutines.flow.filterNotNull
 import org.koin.androidx.compose.koinViewModel
 
 private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
@@ -38,18 +34,9 @@ fun SettingsDestination() {
 @Composable
 fun DemoDestination(navigator: DemoNavigator) {
     val viewModel = koinViewModel<DemoViewModel>()
-    val destinationEventState = viewModel.navigationEventDestination
-        .collectAsStateWithLifecycle(initialValue = null)
-
-    LaunchedEffect(key1 = destinationEventState) {
-        snapshotFlow { destinationEventState.value }
-            .filterNotNull()
-            .collect {
-                navigator.goTo(it)
-            }
+    DemoScreen(viewModel) {
+        navigator.goTo(it)
     }
-
-    DemoScreen(viewModel)
 }
 
 @Destination<BottomNavigationGraph>

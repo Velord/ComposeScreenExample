@@ -29,6 +29,7 @@ import com.velord.bottomnavigation.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.resource.R
 import com.velord.uicore.compose.preview.PreviewCombined
+import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
@@ -44,7 +45,7 @@ class DemoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        DemoScreen(viewModel)
+        DemoScreen(viewModel) {}
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +68,14 @@ class DemoFragment : Fragment() {
 }
 
 @Composable
-fun DemoScreen(viewModel: DemoViewModel) {
+fun DemoScreen(
+    viewModel: DemoViewModel,
+    onNavigationEvent: (DemoDest) -> Unit
+) {
+    ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
+        onNavigationEvent(it)
+    }
+
     Content(
         onOpenShape = viewModel::onOpenShape,
         onOpenModifier = viewModel::onOpenModifier,

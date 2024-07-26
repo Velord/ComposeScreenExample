@@ -11,6 +11,6 @@ object CameraRecordingScreen : Screen {
     override fun Content() {
         val viewModel = koinViewModel<CameraRecordingViewModel>()
         ObserveNavigation(viewModel.navigationEventVoyager)
-        CameraRecordingScreen(viewModel, true)
+        CameraRecordingScreen(viewModel, true) {}
     }
 }

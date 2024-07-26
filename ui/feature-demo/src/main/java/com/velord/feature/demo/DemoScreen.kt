@@ -26,6 +26,6 @@ object DemoScreen : Screen {
             }
         }
 
-        DemoScreen(viewModel)
+        DemoScreen(viewModel) {}
     }
 }
