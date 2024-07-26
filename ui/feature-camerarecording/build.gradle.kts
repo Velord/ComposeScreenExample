@@ -50,8 +50,13 @@ dependencies {
     implementation(libs.bundles.voyager)
     ksp(libs.compose.destinations.ksp)
     // DI
-    implementation(libs.bundles.koin.core)
+    implementation(libs.bundles.koin)
+    implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
+}
+
+composeCompiler {
+    enableStrongSkippingMode = true
 }
 
 ksp {

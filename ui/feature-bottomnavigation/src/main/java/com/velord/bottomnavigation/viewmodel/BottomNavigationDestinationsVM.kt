@@ -2,7 +2,7 @@ package com.velord.bottomnavigation.viewmodel
 
 import androidx.navigation.NavDestination
 import com.velord.bottomnavigation.BottomNavEventService
-import com.velord.bottomnavigation.screen.BottomNavigationDestination
+import com.velord.bottomnavigation.screen.BottomNavigationItem
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -12,15 +12,15 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 data class TabState(
-    val previous: BottomNavigationDestination,
-    val current: BottomNavigationDestination
+    val previous: BottomNavigationItem,
+    val current: BottomNavigationItem
 ) {
     val isSame: Boolean get() = previous == current
 
     companion object {
         val Default = TabState(
-            previous = BottomNavigationDestination.Demo,
-            current = BottomNavigationDestination.Demo
+            previous = BottomNavigationItem.Demo,
+            current = BottomNavigationItem.Demo
         )
     }
 }
@@ -40,7 +40,7 @@ class BottomNavigationDestinationsVM(
         }
     }
 
-    fun onTabClick(newTab: BottomNavigationDestination) {
+    fun onTabClick(newTab: BottomNavigationItem) {
         launch {
             val current = currentTabFlow.take(1).first()
             val new = current.copy(previous = current.current, current = newTab)
@@ -52,7 +52,7 @@ class BottomNavigationDestinationsVM(
         finishAppEvent.emit(Unit)
     }
 
-    fun getNavigationItems() = BottomNavigationDestination.entries
+    fun getNavigationItems() = BottomNavigationItem.entries
 
     fun updateBackHandling(
         startDestinationRoster: List<String?>,

@@ -10,10 +10,9 @@ data class BottomNavBackHandlingState(
     val isEnabled: Boolean get() = isAtStartGraphDestination && isGrantedToProceed
 }
 
-interface BottomNavEventServiceStub
 
 @Single
-class BottomNavEventService : BottomNavEventServiceStub {
+class BottomNavEventService {
 
     val backHandlingStateFlow = MutableStateFlow(BottomNavBackHandlingState())
     val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)

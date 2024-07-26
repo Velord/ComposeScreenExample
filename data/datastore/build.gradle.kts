@@ -35,7 +35,8 @@ dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.kotlin.serialization.json)
     // DI
-    implementation(libs.bundles.koin.core)
+    implementation(libs.bundles.koin)
+    implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
 }
 

@@ -4,6 +4,7 @@ plugins {
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 // When app incompatible with previous version change this value
@@ -56,7 +57,7 @@ android {
             buildConfigField(
                 "com.velord.composescreenexample.ui.main.navigation.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations"
+                "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Compose"
             )
         }
         named("release") {
@@ -67,7 +68,7 @@ android {
             buildConfigField(
                 "com.velord.composescreenexample.ui.main.navigation.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Destinations"
+                "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Compose"
             )
         }
     }
@@ -159,8 +160,10 @@ dependencies {
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.coil)
+    implementation(libs.bundles.kotlin.serialization)
     // DI
-    implementation(libs.bundles.koin.core)
+    implementation(libs.bundles.koin)
+    implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
     // Navigation
     // Navigation Voyager
@@ -177,6 +180,10 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     // Test libs.versions.toml
     //implementation(libs.bundles.androidx.all)
+}
+
+composeCompiler {
+    enableStrongSkippingMode = true
 }
 
 ksp {
