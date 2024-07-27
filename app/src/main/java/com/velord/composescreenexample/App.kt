@@ -4,16 +4,11 @@ import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
-import cafe.adriel.voyager.core.registry.ScreenRegistry
 import com.velord.appstate.AppStateModule
 import com.velord.backend.ktor.BackendModule
 import com.velord.backend.ktor.httpModule
 import com.velord.bottomnavigation.BottomNavigationModule
 import com.velord.camerarecording.CameraRecordingViewModel
-import com.velord.composescreenexample.ui.main.MainActivity
-import com.velord.composescreenexample.ui.main.navigation.featureBottomNavigationModule
-import com.velord.composescreenexample.ui.main.navigation.featureDemoModule
-import com.velord.composescreenexample.ui.main.navigation.featureMainModule
 import com.velord.datastore.DataStoreModule
 import com.velord.db.DbModule
 import com.velord.db.databaseModule
@@ -23,6 +18,7 @@ import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieViewModel
 import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.gateway.GatewayModule
+import com.velord.navigation.voyager.initVoyager
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashViewModel
 import com.velord.usecase.movie.GetAllMovieUC
@@ -80,13 +76,12 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Navigation Voyager
-        ScreenRegistry {
-            (MainActivity.featureMainModule)()
-            (MainActivity.featureBottomNavigationModule)()
-            (MainActivity.featureDemoModule)()
-        }
+        initVoyager()
+        initKoin()
+        initStrictMode()
+    }
 
+    private fun initKoin() {
         startKoin {
             androidLogger()
             androidContext(this@App)
@@ -103,7 +98,9 @@ class App : Application() {
             modules(DbModule().module)
             modules(GatewayModule().module)
         }
+    }
 
+    private fun initStrictMode() {
         StrictMode.setThreadPolicy(
             ThreadPolicy.Builder()
                 .detectDiskReads()
@@ -116,7 +113,7 @@ class App : Application() {
         StrictMode.setVmPolicy(
             VmPolicy.Builder()
                 .detectLeakedSqlLiteObjects()
-               // .detectLeakedClosableObjects()
+                // .detectLeakedClosableObjects()
                 .penaltyLog()
                 .penaltyDeath()
                 .build()

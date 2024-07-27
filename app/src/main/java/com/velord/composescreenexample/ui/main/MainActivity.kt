@@ -8,34 +8,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.fragment.NavHostFragment
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.transitions.SlideTransition
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.generated.navgraphs.MainNavGraph
-import com.ramcosta.composedestinations.navigation.dependency
-import com.velord.bottomnavigation.BottomNavScreen
-import com.velord.bottomnavigation.screen.BottomNavigationComposeVanillaScreen
 import com.velord.composescreenexample.BuildConfig
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
-import com.velord.composescreenexample.ui.main.navigation.BottomNavigationEntryPoint
-import com.velord.composescreenexample.ui.main.navigation.NavigationLib
-import com.velord.composescreenexample.ui.main.navigation.SupremeNavigator
-import com.velord.composescreenexample.ui.main.navigation.SupremeVanillaNavigator
+import com.velord.navigation.CreateNavigationViaDestinations
+import com.velord.navigation.CreateNavigationViaVanilla
+import com.velord.navigation.CreateNavigationViaVoyager
+import com.velord.navigation.NavigationLib
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashScreen
 import com.velord.splash.SplashViewModel
+import com.velord.splash.installSplash
 import com.velord.uicore.utils.setContentWithTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -65,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        installSplash()
 
         super.onCreate(savedInstanceState)
 
@@ -123,9 +112,7 @@ class MainActivity : AppCompatActivity() {
                 isVisible = true
 
                 setContentAfterSplash {
-                    Navigator(BottomNavScreen) {
-                        SlideTransition(it)
-                    }
+                    CreateNavigationViaVoyager()
                 }
             }
         }
@@ -155,13 +142,7 @@ class MainActivity : AppCompatActivity() {
                 isVisible = true
 
                 setContentAfterSplash {
-                    val navController: NavHostController = rememberNavController()
-                    DestinationsNavHost(
-                        navGraph = MainNavGraph,
-                        dependenciesContainerBuilder = {
-                            dependency(SupremeNavigator(navController = navController))
-                        }
-                    )
+                    CreateNavigationViaDestinations()
                 }
             }
         }
@@ -174,18 +155,7 @@ class MainActivity : AppCompatActivity() {
                 isVisible = true
 
                 setContentAfterSplash {
-                    val navController: NavHostController = rememberNavController()
-                    val navigator = SupremeVanillaNavigator()
-                    NavHost(
-                        navController = navController,
-                        startDestination = BottomNavigationEntryPoint,
-                    ) {
-                        composable<BottomNavigationEntryPoint> {
-                            BottomNavigationComposeVanillaScreen(
-                                navigator = { navigator },
-                            )
-                        }
-                    }
+                    CreateNavigationViaVanilla()
                 }
             }
         }

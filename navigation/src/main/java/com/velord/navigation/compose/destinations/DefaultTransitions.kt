@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.main.navigation
+package com.velord.navigation.compose.destinations
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
@@ -9,7 +9,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.navigation.NavBackStackEntry
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
 
-object DefaultTransitions : NavHostAnimatedDestinationStyle() {
+internal object DefaultTransitions : NavHostAnimatedDestinationStyle() {
 
     override val enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
         slideInHorizontally(

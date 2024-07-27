@@ -1,8 +1,9 @@
-package com.velord.composescreenexample.ui.main.navigation.graph
+package com.velord.navigation.compose.destinations.graph
 
 import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
+import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
 import com.velord.feature.demo.DemoNavigator
 import com.velord.feature.demo.DemoScreen
 import com.velord.feature.demo.DemoViewModel
@@ -19,20 +20,23 @@ import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
-@NavHostGraph(route = BOTTOM_NAVIGATION_GRAPH)
+@NavHostGraph(
+    route = BOTTOM_NAVIGATION_GRAPH,
+    visibility = CodeGenVisibility.INTERNAL
+)
 annotation class BottomNavigationGraph
 
 @Destination<BottomNavigationGraph>
 @Destination<CameraRecordingGraph>
 @Composable
-fun SettingsDestination() {
+internal fun SettingsDestination() {
     val viewModel = koinViewModel<ThemeViewModel>()
     SettingsScreen(viewModel)
 }
 
 @Destination<BottomNavigationGraph>(start = true)
 @Composable
-fun DemoDestination(navigator: DemoNavigator) {
+internal fun DemoDestination(navigator: DemoNavigator) {
     val viewModel = koinViewModel<DemoViewModel>()
     DemoScreen(viewModel) {
         navigator.goTo(it)
@@ -41,38 +45,38 @@ fun DemoDestination(navigator: DemoNavigator) {
 
 @Destination<BottomNavigationGraph>
 @Composable
-fun ShapeDemoDestination() {
+internal fun ShapeDemoDestination() {
     ShapeDemoScreen()
 }
 
 @Destination<BottomNavigationGraph>
 @Composable
-fun ModifierDemoDestination() {
+internal fun ModifierDemoDestination() {
     ModifierDemoScreen()
 }
 
 @Destination<BottomNavigationGraph>
 @Composable
-fun FlowSummatorDestination() {
+internal fun FlowSummatorDestination() {
     val viewModel = koinViewModel<FlowSummatorViewModel>()
     FlowSummatorScreen(viewModel)
 }
 
 @Destination<BottomNavigationGraph>
 @Composable
-fun MorphDemoDestination() {
+internal fun MorphDemoDestination() {
     MorphDemoScreen()
 }
 
 @Destination<BottomNavigationGraph>
 @Composable
-fun HintPhoneNumberDestination() {
+internal fun HintPhoneNumberDestination() {
     HintPhoneNumberScreen()
 }
 
 @Destination<BottomNavigationGraph>
 @Composable
-fun MovieDestination() {
+internal fun MovieDestination() {
     val viewModel = koinViewModel<MovieViewModel>()
     MovieScreen(viewModel)
 }
