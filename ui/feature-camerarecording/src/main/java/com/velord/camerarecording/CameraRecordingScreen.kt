@@ -2,7 +2,7 @@ package com.velord.camerarecording
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.velord.navigation.ObserveNavigation
+import com.velord.navigation.voyager.ObserveNavigation
 import org.koin.androidx.compose.koinViewModel
 
 object CameraRecordingScreen : Screen {

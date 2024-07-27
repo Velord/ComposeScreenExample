@@ -1,12 +1,12 @@
-package com.velord.navigation
+package com.velord.navigation.voyager
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.registry.ScreenProvider
 
-sealed class SharedScreen : ScreenProvider {
+sealed class SharedScreenVoyager : ScreenProvider {
 
-    sealed class BottomNavigationTab : SharedScreen() {
+    sealed class BottomNavigationTab : SharedScreenVoyager() {
         data object Camera : BottomNavigationTab()
         data object Demo : BottomNavigationTab()
         data object Settings : BottomNavigationTab()
@@ -16,9 +16,9 @@ sealed class SharedScreen : ScreenProvider {
         @StringRes val title: Int,
         val modifier: Modifier = Modifier,
         val onClick: () -> Unit = {},
-    ) : SharedScreen()
+    ) : SharedScreenVoyager()
 
-    sealed class Demo : SharedScreen() {
+    sealed class Demo : SharedScreenVoyager() {
         data object Shape : Demo()
         data object Modifier : Demo()
         data object FlowSummator : Demo()

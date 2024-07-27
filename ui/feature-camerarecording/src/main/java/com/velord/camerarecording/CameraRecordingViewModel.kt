@@ -13,11 +13,12 @@ import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
 import androidx.core.os.bundleOf
 import com.velord.camerarecording.model.createRecordingViaFileSystem
-import com.velord.navigation.NavigationDataJetpack
-import com.velord.navigation.NavigationDataVoyager
-import com.velord.navigation.SharedScreen
-import com.velord.navigation.entryPoint.SETTINGS_SOURCE
-import com.velord.navigation.entryPoint.SettingsSource
+import com.velord.navigation.fragment.NavigationDataFragment
+import com.velord.navigation.fragment.entryPoint.SETTINGS_SOURCE
+import com.velord.navigation.fragment.entryPoint.SettingsSourceFragment
+import com.velord.navigation.voyager.NavigationDataVoyager
+import com.velord.navigation.voyager.SharedScreenVoyager
+import com.velord.resource.R
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.util.file.FileName
 import com.velord.util.permission.AndroidPermissionState
@@ -38,7 +39,7 @@ class CameraRecordingViewModel(
     // User interaction
     val checkPermissionEvent = MutableSharedFlow<Unit>()
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager?>()
-    val navigationEventJetpack = MutableSharedFlow<NavigationDataJetpack?>()
+    val navigationEventJetpack = MutableSharedFlow<NavigationDataFragment?>()
     val navigationEventDestination = MutableSharedFlow<CameraRecordingNavigationEvent>()
     // Adjustments
     val videoQualityFlow = MutableStateFlow(Quality.HIGHEST)
@@ -54,13 +55,13 @@ class CameraRecordingViewModel(
     fun onSettingsClick() {
         launch {
             val nav = NavigationDataVoyager(
-                screen = SharedScreen.BottomNavigationTab.Settings,
+                screen = SharedScreenVoyager.BottomNavigationTab.Settings,
                 useRoot = true
             )
             navigationEventVoyager.emit(nav)
 
-            val bundle = bundleOf(SETTINGS_SOURCE to SettingsSource.CameraRecording)
-            val data = NavigationDataJetpack(com.velord.resource.R.id.from_cameraRecordingFragment_to_settingsFragment, bundle)
+            val bundle = bundleOf(SETTINGS_SOURCE to SettingsSourceFragment.CameraRecording)
+            val data = NavigationDataFragment(R.id.from_cameraRecordingFragment_to_settingsFragment, bundle)
             navigationEventJetpack.emit(data)
             navigationEventDestination.emit(CameraRecordingNavigationEvent.SETTINGS)
         }
