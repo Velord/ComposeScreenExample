@@ -9,6 +9,7 @@ import com.velord.feature.movie.MovieVoyagerScreen
 import com.velord.flowsummator.FlowSummatorVoyagerScreen
 import com.velord.hintphonenumber.HintPhoneNumberVoyagerScreen
 import com.velord.modifierdemo.ModifierDemoVoyagerScreen
+import com.velord.morphdemo.MorphDemoVoyagerScreen
 import com.velord.settings.SettingsVoyagerScreen
 import com.velord.shapedemo.ShapeDemoVoyagerScreen
 
@@ -42,6 +43,9 @@ val featureDemoModule: ScreenRegistry.() -> Unit get() = screenModule {
     }
     register<SharedScreenVoyager.Demo.FlowSummator> {
         FlowSummatorVoyagerScreen
+    }
+    register<SharedScreenVoyager.Demo.Morph> {
+        MorphDemoVoyagerScreen
     }
     register<SharedScreenVoyager.Demo.HintPhoneNumber> {
         HintPhoneNumberVoyagerScreen

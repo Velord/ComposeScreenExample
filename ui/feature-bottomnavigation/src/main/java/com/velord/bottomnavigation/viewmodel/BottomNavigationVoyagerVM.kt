@@ -1,8 +1,8 @@
 package com.velord.bottomnavigation.viewmodel
 
 import cafe.adriel.voyager.core.screen.Screen
-import com.velord.bottomnavigation.BottomNavVoyagerScreen
-import com.velord.bottomnavigation.BottomNavigationTab
+import com.velord.bottomnavigation.screen.voyager.BottomNavigationTab
+import com.velord.bottomnavigation.screen.voyager.BottomNavigationVoyagerScreen
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +30,7 @@ class BottomNavigationVoyagerVM : CoroutineScopeViewModel() {
     }
 
     fun updateBackHandling(currentNavigationDestination: Screen?) {
-        val isStart = currentNavigationDestination == BottomNavVoyagerScreen
+        val isStart = currentNavigationDestination == BottomNavigationVoyagerScreen
         isBackHandlingEnabledFlow.value = isStart
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/right_nav_graph"
+    app:startDestination="@id/bottom_nav_graph_right_start_destination">
+
+    <fragment
+        android:id="@id/bottom_nav_graph_right_start_destination"
+        android:name="com.velord.navigation.jetpackNavigation.graph.SettingsGraphFragment"
+        android:label="SettingsGraphFragment" >
+
+        <action
+            android:id="@+id/from_settingsGraphFragment_to_SettingsFragment"
+            app:destination="@id/settingsFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.velord.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+
+        <argument
+            android:name="source"
+            app:argType="com.velord.navigation.fragment.entryPoint.SettingsSource"
+            />
+    </fragment>
+
+</navigation>

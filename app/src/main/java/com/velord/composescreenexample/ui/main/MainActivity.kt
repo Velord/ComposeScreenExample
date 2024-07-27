@@ -127,8 +127,8 @@ class MainActivity : AppCompatActivity() {
                 ?: supportFragmentManager.fragments[0] as NavHostFragment
 
         val controller = navHostFragment.navController
-        val graph = controller.navInflater.inflate(R.navigation.main_nav_graph)
-        controller.graph = graph
+        //val graph = controller.navInflater.inflate(RNavigation.navigation.main_navigation)
+        //controller.graph = graph
 
         if (destination != null) {
             controller.navigate(destination, bundle)
