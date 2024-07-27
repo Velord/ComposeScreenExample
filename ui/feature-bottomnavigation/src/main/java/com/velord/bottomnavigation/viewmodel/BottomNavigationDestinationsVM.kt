@@ -2,7 +2,7 @@ package com.velord.bottomnavigation.viewmodel
 
 import androidx.navigation.NavDestination
 import com.velord.bottomnavigation.BottomNavEventService
-import com.velord.bottomnavigation.screen.BottomNavigationItem
+import com.velord.bottomnavigation.screen.compose.BottomNavigationItem
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -121,33 +121,21 @@ android {
 }
 
 dependencies {
-    // Module
+    // Module Universal
     implementation(project(":model"))
     implementation(project(":util"))
+    // Module Specific
     implementation(project(":navigation"))
+    implementation(project(":di"))
     // Module Core
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-navigation"))
     implementation(project(":core:core-resource"))
-    // Module Domain
-    implementation(project(":domain:usecase-setting"))
-    implementation(project(":domain:usecase-movie"))
-    // Module Data Source
-    implementation(project(":data:backend"))
-    implementation(project(":data:datastore"))
-    implementation(project(":data:appstate"))
-    implementation(project(":data:gateway"))
-    implementation(project(":data:db"))
     // Module UI
     implementation(project(":ui:sharedviewmodel"))
     // Module UI Feature
-    implementation(project(":ui:feature-demo"))
-    implementation(project(":ui:feature-camerarecording"))
     implementation(project(":ui:feature-bottomnavigation"))
-    implementation(project(":ui:feature-settings"))
     implementation(project(":ui:feature-splash"))
-    implementation(project(":ui:feature-flowsummator"))
-    implementation(project(":ui:feature-movie"))
     // Module UI Widget
     implementation(project(":ui:widget-refreshableimage"))
     implementation(project(":ui:widget-counter"))
