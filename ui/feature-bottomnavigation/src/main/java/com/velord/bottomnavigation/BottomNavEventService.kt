@@ -1,5 +1,6 @@
 package com.velord.bottomnavigation
 
+import com.velord.bottomnavigation.screen.jetpack.BottomNavigationItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.annotation.Single
 
@@ -9,7 +10,6 @@ data class BottomNavBackHandlingState(
 ) {
     val isEnabled: Boolean get() = isAtStartGraphDestination && isGrantedToProceed
 }
-
 
 @Single
 class BottomNavEventService {

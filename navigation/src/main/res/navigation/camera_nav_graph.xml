@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/left_nav_graph"
+    app:startDestination="@id/bottom_nav_graph_left_start_destination">
+
+    <fragment
+        android:id="@id/bottom_nav_graph_left_start_destination"
+        android:name="com.velord.navigation.jetpackNavigation.graph.CameraGraphFragment"
+        android:label="CameraGraphFragment" >
+
+        <action
+            android:id="@+id/from_cameraGraphFragment_to_CameraRecordingFragment"
+            app:destination="@id/cameraRecordingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cameraRecordingFragment"
+        android:name="com.velord.camerarecording.CameraRecordingFragment"
+        android:label="CameraRecordingFragment">
+
+        <action
+            android:id="@id/from_cameraRecordingFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/do_not_slide"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.velord.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+
+        <argument
+            android:name="source"
+            app:argType="com.velord.navigation.fragment.entryPoint.SettingsSource"
+            />
+    </fragment>
+
+</navigation>
