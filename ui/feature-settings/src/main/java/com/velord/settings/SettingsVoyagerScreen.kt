@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
-object SettingsScreen : Screen {
+object SettingsVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {

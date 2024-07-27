@@ -44,4 +44,5 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
+    implementation(libs.bundles.voyager)
 }

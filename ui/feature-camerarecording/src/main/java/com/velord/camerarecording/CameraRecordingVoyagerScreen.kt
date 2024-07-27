@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.velord.navigation.voyager.ObserveNavigation
 import org.koin.androidx.compose.koinViewModel
 
-object CameraRecordingScreen : Screen {
+object CameraRecordingVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {

@@ -2,44 +2,53 @@ package com.velord.composescreenexample.ui.main.navigation
 
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.registry.screenModule
-import com.velord.camerarecording.CameraRecordingScreen
+import com.velord.camerarecording.CameraRecordingVoyagerScreen
 import com.velord.composescreenexample.ui.main.MainActivity
-import com.velord.composescreenexample.ui.screen.TestScreen
-import com.velord.flowsummator.FlowSummatorScreen
-import com.velord.modifierdemo.ModifierDemoScreen
+import com.velord.composescreenexample.ui.screen.TestVoyagerScreen
+import com.velord.feature.demo.DemoVoyagerScreen
+import com.velord.feature.movie.MovieVoyagerScreen
+import com.velord.flowsummator.FlowSummatorVoyagerScreen
+import com.velord.hintphonenumber.HintPhoneNumberVoyagerScreen
+import com.velord.modifierdemo.ModifierDemoVoyagerScreen
 import com.velord.navigation.voyager.SharedScreenVoyager
-import com.velord.settings.SettingsScreen
-import com.velord.shapedemo.ShapeDemoScreen
+import com.velord.settings.SettingsVoyagerScreen
+import com.velord.shapedemo.ShapeDemoVoyagerScreen
 
 internal val MainActivity.Companion.featureMainModule: ScreenRegistry.() -> Unit
     get() = screenModule {
         register<SharedScreenVoyager.Test> {
-            TestScreen(it.title, it.modifier, it.onClick)
+            TestVoyagerScreen(it.title, it.modifier, it.onClick)
         }
     }
 
 internal val MainActivity.Companion.featureBottomNavigationModule: ScreenRegistry.() -> Unit
     get() = screenModule {
         register<SharedScreenVoyager.BottomNavigationTab.Camera> {
-            CameraRecordingScreen
+            CameraRecordingVoyagerScreen
         }
         register<SharedScreenVoyager.BottomNavigationTab.Demo> {
-            com.velord.feature.demo.DemoScreen
+            DemoVoyagerScreen
         }
         register<SharedScreenVoyager.BottomNavigationTab.Settings> {
-            SettingsScreen
+            SettingsVoyagerScreen
         }
     }
 
 internal val MainActivity.Companion.featureDemoModule: ScreenRegistry.() -> Unit
     get() = screenModule {
         register<SharedScreenVoyager.Demo.Shape> {
-            ShapeDemoScreen
+            ShapeDemoVoyagerScreen
         }
         register<SharedScreenVoyager.Demo.Modifier> {
-            ModifierDemoScreen
+            ModifierDemoVoyagerScreen
         }
         register<SharedScreenVoyager.Demo.FlowSummator> {
-            FlowSummatorScreen
+            FlowSummatorVoyagerScreen
+        }
+        register<SharedScreenVoyager.Demo.HintPhoneNumber> {
+            HintPhoneNumberVoyagerScreen
+        }
+        register<SharedScreenVoyager.Demo.Movie> {
+            MovieVoyagerScreen
         }
     }

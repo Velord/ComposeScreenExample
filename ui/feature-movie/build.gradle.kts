@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.coil)
     implementation(libs.androidx.constraint.compose)
+    implementation(libs.bundles.voyager)
     // DI
     implementation(libs.bundles.koin)
     implementation(platform(libs.koin.bom))
