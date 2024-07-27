@@ -63,6 +63,7 @@ import com.velord.bottomnavigation.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.uicore.dialog.checkRecordVideoPermission
+import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.uicore.utils.permission.CheckCameraAndAudioRecordPermission
 import com.velord.uicore.utils.permission.toPermissionState
 import com.velord.uicore.utils.setContentWithTheme
@@ -105,7 +106,7 @@ class CameraRecordingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        CameraRecordingScreen(viewModel)
+        CameraRecordingScreen(viewModel) {}
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -152,12 +153,21 @@ class CameraRecordingFragment : Fragment() {
     }
 }
 
+enum class CameraRecordingNavigationEvent {
+    SETTINGS
+}
+
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CameraRecordingScreen(
     viewModel: CameraRecordingViewModel,
-    needToHandlePermission: Boolean = false
+    needToHandlePermission: Boolean = false,
+    onNavigationEvent : (CameraRecordingNavigationEvent) -> Unit
 ) {
+    ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
+        onNavigationEvent(it)
+    }
+
     val permissionCameraState = viewModel.permissionCameraFlow.collectAsStateWithLifecycle()
     val permissionAudioState = viewModel.permissionAudioFlow.collectAsStateWithLifecycle()
     val qualityState = viewModel.videoQualityFlow.collectAsStateWithLifecycle()

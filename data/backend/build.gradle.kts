@@ -38,7 +38,8 @@ dependencies {
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.network.all)
     // DI
-    implementation(libs.bundles.koin.core)
+    implementation(libs.bundles.koin)
+    implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
 }
 

@@ -32,9 +32,10 @@ dependencies {
     // Modules
     implementation(project(":model"))
     // Templates
-
+    implementation(libs.bundles.kotlin.module)
     // DI
-    implementation(libs.bundles.koin.core)
+    implementation(libs.bundles.koin)
+    implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
 }
 

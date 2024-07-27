@@ -31,6 +31,10 @@ android {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+}
+
 dependencies {
     // Modules
     implementation(project(":model"))

@@ -47,10 +47,15 @@ dependencies {
     implementation(libs.bundles.coil)
     implementation(libs.androidx.constraint.compose)
     // DI
-    implementation(libs.bundles.koin.core)
+    implementation(libs.bundles.koin)
+    implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
     // 3-rd party
     implementation(libs.compose.scrollbar.nanihadesuka)
+}
+
+composeCompiler {
+    enableStrongSkippingMode = true
 }
 
 ksp {

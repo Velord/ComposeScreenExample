@@ -1,7 +1,7 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
-    alias(libs.plugins.ksp)
+
 }
 
 android {
@@ -31,12 +31,5 @@ dependencies {
     // Modules
     implementation(project(":model"))
     // Templates
-    // DI
-    implementation(libs.bundles.koin.core)
-    ksp(libs.koin.ksp)
-}
-
-ksp {
-    arg("KOIN_CONFIG_CHECK","true")
-    arg("KOIN_DEFAULT_MODULE","false")
+    implementation(libs.bundles.kotlin.module)
 }
