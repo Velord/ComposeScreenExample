@@ -38,10 +38,10 @@ import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
 import com.velord.usecase.setting.SwitchThemeConfigUC
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.context.GlobalContext.startKoin
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import org.koin.ksp.generated.module
 
@@ -61,14 +61,14 @@ private val useCaseModule = module {
 
 private val viewModelModule = module {
     // VieModel that can not be instantiated there has their own module DI
-    viewModelOf(::ThemeViewModel)
-    viewModelOf(::SplashViewModel)
-    viewModelOf(::DemoViewModel)
-    viewModelOf(::FlowSummatorViewModel)
-    viewModelOf(::MovieViewModel)
-    viewModelOf(::AllMovieViewModel)
-    viewModelOf(::FavoriteMovieViewModel)
-    viewModelOf(::CameraRecordingViewModel)
+    viewModel { ThemeViewModel(get(), get(), get(), get()) }
+    viewModel { SplashViewModel() }
+    viewModel { DemoViewModel() }
+    viewModel { FlowSummatorViewModel() }
+    viewModel { MovieViewModel(get(), get()) }
+    viewModel { AllMovieViewModel(get(), get(), get(), get(), get()) }
+    viewModel { FavoriteMovieViewModel(get(), get()) }
+    viewModel { CameraRecordingViewModel(get()) }
 }
 
 @Module

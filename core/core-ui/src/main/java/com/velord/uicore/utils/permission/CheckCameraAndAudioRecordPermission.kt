@@ -3,7 +3,7 @@ package com.velord.uicore.utils.permission
 import android.Manifest
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -30,10 +30,9 @@ fun CheckCameraAndAudioRecordPermission(
             Manifest.permission.RECORD_AUDIO,
         )
     )
-    Log.d("CheckCameraAndAudioRecordPermission", "permissionsState: ${permissionsState}")
 
-    SideEffect {
-        Log.d("CheckCameraAndAudioRecordPermission", "SideEffect")
+    LaunchedEffect(permissionsState) {
+        Log.d("CheckCameraAndAudioRecordPermission", "permissionsState")
         permissionsState.launchMultiplePermissionRequest()
     }
 
