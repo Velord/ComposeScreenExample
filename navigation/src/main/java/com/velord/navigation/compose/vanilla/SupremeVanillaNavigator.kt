@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.main.navigation
+package com.velord.navigation.compose.vanilla
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,7 +26,7 @@ import com.velord.shapedemo.ShapeDemoScreen
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
-class SupremeVanillaNavigator : BottomNavigatorVanilla {
+internal class SupremeVanillaNavigator : BottomNavigatorVanilla {
 
     @Composable
     override fun CreateDestinationsNavHostForBottomVanilla(
@@ -36,71 +36,71 @@ class SupremeVanillaNavigator : BottomNavigatorVanilla {
     ) {
         NavHost(
             navController = navController,
-            startDestination = DemoEntryPoint,
+            startDestination = DemoDestinationVanilla,
             modifier = modifier
         ) {
-            composable<DemoEntryPoint> {
+            composable<DemoDestinationVanilla> {
                 val viewModel = koinViewModel<DemoViewModel>()
 
                 DemoScreen(viewModel) {
                     val dest = when(it) {
-                        DemoDest.Shape -> ShapeDemoEntryPoint
-                        DemoDest.Modifier -> ModifierDemoEntryPoint
-                        DemoDest.FlowSummator -> FlowSummatorEntryPoint
-                        DemoDest.Morph -> MorphDemoEntryPoint
-                        DemoDest.HintPhoneNumber -> HintPhoneNumberEntryPoint
-                        DemoDest.Movie -> MovieEntryPoint
+                        DemoDest.Shape -> ShapeDemoDestinationVanilla
+                        DemoDest.Modifier -> ModifierDestinationVanilla
+                        DemoDest.FlowSummator -> FlowSummatorDestinationVanilla
+                        DemoDest.Morph -> MorphDemoDestinationVanilla
+                        DemoDest.HintPhoneNumber -> HintPhoneDestinationVanilla
+                        DemoDest.Movie -> MovieDestinationVanilla
                     }
                     navController.navigate(dest)
                 }
             }
 
-            composable<SettingsEntryPoint> {
+            composable<SettingsDestinationVanilla> {
                 val viewModel = koinViewModel<ThemeViewModel>()
                 SettingsScreen(viewModel)
             }
 
-            navigation<CameraRecordingGraph>(startDestination = CameraRecordingEntryPoint) {
-                composable<CameraRecordingEntryPoint> {
+            navigation<CameraRecordingGraphVanilla>(startDestination = CameraRecordingDestinationVanilla) {
+                composable<CameraRecordingDestinationVanilla> {
                     val viewModel = koinViewModel<CameraRecordingViewModel>()
 
                     CameraRecordingScreen(viewModel, true) {
                         when(it) {
                             CameraRecordingNavigationEvent.SETTINGS -> {
-                                navController.navigate(CameraRecordingSettingsEntryPoint)
+                                navController.navigate(CameraRecordingSettingsDestinationVanilla)
                             }
                         }
                     }
                 }
 
-                composable<CameraRecordingSettingsEntryPoint> {
+                composable<CameraRecordingSettingsDestinationVanilla> {
                     val viewModel = koinViewModel<ThemeViewModel>()
                     SettingsScreen(viewModel)
                 }
             }
 
-            composable<ShapeDemoEntryPoint> {
+            composable<ShapeDemoDestinationVanilla> {
                 ShapeDemoScreen()
             }
 
-            composable<ModifierDemoEntryPoint> {
+            composable<ModifierDestinationVanilla> {
                 ModifierDemoScreen()
             }
 
-            composable<FlowSummatorEntryPoint> {
+            composable<FlowSummatorDestinationVanilla> {
                 val viewModel = koinViewModel<FlowSummatorViewModel>()
                 FlowSummatorScreen(viewModel)
             }
 
-            composable<MorphDemoEntryPoint> {
+            composable<MorphDemoDestinationVanilla> {
                 MorphDemoScreen()
             }
 
-            composable<HintPhoneNumberEntryPoint> {
+            composable<HintPhoneDestinationVanilla> {
                 HintPhoneNumberScreen()
             }
 
-            composable<MovieEntryPoint> {
+            composable<MovieDestinationVanilla> {
                 val viewModel = koinViewModel<MovieViewModel>()
                 MovieScreen(viewModel)
             }
@@ -108,14 +108,14 @@ class SupremeVanillaNavigator : BottomNavigatorVanilla {
     }
 
     override fun getRoute(route: BottomNavigationItem): Any = when(route) {
-        BottomNavigationItem.Camera -> CameraRecordingGraph
-        BottomNavigationItem.Demo -> DemoEntryPoint
-        BottomNavigationItem.Settings -> SettingsEntryPoint
+        BottomNavigationItem.Camera -> CameraRecordingGraphVanilla
+        BottomNavigationItem.Demo -> DemoDestinationVanilla
+        BottomNavigationItem.Settings -> SettingsDestinationVanilla
     }
 
     override fun getStartRoute(route: BottomNavigationItem): Any = when(route) {
-        BottomNavigationItem.Camera -> CameraRecordingEntryPoint
-        BottomNavigationItem.Demo -> DemoEntryPoint
-        BottomNavigationItem.Settings -> SettingsEntryPoint
+        BottomNavigationItem.Camera -> CameraRecordingDestinationVanilla
+        BottomNavigationItem.Demo -> DemoDestinationVanilla
+        BottomNavigationItem.Settings -> SettingsDestinationVanilla
     }
 }

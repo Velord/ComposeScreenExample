@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.main.navigation
+package com.velord.navigation.compose.destinations
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,7 +26,7 @@ import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.feature.demo.DemoDest
 import com.velord.feature.demo.DemoNavigator
 
-class SupremeNavigator(
+internal class SupremeNavigator(
     private val navController: NavHostController
 ) : BottomNavigator, DemoNavigator, CameraRecordingNavigator {
 

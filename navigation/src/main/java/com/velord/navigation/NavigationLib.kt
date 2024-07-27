@@ -1,4 +1,4 @@
-package com.velord.composescreenexample.ui.main.navigation
+package com.velord.navigation
 
 enum class NavigationLib {
     Voyager,

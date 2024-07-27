@@ -7,7 +7,7 @@ import com.velord.bottomnavigation.screen.BottomNavigationVoyagerScreen
 import com.velord.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
 import org.koin.androidx.compose.koinViewModel
 
-object BottomNavScreen : Screen {
+object BottomNavVoyagerScreen : Screen {
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
