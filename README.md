@@ -2,6 +2,23 @@
 ## Architecture:
 Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Architecture
 
+Project uses navigation libs:
+* [Jetpack Navigation](https://developer.android.com/guide/navigation) **80%** _screens covered._ **DEPRECATED**
+* [Voyager](https://github.com/adrielcafe/voyager) **100%** _screens covered_
+* [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation) **100%** _screens covered_
+* [Compose Destinations](https://github.com/raamcosta/compose-destinations) **100%** _screens covered_
+
+To use different Navigation library need to change in ```build.gradle.kts``` from ```app``` module.
+
+```
+buildConfigField(    
+    "com.velord.navigation.NavigationLib",
+    "NAVIGATION_LIB",
+    "com.velord.navigation.NavigationLib.{Voyager}" or "Jetpack" or "Destinations" or "Compose"
+)
+```
+
+
 ## UI Features:
 * [Movie Demo](#movie-demo)
 * [Phone Number Hint Demo](#phone-number-hint-demo)
