@@ -2,6 +2,7 @@ include(":app")
 // Universal
 include(":util")
 include(":model")
+include(":navigation")
 // Core
 include(":core:core-ui")
 include(":core:core-navigation")

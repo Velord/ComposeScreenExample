@@ -13,7 +13,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.velord.navigation.SharedScreen
+import com.velord.navigation.voyager.SharedScreenVoyager
 import com.velord.resource.R
 
 sealed class BottomNavigationTab : Tab {
@@ -36,7 +36,7 @@ sealed class BottomNavigationTab : Tab {
 
         @Composable
         override fun Content() {
-            val screen = rememberScreen(SharedScreen.BottomNavigationTab.Camera)
+            val screen = rememberScreen(SharedScreenVoyager.BottomNavigationTab.Camera)
             Navigator(screen)
         }
     }
@@ -59,7 +59,7 @@ sealed class BottomNavigationTab : Tab {
 
         @Composable
         override fun Content() {
-            val screen = rememberScreen(SharedScreen.BottomNavigationTab.Demo)
+            val screen = rememberScreen(SharedScreenVoyager.BottomNavigationTab.Demo)
             Navigator(screen) {
                 SlideTransition(it)
             }
@@ -84,7 +84,7 @@ sealed class BottomNavigationTab : Tab {
 
         @Composable
         override fun Content() {
-            val screen = rememberScreen(SharedScreen.BottomNavigationTab.Settings)
+            val screen = rememberScreen(SharedScreenVoyager.BottomNavigationTab.Settings)
             Navigator(screen)
         }
     }

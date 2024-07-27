@@ -1,8 +1,9 @@
 package com.velord.feature.demo
 
-import com.velord.navigation.NavigationDataJetpack
-import com.velord.navigation.NavigationDataVoyager
-import com.velord.navigation.SharedScreen
+import com.velord.navigation.fragment.NavigationDataFragment
+import com.velord.navigation.voyager.NavigationDataVoyager
+import com.velord.navigation.voyager.SharedScreenVoyager
+import com.velord.resource.R
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -10,37 +11,37 @@ import kotlinx.coroutines.launch
 class DemoViewModel : CoroutineScopeViewModel() {
 
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager>()
-    val navigationEventJetpack = MutableSharedFlow<NavigationDataJetpack>()
+    val navigationEventJetpack = MutableSharedFlow<NavigationDataFragment>()
     val navigationEventDestination = MutableSharedFlow<DemoDest>()
 
     fun onOpenShape() = launch {
-        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreen.Demo.Shape))
+        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Shape))
         navigationEventJetpack.emit(
-            NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_shapeDemoFragment)
+            NavigationDataFragment(R.id.from_demoFragment_to_shapeDemoFragment)
         )
         navigationEventDestination.emit(DemoDest.Shape)
     }
 
     fun onOpenModifier() = launch {
-        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreen.Demo.Modifier))
+        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Modifier))
         navigationEventJetpack.emit(
-            NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_modifierDemoFragment)
+            NavigationDataFragment(R.id.from_demoFragment_to_modifierDemoFragment)
         )
         navigationEventDestination.emit(DemoDest.Modifier)
     }
 
     fun onOpenSummator() = launch {
-        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreen.Demo.FlowSummator))
+        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.FlowSummator))
         navigationEventJetpack.emit(
-            NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_flowSummatorFragment)
+            NavigationDataFragment(R.id.from_demoFragment_to_flowSummatorFragment)
         )
         navigationEventDestination.emit(DemoDest.FlowSummator)
     }
 
     fun onOpenMorph() = launch {
-        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreen.Demo.Morph))
+        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Morph))
         navigationEventJetpack.emit(
-            NavigationDataJetpack(com.velord.resource.R.id.from_demoFragment_to_morphDemoFragment)
+            NavigationDataFragment(R.id.from_demoFragment_to_morphDemoFragment)
         )
         navigationEventDestination.emit(DemoDest.Morph)
     }

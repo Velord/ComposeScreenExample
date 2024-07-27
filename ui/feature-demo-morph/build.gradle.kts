@@ -41,6 +41,6 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.voyager)
     implementation(libs.bundles.ui)
+    implementation(libs.bundles.voyager)
 }
