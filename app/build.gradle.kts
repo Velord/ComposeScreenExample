@@ -55,9 +55,9 @@ android {
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
             buildConfigField(
-                "com.velord.composescreenexample.ui.main.navigation.NavigationLib",
+                "com.velord.navigation.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Compose"
+                "com.velord.navigation.NavigationLib.Compose"
             )
         }
         named("release") {
@@ -66,9 +66,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
             buildConfigField(
-                "com.velord.composescreenexample.ui.main.navigation.NavigationLib",
+                "com.velord.navigation.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.composescreenexample.ui.main.navigation.NavigationLib.Compose"
+                "com.velord.navigation.NavigationLib.Compose"
             )
         }
     }
@@ -124,6 +124,7 @@ dependencies {
     // Module
     implementation(project(":model"))
     implementation(project(":util"))
+    implementation(project(":navigation"))
     // Module Core
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-navigation"))
@@ -137,7 +138,6 @@ dependencies {
     implementation(project(":data:appstate"))
     implementation(project(":data:gateway"))
     implementation(project(":data:db"))
-    // Module Data Gateway
     // Module UI
     implementation(project(":ui:sharedviewmodel"))
     // Module UI Feature
@@ -146,10 +146,6 @@ dependencies {
     implementation(project(":ui:feature-bottomnavigation"))
     implementation(project(":ui:feature-settings"))
     implementation(project(":ui:feature-splash"))
-    implementation(project(":ui:feature-demo-shape"))
-    implementation(project(":ui:feature-demo-modifier"))
-    implementation(project(":ui:feature-demo-morph"))
-    implementation(project(":ui:feature-demo-hintphonenumber"))
     implementation(project(":ui:feature-flowsummator"))
     implementation(project(":ui:feature-movie"))
     // Module UI Widget
@@ -159,25 +155,12 @@ dependencies {
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
-    implementation(libs.bundles.coil)
-    implementation(libs.bundles.kotlin.serialization)
     // DI
     implementation(libs.bundles.koin)
     implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
-    // Navigation
-    // Navigation Voyager
-    implementation(libs.bundles.voyager)
-    // Navigation Compose Destinations
-    implementation(libs.bundles.compose.destinations)
-    ksp(libs.compose.destinations.ksp)
-    // Room
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.bundles.androidx.room.coroutines)
     // Other
-    implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)
-    implementation(libs.androidx.core.splashscreen)
     // Test libs.versions.toml
     //implementation(libs.bundles.androidx.all)
 }
