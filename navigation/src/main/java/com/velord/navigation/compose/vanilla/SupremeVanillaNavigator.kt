@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.velord.bottomnavigation.screen.BottomNavigationItem
-import com.velord.bottomnavigation.screen.BottomNavigatorVanilla
+import com.velord.bottomnavigation.screen.compose.BottomNavigationItem
+import com.velord.bottomnavigation.screen.compose.BottomNavigatorVanilla
 import com.velord.camerarecording.CameraRecordingNavigationEvent
 import com.velord.camerarecording.CameraRecordingScreen
 import com.velord.camerarecording.CameraRecordingViewModel
@@ -26,7 +26,9 @@ import com.velord.shapedemo.ShapeDemoScreen
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
-internal class SupremeVanillaNavigator : BottomNavigatorVanilla {
+internal class SupremeVanillaNavigator(
+    private val supremeNavController: NavHostController
+) : BottomNavigatorVanilla {
 
     @Composable
     override fun CreateDestinationsNavHostForBottomVanilla(
@@ -67,15 +69,10 @@ internal class SupremeVanillaNavigator : BottomNavigatorVanilla {
                     CameraRecordingScreen(viewModel, true) {
                         when(it) {
                             CameraRecordingNavigationEvent.SETTINGS -> {
-                                navController.navigate(CameraRecordingSettingsDestinationVanilla)
+                                supremeNavController.navigate(CameraRecordingSettingsDestinationVanilla)
                             }
                         }
                     }
-                }
-
-                composable<CameraRecordingSettingsDestinationVanilla> {
-                    val viewModel = koinViewModel<ThemeViewModel>()
-                    SettingsScreen(viewModel)
                 }
             }
 

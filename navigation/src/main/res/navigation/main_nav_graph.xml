@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/bottomNavFragment"
+    >
+
+    <action
+        android:id="@+id/toBottomNavFragment"
+        app:destination="@+id/bottomNavFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/bottomNavFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/toInDevelopmentFragment"
+        app:destination="@id/inDevelopmentFragment"
+        />
+
+    <fragment
+        android:id="@+id/bottomNavFragment"
+        android:name="com.velord.bottomnavigation.screen.jetpack.BottomNavigationFragment"
+        android:label="BottomNavFragment"
+        />
+
+    <fragment
+        android:id="@+id/inDevelopmentFragment"
+        android:name="com.velord.navigation.jetpackNavigation.inDevelopment.InDevelopmentFragment"
+        android:label="InDevelopmentFragment" />
+
+</navigation>

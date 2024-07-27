@@ -27,7 +27,7 @@ private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
 annotation class BottomNavigationGraph
 
 @Destination<BottomNavigationGraph>
-@Destination<CameraRecordingGraph>
+@Destination<MainGraph>
 @Composable
 internal fun SettingsDestination() {
     val viewModel = koinViewModel<ThemeViewModel>()
