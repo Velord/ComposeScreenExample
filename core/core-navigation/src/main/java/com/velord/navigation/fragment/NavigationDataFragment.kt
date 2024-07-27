@@ -1,8 +1,8 @@
-package com.velord.navigation
+package com.velord.navigation.fragment
 
 import android.os.Bundle
 
-data class NavigationDataJetpack(
+data class NavigationDataFragment(
     val id: Int,
     val bundle: Bundle? = null
 )

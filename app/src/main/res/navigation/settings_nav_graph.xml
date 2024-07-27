@@ -22,7 +22,7 @@
 
         <argument
             android:name="source"
-            app:argType="com.velord.navigation.entryPoint.SettingsSource"
+            app:argType="com.velord.navigation.fragment.entryPoint.SettingsSource"
             />
     </fragment>
 

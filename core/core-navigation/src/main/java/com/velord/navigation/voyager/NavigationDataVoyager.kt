@@ -1,4 +1,4 @@
-package com.velord.navigation
+package com.velord.navigation.voyager
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -8,7 +8,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import kotlinx.coroutines.flow.Flow
 
 data class NavigationDataVoyager(
-    val screen: SharedScreen,
+    val screen: SharedScreenVoyager,
     val useRoot: Boolean = false
 )
 
