@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
 
-data class TestScreen(
+data class TestVoyagerScreen(
     @StringRes val title: Int,
     val modifier: Modifier = Modifier,
     val onClick: () -> Unit = {},

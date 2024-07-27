@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.velord.composescreenexample.ui.screen.TestScreen
+import com.velord.composescreenexample.ui.screen.TestVoyagerScreen
 import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 
@@ -16,6 +16,6 @@ class TestFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        TestScreen(R.string.test)
+        TestVoyagerScreen(R.string.test)
     }
 }

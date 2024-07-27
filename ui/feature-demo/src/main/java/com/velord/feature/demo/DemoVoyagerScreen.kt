@@ -9,7 +9,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.androidx.compose.koinViewModel
 
-object DemoScreen : Screen {
+object DemoVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {
