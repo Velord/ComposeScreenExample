@@ -1,10 +1,10 @@
 include(":app")
-// Universal
-include(":util")
+// Model
 include(":model")
 // Specific
-include(":navigation")
-include(":di")
+include(":infrastructure:util")
+include(":infrastructure:navigation")
+include(":infrastructure:di")
 // Core
 include(":core:core-ui")
 include(":core:core-navigation")

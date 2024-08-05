@@ -35,7 +35,7 @@ android {
 dependencies {
     // Modules
     implementation(project(":model"))
-    implementation(project(":util"))
+    implementation(project(":infrastructure:util"))
     implementation(project(":core:core-resource"))
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-navigation"))
@@ -47,7 +47,6 @@ dependencies {
     implementation(libs.bundles.androidx.camera)
     implementation(libs.bundles.compose.all)
     // Navigation
-    implementation(libs.bundles.voyager)
     ksp(libs.compose.destinations.ksp)
     // DI
     implementation(libs.bundles.koin)

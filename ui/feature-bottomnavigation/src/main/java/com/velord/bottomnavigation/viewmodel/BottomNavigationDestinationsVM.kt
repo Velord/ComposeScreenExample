@@ -2,7 +2,6 @@ package com.velord.bottomnavigation.viewmodel
 
 import androidx.navigation.NavDestination
 import com.velord.bottomnavigation.BottomNavEventService
-import com.velord.bottomnavigation.screen.compose.BottomNavigationItem
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -10,6 +9,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
+
+enum class BottomNavigationItem {
+    Camera,
+    Demo,
+    Settings;
+}
 
 data class TabState(
     val previous: BottomNavigationItem,

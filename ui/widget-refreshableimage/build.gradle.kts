@@ -34,7 +34,7 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
+    implementation(project(":infrastructure:util"))
     implementation(project(":core:core-resource"))
     implementation(project(":core:core-ui"))
     // Templates

@@ -38,7 +38,6 @@ import com.velord.model.movie.SortType
 import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.util.context.getActivity
-import org.koin.androidx.compose.koinViewModel
 import java.util.Calendar
 
 private fun Activity.onClick(intent: Intent) {
@@ -47,12 +46,11 @@ private fun Activity.onClick(intent: Intent) {
 
 @Composable
 internal fun ColumnScope.MoviePager(
+    allMovieViewModel: AllMovieViewModel,
+    favoriteMovieViewModel: FavoriteMovieViewModel,
     uiState: MovieUiState,
     onSwipe: (Int) -> Unit
 ) {
-    val allMovieViewModel = koinViewModel<AllMovieViewModel>()
-    val favoriteMovieViewModel = koinViewModel<FavoriteMovieViewModel>()
-
     val allMovieUiState = allMovieViewModel.uiState.collectAsStateWithLifecycle()
     val favoriteMovieUiState = favoriteMovieViewModel.uiState.collectAsStateWithLifecycle()
 
