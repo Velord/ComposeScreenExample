@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,12 +20,18 @@ import com.velord.feature.movie.component.MovieHeader
 import com.velord.feature.movie.component.MoviePager
 import com.velord.feature.movie.model.MovieFilterOptionUI
 import com.velord.feature.movie.model.MovieSortOptionUI
+import com.velord.feature.movie.viewModel.AllMovieViewModel
+import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.feature.movie.viewModel.MovieViewModel
 import com.velord.uicore.compose.preview.PreviewCombined
 
 @Composable
-fun MovieScreen(viewModel: MovieViewModel) {
+fun MovieScreen(
+    viewModel: MovieViewModel,
+    allMovieViewModel: AllMovieViewModel,
+    favoriteMovieViewModel: FavoriteMovieViewModel,
+) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     Content(
@@ -32,7 +39,14 @@ fun MovieScreen(viewModel: MovieViewModel) {
         onSwipe = viewModel::onSwipe,
         onSortOptionClick = viewModel::onSortOptionClick,
         onFilterOptionClick = viewModel::onFilterOptionClick,
-    )
+    ) {
+        MoviePager(
+            allMovieViewModel = allMovieViewModel,
+            favoriteMovieViewModel = favoriteMovieViewModel,
+            uiState = uiState.value,
+            onSwipe = viewModel::onSwipe
+        )
+    }
 }
 
 @Composable
@@ -41,6 +55,7 @@ private fun Content(
     onSwipe: (Int) -> Unit,
     onSortOptionClick: (MovieSortOptionUI) -> Unit,
     onFilterOptionClick: (MovieFilterOptionUI) -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -56,10 +71,7 @@ private fun Content(
                     onClick = onSwipe
                 )
 
-                MoviePager(
-                    uiState = uiState,
-                    onSwipe = onSwipe
-                )
+                content()
             }
 
             FloatingAction(
@@ -114,5 +126,6 @@ private fun Preview() {
         onSwipe = {},
         onSortOptionClick = {},
         onFilterOptionClick = {},
+        content = {}
     )
 }

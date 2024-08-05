@@ -35,7 +35,7 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
+    implementation(project(":infrastructure:util"))
     implementation(project(":core:core-resource"))
     implementation(project(":core:core-navigation"))
     implementation(project(":core:core-ui"))
@@ -51,9 +51,6 @@ dependencies {
     ksp(libs.koin.ksp)
     // Navigation
     implementation(libs.bundles.voyager)
-    // Navigation Compose Destinations
-    implementation(libs.bundles.compose.destinations)
-    ksp(libs.compose.destinations.ksp)
     // Third Party
     implementation(libs.velord.multiplebackstack)
 }
@@ -65,7 +62,6 @@ composeCompiler {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")
-    arg("compose-destinations.moduleName", "moduleBottomNavigation")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
