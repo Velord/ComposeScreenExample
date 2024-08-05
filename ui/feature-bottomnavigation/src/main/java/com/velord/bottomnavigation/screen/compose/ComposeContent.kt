@@ -1,7 +1,6 @@
 package com.velord.bottomnavigation.screen.compose
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.collection.forEach
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,68 +32,29 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.ExternalModuleGraph
-import com.ramcosta.composedestinations.utils.route
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
 import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.util.context.getActivity
-import org.koin.androidx.compose.koinViewModel
 
-@SuppressLint("RestrictedApi")
-@Composable
-fun LogBackStack(
-    navController: NavController,
-    tag: String,
-) {
-    LaunchedEffect(navController) {
-        navController.currentBackStack.collect {
-            it.print(tag = tag)
-        }
-    }
-}
-
-private fun Collection<NavBackStackEntry>.print(tag: String, prefix: String = "stack") {
-    val stack = toMutableList()
-        .map {
-            val route = it.route()
-            val args = runCatching { route.argsFrom(it) }.getOrNull()?.takeIf { it != Unit }?.let { "(args={$it})" } ?: ""
-            "$route$args"
-        }
-        .toTypedArray().contentToString()
-    Log.d("LogBackStack - $tag", "$prefix = $stack")
-}
-
-@Destination<ExternalModuleGraph>()
 @Composable
 internal fun ComposeContent(
-    content: @Composable (
-        viewModel: BottomNavigationDestinationsVM,
-        navController: NavHostController,
-        currentTab: BottomNavigationItem,
-    ) -> Unit,
+    viewModel: BottomNavigationDestinationsVM,
+    navController: NavController,
+    currentDestination: NavDestination?,
+    content: @Composable (currentTab: BottomNavigationItem) -> Unit,
 ) {
-    val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
     val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle(TabState.Default)
 
     val context = LocalContext.current
-    val navController = rememberNavController()
-    val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry.value?.destination
-
-    //LogBackStack(navController = navController, tag = "ComposeContent")
 
     ObserveSharedFlow(flow = viewModel.finishAppEvent) {
         context.getActivity()?.finish()
@@ -122,7 +82,7 @@ internal fun ComposeContent(
         viewModel.updateBackHandling(startDestinationRoster, currentDestination)
     }
 
-    content(viewModel, navController, tabState.value.current)
+    content(tabState.value.current)
 
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
@@ -168,7 +128,7 @@ internal fun Content(
 }
 
 @Composable
-private fun BottomBar(
+internal fun BottomBar(
     tabs: List<BottomNavigationItem>,
     selectedItem: BottomNavigationItem,
     onClick: (BottomNavigationItem) -> Unit,
@@ -180,7 +140,6 @@ private fun BottomBar(
     ) {
         tabs.forEach { item ->
             val isSelected = selectedItem == item
-            //val isCurrentDestOnBackStack = navController.isRouteOnBackStack(item.direction)
             NavigationBarItem(
                 selected = isSelected,
                 onClick = { onClick(item) },

@@ -32,7 +32,7 @@ android {
 dependencies {
     // Modules
     implementation(project(":model"))
-    implementation(project(":util"))
+    implementation(project(":infrastructure:util"))
     implementation(project(":domain:usecase-setting"))
     // Templates
     implementation(libs.bundles.kotlin.core)

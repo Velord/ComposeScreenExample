@@ -37,13 +37,12 @@ composeCompiler {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
+    implementation(project(":infrastructure:util"))
     implementation(project(":core:core-resource"))
     implementation(project(":core:core-ui"))
     implementation(project(":ui:sharedviewmodel"))
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.voyager)
     implementation(libs.bundles.compose.all)
 }
