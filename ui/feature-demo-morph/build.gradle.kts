@@ -42,5 +42,4 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.ui)
-    implementation(libs.bundles.voyager)
 }

@@ -121,12 +121,11 @@ android {
 }
 
 dependencies {
-    // Module Universal
     implementation(project(":model"))
-    implementation(project(":util"))
     // Module Specific
-    implementation(project(":navigation"))
-    implementation(project(":di"))
+    implementation(project(":infrastructure:util"))
+    implementation(project(":infrastructure:navigation"))
+    implementation(project(":infrastructure:di"))
     // Module Core
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-navigation"))

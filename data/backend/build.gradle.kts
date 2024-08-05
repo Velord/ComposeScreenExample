@@ -31,7 +31,7 @@ android {
 dependencies {
     // Module
     implementation(project(":model"))
-    implementation(project(":util"))
+    implementation(project(":infrastructure:util"))
     implementation(project(":data:datastore"))
     // Templates
     implementation(libs.androidx.core.ktx)

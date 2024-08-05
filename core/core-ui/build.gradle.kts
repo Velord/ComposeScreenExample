@@ -33,8 +33,8 @@ android {
 
 dependencies {
     // Modules
-    implementation(project(":util"))
     implementation(project(":model"))
+    implementation(project(":infrastructure:util"))
     implementation(project(":core:core-resource"))
     implementation(project(":ui:sharedviewmodel"))
     // Templates

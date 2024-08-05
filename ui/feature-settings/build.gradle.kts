@@ -44,8 +44,6 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
-    // Navigation
-    implementation(libs.bundles.voyager)
     // DI
     implementation(libs.bundles.koin)
     implementation(platform(libs.koin.bom))

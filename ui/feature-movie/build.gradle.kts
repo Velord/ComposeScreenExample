@@ -35,7 +35,7 @@ android {
 dependencies {
     // Modules
     implementation(project(":model"))
-    implementation(project(":util"))
+    implementation(project(":infrastructure:util"))
     implementation(project(":core:core-resource"))
     implementation(project(":core:core-ui"))
     implementation(project(":ui:sharedviewmodel"))
@@ -46,11 +46,6 @@ dependencies {
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.coil)
     implementation(libs.androidx.constraint.compose)
-    implementation(libs.bundles.voyager)
-    // DI
-    implementation(libs.bundles.koin)
-    implementation(platform(libs.koin.bom))
-    ksp(libs.koin.ksp)
     // 3-rd party
     implementation(libs.compose.scrollbar.nanihadesuka)
 }
