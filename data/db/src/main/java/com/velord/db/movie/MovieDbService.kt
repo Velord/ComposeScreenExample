@@ -1,4 +1,4 @@
-package com.velord.db
+package com.velord.db.movie
 
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.Movie

@@ -1,4 +1,4 @@
-package com.velord.db
+package com.velord.db.movie
 
 import androidx.room.Dao
 import androidx.room.Delete

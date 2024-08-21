@@ -29,10 +29,10 @@ fun Application.startKoin(
         modules(httpModule)
         modules(databaseModule)
         modules(BottomNavigationModule().module)
-        modules(DataStoreModule().module)
         modules(AppStateModule().module)
         modules(BackendModule().module)
         modules(DbModule().module)
+        modules(DataStoreModule().module)
         modules(GatewayModule().module)
     }
 }
