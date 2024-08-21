@@ -2,6 +2,7 @@ package com.velord.db
 
 import android.content.Context
 import androidx.room.Room
+import com.velord.db.movie.MovieDao
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.dsl.module

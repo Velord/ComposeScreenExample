@@ -1,9 +1,9 @@
 package com.velord.gateway.movie
 
 import com.velord.appstate.AppStateService
-import com.velord.backend.ktor.MovieService
+import com.velord.backend.ktor.NetworkMovieService
 import com.velord.backend.model.MoviePageRequest
-import com.velord.db.MovieDbService
+import com.velord.db.movie.MovieDbService
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MoviePagination
@@ -20,7 +20,7 @@ private const val INITIAL_PAGE = 1
 @Single
 class MovieGateway(
     private val appState: AppStateService,
-    private val http: MovieService,
+    private val http: NetworkMovieService,
     private val db: MovieDbService,
     private val movieSortGateway: MovieSortGateway
 ) : MovieDS {

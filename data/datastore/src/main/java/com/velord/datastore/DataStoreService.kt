@@ -16,16 +16,16 @@ interface DataStoreService {
 
 @Single
 class DataStoreServiceImpl(
-    private val settings: AppSettingsDataStore
+    private val appSettings: AppSettingsDataStore
 ) : DataStoreService {
 
     private suspend fun setFirstLaunch() {
-        settings.updateData {
+        appSettings.updateData {
             it.copy(isAppFirstLaunch = true)
         }
     }
 
-    override suspend fun checkAppFirstLaunch(): Boolean = settings.data.map {
+    override suspend fun checkAppFirstLaunch(): Boolean = appSettings.flow.map {
         val isFirstLaunch = it.isAppFirstLaunch
         if (isFirstLaunch) setFirstLaunch()
 
@@ -33,10 +33,10 @@ class DataStoreServiceImpl(
     }.first()
 
     override suspend fun setThemeConfig(theme: ThemeConfig) {
-       settings.updateData {
+        appSettings.updateData {
            it.copy(theme = theme)
        }
     }
 
-    override suspend fun getAppSettingsFlow(): Flow<AppSettings> = settings.data
+    override suspend fun getAppSettingsFlow(): Flow<AppSettings> = appSettings.flow
 }
