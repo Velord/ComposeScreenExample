@@ -2,7 +2,7 @@ package com.velord.gateway.movie
 
 import android.util.Log
 import com.velord.appstate.AppStateService
-import com.velord.db.MovieDbService
+import com.velord.db.movie.MovieDbService
 import com.velord.model.movie.Movie
 import com.velord.usecase.movie.dataSource.MovieFavoriteDS
 import kotlinx.coroutines.CoroutineExceptionHandler
