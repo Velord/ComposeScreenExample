@@ -1,4 +1,4 @@
-package com.velord.db
+package com.velord.db.movie
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
