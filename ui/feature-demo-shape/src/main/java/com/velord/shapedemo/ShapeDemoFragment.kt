@@ -44,6 +44,7 @@ private fun Content() {
     ) {
         TicketShapeDemo()
         PervasiveArcFromBottomShapeDemo()
+        WaveShapeDemo()
     }
 }
 
