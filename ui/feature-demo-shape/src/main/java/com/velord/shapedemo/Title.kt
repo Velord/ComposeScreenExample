@@ -15,8 +15,7 @@ internal fun Title(
 ) {
     Text(
         text = text,
-        modifier = modifier
-            .padding(top = 32.dp, start = 16.dp),
+        modifier = modifier.padding(top = 32.dp, start = 16.dp),
         color = MaterialTheme.colorScheme.primary,
         textAlign = TextAlign.Start,
         style = MaterialTheme.typography.bodyMedium,
