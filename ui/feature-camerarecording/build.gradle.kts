@@ -44,7 +44,7 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.androidx.camera)
+    implementation(libs.bundles.androidx.camera.all)
     implementation(libs.bundles.compose.all)
     // Navigation
     ksp(libs.compose.destinations.ksp)
