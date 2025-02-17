@@ -181,7 +181,7 @@ private fun Info() {
         ModalBottomSheet(
             onDismissRequest = {},
             sheetState = infoDialogState,
-            windowInsets = WindowInsets(top = 0.dp),
+            contentWindowInsets = { WindowInsets(top = 0.dp) },
         ) {
             Text(
                 text = stringResource(id = R.string.info_description_flow_summator),
