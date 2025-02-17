@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ComposeScreenExample.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation duration. -->
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <!-- Use windowSplashScreenAnimatedIcon to add a drawable or an animated drawable.
+        One of these is required. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- Required for animated icons.
+        We use static.
+        <item name="windowSplashScreenAnimationDuration">200</item>-->
+        <!-- Set the theme of the Activity that directly follows your splash screen.
+        This is required. -->
+        <item name="postSplashScreenTheme">@style/Theme.ComposeScreenExample</item>
+        <!-- Image to be shown at the bottom of the splash screen.
+         However, the design guidelines recommend against using a branding image. -->
+        <item name="android:windowSplashScreenBrandingImage">@drawable/ic_brand</item>
+        <!-- When icon color is near to background define this value.
+        After that change SplashScreen to imitate it. -->
+        <!--        <item name="android:windowSplashScreenIconBackgroundColor">@color/splash_icon_foreground</item>-->
+        <item name="android:windowSplashScreenBehavior">icon_preferred</item>
+    </style>
+</resources>

@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/core-navigation" />
+            <option value="$PROJECT_DIR$/core/core-resource" />
+            <option value="$PROJECT_DIR$/core/core-ui" />
+            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/data/appstate" />
+            <option value="$PROJECT_DIR$/data/backend" />
+            <option value="$PROJECT_DIR$/data/datastore" />
+            <option value="$PROJECT_DIR$/data/db" />
+            <option value="$PROJECT_DIR$/data/gateway" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/usecase-movie" />
+            <option value="$PROJECT_DIR$/domain/usecase-setting" />
+            <option value="$PROJECT_DIR$/infrastructure" />
+            <option value="$PROJECT_DIR$/infrastructure/di" />
+            <option value="$PROJECT_DIR$/infrastructure/navigation" />
+            <option value="$PROJECT_DIR$/infrastructure/util" />
+            <option value="$PROJECT_DIR$/model" />
+            <option value="$PROJECT_DIR$/ui" />
+            <option value="$PROJECT_DIR$/ui/feature-bottomnavigation" />
+            <option value="$PROJECT_DIR$/ui/feature-camerarecording" />
+            <option value="$PROJECT_DIR$/ui/feature-demo" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-hintphonenumber" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-modifier" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-morph" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-shape" />
+            <option value="$PROJECT_DIR$/ui/feature-flowsummator" />
+            <option value="$PROJECT_DIR$/ui/feature-movie" />
+            <option value="$PROJECT_DIR$/ui/feature-settings" />
+            <option value="$PROJECT_DIR$/ui/feature-splash" />
+            <option value="$PROJECT_DIR$/ui/sharedviewmodel" />
+            <option value="$PROJECT_DIR$/ui/widget-counter" />
+            <option value="$PROJECT_DIR$/ui/widget-refreshableimage" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
+    <option name="parallelModelFetch" value="true" />
   </component>
 </project>
