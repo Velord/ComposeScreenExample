@@ -22,7 +22,11 @@ val buildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull() ?: hotfixVersion
 // Doc says: max number is 2100000000
 // Do not use auto numeration when value beyond edge
 val maxSafeVersionCode = 1000000000
-val calculatedVersionNumber = globalVersion * 100000 + majorVersion * 10000 + minorVersion * 1000 + fixVersion * 100 + buildNumber
+val calculatedVersionNumber = globalVersion * 100000 +
+        majorVersion * 10000 +
+        minorVersion * 1000 +
+        fixVersion * 100 +
+        buildNumber
 
 android {
     namespace = "com.velord.composescreenexample"
@@ -122,7 +126,7 @@ android {
 
 dependencies {
     implementation(project(":model"))
-    // Module Specific
+    // Module Infrastructure
     implementation(project(":infrastructure:util"))
     implementation(project(":infrastructure:navigation"))
     implementation(project(":infrastructure:di"))
@@ -139,9 +143,9 @@ dependencies {
     implementation(project(":ui:widget-refreshableimage"))
     implementation(project(":ui:widget-counter"))
     // Templates
-    implementation(libs.bundles.kotlin.all)
+    implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.compose.all)
+    implementation(libs.bundles.compose.ui)
     // DI
     implementation(libs.bundles.koin)
     implementation(platform(libs.koin.bom))
@@ -149,7 +153,12 @@ dependencies {
     // Other
     implementation(libs.androidx.glance.appwidget)
     // Test libs.versions.toml
-    //implementation(libs.bundles.androidx.all)
+    implementation(libs.bundles.androidx.all)
+    implementation(libs.bundles.kotlin.all)
+    implementation(libs.bundles.compose.all)
+    implementation(libs.bundles.compose.thirdparty)
+    implementation(libs.bundles.logging)
+    implementation(libs.bundles.google.all)
 }
 
 composeCompiler {
@@ -162,5 +171,5 @@ ksp {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
 }

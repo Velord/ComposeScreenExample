@@ -12,7 +12,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    // VieModel that can not be instantiated there has their own module DI
+    // VieModel that can not be instantiated here has their own module DI
     viewModel { ThemeViewModel(get(), get(), get(), get()) }
     viewModel { SplashViewModel() }
     viewModel { DemoViewModel() }

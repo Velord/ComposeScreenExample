@@ -1,112 +1,119 @@
 [versions]
 # API
 minApi = "29"
-targetApi = "34"
+targetApi = "35"
 # Build
 buildTools = "30.0.3"
-gradle = "8.3.2"
+gradle = "8.5.1"
 jvmTarget = "17"
 jetifier = "1.0.0-beta10"
 # DI
-dagger = "2.49"
-hilt = "2.51.1"
+dagger = "2.52"
+hilt = "2.52"
 hiltNavigation = "1.2.0"
 hiltNavigationCompose = "1.2.0"
-koinBom = "4.0.0-RC1"
-koinKsp = "1.4.0-RC2"
+koinBom = "4.1.0-Beta5"
+koinKsp = "2.0.0-RC1"
+# Google
+googleGuava = "33.3.1-android"
+googleKsp = "2.1.10-1.0.30"
+googleModernStorage = "1.0.0-alpha06"
+googleRecaptcha = "18.7.0"
+# Google GMS/Google Play Services
+googleGmsAuth = "21.3.0"
 # Kotlin
-kotlin = "2.0.0"
-coroutine = "1.7.3"
-# Kotlin Serialization
+kotlin = "2.1.10"
+kotlinCoroutine = "1.8.0"
+kotlinCollectionsImmutable = "0.3.8"
+kotlinDateTime = "0.6.1"
+# Kotlin Json Serialization
 kotlinJsonSerialization = "1.6.3"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
-# Google
-googleGuava = "32.0.0-android"
-ksp = "2.0.0-1.0.22"
 # AndroidX
 ## A
-androidxActivity = "1.9.0"
+androidxActivity = "1.10.0"
 androidxAds = "1.0.0-alpha05"
-androidxAnnotation = "1.8.0"
+androidxAnnotation = "1.9.1"
 androidxAppCompat = "1.7.0"
-androidxAppSearch = "1.1.0-alpha03"
+androidxAppSearch = "1.1.0-beta01"
 androidxArchCore = "2.2.0"
 androidxAsyncLayoutInflater = "1.0.0"
 androidxAutoFill = "1.1.0"
 ## B
-androidxBenchmark = "1.2.4"
+androidxBenchmark = "1.3.3"
 androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha02"
 androidxBrowser = "1.8.0"
+## Camera
+androidxCamera = "1.5.0-alpha05"
+androidxCameraMedia3 = "1.0.0-alpha01"
+androidxCameraViewFinder = "1.4.0-alpha12"
 ## C
-androidxCamera = "1.3.4"
 androidxCarApp = "1.4.0"
 androidXCardView = "1.0.0"
-androidxCollection = "1.4.1"
+androidxCollection = "1.4.5"
 androidxConcurrent = "1.2.0"
 ## AndroidX Constraint
-androidxConstraint = "2.1.4"
-androidxConstraintCompose = "1.1.0-alpha13"
+androidxConstraint = "2.2.0"
+androidxConstraintCompose = "1.1.0"
 ## C
 androidxContentPager = "1.0.0"
 androidxCoordinatorLayout = "1.2.0"
 ## Core
-androidxCore = "1.13.1"
+androidxCore = "1.15.0"
 androidxCoreAnimation = "1.0.0"
 androidxCoreGoogleShortcuts = "1.1.0"
 androidxCorePerformance = "1.0.0"
 androidxCoreRomoteViews = "1.1.0"
 androidxCoreRole = "1.0.0"
 androidxCoreSplashScreen = "1.0.1"
+androidxCoreUWB = "1.0.0-alpha10"
 ## C
-androidxCoreUWB = "1.0.0-alpha08"
-androidxCredentials = "1.2.2"
+androidxCredentials = "1.3.0"
 androidxCursorAdapter = "1.0.0"
 # AndroidX CustomView
 androidxCustomView = "1.1.0"
 androidxCustomViewPollingContainer = "1.0.0"
 ## D
 androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
-androidxDatastore = "1.1.1"
+androidxDatastore = "1.1.2"
 androidxDocumentFile = "1.0.1"
 androidxDragAndDrop = "1.0.0"
 androidxDrawerLayout = "1.2.0"
 androidxDynamicAnimation = "1.1.0-alpha03"
 ## Emoji
 androidxEmoji = "1.1.0"
-androidxEmoji2 = "1.4.0"
+androidxEmoji2 = "1.5.0"
 ## E
 androidxEnterprise = "1.1.0"
 androidxExifInterface = "1.3.7"
-androidxFragment = "1.8.1"
+androidxFragment = "1.8.6"
 ## Games
-androidxGamesActivity = "3.0.4"
+androidxGamesActivity = "4.0.0"
 androidxGamesController = "2.0.2"
-androidxGamesFramePacing = "2.1.1"
+androidxGamesFramePacing = "2.1.2"
 androidxGamesMemoryAdvice = "2.0.1"
-androidxGamesTextInput = "3.0.3"
-androidxGamesPerformanceTuner = "2.0.0-beta01"
-## G
-androidxGmsAuth = "21.2.0"
+androidxGamesTextInput = "4.0.0"
+androidxGamesPerformanceTuner = "2.0.0"
 ## Glance
-androidxGlance = "1.1.0"  # For Glance, AppWidgets
+androidxGlance = "1.1.1"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha05"
 ## Graphics
-androidxGraphicsCore = "1.0.0"
+androidxGraphicsCore = "1.0.2"
 androidxGraphicsPath = "1.0.1"
-androidxGraphicsShapes = "1.0.0-beta01"
+androidxGraphicsShapes = "1.0.1"
 ## G
 androidxGridlayout = "1.1.0-beta01"
 ## L
 androidxLegacySupport = "1.0.0"
-androidxLifecycle = "2.8.3"
+androidxLifecycle = "2.8.7"
 ## M
-androidxMedia3 = "1.3.1"
+androidxMedia3 = "1.5.1"
 ## N
-androidxNavigation = "2.7.7"
+androidxNavigation = "2.8.7"
 ## AndroidX Paging
-androidxPaging = "3.3.0"
-androidxPagingCompose = "3.3.0"
+androidxPaging = "3.3.6"
+androidxPagingCompose = "3.3.6"
 ## P
 androidxPalette = "1.0.0"
 androidxPercentLayout = "1.0.0"
@@ -114,18 +121,17 @@ androidxPreference = "1.2.1"
 androidxPrint = "1.1.0-beta01"
 ## Privacy Sandbox
 androidxPrivacySandboxActivity = "1.0.0-alpha01"
-androidxPrivacySandboxAds = "1.1.0-beta09"
+androidxPrivacySandboxAds = "1.1.0-beta11"
 androidxPrivacySandboxPlugins = "1.0.0-alpha02"
-androidxPrivacySandboxSdkRuntime = "1.0.0-alpha13"
-androidxPrivacySandboxTools = "1.0.0-alpha09"
-androidxPrivacySandboxUi = "1.0.0-alpha09"
+androidxPrivacySandboxSdkRuntime = "1.0.0-alpha16"
+androidxPrivacySandboxTools = "1.0.0-alpha11"
+androidxPrivacySandboxUi = "1.0.0-alpha13"
 ## P
-androidxProfileInstaller = "1.3.1"
+androidxProfileInstaller = "1.4.1"
 ## R
-androidxRecaptcha = "18.5.1"
 androidxRecommendation = "1.0.0"
 ## Recycler View
-androidxRecyclerView = "1.3.2"
+androidxRecyclerView = "1.4.0"
 androidxRecyclerViewSelection = "1.1.0"
 ## R
 androidxRemoteCallback = "1.0.0-alpha02"
@@ -145,7 +151,7 @@ androidxSliceKtx = "1.0.0-alpha08"
 ## S
 androidxSlidingPaneLayout = "1.2.0"
 androidxSqlite = "2.4.0"
-androidxStartup = "1.1.1"
+androidxStartup = "1.2.0"
 androidxSwipeRefreshLayout = "1.1.0"
 ## T
 ## Test
@@ -156,27 +162,28 @@ androidxTestEspressoDevice = "1.0.1"
 androidxTestExtJunit = "1.2.1"
 androidxTestExtJunitGtest = "1.0.0-alpha02"
 androidxTestExtTruth = "1.6.0"
-androidxTestMonitor = "1.7.1"
-androidxTestOrchestrator = "1.5.0"
-androidxTestRunner = "1.6.1"
+androidxTestMonitor = "1.7.2"
+androidxTestOrchestrator = "1.5.1"
+androidxTestRunner = "1.6.2"
 androidxTestRules = "1.6.1"
 androidxTestServices = "1.5.0"
 androidxTestUiAutomator = "2.3.0"
 ## T
 androidxTextClassifier = "1.0.0-alpha04"
 androidxTracing = "1.2.0"
-androidxTransition = "1.5.0"
+androidxTransition = "1.5.1"
 ## TV
-androidxTv = "1.0.0-rc01"
+androidxTvFoundation = "1.0.0-alpha12"
+androidxTvMaterial = "1.1.0-alpha01"
 androidxTvProvider = "1.1.0-alpha01"
 ## V
 ## Vector Drawable
 androidxVectorDrawable = "1.2.0"
 androidxVectorDrawableSeekable = "1.0.0"
 ## V
-androidxVersionedParcelable = "1.2.0"
+androidxVersionedParcelable = "1.2.1"
 ## ViewPager
-androidxViewPager = "1.1.0-alpha01"
+androidxViewPager = "1.1.0"
 androidxViewPager2 = "1.1.0"
 ## W
 ## Wear
@@ -184,47 +191,49 @@ androidxWear = "1.3.0"
 androidxWearInput = "1.1.0" # For Input, Input Testing
 androidxWearOngoing = "1.0.0"
 androidxWearPhone = "1.0.1"
-androidxWearRemote = "1.1.0-alpha02"
-androidxWearCompose = "1.4.0-beta03"
-androidxWearProtoLayout = "1.1.0"
-androidxWearTiles = "1.3.0"
+androidxWearRemote = "1.1.0"
+androidxWearCompose = "1.4.1"
+androidxWearProtoLayout = "1.2.1"
+androidxWearTiles = "1.4.1"
 androidxWearWatchface = "1.2.1"
 ## W
-androidxWebkit = "1.11.0"
+androidxWebkit = "1.12.1"
 ## Window
 androidxWindow = "1.3.0"
 androidxWindowExtension = "1.0.0"
 ## W
-androidxWorkManager = "2.9.0"
+androidxWorkManager = "2.10.0"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.10.0"
 ktor = "2.3.11"
 # Compose
-composeDefault = "1.7.0-beta05" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.7.8" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeAccompanist = "0.33.2-alpha"
 # composeCompiler = "1.5.14"
-composeMaterial3 = "1.2.1"
+composeMaterial3 = "1.3.1"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
 composeScrollbarNanihadesuka = "2.2.0"
+composeSmartToolFactoryCropper = "0.4.0"
+composeSmartToolFactoryGesture = "3.0.0"
+composeHaze = "0.7.3"
 # Image loader
 coil = "2.2.2"
 # Permission
-sagarCororutinePermission = "2.0.2"
+sagarCoroutinePermission = "2.0.2"
 # Navigation
 composeDestinations = "2.1.0-beta10"
 voyager = "1.1.0-alpha02"
 velordMultipleBackstack = "0.5.9.1"
-# Code quality
-detekt = "1.23.6"
 # Logging
 slf4j = "1.7.32"
+takt = "2.1.1"
+rebugger = "1.0.0-rc03"
 # Testing
 junit = "4.13.2"
 mockk = "1.12.0"
 turbine = "0.7.0"
-material = "1.12.0"
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
@@ -257,13 +266,11 @@ androidx-dynamicanimation-ktx = { module = "androidx.dynamicanimation:dynamicani
 androidx-enterprise = { module = "androidx.enterprise:enterprise-feedback", version.ref = "androidxEnterprise" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifInterface" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragment" }
-androidx-gms-auth = { module = "com.google.android.gms:play-services-auth", version = "androidxGmsAuth" }
 androidx-gridlayout = { module = "androidx.gridlayout:gridlayout", version.ref = "androidxGridlayout" }
 androidx-percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref = "androidxPercentLayout" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreference" }
 androidx-print = { module = "androidx.print:print", version.ref = "androidxPrint" }
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidxProfileInstaller" }
-androidx-recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "androidxRecaptcha" }
 androidx-recommendation = { module = "androidx.recommendation:recommendation", version.ref = "androidxRecommendation" }
 androidx-remotecallback = { module = "androidx.remotecallback:remotecallback", version.ref = "androidxRemoteCallback" }
 androidx-sharetarget = { module = "androidx.sharetarget:sharetarget", version.ref = "androidxShareTarget" }
@@ -285,10 +292,18 @@ androidx-arch-common = { module = "androidx.arch.core:core-common", version.ref 
 androidx-arch-runtime = { module = "androidx.arch.core:core-runtime", version.ref = "androidxArchCore" }
 androidx-arch-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidxArchCore" }
 # AndroidX Camera
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "androidxCamera" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "androidxCamera" }
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidxCamera" }
 androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "androidxCamera" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidxCamera" }
+androidx-camera-mlkit = { module = "androidx.camera:camera-mlkit-vision", version.ref = "androidxCamera" }
 androidx-camera-extension = { module = "androidx.camera:camera-extensions", version.ref = "androidxCamera" }
+androidx-camera-media3 = { module = "androidx.camera.media3:media3-effect", version.ref = "androidxCameraMedia3" }
+# AndroidX Camera Viewfinder
+androidx-camera-viewfinder-core = { module = "androidx.camera.viewfinder:viewfinder-core", version.ref = "androidxCameraViewFinder" }
+androidx-camera-viewfinder-compose = { module = "androidx.camera.viewfinder:viewfinder-compose", version.ref = "androidxCameraViewFinder" }
+androidx-camera-viewfinder-view = { module = "androidx.camera.viewfinder:viewfinder-view", version.ref = "androidxCameraViewFinder" }
 # AndroidX Car App
 androidx-carapp = { module = "androidx.car.app:app", version.ref = "androidxCarApp" }
 androidx-carapp-projected = { module = "androidx.car.app:app-projected", version.ref = "androidxCarApp" }
@@ -307,6 +322,9 @@ androidx-core-remoteviews = { module = "androidx.core:core-remoteviews", version
 androidx-core-role = { module = "androidx.core:core-role", version.ref = "androidxCoreRole" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidxCoreSplashScreen" }
 # AndroidX Credentials
+# The dependency androidx.credentials:credentials-play-services-auth is required to get support from
+# Play services for the Credential Manager API to work. For Android 14 or higher, this is optional.
+# Please check release notes for the latest version.
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "androidxCredentials" }
 androidx-credentials-below13 = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidxCredentials" }
 # AndroidX CustomView
@@ -435,8 +453,8 @@ androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidxT
 androidx-test-services = { module = "androidx.test.services:test-services", version.ref = "androidxTestServices" }
 androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidxTestUiAutomator" }
 # AndroidX TV
-androidx-tv-foundation = { module = "androidx.tv:tv-foundation", version.ref = "androidxTv" }
-androidx-tv-material = { module = "androidx.tv:tv-material", version.ref = "androidxTv" }
+androidx-tv-foundation = { module = "androidx.tv:tv-foundation", version.ref = "androidxTvFoundation" }
+androidx-tv-material = { module = "androidx.tv:tv-material", version.ref = "androidxTvMaterial" }
 androidx-tv-provider = { module = "androidx.tvprovider:tvprovider", version.ref = "androidxTvProvider" }
 # AndroidX Vector Drawable
 androidx-vectordrawable = { module = "androidx.vectordrawable:vectordrawable", version.ref = "androidxVectorDrawable" }
@@ -481,16 +499,6 @@ androidx-workmanager-runtime-ktx = { module = "androidx.work:work-runtime-ktx", 
 androidx-workmanager-gcm = { module = "androidx.work:work-gcm", version.ref = "androidxWorkManager" }
 androidx-workmanager-multiprocess = { module = "androidx.work:work-multiprocess", version.ref = "androidxWorkManager" }
 androidx-workmanager-testing = { module = "androidx.work:work-testing", version.ref = "androidxWorkManager" }
-# Kotlin --------------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------------------
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-# Kotlin Coroutine
-kotlin-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine" }
-kotlin-coroutine-play-service = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutine" }
-# Kotlin Serialization
-kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinJsonSerialization" }
-kotlin-serialization-json-retrofit-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlinJsonSerializationRetrofitConverter" }
 # Compose Core  -------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 compose-animation = { module = "androidx.compose.animation:animation", version.ref = "composeDefault" }
@@ -523,6 +531,9 @@ compose-ui-geometry-android = { module = "androidx.compose.ui:ui-geometry-androi
 # Compose 3-rd party
 compose-html = { module = "com.github.ireward:compose-html", version.ref = "composeHtmlIreward" }
 compose-scrollbar-nanihadesuka = { module = "com.github.nanihadesuka:LazyColumnScrollbar", version.ref = "composeScrollbarNanihadesuka" }
+compose-smarttoolfactory-cropper = { module = "com.github.SmartToolFactory:Compose-Cropper", version.ref = "composeSmartToolFactoryCropper" }
+compose-smarttoolfactory-gesture = { module = "com.github.SmartToolFactory:Compose-Extended-Gestures", version.ref = "composeSmartToolFactoryGesture" }
+compose-haze = { module = "dev.chrisbanes.haze:haze", version.ref = "composeHaze" }
 # DI Dagger ----------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
@@ -543,6 +554,25 @@ koin-navigation = { module = "io.insert-koin:koin-androidx-navigation" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose" }
 koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koinKsp"  }
 koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKsp" }
+# Google
+google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
+google-modernstorage = { module = "com.google.modernstorage:modernstorage-photopicker", version.ref = "googleModernStorage" }
+google-recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "googleRecaptcha" }
+# Google GMS/Google Play Services
+google-gms-auth = { module = "com.google.android.gms:play-services-auth", version = "googleGmsAuth" }
+# Kotlin --------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+# Kotlin Coroutine
+kotlin-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutine" }
+kotlin-coroutine-play-service = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinCoroutine" }
+# Kotlin Other
+kotlin-collections-immuttable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinCollectionsImmutable" }
+kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinDateTime" }
+# Kotlin Serialization
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinJsonSerialization" }
+kotlin-serialization-json-retrofit-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlinJsonSerializationRetrofitConverter" }
 # Network SquareUp ---------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 square-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "squareRetrofit" }
@@ -557,12 +587,10 @@ ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 # ---------------------------------------------------------------------------------------------------
 # Permission
-sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", version.ref = "sagarCororutinePermission" }
+sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", version.ref = "sagarCoroutinePermission" }
 # Image loader
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-# Google
-google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 # Navigation
 velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
 ## Compose Destinations
@@ -578,14 +606,15 @@ voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", vers
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
 # Logging
 slf4j-android = { module = "org.slf4j:slf4j-android", version.ref = "slf4j" }
+takt = { module = "jp.wasabeef:takt", version.ref = "takt" }
+rebugger = { module = "io.github.theapache64:rebugger", version.ref = "rebugger" }
 # Testing
 # Test
 junit = { module = "junit:junit", version.ref = "junit" }
-coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutine" }
+coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutine" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mock = { module = "io.mockk:mockk", version.ref = "mockk" }
 mock-agent = { module = "io.mockk:mockk-agent-jvm", version.ref = "mockk" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
@@ -593,6 +622,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 # Do not mix testing library with implementation in one bundle. Create separate bundle for testing library
 # Do not include Java library when Kotlin impelementation is available
 [bundles]
+# --------------------------------------------------------------------------------------------------
 # AndroidX
 # AndroidX Activity
 androidx-activity = ["androidx-activity-ktx", "androidx-activity-compose"]
@@ -600,8 +630,24 @@ androidx-activity = ["androidx-activity-ktx", "androidx-activity-compose"]
 androidx-arch = ["androidx-arch-common", "androidx-arch-runtime"]
 # AndroidX Camera
 androidx-camera = [
+    "androidx-camera-core", "androidx-camera-camera2",
     "androidx-camera-lifecycle", "androidx-camera-video",
-    "androidx-camera-view", "androidx-camera-extension",
+    "androidx-camera-view", "androidx-camera-mlkit",
+    "androidx-camera-extension", "androidx-camera-media3"
+]
+# AndroidX Camera Viewfinder
+androidx-camera-viewfinder = [
+    "androidx-camera-viewfinder-core", "androidx-camera-viewfinder-compose",
+    "androidx-camera-viewfinder-view"
+]
+androidx-camera-all = [
+    "androidx-camera-core", "androidx-camera-camera2",
+    "androidx-camera-lifecycle", "androidx-camera-video",
+    "androidx-camera-view", "androidx-camera-mlkit",
+    "androidx-camera-extension",
+#    "androidx-camera-media3",
+    "androidx-camera-viewfinder-core", "androidx-camera-viewfinder-compose",
+    "androidx-camera-viewfinder-view"
 ]
 # AndroidX Car App
 androidx-carapp = [
@@ -620,7 +666,6 @@ androidx-core = [
 ]
 # AndroidX Credentials
 androidx-credentials = ["androidx-credentials", "androidx-credentials-below13"]
-androidx-credentials-all = ["androidx-credentials", "androidx-credentials-below13", "androidx-gms-auth"]
 # AndroidX CustomView
 androidx-customview = ["androidx-customview", "androidx-customview-pollingcontainer"]
 # AndroidX Emoji
@@ -834,12 +879,10 @@ androidx-all = [
     # "androidx-dynamicanimation" Could not find androidx.dynamicanimation:dynamicanimation-ktx:1.1.0-alpha03 Manualy declaring dependency works fine
     "androidx-enterprise", "androidx-exifinterface",
     "androidx-fragment-ktx",
-    "androidx-gms-auth",
     "androidx-gridlayout",
     "androidx-media3-exoplayer",
     "androidx-percentlayout", "androidx-preference-ktx",
     "androidx-print", "androidx-profileinstaller",
-    "androidx-recaptcha",
     "androidx-recommendation", "androidx-remotecallback",
     "androidx-savedstate-ktx", "androidx-sharetarget",
     "androidx-slidingpanelayout", "androidx-startup",
@@ -855,8 +898,14 @@ androidx-all = [
     # AndroidX Arch Core
     "androidx-arch-common", "androidx-arch-runtime",
     # AndroidX Camera
+    "androidx-camera-core", "androidx-camera-camera2",
     "androidx-camera-lifecycle", "androidx-camera-video",
-    "androidx-camera-view", "androidx-camera-extension",
+    "androidx-camera-view", "androidx-camera-mlkit",
+    "androidx-camera-extension",
+#    "androidx-camera-media3", Conflicting with other dependencies
+    # AndroidX Camera Viewfinder
+    "androidx-camera-viewfinder-core", "androidx-camera-viewfinder-compose",
+    "androidx-camera-viewfinder-view",
     # AndroidX Car App
     "androidx-carapp", "androidx-carapp-automotive",
     #"androidx-carapp-projected", Manifest merger failed : Attribute meta-data#androidx.car.app.CarAppMetadataHolderService.CAR_HARDWARE_MANAGER https://stackoverflow.com/questions/73089042/android-auto-manifest-merger-failed-attribute-is-also-present-at
@@ -949,21 +998,7 @@ androidx-all = [
     "androidx-workmanager-runtime-ktx", "androidx-workmanager-gcm",
     "androidx-workmanager-multiprocess",
 ]
-# Kotlin
-kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
-kotlin-coroutine = ["kotlin-coroutine-core", "kotlin-coroutine-play-service"]
-kotlin-serialization = [
-    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
-]
-kotlin-all = [
-    "kotlin-stdlib", "kotlin-reflect",
-    "kotlin-coroutine-core", "kotlin-coroutine-play-service",
-    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
-]
-kotlin-module = [
-    "kotlin-stdlib", "kotlin-reflect",
-    "kotlin-coroutine-play-service", "kotlin-coroutine-core"
-]
+# --------------------------------------------------------------------------------------------------
 # Compose
 compose-core = ["compose-runtime", "compose-animation"]
 # Compose Accompanist
@@ -992,6 +1027,12 @@ compose-material-all = [
     "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window"
 ]
+# Compose Third Party
+compose-thirdparty = [
+    "compose-html", "compose-scrollbar-nanihadesuka",
+    "compose-smarttoolfactory-cropper", "compose-smarttoolfactory-gesture",
+    "compose-haze"
+]
 # Compose All
 # Material 2 excluded
 compose-all = [
@@ -1018,8 +1059,7 @@ ui = [
     "compose-material3", "compose-material3-window",
     "androidx-graphics-core", "androidx-graphics-path", "androidx-graphics-shapes"
 ]
-# Compose Third Party
-compose-thirdparty = ["compose-html"]
+# --------------------------------------------------------------------------------------------------
 # DI
 ## Dagger
 dagger = ["dagger", "dagger-android", "dagger-android-support"]
@@ -1035,6 +1075,33 @@ koin = [
     "koin-navigation", "koin-compose",
     "koin-annotation"
 ]
+# --------------------------------------------------------------------------------------------------
+# Google
+google-other = ["google-guava", "google-modernstorage", "google-recaptcha"]
+# Google GMS/Google Play Services
+google-gms = ["google-gms-auth"]
+google-all = [
+    "google-guava", "google-modernstorage", "google-recaptcha",
+    "google-gms-auth"
+]
+# --------------------------------------------------------------------------------------------------
+# Kotlin
+kotlin-core = ["kotlin-stdlib", "kotlin-reflect"]
+kotlin-coroutine = ["kotlin-coroutine-core", "kotlin-coroutine-play-service"]
+kotlin-serialization = [
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter"
+]
+kotlin-module = [
+    "kotlin-stdlib", "kotlin-reflect",
+    "kotlin-coroutine-play-service", "kotlin-coroutine-core"
+]
+kotlin-all = [
+    "kotlin-stdlib", "kotlin-reflect",
+    "kotlin-coroutine-core", "kotlin-coroutine-play-service",
+    "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter",
+    "kotlin-collections-immuttable", "kotlin-datetime"
+]
+# --------------------------------------------------------------------------------------------------
 # Network
 retrofit = ["square-retrofit", "square-okhttp3-interceptor"]
 ktor-android = ["ktor-client-core", "ktor-client-okhttp"]
@@ -1059,14 +1126,18 @@ network-all = [
 ]
 # Image Loader
 coil = ["coil", "coil-compose"]
-# Voyager
+# --------------------------------------------------------------------------------------------------
+# Navigation
+## Voyager
 voyager = [
     "voyager-navigator", "voyager-screenModel",
     "voyager-bottomSheetNavigator", "voyager-tabNavigator",
     "voyager-transitions", "voyager-hilt",
 ]
-# Compose Destinations
+## Compose Destinations
 compose-destinations = ["compose-destinations", "compose-destinations-bottomsheet"]
+# Logging
+logging = ["slf4j-android", "takt", "rebugger"]
 # Test
 test = [
     "junit", "coroutine-test",
@@ -1086,6 +1157,4 @@ kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", versio
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-detekt-compiler = { id = "io.github.detekt.gradle.compiler-plugin", version.ref = "detekt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "googleKsp" }

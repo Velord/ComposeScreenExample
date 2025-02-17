@@ -38,10 +38,11 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.network.all)
-    implementation(libs.bundles.androidx.credentials.all)
+    implementation(libs.bundles.androidx.credentials)
+    implementation(libs.bundles.google.gms)
     implementation(libs.androidx.glance.appwidget)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
 }
