@@ -554,6 +554,10 @@ koin-navigation = { module = "io.insert-koin:koin-androidx-navigation" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose" }
 koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koinKsp"  }
 koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKsp" }
+# Gradle
+gradle-android = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradle-compose = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 # Google
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 google-modernstorage = { module = "com.google.modernstorage:modernstorage-photopicker", version.ref = "googleModernStorage" }
@@ -1075,6 +1079,8 @@ koin = [
     "koin-navigation", "koin-compose",
     "koin-annotation"
 ]
+# Gradle
+gradle = ["gradle-android", "gradle-kotlin", "gradle-compose"]
 # --------------------------------------------------------------------------------------------------
 # Google
 google-other = ["google-guava", "google-modernstorage", "google-recaptcha"]
@@ -1158,3 +1164,5 @@ kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization"
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "googleKsp" }
+# Convention Plugin
+convention-application = { id = "velord.application" }

@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
+
+
+    //id("velord.application")
 }
 
 // When app incompatible with previous version change this value
