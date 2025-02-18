@@ -3,7 +3,7 @@ package com.velord.navigation.compose.vanilla.navigator
 import android.util.Log
 import androidx.navigation.NavHostController
 import com.velord.camerarecording.CameraRecordingNavigator
-import com.velord.feature.demo.DemoDest
+import com.velord.feature.demo.DemoDestinationNavigationEvent
 import com.velord.feature.demo.DemoNavigator
 import com.velord.navigation.compose.vanilla.FlowSummatorDestinationVanilla
 import com.velord.navigation.compose.vanilla.HintPhoneDestinationVanilla
@@ -21,14 +21,14 @@ internal class BottomNavigatorVanilla(
         Log.d("LogBackStack - BottomNavigator", "init: ${this.navController}")
     }
 
-    override fun goTo(dest: DemoDest) {
+    override fun goTo(dest: DemoDestinationNavigationEvent) {
         val dest = when(dest) {
-            DemoDest.Shape -> ShapeDemoDestinationVanilla
-            DemoDest.Modifier -> ModifierDestinationVanilla
-            DemoDest.FlowSummator -> FlowSummatorDestinationVanilla
-            DemoDest.Morph -> MorphDemoDestinationVanilla
-            DemoDest.HintPhoneNumber -> HintPhoneDestinationVanilla
-            DemoDest.Movie -> MovieDestinationVanilla
+            DemoDestinationNavigationEvent.Shape -> ShapeDemoDestinationVanilla
+            DemoDestinationNavigationEvent.Modifier -> ModifierDestinationVanilla
+            DemoDestinationNavigationEvent.FlowSummator -> FlowSummatorDestinationVanilla
+            DemoDestinationNavigationEvent.Morph -> MorphDemoDestinationVanilla
+            DemoDestinationNavigationEvent.HintPhoneNumber -> HintPhoneDestinationVanilla
+            DemoDestinationNavigationEvent.Movie -> MovieDestinationVanilla
         }
         navController.navigate(dest)
     }

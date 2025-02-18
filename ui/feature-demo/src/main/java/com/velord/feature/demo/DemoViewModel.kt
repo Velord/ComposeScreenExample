@@ -12,14 +12,14 @@ class DemoViewModel : CoroutineScopeViewModel() {
 
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager>()
     val navigationEventJetpack = MutableSharedFlow<NavigationDataFragment>()
-    val navigationEventDestination = MutableSharedFlow<DemoDest>()
+    val navigationEventDestination = MutableSharedFlow<DemoDestinationNavigationEvent>()
 
     fun onOpenShape() = launch {
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Shape))
         navigationEventJetpack.emit(
             NavigationDataFragment(R.id.from_demoFragment_to_shapeDemoFragment)
         )
-        navigationEventDestination.emit(DemoDest.Shape)
+        navigationEventDestination.emit(DemoDestinationNavigationEvent.Shape)
     }
 
     fun onOpenModifier() = launch {
@@ -27,7 +27,7 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventJetpack.emit(
             NavigationDataFragment(R.id.from_demoFragment_to_modifierDemoFragment)
         )
-        navigationEventDestination.emit(DemoDest.Modifier)
+        navigationEventDestination.emit(DemoDestinationNavigationEvent.Modifier)
     }
 
     fun onOpenSummator() = launch {
@@ -35,7 +35,7 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventJetpack.emit(
             NavigationDataFragment(R.id.from_demoFragment_to_flowSummatorFragment)
         )
-        navigationEventDestination.emit(DemoDest.FlowSummator)
+        navigationEventDestination.emit(DemoDestinationNavigationEvent.FlowSummator)
     }
 
     fun onOpenMorph() = launch {
@@ -43,18 +43,18 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventJetpack.emit(
             NavigationDataFragment(R.id.from_demoFragment_to_morphDemoFragment)
         )
-        navigationEventDestination.emit(DemoDest.Morph)
+        navigationEventDestination.emit(DemoDestinationNavigationEvent.Morph)
     }
 
     fun onOpenHintPhoneNumber() = launch {
         // TODO: Add for Jetpack
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.HintPhoneNumber))
-        navigationEventDestination.emit(DemoDest.HintPhoneNumber)
+        navigationEventDestination.emit(DemoDestinationNavigationEvent.HintPhoneNumber)
     }
 
     fun onOpenMovie() = launch {
         // TODO: Add for Jetpack
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Movie))
-        navigationEventDestination.emit(DemoDest.Movie)
+        navigationEventDestination.emit(DemoDestinationNavigationEvent.Movie)
     }
 }

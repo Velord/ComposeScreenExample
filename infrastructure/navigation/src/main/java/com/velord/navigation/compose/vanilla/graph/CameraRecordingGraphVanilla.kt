@@ -11,7 +11,7 @@ import com.velord.navigation.compose.vanilla.CameraRecordingDestinationVanilla
 import com.velord.navigation.compose.vanilla.CameraRecordingGraphVanilla
 import org.koin.androidx.compose.koinViewModel
 
-fun NavGraphBuilder.setupCameraRecordingGraph(navigator: CameraRecordingNavigator)  {
+internal fun NavGraphBuilder.setupCameraRecordingGraph(navigator: CameraRecordingNavigator)  {
     navigation<CameraRecordingGraphVanilla>(startDestination = CameraRecordingDestinationVanilla) {
         composable<CameraRecordingDestinationVanilla> {
             val viewModel = koinViewModel<CameraRecordingViewModel>()

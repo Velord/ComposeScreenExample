@@ -22,12 +22,15 @@ fun LogBackStack(
 }
 
 private fun Collection<NavBackStackEntry>.print(tag: String, prefix: String = "stack") {
-    val stack = toMutableList()
-        .map {
-            val route = it.route()
-            val args = runCatching { route.argsFrom(it) }.getOrNull()?.takeIf { it != Unit }?.let { "(args={$it})" } ?: ""
-            "$route$args"
-        }
-        .toTypedArray().contentToString()
+    val stack = toMutableList().toRouteArgs().toTypedArray().contentToString()
     Log.d("LogBackStack - $tag", "$prefix = $stack")
+}
+
+private fun MutableList<NavBackStackEntry>.toRouteArgs(): List<String> = map { entry ->
+    val route = entry.route()
+    val args = runCatching { route.argsFrom(entry) }
+        .getOrNull()
+        ?.takeIf { it != Unit }
+        ?.let { "(args={$it})" } ?: ""
+    "$route$args"
 }

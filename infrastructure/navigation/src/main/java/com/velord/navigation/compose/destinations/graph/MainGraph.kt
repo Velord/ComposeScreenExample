@@ -16,11 +16,8 @@ private const val MAIN_GRAPH = "main_nav_graph"
 )
 annotation class MainGraph
 
-
 @Destination<MainGraph>(start = true)
 @Composable
-fun BottomNavigationDestination(
-    navigator: BottomNavigator,
-) {
+fun BottomNavigationDestination(navigator: BottomNavigator) {
     BottomNavigationScreen(navigator)
 }

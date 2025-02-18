@@ -50,15 +50,11 @@ internal class SupremeNavigatorVanilla(
     }
 
     @Composable
-    override fun createNavController(): NavHostController {
-        val navController = rememberNavController()
-        return navController
-    }
+    override fun createNavController(): NavHostController = rememberNavController()
 
     @Composable
-    override fun createStackEntryAsState(controller: NavController): State<NavBackStackEntry?> {
-        return controller.currentBackStackEntryAsState()
-    }
+    override fun createStackEntryAsState(controller: NavController): State<NavBackStackEntry?> =
+        controller.currentBackStackEntryAsState()
 
     override fun getRoute(route: BottomNavigationItem): Any = when(route) {
         BottomNavigationItem.Camera -> CameraRecordingGraphVanilla

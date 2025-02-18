@@ -1,6 +1,6 @@
 package com.velord.feature.demo
 
-enum class DemoDest {
+enum class DemoDestinationNavigationEvent {
     Shape,
     Modifier,
     FlowSummator,
@@ -10,5 +10,5 @@ enum class DemoDest {
 }
 
 interface DemoNavigator {
-    fun goTo(dest: DemoDest)
+    fun goTo(dest: DemoDestinationNavigationEvent)
 }

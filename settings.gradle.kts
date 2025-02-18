@@ -1,3 +1,48 @@
+pluginManagement {
+    // has name 'build-logic' which is the same as a project of the main build.
+    includeBuild("build-logic")
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google {
+            content {
+                includeGroupAndSubgroups("androidx")
+                includeGroupAndSubgroups("com.android")
+                includeGroupAndSubgroups("com.google")
+            }
+        }
+        maven("https://androidx.dev/storage/compose-compiler/repository") {
+            name = "Compose Compiler Snapshots"
+            content { includeGroup("androidx.compose.compiler") }
+        }
+        mavenCentral()
+        // Does not work
+//        exclusiveContent {
+//            forRepository { maven("https://jitpack.io") { name = "JitPack" } }
+//            filter { includeGroup("com.github") }
+//        }
+        maven("https://oss.sonatype.org/content/repositories/snapshots/") {
+            name = "Sonatype snapshots"
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+        maven {
+            setUrl("https://jitpack.io")
+        }
+    }
+}
+
+rootProject.name = "ComposeScreenExample"
+
 include(":app")
 // Model
 include(":model")
@@ -35,17 +80,4 @@ include(":ui:feature-movie")
 // UI Widget
 include(":ui:widget-refreshableimage")
 include(":ui:widget-counter")
-
-rootProject.name = "ComposeScreenExample"
-
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-        maven {
-            setUrl("https://jitpack.io")
-        }
-    }
-}
+include(":build-logic:convention")

@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
+
+
+    //id("velord.application")
 }
 
 // When app incompatible with previous version change this value
@@ -61,7 +64,7 @@ android {
             buildConfigField(
                 "com.velord.navigation.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.navigation.NavigationLib.Compose"
+                "com.velord.navigation.NavigationLib.Destinations"
             )
         }
         named("release") {

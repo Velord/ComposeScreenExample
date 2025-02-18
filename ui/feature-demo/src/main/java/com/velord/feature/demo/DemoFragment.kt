@@ -70,7 +70,7 @@ class DemoFragment : Fragment() {
 @Composable
 fun DemoScreen(
     viewModel: DemoViewModel,
-    onNavigationEvent: (DemoDest) -> Unit
+    onNavigationEvent: (DemoDestinationNavigationEvent) -> Unit
 ) {
     ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
         onNavigationEvent(it)
