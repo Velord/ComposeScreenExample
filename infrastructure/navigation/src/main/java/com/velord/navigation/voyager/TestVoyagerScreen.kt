@@ -11,6 +11,7 @@ data class TestVoyagerScreen(
     val modifier: Modifier = Modifier,
     val onClick: () -> Unit = {},
 ) : Screen {
+
     @Composable
     override fun Content() {
         TestScreen(title, modifier, onClick)

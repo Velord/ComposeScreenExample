@@ -6,7 +6,7 @@ import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.ramcosta.composedestinations.spec.RouteOrDirection
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 
-interface BottomTabNavigatorDestinations {
+internal interface BottomTabNavigatorDestinations {
     fun getDirection(route: BottomNavigationItem): Direction
     fun getStartRoute(route: BottomNavigationItem): RouteOrDirection
     fun getGraph(): NavHostGraphSpec

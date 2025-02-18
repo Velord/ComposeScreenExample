@@ -37,6 +37,9 @@ fun CreateNavigationViaVanilla() {
     val navController: NavHostController = rememberNavController()
     val navigator = SupremeNavigatorVanilla(navController)
 
+    // Cannot call NavBackStackEntry.route() before DestinationsNavHost!
+    // LogBackStack(navController = navController, tag = "CreateNavigationViaVanilla")
+
     NavHost(
         navController = navController,
         startDestination = BottomNavigationDestinationVanilla,

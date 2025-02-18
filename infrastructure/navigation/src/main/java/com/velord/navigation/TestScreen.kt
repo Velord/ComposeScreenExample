@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TestScreen(
@@ -55,4 +56,10 @@ private fun Content(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    Content(title = com.velord.resource.R.string.settings)
 }

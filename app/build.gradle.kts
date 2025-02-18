@@ -61,7 +61,7 @@ android {
             buildConfigField(
                 "com.velord.navigation.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.navigation.NavigationLib.Compose"
+                "com.velord.navigation.NavigationLib.Destinations"
             )
         }
         named("release") {
