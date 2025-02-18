@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
+
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
@@ -32,6 +34,13 @@ android {
     }
 }
 
+composeCompiler {
+    featureFlags = setOf(
+        ComposeFeatureFlag.StrongSkipping,
+        ComposeFeatureFlag.OptimizeNonSkippingGroups
+    )
+}
+
 dependencies {
     // Modules
     implementation(project(":model"))
@@ -48,10 +57,6 @@ dependencies {
     implementation(libs.androidx.constraint.compose)
     // 3-rd party
     implementation(libs.compose.scrollbar.nanihadesuka)
-}
-
-composeCompiler {
-    enableStrongSkippingMode = true
 }
 
 ksp {

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
+
 plugins {
     id(libs.plugins.android.application.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
@@ -70,7 +72,10 @@ android {
         named("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
             buildConfigField(
                 "com.velord.navigation.NavigationLib",
@@ -83,7 +88,10 @@ android {
     flavorDimensions.add("environment")
     productFlavors {
         val baseUrl = "https://google.com"
-        val currentVersion = globalVersion * 100000 + majorVersion * 10000 + minorVersion * 1000 + fixVersion * 100
+        val currentVersion = globalVersion * 100000 +
+                majorVersion * 10000 +
+                minorVersion * 1000 +
+                fixVersion * 100
         create("develop") {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = false
@@ -127,6 +135,13 @@ android {
     }
 }
 
+composeCompiler {
+    featureFlags = setOf(
+        ComposeFeatureFlag.StrongSkipping,
+        ComposeFeatureFlag.OptimizeNonSkippingGroups
+    )
+}
+
 dependencies {
     implementation(project(":model"))
     // Module Infrastructure
@@ -164,13 +179,9 @@ dependencies {
     implementation(libs.bundles.google.all)
 }
 
-composeCompiler {
-    enableStrongSkippingMode = true
-}
-
 ksp {
-    arg("KOIN_CONFIG_CHECK","true")
-    arg("KOIN_DEFAULT_MODULE","false")
+    arg("KOIN_CONFIG_CHECK", "true")
+    arg("KOIN_DEFAULT_MODULE", "false")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {

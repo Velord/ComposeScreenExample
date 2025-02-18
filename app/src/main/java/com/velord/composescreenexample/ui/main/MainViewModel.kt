@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class MainViewModel (
+class MainViewModel(
     private val context: Context,
     private val savedStateHandle: SavedStateHandle
 ) : CoroutineScopeViewModel() {

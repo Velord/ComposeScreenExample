@@ -24,6 +24,8 @@ android {
     }
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_17
+        // Does not compile without this.
+        // error: cannot find symbol
         sourceCompatibility = JavaVersion.VERSION_17
     }
 }

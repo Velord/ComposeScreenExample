@@ -4,24 +4,14 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT">
-            <builds>
-              <build path="$PROJECT_DIR$/plugin/convention" name="plugin">
-                <projects>
-                  <project path="$PROJECT_DIR$/plugin/convention" />
-                  <project path="$PROJECT_DIR$/plugin/convention/convention" />
-                </projects>
-              </build>
-            </builds>
-          </compositeBuild>
-        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/core-navigation" />
             <option value="$PROJECT_DIR$/core/core-resource" />
@@ -40,8 +30,6 @@
             <option value="$PROJECT_DIR$/infrastructure/navigation" />
             <option value="$PROJECT_DIR$/infrastructure/util" />
             <option value="$PROJECT_DIR$/model" />
-            <option value="$PROJECT_DIR$/plugin/convention" />
-            <option value="$PROJECT_DIR$/plugin/convention/convention" />
             <option value="$PROJECT_DIR$/ui" />
             <option value="$PROJECT_DIR$/ui/feature-bottomnavigation" />
             <option value="$PROJECT_DIR$/ui/feature-camerarecording" />

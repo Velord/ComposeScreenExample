@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
+
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
@@ -25,11 +27,17 @@ android {
     }
     buildFeatures {
         compose = true
-        viewBinding = true
     }
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+composeCompiler {
+    featureFlags = setOf(
+        ComposeFeatureFlag.StrongSkipping,
+        ComposeFeatureFlag.OptimizeNonSkippingGroups
+    )
 }
 
 dependencies {

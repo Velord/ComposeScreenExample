@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNavGraph() {
-        when(BuildConfig.NAVIGATION_LIB) {
+        when (BuildConfig.NAVIGATION_LIB) {
             NavigationLib.Voyager -> setNavGraphViaVoyager()
             NavigationLib.Jetpack -> setNavGraphViaJetpack()
             NavigationLib.Destinations -> setNavGraphViaComposeDestinations()
