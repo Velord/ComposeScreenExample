@@ -1,6 +1,6 @@
 pluginManagement {
     // has name 'build-logic' which is the same as a project of the main build.
-    includeBuild("build-logic")
+    // includeBuild("build-logic")
 
     repositories {
         google()
