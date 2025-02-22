@@ -1,6 +1,6 @@
 # ComposeScreenExample
 ## Architecture:
-Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Architecture
+Single Activity — Multi Module — Multiple Backstack — MVVM(UiState + UiAction) — Clean Architecture
 
 Project uses navigation libs:
 * [Jetpack Navigation](https://developer.android.com/guide/navigation) **80%** _screens covered._ **DEPRECATED**
