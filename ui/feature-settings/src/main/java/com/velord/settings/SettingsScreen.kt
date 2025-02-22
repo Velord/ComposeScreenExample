@@ -1,5 +1,6 @@
 package com.velord.settings
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,56 +36,57 @@ fun SettingsScreen(viewModel: ThemeViewModel) {
 internal fun Content(
     onThemeAction: (ThemeUiAction) -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
-            .statusBarsPadding()
-            .verticalScroll(rememberScrollState()),
-    ) {
-        Title(stringResource(id = R.string.settings))
-
+    Surface {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-                .padding(horizontal = 8.dp)
-                .clip(MaterialTheme.shapes.medium)
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .fillMaxSize()
+                .statusBarsPadding()
+                .verticalScroll(rememberScrollState()),
         ) {
-            val themeSwitcher = LocalTheme.current
-            ThemeSwitcher(
-                title = stringResource(id = R.string.abide_to_os_theme),
-                isChecked = themeSwitcher.config.abideToOs,
-                isEnabled = themeSwitcher.isSystemOsSwitchAvailable,
-                textWhenNotEnabled = stringResource(id = R.string.os_does_not_support_theme_switching),
-                onChange = { onThemeAction(ThemeUiAction.AbideToOsThemeSwitch) }
-            )
+            Title(stringResource(id = R.string.settings))
 
-            val disableOsStr = stringResource(id = R.string.disable_os_theme_switcher)
-            val disabledText = StringBuilder()
-            if (themeSwitcher.config.abideToOs) {
-                disabledText.append(disableOsStr)
-            }
-            if (themeSwitcher.isSystemDynamicColorAvailable.not()) {
-                val android11Str = stringResource(id = R.string.not_available_on_android_11)
-                disabledText.append("\n" + android11Str)
-            }
-            ThemeSwitcher(
-                title = stringResource(id = R.string.use_system_dynamic_theme),
-                isChecked = themeSwitcher.config.useDynamicColor,
-                textWhenNotEnabled = disabledText.toString(),
-                isEnabled = themeSwitcher.isSystemDynamicColorAvailable && themeSwitcher.config.abideToOs.not(),
-                onChange = { onThemeAction(ThemeUiAction.DynamicThemeSwitch) }
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+                    .padding(horizontal = 8.dp)
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(MaterialTheme.colorScheme.primaryContainer)
+            ) {
+                val themeSwitcher = LocalTheme.current
+                ThemeSwitcher(
+                    title = stringResource(id = R.string.abide_to_os_theme),
+                    isChecked = themeSwitcher.config.abideToOs,
+                    isEnabled = themeSwitcher.isSystemOsSwitchAvailable,
+                    textWhenNotEnabled = stringResource(id = R.string.os_does_not_support_theme_switching),
+                    onChange = { onThemeAction(ThemeUiAction.AbideToOsThemeSwitch) }
+                )
 
-            ThemeSwitcher(
-                title = stringResource(id = R.string.use_dark_theme),
-                isChecked = themeSwitcher.config.useDarkTheme,
-                textWhenNotEnabled = disableOsStr,
-                isEnabled = themeSwitcher.config.abideToOs.not(),
-                onChange = { onThemeAction(ThemeUiAction.DarkThemeSwitch) }
-            )
+                val disableOsStr = stringResource(id = R.string.disable_os_theme_switcher)
+                val disabledText = StringBuilder()
+                if (themeSwitcher.config.abideToOs) {
+                    disabledText.append(disableOsStr)
+                }
+                if (themeSwitcher.isSystemDynamicColorAvailable.not()) {
+                    val android11Str = stringResource(id = R.string.not_available_on_android_11)
+                    disabledText.append("\n" + android11Str)
+                }
+                ThemeSwitcher(
+                    title = stringResource(id = R.string.use_system_dynamic_theme),
+                    isChecked = themeSwitcher.config.useDynamicColor,
+                    textWhenNotEnabled = disabledText.toString(),
+                    isEnabled = themeSwitcher.isSystemDynamicColorAvailable && themeSwitcher.config.abideToOs.not(),
+                    onChange = { onThemeAction(ThemeUiAction.DynamicThemeSwitch) }
+                )
+
+                ThemeSwitcher(
+                    title = stringResource(id = R.string.use_dark_theme),
+                    isChecked = themeSwitcher.config.useDarkTheme,
+                    textWhenNotEnabled = disableOsStr,
+                    isEnabled = themeSwitcher.config.abideToOs.not(),
+                    onChange = { onThemeAction(ThemeUiAction.DarkThemeSwitch) }
+                )
+            }
         }
     }
 }
@@ -102,7 +105,7 @@ private fun ThemeSwitcher(
             text = title,
             modifier = Modifier.padding(top = 8.dp, start = 16.dp)
         )
-        if (isEnabled.not()) {
+        AnimatedVisibility(visible = isEnabled.not()) {
             Text(
                 text = textWhenNotEnabled,
                 modifier = Modifier.padding(top = 8.dp, start = 16.dp),
