@@ -52,8 +52,8 @@ internal fun ColumnScope.MoviePager(
     uiState: MovieUiState,
     onSwipe: (Int) -> Unit
 ) {
-    val allMovieUiState = allMovieViewModel.uiState.collectAsStateWithLifecycle()
-    val favoriteMovieUiState = favoriteMovieViewModel.uiState.collectAsStateWithLifecycle()
+    val allMovieUiState = allMovieViewModel.uiStateFlow.collectAsStateWithLifecycle()
+    val favoriteMovieUiState = favoriteMovieViewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     val activity = LocalActivity.current
     ObserveSharedFlow(

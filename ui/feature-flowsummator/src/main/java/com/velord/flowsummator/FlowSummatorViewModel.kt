@@ -32,7 +32,7 @@ sealed interface FlowSummatorUiAction {
 
 class FlowSummatorViewModel : CoroutineScopeViewModel() {
 
-    val uiState = MutableStateFlow(FlowSummatorUiState.DEFAULT)
+    val uiStateFlow = MutableStateFlow(FlowSummatorUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<FlowSummatorUiAction>()
 
     private val sumFlow: MutableSharedFlow<BigInteger> = MutableSharedFlow(
@@ -58,7 +58,7 @@ class FlowSummatorViewModel : CoroutineScopeViewModel() {
 
     private fun onStartClick() = launch {
         // Case when user didn't enter anything
-        val enteredNumber = uiState.value.currentEnteredNumber ?: return@launch
+        val enteredNumber = uiStateFlow.value.currentEnteredNumber ?: return@launch
         launchSumFlow.emit(enteredNumber)
     }
 
@@ -68,12 +68,12 @@ class FlowSummatorViewModel : CoroutineScopeViewModel() {
             // or empty string
             // or that is not a number(Int in that case)
             if (newValue.isEmpty()) null // Case when user cleared the field
-            else uiState.value.currentEnteredNumber
+            else uiStateFlow.value.currentEnteredNumber
         } else {
             newValue.toIntOrNull()
         }
 
-        uiState.update {
+        uiStateFlow.update {
             it.copy(currentEnteredNumber = calculatedValue)
         }
     }
@@ -110,7 +110,7 @@ class FlowSummatorViewModel : CoroutineScopeViewModel() {
         }
         launch {
             sumFlow.mapToCumulativeStringEachNumberByLine().collectLatest {
-                uiState.update { state ->
+                uiStateFlow.update { state ->
                     state.copy(sum = it)
                 }
             }

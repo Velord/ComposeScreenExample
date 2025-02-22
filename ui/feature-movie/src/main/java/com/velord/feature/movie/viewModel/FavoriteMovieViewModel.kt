@@ -31,7 +31,7 @@ class FavoriteMovieViewModel(
     private val updateMovieLikeUC: UpdateMovieLikeUC
 ) : CoroutineScopeViewModel() {
 
-    val uiState: MutableStateFlow<FavoriteMovieUiState> = MutableStateFlow(FavoriteMovieUiState.DEFAULT)
+    val uiStateFlow: MutableStateFlow<FavoriteMovieUiState> = MutableStateFlow(FavoriteMovieUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<FavoriteMovieUiAction>()
 
     init {
@@ -51,7 +51,7 @@ class FavoriteMovieViewModel(
                 is UpdateMovieResult.Success -> null
                 is UpdateMovieResult.DbError -> result.message
             }
-            uiState.value = uiState.value.copy(error = newError)
+            uiStateFlow.value = uiStateFlow.value.copy(error = newError)
         }
     }
 
@@ -63,13 +63,13 @@ class FavoriteMovieViewModel(
                 is GetFavoriteMovieResult.MergeError -> result.message
             }
 
-            uiState.value = uiState.value.copy(error = newError)
+            uiStateFlow.value = uiStateFlow.value.copy(error = newError)
 
             when(result) {
                 is GetFavoriteMovieResult.Success -> result.flow
                 is GetFavoriteMovieResult.MergeError -> null
             }?.collect { roster ->
-                uiState.value = uiState.value.copy(roster = roster)
+                uiStateFlow.value = uiStateFlow.value.copy(roster = roster)
             }
         }
 

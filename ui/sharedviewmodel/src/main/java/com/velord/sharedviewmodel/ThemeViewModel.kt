@@ -36,7 +36,7 @@ class ThemeViewModel(
     private val switchDarkThemeConfigUC: SwitchDarkThemeConfigUC
 ): CoroutineScopeViewModel() {
 
-    val uiState = MutableStateFlow(ThemeUiState.DEFAULT)
+    val uiStateFlow = MutableStateFlow(ThemeUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<ThemeUiAction>()
 
     init {
@@ -50,7 +50,7 @@ class ThemeViewModel(
     }
 
     private fun onAbideToOsThemeSwitch() = launch {
-        uiState.value.androidThemeConfig?.let {
+        uiStateFlow.value.androidThemeConfig?.let {
             switchAbideToOsThemeConfigUC.invoke(it.config)
         }
     }
@@ -68,7 +68,7 @@ class ThemeViewModel(
     }
 
     private fun switchConfig(f: suspend (ThemeConfig) -> Unit) {
-        val config = uiState.value.androidThemeConfig?.config ?: return
+        val config = uiStateFlow.value.androidThemeConfig?.config ?: return
         if (config.abideToOs) return
 
         launch { f(config) }
@@ -77,12 +77,12 @@ class ThemeViewModel(
     private fun observe() {
         launch {
             getThemeConfigUC().map {
-                val newAndroidThemeConfig: AndroidThemeConfig = uiState.value.androidThemeConfig
+                val newAndroidThemeConfig: AndroidThemeConfig = uiStateFlow.value.androidThemeConfig
                     ?.copy(config = it)
                     ?: AndroidThemeConfig.invoke(it)
-                uiState.value.copy(androidThemeConfig = newAndroidThemeConfig)
+                uiStateFlow.value.copy(androidThemeConfig = newAndroidThemeConfig)
             }.collect {
-                uiState.value = it
+                uiStateFlow.value = it
             }
         }
         launch {

@@ -48,7 +48,7 @@ class MovieViewModel(
     private val setMovieSortOptionUC: SetMovieSortOptionUC
 ) : CoroutineScopeViewModel() {
 
-    val uiState: MutableStateFlow<MovieUiState> = MutableStateFlow(MovieUiState.DEFAULT)
+    val uiStateFlow: MutableStateFlow<MovieUiState> = MutableStateFlow(MovieUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<MovieUiAction>()
 
     init {
@@ -62,7 +62,7 @@ class MovieViewModel(
     }
 
     private fun onPageSwipe(newPage: Int) {
-        uiState.update {
+        uiStateFlow.update {
             it.copy(currentPage = newPage)
         }
     }
@@ -81,7 +81,7 @@ class MovieViewModel(
     private fun observe() {
         launch {
             getMovieSortOptionUC().collect { newValue ->
-                uiState.update { state ->
+                uiStateFlow.update { state ->
                     state.copy(sortOptionRoster = newValue.map { MovieSortOptionUI.fromDomain(it) })
                 }
             }

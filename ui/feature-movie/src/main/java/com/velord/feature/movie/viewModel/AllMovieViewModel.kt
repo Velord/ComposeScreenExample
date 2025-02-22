@@ -65,7 +65,7 @@ class AllMovieViewModel(
     private val refreshMovieUC: RefreshMovieUC,
 ) : CoroutineScopeViewModel() {
 
-    val uiState: MutableStateFlow<AllMovieUiState> = MutableStateFlow(AllMovieUiState.DEFAULT)
+    val uiStateFlow: MutableStateFlow<AllMovieUiState> = MutableStateFlow(AllMovieUiState.DEFAULT)
     val shareEvent = MutableSharedFlow<Intent>()
     private val actionFlow = MutableSharedFlow<AllMovieUiAction>()
 
@@ -86,28 +86,28 @@ class AllMovieViewModel(
                 is UpdateMovieResult.Success -> null
                 is UpdateMovieResult.DbError -> result.message
             }
-            uiState.value = uiState.value.copy(error = newError)
+            uiStateFlow.value = uiStateFlow.value.copy(error = newError)
         }
     }
 
     private fun onEndList(triggerIndex: Int) {
-        if (uiState.value.isLoadPageAvailable.not()) return
-        uiState.update {
+        if (uiStateFlow.value.isLoadPageAvailable.not()) return
+        uiStateFlow.update {
             it.copy(paginationStatus = PaginationStatus.Trigger(triggerIndex))
         }
     }
 
     private fun onRefresh() {
-        if (uiState.value.isRefreshAvailable.not()) return
+        if (uiStateFlow.value.isRefreshAvailable.not()) return
 
-        uiState.update {
+        uiStateFlow.update {
             it.copy(paginationStatus = PaginationStatus.Init)
         }
         launch {
-            uiState.value = uiState.value.copy(isRefreshing = true)
+            uiStateFlow.value = uiStateFlow.value.copy(isRefreshing = true)
             val result = refreshMovieUC()
             result.handleLoadPageResult()
-            uiState.value = uiState.value.copy(isRefreshing = false)
+            uiStateFlow.value = uiStateFlow.value.copy(isRefreshing = false)
         }
     }
 
@@ -132,19 +132,19 @@ class AllMovieViewModel(
                 is GetMovieResult.DBError -> result.message
                 is GetMovieResult.MergeError -> result.message
             }
-            uiState.value = uiState.value.copy(error = newError)
+            uiStateFlow.value = uiStateFlow.value.copy(error = newError)
 
             when(result) {
                 is GetMovieResult.Success -> result.flow
                 is GetMovieResult.DBError -> result.flow
                 is GetMovieResult.MergeError -> null
             }?.collect { roster ->
-                uiState.value = uiState.value.copy(roster = roster)
+                uiStateFlow.value = uiStateFlow.value.copy(roster = roster)
             }
         }
 
         launch {
-            uiState
+            uiStateFlow
                 .map { it.paginationStatus }
                 .distinctUntilChanged()
                 .filter { it != PaginationStatus.Init }
@@ -169,18 +169,18 @@ class AllMovieViewModel(
 
     private fun loadNewPage() {
         launch {
-            uiState.value = uiState.value.copy(isLoading = true)
+            uiStateFlow.value = uiStateFlow.value.copy(isLoading = true)
             val result = loadNewPageMovieUC()
             result.handleLoadPageResult()
-            uiState.value = uiState.value.copy(isLoading = false)
+            uiStateFlow.value = uiStateFlow.value.copy(isLoading = false)
         }
     }
 
     private fun MovieLoadNewPageResult.handleLoadPageResult() {
         when(this) {
-            MovieLoadNewPageResult.Success -> uiState.value = uiState.value.copy(error = null)
+            MovieLoadNewPageResult.Success -> uiStateFlow.value = uiStateFlow.value.copy(error = null)
             is MovieLoadNewPageResult.LoadPageFailed -> {
-                uiState.update {
+                uiStateFlow.update {
                     it.copy(
                         error = this.message,
                         paginationStatus = PaginationStatus.Init
@@ -188,7 +188,7 @@ class AllMovieViewModel(
                 }
             }
             is MovieLoadNewPageResult.Exausted -> {
-                uiState.update {
+                uiStateFlow.update {
                     it.copy(
                         error = null,
                         paginationStatus = PaginationStatus.Exausted

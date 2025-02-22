@@ -31,7 +31,7 @@ fun MovieScreen(
     allMovieViewModel: AllMovieViewModel,
     favoriteMovieViewModel: FavoriteMovieViewModel,
 ) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     Content(
         uiState = uiState.value,

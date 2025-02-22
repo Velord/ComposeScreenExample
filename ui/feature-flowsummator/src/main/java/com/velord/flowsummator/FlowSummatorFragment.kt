@@ -61,7 +61,7 @@ class FlowSummatorFragment : Fragment() {
 
 @Composable
 fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     val isStartEnabledState = remember {
         derivedStateOf { uiState.value.currentEnteredNumber != null }

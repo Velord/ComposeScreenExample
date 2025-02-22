@@ -38,7 +38,7 @@ fun ComposeView.setContentWithTheme(
     setContent {
         val activity = LocalContext.current.getActivity()
         val themeViewModel = viewModel<ThemeViewModel>(activity as ViewModelStoreOwner)
-        val themeState: State<ThemeUiState?> = themeViewModel.uiState.collectAsStateWithLifecycle()
+        val themeState: State<ThemeUiState?> = themeViewModel.uiStateFlow.collectAsStateWithLifecycle()
 
         val theme = themeState.value?.androidThemeConfig ?: AndroidThemeConfig.DEFAULT
         CompositionLocalProvider(LocalTheme provides theme) {
