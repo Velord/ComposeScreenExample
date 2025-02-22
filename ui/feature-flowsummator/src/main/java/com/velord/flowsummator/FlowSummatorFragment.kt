@@ -30,7 +30,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.velord.flowsummator.FlowSummatorViewModel.Companion.mapToCumulativeStringEachNumberByLine
 import com.velord.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import kotlinx.coroutines.launch
@@ -63,32 +61,24 @@ class FlowSummatorFragment : Fragment() {
 
 @Composable
 fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
-    val currentTextState = viewModel.sumFlow
-        .mapToCumulativeStringEachNumberByLine()
-        .collectAsStateWithLifecycle(initialValue = "")
-    val currentEnteredValueState = viewModel.currentEnteredNumberFlow
-        .collectAsStateWithLifecycle()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     val isStartEnabledState = remember {
-        derivedStateOf { currentEnteredValueState.value != null }
+        derivedStateOf { uiState.value.currentEnteredNumber != null }
     }
 
     Content(
-        currentTextState = currentTextState,
+        uiState = uiState.value,
         isStartEnabledState = isStartEnabledState,
-        onStartClick = viewModel::onStartClick,
-        enteredValueState = currentEnteredValueState,
-        onNewEnteredValue = viewModel::onNewEnteredValue,
+        onAction = viewModel::onAction,
     )
 }
 
 @Composable
 private fun Content(
-    currentTextState: State<String>,
+    uiState: FlowSummatorUiState,
     isStartEnabledState: State<Boolean>,
-    onStartClick: () -> Unit,
-    enteredValueState: State<Int?>,
-    onNewEnteredValue: (String) -> Unit
+    onAction: (FlowSummatorUiAction) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -101,13 +91,14 @@ private fun Content(
         Title()
         Start(
             isEnabled = isStartEnabledState.value,
-            onClick = onStartClick
+            onClick = { onAction(FlowSummatorUiAction.StartClick) }
         )
+
         EnterField(
-            value = enteredValueState.value,
-            onNewValue = onNewEnteredValue
+            value = uiState.currentEnteredNumber,
+            onNewValue = { onAction(FlowSummatorUiAction.NewEnteredValue(it)) }
         )
-        Result(text = currentTextState.value)
+        Result(text = uiState.sum)
     }
     Info()
 }
@@ -215,10 +206,8 @@ private fun InfoIcon(onClick: () -> Unit) {
 @Composable
 private fun FlowSummatorPreview() {
     Content(
-        currentTextState = mutableStateOf("") ,
+        uiState = FlowSummatorUiState.DEFAULT,
         isStartEnabledState = mutableStateOf(true),
-        onStartClick = {},
-        enteredValueState = mutableIntStateOf(4) ,
-        onNewEnteredValue = {},
+        onAction = {}
     )
 }
