@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.velord.feature.movie.model.MovieFilterOptionUI
 import com.velord.feature.movie.model.MovieSortOptionUI
+import com.velord.feature.movie.viewModel.MovieUiAction
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.resource.R
 import com.velord.uicore.compose.preview.PreviewCombined
@@ -46,14 +47,13 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun MovieBottomSheet(
     uiState: MovieUiState,
+    onAction: (MovieUiAction) -> Unit,
     isSortShowing: Boolean,
     isFilterShowing: Boolean,
     isInfoShowing: Boolean,
     onHideSort: () -> Unit,
     onHideFilter: () -> Unit,
     onHideInfo: () -> Unit,
-    onSortOptionClick: (MovieSortOptionUI) -> Unit,
-    onFilterOptionClick: (MovieFilterOptionUI) -> Unit
 ) {
     if (isSortShowing) {
         Sort(
@@ -61,7 +61,7 @@ internal fun MovieBottomSheet(
             isShowing = isSortShowing,
             onHide = onHideSort,
             onOptionClick = {
-                onSortOptionClick(it)
+                onAction(MovieUiAction.SortOptionClick(it))
             }
         )
     }
@@ -71,7 +71,7 @@ internal fun MovieBottomSheet(
             isShowing = isFilterShowing,
             onHide = onHideFilter,
             onOptionClick = {
-                onFilterOptionClick(it)
+                onAction(MovieUiAction.FilterOptionClick(it))
             }
         )
     }
@@ -218,7 +218,7 @@ private fun Info(
                             url = url,
                             styles = TextLinkStyles(
                                 style = SpanStyle(
-                                    color = Color.Blue,
+                                    color = Color.Gray,
                                     textDecoration = TextDecoration.Underline
                                 )
                             ),
@@ -271,13 +271,12 @@ private fun Sheet(
 private fun Preview() {
     MovieBottomSheet(
         uiState = MovieUiState.DEFAULT,
+        onAction = {},
         isSortShowing = false,
         isFilterShowing = true,
         isInfoShowing = false,
         onHideSort = {},
         onHideFilter = {},
         onHideInfo = {},
-        onSortOptionClick = {},
-        onFilterOptionClick = {}
     )
 }

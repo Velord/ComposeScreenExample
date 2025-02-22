@@ -17,7 +17,6 @@ data class MovieSortOptionUI(
     )
 
     companion object {
-
         fun fromDomain(option: MovieSortOption): MovieSortOptionUI = MovieSortOptionUI(
             type = option.type,
             isSelected = option.isSelected,
@@ -25,12 +24,6 @@ data class MovieSortOptionUI(
                 SortType.DateAscending -> R.string.sort_by_date_ascending
                 SortType.DateDescending -> R.string.sort_by_date_descending
             }
-        )
-
-        val Default: MovieSortOptionUI = MovieSortOptionUI(
-            type = SortType.DateDescending,
-            isSelected = true,
-            name = R.string.sort_by_date_descending
         )
     }
 }
