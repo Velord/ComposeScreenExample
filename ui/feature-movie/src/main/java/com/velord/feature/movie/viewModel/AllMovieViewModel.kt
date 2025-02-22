@@ -167,13 +167,11 @@ class AllMovieViewModel(
         }
     }
 
-    private fun loadNewPage() {
-        launch {
-            uiStateFlow.value = uiStateFlow.value.copy(isLoading = true)
-            val result = loadNewPageMovieUC()
-            result.handleLoadPageResult()
-            uiStateFlow.value = uiStateFlow.value.copy(isLoading = false)
-        }
+    private fun loadNewPage() = launch {
+        uiStateFlow.value = uiStateFlow.value.copy(isLoading = true)
+        val result = loadNewPageMovieUC()
+        result.handleLoadPageResult()
+        uiStateFlow.value = uiStateFlow.value.copy(isLoading = false)
     }
 
     private fun MovieLoadNewPageResult.handleLoadPageResult() {

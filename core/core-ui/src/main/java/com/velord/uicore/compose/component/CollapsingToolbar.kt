@@ -1,6 +1,5 @@
 package com.velord.uicore.compose.component
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -83,8 +82,6 @@ private fun Collaps() {
             min(1f, abs(toolbarOffsetHeightPxState.floatValue) / (toolbarHeightPxState.value / 3f))
         }
     }
-    Log.d("@@@", "alphaState: ${alphaState.value}")
-    Log.d("@@@", "toolbarOffsetHeightPxState: ${toolbarOffsetHeightPxState.value}")
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {

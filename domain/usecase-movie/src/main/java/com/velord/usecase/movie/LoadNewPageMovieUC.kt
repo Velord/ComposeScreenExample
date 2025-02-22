@@ -7,7 +7,7 @@ import com.velord.usecase.movie.result.MovieLoadNewPageResult
 class LoadNewPageMovieUC(private val dataSource: MovieDS) {
 
     suspend operator fun invoke(): MovieLoadNewPageResult = try {
-        val countOfNewItems = dataSource.loadNewPage()
+        val countOfNewItems = dataSource.loadNewPage().value
 
         if (countOfNewItems < MoviePagination.PAGE_COUNT) {
             MovieLoadNewPageResult.Exausted

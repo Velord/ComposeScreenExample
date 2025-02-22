@@ -1,5 +1,6 @@
 package com.velord.feature.movie.component
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -35,6 +36,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.onEach
 import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
 import java.util.Calendar
@@ -61,6 +63,7 @@ internal fun MoviePage(
     }
     val isAtBottomState = remember {
         derivedStateOf {
+            Log.d("Pagination", "isAtBottomState: ${listState.getLastVisibleIndex()} ${rosterSizeState.intValue}")
             MoviePagination.shouldLoadMore(
                 lastVisibleIndex = listState.getLastVisibleIndex(),
                 totalItemCount = rosterSizeState.intValue
@@ -71,8 +74,9 @@ internal fun MoviePage(
         mutableStateOf(roster.findRecentTimeInMilli())
     }
 
-    LaunchedEffect(isAtBottomState.value) {
+    LaunchedEffect(isAtBottomState) {
         snapshotFlow { isAtBottomState.value }
+            .onEach { Log.d("Pagination", "isAtBottomState: ${isAtBottomState.value}") }
             .filter { it }
             .collect {
                 val lastVisibleIndex = listState.getLastVisibleIndex()
