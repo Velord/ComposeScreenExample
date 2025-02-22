@@ -8,13 +8,33 @@ import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
+sealed interface DemoUiAction {
+    data object OpenShapeClick : DemoUiAction
+    data object OpenModifierClick : DemoUiAction
+    data object OpenSummatorClick : DemoUiAction
+    data object OpenMorphClick : DemoUiAction
+    data object OpenHintPhoneNumberClick : DemoUiAction
+    data object OpenMovieClick : DemoUiAction
+}
+
 class DemoViewModel : CoroutineScopeViewModel() {
 
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager>()
     val navigationEventJetpack = MutableSharedFlow<NavigationDataFragment>()
     val navigationEventDestination = MutableSharedFlow<DemoDestinationNavigationEvent>()
+    private val actionFlow = MutableSharedFlow<DemoUiAction>()
 
-    fun onOpenShape() = launch {
+    init {
+        observe()
+    }
+
+    fun onAction(action: DemoUiAction) {
+        launch {
+            actionFlow.emit(action)
+        }
+    }
+
+    private fun onOpenShape() = launch {
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Shape))
         navigationEventJetpack.emit(
             NavigationDataFragment(R.id.from_demoFragment_to_shapeDemoFragment)
@@ -22,7 +42,7 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventDestination.emit(DemoDestinationNavigationEvent.Shape)
     }
 
-    fun onOpenModifier() = launch {
+    private fun onOpenModifier() = launch {
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Modifier))
         navigationEventJetpack.emit(
             NavigationDataFragment(R.id.from_demoFragment_to_modifierDemoFragment)
@@ -30,7 +50,7 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventDestination.emit(DemoDestinationNavigationEvent.Modifier)
     }
 
-    fun onOpenSummator() = launch {
+    private fun onOpenSummator() = launch {
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.FlowSummator))
         navigationEventJetpack.emit(
             NavigationDataFragment(R.id.from_demoFragment_to_flowSummatorFragment)
@@ -38,7 +58,7 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventDestination.emit(DemoDestinationNavigationEvent.FlowSummator)
     }
 
-    fun onOpenMorph() = launch {
+    private fun onOpenMorph() = launch {
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Morph))
         navigationEventJetpack.emit(
             NavigationDataFragment(R.id.from_demoFragment_to_morphDemoFragment)
@@ -46,15 +66,30 @@ class DemoViewModel : CoroutineScopeViewModel() {
         navigationEventDestination.emit(DemoDestinationNavigationEvent.Morph)
     }
 
-    fun onOpenHintPhoneNumber() = launch {
+    private fun onOpenHintPhoneNumber() = launch {
         // TODO: Add for Jetpack
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.HintPhoneNumber))
         navigationEventDestination.emit(DemoDestinationNavigationEvent.HintPhoneNumber)
     }
 
-    fun onOpenMovie() = launch {
+    private fun onOpenMovie() = launch {
         // TODO: Add for Jetpack
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Movie))
         navigationEventDestination.emit(DemoDestinationNavigationEvent.Movie)
+    }
+
+    private fun observe() {
+        launch {
+            actionFlow.collect { action ->
+                when (action) {
+                    DemoUiAction.OpenShapeClick -> onOpenShape()
+                    DemoUiAction.OpenModifierClick -> onOpenModifier()
+                    DemoUiAction.OpenSummatorClick -> onOpenSummator()
+                    DemoUiAction.OpenMorphClick -> onOpenMorph()
+                    DemoUiAction.OpenHintPhoneNumberClick -> onOpenHintPhoneNumber()
+                    DemoUiAction.OpenMovieClick -> onOpenMovie()
+                }
+            }
+        }
     }
 }

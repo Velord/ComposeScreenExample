@@ -76,25 +76,11 @@ fun DemoScreen(
         onNavigationEvent(it)
     }
 
-    Content(
-        onOpenShape = viewModel::onOpenShape,
-        onOpenModifier = viewModel::onOpenModifier,
-        onOpenSummator = viewModel::onOpenSummator,
-        onOpenMorph = viewModel::onOpenMorph,
-        onOpenHintPhoneNumber = viewModel::onOpenHintPhoneNumber,
-        onOpenMovie = viewModel::onOpenMovie
-    )
+    Content(onAction = viewModel::onAction)
 }
 
 @Composable
-private fun Content(
-    onOpenShape: () -> Unit,
-    onOpenModifier: () -> Unit,
-    onOpenSummator: () -> Unit,
-    onOpenMorph: () -> Unit,
-    onOpenHintPhoneNumber: () -> Unit,
-    onOpenMovie: () -> Unit
-) {
+private fun Content(onAction: (DemoUiAction) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -103,12 +89,30 @@ private fun Content(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        OpenButton(text = stringResource(id = R.string.open_shape_demo), onClick = onOpenShape)
-        OpenButton(text = stringResource(id = R.string.open_modifier_demo), onClick = onOpenModifier)
-        OpenButton(text = stringResource(id = R.string.open_flow_summator), onClick = onOpenSummator)
-        OpenButton(text = stringResource(id = R.string.open_morph_demo), onClick = onOpenMorph)
-        OpenButton(text = stringResource(id = R.string.open_hint_phone_number), onClick = onOpenHintPhoneNumber)
-        OpenButton(text = stringResource(id = R.string.open_movie), onClick = onOpenMovie)
+        OpenButton(text = stringResource(
+            id = R.string.open_shape_demo),
+            onClick = { onAction(DemoUiAction.OpenShapeClick) }
+        )
+        OpenButton(
+            text = stringResource(id = R.string.open_modifier_demo),
+            onClick = { onAction(DemoUiAction.OpenModifierClick) }
+        )
+        OpenButton(
+            text = stringResource(id = R.string.open_flow_summator),
+            onClick = { onAction(DemoUiAction.OpenSummatorClick) }
+        )
+        OpenButton(
+            text = stringResource(id = R.string.open_morph_demo),
+            onClick = { onAction(DemoUiAction.OpenMorphClick) }
+        )
+        OpenButton(
+            text = stringResource(id = R.string.open_hint_phone_number),
+            onClick = { onAction(DemoUiAction.OpenHintPhoneNumberClick) }
+        )
+        OpenButton(
+            text = stringResource(id = R.string.open_movie),
+            onClick = { onAction(DemoUiAction.OpenMovieClick) }
+        )
     }
 }
 
@@ -136,12 +140,5 @@ private fun OpenButton(
 @PreviewCombined
 @Composable
 private fun DemoPreview() {
-    Content(
-        onOpenShape = {},
-        onOpenModifier = {},
-        onOpenSummator = {},
-        onOpenMorph = {},
-        onOpenHintPhoneNumber = {},
-        onOpenMovie = {}
-    )
+    Content(onAction = {})
 }
