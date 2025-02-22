@@ -1,6 +1,5 @@
 package com.velord.feature.movie.viewModel
 
-import android.content.Context
 import android.content.Intent
 import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
@@ -52,22 +51,35 @@ sealed class PaginationStatus  {
     data object Exausted : PaginationStatus()
 }
 
+sealed interface AllMovieUiAction {
+    data class OnLikeClick(val movie: Movie) : AllMovieUiAction
+    data class OnClick(val movie: Movie) : AllMovieUiAction
+    data object OnRefresh : AllMovieUiAction
+    data class OnEndList(val triggerIndex: Int) : AllMovieUiAction
+}
+
 class AllMovieViewModel(
     private val getAllMovieUC: GetAllMovieUC,
     private val updateMovieLikeUC: UpdateMovieLikeUC,
     private val loadNewPageMovieUC: LoadNewPageMovieUC,
     private val refreshMovieUC: RefreshMovieUC,
-    private val context: Context
 ) : CoroutineScopeViewModel() {
 
     val uiState: MutableStateFlow<AllMovieUiState> = MutableStateFlow(AllMovieUiState.DEFAULT)
     val shareEvent = MutableSharedFlow<Intent>()
+    private val actionFlow = MutableSharedFlow<AllMovieUiAction>()
 
     init {
         observe()
     }
 
-    fun onLikeClick(movie: Movie) {
+    fun onAction(action: AllMovieUiAction) {
+        launch {
+            actionFlow.emit(action)
+        }
+    }
+
+    private fun onLikeClick(movie: Movie) {
         launch {
             val result = updateMovieLikeUC(movie)
             val newError = when(result) {
@@ -78,14 +90,14 @@ class AllMovieViewModel(
         }
     }
 
-    fun onEndList(triggerIndex: Int) {
+    private fun onEndList(triggerIndex: Int) {
         if (uiState.value.isLoadPageAvailable.not()) return
         uiState.update {
             it.copy(paginationStatus = PaginationStatus.Trigger(triggerIndex))
         }
     }
 
-    fun onRefresh() {
+    private fun onRefresh() {
         if (uiState.value.isRefreshAvailable.not()) return
 
         uiState.update {
@@ -99,7 +111,7 @@ class AllMovieViewModel(
         }
     }
 
-    fun onClick(movie: Movie) {
+    private fun onClick(movie: Movie) {
         val sendIntent = Intent(Intent.ACTION_SEND).apply {
             putExtra(Intent.EXTRA_TEXT, movie.toString())
             setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -121,6 +133,7 @@ class AllMovieViewModel(
                 is GetMovieResult.MergeError -> result.message
             }
             uiState.value = uiState.value.copy(error = newError)
+
             when(result) {
                 is GetMovieResult.Success -> result.flow
                 is GetMovieResult.DBError -> result.flow
@@ -140,6 +153,17 @@ class AllMovieViewModel(
                 .collect {
                     loadNewPage()
                 }
+        }
+
+        launch {
+            actionFlow.collect { action ->
+                when(action) {
+                    is AllMovieUiAction.OnLikeClick -> onLikeClick(action.movie)
+                    is AllMovieUiAction.OnClick -> onClick(action.movie)
+                    is AllMovieUiAction.OnRefresh -> onRefresh()
+                    is AllMovieUiAction.OnEndList -> onEndList(action.triggerIndex)
+                }
+            }
         }
     }
 

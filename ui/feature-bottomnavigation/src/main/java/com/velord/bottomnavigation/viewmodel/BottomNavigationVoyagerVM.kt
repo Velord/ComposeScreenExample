@@ -11,7 +11,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class BottomNavigationVoyagerVM : CoroutineScopeViewModel() {
 
-    val currentTabFlow = MutableStateFlow<BottomNavigationItem>(BottomNavigationItem.Camera)
+    val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)
     val isBackHandlingEnabledFlow = MutableStateFlow(true)
     val finishAppEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
 
