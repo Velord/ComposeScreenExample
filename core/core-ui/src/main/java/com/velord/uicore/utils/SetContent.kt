@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.velord.model.settings.AndroidThemeConfig
+import com.velord.sharedviewmodel.ThemeUiState
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.compose.theme.MainTheme
 import com.velord.util.context.getActivity
@@ -37,10 +38,9 @@ fun ComposeView.setContentWithTheme(
     setContent {
         val activity = LocalContext.current.getActivity()
         val themeViewModel = viewModel<ThemeViewModel>(activity as ViewModelStoreOwner)
-        val themeState: State<AndroidThemeConfig?> = themeViewModel.themeFlow
-            .collectAsStateWithLifecycle()
+        val themeState: State<ThemeUiState?> = themeViewModel.uiStateFlow.collectAsStateWithLifecycle()
 
-        val theme = themeState.value ?: AndroidThemeConfig.DEFAULT
+        val theme = themeState.value?.androidThemeConfig ?: AndroidThemeConfig.DEFAULT
         CompositionLocalProvider(LocalTheme provides theme) {
             val localThemeConfig = LocalTheme.current
             val isDark = if (localThemeConfig.config.abideToOs) {

@@ -2,6 +2,7 @@ package com.velord.feature.movie.component
 
 import android.app.Activity
 import android.content.Intent
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -26,18 +27,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.feature.movie.viewModel.AllMovieUiAction
 import com.velord.feature.movie.viewModel.AllMovieViewModel
+import com.velord.feature.movie.viewModel.FavoriteMovieUiAction
 import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
 import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.ObserveSharedFlow
-import com.velord.util.context.getActivity
 import java.util.Calendar
 
 private fun Activity.onClick(intent: Intent) {
@@ -51,10 +52,10 @@ internal fun ColumnScope.MoviePager(
     uiState: MovieUiState,
     onSwipe: (Int) -> Unit
 ) {
-    val allMovieUiState = allMovieViewModel.uiState.collectAsStateWithLifecycle()
-    val favoriteMovieUiState = favoriteMovieViewModel.uiState.collectAsStateWithLifecycle()
+    val allMovieUiState = allMovieViewModel.uiStateFlow.collectAsStateWithLifecycle()
+    val favoriteMovieUiState = favoriteMovieViewModel.uiStateFlow.collectAsStateWithLifecycle()
 
-    val activity = LocalContext.current.getActivity()
+    val activity = LocalActivity.current
     ObserveSharedFlow(
         flow = allMovieViewModel.shareEvent,
         onEvent = {
@@ -89,19 +90,19 @@ internal fun ColumnScope.MoviePager(
             0 -> RefreshPage(
                 roster = allMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
-                onLike = allMovieViewModel::onLikeClick,
-                onClick = allMovieViewModel::onClick,
+                onLike = { allMovieViewModel.onAction(AllMovieUiAction.OnLikeClick(it)) },
+                onClick = { allMovieViewModel.onAction(AllMovieUiAction.OnClick(it)) },
                 isDataExausted = allMovieUiState.value.paginationStatus.isExausted,
                 isPaginationAvailable = allMovieUiState.value.isPaginationAvailable,
-                onEndList = allMovieViewModel::onEndList,
+                onEndList = { allMovieViewModel.onAction(AllMovieUiAction.OnEndList(it)) },
                 isRefreshing = allMovieUiState.value.isRefreshing,
-                onRefresh = allMovieViewModel::onRefresh
+                onRefresh = { allMovieViewModel.onAction(AllMovieUiAction.OnRefresh) },
             )
             1 -> RefreshPage(
                 roster = favoriteMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
-                onLike = favoriteMovieViewModel::onLikeClick,
-                onClick = allMovieViewModel::onClick,
+                onLike = { favoriteMovieViewModel.onAction(FavoriteMovieUiAction.OnLikeClick(it)) },
+                onClick = { allMovieViewModel.onAction(AllMovieUiAction.OnClick(it)) },
             )
         }
     }
@@ -237,7 +238,7 @@ private fun MoviePagerPreview() {
         ),
     )
     RefreshPage(
-        roster = emptyList(),
+        roster = roster,
         selectedSortOption = SortType.DateAscending,
         onLike = {},
         onClick = {},

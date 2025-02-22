@@ -145,8 +145,7 @@ private fun PageContent(
                     .background(
                         color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = alpha),
                         shape = RoundedCornerShape(4.dp)
-                    )
-                ,
+                    ),
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }

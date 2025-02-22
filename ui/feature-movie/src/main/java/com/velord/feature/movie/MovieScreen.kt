@@ -18,10 +18,9 @@ import com.velord.feature.movie.component.MovieAction
 import com.velord.feature.movie.component.MovieBottomSheet
 import com.velord.feature.movie.component.MovieHeader
 import com.velord.feature.movie.component.MoviePager
-import com.velord.feature.movie.model.MovieFilterOptionUI
-import com.velord.feature.movie.model.MovieSortOptionUI
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
+import com.velord.feature.movie.viewModel.MovieUiAction
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.feature.movie.viewModel.MovieViewModel
 import com.velord.uicore.compose.preview.PreviewCombined
@@ -32,19 +31,19 @@ fun MovieScreen(
     allMovieViewModel: AllMovieViewModel,
     favoriteMovieViewModel: FavoriteMovieViewModel,
 ) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     Content(
         uiState = uiState.value,
-        onSwipe = viewModel::onSwipe,
-        onSortOptionClick = viewModel::onSortOptionClick,
-        onFilterOptionClick = viewModel::onFilterOptionClick,
+        onAction = viewModel::onAction,
     ) {
         MoviePager(
             allMovieViewModel = allMovieViewModel,
             favoriteMovieViewModel = favoriteMovieViewModel,
             uiState = uiState.value,
-            onSwipe = viewModel::onSwipe
+            onSwipe = {
+                viewModel.onAction(MovieUiAction.PageSwipe(it))
+            }
         )
     }
 }
@@ -52,9 +51,7 @@ fun MovieScreen(
 @Composable
 private fun Content(
     uiState: MovieUiState,
-    onSwipe: (Int) -> Unit,
-    onSortOptionClick: (MovieSortOptionUI) -> Unit,
-    onFilterOptionClick: (MovieFilterOptionUI) -> Unit,
+    onAction: (MovieUiAction) -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -68,7 +65,7 @@ private fun Content(
                 MovieHeader(
                     currentPage = uiState.currentPage,
                     pages = uiState.pageRoster,
-                    onClick = onSwipe
+                    onClick = { onAction(MovieUiAction.PageSwipe(it)) }
                 )
 
                 content()
@@ -76,8 +73,7 @@ private fun Content(
 
             FloatingAction(
                 uiState = uiState,
-                onSortOptionClick = onSortOptionClick,
-                onFilterOptionClick = onFilterOptionClick,
+                onAction = onAction
             )
         }
     }
@@ -86,8 +82,7 @@ private fun Content(
 @Composable
 private fun BoxScope.FloatingAction(
     uiState: MovieUiState,
-    onSortOptionClick: (MovieSortOptionUI) -> Unit,
-    onFilterOptionClick: (MovieFilterOptionUI) -> Unit,
+    onAction: (MovieUiAction) -> Unit,
 ) {
     val showSortBottomSheetState = remember { mutableStateOf(false) }
     val showFilterBottomSheetState = remember { mutableStateOf(false) }
@@ -107,14 +102,13 @@ private fun BoxScope.FloatingAction(
 
     MovieBottomSheet(
         uiState = uiState,
+        onAction = onAction,
         isSortShowing = showSortBottomSheetState.value,
         isFilterShowing = showFilterBottomSheetState.value,
         isInfoShowing = showInfoBottomSheetState.value,
         onHideSort = { showSortBottomSheetState.value = false },
         onHideFilter = { showFilterBottomSheetState.value = false },
         onHideInfo = { showInfoBottomSheetState.value = false },
-        onSortOptionClick = onSortOptionClick,
-        onFilterOptionClick = onFilterOptionClick
     )
 }
 
@@ -123,9 +117,7 @@ private fun BoxScope.FloatingAction(
 private fun Preview() {
     Content(
         uiState = MovieUiState.DEFAULT,
-        onSwipe = {},
-        onSortOptionClick = {},
-        onFilterOptionClick = {},
+        onAction = {},
         content = {}
     )
 }

@@ -7,6 +7,7 @@ import com.velord.model.movie.MovieFilterOption
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetMovieSortOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,39 +37,61 @@ data class MovieUiState(
     }
 }
 
+sealed interface MovieUiAction {
+    data class PageSwipe(val newPage: Int) : MovieUiAction
+    data class SortOptionClick(val newOption: MovieSortOptionUI) : MovieUiAction
+    data class FilterOptionClick(val newOption: MovieFilterOptionUI) : MovieUiAction
+}
+
 class MovieViewModel(
     private val getMovieSortOptionUC: GetMovieSortOptionUC,
     private val setMovieSortOptionUC: SetMovieSortOptionUC
 ) : CoroutineScopeViewModel() {
 
-    val uiState: MutableStateFlow<MovieUiState> = MutableStateFlow(MovieUiState.DEFAULT)
+    val uiStateFlow: MutableStateFlow<MovieUiState> = MutableStateFlow(MovieUiState.DEFAULT)
+    private val actionFlow = MutableSharedFlow<MovieUiAction>()
 
     init {
         observe()
     }
 
-    fun onSwipe(newPage: Int) {
-        uiState.update {
+    fun onAction(action: MovieUiAction) {
+        launch {
+            actionFlow.emit(action)
+        }
+    }
+
+    private fun onPageSwipe(newPage: Int) {
+        uiStateFlow.update {
             it.copy(currentPage = newPage)
         }
     }
 
-    fun onSortOptionClick(newOption: MovieSortOptionUI) {
+    private fun onSortOptionClick(newOption: MovieSortOptionUI) {
         if (newOption.isSelected) return
 
         val domain = newOption.toDomain()
         setMovieSortOptionUC(domain)
     }
 
-    fun onFilterOptionClick(newOption: MovieFilterOptionUI) {
+    private fun onFilterOptionClick(newOption: MovieFilterOptionUI) {
         // TODO: disabled for now
     }
 
     private fun observe() {
         launch {
             getMovieSortOptionUC().collect { newValue ->
-                uiState.update { state ->
+                uiStateFlow.update { state ->
                     state.copy(sortOptionRoster = newValue.map { MovieSortOptionUI.fromDomain(it) })
+                }
+            }
+        }
+        launch {
+            actionFlow.collect { action ->
+                when (action) {
+                    is MovieUiAction.PageSwipe -> onPageSwipe(action.newPage)
+                    is MovieUiAction.SortOptionClick -> onSortOptionClick(action.newOption)
+                    is MovieUiAction.FilterOptionClick -> onFilterOptionClick(action.newOption)
                 }
             }
         }
