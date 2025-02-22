@@ -11,7 +11,7 @@ import androidx.navigation.NavHostController
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
-import com.velord.uicore.utils.ObserveSharedFlow
+import com.velord.uicore.utils.ObserveSharedFlowAsState
 import org.koin.androidx.compose.koinViewModel
 
 interface BottomNavigator{
@@ -38,7 +38,8 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
         navController = navController,
         currentDestination = currentDestination,
     ) { currentTab ->
-        ObserveSharedFlow(flow = viewModel.currentTabFlow) { tab ->
+
+        ObserveSharedFlowAsState(flow = viewModel.currentTabFlow) { tab ->
             navigator.onTabClick(tab, navController)
         }
 
