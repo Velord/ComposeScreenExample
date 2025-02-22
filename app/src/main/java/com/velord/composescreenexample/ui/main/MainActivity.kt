@@ -164,8 +164,8 @@ class MainActivity : AppCompatActivity() {
     private fun initObserving() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                themeViewModel.themeFlow.collect { theme ->
-                    viewModel.updateTheme(theme?.config)
+                themeViewModel.uiState.collect { theme ->
+                    viewModel.updateTheme(theme.androidThemeConfig?.config)
                 }
             }
         }

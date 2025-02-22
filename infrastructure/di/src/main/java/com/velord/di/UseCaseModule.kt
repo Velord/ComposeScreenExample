@@ -9,13 +9,13 @@ import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
+import com.velord.usecase.setting.SwitchDarkThemeConfigUC
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
-import com.velord.usecase.setting.SwitchThemeConfigUC
 import org.koin.dsl.module
 
 val useCaseModule = module {
     factory { GetThemeConfigUC(get()) }
-    factory { SwitchThemeConfigUC(get()) }
+    factory { SwitchDarkThemeConfigUC(get()) }
     factory { SwitchAbideToOsThemeConfigUC(get()) }
     factory { SwitchDynamicColorThemeConfigUC(get()) }
     factory { GetAllMovieUC(get(), get()) }

@@ -21,23 +21,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.velord.resource.R
+import com.velord.sharedviewmodel.ThemeUiAction
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.uicore.utils.LocalTheme
 
 @Composable
 fun SettingsScreen(viewModel: ThemeViewModel) {
-    Content(
-        onChangeAbideToOsTheme = { viewModel.onSwitchToOsTheme() },
-        onChangeSystemTheme = { viewModel.onChangeDynamicTheme() },
-        onChangeDarkTheme = { viewModel.onChangeDarkTheme() }
-    )
+    Content(onThemeAction = viewModel::onAction)
 }
 
 @Composable
 internal fun Content(
-    onChangeAbideToOsTheme: () -> Unit = {},
-    onChangeSystemTheme: () -> Unit = {},
-    onChangeDarkTheme: () -> Unit = {},
+    onThemeAction: (ThemeUiAction) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -62,7 +57,7 @@ internal fun Content(
                 isChecked = themeSwitcher.config.abideToOs,
                 isEnabled = themeSwitcher.isSystemOsSwitchAvailable,
                 textWhenNotEnabled = stringResource(id = R.string.os_does_not_support_theme_switching),
-                onChange = onChangeAbideToOsTheme
+                onChange = { onThemeAction(ThemeUiAction.AbideToOsThemeSwitch) }
             )
 
             val disableOsStr = stringResource(id = R.string.disable_os_theme_switcher)
@@ -77,17 +72,17 @@ internal fun Content(
             ThemeSwitcher(
                 title = stringResource(id = R.string.use_system_dynamic_theme),
                 isChecked = themeSwitcher.config.useDynamicColor,
-                isEnabled = themeSwitcher.isSystemDynamicColorAvailable && themeSwitcher.config.abideToOs.not(),
                 textWhenNotEnabled = disabledText.toString(),
-                onChange = onChangeSystemTheme
+                isEnabled = themeSwitcher.isSystemDynamicColorAvailable && themeSwitcher.config.abideToOs.not(),
+                onChange = { onThemeAction(ThemeUiAction.DynamicThemeSwitch) }
             )
 
             ThemeSwitcher(
                 title = stringResource(id = R.string.use_dark_theme),
                 isChecked = themeSwitcher.config.useDarkTheme,
-                isEnabled = themeSwitcher.config.abideToOs.not(),
                 textWhenNotEnabled = disableOsStr,
-                onChange = onChangeDarkTheme
+                isEnabled = themeSwitcher.config.abideToOs.not(),
+                onChange = { onThemeAction(ThemeUiAction.DarkThemeSwitch) }
             )
         }
     }
@@ -97,9 +92,9 @@ internal fun Content(
 private fun ThemeSwitcher(
     title: String,
     isChecked: Boolean,
+    textWhenNotEnabled: String,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    textWhenNotEnabled: String,
     onChange: () -> Unit
 ) {
     Column(modifier = modifier) {
@@ -142,5 +137,5 @@ private fun ColumnScope.Title(
 @Preview
 @Composable
 private fun SettingsPreview() {
-    Content()
+    Content(onThemeAction = {})
 }
