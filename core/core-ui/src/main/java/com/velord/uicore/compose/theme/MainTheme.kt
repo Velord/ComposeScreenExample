@@ -2,6 +2,7 @@ package com.velord.uicore.compose.theme
 
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.LocalActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
@@ -41,7 +42,7 @@ fun MainTheme(
         else -> specialTheme.toColorScheme()
     }
 
-    val context = LocalContext.current as ComponentActivity
+    val context = LocalActivity.current as ComponentActivity
     DisposableEffect(key1 = useDarkTheme, key2 = dynamicColor) {
         val (scrim, darkScrim) = colorScheme
             .defineScrimAndDarkScrimColorForSystemBar(makeTransparent = true)

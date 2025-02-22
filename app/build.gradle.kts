@@ -179,6 +179,16 @@ dependencies {
     implementation(libs.bundles.google.all)
 }
 
+// Making “Optimised Out” Variables Visible in the IDE
+kotlin {
+    compilerOptions {
+        if (System.getProperty("idea.active") == "true") {
+            println("Enable coroutine debugging")
+            freeCompilerArgs.add("-Xdebug")
+        }
+    }
+}
+
 ksp {
     arg("KOIN_CONFIG_CHECK", "true")
     arg("KOIN_DEFAULT_MODULE", "false")
