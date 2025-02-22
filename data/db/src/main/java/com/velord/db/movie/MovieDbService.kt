@@ -23,6 +23,7 @@ interface MovieDbService {
     suspend fun insertAll(movies: List<Movie>)
     suspend fun update(movie: Movie)
     fun getAllLikedFlow(sortType: SortType): Flow<List<Movie>>
+    suspend fun clear()
 }
 
 @Single
@@ -73,5 +74,9 @@ class MovieDbServiceImpl(
             sortOrder = sortOrder,
             orderBy = "date",
         ).map { it.map { entity -> entity.toDomain() } }
+    }
+
+    override suspend fun clear() {
+        db.clear()
     }
 }

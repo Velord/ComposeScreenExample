@@ -55,4 +55,7 @@ interface MovieDao {
 
     @Delete
     suspend fun delete(movie: MovieEntity)
+
+    @Query("DELETE FROM MovieEntity")
+    suspend fun clear()
 }

@@ -22,7 +22,7 @@ class MovieFavoriteGateway(
 ) : MovieFavoriteDS {
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.d("@@@@", "MovieFavoriteGateway CoroutineExceptionHandler: $throwable")
+        Log.d("MovieFavoriteGateway", "CoroutineExceptionHandler: $throwable")
     }
     private val scope = CoroutineScope(Job() + Dispatchers.IO + errorHandler)
 

@@ -1,7 +1,6 @@
 package com.velord.usecase.movie
 
 import com.velord.model.movie.Movie
-import com.velord.model.movie.MoviePagination
 import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieDS
 import com.velord.usecase.movie.dataSource.MovieSortDS
@@ -15,25 +14,15 @@ class GetAllMovieUC(
     private val movieSortDS: MovieSortDS
 ) {
 
-    suspend operator fun invoke(): GetMovieResult = try {
+    operator fun invoke(): GetMovieResult = try {
         val merged = mergeMovieWithSort()
         try {
-            checkOnEmpty()
             GetMovieResult.Success(merged)
         } catch (e: Exception) {
             GetMovieResult.DBError(merged, e.message.orEmpty())
         }
     } catch (e: Exception) {
         GetMovieResult.MergeError(e.message.orEmpty())
-    }
-
-    private suspend fun checkOnEmpty() {
-        if (movieDS.get().isEmpty()) {
-            val isPageFull = movieDS.loadFromDb() == MoviePagination.PAGE_COUNT
-            if (isPageFull.not()) {
-                movieDS.loadNewPage()
-            }
-        }
     }
 
     private fun mergeMovieWithSort(): Flow<List<Movie>> {
