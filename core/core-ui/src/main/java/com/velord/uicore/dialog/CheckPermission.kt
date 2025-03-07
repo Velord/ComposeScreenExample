@@ -28,7 +28,7 @@ private fun Context.askUserActivatePermissionInSettings(
     )
 }
 
-fun Context.showRationalePermissionForMic(
+fun Context.showGoToSettingsForMic(
     onDecline: () -> Unit
 ) {
     askUserActivatePermissionInSettings(
@@ -38,7 +38,7 @@ fun Context.showRationalePermissionForMic(
     )
 }
 
-fun Context.showRationalePermissionForCamera(
+fun Context.showGoToSettingsForCamera(
     onDecline: () -> Unit
 ) {
     askUserActivatePermissionInSettings(
@@ -69,9 +69,9 @@ fun Fragment.checkRecordVideoPermission(
     when {
         isGranted -> onGranted()
         shouldShowRequestPermissionRationale(permRecordAudio) ->
-            requireContext().showRationalePermissionForMic(onDecline)
+            requireContext().showGoToSettingsForMic(onDecline)
         shouldShowRequestPermissionRationale(permCamera) ->
-            requireContext().showRationalePermissionForCamera(onDecline)
+            requireContext().showGoToSettingsForCamera(onDecline)
         else -> actionLauncher.launch(permissions)
     }
 }

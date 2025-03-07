@@ -1,40 +1,53 @@
 package com.velord.uicore.utils.permission
 
 import android.Manifest
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
-import com.velord.uicore.dialog.showRationalePermissionForCamera
-import com.velord.uicore.dialog.showRationalePermissionForMic
+import com.velord.uicore.dialog.showGoToSettingsForCamera
+import com.velord.uicore.dialog.showGoToSettingsForMic
 import com.velord.uicore.utils.ObserveSharedFlow
+import com.velord.util.permission.AndroidPermissionState
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CheckCameraAndAudioRecordPermission(
     triggerCheckEvent: MutableSharedFlow<Unit>,
-    onCameraUpdateState: (PermissionState) -> Unit,
-    onMicroUpdateState: (PermissionState) -> Unit,
+    onCameraUpdateState: (AndroidPermissionState) -> Unit,
+    onMicroUpdateState: (AndroidPermissionState) -> Unit,
 ) {
+    val context = LocalContext.current
+    // Fix the issue when the user first time asked for permission.
+    // Can't do anything if user just leaves\close permission dialog infinite times.
+    val permissionAlreadyRequestedState = rememberSaveable {
+        mutableStateOf(false)
+    }
+
     val permissionsState = rememberMultiplePermissionsState(
         permissions = listOf(
             Manifest.permission.CAMERA,
             Manifest.permission.RECORD_AUDIO,
-        )
+        ),
+        onPermissionsResult = { _ ->
+            Log.d("CheckCameraAndAudioRecordPermission", "onPermissionsResult")
+            if (permissionAlreadyRequestedState.value.not()) {
+                permissionAlreadyRequestedState.value = true
+            }
+        }
     )
-
-    LaunchedEffect(permissionsState) {
-        Log.d("CheckCameraAndAudioRecordPermission", "permissionsState")
-        permissionsState.launchMultiplePermissionRequest()
-    }
 
     val cameraState = remember {
         derivedStateOf {
@@ -50,31 +63,82 @@ fun CheckCameraAndAudioRecordPermission(
                 .firstOrNull { it.permission == Manifest.permission.RECORD_AUDIO }
         }
     }
+
+    LaunchedEffect(permissionsState) {
+        Log.d("CheckCameraAndAudioRecordPermission", "LaunchedEffect permissionsState")
+        permissionsState.launchMultiplePermissionRequest()
+    }
+
+    LaunchedEffect(permissionAlreadyRequestedState.value) {
+        if (permissionAlreadyRequestedState.value.not()) return@LaunchedEffect
+
+        Log.d("CheckCameraAndAudioRecordPermission", "LaunchedEffect permissionAlreadyRequestedState")
+        checkCamera(permissionAlreadyRequestedState, cameraState, context)
+        checkAudioRecord(permissionAlreadyRequestedState, microState, context)
+    }
+
     cameraState.value?.let {
         Log.d("CheckCameraAndAudioRecordPermission", "Camera: ${it.status}")
-        onCameraUpdateState(it)
+        val androidPermState = it.status.toAndroidPermissionState(permissionAlreadyRequestedState.value)
+        onCameraUpdateState(androidPermState)
     }
     microState.value?.let {
         Log.d("CheckCameraAndAudioRecordPermission", "Micro: ${it.status}")
-        onMicroUpdateState(it)
+        val androidPermState = it.status.toAndroidPermissionState(permissionAlreadyRequestedState.value)
+        onMicroUpdateState(androidPermState)
     }
 
-    val context = LocalContext.current
     ObserveSharedFlow(flow = triggerCheckEvent) {
         Log.d("CheckCameraAndAudioRecordPermission", "ObserveTrigger != null")
         permissionsState.launchMultiplePermissionRequest()
-        cameraState.value?.let {
-            Log.d("CheckCameraAndAudioRecordPermission", "AndroidCamera: ${it.status}")
-            if (it.status.isGranted.not() && it.status.shouldShowRationale.not()) {
-                context.showRationalePermissionForCamera {}
-            }
-        }
 
-        microState.value?.let {
-            Log.d("CheckCameraAndAudioRecordPermission", "AndroidMicro: ${it.status}")
-            if (it.status.isGranted.not() && it.status.shouldShowRationale.not()) {
-                context.showRationalePermissionForMic {}
-            }
+        checkCamera(permissionAlreadyRequestedState, cameraState, context)
+        checkAudioRecord(permissionAlreadyRequestedState, microState, context)
+    }
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+private fun checkCamera(
+    permissionAlreadyRequestedState: State<Boolean>,
+    cameraState: State<PermissionState?>,
+    context: Context
+) {
+    baseCheck(
+        permissionAlreadyRequestedState,
+        cameraState,
+        { context.showGoToSettingsForCamera {} },
+        "Camera"
+    )
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+private fun checkAudioRecord(
+    permissionAlreadyRequestedState: State<Boolean>,
+    microState: State<PermissionState?>,
+    context: Context
+) {
+    baseCheck(
+        permissionAlreadyRequestedState,
+        microState,
+        { context.showGoToSettingsForMic {} },
+        "AudioRecord"
+    )
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+private fun baseCheck(
+    permissionAlreadyRequestedState: State<Boolean>,
+    permState: State<PermissionState?>,
+    onCompletelyDenied: () -> Unit,
+    tag: String
+) {
+    permState.value?.let {
+        val isNotGranted = it.status.isGranted.not()
+        val isNotShowRationale = it.status.shouldShowRationale.not()
+        val isRequestedBefore = permissionAlreadyRequestedState.value
+        Log.d("CheckCameraAndAudioRecordPermission", "$tag: ${it.status.toAndroidPermissionState(isRequestedBefore)}")
+        if (isNotGranted && isNotShowRationale && isRequestedBefore) {
+            onCompletelyDenied()
         }
     }
 }

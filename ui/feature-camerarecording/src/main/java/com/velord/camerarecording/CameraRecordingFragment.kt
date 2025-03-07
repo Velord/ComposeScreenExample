@@ -56,14 +56,12 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.velord.bottomnavigation.screen.jetpack.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.uicore.dialog.checkRecordVideoPermission
 import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.uicore.utils.permission.CheckCameraAndAudioRecordPermission
-import com.velord.uicore.utils.permission.toPermissionState
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import com.velord.util.permission.AndroidPermissionState
@@ -162,7 +160,6 @@ enum class CameraRecordingNavigationEvent {
     SETTINGS
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CameraRecordingScreen(
     viewModel: CameraRecordingViewModel,
@@ -179,13 +176,11 @@ fun CameraRecordingScreen(
         CheckCameraAndAudioRecordPermission(
             triggerCheckEvent = viewModel.checkPermissionEvent,
             onCameraUpdateState = {
-                val state = it.status.toPermissionState()
-                val action = CameraRecordingUiAction.UpdateCameraPermissionState(state)
+                val action = CameraRecordingUiAction.UpdateCameraPermissionState(it)
                 viewModel.onAction(action)
             },
             onMicroUpdateState = {
-                val state = it.status.toPermissionState()
-                val action = CameraRecordingUiAction.UpdateAudioPermissionState(state)
+                val action = CameraRecordingUiAction.UpdateAudioPermissionState(it)
                 viewModel.onAction(action)
             }
         )
