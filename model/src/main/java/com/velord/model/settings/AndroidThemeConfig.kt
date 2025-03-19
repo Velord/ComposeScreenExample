@@ -10,6 +10,12 @@ data class AndroidThemeConfig(
 ) {
     companion object {
 
+        val DEFAULT: AndroidThemeConfig = AndroidThemeConfig(
+            config = ThemeConfig.DEFAULT,
+            isSystemOsSwitchAvailable = isSystemOsSwitchAvailable(),
+            isSystemDynamicColorAvailable = isSystemDynamicColorAvailable()
+        )
+
         @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O_MR1)
         fun isSystemOsSwitchAvailable(): Boolean =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
@@ -18,13 +24,8 @@ data class AndroidThemeConfig(
         fun isSystemDynamicColorAvailable(): Boolean =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
-        val DEFAULT: AndroidThemeConfig = AndroidThemeConfig(
-            config = ThemeConfig.DEFAULT,
-            isSystemOsSwitchAvailable = isSystemOsSwitchAvailable(),
-            isSystemDynamicColorAvailable = isSystemDynamicColorAvailable()
-        )
 
-        fun invoke(config: ThemeConfig): AndroidThemeConfig = AndroidThemeConfig(
+        operator fun invoke(config: ThemeConfig): AndroidThemeConfig = AndroidThemeConfig(
             config = config,
             isSystemOsSwitchAvailable = isSystemOsSwitchAvailable(),
             isSystemDynamicColorAvailable = isSystemDynamicColorAvailable()
