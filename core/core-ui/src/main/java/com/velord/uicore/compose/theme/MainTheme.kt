@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.velord.model.settings.AndroidThemeConfig
 import com.velord.model.settings.SpecialTheme
@@ -33,8 +33,9 @@ fun MainTheme(
     specialTheme: SpecialTheme,
     content: @Composable () -> Unit
 ) {
+    val apiAvailable = AndroidThemeConfig.isSystemDynamicColorAvailable()
     val colorScheme: ColorScheme = when {
-        abideToOsTheme.not() && dynamicColor && AndroidThemeConfig.isSystemDynamicColorAvailable() -> {
+        abideToOsTheme.not() && dynamicColor && apiAvailable -> {
             val context = LocalContext.current
             if (useDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
@@ -43,7 +44,7 @@ fun MainTheme(
     }
 
     val context = LocalActivity.current as ComponentActivity
-    DisposableEffect(key1 = useDarkTheme, key2 = dynamicColor) {
+    LaunchedEffect(key1 = useDarkTheme, key2 = dynamicColor) {
         val (scrim, darkScrim) = colorScheme
             .defineScrimAndDarkScrimColorForSystemBar(makeTransparent = true)
         val light = SystemBarStyle.light(
@@ -51,11 +52,11 @@ fun MainTheme(
             darkScrim = darkScrim
         )
         val dark = SystemBarStyle.dark(scrim = scrim)
+        val statusBarStyle = if (useDarkTheme) dark else light
         context.enableEdgeToEdge(
-            statusBarStyle = if (useDarkTheme) dark else light,
-            navigationBarStyle = if (useDarkTheme) dark else light
+            statusBarStyle = statusBarStyle,
+            navigationBarStyle = statusBarStyle
         )
-        onDispose { }
     }
 
     MaterialTheme(

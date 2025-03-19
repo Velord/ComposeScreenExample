@@ -1,6 +1,6 @@
 [versions]
 # API
-minApi = "29"
+minApi = "26"
 targetApi = "35"
 # Build
 buildTools = "30.0.3"
@@ -656,12 +656,12 @@ androidx-camera-all = [
 # AndroidX Car App
 androidx-carapp = [
     "androidx-carapp",
-    "androidx-carapp-automotive",
+    "androidx-carapp-automotive", #uses-sdk:minSdkVersion 27 cannot be smaller than version 29 declared in library
     #"androidx-carapp-projected" Manifest merger failed : Attribute meta-data#androidx.car.app.CarAppMetadataHolderService.CAR_HARDWARE_MANAGER https://stackoverflow.com/questions/73089042/android-auto-manifest-merger-failed-attribute-is-also-present-at
 ]
 # AndroidX Constraint
 androidx-constraint = ["androidx-constraint", "androidx-constraint-compose"]
-# AndroidX Core
+# AndroidX Core"androidx-carapp-automotive
 androidx-core = [
     "androidx-core-ktx",
     "androidx-core-animation", "androidx-core-google-shortcuts",
@@ -911,7 +911,8 @@ androidx-all = [
     "androidx-camera-viewfinder-core", "androidx-camera-viewfinder-compose",
     "androidx-camera-viewfinder-view",
     # AndroidX Car App
-    "androidx-carapp", "androidx-carapp-automotive",
+    "androidx-carapp",
+    #"androidx-carapp-automotive", #uses-sdk:minSdkVersion 27 cannot be smaller than version 29 declared in library
     #"androidx-carapp-projected", Manifest merger failed : Attribute meta-data#androidx.car.app.CarAppMetadataHolderService.CAR_HARDWARE_MANAGER https://stackoverflow.com/questions/73089042/android-auto-manifest-merger-failed-attribute-is-also-present-at
     # AndroidX Constraint
     "androidx-constraint", "androidx-constraint-compose",
