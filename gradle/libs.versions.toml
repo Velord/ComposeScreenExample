@@ -17,10 +17,14 @@ koinKsp = "2.0.0-RC1"
 # Google
 googleGuava = "33.3.1-android"
 googleKsp = "2.1.10-1.0.30"
+googleMapCompose = "6.5.0"
+googleMapUtil = "3.5.2"
 googleModernStorage = "1.0.0-alpha06"
 googleRecaptcha = "18.7.0"
 # Google GMS/Google Play Services
 googleGmsAuth = "21.3.0"
+googleGmsLocation = "21.3.0"
+googleGmsMap = "19.1.0"
 # Kotlin
 kotlin = "2.1.10"
 kotlinCoroutine = "1.10.1"
@@ -31,7 +35,7 @@ kotlinJsonSerialization = "1.7.3"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
 # AndroidX
 ## A
-androidxActivity = "1.10.0"
+androidxActivity = "1.10.1"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.9.1"
 androidxAppCompat = "1.7.0"
@@ -45,38 +49,38 @@ androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha02"
 androidxBrowser = "1.8.0"
 ## Camera
-androidxCamera = "1.5.0-alpha05"
+androidxCamera = "1.5.0-alpha06"
 androidxCameraMedia3 = "1.0.0-alpha01"
-androidxCameraViewFinder = "1.4.0-alpha12"
+androidxCameraViewFinder = "1.4.0-alpha13"
 ## C
 androidxCarApp = "1.4.0"
 androidXCardView = "1.0.0"
-androidxCollection = "1.4.5"
+androidxCollection = "1.5.0"
 androidxConcurrent = "1.2.0"
 ## AndroidX Constraint
-androidxConstraint = "2.2.0"
-androidxConstraintCompose = "1.1.0"
+androidxConstraint = "2.2.1"
+androidxConstraintCompose = "1.1.1"
 ## C
 androidxContentPager = "1.0.0"
-androidxCoordinatorLayout = "1.2.0"
+androidxCoordinatorLayout = "1.3.0"
 ## Core
 androidxCore = "1.15.0"
 androidxCoreAnimation = "1.0.0"
 androidxCoreGoogleShortcuts = "1.1.0"
 androidxCorePerformance = "1.0.0"
 androidxCoreRomoteViews = "1.1.0"
-androidxCoreRole = "1.0.0"
+androidxCoreRole = "1.1.0"
 androidxCoreSplashScreen = "1.0.1"
 androidxCoreUWB = "1.0.0-alpha10"
 ## C
-androidxCredentials = "1.3.0"
+androidxCredentials = "1.5.0"
 androidxCursorAdapter = "1.0.0"
 # AndroidX CustomView
 androidxCustomView = "1.1.0"
 androidxCustomViewPollingContainer = "1.0.0"
 ## D
 androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
-androidxDatastore = "1.1.2"
+androidxDatastore = "1.1.3"
 androidxDocumentFile = "1.0.1"
 androidxDragAndDrop = "1.0.0"
 androidxDrawerLayout = "1.2.0"
@@ -86,7 +90,7 @@ androidxEmoji = "1.1.0"
 androidxEmoji2 = "1.5.0"
 ## E
 androidxEnterprise = "1.1.0"
-androidxExifInterface = "1.3.7"
+androidxExifInterface = "1.4.0"
 androidxFragment = "1.8.6"
 ## Games
 androidxGamesActivity = "4.0.0"
@@ -110,7 +114,7 @@ androidxLifecycle = "2.8.7"
 ## M
 androidxMedia3 = "1.5.1"
 ## N
-androidxNavigation = "2.8.7"
+androidxNavigation = "2.8.9"
 ## AndroidX Paging
 androidxPaging = "3.3.6"
 androidxPagingCompose = "3.3.6"
@@ -121,11 +125,11 @@ androidxPreference = "1.2.1"
 androidxPrint = "1.1.0-beta01"
 ## Privacy Sandbox
 androidxPrivacySandboxActivity = "1.0.0-alpha01"
-androidxPrivacySandboxAds = "1.1.0-beta11"
+androidxPrivacySandboxAds = "1.1.0-beta12"
 androidxPrivacySandboxPlugins = "1.0.0-alpha02"
 androidxPrivacySandboxSdkRuntime = "1.0.0-alpha16"
-androidxPrivacySandboxTools = "1.0.0-alpha11"
-androidxPrivacySandboxUi = "1.0.0-alpha13"
+androidxPrivacySandboxTools = "1.0.0-alpha12"
+androidxPrivacySandboxUi = "1.0.0-alpha14"
 ## P
 androidxProfileInstaller = "1.4.1"
 ## R
@@ -190,14 +194,14 @@ androidxViewPager2 = "1.1.0"
 androidxWear = "1.3.0"
 androidxWearInput = "1.1.0" # For Input, Input Testing
 androidxWearOngoing = "1.0.0"
-androidxWearPhone = "1.0.1"
+androidxWearPhone = "1.1.0"
 androidxWearRemote = "1.1.0"
 androidxWearCompose = "1.4.1"
 androidxWearProtoLayout = "1.2.1"
 androidxWearTiles = "1.4.1"
 androidxWearWatchface = "1.2.1"
 ## W
-androidxWebkit = "1.12.1"
+androidxWebkit = "1.13.0"
 ## Window
 androidxWindow = "1.3.0"
 androidxWindowExtension = "1.0.0"
@@ -222,6 +226,7 @@ composeHaze = "0.7.3"
 coil = "2.2.2"
 # Permission
 sagarCoroutinePermission = "2.0.2"
+accompanistPermission = "0.37.2"
 # Navigation
 composeDestinations = "2.1.0-beta10"
 voyager = "1.1.0-alpha02"
@@ -562,8 +567,14 @@ gradle-compose = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 google-modernstorage = { module = "com.google.modernstorage:modernstorage-photopicker", version.ref = "googleModernStorage" }
 google-recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "googleRecaptcha" }
+google-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "googleMapUtil" }
+google-maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "googleMapCompose" }
+google-maps-compose-utils = { module = "com.google.maps.android:maps-compose-utils", version.ref = "googleMapCompose" }
+google-maps-compose-widgets = { module = "com.google.maps.android:maps-compose-widgets", version.ref = "googleMapCompose" }
 # Google GMS/Google Play Services
 google-gms-auth = { module = "com.google.android.gms:play-services-auth", version = "googleGmsAuth" }
+google-gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "googleGmsLocation" }
+google-gms-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "googleGmsMap" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
@@ -1085,11 +1096,15 @@ gradle = ["gradle-android", "gradle-kotlin", "gradle-compose"]
 # --------------------------------------------------------------------------------------------------
 # Google
 google-other = ["google-guava", "google-modernstorage", "google-recaptcha"]
+google-maps = ["google-maps-utils", "google-maps-compose", "google-maps-compose-utils"]
 # Google GMS/Google Play Services
-google-gms = ["google-gms-auth"]
+google-gms = [
+    "google-gms-auth", "google-gms-location", "google-gms-maps"
+]
 google-all = [
     "google-guava", "google-modernstorage", "google-recaptcha",
-    "google-gms-auth"
+    "google-maps-utils", "google-maps-compose", "google-maps-compose-utils",
+    "google-gms-auth", "google-gms-location", "google-gms-maps"
 ]
 # --------------------------------------------------------------------------------------------------
 # Kotlin
