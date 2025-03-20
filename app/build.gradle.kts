@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
 
-
+    // Convention plugin does not work
     //id("velord.application")
 }
 
@@ -137,7 +137,6 @@ android {
 
 composeCompiler {
     featureFlags = setOf(
-        ComposeFeatureFlag.StrongSkipping,
         ComposeFeatureFlag.OptimizeNonSkippingGroups
     )
 }
