@@ -8,7 +8,7 @@ Project uses navigation libs:
 * [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation) **100%** _screens covered_
 * [Compose Destinations](https://github.com/raamcosta/compose-destinations) **100%** _screens covered_
 
-To use different Navigation library need to change in ```build.gradle.kts``` from ```app``` module.
+To use different Navigation library need to change in ```build.gradle.kts``` at ```app``` module.
 
 ```
 buildConfigField(    
@@ -21,6 +21,10 @@ buildConfigField(
 
 ## UI Features:
 * [Movie Demo](#movie-demo)
+* [Theme Demo](#theme-demo)
+   * [Before 8.1 Oreo](#before-81-oreo)
+   * [After 8.1 and Before 11 Red Velvet Cake](#before-11-red-velvet-cake)
+   * [After 11 Red Velvet Cake](#after-11-red-velvet-cake)
 * [Phone Number Hint Demo](#phone-number-hint-demo)
 * [Compose Shapes](#shape-demo)
    * [TicketPath](#ticketpath)
@@ -38,6 +42,16 @@ buildConfigField(
 
 ## Movie Demo
 [MovieDemo.webm](https://github.com/user-attachments/assets/32bfe923-977a-4803-a297-014d17cc9af9)
+
+## Theme Demo
+* ### Before 8.1 Oreo
+![themedemobefore8.1](https://github.com/user-attachments/assets/4bf872d7-ab15-45d8-91af-06c9caaf81ae)
+
+* ### Before 11 Red Velvet Cake
+https://github.com/user-attachments/assets/aeca3717-9f1d-49cd-9821-a12fa466923e
+
+* ### After 11 Red Velvet Cake
+https://github.com/user-attachments/assets/da8fd995-e6f6-4583-9514-6c985062de39
 
 
 ## Shape Demo
