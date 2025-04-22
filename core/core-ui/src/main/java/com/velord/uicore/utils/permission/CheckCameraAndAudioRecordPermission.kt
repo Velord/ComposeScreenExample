@@ -20,7 +20,12 @@ import com.velord.uicore.dialog.showGoToSettingsForCamera
 import com.velord.uicore.dialog.showGoToSettingsForMic
 import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.util.permission.AndroidPermissionState
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -141,4 +146,13 @@ private fun baseCheck(
             onCompletelyDenied()
         }
     }
+}
+
+val errorHandler = CoroutineExceptionHandler { _, throwable ->
+    Log.e("CheckCameraAndAudioRecordPermission", "Error: ${throwable.message}")
+}
+val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default + errorHandler)
+
+fun main() = runBlocking {
+
 }
