@@ -65,7 +65,6 @@ internal fun Project.configureCompose(
     }
     extensions.configure<ComposeCompilerGradlePluginExtension> {
         featureFlags.addAll(
-            ComposeFeatureFlag.StrongSkipping,
             ComposeFeatureFlag.OptimizeNonSkippingGroups
         )
     }
