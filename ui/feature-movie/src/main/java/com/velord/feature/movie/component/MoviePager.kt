@@ -14,12 +14,12 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
@@ -108,7 +108,7 @@ internal fun ColumnScope.MoviePager(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RefreshPage(
     roster: List<Movie>,
@@ -121,18 +121,29 @@ private fun RefreshPage(
     isRefreshing: Boolean = false,
     onRefresh: () -> Unit = {}
 ) {
-    val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
     val scrollState = rememberScrollState()
-
+    val refreshState = rememberPullToRefreshState()
     val scrollOrNot: Modifier.() -> Modifier = {
         if (roster.isEmpty()) verticalScroll(scrollState) else this
     }
 
-    Box(
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = onRefresh,
         modifier = Modifier
             .fillMaxSize()
-            .pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
-            .scrollOrNot()
+            //.pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
+            .scrollOrNot(),
+        state = refreshState,
+        indicator =  {
+            if (isPaginationAvailable) {
+                Indicator(
+                    isRefreshing = isRefreshing,
+                    state = refreshState,
+                    modifier = Modifier.align(Alignment.TopCenter)
+                )
+            }
+        }
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -165,14 +176,6 @@ private fun RefreshPage(
                     onEndList = onEndList
                 )
             }
-        }
-
-        if (isPaginationAvailable) {
-            PullRefreshIndicator(
-                refreshing = isRefreshing,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
         }
     }
 }
