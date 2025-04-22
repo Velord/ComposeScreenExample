@@ -8,7 +8,7 @@ import io.ktor.http.path
 import org.koin.core.annotation.Provided
 import org.koin.core.annotation.Single
 
-interface NetworkMovieService {
+interface MovieNetworkService {
     suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse
 }
 
@@ -16,9 +16,9 @@ private const val AUTHORIZATION_HEADER = "Authorization"
 private const val BEARER = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiOGJhNDk4ZGFiOTUzYmZhYzVhMTI4YzQ0ZWM2ZSIsIm5iZiI6MTcyMTMzNTMzOC4yMDgxMzYsInN1YiI6IjY2OTk3ZDE0OTU3YjM2NWNjOGZkNzIwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VoVoq1XiABNy-3i8BUe-WXvg7Sp5AjDfrF-yFMmh1eM"
 
 @Single
-class NetworkNetworkMovieServiceImpl(
+class MovieNetworkServiceImpl(
     @Provided private val client: BaseHttpClient
-) : NetworkMovieService {
+) : MovieNetworkService {
 
     override suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse {
         val url = "/3/discover/movie"
