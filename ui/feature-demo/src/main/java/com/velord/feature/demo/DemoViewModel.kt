@@ -1,10 +1,13 @@
 package com.velord.feature.demo
 
+import android.util.Log
+import androidx.lifecycle.viewModelScope
 import com.velord.navigation.fragment.NavigationDataFragment
 import com.velord.navigation.voyager.NavigationDataVoyager
 import com.velord.navigation.voyager.SharedScreenVoyager
 import com.velord.resource.R
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
@@ -26,6 +29,23 @@ class DemoViewModel : CoroutineScopeViewModel() {
 
     init {
         observe()
+
+        viewModelScope.launch {
+            launch {
+                Log.d("@@@", "Hello")
+                delay(100)
+                Log.d("@@@", "World")
+            }
+
+            try {
+                launch {
+                    delay(50)
+                    throw Exception()
+                }
+            } catch (e: Exception) {
+                Log.d("@@@", "Exception caught")
+            }
+        }
     }
 
     fun onAction(action: DemoUiAction) {
