@@ -89,8 +89,8 @@ private fun Content(onAction: (DemoUiAction) -> Unit) {
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        OpenButton(text = stringResource(
-            id = R.string.open_shape_demo),
+        OpenButton(
+            text = stringResource(id = R.string.open_shape_demo),
             onClick = { onAction(DemoUiAction.OpenShapeClick) }
         )
         OpenButton(

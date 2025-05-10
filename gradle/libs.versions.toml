@@ -1,10 +1,10 @@
 [versions]
 # API
 minApi = "26"
-targetApi = "35"
+targetApi = "36"
 # Build
 buildTools = "30.0.3"
-gradle = "8.9.2"
+gradle = "8.10.0"
 jvmTarget = "17"
 jetifier = "1.0.0-beta10"
 # DI
@@ -49,8 +49,8 @@ androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha02"
 androidxBrowser = "1.8.0"
 ## Camera
-androidxCamera = "1.5.0-alpha06"
-androidxCameraMedia3 = "1.0.0-alpha01"
+androidxCamera = "1.5.0-beta01"
+androidxCameraMedia3 = "1.0.0-alpha03"
 androidxCameraViewFinder = "1.4.0-alpha13"
 ## C
 androidxCarApp = "1.4.0"
@@ -76,12 +76,12 @@ androidxCoreUWB = "1.0.0-alpha10"
 androidxCredentials = "1.5.0"
 androidxCursorAdapter = "1.0.0"
 # AndroidX CustomView
-androidxCustomView = "1.1.0"
-androidxCustomViewPollingContainer = "1.0.0"
+androidxCustomView = "1.2.0"
+androidxCustomViewPollingContainer = "1.1.0"
 ## D
 androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
-androidxDatastore = "1.1.4"
-androidxDocumentFile = "1.0.1"
+androidxDatastore = "1.1.6"
+androidxDocumentFile = "1.1.0"
 androidxDragAndDrop = "1.0.0"
 androidxDrawerLayout = "1.2.0"
 androidxDynamicAnimation = "1.1.0"
@@ -90,7 +90,7 @@ androidxEmoji = "1.1.0"
 androidxEmoji2 = "1.5.0"
 ## E
 androidxEnterprise = "1.1.0"
-androidxExifInterface = "1.4.0"
+androidxExifInterface = "1.4.1"
 androidxFragment = "1.8.6"
 ## Games
 androidxGamesActivity = "4.0.0"
@@ -110,11 +110,11 @@ androidxGraphicsShapes = "1.0.1"
 androidxGridlayout = "1.1.0"
 ## L
 androidxLegacySupport = "1.0.0"
-androidxLifecycle = "2.8.7"
+androidxLifecycle = "2.9.0"
 ## M
 androidxMedia3 = "1.6.1"
 ## N
-androidxNavigation = "2.8.9"
+androidxNavigation = "2.9.0"
 ## AndroidX Paging
 androidxPaging = "3.3.6"
 androidxPagingCompose = "3.3.6"
@@ -122,7 +122,7 @@ androidxPagingCompose = "3.3.6"
 androidxPalette = "1.0.0" # There are no release notes for this artifact.
 androidxPercentLayout = "1.0.0"
 androidxPreference = "1.2.1"
-androidxPrint = "1.1.0-rc01"
+androidxPrint = "1.1.0"
 ## Privacy Sandbox
 androidxPrivacySandboxActivity = "1.0.0-alpha01"
 androidxPrivacySandboxAds = "1.1.0-beta12"
@@ -140,9 +140,9 @@ androidxRecyclerViewSelection = "1.1.0"
 ## R
 androidxRemoteCallback = "1.0.0-alpha02"
 androidxResourceInspection = "1.0.1"
-androidxRoom = "2.7.0"
+androidxRoom = "2.7.1"
 ## S
-androidxSavedState = "1.2.1"
+androidxSavedState = "1.3.0"
 ## Security
 androidxSecurityCrypto = "1.1.0-alpha07"
 androidxSecurityAppAuthenticator = "1.0.0-beta01"
@@ -154,7 +154,7 @@ androidxSlice = "1.1.0-alpha02"
 androidxSliceKtx = "1.0.0-alpha08"
 ## S
 androidxSlidingPaneLayout = "1.2.0"
-androidxSqlite = "2.5.0"
+androidxSqlite = "2.5.1"
 androidxStartup = "1.2.0"
 androidxSwipeRefreshLayout = "1.1.0"
 ## T
@@ -174,12 +174,12 @@ androidxTestServices = "1.5.0"
 androidxTestUiAutomator = "2.3.0"
 ## T
 androidxTextClassifier = "1.0.0-alpha04"
-androidxTracing = "1.2.0"
-androidxTransition = "1.5.1"
+androidxTracing = "1.3.0"
+androidxTransition = "1.6.0"
 ## TV
 androidxTvFoundation = "1.0.0-alpha12"
 androidxTvMaterial = "1.1.0-alpha01"
-androidxTvProvider = "1.1.0-beta01"
+androidxTvProvider = "1.1.0"
 ## V
 ## Vector Drawable
 androidxVectorDrawable = "1.2.0"
@@ -206,13 +206,14 @@ androidxWebkit = "1.13.0"
 androidxWindow = "1.3.0"
 androidxWindowExtension = "1.0.0"
 ## W
-androidxWorkManager = "2.10.0"
+androidxWorkManager = "2.10.1"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.10.0"
 ktor = "3.1.0"
 # Compose
-composeDefault = "1.7.8" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.8.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeIcon = "1.7.8"
 composeAccompanist = "0.37.2"
 # composeCompiler = "1.5.14"
 composeMaterial3 = "1.3.2"
@@ -517,8 +518,8 @@ compose-foundation = { module = "androidx.compose.foundation:foundation", versio
 compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "composeDefault" }
 # Compose Material 2
 compose-material = { module = "androidx.compose.material:material", version.ref = "composeDefault" }
-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "composeDefault" }
-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeDefault" }
+compose-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "composeIcon" }
+compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeIcon" }
 # Compose Material 3
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 compose-material3-window = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "composeMaterial3" }

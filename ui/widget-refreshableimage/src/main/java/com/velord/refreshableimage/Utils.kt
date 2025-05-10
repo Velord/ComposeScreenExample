@@ -43,7 +43,6 @@ internal fun Context.getUriForFileThanGrantPermissionThanGetUriPath(url: String)
 private fun Context.createAuthorityForFile(): String =
     "${applicationContext.packageName}.fileprovider"
 
-
 private const val STRING_LENGTH = 6
 private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 internal fun randomStringByKotlinRandom() = (1..STRING_LENGTH)
