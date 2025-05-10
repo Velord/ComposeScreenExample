@@ -15,7 +15,7 @@ plugins {
 // When app incompatible with previous version change this value
 val globalVersion = 1
 // When you create huge feature(or many) release change this value
-val majorVersion = 0
+val majorVersion = 1
 // When you create feature release change this value
 val minorVersion = 0
 // When you create fix change this value
@@ -54,7 +54,7 @@ android {
             useSupportLibrary = true
         }
 
-        resourceConfigurations += listOf("en")
+        androidResources.localeFilters += listOf("en")
     }
 
     buildTypes {
@@ -92,6 +92,7 @@ android {
                 majorVersion * 10000 +
                 minorVersion * 1000 +
                 fixVersion * 100
+
         create("develop") {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = false
@@ -99,7 +100,7 @@ android {
             buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
             buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
 
-            resourceConfigurations += listOf("en", "xxxhdpi")
+            resourceConfigurations.add("xxxhdpi")
         }
         create("qa") {
             dimension = "environment"

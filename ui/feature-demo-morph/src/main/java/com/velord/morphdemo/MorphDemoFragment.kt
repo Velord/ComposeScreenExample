@@ -229,6 +229,6 @@ private fun Title(text: String) {
 
 @Preview
 @Composable
-private fun MorphDemoPreview() {
+private fun Preview() {
     Content()
 }
