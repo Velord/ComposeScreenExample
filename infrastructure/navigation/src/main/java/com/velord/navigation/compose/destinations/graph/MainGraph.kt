@@ -6,11 +6,11 @@ import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
 import com.velord.bottomnavigation.screen.compose.BottomNavigationScreen
 import com.velord.bottomnavigation.screen.compose.BottomNavigator
-import com.velord.navigation.compose.destinations.DefaultTransitions
+import com.velord.navigation.compose.destinations.transition.PopScaleOutTransition
 
 private const val MAIN_GRAPH = "main_nav_graph"
 @NavHostGraph(
-    defaultTransitions = DefaultTransitions::class,
+    defaultTransitions = PopScaleOutTransition::class,
     route = MAIN_GRAPH,
     visibility = CodeGenVisibility.PUBLIC
 )

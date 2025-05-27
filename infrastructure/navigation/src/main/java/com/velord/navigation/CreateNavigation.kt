@@ -12,6 +12,7 @@ import com.ramcosta.composedestinations.navigation.dependency
 import com.velord.bottomnavigation.screen.voyager.BottomNavigationVoyagerScreen
 import com.velord.navigation.compose.destinations.LogBackStack
 import com.velord.navigation.compose.destinations.navigator.SupremeNavigatorDestinations
+import com.velord.navigation.compose.destinations.transition.PopScaleOutTransition
 import com.velord.navigation.compose.vanilla.BottomNavigationDestinationVanilla
 import com.velord.navigation.compose.vanilla.graph.setupMainGraph
 import com.velord.navigation.compose.vanilla.navigator.SupremeNavigatorVanilla
@@ -28,7 +29,7 @@ fun CreateNavigationViaDestinations() {
         navController = navController,
         dependenciesContainerBuilder = {
             dependency(navigator)
-        }
+        },
     )
 }
 
@@ -43,6 +44,7 @@ fun CreateNavigationViaVanilla() {
     NavHost(
         navController = navController,
         startDestination = BottomNavigationDestinationVanilla,
+        popExitTransition = { PopScaleOutTransition.scaleOut }
     ) {
         setupMainGraph(navigator)
     }

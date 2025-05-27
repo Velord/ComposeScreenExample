@@ -21,7 +21,7 @@ val minorVersion = 0
 // When you create fix change this value
 val fixVersion = 0
 // When you create quick fix from master branch change this value
-val hotfixVersion = 2
+val hotfixVersion = 0
 // Based on current CI BUILD_NUMBER
 val buildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull() ?: hotfixVersion
 // Doc says: max number is 2100000000
@@ -80,7 +80,7 @@ android {
             buildConfigField(
                 "com.velord.navigation.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.navigation.NavigationLib.Compose"
+                "com.velord.navigation.NavigationLib.Destinations"
             )
         }
     }

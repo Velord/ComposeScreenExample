@@ -16,6 +16,7 @@ import com.velord.flowsummator.FlowSummatorViewModel
 import com.velord.hintphonenumber.HintPhoneNumberScreen
 import com.velord.modifierdemo.ModifierDemoScreen
 import com.velord.morphdemo.MorphDemoScreen
+import com.velord.navigation.compose.destinations.transition.PopFadeTransition
 import com.velord.settings.SettingsScreen
 import com.velord.shapedemo.ShapeDemoScreen
 import com.velord.sharedviewmodel.ThemeViewModel
@@ -23,6 +24,7 @@ import org.koin.androidx.compose.koinViewModel
 
 private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
 @NavHostGraph(
+    defaultTransitions = PopFadeTransition::class,
     route = BOTTOM_NAVIGATION_GRAPH,
     visibility = CodeGenVisibility.INTERNAL
 )
