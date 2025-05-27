@@ -43,7 +43,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.velord.model.movie.Movie
 import com.velord.uicore.compose.animation.interpolator.toEasing
 import com.velord.uicore.compose.preview.PreviewCombined

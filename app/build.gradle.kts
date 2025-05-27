@@ -171,6 +171,7 @@ dependencies {
     // Other
     implementation(libs.androidx.glance.appwidget)
     // Test libs.versions.toml
+    implementation(libs.bundles.android.all)
     implementation(libs.bundles.androidx.all)
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.compose.all)

@@ -10,10 +10,10 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import coil.imageLoader
-import coil.memory.MemoryCache
-import coil.request.ErrorResult
-import coil.request.ImageRequest
+import coil3.imageLoader
+import coil3.memory.MemoryCache
+import coil3.request.ErrorResult
+import coil3.request.ImageRequest
 import java.util.concurrent.TimeUnit
 
 private const val SEED_KEY = "seed"
