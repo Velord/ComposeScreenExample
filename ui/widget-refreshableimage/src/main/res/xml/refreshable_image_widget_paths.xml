@@ -2,5 +2,5 @@
 <paths>
     <cache-path
         name="refreshable_image_widget"
-        path="image_cache" />
+        path="coil3_disk_cache" />
 </paths>

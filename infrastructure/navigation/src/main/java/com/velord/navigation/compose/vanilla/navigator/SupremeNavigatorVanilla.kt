@@ -1,5 +1,6 @@
 package com.velord.navigation.compose.vanilla.navigator
 
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
@@ -42,7 +43,8 @@ internal class SupremeNavigatorVanilla(
         NavHost(
             navController = navController,
             startDestination = DemoDestinationVanilla,
-            modifier = modifier
+            modifier = modifier,
+            popExitTransition = { fadeOut() }
         ) {
             val navigator = BottomNavigatorVanilla(this@SupremeNavigatorVanilla, navController)
             setupBottomNavigationGraph(navigator)

@@ -24,6 +24,7 @@ import com.velord.bottomnavigation.screen.compose.BottomNavigator
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.camerarecording.CameraRecordingNavigator
+import com.velord.navigation.compose.destinations.transition.PopFadeTransition
 
 internal class SupremeNavigatorDestinations(
     private val supremeNavController: NavHostController
@@ -64,6 +65,7 @@ internal class SupremeNavigatorDestinations(
             navGraph = BottomNavigationNavGraph,
             modifier = modifier,
             //start = getDirection(start), // Fixme: this is not working
+            defaultTransitions = PopFadeTransition,
             navController = navController,
             dependenciesContainerBuilder = {
                 val navigator = BottomNavigatorDestinations(

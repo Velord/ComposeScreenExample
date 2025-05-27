@@ -5,11 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.FileProvider
-import coil.imageLoader
+import coil3.imageLoader
 import kotlin.random.Random
 
 internal fun Context.getUriForFileThanGrantPermissionThanGetUriPath(url: String): String? {
-    return imageLoader.diskCache?.get(url)?.use { snapshot ->
+    return imageLoader.diskCache?.openSnapshot(url)?.use { snapshot ->
         val imageFile = snapshot.data.toFile()
         val contentUri = FileProvider.getUriForFile(
             this@getUriForFileThanGrantPermissionThanGetUriPath,

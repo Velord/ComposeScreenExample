@@ -20,11 +20,16 @@ googleKsp = "2.1.10-1.0.30"
 googleMapCompose = "6.5.0"
 googleMapUtil = "3.8.2"
 googleModernStorage = "1.0.0-alpha06"
-googleRecaptcha = "18.7.0"
+googleRecaptcha = "18.7.1"
+googlePayCompose = "1.1.0"
+googleWalletCompose = "0.1.0-beta01"
 # Google GMS/Google Play Services
+googleGmsAppSet = "16.1.0"
 googleGmsAuth = "21.3.0"
+googleGmsAuthApiPhone = "18.2.0"
 googleGmsLocation = "21.3.0"
 googleGmsMap = "19.2.0"
+googleGmsWallet = "19.4.0"
 # Kotlin
 kotlin = "2.1.10"
 kotlinCoroutine = "1.10.1"
@@ -33,13 +38,15 @@ kotlinDateTime = "0.6.1"
 # Kotlin Json Serialization
 kotlinJsonSerialization = "1.8.0"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
+## Android
+androidInstallReferrer = "2.2"
 # AndroidX
 ## A
 androidxActivity = "1.10.1"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.9.1"
 androidxAppCompat = "1.7.0"
-androidxAppSearch = "1.1.0-beta01"
+androidxAppSearch = "1.1.0-rc01"
 androidxArchCore = "2.2.0"
 androidxAsyncLayoutInflater = "1.1.0"
 androidxAutoFill = "1.1.0"
@@ -80,7 +87,7 @@ androidxCustomView = "1.2.0"
 androidxCustomViewPollingContainer = "1.1.0"
 ## D
 androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
-androidxDatastore = "1.1.6"
+androidxDatastore = "1.1.7"
 androidxDocumentFile = "1.1.0"
 androidxDragAndDrop = "1.0.0"
 androidxDrawerLayout = "1.2.0"
@@ -91,7 +98,7 @@ androidxEmoji2 = "1.5.0"
 ## E
 androidxEnterprise = "1.1.0"
 androidxExifInterface = "1.4.1"
-androidxFragment = "1.8.6"
+androidxFragment = "1.8.7"
 ## Games
 androidxGamesActivity = "4.0.0"
 androidxGamesController = "2.0.2"
@@ -112,7 +119,7 @@ androidxGridlayout = "1.1.0"
 androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.9.0"
 ## M
-androidxMedia3 = "1.6.1"
+androidxMedia3 = "1.7.1"
 ## N
 androidxNavigation = "2.9.0"
 ## AndroidX Paging
@@ -129,14 +136,14 @@ androidxPrivacySandboxAds = "1.1.0-beta12"
 androidxPrivacySandboxPlugins = "1.0.0-alpha02"
 androidxPrivacySandboxSdkRuntime = "1.0.0-alpha17"
 androidxPrivacySandboxTools = "1.0.0-alpha13"
-androidxPrivacySandboxUi = "1.0.0-alpha15"
+androidxPrivacySandboxUi = "1.0.0-alpha16"
 ## P
 androidxProfileInstaller = "1.4.1"
 ## R
 androidxRecommendation = "1.0.0"
 ## Recycler View
 androidxRecyclerView = "1.4.0"
-androidxRecyclerViewSelection = "1.1.0"
+androidxRecyclerViewSelection = "1.2.0"
 ## R
 androidxRemoteCallback = "1.0.0-alpha02"
 androidxResourceInspection = "1.0.1"
@@ -145,7 +152,7 @@ androidxRoom = "2.7.1"
 androidxSavedState = "1.3.0"
 ## Security
 androidxSecurityCrypto = "1.1.0-alpha07"
-androidxSecurityAppAuthenticator = "1.0.0-beta01"
+androidxSecurityAppAuthenticator = "1.0.0-rc01"
 androidxSecurityIdentityCredential = "1.0.0-alpha03"
 ## S
 androidxShareTarget = "1.2.0"
@@ -203,16 +210,16 @@ androidxWearWatchface = "1.2.1"
 ## W
 androidxWebkit = "1.13.0"
 ## Window
-androidxWindow = "1.3.0"
+androidxWindow = "1.4.0"
 androidxWindowExtension = "1.0.0"
 ## W
 androidxWorkManager = "2.10.1"
 # Network
 squareRetrofit = "2.9.0"
 squareOkhttp3Interceptor = "4.10.0"
-ktor = "3.1.0"
+ktor = "3.1.3"
 # Compose
-composeDefault = "1.8.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.8.2" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeIcon = "1.7.8"
 composeAccompanist = "0.37.2"
 # composeCompiler = "1.5.14"
@@ -222,15 +229,15 @@ composeHtmlIreward = "1.0.2"
 composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
-composeHaze = "0.7.3"
+composeHaze = "1.6.2"
 # Image loader
-coil = "2.2.2"
+coil = "3.2.0"
 # Permission
-sagarCoroutinePermission = "2.0.2"
+sagarCoroutinePermission = "2.0.3"
 accompanistPermission = "0.37.2"
 # Navigation
-composeDestinations = "2.1.0-beta10"
-voyager = "1.1.0-alpha02"
+composeDestinations = "2.2.0"
+voyager = "1.1.0-beta03"
 velordMultipleBackstack = "0.5.9.1"
 # Logging
 slf4j = "1.7.32"
@@ -238,13 +245,16 @@ takt = "2.1.1"
 rebugger = "1.0.0-rc03"
 # Testing
 junit = "4.13.2"
-mockk = "1.12.0"
-turbine = "0.7.0"
+mockk = "1.14.2"
+turbine = "1.2.0"
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 [libraries]
+# Android -----------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
+android-install-referrer = { module = "com.android.installreferrer:installreferrer", version.ref = "androidInstallReferrer" }
 # AndroidX -----------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 androidx-ads-identifier = { module = "androidx.ads:ads-identifier", version.ref = "androidxAds" }
@@ -562,15 +572,20 @@ gradle-compose = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin
 # Google
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 google-modernstorage = { module = "com.google.modernstorage:modernstorage-photopicker", version.ref = "googleModernStorage" }
-google-recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "googleRecaptcha" }
 google-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "googleMapUtil" }
 google-maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "googleMapCompose" }
 google-maps-compose-utils = { module = "com.google.maps.android:maps-compose-utils", version.ref = "googleMapCompose" }
 google-maps-compose-widgets = { module = "com.google.maps.android:maps-compose-widgets", version.ref = "googleMapCompose" }
+google-recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "googleRecaptcha" }
+google-wallet-compose = { module = "com.google.wallet.button:compose-wallet-button", version.ref = "googleWalletCompose" }
+google-pay-compose = { module = "com.google.pay.button:compose-pay-button", version.ref = "googlePayCompose" }
 # Google GMS/Google Play Services
+google-gms-appset = { module = "com.google.android.gms:play-services-appset", version.ref = "googleGmsAppSet" }
 google-gms-auth = { module = "com.google.android.gms:play-services-auth", version = "googleGmsAuth" }
+google-gms-auth-api-phone = { module = "com.google.android.gms:play-services-auth-api-phone", version.ref = "googleGmsAuthApiPhone" }
 google-gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "googleGmsLocation" }
 google-gms-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "googleGmsMap" }
+google-gms-wallet = { module = "com.google.android.gms:play-services-wallet", version.ref = "googleGmsWallet" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
@@ -600,8 +615,8 @@ ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", versi
 # Permission
 sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", version.ref = "sagarCoroutinePermission" }
 # Image loader
-coil = { module = "io.coil-kt:coil", version.ref = "coil" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 # Navigation
 velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
 ## Compose Destinations
@@ -633,6 +648,8 @@ mock-agent = { module = "io.mockk:mockk-agent-jvm", version.ref = "mockk" }
 # Do not mix testing library with implementation in one bundle. Create separate bundle for testing library
 # Do not include Java library when Kotlin impelementation is available
 [bundles]
+# Android
+android-all = [ "android-install-referrer" ]
 # --------------------------------------------------------------------------------------------------
 # AndroidX
 # AndroidX Activity
@@ -1087,12 +1104,16 @@ google-other = ["google-guava", "google-modernstorage", "google-recaptcha"]
 google-maps = ["google-maps-utils", "google-maps-compose", "google-maps-compose-utils"]
 # Google GMS/Google Play Services
 google-gms = [
-    "google-gms-auth", "google-gms-location", "google-gms-maps"
+    "google-gms-appset", "google-gms-auth", "google-gms-auth-api-phone",
+    "google-gms-location", "google-gms-maps", "google-gms-wallet"
 ]
+google-wallet = ["google-wallet-compose", "google-pay-compose"]
 google-all = [
     "google-guava", "google-modernstorage", "google-recaptcha",
     "google-maps-utils", "google-maps-compose", "google-maps-compose-utils",
-    "google-gms-auth", "google-gms-location", "google-gms-maps"
+    "google-gms-appset", "google-gms-auth", "google-gms-auth-api-phone",
+    "google-gms-location", "google-gms-maps", "google-gms-wallet",
+    "google-wallet-compose", "google-pay-compose"
 ]
 # --------------------------------------------------------------------------------------------------
 # Kotlin
@@ -1131,11 +1152,11 @@ network-all = [
     "kotlin-serialization-json", "kotlin-serialization-json-retrofit-converter",
     "ktor-client-core", "ktor-client-okhttp",
     "ktor-client-logging", "ktor-client-negotiation",
-    "ktor-serialization", "kotlin-serialization-json",
+    "ktor-serialization",
     "ktor-client-auth", "slf4j-android"
 ]
 # Image Loader
-coil = ["coil", "coil-compose"]
+coil = ["coil-network-ktor3", "coil-compose"]
 # --------------------------------------------------------------------------------------------------
 # Navigation
 ## Voyager
