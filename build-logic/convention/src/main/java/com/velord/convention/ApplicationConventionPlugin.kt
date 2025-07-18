@@ -11,8 +11,6 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.the
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 // Make version catalog available in precompiled scripts
 // https://github.com/gradle/gradle/issues/15383#issuecomment-1567461389
@@ -62,11 +60,6 @@ internal fun Project.configureCompose(
         dependencies {
             implementation(libs.bundles.compose.ui)
         }
-    }
-    extensions.configure<ComposeCompilerGradlePluginExtension> {
-        featureFlags.addAll(
-            ComposeFeatureFlag.OptimizeNonSkippingGroups
-        )
     }
 }
 

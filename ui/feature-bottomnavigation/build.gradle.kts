@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
-
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
@@ -55,12 +53,6 @@ dependencies {
     implementation(libs.bundles.voyager)
     // Third Party
     implementation(libs.velord.multiplebackstack)
-}
-
-composeCompiler {
-    featureFlags = setOf(
-        ComposeFeatureFlag.OptimizeNonSkippingGroups
-    )
 }
 
 ksp {
