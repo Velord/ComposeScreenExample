@@ -8,7 +8,7 @@ plugins {
 group = "com.velord.build_logic.convention"
 
 java {
-    targetCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_24
 }
 
 kotlin {

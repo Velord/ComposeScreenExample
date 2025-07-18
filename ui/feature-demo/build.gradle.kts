@@ -27,7 +27,7 @@ android {
         viewBinding = true
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_24
     }
 }
 
