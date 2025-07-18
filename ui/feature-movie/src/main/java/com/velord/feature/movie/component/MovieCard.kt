@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
@@ -42,7 +42,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
 import coil3.compose.AsyncImage
 import com.velord.model.movie.Movie
 import com.velord.uicore.compose.animation.interpolator.toEasing
@@ -67,35 +66,22 @@ internal fun MovieCard(
         ),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
     ) {
-        ConstraintLayout(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min)
+                .height(IntrinsicSize.Min),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            val (asyncImage, text) = createRefs()
             AsyncImage(
                 model = movie.imageUrl,
                 contentDescription = "Movie Image",
-                modifier = Modifier
-                    .sizeIn(maxWidth = 64.dp)
-                    .constrainAs(asyncImage) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        bottom.linkTo(parent.bottom)
-                    }
-                ,
+                modifier = Modifier.width(width = 64.dp),
                 contentScale = ContentScale.FillBounds
             )
 
             Box(
                 modifier = Modifier
-                    .padding(start = 72.dp)
                     .padding(vertical = 8.dp)
-                    .constrainAs(text) {
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }
                     .fillMaxWidth()
             ) {
                 Column(
