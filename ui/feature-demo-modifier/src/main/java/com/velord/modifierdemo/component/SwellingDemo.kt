@@ -1,4 +1,4 @@
-package com.velord.modifierdemo
+package com.velord.modifierdemo.component
 
 import androidx.compose.animation.core.EaseInBounce
 import androidx.compose.foundation.layout.Box
@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.velord.modifierdemo.Title
 import com.velord.uicore.utils.modifier.swelling
 
 @Composable

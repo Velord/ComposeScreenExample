@@ -3,12 +3,11 @@ package com.velord.bottomnavigation.viewmodel
 import androidx.navigation.NavDestination
 import com.velord.bottomnavigation.BottomNavEventService
 import com.velord.bottomnavigation.screen.jetpack.BottomNavigationItem
+import com.velord.core.resource.R
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
 class BottomNavigationJetpackVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeViewModel() {
@@ -18,9 +17,9 @@ class BottomNavigationJetpackVM(
     val finishAppEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     private val graphBackHandlerToTab = listOf(
-        com.velord.resource.R.id.settingsFragment to BottomNavigationItem.Settings,
-        com.velord.resource.R.id.demoFragment to BottomNavigationItem.Demo,
-        com.velord.resource.R.id.cameraRecordingFragment to BottomNavigationItem.Camera,
+        R.id.settingsFragment to BottomNavigationItem.Settings,
+        R.id.demoFragment to BottomNavigationItem.Demo,
+        R.id.cameraRecordingFragment to BottomNavigationItem.Camera,
     )
 
     fun getNavigationItems() = BottomNavigationItem.entries

@@ -1,9 +1,11 @@
 package com.velord.feature.demo
 
+import android.content.Context
+import com.velord.config.BuildConfigResolver
+import com.velord.core.resource.R
 import com.velord.navigation.fragment.NavigationDataFragment
 import com.velord.navigation.voyager.NavigationDataVoyager
 import com.velord.navigation.voyager.SharedScreenVoyager
-import com.velord.resource.R
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -15,14 +17,22 @@ sealed interface DemoUiAction {
     data object OpenMorphClick : DemoUiAction
     data object OpenHintPhoneNumberClick : DemoUiAction
     data object OpenMovieClick : DemoUiAction
+    data object OpenDialogClick : DemoUiAction
 }
 
-class DemoViewModel : CoroutineScopeViewModel() {
+
+class DemoViewModel(
+    private val context: Context,
+    private val buildConfigResolver: BuildConfigResolver
+) : CoroutineScopeViewModel() {
 
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager>()
     val navigationEventJetpack = MutableSharedFlow<NavigationDataFragment>()
     val navigationEventDestination = MutableSharedFlow<DemoDestinationNavigationEvent>()
+    val toastEvent = MutableSharedFlow<String>()
+
     private val actionFlow = MutableSharedFlow<DemoUiAction>()
+
 
     init {
         observe()
@@ -67,15 +77,29 @@ class DemoViewModel : CoroutineScopeViewModel() {
     }
 
     private fun onOpenHintPhoneNumber() = launch {
-        // TODO: Add for Jetpack
+        checkJetpackLib()
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.HintPhoneNumber))
         navigationEventDestination.emit(DemoDestinationNavigationEvent.HintPhoneNumber)
     }
 
     private fun onOpenMovie() = launch {
-        // TODO: Add for Jetpack
+        checkJetpackLib()
         navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Movie))
         navigationEventDestination.emit(DemoDestinationNavigationEvent.Movie)
+    }
+
+    private fun onOpenDialog() = launch {
+        checkJetpackLib()
+        navigationEventVoyager.emit(NavigationDataVoyager(SharedScreenVoyager.Demo.Dialog))
+        navigationEventDestination.emit(DemoDestinationNavigationEvent.Dialog)
+    }
+
+    private suspend fun checkJetpackLib() {
+        val lib = buildConfigResolver.getNavigationLib()
+        if (lib.isJetpack) {
+            val str = context.getString(R.string.this_demo_is_deprecated, lib.name)
+            toastEvent.emit(str)
+        }
     }
 
     private fun observe() {
@@ -88,6 +112,7 @@ class DemoViewModel : CoroutineScopeViewModel() {
                     DemoUiAction.OpenMorphClick -> onOpenMorph()
                     DemoUiAction.OpenHintPhoneNumberClick -> onOpenHintPhoneNumber()
                     DemoUiAction.OpenMovieClick -> onOpenMovie()
+                    DemoUiAction.OpenDialogClick -> onOpenDialog()
                 }
             }
         }

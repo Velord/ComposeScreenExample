@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.uicore"
+    namespace = "com.velord.core.ui"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 

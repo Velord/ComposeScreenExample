@@ -6,7 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.navigation"
+    namespace = "com.velord.core.navigation"
+
     compileSdk = libs.versions.targetApi.get().toInt()
 
     defaultConfig {

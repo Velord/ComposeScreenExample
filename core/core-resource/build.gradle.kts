@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.resource"
+    namespace = "com.velord.core.resource"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 

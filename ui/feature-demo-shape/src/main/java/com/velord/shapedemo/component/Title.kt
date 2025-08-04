@@ -1,4 +1,4 @@
-package com.velord.shapedemo
+package com.velord.shapedemo.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme

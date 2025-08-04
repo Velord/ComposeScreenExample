@@ -2,6 +2,7 @@ package com.velord.navigation.compose.destinations.navigator
 
 import android.util.Log
 import androidx.navigation.NavHostController
+import com.ramcosta.composedestinations.generated.navigation.destinations.DialogDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.FlowSummatorDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.HintPhoneNumberDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.ModifierDemoDestinationDestination
@@ -30,6 +31,7 @@ internal class BottomNavigatorDestinations(
             DemoDestinationNavigationEvent.Morph -> MorphDemoDestinationDestination
             DemoDestinationNavigationEvent.HintPhoneNumber -> HintPhoneNumberDestinationDestination
             DemoDestinationNavigationEvent.Movie -> MovieDestinationDestination
+            DemoDestinationNavigationEvent.Dialog -> DialogDestinationDestination
         }
         navController.toDestinationsNavigator().navigate(dest)
     }

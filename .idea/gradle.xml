@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/domain/usecase-movie" />
             <option value="$PROJECT_DIR$/domain/usecase-setting" />
             <option value="$PROJECT_DIR$/infrastructure" />
+            <option value="$PROJECT_DIR$/infrastructure/config" />
             <option value="$PROJECT_DIR$/infrastructure/di" />
             <option value="$PROJECT_DIR$/infrastructure/navigation" />
             <option value="$PROJECT_DIR$/infrastructure/util" />
@@ -35,6 +36,7 @@
             <option value="$PROJECT_DIR$/ui/feature-bottomnavigation" />
             <option value="$PROJECT_DIR$/ui/feature-camerarecording" />
             <option value="$PROJECT_DIR$/ui/feature-demo" />
+            <option value="$PROJECT_DIR$/ui/feature-demo-dialog" />
             <option value="$PROJECT_DIR$/ui/feature-demo-hintphonenumber" />
             <option value="$PROJECT_DIR$/ui/feature-demo-modifier" />
             <option value="$PROJECT_DIR$/ui/feature-demo-morph" />

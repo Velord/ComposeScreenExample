@@ -37,3 +37,6 @@ internal object ShapeDemoDestinationVanilla
 
 @Serializable
 internal object MovieDestinationVanilla
+
+@Serializable
+internal object DialogDestinationVanilla

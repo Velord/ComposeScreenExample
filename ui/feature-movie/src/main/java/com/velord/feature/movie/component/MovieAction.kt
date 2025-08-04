@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.velord.core.resource.R
 import com.velord.uicore.compose.preview.PreviewCombined
 
 @Composable
@@ -46,7 +47,7 @@ internal fun BoxScope.MovieAction(
             onClick = onSortClick,
             modifier = Modifier,
             text = {
-                Text(stringResource(id = com.velord.resource.R.string.sort_by))
+                Text(stringResource(id = R.string.sort_by))
             },
             icon = {
                 Icon(
@@ -60,7 +61,7 @@ internal fun BoxScope.MovieAction(
             onClick = onFilterClick,
             modifier = Modifier,
             text = {
-                Text(stringResource(id = com.velord.resource.R.string.filter_by))
+                Text(stringResource(id = R.string.filter_by))
             },
             icon = {
                 Icon(

@@ -35,11 +35,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.velord.core.resource.R
 import com.velord.feature.movie.model.MovieFilterOptionUI
 import com.velord.feature.movie.model.MovieSortOptionUI
 import com.velord.feature.movie.viewModel.MovieUiAction
 import com.velord.feature.movie.viewModel.MovieUiState
-import com.velord.resource.R
 import com.velord.uicore.compose.preview.PreviewCombined
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

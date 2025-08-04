@@ -7,6 +7,7 @@ plugins {
 
 android {
     namespace = "com.velord.feature.demo"
+
     compileSdk = libs.versions.targetApi.get().toInt()
 
     defaultConfig {
@@ -32,11 +33,14 @@ android {
 }
 
 dependencies {
-    // Modules
+    // Modules Infrastructure
     implementation(project(":infrastructure:util"))
+    implementation(project(":infrastructure:config"))
+    // Modules Core
     implementation(project(":core:core-resource"))
     implementation(project(":core:core-navigation"))
     implementation(project(":core:core-ui"))
+    // Modules Ui
     implementation(project(":ui:sharedviewmodel"))
     implementation(project(":ui:feature-bottomnavigation"))
     // Templates

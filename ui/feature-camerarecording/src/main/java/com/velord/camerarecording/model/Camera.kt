@@ -20,7 +20,7 @@ import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.PreviewView
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
-import com.velord.resource.R
+import com.velord.core.resource.R
 import com.velord.util.file.FileName
 import com.velord.util.file.NewFile
 import com.velord.util.file.OutputDirectory

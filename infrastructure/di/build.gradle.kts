@@ -29,6 +29,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":infrastructure:config"))
+    // Module Infrastructure
     // Module Domain
     implementation(project(":domain:usecase-setting"))
     implementation(project(":domain:usecase-movie"))
@@ -48,6 +50,7 @@ dependencies {
     implementation(project(":ui:feature-splash"))
     implementation(project(":ui:feature-flowsummator"))
     implementation(project(":ui:feature-movie"))
+    implementation(project(":ui:feature-demo-dialog"))
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)

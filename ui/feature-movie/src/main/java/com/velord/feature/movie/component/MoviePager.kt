@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.core.resource.R
 import com.velord.feature.movie.viewModel.AllMovieUiAction
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieUiAction
@@ -152,7 +153,7 @@ private fun RefreshPage(
             if (isDataExausted) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        text = stringResource(id = com.velord.resource.R.string.all_movies),
+                        text = stringResource(id = R.string.all_movies),
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp)

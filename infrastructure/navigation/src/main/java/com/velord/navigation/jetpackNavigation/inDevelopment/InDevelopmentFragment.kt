@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.velord.resource.R
+import com.velord.core.resource.R
 import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.activityNavController
 import com.velord.util.fragment.viewLifecycleScope
@@ -26,6 +26,8 @@ import kotlinx.coroutines.launch
 
 class InDevelopmentFragment : Fragment() {
 
+    // For Koin use `by viewModel<InDevelopmentViewModel>()`
+    // Add libs to build.gradle.kts:
     private val viewModel by viewModels<InDevelopmentViewModel>()
 
     override fun onCreateView(

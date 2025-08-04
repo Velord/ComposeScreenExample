@@ -23,8 +23,8 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.velord.bottomnavigation.screen.compose.BottomBar
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
+import com.velord.core.resource.R
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
-import com.velord.resource.R
 import com.velord.util.context.getActivity
 
 private fun BottomNavigationItem.toTab(): BottomNavigationTab = when (this) {

@@ -1,6 +1,8 @@
 package com.velord.di
 
+import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.camerarecording.CameraRecordingViewModel
+import com.velord.dialogDemo.DialogDemoViewModel
 import com.velord.feature.demo.DemoViewModel
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
@@ -15,10 +17,12 @@ val viewModelModule = module {
     // VieModel that can not be instantiated here has their own module DI
     viewModel { ThemeViewModel(get(), get(), get(), get()) }
     viewModel { SplashViewModel() }
-    viewModel { DemoViewModel() }
+    viewModel { DemoViewModel(get(), get()) }
     viewModel { FlowSummatorViewModel() }
     viewModel { MovieViewModel(get(), get()) }
     viewModel { AllMovieViewModel(get(), get(), get(), get()) }
     viewModel { FavoriteMovieViewModel(get(), get()) }
     viewModel { CameraRecordingViewModel(get()) }
+    viewModel { BottomNavigationJetpackVM(get()) }
+    viewModel { DialogDemoViewModel() }
 }
