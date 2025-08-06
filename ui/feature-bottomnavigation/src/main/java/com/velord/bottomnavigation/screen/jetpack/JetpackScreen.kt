@@ -17,8 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
+import com.velord.core.resource.R
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
-import com.velord.resource.R
 import com.velord.uicore.compose.component.AnimatableLabeledIcon
 import com.velord.uicore.compose.preview.PreviewCombined
 

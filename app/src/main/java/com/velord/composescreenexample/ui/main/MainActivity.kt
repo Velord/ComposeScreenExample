@@ -17,10 +17,10 @@ import androidx.navigation.fragment.NavHostFragment
 import com.velord.composescreenexample.BuildConfig
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
+import com.velord.config.NavigationLib
 import com.velord.navigation.CreateNavigationViaDestinations
 import com.velord.navigation.CreateNavigationViaVanilla
 import com.velord.navigation.CreateNavigationViaVoyager
-import com.velord.navigation.NavigationLib
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashScreen
 import com.velord.splash.SplashViewModel
@@ -28,6 +28,7 @@ import com.velord.splash.installSplash
 import com.velord.uicore.utils.setContentWithTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.velord.navigation.R as RNavigation
 
 class MainActivity : AppCompatActivity() {
 
@@ -127,8 +128,8 @@ class MainActivity : AppCompatActivity() {
                 ?: supportFragmentManager.fragments[0] as NavHostFragment
 
         val controller = navHostFragment.navController
-        //val graph = controller.navInflater.inflate(RNavigation.navigation.main_navigation)
-        //controller.graph = graph
+        val graph = controller.navInflater.inflate(RNavigation.navigation.main_nav_graph)
+        controller.graph = graph
 
         if (destination != null) {
             controller.navigate(destination, bundle)

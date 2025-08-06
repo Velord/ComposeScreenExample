@@ -62,9 +62,9 @@ android {
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
             buildConfigField(
-                "com.velord.navigation.NavigationLib",
+                "com.velord.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.navigation.NavigationLib.Destinations"
+                "com.velord.config.NavigationLib.Destinations"
             )
         }
         named("release") {
@@ -76,9 +76,9 @@ android {
             )
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
             buildConfigField(
-                "com.velord.navigation.NavigationLib",
+                "com.velord.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.navigation.NavigationLib.Destinations"
+                "com.velord.config.NavigationLib.Destinations"
             )
         }
     }
@@ -140,6 +140,7 @@ dependencies {
     implementation(project(":infrastructure:util"))
     implementation(project(":infrastructure:navigation"))
     implementation(project(":infrastructure:di"))
+    implementation(project(":infrastructure:config"))
     // Module Core
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-navigation"))

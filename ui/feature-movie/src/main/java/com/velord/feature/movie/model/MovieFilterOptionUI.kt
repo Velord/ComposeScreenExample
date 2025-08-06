@@ -2,9 +2,9 @@ package com.velord.feature.movie.model
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.State
+import com.velord.core.resource.R
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.MovieFilterOption
-import com.velord.resource.R
 
 data class MovieFilterOptionUI(
     val type: FilterType,

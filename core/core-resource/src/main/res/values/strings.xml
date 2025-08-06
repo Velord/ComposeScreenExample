@@ -70,7 +70,7 @@
     <string name="filter_by">Filter by</string>
     <string name="filter_by_rating">Filter by rating</string>
     <string name="filter_by_vote_count">Filter by vote count</string>
-    <string name="open_movie">Open movie</string>
+    <string name="open_movie">Open Movie</string>
     <string name="all_movies">All movies with this filters are loaded</string>
     <string name="info_description_movie">Test Task for android candidates\n
 \n
@@ -118,4 +118,11 @@
     </string>
     <string name="range">Range: %1s</string>
     <string name="info_description_movie_url">https://github.com/AppSci/android-test-task?tab=readme-ov-file</string>
+    <string name="open_dialog">Open Dialog Demo</string>
+    <string name="this_demo_is_deprecated">This demo is Deprecated on this navigation lib: %s</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="ok">Ok</string>
+    <string name="show_two_buttons_dialog">Show two buttons dialog</string>
+    <string name="show_one_button_dialog">Show one button dialog</string>
 </resources>

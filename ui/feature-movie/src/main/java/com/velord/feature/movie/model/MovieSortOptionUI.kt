@@ -1,9 +1,9 @@
 package com.velord.feature.movie.model
 
 import androidx.annotation.StringRes
+import com.velord.core.resource.R
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
-import com.velord.resource.R
 
 data class MovieSortOptionUI(
     val type: SortType,

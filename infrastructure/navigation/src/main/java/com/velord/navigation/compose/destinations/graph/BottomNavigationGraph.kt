@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
+import com.velord.dialogDemo.DialogDemoScreen
+import com.velord.dialogDemo.DialogDemoViewModel
 import com.velord.feature.demo.DemoNavigator
 import com.velord.feature.demo.DemoScreen
 import com.velord.feature.demo.DemoViewModel
@@ -85,4 +87,11 @@ internal fun MovieDestination() {
     val allMovieViewModel = koinViewModel<AllMovieViewModel>()
     val favoriteMovieViewModel = koinViewModel<FavoriteMovieViewModel>()
     MovieScreen(viewModel, allMovieViewModel, favoriteMovieViewModel)
+}
+
+@Destination<BottomNavigationGraph>
+@Composable
+internal fun DialogDestination() {
+    val viewModel = koinViewModel<DialogDemoViewModel>()
+    DialogDemoScreen(viewModel)
 }

@@ -4,8 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Camera
 import androidx.compose.material.icons.outlined.Hexagon
 import androidx.compose.material.icons.outlined.Settings
+import com.velord.core.resource.R
 import com.velord.multiplebackstackapplier.MultipleBackstackGraphItem
-import com.velord.resource.R
 
 enum class BottomNavigationItem(
     override val navigationGraphId: Int,

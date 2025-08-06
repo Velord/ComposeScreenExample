@@ -9,7 +9,6 @@ plugins {
 
 android {
     namespace = "com.velord.navigation"
-    compileSdk = 34
 
     compileSdk = libs.versions.targetApi.get().toInt()
 
@@ -35,6 +34,7 @@ dependencies {
     // Module
     implementation(project(":model"))
     implementation(project(":infrastructure:util"))
+    implementation(project(":infrastructure:config"))
     // Module Core
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-navigation"))
@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":ui:feature-demo-modifier"))
     implementation(project(":ui:feature-demo-morph"))
     implementation(project(":ui:feature-demo-hintphonenumber"))
+    implementation(project(":ui:feature-demo-dialog"))
     implementation(project(":ui:feature-flowsummator"))
     implementation(project(":ui:feature-movie"))
     // Templates

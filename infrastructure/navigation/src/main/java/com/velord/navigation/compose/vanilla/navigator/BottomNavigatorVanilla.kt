@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.feature.demo.DemoDestinationNavigationEvent
 import com.velord.feature.demo.DemoNavigator
+import com.velord.navigation.compose.vanilla.DialogDestinationVanilla
 import com.velord.navigation.compose.vanilla.FlowSummatorDestinationVanilla
 import com.velord.navigation.compose.vanilla.HintPhoneDestinationVanilla
 import com.velord.navigation.compose.vanilla.ModifierDestinationVanilla
@@ -29,6 +30,7 @@ internal class BottomNavigatorVanilla(
             DemoDestinationNavigationEvent.Morph -> MorphDemoDestinationVanilla
             DemoDestinationNavigationEvent.HintPhoneNumber -> HintPhoneDestinationVanilla
             DemoDestinationNavigationEvent.Movie -> MovieDestinationVanilla
+            DemoDestinationNavigationEvent.Dialog -> DialogDestinationVanilla
         }
         navController.navigate(dest)
     }

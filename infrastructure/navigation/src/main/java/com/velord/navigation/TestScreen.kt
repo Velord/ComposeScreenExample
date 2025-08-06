@@ -61,5 +61,5 @@ private fun Content(
 @Preview
 @Composable
 private fun Preview() {
-    Content(title = com.velord.resource.R.string.settings)
+    Content(title = com.velord.core.resource.R.string.settings)
 }

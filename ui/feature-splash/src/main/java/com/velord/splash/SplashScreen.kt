@@ -39,8 +39,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.core.resource.R
 import com.velord.model.settings.SpecialTheme
-import com.velord.resource.R
 import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.LocalTheme
 

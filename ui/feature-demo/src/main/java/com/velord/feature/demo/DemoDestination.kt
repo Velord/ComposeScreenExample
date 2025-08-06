@@ -6,7 +6,8 @@ enum class DemoDestinationNavigationEvent {
     FlowSummator,
     Morph,
     HintPhoneNumber,
-    Movie
+    Movie,
+    Dialog,
 }
 
 interface DemoNavigator {
