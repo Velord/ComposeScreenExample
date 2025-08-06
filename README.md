@@ -12,9 +12,9 @@ To use different Navigation library need to change in ```build.gradle.kts``` at 
 
 ```
 buildConfigField(    
-    "com.velord.buildconfig.NavigationLib",
+    "com.velord.config.NavigationLib",
     "NAVIGATION_LIB",
-    "com.velord.buildconfig.NavigationLib.{Voyager}" or "Jetpack" or "Destinations" or "Compose"
+    "com.velord.config.NavigationLib.{Voyager}" or "Jetpack" or "Destinations" or "Compose"
 )
 ```
 
