@@ -27,7 +27,135 @@ import com.velord.dialogDemo.component.DialogAnimations
 import com.velord.dialogDemo.component.DialogPredefinedAnimation
 import com.velord.dialogDemo.component.OneButtonDialog
 import com.velord.dialogDemo.component.TwoButtonDialog
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.suspendCoroutine
+import kotlin.math.max
+import kotlin.random.Random
 
+class GeminiRequestProcessor {
+
+    fun proceed(request: String, callback: (ResponseGemini) -> Unit) {
+        Thread.sleep(1000)
+        val length = Random.nextInt(max(request.length * 3, 9)) + 1
+        val answer = generateAnswer(length).replaceFirstChar { it.uppercase() }
+        callback(ResponseGemini(answer))
+    }
+
+    private val words = listOf(
+        "lorem", "ipsum", "dolor", "sit", "amet", "consectetur",
+        "adipiscing", "elit", "sed", "do", "eiusmod", "tempor",
+        "incididunt", "ut", "labore", "et", "dolore", "magna", "aliqua"
+    )
+
+    private fun generateAnswer(wordCount: Int): String {
+        return (1..wordCount)
+            .map { words.random() }
+            .joinToString(" ")
+    }
+
+    data class ResponseGemini(val answer: String)
+}
+
+class ChatgptRequestProcessor {
+
+    fun proceed(request: String): ResponseChatGpt {
+        Thread.sleep(2000)
+        val length = Random.nextInt(max(request.length * 3, 9)) + 1
+        val answer = generateAnswer(length).replaceFirstChar { it.uppercase() }
+        return ResponseChatGpt(answer)
+    }
+
+    private val words = listOf(
+        "galaxy", "throw", "travel", "drive", "melon", "swim", "read", "dance",
+        "black", "peach", "write", "cat", "jump", "apple", "couch", "blackhole",
+        "run", "chair", "elephant", "truck", "to",
+    )
+
+    private fun generateAnswer(wordCount: Int): String {
+        return (1..wordCount)
+            .map { words.random() }
+            .joinToString(" ")
+    }
+
+    data class ResponseChatGpt(val answer: String)
+}
+
+class AlphaRequestProcessor {
+
+    fun proceed(request: String) = flow {
+        val length = Random.nextInt(max(request.length * 3, 9)) + 1
+        (1..length).map {
+            emit(words.random())
+            Thread.sleep(100)
+        }
+    }
+
+    private val words = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+}
+
+data class ResponseProcessor(
+    val answerGemini: String? = null,
+    val answerChatGpt: String? = null,
+    val answerAlpha: String? = null
+)
+
+suspend fun wrapper(proc: GeminiRequestProcessor): String = suspendCoroutine {  cont ->
+    proc.proceed("request") {
+        cont.resumeWith(Result.success(it.answer))
+    }
+}
+
+interface A {
+    suspend fun proceed(request: String): String
+}
+
+class Processor(
+    val fds: List<String>
+) : CoroutineScope{
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO + SupervisorJob()
+
+    val flows = MutableStateFlow<List<ResponseProcessor>>(emptyList())
+
+    fun process(request: String) {
+        launch {
+//            fds.map {
+//                async {
+//                    it.proceed(request)
+//                }
+//            }.awaitAll().joinToString()
+        }
+    }
+}
+
+//fun main2() = runBlocking {
+//    val sdf = Processor(
+//        gemini = GeminiRequestProcessor(),
+//        chatgpt = ChatgptRequestProcessor(),
+//        alpha = AlphaRequestProcessor()
+//    )
+//
+//    launch {
+//        sdf.process("What is the meaning of life?")
+//    }
+//
+//    sdf.flows.collect { responses ->
+//        println("Collected responses: $responses")
+//    }
+//
+//    Unit
+//}
 
 @Composable
 fun DialogDemoScreen(viewModel: DialogDemoViewModel) {
@@ -55,6 +183,8 @@ fun DialogDemoScreen(viewModel: DialogDemoViewModel) {
             mainBox = DialogPredefinedAnimation.Default()
         )
     )
+
+
 }
 
 @Composable
@@ -105,4 +235,76 @@ private fun ShapeDemoPreview() {
     Content(
         onAction = {}
     )
+}
+
+private val handler = CoroutineExceptionHandler { _, throwable ->
+    println("CoroutineExceptionHandler: ${throwable.message}")
+}
+private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default + handler)
+
+fun main() = runBlocking {
+    scope.async(handler) {
+        error("Top level async error")
+    }.await()
+
+//    scope.launch {
+//        launch {
+//            launch {
+//                launch {
+//                    launch {
+//                        launch(handler + Job()) {
+//                            delay(100L)
+//                            error("This is an error in nested launch block")
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        async(Job() + handler) { // Even Job creates new coroutine scope, handler is ignored by async
+//            error("This is an error in async block")
+//        }
+//    }
+//
+//    scope.launch(handler) {
+//        coroutineScope {
+//            async {
+//                error("coroutineScope This is an error in async block outside of launch")
+//            }
+//        }
+//    }
+//    scope.launch {
+//        launch {
+//            launch(handler) {
+//                launch {
+//                    supervisorScope {
+//                        launch {
+//                            error("supervisorScope launch outside of main scope")
+//                        }
+//                        launch {
+//                            launch {
+//                                async {
+//                                    delay(100L)
+//                                    error("supervisorScope async outside of main scope")
+//                                }.await()
+//                            }
+//                        }
+//
+//                        launch {
+//                            withContext(handler + Dispatchers.IO) {
+//                                error("withContext error in block outside of launch")
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        withContext(handler + Dispatchers.IO) {
+//            //error("withContext !!!!!!! error in block outside of launch")
+//        }
+//    }
+
+    delay(10000L)
+    Unit
 }
