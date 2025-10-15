@@ -36,7 +36,7 @@ data class DialogAnimations(
 ) {
     companion object {
         val Default = DialogAnimations(
-            mainBox = DialogPredefinedAnimation.FadeAndSlide.Default,
+            mainBox = DialogPredefinedAnimation.Default(),
             background = DialogPredefinedAnimation.Fade.Default
         )
     }

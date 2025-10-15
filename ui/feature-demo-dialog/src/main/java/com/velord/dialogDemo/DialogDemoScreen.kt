@@ -52,7 +52,7 @@ fun DialogDemoScreen(viewModel: DialogDemoViewModel) {
             viewModel.onAction(DialogDemoUiAction.OneButtonDialogDismiss)
         },
         animation = DialogAnimations.Default.copy(
-            mainBox = DialogPredefinedAnimation.Default()
+            mainBox = DialogPredefinedAnimation.Fade.Default
         )
     )
 }
