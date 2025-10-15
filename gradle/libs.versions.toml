@@ -1,25 +1,24 @@
 [versions]
-
 # API
 minApi = "26"
 targetApi = "36"
 # Build
 buildTools = "30.0.3"
-gradle = "8.10.1"
+gradle = "8.13.0"
 jvmTarget = "24"
 jetifier = "1.0.0-beta10"
 # DI
-dagger = "2.57"
-hilt = "2.57"
-hiltNavigation = "1.3.0-alpha02"
-hiltNavigationCompose = "1.3.0-alpha02"
+dagger = "2.57.2"
+hilt = "2.57.2"
+hiltNavigation = "1.3.0"
+hiltNavigationCompose = "1.3.0"
 koinBom = "4.1.0"
 koinKsp = "2.1.0"
 # Google
-googleGuava = "33.3.1-android"
-googleKsp = "2.2.0-2.0.2"
-googleMapCompose = "6.5.0"
-googleMapUtil = "3.8.2"
+googleGuava = "33.5.0-android"
+googleKsp = "2.2.20-2.0.3"
+googleMapCompose = "6.12.1"
+googleMapUtil = "3.19.0"
 googleModernStorage = "1.0.0-alpha06"
 googleRecaptcha = "18.7.1"
 googlePayCompose = "1.1.0"
@@ -27,23 +26,24 @@ googleWalletCompose = "0.1.0-beta01"
 # Google GMS/Google Play Services
 googleGmsAppSet = "16.1.0"
 googleGmsAuth = "21.3.0"
-googleGmsAuthApiPhone = "18.2.0"
+googleGmsAuthApiPhone = "18.3.0"
+googleGmsBase = "18.9.0"
 googleGmsLocation = "21.3.0"
 googleGmsMap = "19.2.0"
-googleGmsWallet = "19.4.0"
+googleGmsWallet = "19.5.0"
 # Kotlin
-kotlin = "2.2.0"
+kotlin = "2.2.20"
 kotlinCoroutine = "1.10.2"
-kotlinCollectionsImmutable = "0.3.8"
+kotlinCollectionsImmutable = "0.4.0"
 kotlinDateTime = "0.7.1"
 # Kotlin Json Serialization
-kotlinJsonSerialization = "1.8.0"
+kotlinJsonSerialization = "1.9.0"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
 ## Android
 androidInstallReferrer = "2.2"
 # AndroidX
 ## A
-androidxActivity = "1.10.1"
+androidxActivity = "1.11.0"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.9.1"
 androidxAppCompat = "1.7.1"
@@ -52,14 +52,14 @@ androidxArchCore = "2.2.0"
 androidxAsyncLayoutInflater = "1.1.0"
 androidxAutoFill = "1.3.0"
 ## B
-androidxBenchmark = "1.3.4"
+androidxBenchmark = "1.4.1"
 androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha02"
-androidxBrowser = "1.8.0"
+androidxBrowser = "1.9.0"
 ## Camera
-androidxCamera = "1.5.0-beta02"
-androidxCameraMedia3 = "1.0.0-alpha03"
-androidxCameraViewFinder = "1.4.0-alpha13"
+androidxCamera = "1.5.1"
+androidxCameraMedia3 = "1.0.0-alpha04"
+androidxCameraViewFinder = "1.5.1"
 ## C
 androidxCarApp = "1.7.0"
 androidXCardView = "1.0.0"
@@ -72,7 +72,7 @@ androidxConstraintCompose = "1.1.1"
 androidxContentPager = "1.0.0"
 androidxCoordinatorLayout = "1.3.0"
 ## Core
-androidxCore = "1.16.0"
+androidxCore = "1.17.0"
 androidxCoreAnimation = "1.0.0"
 androidxCoreGoogleShortcuts = "1.1.0"
 androidxCorePerformance = "1.0.0"
@@ -95,21 +95,21 @@ androidxDrawerLayout = "1.2.0"
 androidxDynamicAnimation = "1.1.0"
 ## Emoji
 androidxEmoji = "1.1.0"
-androidxEmoji2 = "1.5.0"
+androidxEmoji2 = "1.6.0"
 ## E
 androidxEnterprise = "1.1.0"
 androidxExifInterface = "1.4.1"
-androidxFragment = "1.8.8"
+androidxFragment = "1.8.9"
 ## Games
 androidxGamesActivity = "4.0.0"
 androidxGamesController = "2.0.2"
-androidxGamesFramePacing = "2.1.2"
+androidxGamesFramePacing = "2.1.3"
 androidxGamesMemoryAdvice = "2.0.1"
 androidxGamesTextInput = "4.0.0"
 androidxGamesPerformanceTuner = "2.0.0"
 ## Glance
 androidxGlance = "1.1.1"  # For Glance, AppWidgets
-androidxGlanceWearTiles = "1.0.0-alpha05"
+androidxGlanceWearTiles = "1.0.0-alpha07"
 ## Graphics
 androidxGraphicsCore = "1.0.3"
 androidxGraphicsPath = "1.0.1"
@@ -118,11 +118,11 @@ androidxGraphicsShapes = "1.0.1"
 androidxGridlayout = "1.1.0"
 ## L
 androidxLegacySupport = "1.0.0"
-androidxLifecycle = "2.9.2"
+androidxLifecycle = "2.9.4"
 ## M
-androidxMedia3 = "1.7.1"
+androidxMedia3 = "1.8.0"
 ## N
-androidxNavigation = "2.9.2"
+androidxNavigation = "2.9.5"
 ## AndroidX Paging
 androidxPaging = "3.3.6"
 androidxPagingCompose = "3.3.6"
@@ -148,12 +148,12 @@ androidxRecyclerViewSelection = "1.2.0"
 ## R
 androidxRemoteCallback = "1.0.0-alpha02"
 androidxResourceInspection = "1.0.1"
-androidxRoom = "2.7.2"
+androidxRoom = "2.8.2"
 ## S
-androidxSavedState = "1.3.1"
+androidxSavedState = "1.3.3"
 ## Security
-androidxSecurityCrypto = "1.1.0-beta01"
-androidxSecurityAppAuthenticator = "1.0.0-rc01"
+androidxSecurityCrypto = "1.1.0"
+androidxSecurityAppAuthenticator = "1.0.0"
 androidxSecurityIdentityCredential = "1.0.0-alpha03"
 ## S
 androidxShareTarget = "1.2.0"
@@ -162,23 +162,23 @@ androidxSlice = "1.1.0-alpha02"
 androidxSliceKtx = "1.0.0-alpha08"
 ## S
 androidxSlidingPaneLayout = "1.2.0"
-androidxSqlite = "2.5.2"
+androidxSqlite = "2.6.1"
 androidxStartup = "1.2.0"
 androidxSwipeRefreshLayout = "1.1.0"
 ## T
 ## Test
 androidxTestAnnotation = "1.0.1"
-androidxTestCore = "1.6.1"
-androidxTestEspresso = "3.6.1"
-androidxTestEspressoDevice = "1.0.1"
-androidxTestExtJunit = "1.2.1"
+androidxTestCore = "1.7.0"
+androidxTestEspresso = "3.7.0"
+androidxTestEspressoDevice = "1.1.0"
+androidxTestExtJunit = "1.3.0"
 androidxTestExtJunitGtest = "1.0.0-alpha02"
-androidxTestExtTruth = "1.6.0"
-androidxTestMonitor = "1.7.2"
-androidxTestOrchestrator = "1.5.1"
-androidxTestRunner = "1.6.2"
-androidxTestRules = "1.6.1"
-androidxTestServices = "1.5.0"
+androidxTestExtTruth = "1.7.0"
+androidxTestMonitor = "1.8.0"
+androidxTestOrchestrator = "1.6.1"
+androidxTestRunner = "1.7.0"
+androidxTestRules = "1.7.0"
+androidxTestServices = "1.6.0"
 androidxTestUiAutomator = "2.3.0"
 ## T
 androidxTextClassifier = "1.0.0-alpha04"
@@ -200,54 +200,54 @@ androidxViewPager2 = "1.1.0"
 ## W
 ## Wear
 androidxWear = "1.3.0"
-androidxWearInput = "1.1.0" # For Input, Input Testing
-androidxWearOngoing = "1.0.0"
+androidxWearInput = "1.2.0" # For Input, Input Testing
+androidxWearOngoing = "1.1.0"
 androidxWearPhone = "1.1.0"
 androidxWearRemote = "1.1.0"
-androidxWearCompose = "1.4.1"
+androidxWearCompose = "1.5.3"
 androidxWearProtoLayout = "1.3.0"
 androidxWearTiles = "1.5.0"
 androidxWearWatchface = "1.2.1"
 ## W
 androidxWebkit = "1.14.0"
 ## Window
-androidxWindow = "1.4.0"
+androidxWindow = "1.5.0"
 androidxWindowExtension = "1.0.0"
 ## W
-androidxWorkManager = "2.10.2"
+androidxWorkManager = "2.10.5"
 # Network
-squareRetrofit = "2.9.0"
-squareOkhttp3Interceptor = "4.10.0"
-ktor = "3.1.3"
+squareRetrofit = "3.0.0"
+squareOkhttp3Interceptor = "5.2.1"
+ktor = "3.3.1"
 # Compose
-composeDefault = "1.8.3" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.9.3" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeIcon = "1.7.8"
-composeAccompanist = "0.37.2"
+composeAccompanist = "0.37.3"
 # composeCompiler = "1.5.14"
-composeMaterial3 = "1.3.2"
+composeMaterial3 = "1.4.0"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
 composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
-composeHaze = "1.6.2"
+composeHaze = "1.6.10"
 # Image loader
-coil = "3.2.0"
+coil = "3.3.0"
 # Permission
 sagarCoroutinePermission = "2.0.3"
 accompanistPermission = "0.37.2"
 # Navigation
-composeDestinations = "2.2.0"
+composeDestinations = "2.3.0"
 voyager = "1.1.0-beta03"
 velordMultipleBackstack = "0.5.9.1"
 # Logging
-slf4j = "1.7.32"
+slf4j = "1.7.36"
 takt = "2.1.1"
-rebugger = "1.0.0-rc03"
+rebugger = "1.0.1"
 # Testing
 junit = "4.13.2"
-mockk = "1.14.2"
-turbine = "1.2.0"
+mockk = "1.14.6"
+turbine = "1.2.1"
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
@@ -584,6 +584,7 @@ google-pay-compose = { module = "com.google.pay.button:compose-pay-button", vers
 google-gms-appset = { module = "com.google.android.gms:play-services-appset", version.ref = "googleGmsAppSet" }
 google-gms-auth = { module = "com.google.android.gms:play-services-auth", version = "googleGmsAuth" }
 google-gms-auth-api-phone = { module = "com.google.android.gms:play-services-auth-api-phone", version.ref = "googleGmsAuthApiPhone" }
+google-gms-base = { module = "com.google.android.gms:play-services-base", version.ref = "googleGmsBase" }
 google-gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "googleGmsLocation" }
 google-gms-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "googleGmsMap" }
 google-gms-wallet = { module = "com.google.android.gms:play-services-wallet", version.ref = "googleGmsWallet" }
@@ -1106,13 +1107,15 @@ google-maps = ["google-maps-utils", "google-maps-compose", "google-maps-compose-
 # Google GMS/Google Play Services
 google-gms = [
     "google-gms-appset", "google-gms-auth", "google-gms-auth-api-phone",
-    "google-gms-location", "google-gms-maps", "google-gms-wallet"
+    "google-gms-base",
+    "google-gms-location", "google-gms-maps", "google-gms-wallet",
 ]
 google-wallet = ["google-wallet-compose", "google-pay-compose"]
 google-all = [
     "google-guava", "google-modernstorage", "google-recaptcha",
     "google-maps-utils", "google-maps-compose", "google-maps-compose-utils",
     "google-gms-appset", "google-gms-auth", "google-gms-auth-api-phone",
+    "google-gms-base",
     "google-gms-location", "google-gms-maps", "google-gms-wallet",
     "google-wallet-compose", "google-pay-compose"
 ]
