@@ -171,6 +171,8 @@ dependencies {
     implementation(libs.bundles.compose.thirdparty)
     implementation(libs.bundles.logging)
     implementation(libs.bundles.google.all)
+    implementation(libs.bundles.google.firebase)
+    implementation(platform(libs.google.firebase.bom))
 }
 
 // Making “Optimised Out” Variables Visible in the IDE

@@ -1,6 +1,7 @@
 package com.velord.modifierdemo.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.velord.modifierdemo.Title
+import com.velord.uicore.compose.preview.PreviewCombined
 import com.velord.uicore.utils.modifier.shimmering
 
 private fun Modifier.default(): Modifier = this
@@ -192,4 +194,12 @@ private fun ReverseRainbow() {
             ),
         textAlign = TextAlign.Center
     )
+}
+
+@PreviewCombined
+@Composable
+private fun Preview() {
+    Column {
+        ShimmeringDemo()
+    }
 }

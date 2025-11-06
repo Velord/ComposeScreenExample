@@ -1,4 +1,4 @@
-package com.velord.uicore.compose.theme.shape
+package com.velord.uicore.compose.shape
 
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Matrix
