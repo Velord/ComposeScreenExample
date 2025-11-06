@@ -27,7 +27,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +45,7 @@ import androidx.graphics.shapes.star
 import com.velord.uicore.compose.animation.interpolator.toEasing
 import com.velord.uicore.compose.path.toComposePath
 import com.velord.uicore.compose.polygon.heart
-import com.velord.uicore.compose.theme.shape.MorphShape
+import com.velord.uicore.compose.shape.MorphShape
 
 @Composable
 fun MorphDemoScreen() {
@@ -83,9 +82,9 @@ private fun ColumnScope.TriangleToStar() {
     val interactionSource = remember {
         MutableInteractionSource()
     }
-    val isPressed by interactionSource.collectIsPressedAsState()
+    val isPressedState = interactionSource.collectIsPressedAsState()
     val animatedProgress = animateFloatAsState(
-        targetValue = if (isPressed) 1f else 0f,
+        targetValue = if (isPressedState.value) 1f else 0f,
         label = "TriangleToStar progress",
         animationSpec = spring(dampingRatio = 0.4f, stiffness = Spring.StiffnessMedium)
     )

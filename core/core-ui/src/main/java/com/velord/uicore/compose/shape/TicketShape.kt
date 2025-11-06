@@ -1,4 +1,4 @@
-package com.velord.uicore.compose.theme.shape
+package com.velord.uicore.compose.shape
 
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.ui.graphics.Shape

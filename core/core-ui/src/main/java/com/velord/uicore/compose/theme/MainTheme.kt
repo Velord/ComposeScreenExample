@@ -14,9 +14,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.velord.model.settings.AndroidThemeConfig
 import com.velord.model.settings.SpecialTheme
+import com.velord.uicore.compose.shape.MainShapes
 import com.velord.uicore.compose.theme.color.DarkColorScheme
 import com.velord.uicore.compose.theme.color.LightColorScheme
-import com.velord.uicore.compose.theme.shape.MainShapes
 import com.velord.uicore.utils.defineScrimAndDarkScrimColorForSystemBar
 
 private fun SpecialTheme.toColorScheme(): ColorScheme = when (this) {
