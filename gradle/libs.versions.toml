@@ -14,25 +14,31 @@ hiltNavigation = "1.3.0"
 hiltNavigationCompose = "1.3.0"
 koinBom = "4.1.0"
 koinKsp = "2.1.0"
-# Google
+# Google Firebase
+googleFirebaseBom = "34.5.0"
+googleFirebaseCrashlyticPlugin = "3.0.6"
+# Google Other
 googleGuava = "33.5.0-android"
 googleKsp = "2.2.20-2.0.3"
 googleMapCompose = "6.12.1"
-googleMapUtil = "3.19.0"
+googleMapUtil = "3.19.1"
 googleModernStorage = "1.0.0-alpha06"
-googleRecaptcha = "18.7.1"
+googleRecaptcha = "18.7.1" # 18.8.0 requires core library desugaring to be enabled
 googlePayCompose = "1.1.0"
 googleWalletCompose = "0.1.0-beta01"
 # Google GMS/Google Play Services
 googleGmsAppSet = "16.1.0"
-googleGmsAuth = "21.3.0"
+googleGmsAuth = "21.4.0"
 googleGmsAuthApiPhone = "18.3.0"
 googleGmsBase = "18.9.0"
 googleGmsLocation = "21.3.0"
 googleGmsMap = "19.2.0"
+googleGmsMlKit = "19.0.1"
+googleGmsVision = "20.1.3"
+googleGmsServicesPlugin = "4.4.4"
 googleGmsWallet = "19.5.0"
 # Kotlin
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 kotlinCoroutine = "1.10.2"
 kotlinCollectionsImmutable = "0.4.0"
 kotlinDateTime = "0.7.1"
@@ -78,7 +84,7 @@ androidxCoreGoogleShortcuts = "1.1.0"
 androidxCorePerformance = "1.0.0"
 androidxCoreRomoteViews = "1.1.0"
 androidxCoreRole = "1.1.0"
-androidxCoreSplashScreen = "1.0.1"
+androidxCoreSplashScreen = "1.2.0"
 androidxCoreUWB = "1.0.0-alpha10"
 ## C
 androidxCredentials = "1.5.0"
@@ -113,7 +119,7 @@ androidxGlanceWearTiles = "1.0.0-alpha07"
 ## Graphics
 androidxGraphicsCore = "1.0.3"
 androidxGraphicsPath = "1.0.1"
-androidxGraphicsShapes = "1.0.1"
+androidxGraphicsShapes = "1.1.0"
 ## G
 androidxGridlayout = "1.1.0"
 ## L
@@ -122,7 +128,7 @@ androidxLifecycle = "2.9.4"
 ## M
 androidxMedia3 = "1.8.0"
 ## N
-androidxNavigation = "2.9.5"
+androidxNavigation = "2.9.6"
 ## AndroidX Paging
 androidxPaging = "3.3.6"
 androidxPagingCompose = "3.3.6"
@@ -148,9 +154,9 @@ androidxRecyclerViewSelection = "1.2.0"
 ## R
 androidxRemoteCallback = "1.0.0-alpha02"
 androidxResourceInspection = "1.0.1"
-androidxRoom = "2.8.2"
+androidxRoom = "2.8.3"
 ## S
-androidxSavedState = "1.3.3"
+androidxSavedState = "1.4.0"
 ## Security
 androidxSecurityCrypto = "1.1.0"
 androidxSecurityAppAuthenticator = "1.0.0"
@@ -204,7 +210,7 @@ androidxWearInput = "1.2.0" # For Input, Input Testing
 androidxWearOngoing = "1.1.0"
 androidxWearPhone = "1.1.0"
 androidxWearRemote = "1.1.0"
-androidxWearCompose = "1.5.3"
+androidxWearCompose = "1.5.5"
 androidxWearProtoLayout = "1.3.0"
 androidxWearTiles = "1.5.0"
 androidxWearWatchface = "1.2.1"
@@ -214,13 +220,13 @@ androidxWebkit = "1.14.0"
 androidxWindow = "1.5.0"
 androidxWindowExtension = "1.0.0"
 ## W
-androidxWorkManager = "2.10.5"
+androidxWorkManager = "2.11.0"
 # Network
 squareRetrofit = "3.0.0"
-squareOkhttp3Interceptor = "5.2.1"
-ktor = "3.3.1"
+squareOkhttp3Interceptor = "5.3.0"
+ktor = "3.3.2"
 # Compose
-composeDefault = "1.9.3" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.9.4" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeIcon = "1.7.8"
 composeAccompanist = "0.37.3"
 # composeCompiler = "1.5.14"
@@ -570,7 +576,12 @@ koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKsp
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-compose = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
-# Google
+# Google Firebase -----------------------------------------------------------------------------------
+google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "googleFirebaseBom" }
+google-firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+google-firebase-crashlytic = { module = "com.google.firebase:firebase-crashlytics" }
+google-firebase-analytic = { module = "com.google.firebase:firebase-analytics" }
+# Google Other ------------------------------------------------------------------------------------
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 google-modernstorage = { module = "com.google.modernstorage:modernstorage-photopicker", version.ref = "googleModernStorage" }
 google-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "googleMapUtil" }
@@ -587,6 +598,8 @@ google-gms-auth-api-phone = { module = "com.google.android.gms:play-services-aut
 google-gms-base = { module = "com.google.android.gms:play-services-base", version.ref = "googleGmsBase" }
 google-gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "googleGmsLocation" }
 google-gms-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "googleGmsMap" }
+google-gms-mlkit = { module = "com.google.android.gms:play-services-mlkit-text-recognition", version.ref = "googleGmsMlKit" }
+gogle-gms-vision = { module = "com.google.android.gms:play-services-vision", version.ref = "googleGmsVision" }
 google-gms-wallet = { module = "com.google.android.gms:play-services-wallet", version.ref = "googleGmsWallet" }
 # Kotlin --------------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
@@ -619,6 +632,7 @@ sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", versio
 # Image loader
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
 # Navigation
 velord-multiplebackstack = { module = "com.github.Velord:MultipleBackstackApplier", version.ref = "velordMultipleBackstack" }
 ## Compose Destinations
@@ -1102,21 +1116,30 @@ koin = [
 gradle = ["gradle-android", "gradle-kotlin", "gradle-compose"]
 # --------------------------------------------------------------------------------------------------
 # Google
+google-firebase = [
+    "google-firebase-analytic", "google-firebase-crashlytic", "google-firebase-messaging"
+]
 google-other = ["google-guava", "google-modernstorage", "google-recaptcha"]
-google-maps = ["google-maps-utils", "google-maps-compose", "google-maps-compose-utils"]
+google-maps = [
+    "google-maps-utils", "google-maps-compose",
+    "google-maps-compose-utils", "google-maps-compose-widgets"
+]
 # Google GMS/Google Play Services
 google-gms = [
     "google-gms-appset", "google-gms-auth", "google-gms-auth-api-phone",
-    "google-gms-base",
-    "google-gms-location", "google-gms-maps", "google-gms-wallet",
+    "google-gms-base", "google-gms-location", "google-gms-maps",
+    "google-gms-mlkit", "gogle-gms-vision",
+    "google-gms-wallet",
 ]
 google-wallet = ["google-wallet-compose", "google-pay-compose"]
 google-all = [
     "google-guava", "google-modernstorage", "google-recaptcha",
-    "google-maps-utils", "google-maps-compose", "google-maps-compose-utils",
+    "google-maps-utils", "google-maps-compose",
+    "google-maps-compose-utils", "google-maps-compose-widgets",
     "google-gms-appset", "google-gms-auth", "google-gms-auth-api-phone",
-    "google-gms-base",
-    "google-gms-location", "google-gms-maps", "google-gms-wallet",
+    "google-gms-base", "google-gms-location", "google-gms-maps",
+    "google-gms-mlkit", "gogle-gms-vision",
+    "google-gms-wallet",
     "google-wallet-compose", "google-pay-compose"
 ]
 # --------------------------------------------------------------------------------------------------
@@ -1160,7 +1183,7 @@ network-all = [
     "ktor-client-auth", "slf4j-android"
 ]
 # Image Loader
-coil = ["coil-network-ktor3", "coil-compose"]
+coil = ["coil-network-ktor3", "coil-compose", "coil-gif"]
 # --------------------------------------------------------------------------------------------------
 # Navigation
 ## Voyager
@@ -1193,5 +1216,7 @@ kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization"
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "googleKsp" }
+google-firebase-crashlytic = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlyticPlugin" }
+google-gms-services = { id = "com.google.gms.google-services", version.ref = "googleGmsServicesPlugin" }
 # Convention Plugin
 convention-application = { id = "velord.application" }
