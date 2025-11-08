@@ -49,8 +49,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.core.resource.R
-import com.velord.uicore.utils.ObserveSharedFlow
-import com.velord.uicore.utils.permission.CheckCameraAndAudioRecordPermission
+import com.velord.core.ui.utils.ObserveSharedFlow
+import com.velord.core.ui.utils.permission.CheckCameraAndAudioRecordPermission
 
 enum class CameraRecordingNavigationEvent {
     SETTINGS

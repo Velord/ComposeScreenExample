@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
@@ -57,10 +59,11 @@ dependencies {
     // Templates
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
+    implementation(libs.bundles.androidx.navigation.all)
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.coil)
     implementation(libs.bundles.kotlin.serialization)
-    // Navigation
+    // Navigation 3-rd Party
     // Navigation Voyager
     implementation(libs.bundles.voyager)
     // Navigation Compose Destinations
@@ -78,6 +81,8 @@ ksp {
     arg("compose-destinations.moduleName", "navigation")
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+tasks.withType<KotlinCompile> {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
 }

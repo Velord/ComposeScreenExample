@@ -11,7 +11,7 @@ import androidx.navigation.NavHostController
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
-import com.velord.uicore.utils.ObserveSharedFlowAsState
+import com.velord.core.ui.utils.ObserveSharedFlowAsState
 import org.koin.androidx.compose.koinViewModel
 
 interface BottomNavigator{

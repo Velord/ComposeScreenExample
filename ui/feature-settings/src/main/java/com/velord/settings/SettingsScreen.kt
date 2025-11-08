@@ -27,9 +27,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.velord.core.resource.R
+import com.velord.core.ui.utils.LocalTheme
 import com.velord.sharedviewmodel.ThemeUiAction
 import com.velord.sharedviewmodel.ThemeViewModel
-import com.velord.uicore.utils.LocalTheme
 
 @Composable
 fun SettingsScreen(viewModel: ThemeViewModel) {

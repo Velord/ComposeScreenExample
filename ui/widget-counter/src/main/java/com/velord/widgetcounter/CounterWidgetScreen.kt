@@ -29,7 +29,7 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
 import com.velord.core.resource.R
-import com.velord.uicore.compose.glance.MainGlanceTheme
+import com.velord.core.ui.compose.glance.MainGlanceTheme
 
 private fun createAction(count: Int): Action = actionRunCallback<UpdateCountCallback>(
     parameters = actionParametersOf(CounterWidget.actionParameterKey to count)

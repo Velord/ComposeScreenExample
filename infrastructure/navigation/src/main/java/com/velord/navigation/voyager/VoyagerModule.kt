@@ -13,14 +13,14 @@ import com.velord.navigation.voyager.screen.MovieVoyagerScreen
 import com.velord.navigation.voyager.screen.SettingsVoyagerScreen
 import com.velord.navigation.voyager.screen.ShapeDemoVoyagerScreen
 
-context(Application, ScreenRegistry)
+context(_: Application, _: ScreenRegistry)
 val featureMainModule: ScreenRegistry.() -> Unit get() = screenModule {
     register<SharedScreenVoyager.Test> {
         TestVoyagerScreen(it.title, it.modifier, it.onClick)
     }
 }
 
-context(Application, ScreenRegistry)
+context(_: Application, _: ScreenRegistry)
 val featureBottomNavigationModule: ScreenRegistry.() -> Unit get() = screenModule {
     register<SharedScreenVoyager.BottomNavigationTab.Camera> {
         CameraRecordingVoyagerScreen
@@ -33,7 +33,7 @@ val featureBottomNavigationModule: ScreenRegistry.() -> Unit get() = screenModul
     }
 }
 
-context(Application, ScreenRegistry)
+context(_: Application, _: ScreenRegistry)
 val featureDemoModule: ScreenRegistry.() -> Unit get() = screenModule {
     register<SharedScreenVoyager.Demo.Shape> {
         ShapeDemoVoyagerScreen

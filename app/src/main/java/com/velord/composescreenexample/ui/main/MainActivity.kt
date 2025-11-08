@@ -18,6 +18,7 @@ import com.velord.composescreenexample.BuildConfig
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
 import com.velord.config.NavigationLib
+import com.velord.core.ui.utils.setContentWithTheme
 import com.velord.navigation.CreateNavigationViaDestinations
 import com.velord.navigation.CreateNavigationViaVanilla
 import com.velord.navigation.CreateNavigationViaVoyager
@@ -25,7 +26,6 @@ import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashScreen
 import com.velord.splash.SplashViewModel
 import com.velord.splash.installSplash
-import com.velord.uicore.utils.setContentWithTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.velord.navigation.R as RNavigation

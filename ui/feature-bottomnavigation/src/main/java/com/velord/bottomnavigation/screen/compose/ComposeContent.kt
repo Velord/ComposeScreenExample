@@ -39,9 +39,9 @@ import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.core.resource.R
+import com.velord.core.ui.compose.component.AnimatableLabeledIcon
+import com.velord.core.ui.utils.ObserveSharedFlow
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
-import com.velord.uicore.compose.component.AnimatableLabeledIcon
-import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.util.context.getActivity
 
 @Composable

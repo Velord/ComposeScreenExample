@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.velord.core.resource.R
+import com.velord.core.ui.utils.setContentWithTheme
 import com.velord.navigation.TestScreen
-import com.velord.uicore.utils.setContentWithTheme
 
 class TestFragment : Fragment() {
 

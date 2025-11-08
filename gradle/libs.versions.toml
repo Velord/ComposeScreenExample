@@ -129,6 +129,7 @@ androidxLifecycle = "2.9.4"
 androidxMedia3 = "1.8.0"
 ## N
 androidxNavigation = "2.9.6"
+androidxNavigation3 = "1.0.0-rc01"
 ## AndroidX Paging
 androidxPaging = "3.3.6"
 androidxPagingCompose = "3.3.6"
@@ -390,6 +391,9 @@ androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragme
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-dynamicfeature = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "androidxNavigation" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
+# AndroidX Navigation 3
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "androidxNavigation3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "androidxNavigation3" }
 # AndroidX Media3
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
 # AndroidX Paging
@@ -754,6 +758,12 @@ androidx-navigation = [
     "androidx-navigation-fragment", "androidx-navigation-ui",
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose"
 ]
+androidx-navigation3 = [ "androidx-navigation3-runtime", "androidx-navigation3-ui" ]
+androidx-navigation-all = [
+    "androidx-navigation-fragment", "androidx-navigation-ui",
+    "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
+    "androidx-navigation3-runtime", "androidx-navigation3-ui",
+]
 # AndroidX Paging
 androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
 # AndroidX Privacy Sandbox
@@ -900,8 +910,6 @@ androidx-module = [
     "androidx-lifecycle-runtime-compose",
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-viewmodel-compose",
-    "androidx-navigation-fragment",
-    "androidx-navigation-ui",
     "androidx-transition-ktx"
 ]
 # AndroidX All
@@ -986,6 +994,7 @@ androidx-all = [
     # AndroidX Navigation
     "androidx-navigation-fragment", "androidx-navigation-ui",
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
+    "androidx-navigation3-runtime", "androidx-navigation3-ui",
     # AndroidX Paging
     "androidx-paging-runtime", "androidx-paging-compose",
     # AndroidX Privacy Sandbox
@@ -1185,7 +1194,7 @@ network-all = [
 # Image Loader
 coil = ["coil-network-ktor3", "coil-compose", "coil-gif"]
 # --------------------------------------------------------------------------------------------------
-# Navigation
+# Navigation 3-rd Party
 ## Voyager
 voyager = [
     "voyager-navigator", "voyager-screenModel",

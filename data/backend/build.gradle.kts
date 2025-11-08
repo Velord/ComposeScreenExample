@@ -43,10 +43,6 @@ dependencies {
     ksp(libs.koin.ksp)
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
-}
-
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")

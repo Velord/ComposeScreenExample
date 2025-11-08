@@ -42,10 +42,10 @@ import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.pillStar
 import androidx.graphics.shapes.star
-import com.velord.uicore.compose.animation.interpolator.toEasing
-import com.velord.uicore.compose.path.toComposePath
-import com.velord.uicore.compose.polygon.heart
-import com.velord.uicore.compose.shape.MorphShape
+import com.velord.core.ui.compose.animation.interpolator.toEasing
+import com.velord.core.ui.compose.path.toComposePath
+import com.velord.core.ui.compose.polygon.heart
+import com.velord.core.ui.compose.shape.MorphShape
 
 @Composable
 fun MorphDemoScreen() {

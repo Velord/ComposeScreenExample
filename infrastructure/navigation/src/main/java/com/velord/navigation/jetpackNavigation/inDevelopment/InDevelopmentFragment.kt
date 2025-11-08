@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.velord.core.resource.R
-import com.velord.uicore.utils.setContentWithTheme
-import com.velord.util.fragment.activityNavController
+import com.velord.core.ui.utils.setContentWithTheme
+import com.velord.navigation.fragment.util.activityNavController
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
 

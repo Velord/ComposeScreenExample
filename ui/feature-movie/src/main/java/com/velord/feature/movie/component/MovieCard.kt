@@ -43,9 +43,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.velord.core.ui.compose.animation.interpolator.toEasing
+import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.movie.Movie
-import com.velord.uicore.compose.animation.interpolator.toEasing
-import com.velord.uicore.compose.preview.PreviewCombined
 import kotlinx.coroutines.flow.filter
 import java.util.Calendar
 
