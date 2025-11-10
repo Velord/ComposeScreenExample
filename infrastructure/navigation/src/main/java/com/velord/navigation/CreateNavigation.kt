@@ -56,3 +56,20 @@ fun CreateNavigationViaVoyager() {
         SlideTransition(it)
     }
 }
+
+@Composable
+fun CreateNavigationViaNav3() {
+    val navController: NavHostController = rememberNavController()
+    val navigator = SupremeNavigatorVanilla(navController)
+
+    // Cannot call NavBackStackEntry.route() before DestinationsNavHost!
+    // LogBackStack(navController = navController, tag = "CreateNavigationViaVanilla")
+
+    NavHost(
+        navController = navController,
+        startDestination = BottomNavigationDestinationVanilla,
+        popExitTransition = { PopScaleOutTransition.scaleOut }
+    ) {
+        setupMainGraph(navigator)
+    }
+}

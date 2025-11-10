@@ -4,7 +4,8 @@ enum class NavigationLib {
     Voyager,
     Jetpack,
     Destinations,
-    Compose;
+    Compose,
+    Nav3;
 
     val isJetpack: Boolean get() = this == Jetpack
 }

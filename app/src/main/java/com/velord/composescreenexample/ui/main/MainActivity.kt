@@ -20,6 +20,7 @@ import com.velord.composescreenexample.databinding.ActivityMainBinding
 import com.velord.config.NavigationLib
 import com.velord.core.ui.utils.setContentWithTheme
 import com.velord.navigation.CreateNavigationViaDestinations
+import com.velord.navigation.CreateNavigationViaNav3
 import com.velord.navigation.CreateNavigationViaVanilla
 import com.velord.navigation.CreateNavigationViaVoyager
 import com.velord.sharedviewmodel.ThemeViewModel
@@ -102,6 +103,7 @@ class MainActivity : AppCompatActivity() {
             NavigationLib.Jetpack -> setNavGraphViaJetpack()
             NavigationLib.Destinations -> setNavGraphViaComposeDestinations()
             NavigationLib.Compose -> setNavGraphViaCompose()
+            NavigationLib.Nav3 -> setNavGraphViaNav3()
             else -> setNavGraphViaJetpack()
         }
     }
@@ -157,6 +159,19 @@ class MainActivity : AppCompatActivity() {
 
                 setContentAfterSplash {
                     CreateNavigationViaVanilla()
+                }
+            }
+        }
+    }
+
+    private fun setNavGraphViaNav3() {
+        binding?.apply {
+            navHostFragment.isVisible = false
+            mainNavHost.apply {
+                isVisible = true
+
+                setContentAfterSplash {
+                    CreateNavigationViaNav3()
                 }
             }
         }
