@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.utils.modifier.WaveSide
-import com.velord.uicore.utils.modifier.waveShape
+import com.velord.core.ui.utils.modifier.WaveSide
+import com.velord.core.ui.utils.modifier.waveShape
 
 @Composable
 internal fun WaveShapeDemo() {

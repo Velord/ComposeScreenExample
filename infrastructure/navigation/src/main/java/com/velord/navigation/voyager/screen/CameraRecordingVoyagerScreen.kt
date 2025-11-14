@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.velord.camerarecording.CameraRecordingScreen
 import com.velord.camerarecording.CameraRecordingViewModel
-import com.velord.navigation.voyager.ObserveNavigation
+import com.velord.core.navigation.voyager.ObserveNavigation
 import org.koin.androidx.compose.koinViewModel
 
-object CameraRecordingVoyagerScreen : Screen {
+internal object CameraRecordingVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {

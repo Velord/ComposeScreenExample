@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.velord.core.ui.utils.modifier.blinkingShadow
 import com.velord.modifierdemo.Title
-import com.velord.uicore.utils.modifier.blinkingShadow
 
 @Composable
 internal fun BlinkingShadowDemo() {

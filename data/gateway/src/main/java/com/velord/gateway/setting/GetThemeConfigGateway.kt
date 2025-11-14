@@ -2,7 +2,7 @@ package com.velord.gateway.setting
 
 import com.velord.appstate.AppStateService
 import com.velord.datastore.DataStoreService
-import com.velord.model.settings.ThemeConfig
+import com.velord.model.setting.ThemeConfig
 import com.velord.usecase.setting.GetThemeConfigDS
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -21,7 +21,7 @@ class GetThemeConfigGateway(
         if (isInitialized.not()) {
             isInitialized = true
             runCatching {
-                appState.themeConfigFlow.value = dataStore.getAppSettingsFlow().map { it.theme }.first()
+                appState.themeConfigFlow.value = dataStore.getAppSettingFlow().map { it.theme }.first()
             }
         }
 

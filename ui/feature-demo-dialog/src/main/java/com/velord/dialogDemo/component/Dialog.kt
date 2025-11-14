@@ -9,7 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.velord.core.resource.R
-import com.velord.uicore.compose.preview.PreviewCombined
+import com.velord.core.ui.compose.preview.PreviewCombined
 
 @Composable
 fun OneButtonDialog(

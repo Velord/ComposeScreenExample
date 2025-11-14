@@ -5,13 +5,7 @@ import androidx.navigation.NavHostController
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.feature.demo.DemoDestinationNavigationEvent
 import com.velord.feature.demo.DemoNavigator
-import com.velord.navigation.compose.vanilla.DialogDestinationVanilla
-import com.velord.navigation.compose.vanilla.FlowSummatorDestinationVanilla
-import com.velord.navigation.compose.vanilla.HintPhoneDestinationVanilla
-import com.velord.navigation.compose.vanilla.ModifierDestinationVanilla
-import com.velord.navigation.compose.vanilla.MorphDemoDestinationVanilla
-import com.velord.navigation.compose.vanilla.MovieDestinationVanilla
-import com.velord.navigation.compose.vanilla.ShapeDemoDestinationVanilla
+import com.velord.navigation.compose.vanilla.GraphVanilla
 
 internal class BottomNavigatorVanilla(
     private val parent: SupremeNavigatorVanilla,
@@ -19,18 +13,18 @@ internal class BottomNavigatorVanilla(
 ) : DemoNavigator, CameraRecordingNavigator by parent {
 
     init {
-        Log.d("LogBackStack - BottomNavigator", "init: ${this.navController}")
+        Log.d("LogBackStack - BottomNavigatorVanilla", "init: ${this.navController}")
     }
 
     override fun goTo(dest: DemoDestinationNavigationEvent) {
         val dest = when(dest) {
-            DemoDestinationNavigationEvent.Shape -> ShapeDemoDestinationVanilla
-            DemoDestinationNavigationEvent.Modifier -> ModifierDestinationVanilla
-            DemoDestinationNavigationEvent.FlowSummator -> FlowSummatorDestinationVanilla
-            DemoDestinationNavigationEvent.Morph -> MorphDemoDestinationVanilla
-            DemoDestinationNavigationEvent.HintPhoneNumber -> HintPhoneDestinationVanilla
-            DemoDestinationNavigationEvent.Movie -> MovieDestinationVanilla
-            DemoDestinationNavigationEvent.Dialog -> DialogDestinationVanilla
+            DemoDestinationNavigationEvent.Shape -> GraphVanilla.BottomTab.Demo.ShapeDemoDestinationVanilla
+            DemoDestinationNavigationEvent.Modifier -> GraphVanilla.BottomTab.Demo.ModifierDestinationVanilla
+            DemoDestinationNavigationEvent.FlowSummator -> GraphVanilla.BottomTab.Demo.FlowSummatorDestinationVanilla
+            DemoDestinationNavigationEvent.Morph -> GraphVanilla.BottomTab.Demo.MorphDemoDestinationVanilla
+            DemoDestinationNavigationEvent.HintPhoneNumber -> GraphVanilla.BottomTab.Demo.HintPhoneDestinationVanilla
+            DemoDestinationNavigationEvent.Movie -> GraphVanilla.BottomTab.Demo.MovieDestinationVanilla
+            DemoDestinationNavigationEvent.Dialog -> GraphVanilla.BottomTab.Demo.DialogDestinationVanilla
         }
         navController.navigate(dest)
     }

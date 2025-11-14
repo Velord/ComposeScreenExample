@@ -8,7 +8,7 @@ import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieViewModel
 import org.koin.androidx.compose.koinViewModel
 
-object MovieVoyagerScreen : Screen {
+internal object MovieVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {

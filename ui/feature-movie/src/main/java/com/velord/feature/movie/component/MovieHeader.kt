@@ -29,8 +29,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.feature.movie.model.MoviePage
-import com.velord.uicore.compose.preview.PreviewCombined
 
 @Composable
 internal fun MovieHeader(

@@ -33,11 +33,11 @@ android {
 }
 
 dependencies {
-    // Templates
+    // Template
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.lifecycle.runtime)
-    // Navigation
-    implementation(libs.bundles.voyager)
-    // Compose
     implementation(libs.bundles.compose.all)
+    // Lib
+    implementation(libs.bundles.voyager)
+    implementation(libs.androidx.navigation.fragment)
 }

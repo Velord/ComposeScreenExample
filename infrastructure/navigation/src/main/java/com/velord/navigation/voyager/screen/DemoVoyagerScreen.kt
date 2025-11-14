@@ -11,7 +11,7 @@ import com.velord.feature.demo.DemoScreen
 import com.velord.feature.demo.DemoViewModel
 import org.koin.androidx.compose.koinViewModel
 
-object DemoVoyagerScreen : Screen {
+internal object DemoVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {

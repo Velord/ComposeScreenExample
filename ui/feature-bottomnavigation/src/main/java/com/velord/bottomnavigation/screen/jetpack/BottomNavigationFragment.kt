@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.velord.bottomnavigation.R
 import com.velord.bottomnavigation.databinding.FragmentBottomNavigationBinding
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
+import com.velord.core.ui.utils.setContentWithTheme
 import com.velord.multiplebackstackapplier.MultipleBackstack
-import com.velord.uicore.utils.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -96,9 +96,9 @@ class BottomNavigationFragment : Fragment(R.layout.fragment_bottom_navigation) {
         initObserving()
     }
 
-    context(FragmentBottomNavigationBinding)
+    context(b: FragmentBottomNavigationBinding)
     private fun initView() {
-        bottomNavBarView.setContentWithTheme {
+        b.bottomNavBarView.setContentWithTheme {
             JetpackScreen(viewModel)
         }
     }

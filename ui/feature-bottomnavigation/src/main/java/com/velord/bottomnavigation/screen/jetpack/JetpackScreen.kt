@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.core.resource.R
+import com.velord.core.ui.compose.component.AnimatableLabeledIcon
+import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
-import com.velord.uicore.compose.component.AnimatableLabeledIcon
-import com.velord.uicore.compose.preview.PreviewCombined
 
 @Composable
 internal fun JetpackScreen(viewModel: BottomNavigationJetpackVM) {

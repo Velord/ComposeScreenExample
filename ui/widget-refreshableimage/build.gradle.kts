@@ -44,7 +44,3 @@ dependencies {
     // Compose
     implementation(libs.bundles.compose.ui)
 }
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
-}
