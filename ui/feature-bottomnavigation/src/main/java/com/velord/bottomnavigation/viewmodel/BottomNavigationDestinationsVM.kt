@@ -13,7 +13,7 @@ import org.koin.android.annotation.KoinViewModel
 enum class BottomNavigationItem {
     Camera,
     Demo,
-    Settings;
+    Setting;
 }
 
 data class TabState(

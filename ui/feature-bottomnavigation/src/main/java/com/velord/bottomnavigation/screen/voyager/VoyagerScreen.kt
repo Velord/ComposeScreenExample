@@ -30,7 +30,7 @@ import com.velord.util.context.getActivity
 private fun BottomNavigationItem.toTab(): BottomNavigationTab = when (this) {
     BottomNavigationItem.Camera -> BottomNavigationTab.Camera
     BottomNavigationItem.Demo -> BottomNavigationTab.Demo
-    BottomNavigationItem.Settings -> BottomNavigationTab.Settings
+    BottomNavigationItem.Setting -> BottomNavigationTab.Settings
 }
 
 @Composable

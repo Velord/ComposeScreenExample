@@ -13,7 +13,7 @@ internal class BottomNavigatorVanilla(
 ) : DemoNavigator, CameraRecordingNavigator by parent {
 
     init {
-        Log.d("LogBackStack - BottomNavigator", "init: ${this.navController}")
+        Log.d("LogBackStack - BottomNavigatorVanilla", "init: ${this.navController}")
     }
 
     override fun goTo(dest: DemoDestinationNavigationEvent) {

@@ -172,5 +172,5 @@ internal fun BottomBar(
 private fun BottomNavigationItem.getIcon(): ImageVector = when (this) {
     BottomNavigationItem.Camera -> Icons.Outlined.Camera
     BottomNavigationItem.Demo -> Icons.Outlined.Hexagon
-    BottomNavigationItem.Settings -> Icons.Outlined.Settings
+    BottomNavigationItem.Setting -> Icons.Outlined.Settings
 }

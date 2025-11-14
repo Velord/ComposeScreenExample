@@ -21,7 +21,6 @@ annotation class CameraRecordingGraph
 @Composable
 internal fun CameraRecordingDestination(navigator: CameraRecordingNavigator) {
     val viewModel = koinViewModel<CameraRecordingViewModel>()
-
     CameraRecordingScreen(viewModel, true) {
         when (it) {
             CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingFromCameraRecording()

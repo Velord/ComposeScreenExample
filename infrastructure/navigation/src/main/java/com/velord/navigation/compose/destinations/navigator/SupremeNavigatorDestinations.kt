@@ -11,10 +11,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.navigation.destinations.BottomNavigationSettingsDestinationDestination
-import com.ramcosta.composedestinations.generated.navigation.destinations.DemoDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.MainSettingsDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.navgraphs.BottomNavigationNavGraph
 import com.ramcosta.composedestinations.generated.navigation.navgraphs.CameraRecordingNavGraph
+import com.ramcosta.composedestinations.generated.navigation.navgraphs.DemoNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
@@ -26,25 +26,22 @@ import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.navigation.compose.destinations.transition.PopFadeTransition
 
-internal class SupremeNavigatorDestinations(
-    private val supremeNavController: NavHostController
-) : BottomNavigator, BottomTabNavigatorDestinations, CameraRecordingNavigator {
+ /*
+ * !!!
+ * Crucial to use generated classes
+ * !!!
+ */
+internal class SupremeNavigatorDestinations(private val supremeNavController: NavHostController) :
+    // BottomNavigationScreen setup
+    BottomNavigator,
+    // Bottom navigation tab click setup
+    BottomTabNavigatorDestinations,
+    // Below list of certain "Navigator" that work with supreme nav controller
+    CameraRecordingNavigator {
 
     init {
-        Log.d("LogBackStack - SupremeNavigator", "init: ${this.supremeNavController}")
+        Log.d("LogBackStack - SupremeNavigatorDestinations", "init: ${this.supremeNavController}")
     }
-
-    override fun goToSettingFromCameraRecording() {
-        supremeNavController.toDestinationsNavigator().navigate(MainSettingsDestinationDestination)
-    }
-
-    override fun getDirection(route: BottomNavigationItem): Direction = when(route) {
-        BottomNavigationItem.Camera -> CameraRecordingNavGraph
-        BottomNavigationItem.Demo -> DemoDestinationDestination
-        BottomNavigationItem.Settings -> BottomNavigationSettingsDestinationDestination
-    }
-
-    override fun getGraph(): NavHostGraphSpec = BottomNavigationNavGraph
 
     override fun onTabClick(tab: TabState, controller: NavHostController) {
         onTabClickDestinations(
@@ -68,9 +65,11 @@ internal class SupremeNavigatorDestinations(
             defaultTransitions = PopFadeTransition,
             navController = navController,
             dependenciesContainerBuilder = {
+                // Just wrapper for strong type system.
+                // Includes all "Navigator" that possible from bottom graph
                 val navigator = BottomNavigatorDestinations(
+                    parent = this@SupremeNavigatorDestinations,
                     navController = navController,
-                    parent = this@SupremeNavigatorDestinations
                 )
                 dependency(navigator)
             }
@@ -78,19 +77,27 @@ internal class SupremeNavigatorDestinations(
     }
 
     @Composable
-    override fun createBottomNavHostController(): NavHostController {
-        val navController = rememberNavController()
-        return navController
-    }
+    override fun createBottomNavHostController(): NavHostController = rememberNavController()
 
     @Composable
-    override fun createStackEntryAsState(controller: NavController): State<NavBackStackEntry?> {
-        return controller.currentBackStackEntryAsState()
+    override fun createStackEntryAsState(controller: NavController): State<NavBackStackEntry?> =
+        controller.currentBackStackEntryAsState()
+
+    override fun getDirection(route: BottomNavigationItem): Direction = when(route) {
+        BottomNavigationItem.Camera -> CameraRecordingNavGraph
+        BottomNavigationItem.Demo -> DemoNavGraph
+        BottomNavigationItem.Setting -> BottomNavigationSettingsDestinationDestination
     }
+
+    override fun getGraph(): NavHostGraphSpec = BottomNavigationNavGraph
 
     override fun getStartRoute(route: BottomNavigationItem): RouteOrDirection = when(route) {
         BottomNavigationItem.Camera -> CameraRecordingNavGraph.startRoute
-        BottomNavigationItem.Demo -> DemoDestinationDestination
-        BottomNavigationItem.Settings -> BottomNavigationSettingsDestinationDestination
+        BottomNavigationItem.Demo -> DemoNavGraph.startRoute
+        BottomNavigationItem.Setting -> BottomNavigationSettingsDestinationDestination
+    }
+
+    override fun goToSettingFromCameraRecording() {
+        supremeNavController.toDestinationsNavigator().navigate(MainSettingsDestinationDestination)
     }
 }

@@ -23,7 +23,15 @@ fun CreateNavigationViaDestinations() {
     val navigator = SupremeNavigatorDestinations(navController)
 
     LogBackStack(navController = navController, tag = "CreateNavigationViaDestinations")
-
+    /*
+    Start route is determined by below code. And this parameter @Destination<XGraph>(start = true)
+    First is MainGraph
+    That leads to BottomNavigationScreen
+    Then CreateNavHostForBottom creates new NavHost
+    That leads to BottomNavigationGraph
+    Then certain tab is start route
+    Also need to change TabState.Default to work together.
+    */
     DestinationsNavHost(
         navGraph = MainNavGraph,
         navController = navController,
@@ -65,6 +73,15 @@ fun CreateNavigationViaNav3() {
     // Cannot call NavBackStackEntry.route() before DestinationsNavHost!
     // LogBackStack(navController = navController, tag = "CreateNavigationViaVanilla")
 
+    /*
+    Start route is determined by below code. It is NOT like Destinations lib.
+    First is startDestination = GraphVanilla.Main.BottomNavigationDestinationVanilla
+    That leads to BottomNavigationScreen
+    Then CreateNavHostForBottom creates new NavHost
+    That leads to startDestination = GraphVanilla.BottomTab.Demo.Self,
+    Then certain tab is start route
+    Also need to change TabState.Default
+    */
     NavHost(
         navController = navController,
         startDestination = GraphVanilla.Main.BottomNavigationDestinationVanilla,
