@@ -10,7 +10,7 @@ import com.velord.camerarecording.CameraRecordingViewModel
 import com.velord.navigation.compose.vanilla.GraphVanilla
 import org.koin.androidx.compose.koinViewModel
 
-internal fun NavGraphBuilder.setupCameraRecordingGraph(navigator: CameraRecordingNavigator)  {
+internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraRecordingNavigator)  {
     navigation<GraphVanilla.BottomTab.CameraRecording.Self>(
         startDestination = GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla
     ) {

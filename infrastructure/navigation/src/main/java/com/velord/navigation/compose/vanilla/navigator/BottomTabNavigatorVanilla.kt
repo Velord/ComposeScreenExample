@@ -5,8 +5,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 
 interface BottomTabNavigatorVanilla {
-    fun getRouteOnTabClick(route: BottomNavigationItem): Any
-    fun getTabStartRoute(route: BottomNavigationItem): Any
+    fun getRouteOnTabClickVanilla(route: BottomNavigationItem): Any
+    fun getTabStartRouteVanilla(route: BottomNavigationItem): Any
 }
 
 internal fun onTabClickVanilla(
@@ -18,12 +18,12 @@ internal fun onTabClickVanilla(
     if (isSelected) {
         // When we click again on a bottom bar item and it was already selected
         // we want to pop the back stack until the initial destination of this bottom bar item
-        val start = navigator.getTabStartRoute(item)
+        val start = navigator.getTabStartRouteVanilla(item)
         navController.popBackStack(start, false)
         return
     }
 
-    val destination = navigator.getRouteOnTabClick(item)
+    val destination = navigator.getRouteOnTabClickVanilla(item)
     navController.navigate(destination) {
         // Pop up to the root of the graph to
         // avoid building up a large stack of destinations

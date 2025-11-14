@@ -1,12 +1,13 @@
 package com.velord.navigation.compose.vanilla.navigator
 
 import android.util.Log
+import androidx.collection.forEach
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -16,37 +17,38 @@ import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.navigation.compose.vanilla.GraphVanilla
-import com.velord.navigation.compose.vanilla.graph.setupBottomNavigationGraph
+import com.velord.navigation.compose.vanilla.graph.setupBottomNavigationGraphVanilla
 
 internal class SupremeNavigatorVanilla(private val supremeNavController: NavHostController) :
     // BottomNavigationScreen setup
     BottomNavigator,
-    // Bottom navigation tab click setup
+    // Bottom navigation tab click setup. It depends on the specific nav library.
     BottomTabNavigatorVanilla,
     // Below list of certain "Navigator" that work with supreme nav controller
     CameraRecordingNavigator {
+
+    private var bottomTabNavController: NavHostController? = null
 
     init {
         Log.d("LogBackStack - SupremeNavigatorVanilla", "init: ${this.supremeNavController}")
     }
 
-    override fun onTabClick(tab: TabState, controller: NavHostController) {
+    override fun onTabClick(tab: TabState) {
         onTabClickVanilla(
             isSelected = tab.isSame,
             item = tab.current,
-            navController = controller,
+            navController = bottomTabNavController!!,
             navigator = this,
         )
     }
 
     @Composable
     override fun CreateNavHostForBottom(
-        navController: NavHostController,
         modifier: Modifier,
         startRoute: BottomNavigationItem,
     ) {
         NavHost(
-            navController = navController,
+            navController = bottomTabNavController!!,
             startDestination = GraphVanilla.BottomTab.Demo.Self,
             modifier = modifier,
             popExitTransition = { fadeOut() }
@@ -55,26 +57,47 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
             // Includes all "Navigator" that possible from bottom graph
             val navigator = BottomNavigatorVanilla(
                 parent = this@SupremeNavigatorVanilla,
-                navController = navController
+                navController = bottomTabNavController!!
             )
-            setupBottomNavigationGraph(navigator)
+            setupBottomNavigationGraphVanilla(navigator)
         }
     }
 
     @Composable
-    override fun createBottomNavHostController(): NavHostController = rememberNavController()
+    override fun setupController(
+        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit
+    ) {
+        bottomTabNavController = rememberNavController()
+        val backStackEntry = bottomTabNavController!!.currentBackStackEntryAsState()
+        val currentDestination = backStackEntry.value?.destination
 
-    @Composable
-    override fun createStackEntryAsState(controller: NavController): State<NavBackStackEntry?> =
-        controller.currentBackStackEntryAsState()
+        LaunchedEffect(currentDestination) {
+            if (currentDestination == null) return@LaunchedEffect
+            val nodes = mutableListOf<NavDestination>()
 
-    override fun getRouteOnTabClick(route: BottomNavigationItem): Any = when(route) {
+            bottomTabNavController!!.graph.nodes.forEach { _, value ->
+                nodes.add(value)
+            }
+            val startDestinationRoster = nodes.map {
+                when (it) {
+                    is NavGraph -> it.startDestinationRoute
+                    else -> it.route
+                }
+            }
+            updateBackHandling(
+                startDestinationRoster,
+                currentDestination.route
+            )
+        }
+    }
+
+    override fun getRouteOnTabClickVanilla(route: BottomNavigationItem): Any = when(route) {
         BottomNavigationItem.Camera -> GraphVanilla.BottomTab.CameraRecording.Self
         BottomNavigationItem.Demo -> GraphVanilla.BottomTab.Demo.Self
         BottomNavigationItem.Setting -> GraphVanilla.BottomTab.SettingDestinationVanilla
     }
 
-    override fun getTabStartRoute(route: BottomNavigationItem): Any = when(route) {
+    override fun getTabStartRouteVanilla(route: BottomNavigationItem): Any = when(route) {
         BottomNavigationItem.Camera -> GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla
         BottomNavigationItem.Demo -> GraphVanilla.BottomTab.Demo.DemoDestinationVanilla
         BottomNavigationItem.Setting -> GraphVanilla.BottomTab.SettingDestinationVanilla

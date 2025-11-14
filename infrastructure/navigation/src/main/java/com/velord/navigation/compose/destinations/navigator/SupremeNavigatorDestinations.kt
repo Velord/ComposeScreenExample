@@ -1,11 +1,12 @@
 package com.velord.navigation.compose.destinations.navigator
 
 import android.util.Log
+import androidx.collection.forEach
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -26,38 +27,40 @@ import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.navigation.compose.destinations.transition.PopFadeTransition
 
- /*
- * !!!
- * Crucial to use generated classes
- * !!!
- */
+/*
+* !!!
+* It is crucial to use generated classes
+* !!!
+*/
 internal class SupremeNavigatorDestinations(private val supremeNavController: NavHostController) :
-    // BottomNavigationScreen setup
+// BottomNavigationScreen setup
     BottomNavigator,
-    // Bottom navigation tab click setup
+    // Bottom navigation tab click setup. It depends on the specific nav library.
     BottomTabNavigatorDestinations,
     // Below list of certain "Navigator" that work with supreme nav controller
     CameraRecordingNavigator {
+
+    private var bottomTabNavController: NavHostController? = null
 
     init {
         Log.d("LogBackStack - SupremeNavigatorDestinations", "init: ${this.supremeNavController}")
     }
 
-    override fun onTabClick(tab: TabState, controller: NavHostController) {
+    override fun onTabClick(tab: TabState) {
         onTabClickDestinations(
             isSelected = tab.isSame,
             item = tab.current,
-            destinationNavigator = controller.toDestinationsNavigator(),
+            destinationNavigator = bottomTabNavController!!.toDestinationsNavigator(),
             navigator = this,
         )
     }
 
     @Composable
     override fun CreateNavHostForBottom(
-        navController: NavHostController,
         modifier: Modifier,
         start: BottomNavigationItem
     ) {
+        val navController = bottomTabNavController!!
         DestinationsNavHost(
             navGraph = BottomNavigationNavGraph,
             modifier = modifier,
@@ -77,11 +80,32 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
     }
 
     @Composable
-    override fun createBottomNavHostController(): NavHostController = rememberNavController()
+    override fun setupController(
+        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit
+    ) {
+        bottomTabNavController = rememberNavController()
+        val backStackEntry = bottomTabNavController!!.currentBackStackEntryAsState()
+        val currentDestination = backStackEntry.value?.destination
 
-    @Composable
-    override fun createStackEntryAsState(controller: NavController): State<NavBackStackEntry?> =
-        controller.currentBackStackEntryAsState()
+        LaunchedEffect(currentDestination) {
+            if (currentDestination == null) return@LaunchedEffect
+            val nodes = mutableListOf<NavDestination>()
+
+            bottomTabNavController!!.graph.nodes.forEach { _, value ->
+                nodes.add(value)
+            }
+            val startDestinationRoster = nodes.map {
+                when (it) {
+                    is NavGraph -> it.startDestinationRoute
+                    else -> it.route
+                }
+            }
+            updateBackHandling(
+                startDestinationRoster,
+                currentDestination.route
+            )
+        }
+    }
 
     override fun getDirection(route: BottomNavigationItem): Direction = when(route) {
         BottomNavigationItem.Camera -> CameraRecordingNavGraph

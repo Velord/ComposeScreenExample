@@ -8,9 +8,9 @@ import com.velord.setting.SettingScreen
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
-internal fun NavGraphBuilder.setupBottomNavigationGraph(navigator: BottomNavigatorVanilla) {
-    setupCameraRecordingGraph(navigator)
-    setupDemoGraph(navigator)
+internal fun NavGraphBuilder.setupBottomNavigationGraphVanilla(navigator: BottomNavigatorVanilla) {
+    setupCameraRecordingGraphVanilla(navigator)
+    setupDemoGraphVanilla(navigator)
 
     composable<GraphVanilla.BottomTab.SettingDestinationVanilla> {
         val viewModel = koinViewModel<ThemeViewModel>()

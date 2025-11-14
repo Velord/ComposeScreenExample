@@ -1,6 +1,5 @@
 package com.velord.bottomnavigation.viewmodel
 
-import androidx.navigation.NavDestination
 import com.velord.bottomnavigation.BottomNavEventService
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.channels.BufferOverflow
@@ -64,9 +63,9 @@ class BottomNavigationDestinationsVM(
 
     fun updateBackHandling(
         startDestinationRoster: List<String?>,
-        dest: NavDestination?
+        currentRoute: String?
     ) {
-        val isStart = startDestinationRoster.contains(dest?.route)
+        val isStart = startDestinationRoster.contains(currentRoute)
         val newState = backHandlingStateFlow.value.copy(isAtStartGraphDestination = isStart)
         bottomNavEventService.updateBackHandlingState(newState)
     }

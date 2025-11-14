@@ -21,7 +21,7 @@ import com.velord.navigation.compose.vanilla.GraphVanilla
 import com.velord.shapedemo.ShapeDemoScreen
 import org.koin.androidx.compose.koinViewModel
 
-internal fun NavGraphBuilder.setupDemoGraph(navigator: DemoNavigator) {
+internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
     navigation<GraphVanilla.BottomTab.Demo.Self>(startDestination = GraphVanilla.BottomTab.Demo.DemoDestinationVanilla) {
         composable<GraphVanilla.BottomTab.Demo.DemoDestinationVanilla> {
             val viewModel = koinViewModel<DemoViewModel>()

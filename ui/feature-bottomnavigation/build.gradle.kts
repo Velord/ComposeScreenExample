@@ -52,7 +52,7 @@ dependencies {
     implementation(libs.bundles.koin)
     implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
-    // Lib
+    // Lib. Only Jetpack Navigation based on Fragment depends on it.
     implementation(libs.androidx.navigation.ui)
     // Third Party
     implementation(libs.velord.multiplebackstack)

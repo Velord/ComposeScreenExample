@@ -1,4 +1,4 @@
-package com.velord.navigation.compose.destinations
+package com.velord.navigation.compose
 
 import android.annotation.SuppressLint
 import android.util.Log

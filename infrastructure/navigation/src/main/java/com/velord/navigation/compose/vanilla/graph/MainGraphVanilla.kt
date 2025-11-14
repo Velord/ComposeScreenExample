@@ -9,7 +9,7 @@ import com.velord.setting.SettingScreen
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
-internal fun NavGraphBuilder.setupMainGraph(navigator: SupremeNavigatorVanilla)  {
+internal fun NavGraphBuilder.setupMainGraphVanilla(navigator: SupremeNavigatorVanilla)  {
     composable<GraphVanilla.Main.BottomNavigationDestinationVanilla> {
         BottomNavigationScreen(navigator = navigator)
     }
