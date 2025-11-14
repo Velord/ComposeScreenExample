@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.velord.core.navigation.fragment.entryPoint.SETTINGS_SOURCE
+import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.ui.utils.setContentWithTheme
 import com.velord.navigation.R
-import com.velord.navigation.fragment.entryPoint.SETTINGS_SOURCE
-import com.velord.navigation.fragment.entryPoint.SettingsSourceFragment
 
 class SettingsGraphFragment : Fragment() {
 

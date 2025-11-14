@@ -1,4 +1,4 @@
-package com.velord.navigation.voyager
+package com.velord.core.navigation.voyager
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle

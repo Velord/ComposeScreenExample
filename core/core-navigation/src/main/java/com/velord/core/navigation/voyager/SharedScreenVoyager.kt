@@ -1,4 +1,4 @@
-package com.velord.navigation.voyager
+package com.velord.core.navigation.voyager
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.Modifier

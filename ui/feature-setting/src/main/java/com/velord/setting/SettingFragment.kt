@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.velord.bottomnavigation.screen.jetpack.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
+import com.velord.core.navigation.fragment.entryPoint.SETTINGS_SOURCE
+import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.ui.utils.setContentWithTheme
-import com.velord.navigation.fragment.entryPoint.SETTINGS_SOURCE
-import com.velord.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

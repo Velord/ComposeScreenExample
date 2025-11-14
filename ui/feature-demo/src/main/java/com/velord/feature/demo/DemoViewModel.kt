@@ -2,10 +2,10 @@ package com.velord.feature.demo
 
 import android.content.Context
 import com.velord.config.BuildConfigResolver
+import com.velord.core.navigation.fragment.NavigationDataFragment
+import com.velord.core.navigation.voyager.NavigationDataVoyager
+import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
-import com.velord.navigation.fragment.NavigationDataFragment
-import com.velord.navigation.voyager.NavigationDataVoyager
-import com.velord.navigation.voyager.SharedScreenVoyager
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch

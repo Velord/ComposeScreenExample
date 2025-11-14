@@ -1,4 +1,4 @@
-package com.velord.navigation.fragment.util
+package com.velord.core.navigation.fragment.util
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.velord.navigation.fragment.NavigationDataFragment
+import com.velord.core.navigation.fragment.NavigationDataFragment
 import kotlin.reflect.KProperty
 
 const val DEFAULT_BUNDLE_NAME = "navigationData"

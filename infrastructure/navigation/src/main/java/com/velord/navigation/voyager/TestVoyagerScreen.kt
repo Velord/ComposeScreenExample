@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import com.velord.navigation.TestScreen
 
-data class TestVoyagerScreen(
+internal data class TestVoyagerScreen(
     @StringRes val title: Int,
     val modifier: Modifier = Modifier,
     val onClick: () -> Unit = {},

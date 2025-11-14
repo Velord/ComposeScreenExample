@@ -6,7 +6,7 @@ import com.velord.setting.SettingScreen
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
-object SettingsVoyagerScreen : Screen {
+internal object SettingsVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {

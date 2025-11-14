@@ -13,12 +13,12 @@ import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
 import androidx.core.os.bundleOf
 import com.velord.camerarecording.model.createRecordingViaFileSystem
+import com.velord.core.navigation.fragment.NavigationDataFragment
+import com.velord.core.navigation.fragment.entryPoint.SETTINGS_SOURCE
+import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
+import com.velord.core.navigation.voyager.NavigationDataVoyager
+import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
-import com.velord.navigation.fragment.NavigationDataFragment
-import com.velord.navigation.fragment.entryPoint.SETTINGS_SOURCE
-import com.velord.navigation.fragment.entryPoint.SettingsSourceFragment
-import com.velord.navigation.voyager.NavigationDataVoyager
-import com.velord.navigation.voyager.SharedScreenVoyager
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.util.file.FileName
 import com.velord.util.permission.AndroidPermissionState

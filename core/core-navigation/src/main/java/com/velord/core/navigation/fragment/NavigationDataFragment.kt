@@ -1,4 +1,4 @@
-package com.velord.navigation.fragment
+package com.velord.core.navigation.fragment
 
 import android.os.Bundle
 

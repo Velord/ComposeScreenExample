@@ -1,4 +1,4 @@
-package com.velord.navigation.fragment.entryPoint
+package com.velord.core.navigation.fragment.entryPoint
 
 enum class SettingsSourceFragment {
     SettingsGraph, CameraRecording
