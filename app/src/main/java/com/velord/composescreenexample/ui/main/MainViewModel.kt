@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 import com.velord.core.ui.compose.glance.updateAll
-import com.velord.model.settings.ThemeConfig
+import com.velord.model.setting.ThemeConfig
 import com.velord.refreshableimage.RefreshableImageWidget
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.widgetcounter.CounterWidget

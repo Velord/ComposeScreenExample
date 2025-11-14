@@ -1,7 +1,7 @@
 package com.velord.sharedviewmodel
 
-import com.velord.model.settings.AndroidThemeConfig
-import com.velord.model.settings.ThemeConfig
+import com.velord.model.setting.AndroidThemeConfig
+import com.velord.model.setting.ThemeConfig
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDarkThemeConfigUC

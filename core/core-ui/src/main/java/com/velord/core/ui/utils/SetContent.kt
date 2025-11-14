@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.velord.core.ui.compose.theme.MainTheme
-import com.velord.model.settings.AndroidThemeConfig
+import com.velord.model.setting.AndroidThemeConfig
 import com.velord.sharedviewmodel.ThemeUiState
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.util.context.getActivity

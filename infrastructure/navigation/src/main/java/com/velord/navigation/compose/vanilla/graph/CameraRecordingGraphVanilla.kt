@@ -7,18 +7,18 @@ import com.velord.camerarecording.CameraRecordingNavigationEvent
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.camerarecording.CameraRecordingScreen
 import com.velord.camerarecording.CameraRecordingViewModel
-import com.velord.navigation.compose.vanilla.CameraRecordingDestinationVanilla
-import com.velord.navigation.compose.vanilla.CameraRecordingGraphVanilla
+import com.velord.navigation.compose.vanilla.GraphVanilla
 import org.koin.androidx.compose.koinViewModel
 
 internal fun NavGraphBuilder.setupCameraRecordingGraph(navigator: CameraRecordingNavigator)  {
-    navigation<CameraRecordingGraphVanilla>(startDestination = CameraRecordingDestinationVanilla) {
-        composable<CameraRecordingDestinationVanilla> {
+    navigation<GraphVanilla.BottomTab.CameraRecording.Self>(
+        startDestination = GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla
+    ) {
+        composable<GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla> {
             val viewModel = koinViewModel<CameraRecordingViewModel>()
-
             CameraRecordingScreen(viewModel, true) {
                 when (it) {
-                    CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingsFromCameraRecording()
+                    CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingFromCameraRecording()
                 }
             }
         }

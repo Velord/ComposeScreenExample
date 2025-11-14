@@ -19,7 +19,7 @@ import com.velord.hintphonenumber.HintPhoneNumberScreen
 import com.velord.modifierdemo.ModifierDemoScreen
 import com.velord.morphdemo.MorphDemoScreen
 import com.velord.navigation.compose.destinations.transition.PopFadeTransition
-import com.velord.settings.SettingsScreen
+import com.velord.setting.SettingScreen
 import com.velord.shapedemo.ShapeDemoScreen
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -37,7 +37,7 @@ annotation class BottomNavigationGraph
 @Composable
 internal fun SettingsDestination() {
     val viewModel = koinViewModel<ThemeViewModel>()
-    SettingsScreen(viewModel)
+    SettingScreen(viewModel)
 }
 
 @Destination<BottomNavigationGraph>(start = true)

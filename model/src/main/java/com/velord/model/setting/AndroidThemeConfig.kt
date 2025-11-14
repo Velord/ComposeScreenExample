@@ -1,4 +1,4 @@
-package com.velord.model.settings
+package com.velord.model.setting
 
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast

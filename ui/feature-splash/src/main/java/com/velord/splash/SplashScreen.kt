@@ -42,7 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.core.resource.R
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.utils.LocalTheme
-import com.velord.model.settings.SpecialTheme
+import com.velord.model.setting.SpecialTheme
 
 private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 500
 private const val ROTATE_AFTER = ANIMATION_TRANSITION_TO_CURRENT_THEME + 1000

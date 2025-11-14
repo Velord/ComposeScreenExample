@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.settings"
+    namespace = "com.velord.setting"
 
     compileSdk = libs.versions.targetApi.get().toInt()
 

@@ -1,4 +1,4 @@
-package com.velord.settings
+package com.velord.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import com.velord.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingsFragment : Fragment() {
+class SettingFragment : Fragment() {
 
     private val viewModel by activityViewModels<ThemeViewModel>()
     private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
@@ -24,7 +24,7 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        SettingsScreen(viewModel)
+        SettingScreen(viewModel)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +32,6 @@ class SettingsFragment : Fragment() {
 
         val isActivated = this.arguments?.get(SETTINGS_SOURCE) == SettingsSourceFragment.SettingsGraph
         if (isActivated.not()) return
-        addTestCallback("Settings graph", viewModelBottom)
+        addTestCallback("Setting graph", viewModelBottom)
     }
 }

@@ -1,4 +1,4 @@
-package com.velord.settings
+package com.velord.setting
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -32,7 +32,7 @@ import com.velord.sharedviewmodel.ThemeUiAction
 import com.velord.sharedviewmodel.ThemeViewModel
 
 @Composable
-fun SettingsScreen(viewModel: ThemeViewModel) {
+fun SettingScreen(viewModel: ThemeViewModel) {
     Content(onThemeAction = viewModel::onAction)
 }
 

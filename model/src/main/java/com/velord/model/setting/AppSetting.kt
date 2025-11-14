@@ -1,14 +1,14 @@
-package com.velord.model.settings
+package com.velord.model.setting
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AppSettings(
+data class AppSetting(
     val isAppFirstLaunch: Boolean,
     val theme: ThemeConfig
 ) {
     companion object {
-        val DEFAULT = AppSettings(
+        val DEFAULT = AppSetting(
             isAppFirstLaunch = false,
             theme = ThemeConfig.DEFAULT
         )

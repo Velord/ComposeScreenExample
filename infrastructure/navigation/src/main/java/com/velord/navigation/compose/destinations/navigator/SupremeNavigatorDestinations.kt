@@ -34,7 +34,7 @@ internal class SupremeNavigatorDestinations(
         Log.d("LogBackStack - SupremeNavigator", "init: ${this.supremeNavController}")
     }
 
-    override fun goToSettingsFromCameraRecording() {
+    override fun goToSettingFromCameraRecording() {
         supremeNavController.toDestinationsNavigator().navigate(MainSettingsDestinationDestination)
     }
 
@@ -78,7 +78,7 @@ internal class SupremeNavigatorDestinations(
     }
 
     @Composable
-    override fun createNavController(): NavHostController {
+    override fun createBottomNavHostController(): NavHostController {
         val navController = rememberNavController()
         return navController
     }

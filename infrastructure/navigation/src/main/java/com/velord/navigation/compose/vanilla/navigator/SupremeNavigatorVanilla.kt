@@ -14,16 +14,18 @@ import com.velord.bottomnavigation.screen.compose.BottomNavigator
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.camerarecording.CameraRecordingNavigator
-import com.velord.navigation.compose.vanilla.CameraRecordingDestinationVanilla
-import com.velord.navigation.compose.vanilla.CameraRecordingGraphVanilla
-import com.velord.navigation.compose.vanilla.CameraRecordingSettingsDestinationVanilla
-import com.velord.navigation.compose.vanilla.DemoDestinationVanilla
-import com.velord.navigation.compose.vanilla.SettingsDestinationVanilla
+import com.velord.navigation.compose.vanilla.GraphVanilla
 import com.velord.navigation.compose.vanilla.graph.setupBottomNavigationGraph
 
-internal class SupremeNavigatorVanilla(
-    private val supremeNavController: NavHostController
-) : BottomNavigator, BottomTabNavigatorVanilla, CameraRecordingNavigator {
+internal class SupremeNavigatorVanilla(private val supremeNavController: NavHostController) :
+    // BottomNavigationScreen setup
+    BottomNavigator,
+    // Just wrapper for strong type system.
+    // Includes all "Navigator" that possible from bottom graph
+    BottomTabNavigatorVanilla,
+    // Below list of certain "Navigator" that work with supreme nav controller
+    CameraRecordingNavigator
+{
 
     override fun onTabClick(tab: TabState, controller: NavHostController) {
         onTabClickVanilla(
@@ -42,7 +44,7 @@ internal class SupremeNavigatorVanilla(
     ) {
         NavHost(
             navController = navController,
-            startDestination = DemoDestinationVanilla,
+            startDestination = GraphVanilla.BottomTab.Demo.Self,
             modifier = modifier,
             popExitTransition = { fadeOut() }
         ) {
@@ -52,25 +54,25 @@ internal class SupremeNavigatorVanilla(
     }
 
     @Composable
-    override fun createNavController(): NavHostController = rememberNavController()
+    override fun createBottomNavHostController(): NavHostController = rememberNavController()
 
     @Composable
     override fun createStackEntryAsState(controller: NavController): State<NavBackStackEntry?> =
         controller.currentBackStackEntryAsState()
 
-    override fun getRoute(route: BottomNavigationItem): Any = when(route) {
-        BottomNavigationItem.Camera -> CameraRecordingGraphVanilla
-        BottomNavigationItem.Demo -> DemoDestinationVanilla
-        BottomNavigationItem.Settings -> SettingsDestinationVanilla
+    override fun getRouteOnTabClick(route: BottomNavigationItem): Any = when(route) {
+        BottomNavigationItem.Camera -> GraphVanilla.BottomTab.CameraRecording.Self
+        BottomNavigationItem.Demo -> GraphVanilla.BottomTab.Demo.Self
+        BottomNavigationItem.Settings -> GraphVanilla.BottomTab.SettingDestinationVanilla
     }
 
-    override fun getStartRoute(route: BottomNavigationItem): Any = when(route) {
-        BottomNavigationItem.Camera -> CameraRecordingDestinationVanilla
-        BottomNavigationItem.Demo -> DemoDestinationVanilla
-        BottomNavigationItem.Settings -> SettingsDestinationVanilla
+    override fun getTabStartRoute(route: BottomNavigationItem): Any = when(route) {
+        BottomNavigationItem.Camera -> GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla
+        BottomNavigationItem.Demo -> GraphVanilla.BottomTab.Demo.DemoDestinationVanilla
+        BottomNavigationItem.Settings -> GraphVanilla.BottomTab.SettingDestinationVanilla
     }
 
-    override fun goToSettingsFromCameraRecording() {
-        supremeNavController.navigate(CameraRecordingSettingsDestinationVanilla)
+    override fun goToSettingFromCameraRecording() {
+        supremeNavController.navigate(GraphVanilla.Main.SettingDestinationVanilla)
     }
 }

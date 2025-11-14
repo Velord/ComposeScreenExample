@@ -24,7 +24,7 @@ internal fun CameraRecordingDestination(navigator: CameraRecordingNavigator) {
 
     CameraRecordingScreen(viewModel, true) {
         when (it) {
-            CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingsFromCameraRecording()
+            CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingFromCameraRecording()
         }
     }
 }

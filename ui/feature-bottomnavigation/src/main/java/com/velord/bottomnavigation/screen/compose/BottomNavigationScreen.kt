@@ -21,7 +21,7 @@ interface BottomNavigator{
         modifier: Modifier,
         startRoute: BottomNavigationItem
     )
-    @Composable fun createNavController(): NavHostController
+    @Composable fun createBottomNavHostController(): NavHostController
     @Composable fun createStackEntryAsState(controller: NavController): State<NavBackStackEntry?>
 }
 
@@ -29,7 +29,7 @@ interface BottomNavigator{
 fun BottomNavigationScreen(navigator: BottomNavigator) {
     val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
 
-    val navController = navigator.createNavController()
+    val navController = navigator.createBottomNavHostController()
     val backStackEntry = navigator.createStackEntryAsState(navController)
     val currentDestination = backStackEntry.value?.destination
 

@@ -16,8 +16,8 @@ import com.velord.core.ui.compose.shape.MainShapes
 import com.velord.core.ui.compose.theme.color.DarkColorScheme
 import com.velord.core.ui.compose.theme.color.LightColorScheme
 import com.velord.core.ui.utils.defineScrimAndDarkScrimColorForSystemBar
-import com.velord.model.settings.AndroidThemeConfig
-import com.velord.model.settings.SpecialTheme
+import com.velord.model.setting.AndroidThemeConfig
+import com.velord.model.setting.SpecialTheme
 
 private fun SpecialTheme.toColorScheme(): ColorScheme = when (this) {
     SpecialTheme.DARK -> DarkColorScheme

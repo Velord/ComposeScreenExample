@@ -46,7 +46,7 @@ dependencies {
     implementation(project(":ui:feature-demo"))
     implementation(project(":ui:feature-camerarecording"))
     implementation(project(":ui:feature-bottomnavigation"))
-    implementation(project(":ui:feature-settings"))
+    implementation(project(":ui:feature-setting"))
     implementation(project(":ui:feature-splash"))
     implementation(project(":ui:feature-flowsummator"))
     implementation(project(":ui:feature-movie"))

@@ -1,35 +1,35 @@
-package com.velord.datastore.appSettings
+package com.velord.datastore.appSetting
 
 import android.content.Context
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
-import com.velord.model.settings.AppSettings
+import com.velord.model.setting.AppSetting
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.annotation.Single
 
-interface AppSettingsDataStore {
-    val flow: Flow<AppSettings>
-    suspend fun updateData(transform: suspend (t: AppSettings) -> AppSettings): Result<AppSettings>
+interface AppSettingDataStore {
+    val flow: Flow<AppSetting>
+    suspend fun updateData(transform: suspend (t: AppSetting) -> AppSetting): Result<AppSetting>
 }
 
 @Single
-class AppSettingsDataStoreImpl(
+class AppSettingDataStoreImpl(
     private val context: Context
-) : AppSettingsDataStore {
+) : AppSettingDataStore {
 
     private val Context.dataStore by dataStore(
-        fileName = "settings",
-        serializer = AppSettingsDataStoreSerializer,
+        fileName = "setting",
+        serializer = AppSettingDataStoreSerializer,
         corruptionHandler = ReplaceFileCorruptionHandler {
-            AppSettings.DEFAULT
+            AppSetting.DEFAULT
         }
     )
 
-    override val flow: Flow<AppSettings>
+    override val flow: Flow<AppSetting>
         get() = context.dataStore.data
 
     override suspend fun updateData(
-        transform: suspend (t: AppSettings) -> AppSettings
+        transform: suspend (t: AppSetting) -> AppSetting
     ) = Result.runCatching {
         context.dataStore.updateData {
             transform(it)

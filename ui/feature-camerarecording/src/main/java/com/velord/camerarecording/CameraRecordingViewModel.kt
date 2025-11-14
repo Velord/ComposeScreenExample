@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 interface CameraRecordingNavigator {
-    fun goToSettingsFromCameraRecording()
+    fun goToSettingFromCameraRecording()
 }
 
 data class CameraRecordingUiState(
