@@ -8,7 +8,7 @@ plugins {
 group = "com.velord.build_logic.convention"
 
 java {
-    targetCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 kotlin {
@@ -23,7 +23,7 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
 }
 
 gradlePlugin {

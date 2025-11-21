@@ -60,6 +60,7 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Nav
         item: BottomNavigationItem,
         backStackNavigator: BackStackNavigator,
     ) {
+        // go back does not work if tab selection has not happened
         if (isSelected) {
             // When we click again on a bottom bar item and it was already selected
             // we want to pop the back stack until the initial destination of this bottom bar item
