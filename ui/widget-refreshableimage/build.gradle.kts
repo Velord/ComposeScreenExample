@@ -27,7 +27,7 @@ android {
         compose = true
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
