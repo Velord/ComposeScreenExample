@@ -27,7 +27,7 @@ android {
         compose = true
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
@@ -43,8 +43,4 @@ dependencies {
     implementation(libs.bundles.coil)
     // Compose
     implementation(libs.bundles.compose.ui)
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
 }

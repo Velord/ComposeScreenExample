@@ -21,8 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.velord.core.resource.R
-import com.velord.uicore.compose.preview.PreviewCombined
-import com.velord.uicore.utils.ObserveSharedFlow
+import com.velord.core.ui.compose.preview.PreviewCombined
+import com.velord.core.ui.utils.ObserveSharedFlow
 
 @Composable
 fun DemoScreen(

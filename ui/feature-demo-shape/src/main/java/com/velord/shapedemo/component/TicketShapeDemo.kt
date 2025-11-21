@@ -25,8 +25,8 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.velord.uicore.compose.path.ticketPath
-import com.velord.uicore.compose.shape.TicketShape
+import com.velord.core.ui.compose.path.ticketPath
+import com.velord.core.ui.compose.shape.TicketShape
 
 @Composable
 internal fun TicketShapeDemo() {

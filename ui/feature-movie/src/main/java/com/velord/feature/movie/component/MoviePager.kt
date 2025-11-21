@@ -31,6 +31,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.core.resource.R
+import com.velord.core.ui.compose.preview.PreviewCombined
+import com.velord.core.ui.utils.ObserveSharedFlow
 import com.velord.feature.movie.viewModel.AllMovieUiAction
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieUiAction
@@ -38,8 +40,6 @@ import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
-import com.velord.uicore.compose.preview.PreviewCombined
-import com.velord.uicore.utils.ObserveSharedFlow
 import java.util.Calendar
 
 private fun Activity.onClick(intent: Intent) {

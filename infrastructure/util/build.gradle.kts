@@ -25,7 +25,7 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     buildFeatures {
@@ -34,15 +34,12 @@ android {
 }
 
 dependencies {
-    // Templates
+    // Template
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.network.all)
     implementation(libs.bundles.androidx.credentials)
     implementation(libs.bundles.google.gms)
+    // Lib
     implementation(libs.androidx.glance.appwidget)
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
 }

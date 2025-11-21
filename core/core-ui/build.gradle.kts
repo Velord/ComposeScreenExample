@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
@@ -27,26 +29,30 @@ android {
         viewBinding = true
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
 dependencies {
-    // Modules
+    // Module
     implementation(project(":model"))
     implementation(project(":infrastructure:util"))
     implementation(project(":core:core-resource"))
     implementation(project(":ui:sharedviewmodel"))
-    // Templates
+    // Template
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.coil)
-    // Compose
     implementation(libs.bundles.ui)
+    // Lib
+    implementation(libs.androidx.navigation.ui) // Material Dialog lib
+    // Compose
     implementation(libs.androidx.glance)
     implementation(libs.androidx.glance.appwidget)
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+tasks.withType<KotlinCompile> {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
 }

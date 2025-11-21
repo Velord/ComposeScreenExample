@@ -20,10 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.velord.core.ui.utils.modifier.HangingDefaults
+import com.velord.core.ui.utils.modifier.HangingPivotPoint
+import com.velord.core.ui.utils.modifier.hanging
 import com.velord.modifierdemo.Title
-import com.velord.uicore.utils.modifier.HangingDefaults
-import com.velord.uicore.utils.modifier.HangingPivotPoint
-import com.velord.uicore.utils.modifier.hanging
 
 @Composable
 internal fun ColumnScope.HangingDemo() {

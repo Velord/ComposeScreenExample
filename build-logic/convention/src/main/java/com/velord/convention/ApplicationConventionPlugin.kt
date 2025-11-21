@@ -41,7 +41,7 @@ internal fun Project.configureAndroid(
             resourceConfigurations += listOf("en")
         }
         compileOptions {
-            targetCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_21
         }
         buildFeatures {
             buildConfig = true

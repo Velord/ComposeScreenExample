@@ -129,6 +129,7 @@ androidxLifecycle = "2.9.4"
 androidxMedia3 = "1.8.0"
 ## N
 androidxNavigation = "2.9.6"
+androidxNavigation3 = "1.0.0-rc01"
 ## AndroidX Paging
 androidxPaging = "3.3.6"
 androidxPagingCompose = "3.3.6"
@@ -231,6 +232,7 @@ composeIcon = "1.7.8"
 composeAccompanist = "0.37.3"
 # composeCompiler = "1.5.14"
 composeMaterial3 = "1.4.0"
+composeMaterial3Adaptive = "1.2.0"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
 composeScrollbarNanihadesuka = "2.2.0"
@@ -385,11 +387,15 @@ androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-ru
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidxNavigation3" }
 # AndroidX Navigation
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-dynamicfeature = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "androidxNavigation" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
+# AndroidX Navigation 3
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "androidxNavigation3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "androidxNavigation3" }
 # AndroidX Media3
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
 # AndroidX Paging
@@ -540,6 +546,9 @@ compose-material-icons-extended = { module = "androidx.compose.material:material
 # Compose Material 3
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 compose-material3-window = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "composeMaterial3" }
+compose-material3-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", version.ref = "composeMaterial3Adaptive" }
+compose-material3-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout", version.ref = "composeMaterial3Adaptive" }
+compose-material3-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "composeMaterial3Adaptive" }
 # Compose Ui
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeDefault" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeDefault" }
@@ -740,19 +749,27 @@ androidx-lifecycle-runtime = [
 androidx-lifecycle-viewmodel = [
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-viewmodel-compose",
-    "androidx-lifecycle-viewmodel-savedstate"
+    "androidx-lifecycle-viewmodel-savedstate",
+    "androidx-lifecycle-viewmodel-navigation3"
 ]
 androidx-lifecycle-all = [
     "androidx-lifecycle-service", "androidx-lifecycle-process",
     "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-runtime-compose",
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-viewmodel-compose",
-    "androidx-lifecycle-viewmodel-savedstate"
+    "androidx-lifecycle-viewmodel-savedstate",
+    "androidx-lifecycle-viewmodel-navigation3"
 ]
 # AndroidX Navigation
 androidx-navigation = [
     "androidx-navigation-fragment", "androidx-navigation-ui",
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose"
+]
+androidx-navigation3 = [ "androidx-navigation3-runtime", "androidx-navigation3-ui" ]
+androidx-navigation-all = [
+    "androidx-navigation-fragment", "androidx-navigation-ui",
+    "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
+    "androidx-navigation3-runtime", "androidx-navigation3-ui",
 ]
 # AndroidX Paging
 androidx-paging = ["androidx-paging-runtime", "androidx-paging-compose"]
@@ -900,8 +917,6 @@ androidx-module = [
     "androidx-lifecycle-runtime-compose",
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-viewmodel-compose",
-    "androidx-navigation-fragment",
-    "androidx-navigation-ui",
     "androidx-transition-ktx"
 ]
 # AndroidX All
@@ -983,9 +998,11 @@ androidx-all = [
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-viewmodel-compose",
     "androidx-lifecycle-viewmodel-savedstate",
+    "androidx-lifecycle-viewmodel-navigation3",
     # AndroidX Navigation
     "androidx-navigation-fragment", "androidx-navigation-ui",
     "androidx-navigation-dynamicfeature", "androidx-navigation-compose",
+    "androidx-navigation3-runtime", "androidx-navigation3-ui",
     # AndroidX Paging
     "androidx-paging-runtime", "androidx-paging-compose",
     # AndroidX Privacy Sandbox
@@ -1060,11 +1077,22 @@ compose-ui = [
 ]
 # Compose Material
 compose-material-icons = ["compose-material-icons-core", "compose-material-icons-extended"]
-compose-material-third = ["compose-material3", "compose-material3-window"]
+compose-material3-other = ["compose-material3", "compose-material3-window"]
+compose-material3-adaptive = [
+    "compose-material3-adaptive", "compose-material3-adaptive-layout",
+    "compose-material3-adaptive-navigation"
+]
+compose-material3-all = [
+    "compose-material3", "compose-material3-window",
+    "compose-material3-adaptive", "compose-material3-adaptive-layout",
+    "compose-material3-adaptive-navigation"
+]
 compose-material-all = [
     "compose-material",
     "compose-material-icons-core", "compose-material-icons-extended",
-    "compose-material3", "compose-material3-window"
+    "compose-material3", "compose-material3-window",
+    "compose-material3-adaptive", "compose-material3-adaptive-layout",
+    "compose-material3-adaptive-navigation"
 ]
 # Compose Third Party
 compose-thirdparty = [
@@ -1082,7 +1110,9 @@ compose-all = [
     "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
     "compose-ui-geometry", "compose-ui-geometry-android",
     "compose-material-icons-core", "compose-material-icons-extended",
-    "compose-material3", "compose-material3-window"
+    "compose-material3", "compose-material3-window",
+    "compose-material3-adaptive", "compose-material3-adaptive-layout",
+    "compose-material3-adaptive-navigation"
 ]
 
 ui = [
@@ -1094,6 +1124,8 @@ ui = [
     "compose-ui-geometry", "compose-ui-geometry-android",
     "compose-material", "compose-material-icons-core", "compose-material-icons-extended",
     "compose-material3", "compose-material3-window",
+    "compose-material3-adaptive", "compose-material3-adaptive-layout",
+    "compose-material3-adaptive-navigation",
     "androidx-graphics-core", "androidx-graphics-path", "androidx-graphics-shapes"
 ]
 # --------------------------------------------------------------------------------------------------
@@ -1185,7 +1217,7 @@ network-all = [
 # Image Loader
 coil = ["coil-network-ktor3", "coil-compose", "coil-gif"]
 # --------------------------------------------------------------------------------------------------
-# Navigation
+# Navigation 3-rd Party
 ## Voyager
 voyager = [
     "voyager-navigator", "voyager-screenModel",

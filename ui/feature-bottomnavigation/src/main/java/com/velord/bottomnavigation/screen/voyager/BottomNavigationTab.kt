@@ -13,8 +13,8 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
+import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
-import com.velord.navigation.voyager.SharedScreenVoyager
 
 sealed class BottomNavigationTab : Tab {
 

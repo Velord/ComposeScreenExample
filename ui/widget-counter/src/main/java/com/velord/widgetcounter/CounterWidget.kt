@@ -14,7 +14,7 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import com.velord.uicore.compose.glance.GlanceWidgetThemeSustainer
+import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 
 class CounterWidget :
     GlanceAppWidget(errorUiLayout = R.layout.counter_widget_error_layout),

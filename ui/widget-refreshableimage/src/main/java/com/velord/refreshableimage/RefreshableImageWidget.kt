@@ -22,7 +22,7 @@ import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import com.velord.uicore.compose.glance.GlanceWidgetThemeSustainer
+import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

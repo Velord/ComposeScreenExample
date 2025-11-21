@@ -3,7 +3,7 @@ package com.velord.appstate
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
-import com.velord.model.settings.ThemeConfig
+import com.velord.model.setting.ThemeConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.annotation.Single
 
