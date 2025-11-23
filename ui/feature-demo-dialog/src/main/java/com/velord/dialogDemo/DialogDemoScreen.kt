@@ -242,7 +242,7 @@ private val handler = CoroutineExceptionHandler { _, throwable ->
 }
 private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default + handler)
 
-fun main() = runBlocking {
+fun main2() = runBlocking {
     scope.async(handler) {
         error("Top level async error")
     }.await()
@@ -308,3 +308,60 @@ fun main() = runBlocking {
     delay(10000L)
     Unit
 }
+
+fun main() {
+    V.bar()
+}
+
+class V(val x: Int) {
+
+    constructor() : this(42) {
+        println("Secondary constructor initialized with x = $x")
+    }
+
+    init {
+        println("First init Initialized with x = $x")
+    }
+
+    init {
+        println("Second init initialized with x = $x")
+    }
+
+    fun foo() {
+        println("Function foo called with x = $x")
+    }
+
+    companion object {
+
+        init {
+            println("Companion object initialized")
+        }
+
+        operator fun invoke(): V {
+            Unit
+            println("Companion object invoke called")
+            return V()
+        }
+
+        fun bar() {
+            println("Companion object function bar called")
+        }
+    }
+}
+open class Extension
+
+abstract sealed class FFF : Extension() {
+    data class A(val x: Int) : FFF()
+    data class B(val y: String) : FFF()
+}
+
+sealed class SSS : FFF() {
+    object A : SSS()
+    object B : SSS()
+}
+
+enum class S {
+    X, Y, Z
+}
+
+data class Bbb(val x: Int, val y: String) : Extension()
