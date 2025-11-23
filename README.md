@@ -7,14 +7,14 @@ Project uses navigation libs:
 * [Voyager](https://github.com/adrielcafe/voyager) **100%** _screens covered_
 * [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation) **100%** _screens covered_
 * [Compose Destinations](https://github.com/raamcosta/compose-destinations) **100%** _screens covered_
-
+* [Compose Nav3](https://github.com/raamcosta/compose-destinations](https://developer.android.com/guide/navigation/navigation-3) **100%** _screens covered_ !!!In active phase development
 To use different Navigation library need to change in ```build.gradle.kts``` at ```app``` module.
 
 ```
 buildConfigField(    
     "com.velord.config.NavigationLib",
     "NAVIGATION_LIB",
-    "com.velord.config.NavigationLib.{Voyager}" or "Jetpack" or "Destinations" or "Compose"
+    "com.velord.config.NavigationLib.{Voyager}" or "Jetpack" or "Destinations" or "Compose" or "Nav3"
 )
 ```
 
