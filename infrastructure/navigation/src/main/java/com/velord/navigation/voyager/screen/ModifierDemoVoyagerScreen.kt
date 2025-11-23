@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.velord.modifierdemo.ModifierDemoScreen
 
-object ModifierDemoVoyagerScreen : Screen {
+internal object ModifierDemoVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {

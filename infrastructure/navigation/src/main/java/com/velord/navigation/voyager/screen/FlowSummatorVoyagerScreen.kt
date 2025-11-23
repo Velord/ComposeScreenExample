@@ -6,7 +6,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.velord.flowsummator.FlowSummatorScreen
 import com.velord.flowsummator.FlowSummatorViewModel
 
-object FlowSummatorVoyagerScreen : Screen {
+internal object FlowSummatorVoyagerScreen : Screen {
+
     @Composable
     override fun Content() {
         val viewModel = viewModel<FlowSummatorViewModel>()

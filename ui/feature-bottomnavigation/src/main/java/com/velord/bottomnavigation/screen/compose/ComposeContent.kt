@@ -1,7 +1,6 @@
 package com.velord.bottomnavigation.screen.compose
 
 import android.annotation.SuppressLint
-import androidx.collection.forEach
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,6 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,23 +30,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.core.resource.R
+import com.velord.core.ui.compose.component.AnimatableLabeledIcon
+import com.velord.core.ui.utils.ObserveSharedFlow
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
-import com.velord.uicore.compose.component.AnimatableLabeledIcon
-import com.velord.uicore.utils.ObserveSharedFlow
 import com.velord.util.context.getActivity
 
 @Composable
 internal fun ComposeContent(
     viewModel: BottomNavigationDestinationsVM,
-    navController: NavController,
-    currentDestination: NavDestination?,
     content: @Composable (currentTab: BottomNavigationItem) -> Unit,
 ) {
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
@@ -64,22 +57,6 @@ internal fun ComposeContent(
         // When the graph is completed, we can proceed with the back handling
         // Current logic is simple, we just allow the back handling
         viewModel.graphCompletedHandling()
-    }
-
-    LaunchedEffect(currentDestination) {
-        if (currentDestination == null) return@LaunchedEffect
-        val nodes = mutableListOf<NavDestination>()
-
-        navController.graph.nodes.forEach { _, value ->
-            nodes.add(value)
-        }
-        val startDestinationRoster = nodes.map {
-            when (it) {
-                is NavGraph -> it.startDestinationRoute
-                else -> it.route
-            }
-        }
-        viewModel.updateBackHandling(startDestinationRoster, currentDestination)
     }
 
     content(tabState.value.current)
@@ -172,5 +149,5 @@ internal fun BottomBar(
 private fun BottomNavigationItem.getIcon(): ImageVector = when (this) {
     BottomNavigationItem.Camera -> Icons.Outlined.Camera
     BottomNavigationItem.Demo -> Icons.Outlined.Hexagon
-    BottomNavigationItem.Settings -> Icons.Outlined.Settings
+    BottomNavigationItem.Setting -> Icons.Outlined.Settings
 }

@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.feature.movie.component.MovieAction
 import com.velord.feature.movie.component.MovieBottomSheet
 import com.velord.feature.movie.component.MovieHeader
@@ -23,7 +24,6 @@ import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieUiAction
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.feature.movie.viewModel.MovieViewModel
-import com.velord.uicore.compose.preview.PreviewCombined
 
 @Composable
 fun MovieScreen(

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
@@ -29,28 +31,29 @@ android {
         viewBinding = true
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
 dependencies {
-    // Modules
+    // Module
     implementation(project(":infrastructure:util"))
     implementation(project(":core:core-resource"))
     implementation(project(":core:core-navigation"))
     implementation(project(":core:core-ui"))
     implementation(project(":ui:sharedviewmodel"))
-    // Templates
+    // Template
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.kotlin.serialization)
+    implementation(libs.bundles.voyager) // Refactor. Too much effort need to move to nav module
     // DI
     implementation(libs.bundles.koin)
     implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
-    // Navigation
-    implementation(libs.bundles.voyager)
+    // Lib. Only Jetpack Navigation based on Fragment depends on it.
+    implementation(libs.androidx.navigation.ui)
     // Third Party
     implementation(libs.velord.multiplebackstack)
 }
@@ -60,6 +63,8 @@ ksp {
     arg("KOIN_DEFAULT_MODULE","false")
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+tasks.withType<KotlinCompile> {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
 }

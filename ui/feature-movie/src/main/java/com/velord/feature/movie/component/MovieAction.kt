@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.velord.core.resource.R
-import com.velord.uicore.compose.preview.PreviewCombined
+import com.velord.core.ui.compose.preview.PreviewCombined
 
 @Composable
 internal fun BoxScope.MovieAction(

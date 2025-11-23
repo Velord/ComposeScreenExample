@@ -1,6 +1,6 @@
 package com.velord.usecase.setting
 
-import com.velord.model.settings.ThemeConfig
+import com.velord.model.setting.ThemeConfig
 
 class SwitchDynamicColorThemeConfigUC(private val dataSource: GetThemeConfigDS) {
 

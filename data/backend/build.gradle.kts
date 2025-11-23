@@ -24,7 +24,7 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
@@ -41,10 +41,6 @@ dependencies {
     implementation(libs.bundles.koin)
     implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    compilerOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
 }
 
 ksp {

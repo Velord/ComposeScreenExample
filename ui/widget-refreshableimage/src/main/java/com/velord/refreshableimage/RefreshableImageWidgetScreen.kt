@@ -34,7 +34,7 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
 import com.velord.core.resource.R
-import com.velord.uicore.compose.glance.MainGlanceTheme
+import com.velord.core.ui.compose.glance.MainGlanceTheme
 import kotlin.math.roundToInt
 
 // On emulator redundant compositions with wrong LocalSize.current ruin all flow

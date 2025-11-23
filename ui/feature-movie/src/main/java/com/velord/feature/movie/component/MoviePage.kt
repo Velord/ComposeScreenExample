@@ -27,11 +27,11 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MoviePagination
 import com.velord.model.movie.SortType
 import com.velord.model.movie.findRecentTimeInMilli
-import com.velord.uicore.compose.preview.PreviewCombined
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
