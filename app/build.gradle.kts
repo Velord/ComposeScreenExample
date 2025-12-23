@@ -15,7 +15,7 @@ plugins {
 // When app incompatible with previous version change this value
 val globalVersion = 1
 // When you create huge feature(or many) release change this value
-val majorVersion = 1
+val majorVersion = 2
 // When you create feature release change this value
 val minorVersion = 0
 // When you create fix change this value
@@ -166,15 +166,15 @@ dependencies {
     // Other
     implementation(libs.androidx.glance.appwidget)
     // Test libs.versions.toml
-    implementation(libs.bundles.android.all)
-    implementation(libs.bundles.androidx.all)
-    implementation(libs.bundles.kotlin.all)
-    implementation(libs.bundles.compose.all)
-    implementation(libs.bundles.compose.thirdparty)
-    implementation(libs.bundles.logging)
-    implementation(libs.bundles.google.all)
-    implementation(libs.bundles.google.firebase)
-    implementation(platform(libs.google.firebase.bom))
+//    implementation(libs.bundles.android.all)
+//    implementation(libs.bundles.androidx.all)
+//    implementation(libs.bundles.kotlin.all)
+//    implementation(libs.bundles.compose.all)
+//    implementation(libs.bundles.compose.thirdparty)
+//    implementation(libs.bundles.logging)
+//    implementation(libs.bundles.google.all)
+//    implementation(libs.bundles.google.firebase)
+//    implementation(platform(libs.google.firebase.bom))
 }
 
 // Making “Optimised Out” Variables Visible in the IDE

@@ -17,7 +17,7 @@ private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
 )
 annotation class BottomNavigationGraph
 
-@Destination<BottomNavigationGraph>(start = true)
+@Destination<BottomNavigationGraph>
 @Destination<MainGraph>
 @Composable
 internal fun SettingsDestination() {
