@@ -23,6 +23,7 @@ import org.koin.androidx.compose.koinViewModel
 
 private const val DEMO_GRAPH = "demo_graph"
 @NavGraph<BottomNavigationGraph>(
+    start = true,
     route = DEMO_GRAPH,
     visibility = CodeGenVisibility.INTERNAL
 )
