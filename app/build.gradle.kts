@@ -66,7 +66,7 @@ android {
             buildConfigField(
                 "com.velord.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.config.NavigationLib.Nav3"
+                "com.velord.config.NavigationLib.Compose"
             )
         }
         named("release") {
@@ -166,15 +166,15 @@ dependencies {
     // Other
     implementation(libs.androidx.glance.appwidget)
     // Test libs.versions.toml
-    implementation(libs.bundles.android.all)
-    implementation(libs.bundles.androidx.all)
-    implementation(libs.bundles.kotlin.all)
-    implementation(libs.bundles.compose.all)
-    implementation(libs.bundles.compose.thirdparty)
-    implementation(libs.bundles.logging)
-    implementation(libs.bundles.google.all)
-    implementation(libs.bundles.google.firebase)
-    implementation(platform(libs.google.firebase.bom))
+//    implementation(libs.bundles.android.all)
+//    implementation(libs.bundles.androidx.all)
+//    implementation(libs.bundles.kotlin.all)
+//    implementation(libs.bundles.compose.all)
+//    implementation(libs.bundles.compose.thirdparty)
+//    implementation(libs.bundles.logging)
+//    implementation(libs.bundles.google.all)
+//    implementation(libs.bundles.google.firebase)
+//    implementation(platform(libs.google.firebase.bom))
 }
 
 // Making “Optimised Out” Variables Visible in the IDE

@@ -12,13 +12,15 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.coroutines.CoroutineContext
 
+private const val TAG = "CoroutineScopeViewModel"
+
 open class CoroutineScopeViewModel: ViewModel(), CoroutineScope {
 
     private val job = SupervisorJob()
     private val errorHandler = CoroutineExceptionHandler { _, error ->
         runCatching {
             val exception = error.toBaseException()
-            Log.d("BaseViewModel", "Exception: $exception: $error")
+            Log.d(TAG, "Exception: $exception: $error")
             exceptionEvent.tryEmit(exception)
         }.onFailure {
             it.printStackTrace()

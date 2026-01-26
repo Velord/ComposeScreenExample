@@ -40,7 +40,7 @@ class App : Application() {
     private fun initStrictMode() {
         StrictMode.setThreadPolicy(
             ThreadPolicy.Builder()
-                .detectDiskReads()
+                //.detectDiskReads()
                 .detectDiskWrites()
                 .detectNetwork()
                 .penaltyFlashScreen()

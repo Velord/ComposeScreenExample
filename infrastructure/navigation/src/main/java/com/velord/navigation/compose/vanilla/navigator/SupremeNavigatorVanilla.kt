@@ -1,12 +1,12 @@
 package com.velord.navigation.compose.vanilla.navigator
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.collection.forEach
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -63,8 +63,9 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
         }
     }
 
+    @SuppressLint("RestrictedApi")
     @Composable
-    override fun setupController(
+    override fun SetupNavController(
         updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit
     ) {
         bottomTabNavController = rememberNavController()
@@ -72,17 +73,16 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
         val currentDestination = backStackEntry.value?.destination
 
         LaunchedEffect(currentDestination) {
+            Log.d("@@@", "SetupNavController: $currentDestination")
             if (currentDestination == null) return@LaunchedEffect
-            val nodes = mutableListOf<NavDestination>()
+            val startDestinationRoster = mutableListOf<String?>()
 
             bottomTabNavController!!.graph.nodes.forEach { _, value ->
-                nodes.add(value)
-            }
-            val startDestinationRoster = nodes.map {
-                when (it) {
-                    is NavGraph -> it.startDestinationRoute
-                    else -> it.route
+                val startDestination = when (value) {
+                    is NavGraph -> value.startDestinationRoute
+                    else -> value.route
                 }
+                startDestinationRoster.add(startDestination)
             }
             updateBackHandling(
                 startDestinationRoster,

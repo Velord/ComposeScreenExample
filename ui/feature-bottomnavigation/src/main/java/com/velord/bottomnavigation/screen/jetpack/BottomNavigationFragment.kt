@@ -68,7 +68,7 @@ class BottomNavigationFragment : Fragment(R.layout.fragment_bottom_navigation) {
             lifecycleOwner = this,
             context = requireContext(),
             items = viewModel.getNavigationItems(),
-            flowOnSelect = viewModel.currentTabFlow,
+            flowOnSelect = viewModel.currentTabStateFlow,
             onMenuChange = {
                 val current = navController.currentDestination
                 viewModel.updateBackHandling(current)

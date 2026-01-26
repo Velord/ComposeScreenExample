@@ -3,6 +3,7 @@ package com.velord.model.movie
 import android.util.Log
 
 data object MoviePagination {
+
     private const val PRELOAD_BEFORE_END = 10
     const val PAGE_COUNT = 20
 

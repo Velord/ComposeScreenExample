@@ -1,11 +1,9 @@
 package com.velord.bottomnavigation.viewmodel
 
+import android.util.Log
 import com.velord.bottomnavigation.BottomNavEventService
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
@@ -34,24 +32,18 @@ class BottomNavigationDestinationsVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeViewModel() {
 
-    val currentTabFlow = MutableSharedFlow<TabState>(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    val currentTabStateFlow = bottomNavEventService.currentTabStateFlow
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
     val finishAppEvent = MutableSharedFlow<Unit>()
-
-    init {
-        launch {
-            currentTabFlow.emit(TabState.Default)
-        }
-    }
+    val onTabClickEvent = MutableSharedFlow<TabState>()
 
     fun onTabClick(newTab: BottomNavigationItem) {
         launch {
-            val current = currentTabFlow.take(1).first()
+            val current = currentTabStateFlow.value
             val new = current.copy(previous = current.current, current = newTab)
-            currentTabFlow.emit(new)
+            Log.d("@@@", "onTabClick: $new")
+            bottomNavEventService.updateTab(new)
+            onTabClickEvent.emit(new)
         }
     }
 
@@ -68,9 +60,11 @@ class BottomNavigationDestinationsVM(
         val isStart = startDestinationRoster.contains(currentRoute)
         val newState = backHandlingStateFlow.value.copy(isAtStartGraphDestination = isStart)
         bottomNavEventService.updateBackHandlingState(newState)
+        Log.d("@@@", "updateBackHandling: $newState")
     }
 
     fun graphCompletedHandling() {
+        Log.d("@@@", "graphCompletedHandling")
         changeGrantedToProceed(true)
     }
 

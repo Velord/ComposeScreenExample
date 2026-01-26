@@ -18,6 +18,6 @@ annotation class MainGraph
 
 @Destination<MainGraph>(start = true)
 @Composable
-fun BottomNavigationDestination(navigator: BottomNavigator) {
+internal fun BottomNavigationDestination(navigator: BottomNavigator) {
     BottomNavigationScreen(navigator)
 }

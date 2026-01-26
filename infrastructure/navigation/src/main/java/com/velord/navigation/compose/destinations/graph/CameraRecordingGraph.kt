@@ -11,6 +11,7 @@ import com.velord.camerarecording.CameraRecordingViewModel
 import org.koin.androidx.compose.koinViewModel
 
 private const val CAMERA_RECORDING_GRAPH = "camera_recording_graph"
+
 @NavGraph<BottomNavigationGraph>(
     route = CAMERA_RECORDING_GRAPH,
     visibility = CodeGenVisibility.INTERNAL
