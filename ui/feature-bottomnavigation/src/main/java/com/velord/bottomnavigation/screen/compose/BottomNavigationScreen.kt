@@ -20,7 +20,8 @@ interface BottomNavigator {
     )
     @Composable
     fun SetupNavController(
-        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit
+        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit,
+        onTabChanged: (BottomNavigationItem) -> Unit,
     )
 }
 
@@ -28,9 +29,14 @@ interface BottomNavigator {
 fun BottomNavigationScreen(navigator: BottomNavigator) {
     val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
 
-    navigator.SetupNavController { startDestinationRoster, currentDestination ->
-        viewModel.updateBackHandling(startDestinationRoster, currentDestination)
-    }
+    navigator.SetupNavController(
+        updateBackHandling = { startDestinationRoster, currentDestination ->
+            viewModel.updateBackHandling(startDestinationRoster, currentDestination)
+        },
+        onTabChanged = { tab ->
+            viewModel.onTabDestinationChanged(tab)
+        }
+    )
 
     ScreenSetup(viewModel = viewModel) {
         val currentTabState = viewModel.currentTabStateFlow.collectAsStateWithLifecycle()

@@ -103,7 +103,8 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Nav
 
     @Composable
     override fun SetupNavController(
-        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit
+        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit,
+        onTabChanged: (BottomNavigationItem) -> Unit,
     ) {
         // TODO:
     }

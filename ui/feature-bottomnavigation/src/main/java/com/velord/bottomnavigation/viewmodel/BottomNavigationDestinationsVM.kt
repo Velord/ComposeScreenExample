@@ -39,12 +39,26 @@ class BottomNavigationDestinationsVM(
 
     fun onTabClick(newTab: BottomNavigationItem) {
         launch {
-            val current = currentTabStateFlow.value
-            val new = current.copy(previous = current.current, current = newTab)
-            Log.d("@@@", "onTabClick: $new")
-            bottomNavEventService.updateTab(new)
-            onTabClickEvent.emit(new)
+            val newState = updateTabStateInternal(newTab)
+            Log.d("@@@", "onTabClick: $newState")
+            onTabClickEvent.emit(newState)
         }
+    }
+
+    // (Back Press -> Updates State ONLY)
+    fun onTabDestinationChanged(newTab: BottomNavigationItem) {
+        // We only update the UI state so the bottom bar highlights correctly.
+        // We do NOT emit to onTabClickEvent, preventing the navigation loop.
+        if (currentTabStateFlow.value.current == newTab) return
+
+        updateTabStateInternal(newTab)
+    }
+
+    private fun updateTabStateInternal(newTab: BottomNavigationItem): TabState {
+        val current = currentTabStateFlow.value
+        val new = current.copy(previous = current.current, current = newTab)
+        bottomNavEventService.updateTab(new)
+        return new
     }
 
     fun onBackDoubleClick() = launch {

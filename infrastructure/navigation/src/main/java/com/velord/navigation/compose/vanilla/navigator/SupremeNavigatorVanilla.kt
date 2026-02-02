@@ -66,7 +66,8 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
     @SuppressLint("RestrictedApi")
     @Composable
     override fun SetupNavController(
-        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit
+        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit,
+        onTabChanged: (BottomNavigationItem) -> Unit,
     ) {
         bottomTabNavController = rememberNavController()
         val backStackEntry = bottomTabNavController!!.currentBackStackEntryAsState()
@@ -88,6 +89,17 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
                 startDestinationRoster,
                 currentDestination.route
             )
+
+            // Sync current tab state with nav controller destination
+            BottomNavigationItem.entries.forEach { item ->
+                val tabStartRoute = getTabStartRouteVanilla(item)
+                // Check if current route matches this tab
+                val isMatch = currentDestination.route?.contains(tabStartRoute::class.simpleName!!) == true
+                if (isMatch) {
+                    Log.d("@@@", "SetupNavController match")
+                    onTabChanged(item)
+                }
+            }
         }
     }
 
