@@ -16,6 +16,11 @@ internal fun NavGraphBuilder.setupMainGraphVanilla(navigator: SupremeNavigatorVa
 
     composable<GraphVanilla.Main.SettingDestinationVanilla> {
         val viewModel = koinViewModel<ThemeViewModel>()
-        SettingScreen(viewModel)
+        SettingScreen(
+            viewModel = viewModel,
+            onBackClick = {
+               // Handle back navigation if needed
+            }
+        )
     }
 }

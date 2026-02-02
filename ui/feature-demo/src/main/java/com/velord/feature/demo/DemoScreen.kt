@@ -1,6 +1,8 @@
 package com.velord.feature.demo
 
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +31,10 @@ fun DemoScreen(
     viewModel: DemoViewModel,
     onNavigationEvent: (DemoDestinationNavigationEvent) -> Unit
 ) {
+    BackHandler {
+        Log.d("@@@", "DemoScreen")
+    }
+
     ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
         onNavigationEvent(it)
     }

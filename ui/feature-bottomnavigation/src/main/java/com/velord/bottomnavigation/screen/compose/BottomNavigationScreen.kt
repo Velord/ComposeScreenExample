@@ -37,7 +37,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
 
         // Observe all clicks, not just state(state can't be changed when you click on same tab)
         ObserveSharedFlow(flow = viewModel.onTabClickEvent) { tab ->
-            Log.d("@@@", "ObserveSharedFlowAsState: $tab")
+            Log.d("@@@", "BottomNavigationScreen onTabClickEvent: $tab")
             navigator.onTabClick(tab)
         }
 

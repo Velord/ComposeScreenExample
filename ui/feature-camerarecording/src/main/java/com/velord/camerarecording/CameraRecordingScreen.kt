@@ -2,6 +2,7 @@ package com.velord.camerarecording
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Recorder
@@ -62,6 +63,10 @@ fun CameraRecordingScreen(
     needToHandlePermission: Boolean = false,
     onNavigationEvent : (CameraRecordingNavigationEvent) -> Unit
 ) {
+    BackHandler {
+        Log.d("@@@", "CameraRecordingScreen")
+    }
+
     ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
         onNavigationEvent(it)
     }

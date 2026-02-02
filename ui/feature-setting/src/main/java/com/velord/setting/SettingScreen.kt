@@ -1,5 +1,7 @@
 package com.velord.setting
 
+import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
@@ -19,6 +21,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,13 +30,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.core.resource.R
 import com.velord.core.ui.utils.LocalTheme
 import com.velord.sharedviewmodel.ThemeUiAction
 import com.velord.sharedviewmodel.ThemeViewModel
 
 @Composable
-fun SettingScreen(viewModel: ThemeViewModel) {
+fun SettingScreen(
+    viewModel: ThemeViewModel,
+    onBackClick: () -> Unit,
+) {
+    val isEnabledState = remember {
+        mutableStateOf(true)
+    }
+    BackHandler(enabled = isEnabledState.value) {
+        onBackClick()
+        isEnabledState.value = false
+        Log.d("@@@", "SettingScreen")
+    }
+
     Content(onThemeAction = viewModel::onAction)
 }
 

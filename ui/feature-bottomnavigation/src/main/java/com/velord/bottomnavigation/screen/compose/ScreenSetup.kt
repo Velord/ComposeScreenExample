@@ -59,14 +59,15 @@ internal fun ScreenSetup(
     }
 
     SideEffect {
+        Log.d("@@@", "ScreenSetup SideEffect")
         // When the graph is completed, we can proceed with the back handling
         // Current logic is simple, we just allow the back handling
-        viewModel.graphCompletedHandling()
+        //viewModel.graphCompletedHandling()
     }
 
     content()
 
-    Log.d("@@@", "ComposeContent: ${isEnabledState.value}")
+    Log.d("@@@", "ScreenSetup: isEnabledState = ${isEnabledState.value}")
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
