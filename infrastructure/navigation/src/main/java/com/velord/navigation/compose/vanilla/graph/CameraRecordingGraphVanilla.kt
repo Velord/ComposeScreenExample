@@ -3,6 +3,7 @@ package com.velord.navigation.compose.vanilla.graph
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.camerarecording.CameraRecordingNavigationEvent
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.camerarecording.CameraRecordingScreen
@@ -16,11 +17,19 @@ internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraR
     ) {
         composable<GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla> {
             val viewModel = koinViewModel<CameraRecordingViewModel>()
-            CameraRecordingScreen(viewModel, true) {
-                when (it) {
-                    CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingFromCameraRecording()
+            val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+            CameraRecordingScreen(
+                viewModel = viewModel,
+                needToHandlePermission = true,
+                onNavigationEvent = {
+                    when (it) {
+                        CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingFromCameraRecording()
+                    }
+                },
+                onBackClick = {
+                    bottomNavViewModel.graphCompletedHandling()
                 }
-            }
+            )
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.velord.setting
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -30,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.core.resource.R
 import com.velord.core.ui.utils.LocalTheme
 import com.velord.sharedviewmodel.ThemeUiAction
@@ -41,13 +39,12 @@ fun SettingScreen(
     viewModel: ThemeViewModel,
     onBackClick: () -> Unit,
 ) {
-    val isEnabledState = remember {
-        mutableStateOf(true)
-    }
+    val isEnabledState = remember { mutableStateOf(true) }
+
+    // Simulate of screen something doing on first back click
     BackHandler(enabled = isEnabledState.value) {
         onBackClick()
         isEnabledState.value = false
-        Log.d("@@@", "SettingScreen")
     }
 
     Content(onThemeAction = viewModel::onAction)

@@ -22,6 +22,7 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
@@ -47,9 +48,17 @@ internal fun ScreenSetup(
     content: @Composable () -> Unit,
 ) {
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
+
+    // Log whenever the state changes
+    LaunchedEffect(backHandlingState.value) {
+        Log.d("LogBackStack", "ScreenSetup: State Changed -> $backHandlingState.value")
+    }
+
     val isEnabledState = remember {
         derivedStateOf {
-            backHandlingState.value.isEnabled
+            val enabled = backHandlingState.value.isEnabled
+            Log.d("LogBackStack", "ScreenSetup: Derived isEnabled -> $enabled")
+            enabled
         }
     }
 
@@ -59,7 +68,6 @@ internal fun ScreenSetup(
     }
 
     SideEffect {
-        Log.d("@@@", "ScreenSetup SideEffect")
         // When the graph is completed, we can proceed with the back handling
         // Current logic is simple, we just allow the back handling
         //viewModel.graphCompletedHandling()
@@ -67,7 +75,7 @@ internal fun ScreenSetup(
 
     content()
 
-    Log.d("@@@", "ScreenSetup: isEnabledState = ${isEnabledState.value}")
+    Log.d("LogBackStack", "ScreenSetup: Parent BackHandler Registered. Enabled=${isEnabledState.value}")
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,

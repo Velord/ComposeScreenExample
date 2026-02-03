@@ -1,6 +1,5 @@
 package com.velord.bottomnavigation.viewmodel
 
-import android.util.Log
 import com.velord.bottomnavigation.BottomNavEventService
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,17 +39,20 @@ class BottomNavigationDestinationsVM(
     fun onTabClick(newTab: BottomNavigationItem) {
         launch {
             val newState = updateTabStateInternal(newTab)
-            Log.d("@@@", "onTabClick: $newState")
             onTabClickEvent.emit(newState)
         }
     }
 
     // (Back Press -> Updates State ONLY)
     fun onTabDestinationChanged(newTab: BottomNavigationItem) {
+        graphTakeResponsibility()
         // We only update the UI state so the bottom bar highlights correctly.
         // We do NOT emit to onTabClickEvent, preventing the navigation loop.
         if (currentTabStateFlow.value.current == newTab) return
 
+        // 1. Reset the "Granted" state because we are entering a new flow
+
+        // 2. Update the tab
         updateTabStateInternal(newTab)
     }
 
@@ -74,11 +76,9 @@ class BottomNavigationDestinationsVM(
         val isStart = startDestinationRoster.contains(currentRoute)
         val newState = backHandlingStateFlow.value.copy(isAtStartGraphDestination = isStart)
         bottomNavEventService.updateBackHandlingState(newState)
-        Log.d("@@@", "updateBackHandling: $newState")
     }
 
     fun graphCompletedHandling() {
-        Log.d("@@@", "graphCompletedHandling")
         changeGrantedToProceed(true)
     }
 

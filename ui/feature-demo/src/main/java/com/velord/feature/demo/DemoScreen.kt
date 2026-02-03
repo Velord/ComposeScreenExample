@@ -31,10 +31,6 @@ fun DemoScreen(
     viewModel: DemoViewModel,
     onNavigationEvent: (DemoDestinationNavigationEvent) -> Unit
 ) {
-    BackHandler {
-       // Log.d("@@@", "DemoScreen")
-    }
-
     ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
         onNavigationEvent(it)
     }

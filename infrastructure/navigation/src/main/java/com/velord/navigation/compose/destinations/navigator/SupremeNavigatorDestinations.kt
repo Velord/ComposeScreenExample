@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.collection.forEach
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
@@ -26,6 +28,8 @@ import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.navigation.compose.destinations.transition.PopFadeTransition
+import com.velord.navigation.compose.vanilla.navigator.LogNavigationEvents
+import com.velord.navigation.compose.vanilla.navigator.logTabClick
 
 /*
 * !!!
@@ -40,17 +44,21 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
     // Below list of certain "Navigator" that work with supreme nav controller
     CameraRecordingNavigator {
 
-    private var bottomTabNavController: NavHostController? = null
+    private val bottomTabNavControllerState: MutableState<NavHostController?> = mutableStateOf(null)
 
     init {
         Log.d("LogBackStack - SupremeNavigatorDestinations", "init: ${this.supremeNavController}")
     }
 
     override fun onTabClick(tab: TabState) {
+        val controller = bottomTabNavControllerState.value!!
+
+        logTabClick(controller, tab)
+
         onTabClickDestinations(
             isSelected = tab.isSame,
             item = tab.current,
-            destinationNavigator = bottomTabNavController!!.toDestinationsNavigator(),
+            destinationNavigator = controller.toDestinationsNavigator(),
             navigator = this,
         )
     }
@@ -60,7 +68,8 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
         modifier: Modifier,
         start: BottomNavigationItem
     ) {
-        val navController = bottomTabNavController!!
+        val navController = bottomTabNavControllerState.value!!
+
         DestinationsNavHost(
             navGraph = BottomNavigationNavGraph,
             modifier = modifier,
@@ -85,16 +94,23 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
         updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit,
         onTabChanged: (BottomNavigationItem) -> Unit,
     ) {
-        bottomTabNavController = rememberNavController()
+        val navController = rememberNavController()
+
+        if (bottomTabNavControllerState.value != navController) {
+            bottomTabNavControllerState.value = navController
+        }
+
+        LogNavigationEvents(navController = navController, label = "DestinationsLib")
+
+        val bottomTabNavController = bottomTabNavControllerState.value
         val backStackEntry = bottomTabNavController!!.currentBackStackEntryAsState()
         val currentDestination = backStackEntry.value?.destination
 
         LaunchedEffect(currentDestination) {
-            Log.d("@@@", "SetupNavController: $currentDestination")
             if (currentDestination == null) return@LaunchedEffect
             val startDestinationRoster = mutableListOf<String?>()
 
-            bottomTabNavController!!.graph.nodes.forEach { _, value ->
+            bottomTabNavController.graph.nodes.forEach { _, value ->
                 val startDestination = when (value) {
                     is NavGraph -> value.startDestinationRoute
                     else -> value.route
@@ -108,30 +124,29 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
 
             // Sync current tab state with nav controller destination
             BottomNavigationItem.entries.forEach { item ->
-                val tabStartRoute = getStartRoute(item)
+                val tabStartRoute = getTabStartRoute(item)
                 // Check if current route matches this tab
                 val isMatch = currentDestination.route?.contains(tabStartRoute::class.simpleName!!) == true
                 if (isMatch) {
-                    Log.d("@@@", "SetupNavController match")
                     onTabChanged(item)
                 }
             }
         }
     }
 
-    override fun getDirection(route: BottomNavigationItem): Direction = when(route) {
+    override fun getRouteOnTabClick(route: BottomNavigationItem): Direction = when(route) {
         BottomNavigationItem.Camera -> CameraRecordingNavGraph
         BottomNavigationItem.Demo -> DemoNavGraph
         BottomNavigationItem.Setting -> BottomNavigationSettingsDestinationDestination
     }
 
-    override fun getGraph(): NavHostGraphSpec = BottomNavigationNavGraph
-
-    override fun getStartRoute(route: BottomNavigationItem): RouteOrDirection = when(route) {
+    override fun getTabStartRoute(route: BottomNavigationItem): RouteOrDirection = when(route) {
         BottomNavigationItem.Camera -> CameraRecordingNavGraph.startRoute
         BottomNavigationItem.Demo -> DemoNavGraph.startRoute
         BottomNavigationItem.Setting -> BottomNavigationSettingsDestinationDestination
     }
+
+    override fun getPopRouteOnTabClick(): NavHostGraphSpec = BottomNavigationNavGraph
 
     override fun goToSettingFromCameraRecording() {
         supremeNavController.toDestinationsNavigator().navigate(MainSettingsDestinationDestination)
