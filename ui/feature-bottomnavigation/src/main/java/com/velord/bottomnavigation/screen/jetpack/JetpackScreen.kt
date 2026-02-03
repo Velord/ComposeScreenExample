@@ -24,7 +24,7 @@ import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHand
 
 @Composable
 internal fun JetpackScreen(viewModel: BottomNavigationJetpackVM) {
-    val tabFlow = viewModel.currentTabFlow.collectAsStateWithLifecycle()
+    val tabFlow = viewModel.currentTabStateFlow.collectAsStateWithLifecycle()
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
 
     Content(

@@ -16,6 +16,11 @@ internal fun EntryProviderScope<NavKey>.setupMainGraphNav3(navigator: SupremeNav
 
     entry<GraphNav3.Main.SettingDestinationNav3> {
         val viewModel = koinViewModel<ThemeViewModel>()
-        SettingScreen(viewModel)
+        SettingScreen(
+            viewModel = viewModel,
+            onBackClick = {
+               // Handle back navigation if needed
+            }
+        )
     }
 }

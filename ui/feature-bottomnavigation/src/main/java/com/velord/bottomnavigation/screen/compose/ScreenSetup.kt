@@ -1,6 +1,7 @@
 package com.velord.bottomnavigation.screen.compose
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +22,10 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -32,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
-import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.core.resource.R
 import com.velord.core.ui.compose.component.AnimatableLabeledIcon
 import com.velord.core.ui.utils.ObserveSharedFlow
@@ -40,15 +43,26 @@ import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHand
 import com.velord.util.context.getActivity
 
 @Composable
-internal fun ComposeContent(
+internal fun ScreenSetup(
     viewModel: BottomNavigationDestinationsVM,
-    content: @Composable (currentTab: BottomNavigationItem) -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
-    val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle(TabState.Default)
+
+    // Log whenever the state changes
+    LaunchedEffect(backHandlingState.value) {
+        Log.d("LogBackStack", "ScreenSetup: State Changed -> $backHandlingState.value")
+    }
+
+    val isEnabledState = remember {
+        derivedStateOf {
+            val enabled = backHandlingState.value.isEnabled
+            Log.d("LogBackStack", "ScreenSetup: Derived isEnabled -> $enabled")
+            enabled
+        }
+    }
 
     val context = LocalContext.current
-
     ObserveSharedFlow(flow = viewModel.finishAppEvent) {
         context.getActivity()?.finish()
     }
@@ -56,16 +70,17 @@ internal fun ComposeContent(
     SideEffect {
         // When the graph is completed, we can proceed with the back handling
         // Current logic is simple, we just allow the back handling
-        viewModel.graphCompletedHandling()
+        //viewModel.graphCompletedHandling()
     }
 
-    content(tabState.value.current)
+    content()
 
+    Log.d("LogBackStack", "ScreenSetup: Parent BackHandler Registered. Enabled=${isEnabledState.value}")
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),
-        enabled = backHandlingState.value.isEnabled,
+        enabled = isEnabledState.value,
         onBackClickLessThanDuration = viewModel::onBackDoubleClick,
     ) {
         Box(

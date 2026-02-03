@@ -58,7 +58,14 @@ class CameraRecordingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        CameraRecordingScreen(viewModel) {}
+        CameraRecordingScreen(
+            viewModel = viewModel,
+            needToHandlePermission = false,
+            onNavigationEvent = {},
+            onBackClick = {
+                viewModelBottom.graphCompletedHandling()
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

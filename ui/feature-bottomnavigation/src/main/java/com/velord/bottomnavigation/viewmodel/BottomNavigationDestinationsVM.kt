@@ -2,10 +2,7 @@ package com.velord.bottomnavigation.viewmodel
 
 import com.velord.bottomnavigation.BottomNavEventService
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
@@ -34,25 +31,36 @@ class BottomNavigationDestinationsVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeViewModel() {
 
-    val currentTabFlow = MutableSharedFlow<TabState>(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    val currentTabStateFlow = bottomNavEventService.currentTabStateFlow
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
     val finishAppEvent = MutableSharedFlow<Unit>()
-
-    init {
-        launch {
-            currentTabFlow.emit(TabState.Default)
-        }
-    }
+    val onTabClickEvent = MutableSharedFlow<TabState>()
 
     fun onTabClick(newTab: BottomNavigationItem) {
         launch {
-            val current = currentTabFlow.take(1).first()
-            val new = current.copy(previous = current.current, current = newTab)
-            currentTabFlow.emit(new)
+            val newState = updateTabStateInternal(newTab)
+            onTabClickEvent.emit(newState)
         }
+    }
+
+    // (Back Press -> Updates State ONLY)
+    fun onTabDestinationChanged(newTab: BottomNavigationItem) {
+        graphTakeResponsibility()
+        // We only update the UI state so the bottom bar highlights correctly.
+        // We do NOT emit to onTabClickEvent, preventing the navigation loop.
+        if (currentTabStateFlow.value.current == newTab) return
+
+        // 1. Reset the "Granted" state because we are entering a new flow
+
+        // 2. Update the tab
+        updateTabStateInternal(newTab)
+    }
+
+    private fun updateTabStateInternal(newTab: BottomNavigationItem): TabState {
+        val current = currentTabStateFlow.value
+        val new = current.copy(previous = current.current, current = newTab)
+        bottomNavEventService.updateTab(new)
+        return new
     }
 
     fun onBackDoubleClick() = launch {

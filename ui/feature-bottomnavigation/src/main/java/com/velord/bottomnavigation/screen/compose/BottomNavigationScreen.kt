@@ -1,24 +1,27 @@
 package com.velord.bottomnavigation.screen.compose
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
-import com.velord.core.ui.utils.ObserveSharedFlowAsState
+import com.velord.core.ui.utils.ObserveSharedFlow
 import org.koin.androidx.compose.koinViewModel
 
-interface BottomNavigator{
+interface BottomNavigator {
     fun onTabClick(tab: TabState)
     @Composable fun CreateNavHostForBottom(
         modifier: Modifier,
         startRoute: BottomNavigationItem
     )
     @Composable
-    fun setupController(
-        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit
+    fun SetupNavController(
+        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit,
+        onTabChanged: (BottomNavigationItem) -> Unit,
     )
 }
 
@@ -26,23 +29,32 @@ interface BottomNavigator{
 fun BottomNavigationScreen(navigator: BottomNavigator) {
     val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
 
-    navigator.setupController { startDestinationRoster, currentDestination ->
-        viewModel.updateBackHandling(startDestinationRoster, currentDestination)
-    }
+    navigator.SetupNavController(
+        updateBackHandling = { startDestinationRoster, currentDestination ->
+            viewModel.updateBackHandling(startDestinationRoster, currentDestination)
+        },
+        onTabChanged = { tab ->
+            viewModel.onTabDestinationChanged(tab)
+        }
+    )
 
-    ComposeContent(viewModel = viewModel) { currentTab ->
-        ObserveSharedFlowAsState(flow = viewModel.currentTabFlow) { tab ->
+    ScreenSetup(viewModel = viewModel) {
+        val currentTabState = viewModel.currentTabStateFlow.collectAsStateWithLifecycle()
+
+        // Observe all clicks, not just state(state can't be changed when you click on same tab)
+        ObserveSharedFlow(flow = viewModel.onTabClickEvent) { tab ->
+            Log.d("LogBackStack", "BottomNavigationScreen onTabClickEvent: $tab")
             navigator.onTabClick(tab)
         }
 
         Content(
-            tab = currentTab,
+            tab = currentTabState.value.current,
             createNavHost = {
                 navigator.CreateNavHostForBottom(
                     modifier = Modifier
                         .padding(bottom = it.calculateBottomPadding())
                         .fillMaxSize(),
-                    startRoute = currentTab
+                    startRoute = currentTabState.value.current
                 )
             },
             getNavigationItems = viewModel::getNavigationItems,

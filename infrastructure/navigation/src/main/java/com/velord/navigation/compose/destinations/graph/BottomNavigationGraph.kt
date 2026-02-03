@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
+import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.navigation.compose.destinations.transition.PopFadeTransition
 import com.velord.setting.SettingScreen
 import com.velord.sharedviewmodel.ThemeViewModel
@@ -22,5 +23,11 @@ annotation class BottomNavigationGraph
 @Composable
 internal fun SettingsDestination() {
     val viewModel = koinViewModel<ThemeViewModel>()
-    SettingScreen(viewModel)
+    val bottomNavVM = koinViewModel<BottomNavigationDestinationsVM>()
+    SettingScreen(
+        viewModel = viewModel,
+        onBackClick = {
+            bottomNavVM.graphCompletedHandling()
+        }
+    )
 }

@@ -24,7 +24,9 @@ class SettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        SettingScreen(viewModel)
+        SettingScreen(viewModel) {
+            viewModelBottom.graphCompletedHandling()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

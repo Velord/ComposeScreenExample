@@ -1,6 +1,6 @@
 package com.velord.bottomnavigation
 
-import com.velord.bottomnavigation.screen.jetpack.BottomNavigationItem
+import com.velord.bottomnavigation.viewmodel.TabState
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.annotation.Single
 
@@ -15,14 +15,13 @@ data class BottomNavBackHandlingState(
 class BottomNavEventService {
 
     val backHandlingStateFlow = MutableStateFlow(BottomNavBackHandlingState())
-    val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)
+    val currentTabStateFlow = MutableStateFlow(TabState.Default)
 
     fun updateBackHandlingState(newState: BottomNavBackHandlingState) {
         backHandlingStateFlow.value =  newState
     }
 
-    fun updateTab(newTab: BottomNavigationItem) {
-        if (newTab == currentTabFlow.value) return
-        currentTabFlow.value = newTab
+    fun updateTab(newTab: TabState) {
+        currentTabStateFlow.value = newTab
     }
 }

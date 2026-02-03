@@ -2,6 +2,7 @@ package com.velord.camerarecording
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Recorder
@@ -35,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -60,8 +62,14 @@ enum class CameraRecordingNavigationEvent {
 fun CameraRecordingScreen(
     viewModel: CameraRecordingViewModel,
     needToHandlePermission: Boolean = false,
-    onNavigationEvent : (CameraRecordingNavigationEvent) -> Unit
+    onNavigationEvent : (CameraRecordingNavigationEvent) -> Unit,
+    onBackClick: () -> Unit,
 ) {
+    SideEffect {
+        // Simulate we completed back stack handling
+        onBackClick()
+    }
+
     ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
         onNavigationEvent(it)
     }
@@ -69,21 +77,22 @@ fun CameraRecordingScreen(
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     if (needToHandlePermission) {
-        CheckCameraAndAudioRecordPermission(
-            triggerCheckEvent = viewModel.checkPermissionEvent,
-            onCameraUpdateState = {
-                val action = CameraRecordingUiAction.UpdateCameraPermissionState(it)
-                viewModel.onAction(action)
-            },
-            onMicroUpdateState = {
-                val action = CameraRecordingUiAction.UpdateAudioPermissionState(it)
-                viewModel.onAction(action)
-            }
-        )
+        // To annoying. Return back later.
+//        CheckCameraAndAudioRecordPermission(
+//            triggerCheckEvent = viewModel.checkPermissionEvent,
+//            onCameraUpdateState = {
+//                val action = CameraRecordingUiAction.UpdateCameraPermissionState(it)
+//                viewModel.onAction(action)
+//            },
+//            onMicroUpdateState = {
+//                val action = CameraRecordingUiAction.UpdateAudioPermissionState(it)
+//                viewModel.onAction(action)
+//            }
+//        )
     }
 
-    Log.d("CameraRecordingFragment", "permissionCameraState: ${uiState.value.permissionCamera}")
-    Log.d("CameraRecordingFragment", "permissionAudioState: ${uiState.value.permissionAudio}")
+    Log.d("CameraRecordingScreen", "permissionCameraState: ${uiState.value.permissionCamera}")
+    Log.d("CameraRecordingScreen", "permissionAudioState: ${uiState.value.permissionAudio}")
     Content(
         uiState = uiState.value,
         onAction = viewModel::onAction

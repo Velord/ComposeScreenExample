@@ -25,7 +25,8 @@ private const val DEMO_GRAPH = "demo_graph"
 @NavGraph<BottomNavigationGraph>(
     start = true,
     route = DEMO_GRAPH,
-    visibility = CodeGenVisibility.INTERNAL
+    visibility = CodeGenVisibility.INTERNAL,
+    start = true
 )
 annotation class DemoGraph
 

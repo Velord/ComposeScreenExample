@@ -9,12 +9,15 @@ import com.velord.model.movie.MoviePagination
 import com.velord.model.movie.MovieRosterSize
 import com.velord.usecase.movie.dataSource.LoadNewPageMovieDS
 import com.velord.usecase.movie.dataSource.RefreshMovieDS
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Single
 
 private const val INITIAL_PAGE = 1
+private const val TAG = "MoviePaginationGateway"
 
 // Load First Page at init
 // Than load from Db
@@ -27,7 +30,10 @@ class MoviePaginationGateway(
     private val movieSortGateway: MovieSortGateway
 ) : LoadNewPageMovieDS, RefreshMovieDS {
 
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private val errorHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.d(TAG, "Error: $throwable")
+    }
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob() + errorHandler)
     private var currentPage = INITIAL_PAGE
 
     init {
@@ -41,10 +47,10 @@ class MoviePaginationGateway(
     }
 
     override suspend fun load(): MovieRosterSize {
-        Log.d("MoviePaginationGateway", "loadNewPage: $currentPage")
+        Log.d(TAG, "loadNewPage: $currentPage")
         val fromDb = loadFromDb(currentPage)
         val isPageFull = fromDb.value == MoviePagination.PAGE_COUNT
-        Log.d("MoviePaginationGateway", "loadNewPage fromDb: $fromDb")
+        Log.d(TAG, "loadNewPage fromDb: $fromDb")
         val newSize = if (isPageFull) {
             fromDb
         } else {
@@ -70,8 +76,8 @@ class MoviePaginationGateway(
         )
         val movieRoster = http.getMovie(newPage)
         val newRoster = movieRoster.results.map { it.toDomain() }
-        Log.d("MoviePaginationGateway", "loadFromNetwork newRoster: $newRoster")
-        Log.d("MoviePaginationGateway", "loadFromNetwork size: ${newRoster.size}")
+        Log.d(TAG, "loadFromNetwork newRoster: $newRoster")
+        Log.d(TAG, "loadFromNetwork size: ${newRoster.size}")
         movieGateway.update { movies ->
             (movies + newRoster).toSet().toList()
         }
@@ -89,7 +95,7 @@ class MoviePaginationGateway(
             sortType = sortType,
             filterRoster = filterRoster
         )
-        Log.d("MoviePaginationGateway", "loadFromDb: $fromDb")
+        Log.d(TAG, "loadFromDb: $fromDb")
         movieGateway.update { movies ->
             (movies + fromDb).toSet().toList()
         }
