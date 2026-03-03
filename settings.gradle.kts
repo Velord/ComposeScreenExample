@@ -82,4 +82,3 @@ include(":ui:feature-movie")
 // UI Widget
 include(":ui:widget-refreshableimage")
 include(":ui:widget-counter")
-include(":build-logic:convention")

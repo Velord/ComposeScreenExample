@@ -128,6 +128,7 @@ android {
 
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_21
+        isCoreLibraryDesugaringEnabled = true
     }
     buildFeatures {
         compose = true
@@ -163,6 +164,8 @@ dependencies {
     implementation(libs.bundles.koin)
     implementation(platform(libs.koin.bom))
     ksp(libs.koin.ksp)
+    // Tool
+    coreLibraryDesugaring(libs.android.desugar)
     // Other
     implementation(libs.androidx.glance.appwidget)
     // Test libs.versions.toml

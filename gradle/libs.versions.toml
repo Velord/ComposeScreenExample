@@ -8,48 +8,49 @@ gradle = "8.13.0"
 jvmTarget = "24"
 jetifier = "1.0.0-beta10"
 # DI
-dagger = "2.57.2"
-hilt = "2.57.2"
+dagger = "2.59.2"
+hilt = "2.59.2"
 hiltNavigation = "1.3.0"
 hiltNavigationCompose = "1.3.0"
-koinBom = "4.1.0"
-koinKsp = "2.1.0"
+koinBom = "4.1.1"
+koinKsp = "2.3.1"
 # Google Firebase
-googleFirebaseBom = "34.5.0"
+googleFirebaseBom = "34.10.0"
 googleFirebaseCrashlyticPlugin = "3.0.6"
 # Google Other
 googleGuava = "33.5.0-android"
-googleKsp = "2.2.20-2.0.3"
-googleMapCompose = "6.12.1"
-googleMapUtil = "3.19.1"
+googleKsp = "2.3.4"
+googleMapCompose = "8.2.0"
+googleMapUtil = "4.1.0"
 googleModernStorage = "1.0.0-alpha06"
-googleRecaptcha = "18.7.1" # 18.8.0 requires core library desugaring to be enabled
-googlePayCompose = "1.1.0"
+googleRecaptcha = "18.8.0" # 18.8.0 requires core library desugaring to be enabled
+googlePayCompose = "1.2.0"
 googleWalletCompose = "0.1.0-beta01"
 # Google GMS/Google Play Services
 googleGmsAppSet = "16.1.0"
 googleGmsAuth = "21.4.0"
 googleGmsAuthApiPhone = "18.3.0"
-googleGmsBase = "18.9.0"
+googleGmsBase = "18.10.0"
 googleGmsLocation = "21.3.0"
-googleGmsMap = "19.2.0"
+googleGmsMap = "20.0.0"
 googleGmsMlKit = "19.0.1"
 googleGmsVision = "20.1.3"
 googleGmsServicesPlugin = "4.4.4"
 googleGmsWallet = "19.5.0"
 # Kotlin
-kotlin = "2.2.21"
+kotlin = "2.3.10"
 kotlinCoroutine = "1.10.2"
 kotlinCollectionsImmutable = "0.4.0"
 kotlinDateTime = "0.7.1"
 # Kotlin Json Serialization
-kotlinJsonSerialization = "1.9.0"
+kotlinJsonSerialization = "1.10.0"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
 ## Android
+androidDesugar = "2.1.5"
 androidInstallReferrer = "2.2"
 # AndroidX
 ## A
-androidxActivity = "1.11.0"
+androidxActivity = "1.12.4"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.9.1"
 androidxAppCompat = "1.7.1"
@@ -63,9 +64,9 @@ androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha02"
 androidxBrowser = "1.9.0"
 ## Camera
-androidxCamera = "1.5.1"
+androidxCamera = "1.5.3"
 androidxCameraMedia3 = "1.0.0-alpha04"
-androidxCameraViewFinder = "1.5.1"
+androidxCameraViewFinder = "1.5.3"
 ## C
 androidxCarApp = "1.7.0"
 androidXCardView = "1.0.0"
@@ -85,7 +86,7 @@ androidxCorePerformance = "1.0.0"
 androidxCoreRomoteViews = "1.1.0"
 androidxCoreRole = "1.1.0"
 androidxCoreSplashScreen = "1.2.0"
-androidxCoreUWB = "1.0.0-alpha10"
+androidxCoreUWB = "1.0.0-alpha11"
 ## C
 androidxCredentials = "1.5.0"
 androidxCursorAdapter = "1.0.0"
@@ -94,17 +95,17 @@ androidxCustomView = "1.2.0"
 androidxCustomViewPollingContainer = "1.1.0"
 ## D
 androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
-androidxDatastore = "1.1.7"
+androidxDatastore = "1.2.0"
 androidxDocumentFile = "1.1.0"
 androidxDragAndDrop = "1.0.0"
 androidxDrawerLayout = "1.2.0"
 androidxDynamicAnimation = "1.1.0"
 ## Emoji
-androidxEmoji = "1.1.0"
+androidxEmoji = "1.2.0"
 androidxEmoji2 = "1.6.0"
 ## E
 androidxEnterprise = "1.1.0"
-androidxExifInterface = "1.4.1"
+androidxExifInterface = "1.4.2"
 androidxFragment = "1.8.9"
 ## Games
 androidxGamesActivity = "4.0.0"
@@ -117,22 +118,21 @@ androidxGamesPerformanceTuner = "2.0.0"
 androidxGlance = "1.1.1"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha07"
 ## Graphics
-androidxGraphicsCore = "1.0.3"
+androidxGraphicsCore = "1.0.4"
 androidxGraphicsPath = "1.0.1"
 androidxGraphicsShapes = "1.1.0"
 ## G
 androidxGridlayout = "1.1.0"
 ## L
 androidxLegacySupport = "1.0.0"
-androidxLifecycle = "2.9.4"
+androidxLifecycle = "2.10.0"
 ## M
-androidxMedia3 = "1.8.0"
+androidxMedia3 = "1.9.2"
 ## N
-androidxNavigation = "2.9.6"
-androidxNavigation3 = "1.0.0-rc01"
+androidxNavigation = "2.9.7"
+androidxNavigation3 = "1.0.1"
 ## AndroidX Paging
-androidxPaging = "3.3.6"
-androidxPagingCompose = "3.3.6"
+androidxPaging = "3.4.1"
 ## P
 androidxPalette = "1.0.0" # There are no release notes for this artifact.
 androidxPercentLayout = "1.0.0"
@@ -142,9 +142,9 @@ androidxPrint = "1.1.0"
 androidxPrivacySandboxActivity = "1.0.0-alpha01"
 androidxPrivacySandboxAds = "1.1.0-beta12"
 androidxPrivacySandboxPlugins = "1.0.0-alpha02"
-androidxPrivacySandboxSdkRuntime = "1.0.0-alpha18"
-androidxPrivacySandboxTools = "1.0.0-alpha13"
-androidxPrivacySandboxUi = "1.0.0-alpha16"
+androidxPrivacySandboxSdkRuntime = "1.0.0-alpha19"
+androidxPrivacySandboxTools = "1.0.0-alpha14"
+androidxPrivacySandboxUi = "1.0.0-alpha17"
 ## P
 androidxProfileInstaller = "1.4.1"
 ## R
@@ -153,9 +153,9 @@ androidxRecommendation = "1.0.0"
 androidxRecyclerView = "1.4.0"
 androidxRecyclerViewSelection = "1.2.0"
 ## R
-androidxRemoteCallback = "1.0.0-alpha02"
+androidxRemoteCallback = "1.0.0-alpha03"
 androidxResourceInspection = "1.0.1"
-androidxRoom = "2.8.3"
+androidxRoom = "2.8.4"
 ## S
 androidxSavedState = "1.4.0"
 ## Security
@@ -169,9 +169,9 @@ androidxSlice = "1.1.0-alpha02"
 androidxSliceKtx = "1.0.0-alpha08"
 ## S
 androidxSlidingPaneLayout = "1.2.0"
-androidxSqlite = "2.6.1"
+androidxSqlite = "2.6.2"
 androidxStartup = "1.2.0"
-androidxSwipeRefreshLayout = "1.1.0"
+androidxSwipeRefreshLayout = "1.2.0"
 ## T
 ## Test
 androidxTestAnnotation = "1.0.1"
@@ -190,7 +190,7 @@ androidxTestUiAutomator = "2.3.0"
 ## T
 androidxTextClassifier = "1.0.0-alpha04"
 androidxTracing = "1.3.0"
-androidxTransition = "1.6.0"
+androidxTransition = "1.7.0"
 ## TV
 androidxTvFoundation = "1.0.0-alpha12"
 androidxTvMaterial = "1.1.0-alpha01"
@@ -206,28 +206,28 @@ androidxViewPager = "1.1.0"
 androidxViewPager2 = "1.1.0"
 ## W
 ## Wear
-androidxWear = "1.3.0"
+androidxWear = "1.4.0"
 androidxWearInput = "1.2.0" # For Input, Input Testing
 androidxWearOngoing = "1.1.0"
 androidxWearPhone = "1.1.0"
-androidxWearRemote = "1.1.0"
-androidxWearCompose = "1.5.5"
+androidxWearRemote = "1.2.0"
+androidxWearCompose = "1.5.6"
 androidxWearProtoLayout = "1.3.0"
 androidxWearTiles = "1.5.0"
 androidxWearWatchface = "1.2.1"
 ## W
-androidxWebkit = "1.14.0"
+androidxWebkit = "1.15.0"
 ## Window
-androidxWindow = "1.5.0"
+androidxWindow = "1.5.1"
 androidxWindowExtension = "1.0.0"
 ## W
-androidxWorkManager = "2.11.0"
+androidxWorkManager = "2.11.1"
 # Network
 squareRetrofit = "3.0.0"
-squareOkhttp3Interceptor = "5.3.0"
-ktor = "3.3.2"
+squareOkhttp3Interceptor = "5.3.2"
+ktor = "3.4.1"
 # Compose
-composeDefault = "1.9.4" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composeDefault = "1.10.4" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeIcon = "1.7.8"
 composeAccompanist = "0.37.3"
 # composeCompiler = "1.5.14"
@@ -238,9 +238,9 @@ composeHtmlIreward = "1.0.2"
 composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
-composeHaze = "1.6.10"
+composeHaze = "1.7.2"
 # Image loader
-coil = "3.3.0"
+coil = "3.4.0"
 # Permission
 sagarCoroutinePermission = "2.0.3"
 accompanistPermission = "0.37.2"
@@ -254,7 +254,7 @@ takt = "2.1.1"
 rebugger = "1.0.1"
 # Testing
 junit = "4.13.2"
-mockk = "1.14.6"
+mockk = "1.14.9"
 turbine = "1.2.1"
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
@@ -263,6 +263,7 @@ turbine = "1.2.1"
 [libraries]
 # Android -----------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
+android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "androidDesugar" }
 android-install-referrer = { module = "com.android.installreferrer:installreferrer", version.ref = "androidInstallReferrer" }
 # AndroidX -----------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
@@ -400,7 +401,7 @@ androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", vers
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
 # AndroidX Paging
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
-androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPaging" }
 # AndroidX Privacy Sandbox Activity
 # Could not find !!!
 androidx-privacysandbox-activity = { module = "androidx.privacysandbox.activity:activity", version.ref = "androidxPrivacySandboxActivity" }
