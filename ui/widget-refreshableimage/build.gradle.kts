@@ -1,6 +1,5 @@
 plugins {
     id(libs.plugins.android.library.get().pluginId)
-    id(libs.plugins.kotlin.android.get().pluginId)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.kotlin.plugin.compose)
 }
@@ -41,6 +40,8 @@ dependencies {
     implementation(libs.bundles.androidx.glance)
     implementation(libs.bundles.androidx.workmanager)
     implementation(libs.bundles.coil)
+    // AndroidX
+    implementation(libs.androidx.core.ktx)
     // Compose
     implementation(libs.bundles.compose.ui)
 }

@@ -4,7 +4,7 @@ minApi = "26"
 targetApi = "36"
 # Build
 buildTools = "30.0.3"
-gradle = "8.13.0"
+gradle = "9.0.1"
 jvmTarget = "24"
 jetifier = "1.0.0-beta10"
 # DI
@@ -603,7 +603,7 @@ google-wallet-compose = { module = "com.google.wallet.button:compose-wallet-butt
 google-pay-compose = { module = "com.google.pay.button:compose-pay-button", version.ref = "googlePayCompose" }
 # Google GMS/Google Play Services
 google-gms-appset = { module = "com.google.android.gms:play-services-appset", version.ref = "googleGmsAppSet" }
-google-gms-auth = { module = "com.google.android.gms:play-services-auth", version = "googleGmsAuth" }
+google-gms-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "googleGmsAuth" }
 google-gms-auth-api-phone = { module = "com.google.android.gms:play-services-auth-api-phone", version.ref = "googleGmsAuthApiPhone" }
 google-gms-base = { module = "com.google.android.gms:play-services-base", version.ref = "googleGmsBase" }
 google-gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "googleGmsLocation" }
