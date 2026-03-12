@@ -1,11 +1,36 @@
 # ComposeScreenExample
 ## Architecture:
-Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Architecture
+Single Activity — Multi Module — Multiple Backstack — MVVM(UiState + UiAction) — Clean Architecture/Redux(one app state)
+
+Project uses navigation libs:
+* [Jetpack Navigation](https://developer.android.com/guide/navigation) **80%** _screens covered._ **DEPRECATED**
+* [Voyager](https://github.com/adrielcafe/voyager) **100%** _screens covered_
+* [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation) **100%** _screens covered_
+* [Compose Destinations](https://github.com/raamcosta/compose-destinations) **100%** _screens covered_
+* [Compose Nav3](https://developer.android.com/guide/navigation/navigation-3) **100%** _screens covered_ !!! In active phase development
+  
+To use different Navigation library need to change in ```build.gradle.kts``` at ```app``` module.
+
+```
+buildConfigField(    
+    "com.velord.config.NavigationLib",
+    "NAVIGATION_LIB",
+    "com.velord.config.NavigationLib.{Voyager}" or "Jetpack" or "Destinations" or "Compose" or "Nav3"
+)
+```
+
 
 ## UI Features:
+* [Movie Demo](#movie-demo)
+* [Theme Demo](#theme-demo)
+   * [Before 8.1 Oreo](#before-81-oreo)
+   * [After 8.1 and Before 11 Red Velvet Cake](#before-11-red-velvet-cake)
+   * [After 11 Red Velvet Cake](#after-11-red-velvet-cake)
+* [Phone Number Hint Demo](#phone-number-hint-demo)
 * [Compose Shapes](#shape-demo)
    * [TicketPath](#ticketpath)
    * [ArcAtBottomCenterPath](#arcatbottomcenterpath)
+   * [WaveShape](#arcatbottomcenterpath)
 * [Compose Modifiers](#modifier-demo)
    * [Shimmering](#shimmering)
    * [BlinkingShadow](#blinking-shadow)
@@ -16,8 +41,22 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
     * [Counter](#counter)
     * [Refreshable Image](#refreshable-image)
 
+## Movie Demo
+[MovieDemo.webm](https://github.com/user-attachments/assets/32bfe923-977a-4803-a297-014d17cc9af9)
+
+## Theme Demo
+* ### Before 8.1 Oreo
+![themedemobefore8.1](https://github.com/user-attachments/assets/4bf872d7-ab15-45d8-91af-06c9caaf81ae)
+
+* ### Before 11 Red Velvet Cake
+https://github.com/user-attachments/assets/aeca3717-9f1d-49cd-9821-a12fa466923e
+
+* ### After 11 Red Velvet Cake
+https://github.com/user-attachments/assets/da8fd995-e6f6-4583-9514-6c985062de39
+
+
 ## Shape Demo
-[ShapeDemo.webm](https://github.com/Velord/ComposeScreenExample/assets/33905170/c5cbd5ca-8cb3-4efb-8601-10994eb011a5)
+[ShapeDemo.webm](https://github.com/user-attachments/assets/e7ed352d-f9b7-46c4-9745-9ff2498b22c8)
 
 ### Shapes and layouts used:
 #### 1. TicketShape 2. ArcAtBottomCenterShape 3. PervasiveArcFromBottomLayout
@@ -27,8 +66,11 @@ Single Activity — Multi Module — Multiple Backstack — MVVM — Clean Archi
 ![246669480-b7bf28f2-5e1e-4eb9-ae53-fe3e8ecffd16](https://github.com/Velord/ComposeScreenExample/assets/33905170/64e99cdf-4c2d-4e6a-bdc4-7ab81ac4734d)
 
 * #### ArcAtBottomCenterPath 
-It is the arc placed in the bottom center of the layout dependent on the progress
+It is the arc placed in the bottom center of the layout that depends on the progress
 ![246670194-fd752fb4-8e3c-49e8-b1bb-f860138600e8](https://github.com/Velord/ComposeScreenExample/assets/33905170/75dc1cdc-b9f8-4bff-8b98-4ff675ef2617) 
+
+* #### WaveShape
+![Screenshot_20241125_174739](https://github.com/user-attachments/assets/664f9e5b-5ca1-4fe4-8410-d1792cf1ce47)
 
 
 ## Modifier Demo
@@ -296,3 +338,6 @@ It is the arc placed in the bottom center of the layout dependent on the progres
 
 [Refreshable Image](https://github.com/Velord/ComposeScreenExample/assets/33905170/52762849-2d09-4445-85f1-4975d22ff52e)
 
+
+## Phone Number Hint Demo
+[Phone Number Hint Demo](https://github.com/user-attachments/assets/041d7f78-7083-4640-a68e-04662335d250)

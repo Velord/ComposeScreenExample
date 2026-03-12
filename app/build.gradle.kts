@@ -1,15 +1,20 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id(libs.plugins.android.application.get().pluginId)
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
-    id(libs.plugins.dagger.hilt.get().pluginId)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.kotlin.plugin.serialization)
+
+    // Convention plugin does not work
+    //id("velord.application")
 }
 
 // When app incompatible with previous version change this value
 val globalVersion = 1
 // When you create huge feature(or many) release change this value
-val majorVersion = 0
+val majorVersion = 2
 // When you create feature release change this value
 val minorVersion = 0
 // When you create fix change this value
@@ -21,7 +26,11 @@ val buildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull() ?: hotfixVersion
 // Doc says: max number is 2100000000
 // Do not use auto numeration when value beyond edge
 val maxSafeVersionCode = 1000000000
-val calculatedVersionNumber = globalVersion * 100000 + majorVersion * 10000 + minorVersion * 1000 + fixVersion * 100 + buildNumber
+val calculatedVersionNumber = globalVersion * 100000 +
+        majorVersion * 10000 +
+        minorVersion * 1000 +
+        fixVersion * 100 +
+        buildNumber
 
 android {
     namespace = "com.velord.composescreenexample"
@@ -44,25 +53,45 @@ android {
             useSupportLibrary = true
         }
 
-        resourceConfigurations += listOf("en")
+        androidResources.localeFilters += listOf("en")
     }
 
     buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("debug")
+        }
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
+            buildConfigField(
+                "com.velord.config.NavigationLib",
+                "NAVIGATION_LIB",
+                "com.velord.config.NavigationLib.Compose"
+            )
         }
         named("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
+            buildConfigField(
+                "com.velord.config.NavigationLib",
+                "NAVIGATION_LIB",
+                "com.velord.config.NavigationLib.Destinations"
+            )
         }
     }
 
     flavorDimensions.add("environment")
     productFlavors {
         val baseUrl = "https://google.com"
-        val currentVersion = globalVersion * 100000 + majorVersion * 10000 + minorVersion * 1000 + fixVersion * 100
+        val currentVersion = globalVersion * 100000 +
+                majorVersion * 10000 +
+                minorVersion * 1000 +
+                fixVersion * 100
+
         create("develop") {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = false
@@ -70,7 +99,7 @@ android {
             buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
             buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
 
-            resourceConfigurations += listOf("en", "xxxhdpi")
+            resourceConfigurations.add("xxxhdpi")
         }
         create("qa") {
             dimension = "environment"
@@ -97,60 +126,76 @@ android {
     }
 
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
+        isCoreLibraryDesugaringEnabled = true
     }
     buildFeatures {
         compose = true
         viewBinding = true
         buildConfig = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
 }
 
 dependencies {
-    // Module
-    implementation(project(":resource"))
-    implementation(project(":core-navigation"))
-
     implementation(project(":model"))
-    implementation(project(":util"))
-
-    implementation(project(":backend"))
-    implementation(project(":datastore"))
-
-    implementation(project(":sharedviewmodel"))
-    implementation(project(":core-ui"))
-
-    implementation(project(":feature-demo"))
-    implementation(project(":feature-camerarecording"))
-    implementation(project(":feature-bottomnavigation"))
-    implementation(project(":feature-demo-shape"))
-    implementation(project(":feature-demo-modifier"))
-    implementation(project(":feature-flowsummator"))
-    implementation(project(":feature-settings"))
-    implementation(project(":widget-refreshableimage"))
-
-    implementation(project(":widget-counter"))
+    // Module Infrastructure
+    implementation(project(":infrastructure:util"))
+    implementation(project(":infrastructure:navigation"))
+    implementation(project(":infrastructure:di"))
+    implementation(project(":infrastructure:config"))
+    // Module Core
+    implementation(project(":core:core-ui"))
+    implementation(project(":core:core-navigation"))
+    implementation(project(":core:core-resource"))
+    // Module UI
+    implementation(project(":ui:sharedviewmodel"))
+    // Module UI Feature
+    implementation(project(":ui:feature-bottomnavigation"))
+    implementation(project(":ui:feature-splash"))
+    // Module UI Widget
+    implementation(project(":ui:widget-refreshableimage"))
+    implementation(project(":ui:widget-counter"))
     // Templates
-    implementation(libs.bundles.kotlin.all)
+    implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.coil)
-    implementation(libs.bundles.voyager)
-    // Compose
-    implementation(libs.bundles.compose.all)
+    implementation(libs.bundles.compose.ui)
     // DI
-    implementation(libs.bundles.dagger.all)
-    kapt(libs.bundles.dagger.kapt)
-    kapt(libs.hilt.compiler)
+    implementation(libs.bundles.koin)
+    implementation(platform(libs.koin.bom))
+    ksp(libs.koin.ksp)
+    // Tool
+    coreLibraryDesugaring(libs.android.desugar)
     // Other
-    implementation(libs.androidx.datastore)
     implementation(libs.androidx.glance.appwidget)
-    // Only for test
-    implementation(libs.bundles.androidx.all)
+    // Test libs.versions.toml
+//    implementation(libs.bundles.android.all)
+//    implementation(libs.bundles.androidx.all)
+//    implementation(libs.bundles.kotlin.all)
+//    implementation(libs.bundles.compose.all)
+//    implementation(libs.bundles.compose.thirdparty)
+//    implementation(libs.bundles.logging)
+//    implementation(libs.bundles.google.all)
+//    implementation(libs.bundles.google.firebase)
+//    implementation(platform(libs.google.firebase.bom))
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+// Making “Optimised Out” Variables Visible in the IDE
+kotlin {
+    compilerOptions {
+        if (System.getProperty("idea.active") == "true") {
+            println("Enable coroutine debugging")
+            freeCompilerArgs.add("-Xdebug")
+        }
+    }
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK", "true")
+    arg("KOIN_DEFAULT_MODULE", "false")
+}
+
+tasks.withType<KotlinCompile> {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
 }
