@@ -5,7 +5,15 @@ internal data class MemoryDump(
     val trimLevel: Int? = null,
     val timestamp: Long,
     val snapshot: MemorySnapshot
-)
+) {
+    override fun toString(): String {
+        val trimInfo = trimLevel?.let { " (Level: $it)" } ?: ""
+        return "[$reason]$trimInfo PSS: ${snapshot.pss.total}MB" +
+                " | Java: ${snapshot.pss.javaHeap}MB" +
+                " | USS: ${snapshot.core.uss}MB" +
+                " | RSS: ${snapshot.core.rss}MB"
+    }
+}
 
 internal enum class DumpReason {
     INTERVAL, TRIM_MEMORY, OOM

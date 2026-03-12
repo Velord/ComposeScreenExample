@@ -75,7 +75,7 @@ class MemoryLeakMonitor(
     override fun onLowMemory() = Unit // No-op
 
     private fun publishMemoryDump(dump: MemoryDump) {
-        logger.log("Memory Dump [${dump.reason}]: $dump")
+        logger.log("$dump")
 
         logger.apply {
             with(dump) {
