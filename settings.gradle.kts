@@ -61,6 +61,7 @@ include(":data:datastore")
 include(":data:appstate")
 include(":data:db")
 include(":data:gateway")
+include(":data:os")
 // Domain
 include(":domain:usecase-setting")
 include(":domain:usecase-movie")

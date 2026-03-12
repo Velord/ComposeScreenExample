@@ -147,6 +147,8 @@ dependencies {
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-navigation"))
     implementation(project(":core:core-resource"))
+    // Module Data
+    implementation(project(":data:os"))
     // Module UI
     implementation(project(":ui:sharedviewmodel"))
     // Module UI Feature
