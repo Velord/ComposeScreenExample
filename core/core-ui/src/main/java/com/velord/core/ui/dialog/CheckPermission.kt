@@ -7,11 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-<<<<<<<< HEAD:core-ui/src/main/java/com/velord/uicore/dialog/CheckPermission.kt
-import com.velord.resource.R
-========
 import com.velord.core.resource.R
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:core/core-ui/src/main/java/com/velord/core/ui/dialog/CheckPermission.kt
 import com.velord.util.context.createSettingsIntent
 
 private fun Context.askUserActivatePermissionInSettings(
@@ -32,11 +28,7 @@ private fun Context.askUserActivatePermissionInSettings(
     )
 }
 
-<<<<<<<< HEAD:core-ui/src/main/java/com/velord/uicore/dialog/CheckPermission.kt
-fun Context.showRationalePermissionForMic(
-========
 fun Context.showGoToSettingsForMic(
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:core/core-ui/src/main/java/com/velord/core/ui/dialog/CheckPermission.kt
     onDecline: () -> Unit
 ) {
     askUserActivatePermissionInSettings(
@@ -46,11 +38,7 @@ fun Context.showGoToSettingsForMic(
     )
 }
 
-<<<<<<<< HEAD:core-ui/src/main/java/com/velord/uicore/dialog/CheckPermission.kt
-fun Context.showRationalePermissionForCamera(
-========
 fun Context.showGoToSettingsForCamera(
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:core/core-ui/src/main/java/com/velord/core/ui/dialog/CheckPermission.kt
     onDecline: () -> Unit
 ) {
     askUserActivatePermissionInSettings(
@@ -60,7 +48,6 @@ fun Context.showGoToSettingsForCamera(
     )
 }
 
-<<<<<<<< HEAD:core-ui/src/main/java/com/velord/uicore/dialog/CheckPermission.kt
 fun Fragment.checkRecordAudioPermission(
     actionLauncher: ActivityResultLauncher<String>,
     onGranted: () -> Unit
@@ -74,13 +61,11 @@ fun Fragment.checkRecordAudioPermission(
     when {
         isGranted -> onGranted()
         shouldShowRequestPermissionRationale(permRecordAudio) ->
-            requireContext().showRationalePermissionForMic {}
+            requireContext().showGoToSettingsForMic {}
         else -> actionLauncher.launch(permRecordAudio)
     }
 }
 
-========
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:core/core-ui/src/main/java/com/velord/core/ui/dialog/CheckPermission.kt
 fun Fragment.checkRecordVideoPermission(
     actionLauncher: ActivityResultLauncher<Array<String>>,
     onGranted: () -> Unit,
@@ -92,25 +77,20 @@ fun Fragment.checkRecordVideoPermission(
         permRecordAudio,
         permCamera
     )
-    val isGranted = permissions.all {
+
+    val isGranted = permissions.all { permission ->
         ContextCompat.checkSelfPermission(
             requireContext(),
-            permRecordAudio
+            permission
         ) == PackageManager.PERMISSION_GRANTED
     }
 
     when {
         isGranted -> onGranted()
         shouldShowRequestPermissionRationale(permRecordAudio) ->
-<<<<<<<< HEAD:core-ui/src/main/java/com/velord/uicore/dialog/CheckPermission.kt
-            requireContext().showRationalePermissionForMic(onDecline)
-        shouldShowRequestPermissionRationale(permCamera) ->
-            requireContext().showRationalePermissionForCamera(onDecline)
-========
             requireContext().showGoToSettingsForMic(onDecline)
         shouldShowRequestPermissionRationale(permCamera) ->
             requireContext().showGoToSettingsForCamera(onDecline)
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:core/core-ui/src/main/java/com/velord/core/ui/dialog/CheckPermission.kt
         else -> actionLauncher.launch(permissions)
     }
 }

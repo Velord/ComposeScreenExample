@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:feature-demo-modifier/src/main/java/com/velord/modifierdemo/BlinkingDemo.kt
-package com.velord.modifierdemo
-========
 package com.velord.modifierdemo.component
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:ui/feature-demo-modifier/src/main/java/com/velord/modifierdemo/component/BlinkingDemo.kt
 
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.foundation.layout.Box

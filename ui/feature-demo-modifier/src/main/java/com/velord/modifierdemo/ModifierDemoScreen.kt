@@ -20,11 +20,7 @@ import com.velord.modifierdemo.component.ShimmeringDemo
 import com.velord.modifierdemo.component.SwellingDemo
 
 @Composable
-<<<<<<<< HEAD:feature-demo-modifier/src/main/java/com/velord/modifierdemo/ModifierDemoFragment.kt
-internal fun ModifierDemoScreen() {
-========
 fun ModifierDemoScreen() {
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:ui/feature-demo-modifier/src/main/java/com/velord/modifierdemo/ModifierDemoScreen.kt
     Content()
 }
 

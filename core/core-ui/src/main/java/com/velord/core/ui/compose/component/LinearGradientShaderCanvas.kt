@@ -1,10 +1,6 @@
-<<<<<<<< HEAD:core-ui/src/main/java/com/velord/uicore/compose/component/LinearGradientShaderCanvas.kt
 @file:Suppress("FunctionName", "FunctionName")
 
-package com.velord.uicore.compose.component
-========
 package com.velord.core.ui.compose.component
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:core/core-ui/src/main/java/com/velord/core/ui/compose/component/LinearGradientShaderCanvas.kt
 
 import android.graphics.RectF
 import androidx.compose.ui.geometry.Offset

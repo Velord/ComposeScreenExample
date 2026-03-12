@@ -18,11 +18,7 @@ import com.velord.shapedemo.component.TicketShapeDemo
 import com.velord.shapedemo.component.WaveShapeDemo
 
 @Composable
-<<<<<<<< HEAD:feature-demo-shape/src/main/java/com/velord/shapedemo/ShapeDemoFragment.kt
-internal fun ShapeDemoScreen() {
-========
 fun ShapeDemoScreen() {
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:ui/feature-demo-shape/src/main/java/com/velord/shapedemo/ShapeDemoScreen.kt
     Content()
 }
 

@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:feature-demo-modifier/src/main/java/com/velord/modifierdemo/SwellingDemo.kt
-package com.velord.modifierdemo
-========
 package com.velord.modifierdemo.component
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:ui/feature-demo-modifier/src/main/java/com/velord/modifierdemo/component/SwellingDemo.kt
 
 import androidx.compose.animation.core.EaseInBounce
 import androidx.compose.foundation.layout.Box
@@ -24,12 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-<<<<<<<< HEAD:feature-demo-modifier/src/main/java/com/velord/modifierdemo/SwellingDemo.kt
-import com.velord.uicore.utils.modifier.swelling
-========
 import com.velord.core.ui.utils.modifier.swelling
 import com.velord.modifierdemo.Title
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:ui/feature-demo-modifier/src/main/java/com/velord/modifierdemo/component/SwellingDemo.kt
 
 @Composable
 internal fun ColumnScope.SwellingDemo() {
