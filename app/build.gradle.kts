@@ -170,6 +170,9 @@ dependencies {
     coreLibraryDesugaring(libs.android.desugar)
     // Other
     implementation(libs.androidx.glance.appwidget)
+    // Firebase
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.bundles.google.firebase)
     // Test libs.versions.toml
 //    implementation(libs.bundles.android.all)
 //    implementation(libs.bundles.androidx.all)
