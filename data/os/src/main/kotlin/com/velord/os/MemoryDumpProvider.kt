@@ -3,10 +3,12 @@ package com.velord.os
 import android.os.Debug
 import android.system.Os
 import android.system.OsConstants
+import org.koin.core.annotation.Single
 import java.io.BufferedReader
 import java.io.FileReader
 import kotlin.math.roundToLong
 
+@Single
 internal class MemoryDumpProvider(private val logger: MemoryLogger) {
 
     private val memoryInfo = Debug.MemoryInfo()

@@ -10,8 +10,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Single
 import kotlin.time.Duration.Companion.minutes
 
+@Single
 class MemoryLeakMonitor(
     private val context: Context,
     private val logger: MemoryLogger,

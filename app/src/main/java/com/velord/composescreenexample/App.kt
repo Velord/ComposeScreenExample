@@ -11,6 +11,7 @@ import com.velord.di.startKoin
 import com.velord.navigation.voyager.initVoyager
 import com.velord.os.MemoryLeakMonitor
 import com.velord.os.MemoryLogger
+import org.koin.android.ext.android.inject
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
@@ -28,48 +29,44 @@ internal class BuildConfigResolverImpl: BuildConfigResolver {
 @Single
 internal class MemoryLoggerImpl : MemoryLogger {
 
-    private val tag = "MemoryMonitor"
-
     override fun log(message: String, isError: Boolean) {
         if (isError) {
-            Log.e(tag, message)
+            Log.e(TAG, message)
             // FirebaseCrashlytics.getInstance().log("E/$tag: $message")
         } else {
-            Log.d(tag, message)
+            Log.d(TAG, message)
             // FirebaseCrashlytics.getInstance().log("D/$tag: $message")
         }
     }
 
     override fun recordException(throwable: Throwable) {
-        Log.e(tag, "Recording non-fatal exception", throwable)
+        Log.e(TAG, "Recording non-fatal exception", throwable)
         // FirebaseCrashlytics.getInstance().recordException(throwable)
     }
 
     override fun setCustomKey(key: String, value: Int) {
-        Log.d(tag, "Key [$key] = $value")
+        Log.d(TAG, "Key [$key] = $value")
         // FirebaseCrashlytics.getInstance().setCustomKey(key, value)
     }
 
     override fun setCustomKey(key: String, value: Long) {
-        Log.d(tag, "Key [$key] = $value")
+        Log.d(TAG, "Key [$key] = $value")
         // FirebaseCrashlytics.getInstance().setCustomKey(key, value)
     }
 
     override fun setCustomKey(key: String, value: String) {
-        Log.d(tag, "Key [$key] = $value")
+        Log.d(TAG, "Key [$key] = $value")
         // FirebaseCrashlytics.getInstance().setCustomKey(key, value)
+    }
+
+    companion object {
+        private const val TAG = "MemoryLogger"
     }
 }
 
 class App : Application() {
 
-    private val memoryLogger: MemoryLogger by lazy {
-        MemoryLoggerImpl()
-    }
-
-    private val memoryLeakMonitor: MemoryLeakMonitor by lazy {
-        MemoryLeakMonitor(this, memoryLogger)
-    }
+    private val memoryLeakMonitor: MemoryLeakMonitor by inject()
 
     override fun onCreate() {
         super.onCreate()
