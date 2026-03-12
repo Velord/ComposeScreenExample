@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:sharedviewmodel/src/main/java/com/example/sharedviewmodel/CoroutineScopeViewModel.kt
-package com.example.sharedviewmodel
-========
 package com.velord.sharedviewmodel
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:ui/sharedviewmodel/src/main/java/com/velord/sharedviewmodel/CoroutineScopeViewModel.kt
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -16,11 +12,8 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.coroutines.CoroutineContext
 
-<<<<<<<< HEAD:sharedviewmodel/src/main/java/com/example/sharedviewmodel/CoroutineScopeViewModel.kt
-========
 private const val TAG = "CoroutineScopeViewModel"
 
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:ui/sharedviewmodel/src/main/java/com/velord/sharedviewmodel/CoroutineScopeViewModel.kt
 open class CoroutineScopeViewModel: ViewModel(), CoroutineScope {
 
     private val job = SupervisorJob()

@@ -20,17 +20,11 @@ import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.PreviewView
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
-<<<<<<<< HEAD:feature-camerarecording/src/main/java/com/velord/camerarecording/model/Camera.kt
-import com.velord.resource.R
-import com.velord.util.file.FileName
-import com.velord.util.file.NewFile
-========
 import com.velord.core.resource.R
 import com.velord.util.file.FileName
 import com.velord.util.file.NewFile
 import com.velord.util.file.OutputDirectory
 import java.io.File
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:ui/feature-camerarecording/src/main/java/com/velord/camerarecording/model/Camera.kt
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 

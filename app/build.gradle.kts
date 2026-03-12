@@ -6,7 +6,8 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
-
+    alias(libs.plugins.google.gms.services)
+    alias(libs.plugins.google.firebase.crashlytic)
     // Convention plugin does not work
     //id("velord.application")
 }

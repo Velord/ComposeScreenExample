@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:core-ui/src/main/java/com/velord/uicore/compose/preview/PreviewFont.kt
-package com.velord.uicore.compose.preview
-========
 package com.velord.core.ui.compose.preview
->>>>>>>> 76f71e457c730912e8e00a3beb96f602e7765555:core/core-ui/src/main/java/com/velord/core/ui/compose/preview/PreviewFont.kt
 
 import androidx.compose.ui.tooling.preview.Preview
 
