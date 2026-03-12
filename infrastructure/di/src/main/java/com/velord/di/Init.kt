@@ -5,6 +5,7 @@ import com.velord.backend.ktor.httpModule
 import com.velord.bottomnavigation.BottomNavigationModule
 import com.velord.db.databaseModule
 import com.velord.gateway.GatewayModule
+import com.velord.os.OsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -28,5 +29,6 @@ fun Application.startKoin(
         // Load Annotation-based modules
         modules(BottomNavigationModule().module)
         modules(GatewayModule().module)
+        modules(OsModule().module)
     }
 }

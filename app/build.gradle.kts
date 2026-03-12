@@ -6,7 +6,8 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
-
+    alias(libs.plugins.google.gms.services)
+    alias(libs.plugins.google.firebase.crashlytic)
     // Convention plugin does not work
     //id("velord.application")
 }
@@ -147,6 +148,8 @@ dependencies {
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-navigation"))
     implementation(project(":core:core-resource"))
+    // Module Data
+    implementation(project(":data:os"))
     // Module UI
     implementation(project(":ui:sharedviewmodel"))
     // Module UI Feature
@@ -167,6 +170,9 @@ dependencies {
     coreLibraryDesugaring(libs.android.desugar)
     // Other
     implementation(libs.androidx.glance.appwidget)
+    // Firebase
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.bundles.google.firebase)
     // Test libs.versions.toml
 //    implementation(libs.bundles.android.all)
 //    implementation(libs.bundles.androidx.all)

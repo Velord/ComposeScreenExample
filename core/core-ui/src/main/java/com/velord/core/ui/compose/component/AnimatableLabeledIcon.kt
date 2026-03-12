@@ -34,6 +34,7 @@ fun AnimatableLabeledIcon(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
+        // Delegates to the private optimized Icon below
         Icon(
             painter = painter,
             scale = scale,
@@ -67,7 +68,7 @@ private fun Icon(
         ),
         label = "AnimatableLabeledIcon scale"
     )
-    // TODO: reduce recompositions
+
     val animatedColorState: State<Color> = animateColorAsState(
         targetValue = color,
         animationSpec = TweenSpec(
@@ -80,12 +81,13 @@ private fun Icon(
     Icon(
         painter = painter,
         contentDescription = null,
-        tint = animatedColorState.value,
+        tint = animatedColorState.value, // This will only cause this specific Icon to recompose, not the text!
         modifier = modifier
+            .size(iconSize)
             .graphicsLayer {
+                // Reading state inside graphicsLayer skips recomposition and layout phases
                 scaleX = animatedScaleState.value
                 scaleY = animatedScaleState.value
             }
-            .size(iconSize)
     )
 }

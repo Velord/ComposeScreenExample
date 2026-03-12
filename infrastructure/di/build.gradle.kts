@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":data:appstate"))
     implementation(project(":data:gateway"))
     implementation(project(":data:db"))
+    implementation(project(":data:os"))
     // Module UI
     implementation(project(":ui:sharedviewmodel"))
     // Module UI Feature
