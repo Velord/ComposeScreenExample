@@ -13,7 +13,7 @@ import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.navigation.compose.nav3.GraphNav3
-import com.velord.navigation.compose.nav3.graph.setupBottomNavigationNav3
+import com.velord.navigation.compose.nav3.graph.setupBottomNavigationGraphNav3
 
 private val BOTTOM_TAB_TOP_LEVEL_ROUTES = setOf(
     GraphNav3.BottomTab.CameraRecording.CameraRecordingDestinationNav3,
@@ -93,7 +93,7 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Nav
         }
 
         val entryProvider = entryProvider {
-            setupBottomNavigationNav3(navigator)
+            setupBottomNavigationGraphNav3(navigator)
         }
         NavDisplay(
             entries = navigationState.toEntries(entryProvider),
@@ -106,7 +106,20 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Nav
         updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit,
         onTabChanged: (BottomNavigationItem) -> Unit,
     ) {
-        // TODO:
+        // Simulate back handling and tab change observation for nav3
+        // This is a minimal implementation; you can extend it for more advanced use cases
+        val currentRoute = backStack.lastOrNull()?.toString()
+        val startDestinationRoster = BOTTOM_TAB_TOP_LEVEL_ROUTES.map { it.toString() }
+        updateBackHandling(startDestinationRoster, currentRoute)
+        // Optionally, observe tab changes and call onTabChanged if needed
+        // For now, call with the current tab
+        val currentTab = when (backStack.lastOrNull()) {
+            GraphNav3.BottomTab.CameraRecording.CameraRecordingDestinationNav3 -> BottomNavigationItem.Camera
+            GraphNav3.BottomTab.Demo.DemoDestinationNav3 -> BottomNavigationItem.Demo
+            GraphNav3.BottomTab.SettingDestinationNav3 -> BottomNavigationItem.Setting
+            else -> BottomNavigationItem.Demo
+        }
+        onTabChanged(currentTab)
     }
 
     override fun goToSettingFromCameraRecording() {
