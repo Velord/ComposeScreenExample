@@ -41,6 +41,14 @@ internal class BackStackNavigator(val state: NavigationState) {
             currentStack.removeAt(currentStack.lastIndex)
         }
     }
+
+    fun popToRoot() {
+        val currentStack = state.backStacks[state.topLevelRoute] ?: return
+        // Keep only the first element (the start route of this tab)
+        while (currentStack.size > 1) {
+            currentStack.removeAt(currentStack.lastIndex)
+        }
+    }
 }
 
 @Composable

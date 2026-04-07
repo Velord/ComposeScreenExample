@@ -172,6 +172,7 @@ internal fun logTabClick(controller: NavHostController, tab: TabState) {
         """.trimIndent())
 }
 
+@SuppressLint("RestrictedApi")
 @Composable
 internal fun LogNavigationEvents(navController: NavHostController, label: String) {
     LaunchedEffect(navController) {
