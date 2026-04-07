@@ -1,30 +1,11 @@
 plugins {
-    id(libs.plugins.android.library.get().pluginId)
+    alias(libs.plugins.convention.android.library)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
     namespace = "com.velord.model"
-
-    compileSdk = libs.versions.targetApi.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minApi.get().toInt()
-    }
-
-    buildTypes {
-        named("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_21
-    }
 }
 
 dependencies {
@@ -36,4 +17,3 @@ dependencies {
     // Test
     testImplementation(libs.bundles.test)
 }
-
