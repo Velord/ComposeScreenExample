@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
+import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.dialogDemo.DialogDemoScreen
 import com.velord.dialogDemo.DialogDemoViewModel
 import com.velord.feature.demo.DemoNavigator
@@ -33,9 +34,19 @@ annotation class DemoGraph
 @Composable
 internal fun DemoDestination(navigator: DemoNavigator) {
     val viewModel = koinViewModel<DemoViewModel>()
-    DemoScreen(viewModel) {
-        navigator.goTo(it)
-    }
+    val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+
+    DemoScreen(
+        viewModel = viewModel,
+        onNavigationEvent = {
+            navigator.goTo(it)
+        },
+        onBackClick = {
+            // To enable System Back Button handling
+            // via Bottom Navigation -> comment the line below
+            // bottomNavViewModel.graphCompletedHandling()
+        }
+    )
 }
 
 @Destination<DemoGraph>

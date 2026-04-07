@@ -2,6 +2,7 @@ package com.velord.navigation.compose.nav3.graph
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
+import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.dialogDemo.DialogDemoScreen
 import com.velord.dialogDemo.DialogDemoViewModel
 import com.velord.feature.demo.DemoNavigator
@@ -23,9 +24,19 @@ import org.koin.androidx.compose.koinViewModel
 internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNavigator) {
     entry<GraphNav3.BottomTab.Demo.DemoDestinationNav3> {
         val viewModel = koinViewModel<DemoViewModel>()
-        DemoScreen(viewModel) {
-            navigator.goTo(it)
-        }
+        val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+
+        DemoScreen(
+            viewModel = viewModel,
+            onNavigationEvent = {
+                navigator.goTo(it)
+            },
+            onBackClick = {
+                // To enable System Back Button handling
+                // via Bottom Navigation -> comment the line below
+                // bottomNavViewModel.graphCompletedHandling()
+            }
+        )
     }
 
     entry<GraphNav3.BottomTab.Demo.ShapeDemoDestinationNav3> {

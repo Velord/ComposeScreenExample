@@ -18,6 +18,7 @@ internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraR
         composable<GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla> {
             val viewModel = koinViewModel<CameraRecordingViewModel>()
             val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+
             CameraRecordingScreen(
                 viewModel = viewModel,
                 needToHandlePermission = true,

@@ -93,7 +93,7 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
             if (currentDestination == null) return@LaunchedEffect
             val startDestinationRoster = mutableListOf<String?>()
 
-            bottomTabNavController!!.graph.nodes.forEach { _, value ->
+            bottomTabNavController.graph.nodes.forEach { _, value ->
                 val startDestination = when (value) {
                     is NavGraph -> value.startDestinationRoute
                     else -> value.route

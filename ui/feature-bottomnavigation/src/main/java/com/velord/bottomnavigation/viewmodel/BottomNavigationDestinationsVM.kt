@@ -45,14 +45,20 @@ class BottomNavigationDestinationsVM(
 
     // (Back Press -> Updates State ONLY)
     fun onTabDestinationChanged(newTab: BottomNavigationItem) {
-        graphTakeResponsibility()
+        // Previous solution was to reset all time we enter a new tab,
+        // But this causes sync issues at a startup time.
+        // The "bottom navigation" screen and the "first destination" screen
+        // in the graph are into race condition.
+        // For example, if the first destination screen is faster to emit the tab state than
+        // the bottom navigation screen, then the bottom navigation screen will override
+        // it with the default tab state, causing the app to always
+        // start with isGrantedToProceed = false
+        //graphTakeResponsibility()
+
         // We only update the UI state so the bottom bar highlights correctly.
         // We do NOT emit to onTabClickEvent, preventing the navigation loop.
         if (currentTabStateFlow.value.current == newTab) return
 
-        // 1. Reset the "Granted" state because we are entering a new flow
-
-        // 2. Update the tab
         updateTabStateInternal(newTab)
     }
 
@@ -74,7 +80,16 @@ class BottomNavigationDestinationsVM(
         currentRoute: String?
     ) {
         val isStart = startDestinationRoster.contains(currentRoute)
-        val newState = backHandlingStateFlow.value.copy(isAtStartGraphDestination = isStart)
+        val newState = backHandlingStateFlow.value.copy(
+            isAtStartGraphDestination = isStart,
+            // Auto-revoke the grant if we navigate deep into the stack.
+            // If we are at the start, keep whatever the screen requested.
+            isGrantedToProceed = if (isStart) {
+                backHandlingStateFlow.value.isGrantedToProceed
+            } else {
+                false
+            }
+        )
         bottomNavEventService.updateBackHandlingState(newState)
     }
 

@@ -1,8 +1,6 @@
 package com.velord.feature.demo
 
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,8 +28,14 @@ import com.velord.core.ui.utils.ObserveSharedFlow
 @Composable
 fun DemoScreen(
     viewModel: DemoViewModel,
-    onNavigationEvent: (DemoDestinationNavigationEvent) -> Unit
+    onNavigationEvent: (DemoDestinationNavigationEvent) -> Unit,
+    onBackClick: () -> Unit,
 ) {
+    SideEffect {
+        // Simulate we completed back stack handling
+        onBackClick()
+    }
+
     ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
         onNavigationEvent(it)
     }

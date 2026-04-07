@@ -51,7 +51,7 @@ internal fun ScreenSetup(
 
     // Log whenever the state changes
     LaunchedEffect(backHandlingState.value) {
-        Log.d("LogBackStack", "ScreenSetup: State Changed -> $backHandlingState.value")
+        Log.d("LogBackStack", "ScreenSetup: State Changed -> ${backHandlingState.value}")
     }
 
     val isEnabledState = remember {
@@ -75,6 +75,10 @@ internal fun ScreenSetup(
 
     content()
 
+    // What if we want to not block system back and allow just exit the app ?
+    // In that case, we can simply not call graphCompletedHandling() at all,
+    // and the back handling will not be enabled,
+    // allowing the system to handle the back press as usual.
     Log.d("LogBackStack", "ScreenSetup: Parent BackHandler Registered. Enabled=${isEnabledState.value}")
     val str = stringResource(id = R.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
