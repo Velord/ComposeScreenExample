@@ -1,34 +1,12 @@
 plugins {
-    id(libs.plugins.android.library.get().pluginId)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.plugin.compose)
+    id("velord.android.library")
+    id("velord.android.compose")
+    id("velord.android.viewbinding")
+    id("velord.koin")
 }
 
 android {
     namespace = "com.velord.flowsummator"
-
-    compileSdk = libs.versions.targetApi.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minApi.get().toInt()
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    buildFeatures {
-        compose = true
-        viewBinding = true
-    }
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_21
-    }
 }
 
 dependencies {
@@ -41,13 +19,4 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
-    // DI
-    implementation(libs.bundles.koin)
-    implementation(platform(libs.koin.bom))
-    ksp(libs.koin.ksp)
-}
-
-ksp {
-    arg("KOIN_CONFIG_CHECK","true")
-    arg("KOIN_DEFAULT_MODULE","false")
 }

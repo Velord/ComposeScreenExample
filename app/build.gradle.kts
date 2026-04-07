@@ -1,15 +1,12 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id(libs.plugins.android.application.get().pluginId)
+    id("velord.android.application")
+    id("velord.android.compose")
+    id("velord.android.viewbinding")
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
+    id("velord.koin")
     alias(libs.plugins.google.gms.services)
     alias(libs.plugins.google.firebase.crashlytic)
-    // Convention plugin does not work
-    //id("velord.application")
 }
 
 // When app incompatible with previous version change this value
@@ -36,15 +33,12 @@ val calculatedVersionNumber = globalVersion * 100000 +
 android {
     namespace = "com.velord.composescreenexample"
 
-    compileSdk = libs.versions.targetApi.get().toInt()
-
     defaultConfig {
         applicationId = "com.velord.composescreenexample"
 
-        minSdk = libs.versions.minApi.get().toInt()
         targetSdk = libs.versions.targetApi.get().toInt()
 
-        //Don"t use number greater than maxSafeVersionCode
+        //Don't use number greater than maxSafeVersionCode
         val isLessThanMax = calculatedVersionNumber < maxSafeVersionCode
         versionCode = if (isLessThanMax) calculatedVersionNumber else 0
         versionName = "$globalVersion.$majorVersion.$minorVersion"
@@ -127,12 +121,9 @@ android {
     }
 
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_21
         isCoreLibraryDesugaringEnabled = true
     }
     buildFeatures {
-        compose = true
-        viewBinding = true
         buildConfig = true
     }
 }
@@ -162,10 +153,6 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.ui)
-    // DI
-    implementation(libs.bundles.koin)
-    implementation(platform(libs.koin.bom))
-    ksp(libs.koin.ksp)
     // Tool
     coreLibraryDesugaring(libs.android.desugar)
     // Other
@@ -185,23 +172,12 @@ dependencies {
 //    implementation(platform(libs.google.firebase.bom))
 }
 
-// Making “Optimised Out” Variables Visible in the IDE
+// Making optimized out variables visible in the IDE.
 kotlin {
     compilerOptions {
         if (System.getProperty("idea.active") == "true") {
             println("Enable coroutine debugging")
             freeCompilerArgs.add("-Xdebug")
         }
-    }
-}
-
-ksp {
-    arg("KOIN_CONFIG_CHECK", "true")
-    arg("KOIN_DEFAULT_MODULE", "false")
-}
-
-tasks.withType<KotlinCompile> {
-    compilerOptions {
-        freeCompilerArgs.add("-Xcontext-parameters")
     }
 }

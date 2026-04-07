@@ -1252,4 +1252,8 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "googleKsp" }
 google-firebase-crashlytic = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlyticPlugin" }
 google-gms-services = { id = "com.google.gms.google-services", version.ref = "googleGmsServicesPlugin" }
 # Convention Plugin
-convention-application = { id = "velord.application" }
+convention-android-application = { id = "velord.android.application" }
+convention-android-library = { id = "velord.android.library" }
+convention-android-compose = { id = "velord.android.compose" }
+convention-android-viewbinding = { id = "velord.android.viewbinding" }
+convention-koin = { id = "velord.koin" }

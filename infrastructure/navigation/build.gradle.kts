@@ -1,34 +1,13 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id(libs.plugins.android.library.get().pluginId)
+    id("velord.android.library")
+    id("velord.android.compose")
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
+    id("velord.koin")
 }
 
 android {
     namespace = "com.velord.navigation"
-
-    compileSdk = libs.versions.targetApi.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minApi.get().toInt()
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_21
-    }
 }
 
 dependencies {
@@ -68,20 +47,8 @@ dependencies {
     // Navigation Compose Destinations
     implementation(libs.bundles.compose.destinations)
     ksp(libs.compose.destinations.ksp)
-    // DI
-    implementation(libs.bundles.koin)
-    implementation(platform(libs.koin.bom))
-    ksp(libs.koin.ksp)
 }
 
 ksp {
-    arg("KOIN_CONFIG_CHECK","true")
-    arg("KOIN_DEFAULT_MODULE","false")
     arg("compose-destinations.moduleName", "navigation")
-}
-
-tasks.withType<KotlinCompile> {
-    compilerOptions {
-        freeCompilerArgs.add("-Xcontext-parameters")
-    }
 }

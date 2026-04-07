@@ -1,35 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id(libs.plugins.android.library.get().pluginId)
-    alias(libs.plugins.kotlin.plugin.compose)
+    id("velord.android.library")
+    id("velord.android.compose")
+    id("velord.android.viewbinding")
 }
 
 android {
     namespace = "com.velord.core.ui"
-
-    compileSdk = libs.versions.targetApi.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minApi.get().toInt()
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    buildFeatures {
-        compose = true
-        viewBinding = true
-    }
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_21
-    }
 }
 
 dependencies {
@@ -48,10 +24,4 @@ dependencies {
     // Compose
     implementation(libs.androidx.glance)
     implementation(libs.androidx.glance.appwidget)
-}
-
-tasks.withType<KotlinCompile> {
-    compilerOptions {
-        freeCompilerArgs.add("-Xcontext-parameters")
-    }
 }

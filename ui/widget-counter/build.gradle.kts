@@ -1,32 +1,10 @@
 plugins {
-    id(libs.plugins.android.library.get().pluginId)
-    alias(libs.plugins.kotlin.plugin.compose)
+    id("velord.android.library")
+    id("velord.android.compose")
 }
 
 android {
     namespace = "com.velord.widgetcounter"
-
-    compileSdk = libs.versions.targetApi.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minApi.get().toInt()
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    buildFeatures {
-        compose = true
-    }
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_21
-    }
 }
 
 dependencies {

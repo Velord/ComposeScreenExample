@@ -1,41 +1,17 @@
 plugins {
-    id(libs.plugins.android.library.get().pluginId)
-    alias(libs.plugins.ksp)
+    id("velord.android.library")
+    id("velord.koin")
 }
 
 android {
     namespace = "com.velord.os"
-
-    compileSdk = libs.versions.targetApi.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minApi.get().toInt()
-    }
-
-    buildTypes {
-        named("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_21
-    }
 }
 
 dependencies {
     // Templates
     implementation(libs.bundles.kotlin.module)
-    // DI
-    implementation(libs.bundles.koin)
-    implementation(platform(libs.koin.bom))
-    ksp(libs.koin.ksp)
 }
 
 ksp {
-    arg("KOIN_CONFIG_CHECK","false")
-    arg("KOIN_DEFAULT_MODULE","false")
+    arg("KOIN_CONFIG_CHECK", "false")
 }
