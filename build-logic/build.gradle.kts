@@ -29,6 +29,22 @@ gradlePlugin {
             id = "velord.koin"
             implementationClass = "com.velord.buildlogic.KoinConventionPlugin"
         }
+        register("featureUiConvention") {
+            id = "velord.feature.ui"
+            implementationClass = "com.velord.buildlogic.FeatureUiConventionPlugin"
+        }
+        register("featureUiKoinConvention") {
+            id = "velord.feature.ui.koin"
+            implementationClass = "com.velord.buildlogic.FeatureUiKoinConventionPlugin"
+        }
+        register("domainUsecaseConvention") {
+            id = "velord.domain.usecase"
+            implementationClass = "com.velord.buildlogic.DomainUsecaseConventionPlugin"
+        }
+        register("widgetGlanceConvention") {
+            id = "velord.widget.glance"
+            implementationClass = "com.velord.buildlogic.WidgetGlanceConventionPlugin"
+        }
     }
 }
 

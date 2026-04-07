@@ -12,7 +12,7 @@ data class MovieResponse(
     @SerialName("release_date")
     val date: String,
     @SerialName("poster_path")
-    val imageUrl: String,
+    val imageUrl: String? = null,
     @SerialName("overview")
     val description: String,
     @SerialName("vote_average")

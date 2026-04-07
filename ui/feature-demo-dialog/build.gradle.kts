@@ -1,7 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    alias(libs.plugins.convention.android.compose)
-    alias(libs.plugins.convention.android.viewbinding)
+    alias(libs.plugins.convention.feature.ui)
 }
 
 android {
@@ -14,7 +12,5 @@ dependencies {
     implementation(project(":core:core-ui"))
     implementation(project(":ui:sharedviewmodel"))
     // Templates
-    implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
 }

@@ -1257,3 +1257,7 @@ convention-android-library = { id = "velord.android.library" }
 convention-android-compose = { id = "velord.android.compose" }
 convention-android-viewbinding = { id = "velord.android.viewbinding" }
 convention-koin = { id = "velord.koin" }
+convention-feature-ui = { id = "velord.feature.ui" }
+convention-feature-ui-koin = { id = "velord.feature.ui.koin" }
+convention-domain-usecase = { id = "velord.domain.usecase" }
+convention-widget-glance = { id = "velord.widget.glance" }

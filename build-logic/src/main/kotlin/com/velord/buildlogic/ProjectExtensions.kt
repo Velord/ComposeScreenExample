@@ -9,3 +9,18 @@ internal val Project.libs: VersionCatalog
 
 internal fun Project.version(name: String): String =
     libs.findVersion(name).get().requiredVersion
+
+internal fun Project.addBundle(configurationName: String, bundleName: String) {
+    val bundle = libs.findBundle(bundleName).get().get()
+    bundle.forEach { dependency ->
+        dependencies.add(configurationName, dependency)
+    }
+}
+
+internal fun Project.addLibraryDependency(configurationName: String, libraryName: String) {
+    dependencies.add(configurationName, libs.findLibrary(libraryName).get().get())
+}
+
+internal fun Project.addProjectDependency(configurationName: String, projectPath: String) {
+    dependencies.add(configurationName, project(projectPath))
+}

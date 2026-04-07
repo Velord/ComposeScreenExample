@@ -1,9 +1,6 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    alias(libs.plugins.convention.android.compose)
-    alias(libs.plugins.convention.android.viewbinding)
+    alias(libs.plugins.convention.feature.ui.koin)
     alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.convention.koin)
 }
 
 android {
@@ -18,8 +15,6 @@ dependencies {
     implementation(project(":core:core-ui"))
     implementation(project(":ui:sharedviewmodel"))
     // Template
-    implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.kotlin.serialization)
     implementation(libs.bundles.voyager) // Refactor. Too much effort need to move to nav module

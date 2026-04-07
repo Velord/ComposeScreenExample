@@ -1,8 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    alias(libs.plugins.convention.android.compose)
-    alias(libs.plugins.convention.android.viewbinding)
-    alias(libs.plugins.convention.koin)
+    alias(libs.plugins.convention.feature.ui.koin)
 }
 
 android {
@@ -18,7 +15,5 @@ dependencies {
     implementation(project(":ui:sharedviewmodel"))
     implementation(project(":ui:feature-bottomnavigation"))
     // Templates
-    implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
 }

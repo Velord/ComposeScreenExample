@@ -1,7 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    alias(libs.plugins.convention.android.compose)
-    alias(libs.plugins.convention.android.viewbinding)
+    alias(libs.plugins.convention.feature.ui)
 }
 
 android {
@@ -17,8 +15,6 @@ dependencies {
     implementation(project(":ui:sharedviewmodel"))
     implementation(project(":domain:usecase-movie"))
     // Templates
-    implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.coil)
     implementation(libs.androidx.constraint.compose)

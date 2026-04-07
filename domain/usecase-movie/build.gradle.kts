@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
+    alias(libs.plugins.convention.domain.usecase)
 }
 
 android {
@@ -7,10 +7,6 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":model"))
-    // Templates
-    implementation(libs.bundles.kotlin.module)
     // Test
     testImplementation(libs.junit)
     testImplementation(libs.bundles.test)
