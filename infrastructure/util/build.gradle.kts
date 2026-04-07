@@ -1,6 +1,6 @@
 plugins {
-    id("velord.android.library")
-    id("velord.android.compose")
+    alias(libs.plugins.convention.android.library)
+    alias(libs.plugins.convention.android.compose)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.kotlin.plugin.serialization)
 }

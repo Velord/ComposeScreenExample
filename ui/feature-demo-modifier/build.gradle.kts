@@ -1,7 +1,7 @@
 plugins {
-    id("velord.android.library")
-    id("velord.android.compose")
-    id("velord.android.viewbinding")
+    alias(libs.plugins.convention.android.library)
+    alias(libs.plugins.convention.android.compose)
+    alias(libs.plugins.convention.android.viewbinding)
 }
 
 android {

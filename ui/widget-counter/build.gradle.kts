@@ -1,6 +1,6 @@
 plugins {
-    id("velord.android.library")
-    id("velord.android.compose")
+    alias(libs.plugins.convention.android.library)
+    alias(libs.plugins.convention.android.compose)
 }
 
 android {

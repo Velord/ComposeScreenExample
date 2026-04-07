@@ -1,7 +1,7 @@
 plugins {
-    id("velord.android.library")
+    alias(libs.plugins.convention.android.library)
     alias(libs.plugins.kotlin.plugin.serialization)
-    id("velord.koin")
+    alias(libs.plugins.convention.koin)
 }
 
 android {

@@ -1,7 +1,7 @@
 plugins {
-    id("velord.android.library")
+    alias(libs.plugins.convention.android.library)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
-    id("velord.koin")
+    alias(libs.plugins.convention.koin)
 }
 
 android {

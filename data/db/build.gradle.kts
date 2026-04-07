@@ -1,6 +1,6 @@
 plugins {
-    id("velord.android.library")
-    id("velord.koin")
+    alias(libs.plugins.convention.android.library)
+    alias(libs.plugins.convention.koin)
 }
 
 android {

@@ -1,5 +1,5 @@
 plugins {
-    id("velord.android.library")
+    alias(libs.plugins.convention.android.library)
 }
 
 android {

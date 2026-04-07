@@ -1,10 +1,10 @@
 plugins {
-    id("velord.android.application")
-    id("velord.android.compose")
-    id("velord.android.viewbinding")
+    alias(libs.plugins.convention.android.application)
+    alias(libs.plugins.convention.android.compose)
+    alias(libs.plugins.convention.android.viewbinding)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.kotlin.plugin.serialization)
-    id("velord.koin")
+    alias(libs.plugins.convention.koin)
     alias(libs.plugins.google.gms.services)
     alias(libs.plugins.google.firebase.crashlytic)
 }
