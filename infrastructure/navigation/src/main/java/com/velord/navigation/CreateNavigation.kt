@@ -89,11 +89,11 @@ fun CreateNavigationViaNav3() {
     val navigator = SupremeNavigatorNav3(backStack)
 
     /*
-    TODO: add description
+        TODO: add description
     */
 
     NavDisplay(
-        backStack = backStack, // Your custom-managed back stack
+        backStack = backStack, // Custom-managed back stack
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
             setupMainGraphNav3(navigator)

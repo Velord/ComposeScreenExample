@@ -93,7 +93,7 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
             if (currentDestination == null) return@LaunchedEffect
             val startDestinationRoster = mutableListOf<String?>()
 
-            bottomTabNavController!!.graph.nodes.forEach { _, value ->
+            bottomTabNavController.graph.nodes.forEach { _, value ->
                 val startDestination = when (value) {
                     is NavGraph -> value.startDestinationRoute
                     else -> value.route
@@ -135,12 +135,12 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
         val currentEntry = controller.currentBackStackEntry
         val rootGraph = controller.graph
 
-        // 1. If no current entry (App Start), default to the Global Start (Demo)
+        // If no current entry (App Start), default to the Global Start (Demo)
         if (currentEntry == null) {
             return rootGraph.findStartDestination().id
         }
 
-        // 2. Dynamic Logic: Find the root of the CURRENT tab
+        // Dynamic Logic: Find the root of the CURRENT tab
         var tabRoot = currentEntry.destination
 
         // Walk up the graph until we find the direct child of the Root NavHost
@@ -172,6 +172,7 @@ internal fun logTabClick(controller: NavHostController, tab: TabState) {
         """.trimIndent())
 }
 
+@SuppressLint("RestrictedApi")
 @Composable
 internal fun LogNavigationEvents(navController: NavHostController, label: String) {
     LaunchedEffect(navController) {

@@ -3,6 +3,7 @@ package com.velord.navigation.compose.vanilla.graph
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.dialogDemo.DialogDemoScreen
 import com.velord.dialogDemo.DialogDemoViewModel
 import com.velord.feature.demo.DemoNavigator
@@ -25,9 +26,19 @@ internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
     navigation<GraphVanilla.BottomTab.Demo.Self>(startDestination = GraphVanilla.BottomTab.Demo.DemoDestinationVanilla) {
         composable<GraphVanilla.BottomTab.Demo.DemoDestinationVanilla> {
             val viewModel = koinViewModel<DemoViewModel>()
-            DemoScreen(viewModel) {
-                navigator.goTo(it)
-            }
+            val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+
+            DemoScreen(
+                viewModel = viewModel,
+                onNavigationEvent = {
+                    navigator.goTo(it)
+                },
+                onBackClick = {
+                    // To enable System Back Button handling
+                    // via Bottom Navigation -> comment the line below
+                    // bottomNavViewModel.graphCompletedHandling()
+                }
+            )
         }
 
         composable<GraphVanilla.BottomTab.Demo.ShapeDemoDestinationVanilla> {

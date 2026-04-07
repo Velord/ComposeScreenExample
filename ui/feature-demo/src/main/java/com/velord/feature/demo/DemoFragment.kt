@@ -23,7 +23,15 @@ class DemoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        DemoScreen(viewModel) {}
+        DemoScreen(
+            viewModel = viewModel,
+            onNavigationEvent = { _ -> },
+            onBackClick = {
+                // To enable System Back Button handling
+                // via Bottom Navigation -> comment the line below
+                // bottomNavViewModel.graphCompletedHandling()
+            }
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
