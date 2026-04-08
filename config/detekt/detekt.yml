@@ -1,0 +1,11 @@
+# Keep this file small and only override detekt defaults when the repo
+# deliberately chooses a different rule setting.
+naming:
+  FunctionNaming:
+    ignoreAnnotated:
+      - Composable
+
+complexity:
+  TooManyFunctions:
+    ignoreAnnotatedFunctions:
+      - Preview

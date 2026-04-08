@@ -1,0 +1,520 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ForbiddenComment:CreateNavigation.kt:/* TODO: add description */</ID>
+    <ID>ForbiddenComment:MainActivity.kt:MainActivity$// TODO: handle extra bundle</ID>
+    <ID>ForbiddenComment:MainViewModel.kt:MainViewModel$// TODO: save theme to data store</ID>
+    <ID>ForbiddenComment:MovieViewModel.kt:// TODO: Create Filter logic through layers. Use Default by now</ID>
+    <ID>ForbiddenComment:MovieViewModel.kt:MovieViewModel$// TODO: disabled for now</ID>
+    <ID>FunctionNaming:ArcAtBottomCenterShape.kt:fun ArcAtBottomCenterShape : Shape</ID>
+    <ID>FunctionNaming:CircularSpringInterpolator.kt:fun CircularSpringInterpolatorEasing: Easing</ID>
+    <ID>FunctionNaming:DialogDefaults.kt:DialogActions.Companion$fun OneButton: DialogActions</ID>
+    <ID>FunctionNaming:DialogDefaults.kt:DialogActions.Companion$fun TwoButton: DialogActions</ID>
+    <ID>FunctionNaming:MoviePage.kt:private fun LazyListScope.MovieCardItems</ID>
+    <ID>FunctionNaming:MoviePage.kt:private fun LazyListScope.ProgressItem</ID>
+    <ID>FunctionNaming:SpringOverflowInterpolator.kt:fun SpringOverflowInterpolatorEasing: Easing</ID>
+    <ID>FunctionNaming:TicketShape.kt:fun TicketShape: Shape</ID>
+    <ID>LongMethod:MoviePage.kt:@Composable internal fun MoviePage</ID>
+    <ID>LongMethod:MoviePage.kt:@PreviewCombined @Composable private fun MoviePagerPreview</ID>
+    <ID>LongMethod:MoviePager.kt:@PreviewCombined @Composable private fun MoviePagerPreview</ID>
+    <ID>LongMethod:PervasiveArcFromBottomShapeDemo.kt:@Composable internal fun PervasiveArcFromBottomShapeDemo</ID>
+    <ID>LongMethod:TicketPath.kt:fun ticketPath: Path</ID>
+    <ID>MagicNumber:AllMovieViewModel.kt:AllMovieViewModel$300</ID>
+    <ID>MagicNumber:ArcAtBottomCenterPath.kt:100.0f</ID>
+    <ID>MagicNumber:CollapsingToolbar.kt:3f</ID>
+    <ID>MagicNumber:Color.kt:0.114</ID>
+    <ID>MagicNumber:Color.kt:0.299</ID>
+    <ID>MagicNumber:Color.kt:0.5</ID>
+    <ID>MagicNumber:Color.kt:0.587</ID>
+    <ID>MagicNumber:Color.kt:0x00ffffff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0x7f000000</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF00131A</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF001F2A</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF001f2a</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF003641</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF00384D</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF004e5e</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF062A36</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF062F3D</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF063444</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF09465C</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF0B526B</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF2b2277</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF423b8e</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF47464F</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF47464f</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF500670</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF58d6f7</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF5A54A8</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF690005</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF692789</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF928f99</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF93000a</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFBFE9FF</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFC5C0FF</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFb1ecff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFbfe9ff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFc5c0ff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFc8c5d0</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFe3dfff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFe9b3ff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFf7d8ff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFffb4ab</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFffdad6</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF000000</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF001f27</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF001f2a</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF003547</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF00677c</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF140463</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF310048</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF410002</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF47464f</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF5A54A8</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF5a54a8</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF787680</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF8341a3</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFAAAAAA</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFC4C4C4</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFC5C0FF</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFC8C5D0</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFCECECE</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFDADADA</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFE1F4FF</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFE2E2E2</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFFAFFFF</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFFFFFFF</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFb1ecff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFba1a1a</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFe3dfff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFe5e1ec</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFf7d8ff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFfafcff</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFffdad6</ID>
+    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFffffff</ID>
+    <ID>MagicNumber:DefaultTransition.kt:DefaultTransition$700</ID>
+    <ID>MagicNumber:HangingDemo.kt:10</ID>
+    <ID>MagicNumber:HangingDemo.kt:300</ID>
+    <ID>MagicNumber:HangingDemo.kt:3000</ID>
+    <ID>MagicNumber:HeartPolygon.kt:0.1f</ID>
+    <ID>MagicNumber:HeartPolygon.kt:0.6f</ID>
+    <ID>MagicNumber:HeartPolygon.kt:0.8f</ID>
+    <ID>MagicNumber:HeartPolygon.kt:180f</ID>
+    <ID>MagicNumber:LinearGradientShaderCanvas.kt:8f</ID>
+    <ID>MagicNumber:MorphDemoScreen.kt:0.36f</ID>
+    <ID>MagicNumber:MorphDemoScreen.kt:0.5f</ID>
+    <ID>MagicNumber:MorphDemoScreen.kt:0.7f</ID>
+    <ID>MagicNumber:MorphDemoScreen.kt:14</ID>
+    <ID>MagicNumber:MorphDemoScreen.kt:3</ID>
+    <ID>MagicNumber:MorphDemoScreen.kt:5</ID>
+    <ID>MagicNumber:MovieCard.kt:2021</ID>
+    <ID>MagicNumber:MovieFilterOption.kt:FilterType.Rating$10.0f</ID>
+    <ID>MagicNumber:MovieFilterOption.kt:FilterType.VoteCount$1000</ID>
+    <ID>MagicNumber:MovieHeader.kt:700</ID>
+    <ID>MagicNumber:MoviePage.kt:300</ID>
+    <ID>MagicNumber:PervasiveArcFromBottomLayout.kt:100</ID>
+    <ID>MagicNumber:PopFadeTransition.kt:PopFadeTransition$700</ID>
+    <ID>MagicNumber:RecomposeHighlighter.kt:100f</ID>
+    <ID>MagicNumber:RefreshableImageWidgetWorker.kt:RefreshableImageWidgetWorker.Companion$365</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.1f</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.2f</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.35f</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.3f</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.7f</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.85f</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.8f</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.95f</ID>
+    <ID>MagicNumber:ShimmeringDemo.kt:0.9f</ID>
+    <ID>MagicNumber:SplashScreen.kt:2.65f</ID>
+    <ID>MagicNumber:SplashScreen.kt:500</ID>
+    <ID>MagicNumber:SplashViewModel.kt:SplashViewModel$2000</ID>
+    <ID>MagicNumber:SpringOverflowInterpolator.kt:SpringOverflowInterpolator$10</ID>
+    <ID>MagicNumber:SpringOverflowInterpolator.kt:SpringOverflowInterpolator$4</ID>
+    <ID>MagicNumber:SupremeNavigatorVanilla.kt:8</ID>
+    <ID>MagicNumber:TestData.kt:10</ID>
+    <ID>MagicNumber:TestData.kt:11</ID>
+    <ID>MagicNumber:TestData.kt:12</ID>
+    <ID>MagicNumber:TestData.kt:14</ID>
+    <ID>MagicNumber:TestData.kt:15</ID>
+    <ID>MagicNumber:TestData.kt:16</ID>
+    <ID>MagicNumber:TestData.kt:17</ID>
+    <ID>MagicNumber:TestData.kt:18</ID>
+    <ID>MagicNumber:TestData.kt:19</ID>
+    <ID>MagicNumber:TestData.kt:1957</ID>
+    <ID>MagicNumber:TestData.kt:1972</ID>
+    <ID>MagicNumber:TestData.kt:1974</ID>
+    <ID>MagicNumber:TestData.kt:1977</ID>
+    <ID>MagicNumber:TestData.kt:1987</ID>
+    <ID>MagicNumber:TestData.kt:1993</ID>
+    <ID>MagicNumber:TestData.kt:1994</ID>
+    <ID>MagicNumber:TestData.kt:1997</ID>
+    <ID>MagicNumber:TestData.kt:1999</ID>
+    <ID>MagicNumber:TestData.kt:20</ID>
+    <ID>MagicNumber:TestData.kt:2001</ID>
+    <ID>MagicNumber:TestData.kt:2003</ID>
+    <ID>MagicNumber:TestData.kt:2004</ID>
+    <ID>MagicNumber:TestData.kt:2006</ID>
+    <ID>MagicNumber:TestData.kt:2008</ID>
+    <ID>MagicNumber:TestData.kt:2010</ID>
+    <ID>MagicNumber:TestData.kt:2014</ID>
+    <ID>MagicNumber:TestData.kt:2015</ID>
+    <ID>MagicNumber:TestData.kt:2016</ID>
+    <ID>MagicNumber:TestData.kt:2019</ID>
+    <ID>MagicNumber:TestData.kt:21</ID>
+    <ID>MagicNumber:TestData.kt:22</ID>
+    <ID>MagicNumber:TestData.kt:23</ID>
+    <ID>MagicNumber:TestData.kt:24</ID>
+    <ID>MagicNumber:TestData.kt:25</ID>
+    <ID>MagicNumber:TestData.kt:26</ID>
+    <ID>MagicNumber:TestData.kt:27</ID>
+    <ID>MagicNumber:TestData.kt:3</ID>
+    <ID>MagicNumber:TestData.kt:30</ID>
+    <ID>MagicNumber:TestData.kt:4</ID>
+    <ID>MagicNumber:TestData.kt:5</ID>
+    <ID>MagicNumber:TestData.kt:6</ID>
+    <ID>MagicNumber:TestData.kt:7</ID>
+    <ID>MagicNumber:TestData.kt:8</ID>
+    <ID>MagicNumber:TestData.kt:9</ID>
+    <ID>MagicNumber:TicketShapeDemo.kt:10f</ID>
+    <ID>MagicNumber:TicketShapeDemo.kt:15f</ID>
+    <ID>MagicNumber:TicketShapeDemo.kt:20f</ID>
+    <ID>MagicNumber:TicketShapeDemo.kt:30f</ID>
+    <ID>MatchingDeclarationName:BottomNavigationScreen.kt:BottomNavigator</ID>
+    <ID>MatchingDeclarationName:BuildConfig.kt:BuildConfigResolver</ID>
+    <ID>MatchingDeclarationName:CameraRecordingScreen.kt:CameraRecordingNavigationEvent</ID>
+    <ID>MatchingDeclarationName:DI.kt:AppStateModule</ID>
+    <ID>MatchingDeclarationName:DI.kt:BottomNavigationModule</ID>
+    <ID>MatchingDeclarationName:DI.kt:DataStoreModule</ID>
+    <ID>MatchingDeclarationName:DI.kt:GatewayModule</ID>
+    <ID>MatchingDeclarationName:DI.kt:OsModule</ID>
+    <ID>MatchingDeclarationName:MorphDemoScreen.kt:MorphDemoVoyagerScreen : Screen</ID>
+    <ID>MaxLineLength:DemoGraphVanilla.kt:navigation</ID>
+    <ID>MaxLineLength:GetAllMovieUCTest.kt:GetAllMovieUCTest$assertEquals("Database error", (result as GetMovieResult.DBError).message)</ID>
+    <ID>MaxLineLength:GetAllMovieUCTest.kt:GetAllMovieUCTest$private val movie2 = Movie(2, "Movie 2", "Description 2", true, Calendar.getInstance().apply { add(Calendar.DAY_OF_MONTH, 1) }, 3.8f, 50, "imagePath2")</ID>
+    <ID>MaxLineLength:GetAllMovieUCTest.kt:GetAllMovieUCTest$val movie4 = Movie(4, "Movie 4", "Desc 4", true, Calendar.getInstance().apply { add(Calendar.DAY_OF_MONTH, 1) }, 3.5f, 60, "imagePath4")</ID>
+    <ID>MaxLineLength:LoadNewPageMovieUCTest.kt:LoadNewPageMovieUCTest$assertEquals(MovieLoadNewPageResult.Exausted, result)</ID>
+    <ID>MaxLineLength:LoadNewPageMovieUCTest.kt:LoadNewPageMovieUCTest$fun</ID>
+    <ID>MaxLineLength:LoadNewPageMovieUCTest.kt:LoadNewPageMovieUCTest$val veryLongErrorMessage = "This is a very long error message that exceeds any reasonable length and should be truncated or handled appropriately bythe UI to avoid display issues."</ID>
+    <ID>MaxLineLength:MorphShape.kt:MorphShape$// By default this stretches the path to the size of the container, if you don't want stretching, use the same size.width for both x and y.</ID>
+    <ID>MaxLineLength:MovieCard.kt:description = "Lorem ipsum dolor sit amet, consectetur adipLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et discing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</ID>
+    <ID>MaxLineLength:MovieNetworkService.kt:private const val BEARER = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiOGJhNDk4ZGFiOTUzYmZhYzVhMTI4YzQ0ZWM2ZSIsIm5iZiI6MTcyMTMzNTMzOC4yMDgxMzYsInN1YiI6IjY2OTk3ZDE0OTU3YjM2NWNjOGZkNzIwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VoVoq1XiABNy-3i8BUe-WXvg7Sp5AjDfrF-yFMmh1eM"</ID>
+    <ID>MaxLineLength:MoviePage.kt:description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers."</ID>
+    <ID>MaxLineLength:MoviePage.kt:description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son."</ID>
+    <ID>MaxLineLength:MoviePager.kt:description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers."</ID>
+    <ID>MaxLineLength:MoviePager.kt:description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son."</ID>
+    <ID>MaxLineLength:MoviePaginationTest.kt:MoviePaginationTest$fun</ID>
+    <ID>MaxLineLength:MovieTest.kt:MovieTest$assert(invalidCalendar.timeInMillis &gt;= currentCalendar.timeInMillis)</ID>
+    <ID>MaxLineLength:RefreshMovieUCTest.kt:RefreshMovieUCTest$fun</ID>
+    <ID>MaxLineLength:RefreshableImageWidget.kt:RefreshCallback$val</ID>
+    <ID>MaxLineLength:SplashScreen.kt:enter = fadeIn(animationSpec = tween(durationMillis = 50, delayMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME / 4))</ID>
+    <ID>MaxLineLength:TestData.kt:description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers."</ID>
+    <ID>MaxLineLength:TestData.kt:description = "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."</ID>
+    <ID>MaxLineLength:TestData.kt:description = "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O."</ID>
+    <ID>MaxLineLength:TestData.kt:description = "After a tragic accident, two stage magicians engage in a battle to create the ultimate illusion while sacrificing everything they have to outwit each other."</ID>
+    <ID>MaxLineLength:TestData.kt:description = "An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston."</ID>
+    <ID>MaxLineLength:TestData.kt:description = "Lion cub and future king Simba searches for his identity. His eagerness to please others and penchant for testing his boundaries sometimes gets him into trouble."</ID>
+    <ID>MaxLineLength:TestData.kt:description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A cynical journalist tasked with profiling Mister Rogers must confront his own childhood trauma while learning about empathy kindness and forgiveness."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A family gathering turns into a murder investigation when renowned crime novelist Harlan Thrombey is found dead at his estate."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A jury must come to a unanimous decision in the case of a young man accused of murdering his father."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A kind-hearted street urchin named Aladdin embarks on an adventure after finding a magical lamp that houses a powerful genie."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A live-action remake of the 1994 Disney classic, telling the story of Simba's journey to become king."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A prison warden must confront the psychological toll of her job when she is tasked with overseeing the execution of a death row inmate."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A shy waitress in a Parisian café decides to anonymously change the lives of the people around her for the better, but struggles to find happiness for herself."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A young boy in Nazi Germany during World War II has an imaginary friend who is Hitler. He begins to question his beliefs when his widowed mother hides a young Jewish girl in their attic."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A young girl, Chihiro Ogino, finds herself in the world of spirits. After her parents are transformed into pigs by the witch Yubaba, Chihiro takes a job working in Yubaba's bathhouse to find a way to free herself and her parents and return to the human world."</ID>
+    <ID>MaxLineLength:TestData.kt:description="A young woman in 18th-century France is unwillingly sent to a nunnery and awaits being married to a stranger. During this time, she develops a forbidden romance with a female painter who is sent to paint her portrait."</ID>
+    <ID>MaxLineLength:TestData.kt:description="After the devastating events of Avengers: Infinity War (2018), the remaining Avengers assemble once more in order to undo Thanos' actions and restore balance to the universe."</ID>
+    <ID>MaxLineLength:TestData.kt:description="American car designer Carroll Shelby and his British driver, Ken Miles, battle corporate interference and their own egos to build a revolutionary race car for Ford in order to defeat Ferrari at the 24 Hours of Le Mans in 1966."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Billi, a young Chinese-American writer, travels to China to visit her ailing grandmother. What starts as an emotional reunion turns into an unexpected journey as Billi grapples with cultural differences and family secrets."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Carol Danvers becomes one of the universe's most powerful heroes when she absorbs the energy from an alien engine. Set in the 1990s, she finds herself in a war between two alien races and must reunite with an old friend to learn more about her past while saving the planet from a dangerous threat."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Following the events of Avengers: Endgame (2019), Peter Parker decides to take a vacation to Europe with his friends. However, his plans are put on hold when Nick Fury arrives needing his help to battle a new threat."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Gandalf and Aragorn lead the World of Men into a final battle against Sauron's evil forces. Frodo and Sam must travel deep into Mordor to destroy the One Ring and end the threat of Sauron forever."</ID>
+    <ID>MaxLineLength:TestData.kt:description="In 1981, a struggling stand-up comedian named Arthur Fleck is mentally and emotionally broken by the indifference and cruelty he experiences every day. This mistreatment pushes him further into madness and leads him to become a violent criminal known as the Joker."</ID>
+    <ID>MaxLineLength:TestData.kt:description="In a dystopian future where Earth is overrun with garbage, a lonely robot named WALL-E encounters a sleek robot named EVE and follows her into outer space on a quest to save humanity."</ID>
+    <ID>MaxLineLength:TestData.kt:description="In a post-apocalyptic wasteland, a woman named Imperator Furiosa rebels against a tyrannical ruler in order to help five enslaved women escape from his clutches."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Jo March, Meg March, Amy March, and Beth March are four sisters who come of age in America during the Civil War."</ID>
+    <ID>MaxLineLength:TestData.kt:description="The legendary warrior, Li Mu Bai, entrusts his powerful Green Destiny sword to his security chief, Shu Lien. However, the sword is stolen, and Li Mu Bai must find it before it falls into the wrong hands."</ID>
+    <ID>MaxLineLength:TestData.kt:description="The lives of two mob hit men, a boxer, and a wife of a gangster become intertwined in a series of violent events."</ID>
+    <ID>MaxLineLength:TestData.kt:description="The story of a legendary concierge at a renowned European hotel between the wars and his relationship with a young lobby boy."</ID>
+    <ID>MaxLineLength:TestData.kt:description="The story of the Corleone family in America, focusing on the transformation of Michael Corleone from reluctant family outsider to ruthless mafia patriarch."</ID>
+    <ID>MaxLineLength:TestData.kt:description="The true story of Oskar Schindler, a German businessman who saved the lives of over 1100 Jews during the Holocaust by employing them in his factories."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Twenty-seven years after the events of It Chapter One (2017), the Losers' Club have grown up and moved away from Derry, Maine. However, they are all psychically linked by Pennywise the Dancing Clown, and they must reunite to stop him once and for all."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Two lighthouse keepers on a remote New England island in the late 19th century slowly descend into madness."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Westley, a farmhand with nothing to his name except his love for Princess Buttercup, must face the evil Prince Humperdinck, his three deadly henchmen, and a cunning Sicilian in order to win her hand in marriage."</ID>
+    <ID>MaxLineLength:TestData.kt:description="When Joel Barish discovers that his girlfriend Clementine has erased all memories of their relationship, he undergoes the same procedure to erase her from his mind. However, as the procedure begins, Joel realizes that he may not want to forget everything."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Will Hunting, a young janitor at MIT, has a gift for mathematics but needs help from a therapist to find direction in his life."</ID>
+    <ID>MaxLineLength:TestData.kt:description="Woody, Buzz Lightyear, and the gang find themselves on a new adventure when Bonnie takes a road trip with her family. Along the way, they encounter a new toy named Forky who doesn't understand why he's a toy."</ID>
+    <ID>NewLineAtEndOfFile:AlertDialog.kt:com.velord.core.ui.dialog.AlertDialog.kt</ID>
+    <ID>NewLineAtEndOfFile:AllMovieViewModel.kt:com.velord.feature.movie.viewModel.AllMovieViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:AndroidPermissionState.kt:com.velord.util.permission.AndroidPermissionState.kt</ID>
+    <ID>NewLineAtEndOfFile:AndroidThemeConfig.kt:com.velord.model.setting.AndroidThemeConfig.kt</ID>
+    <ID>NewLineAtEndOfFile:AnimatableLabeledIcon.kt:com.velord.core.ui.compose.component.AnimatableLabeledIcon.kt</ID>
+    <ID>NewLineAtEndOfFile:App.kt:com.velord.composescreenexample.App.kt</ID>
+    <ID>NewLineAtEndOfFile:AppDatabase.kt:com.velord.db.AppDatabase.kt</ID>
+    <ID>NewLineAtEndOfFile:AppSettingDataStore.kt:com.velord.datastore.appSetting.AppSettingDataStore.kt</ID>
+    <ID>NewLineAtEndOfFile:AppSettingDataStoreSerializer.kt:com.velord.datastore.appSetting.AppSettingDataStoreSerializer.kt</ID>
+    <ID>NewLineAtEndOfFile:AppStateService.kt:com.velord.appstate.AppStateService.kt</ID>
+    <ID>NewLineAtEndOfFile:ArcAtBottomCenterPath.kt:com.velord.core.ui.compose.path.ArcAtBottomCenterPath.kt</ID>
+    <ID>NewLineAtEndOfFile:ArcAtBottomCenterShape.kt:com.velord.core.ui.compose.shape.ArcAtBottomCenterShape.kt</ID>
+    <ID>NewLineAtEndOfFile:BackStackNavigator.kt:com.velord.navigation.compose.nav3.navigator.BackStackNavigator.kt</ID>
+    <ID>NewLineAtEndOfFile:Background.kt:com.velord.dialogDemo.component.Background.kt</ID>
+    <ID>NewLineAtEndOfFile:BaseException.kt:com.velord.util.exception.BaseException.kt</ID>
+    <ID>NewLineAtEndOfFile:BaseHttpClient.kt:com.velord.backend.ktor.BaseHttpClient.kt</ID>
+    <ID>NewLineAtEndOfFile:BaseUrl.kt:com.velord.backend.model.BaseUrl.kt</ID>
+    <ID>NewLineAtEndOfFile:BlinkingDemo.kt:com.velord.modifierdemo.component.BlinkingDemo.kt</ID>
+    <ID>NewLineAtEndOfFile:BlinkingShadow.kt:com.velord.core.ui.utils.modifier.BlinkingShadow.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavEventService.kt:com.velord.bottomnavigation.BottomNavEventService.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationDestinationsVM.kt:com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationGraphDestinations.kt:com.velord.navigation.compose.destinations.graph.BottomNavigationGraphDestinations.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationGraphNav3.kt:com.velord.navigation.compose.nav3.graph.BottomNavigationGraphNav3.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationGraphVanilla.kt:com.velord.navigation.compose.vanilla.graph.BottomNavigationGraphVanilla.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationItem.kt:com.velord.bottomnavigation.screen.jetpack.BottomNavigationItem.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationJetpackVM.kt:com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationScreen.kt:com.velord.bottomnavigation.screen.compose.BottomNavigationScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationTab.kt:com.velord.bottomnavigation.screen.voyager.BottomNavigationTab.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationVoyagerScreen.kt:com.velord.bottomnavigation.screen.voyager.BottomNavigationVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigationVoyagerVM.kt:com.velord.bottomnavigation.viewmodel.BottomNavigationVoyagerVM.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigatorDestinations.kt:com.velord.navigation.compose.destinations.navigator.BottomNavigatorDestinations.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigatorNav3.kt:com.velord.navigation.compose.nav3.navigator.BottomNavigatorNav3.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomNavigatorVanilla.kt:com.velord.navigation.compose.vanilla.navigator.BottomNavigatorVanilla.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomTabNavigatorDestinations.kt:com.velord.navigation.compose.destinations.navigator.BottomTabNavigatorDestinations.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomTabNavigatorNav3.kt:com.velord.navigation.compose.nav3.navigator.BottomTabNavigatorNav3.kt</ID>
+    <ID>NewLineAtEndOfFile:BottomTabNavigatorVanilla.kt:com.velord.navigation.compose.vanilla.navigator.BottomTabNavigatorVanilla.kt</ID>
+    <ID>NewLineAtEndOfFile:BuildConfig.kt:com.velord.config.BuildConfig.kt</ID>
+    <ID>NewLineAtEndOfFile:Camera.kt:com.velord.camerarecording.model.Camera.kt</ID>
+    <ID>NewLineAtEndOfFile:CameraGraphFragment.kt:com.velord.navigation.jetpackNavigation.graph.CameraGraphFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:CameraRecordingFragment.kt:com.velord.camerarecording.CameraRecordingFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:CameraRecordingGraphDestinations.kt:com.velord.navigation.compose.destinations.graph.CameraRecordingGraphDestinations.kt</ID>
+    <ID>NewLineAtEndOfFile:CameraRecordingGraphNav3.kt:com.velord.navigation.compose.nav3.graph.CameraRecordingGraphNav3.kt</ID>
+    <ID>NewLineAtEndOfFile:CameraRecordingGraphVanilla.kt:com.velord.navigation.compose.vanilla.graph.CameraRecordingGraphVanilla.kt</ID>
+    <ID>NewLineAtEndOfFile:CameraRecordingScreen.kt:com.velord.camerarecording.CameraRecordingScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:CameraRecordingViewModel.kt:com.velord.camerarecording.CameraRecordingViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:CameraRecordingVoyagerScreen.kt:com.velord.navigation.voyager.screen.CameraRecordingVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:CheckCameraAndAudioRecordPermission.kt:com.velord.core.ui.utils.permission.CheckCameraAndAudioRecordPermission.kt</ID>
+    <ID>NewLineAtEndOfFile:CheckPermission.kt:com.velord.core.ui.dialog.CheckPermission.kt</ID>
+    <ID>NewLineAtEndOfFile:CircularSpringInterpolator.kt:com.velord.core.ui.compose.animation.interpolator.CircularSpringInterpolator.kt</ID>
+    <ID>NewLineAtEndOfFile:CollapsingToolbar.kt:com.velord.core.ui.compose.component.CollapsingToolbar.kt</ID>
+    <ID>NewLineAtEndOfFile:Color.kt:com.velord.core.ui.utils.Color.kt</ID>
+    <ID>NewLineAtEndOfFile:ColorScheme.kt:com.velord.core.ui.compose.theme.color.ColorScheme.kt</ID>
+    <ID>NewLineAtEndOfFile:ColorScheme.kt:com.velord.core.ui.utils.ColorScheme.kt</ID>
+    <ID>NewLineAtEndOfFile:ColorTokens.kt:com.velord.core.ui.compose.theme.color.ColorTokens.kt</ID>
+    <ID>NewLineAtEndOfFile:Content.kt:com.velord.dialogDemo.component.Content.kt</ID>
+    <ID>NewLineAtEndOfFile:Context.kt:com.velord.util.context.Context.kt</ID>
+    <ID>NewLineAtEndOfFile:CoroutineScopeViewModel.kt:com.velord.sharedviewmodel.CoroutineScopeViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:CounterWidget.kt:com.velord.widgetcounter.CounterWidget.kt</ID>
+    <ID>NewLineAtEndOfFile:CounterWidgetScreen.kt:com.velord.widgetcounter.CounterWidgetScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:CreateNavigation.kt:com.velord.navigation.CreateNavigation.kt</ID>
+    <ID>NewLineAtEndOfFile:DI.kt:com.velord.appstate.DI.kt</ID>
+    <ID>NewLineAtEndOfFile:DI.kt:com.velord.backend.ktor.DI.kt</ID>
+    <ID>NewLineAtEndOfFile:DI.kt:com.velord.bottomnavigation.DI.kt</ID>
+    <ID>NewLineAtEndOfFile:DI.kt:com.velord.datastore.DI.kt</ID>
+    <ID>NewLineAtEndOfFile:DI.kt:com.velord.db.DI.kt</ID>
+    <ID>NewLineAtEndOfFile:DI.kt:com.velord.gateway.DI.kt</ID>
+    <ID>NewLineAtEndOfFile:DI.kt:com.velord.os.DI.kt</ID>
+    <ID>NewLineAtEndOfFile:DI.kt:com.velord.sharedviewmodel.DI.kt</ID>
+    <ID>NewLineAtEndOfFile:DataStoreService.kt:com.velord.datastore.DataStoreService.kt</ID>
+    <ID>NewLineAtEndOfFile:DefaultTransition.kt:com.velord.navigation.compose.destinations.transition.DefaultTransition.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoDestination.kt:com.velord.feature.demo.DemoDestination.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoFragment.kt:com.velord.feature.demo.DemoFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoGraphDestinations.kt:com.velord.navigation.compose.destinations.graph.DemoGraphDestinations.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoGraphFragment.kt:com.velord.navigation.jetpackNavigation.graph.DemoGraphFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoGraphNav3.kt:com.velord.navigation.compose.nav3.graph.DemoGraphNav3.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoGraphVanilla.kt:com.velord.navigation.compose.vanilla.graph.DemoGraphVanilla.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoScreen.kt:com.velord.feature.demo.DemoScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoViewModel.kt:com.velord.feature.demo.DemoViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:DemoVoyagerScreen.kt:com.velord.navigation.voyager.screen.DemoVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:Dialog.kt:com.velord.dialogDemo.component.Dialog.kt</ID>
+    <ID>NewLineAtEndOfFile:DialogDefaults.kt:com.velord.dialogDemo.component.DialogDefaults.kt</ID>
+    <ID>NewLineAtEndOfFile:DialogDemoScreen.kt:com.velord.dialogDemo.DialogDemoScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:DialogDemoVoyagerScreen.kt:com.velord.navigation.voyager.screen.DialogDemoVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:DialogSetup.kt:com.velord.dialogDemo.component.DialogSetup.kt</ID>
+    <ID>NewLineAtEndOfFile:ErrorResponse.kt:com.velord.backend.model.ErrorResponse.kt</ID>
+    <ID>NewLineAtEndOfFile:ErrorResponse.kt:com.velord.util.exception.ErrorResponse.kt</ID>
+    <ID>NewLineAtEndOfFile:FavoriteMovieViewModel.kt:com.velord.feature.movie.viewModel.FavoriteMovieViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:FilterTypeTest.kt:com.velord.model.FilterTypeTest.kt</ID>
+    <ID>NewLineAtEndOfFile:FlowCreator.kt:com.velord.flowsummator.FlowCreator.kt</ID>
+    <ID>NewLineAtEndOfFile:FlowSummatorFragment.kt:com.velord.flowsummator.FlowSummatorFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:FlowSummatorScreen.kt:com.velord.flowsummator.FlowSummatorScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:FlowSummatorViewModel.kt:com.velord.flowsummator.FlowSummatorViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:FlowSummatorVoyagerScreen.kt:com.velord.navigation.voyager.screen.FlowSummatorVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:Fragment.kt:com.velord.core.navigation.fragment.util.Fragment.kt</ID>
+    <ID>NewLineAtEndOfFile:Fragment.kt:com.velord.util.fragment.Fragment.kt</ID>
+    <ID>NewLineAtEndOfFile:FullSizeBackground.kt:com.velord.core.ui.compose.component.FullSizeBackground.kt</ID>
+    <ID>NewLineAtEndOfFile:GetAllMovieUC.kt:com.velord.usecase.movie.GetAllMovieUC.kt</ID>
+    <ID>NewLineAtEndOfFile:GetAllMovieUCTest.kt:com.velord.usecase.movie.GetAllMovieUCTest.kt</ID>
+    <ID>NewLineAtEndOfFile:GetFavoriteMovieResult.kt:com.velord.usecase.movie.result.GetFavoriteMovieResult.kt</ID>
+    <ID>NewLineAtEndOfFile:GetFavoriteMovieUC.kt:com.velord.usecase.movie.GetFavoriteMovieUC.kt</ID>
+    <ID>NewLineAtEndOfFile:GetFavoriteMovieUCTest.kt:com.velord.usecase.movie.GetFavoriteMovieUCTest.kt</ID>
+    <ID>NewLineAtEndOfFile:GetMovieResult.kt:com.velord.usecase.movie.result.GetMovieResult.kt</ID>
+    <ID>NewLineAtEndOfFile:GetMovieSortOptionUC.kt:com.velord.usecase.movie.GetMovieSortOptionUC.kt</ID>
+    <ID>NewLineAtEndOfFile:GetMovieSortOptionUCTest.kt:com.velord.usecase.movie.GetMovieSortOptionUCTest.kt</ID>
+    <ID>NewLineAtEndOfFile:GetThemeConfigDS.kt:com.velord.usecase.setting.GetThemeConfigDS.kt</ID>
+    <ID>NewLineAtEndOfFile:GetThemeConfigGateway.kt:com.velord.gateway.setting.GetThemeConfigGateway.kt</ID>
+    <ID>NewLineAtEndOfFile:GetThemeConfigUC.kt:com.velord.usecase.setting.GetThemeConfigUC.kt</ID>
+    <ID>NewLineAtEndOfFile:GlanceColorProviders.kt:com.velord.core.ui.compose.glance.GlanceColorProviders.kt</ID>
+    <ID>NewLineAtEndOfFile:GlanceWidgetThemeSustainer.kt:com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer.kt</ID>
+    <ID>NewLineAtEndOfFile:GraphNav3.kt:com.velord.navigation.compose.nav3.GraphNav3.kt</ID>
+    <ID>NewLineAtEndOfFile:GraphVanilla.kt:com.velord.navigation.compose.vanilla.GraphVanilla.kt</ID>
+    <ID>NewLineAtEndOfFile:Hanging.kt:com.velord.core.ui.utils.modifier.Hanging.kt</ID>
+    <ID>NewLineAtEndOfFile:HangingDemo.kt:com.velord.modifierdemo.component.HangingDemo.kt</ID>
+    <ID>NewLineAtEndOfFile:HeartPolygon.kt:com.velord.core.ui.compose.polygon.HeartPolygon.kt</ID>
+    <ID>NewLineAtEndOfFile:HesitateEasing.kt:com.velord.core.ui.compose.animation.easing.HesitateEasing.kt</ID>
+    <ID>NewLineAtEndOfFile:HintPhoneNumberVoyagerScreen.kt:com.velord.navigation.voyager.screen.HintPhoneNumberVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:HttpException.kt:com.velord.util.exception.HttpException.kt</ID>
+    <ID>NewLineAtEndOfFile:InDevelopmentFragment.kt:com.velord.navigation.jetpackNavigation.inDevelopment.InDevelopmentFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:InDevelopmentViewModel.kt:com.velord.navigation.jetpackNavigation.inDevelopment.InDevelopmentViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:Init.kt:com.velord.di.Init.kt</ID>
+    <ID>NewLineAtEndOfFile:Install.kt:com.velord.splash.Install.kt</ID>
+    <ID>NewLineAtEndOfFile:JetpackScreen.kt:com.velord.bottomnavigation.screen.jetpack.JetpackScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:LinearGradientShaderCanvas.kt:com.velord.core.ui.compose.component.LinearGradientShaderCanvas.kt</ID>
+    <ID>NewLineAtEndOfFile:LoadNewPageMovieUC.kt:com.velord.usecase.movie.LoadNewPageMovieUC.kt</ID>
+    <ID>NewLineAtEndOfFile:LoadNewPageMovieUCTest.kt:com.velord.usecase.movie.LoadNewPageMovieUCTest.kt</ID>
+    <ID>NewLineAtEndOfFile:LogBackStack.kt:com.velord.navigation.compose.LogBackStack.kt</ID>
+    <ID>NewLineAtEndOfFile:MainActivity.kt:com.velord.composescreenexample.ui.main.MainActivity.kt</ID>
+    <ID>NewLineAtEndOfFile:MainGlanceTheme.kt:com.velord.core.ui.compose.glance.MainGlanceTheme.kt</ID>
+    <ID>NewLineAtEndOfFile:MainGraphDestinations.kt:com.velord.navigation.compose.destinations.graph.MainGraphDestinations.kt</ID>
+    <ID>NewLineAtEndOfFile:MainGraphNav3.kt:com.velord.navigation.compose.nav3.graph.MainGraphNav3.kt</ID>
+    <ID>NewLineAtEndOfFile:MainGraphVanilla.kt:com.velord.navigation.compose.vanilla.graph.MainGraphVanilla.kt</ID>
+    <ID>NewLineAtEndOfFile:MainTheme.kt:com.velord.core.ui.compose.theme.MainTheme.kt</ID>
+    <ID>NewLineAtEndOfFile:MainViewModel.kt:com.velord.composescreenexample.ui.main.MainViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:Mapper.kt:com.velord.core.ui.compose.path.Mapper.kt</ID>
+    <ID>NewLineAtEndOfFile:MemoryDump.kt:com.velord.os.MemoryDump.kt</ID>
+    <ID>NewLineAtEndOfFile:MemoryLogger.kt:com.velord.os.MemoryLogger.kt</ID>
+    <ID>NewLineAtEndOfFile:ModifierDemoScreen.kt:com.velord.modifierdemo.ModifierDemoScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:ModifierDemoVoyagerScreen.kt:com.velord.navigation.voyager.screen.ModifierDemoVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:MorphDemoFragment.kt:com.velord.morphdemo.MorphDemoFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:MorphDemoScreen.kt:com.velord.morphdemo.MorphDemoScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:MorphDemoScreen.kt:com.velord.navigation.voyager.screen.MorphDemoScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:MorphShape.kt:com.velord.core.ui.compose.shape.MorphShape.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieAction.kt:com.velord.feature.movie.component.MovieAction.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieBottomSheet.kt:com.velord.feature.movie.component.MovieBottomSheet.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieCard.kt:com.velord.feature.movie.component.MovieCard.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieDS.kt:com.velord.usecase.movie.dataSource.MovieDS.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieDbService.kt:com.velord.db.movie.MovieDbService.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieEntity.kt:com.velord.db.movie.MovieEntity.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieFavoriteDS.kt:com.velord.usecase.movie.dataSource.MovieFavoriteDS.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieFavoriteGateway.kt:com.velord.gateway.movie.MovieFavoriteGateway.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieFilterOption.kt:com.velord.model.movie.MovieFilterOption.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieFilterOptionTest.kt:com.velord.model.MovieFilterOptionTest.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieFilterOptionUI.kt:com.velord.feature.movie.model.MovieFilterOptionUI.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieGateway.kt:com.velord.gateway.movie.MovieGateway.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieHeader.kt:com.velord.feature.movie.component.MovieHeader.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieLoadNewPageResult.kt:com.velord.usecase.movie.result.MovieLoadNewPageResult.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieNetworkService.kt:com.velord.backend.ktor.MovieNetworkService.kt</ID>
+    <ID>NewLineAtEndOfFile:MoviePage.kt:com.velord.feature.movie.component.MoviePage.kt</ID>
+    <ID>NewLineAtEndOfFile:MoviePage.kt:com.velord.feature.movie.model.MoviePage.kt</ID>
+    <ID>NewLineAtEndOfFile:MoviePageRequest.kt:com.velord.backend.model.MoviePageRequest.kt</ID>
+    <ID>NewLineAtEndOfFile:MoviePager.kt:com.velord.feature.movie.component.MoviePager.kt</ID>
+    <ID>NewLineAtEndOfFile:MoviePagination.kt:com.velord.model.movie.MoviePagination.kt</ID>
+    <ID>NewLineAtEndOfFile:MoviePaginationGateway.kt:com.velord.gateway.movie.MoviePaginationGateway.kt</ID>
+    <ID>NewLineAtEndOfFile:MoviePaginationTest.kt:com.velord.model.MoviePaginationTest.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieRosterResponse.kt:com.velord.backend.model.MovieRosterResponse.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieRosterSize.kt:com.velord.model.movie.MovieRosterSize.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieScreen.kt:com.velord.feature.movie.MovieScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieSortDS.kt:com.velord.usecase.movie.dataSource.MovieSortDS.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieSortGateway.kt:com.velord.gateway.movie.MovieSortGateway.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieSortOption.kt:com.velord.model.movie.MovieSortOption.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieSortOptionTest.kt:com.velord.model.MovieSortOptionTest.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieSortOptionUI.kt:com.velord.feature.movie.model.MovieSortOptionUI.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieTest.kt:com.velord.model.MovieTest.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieViewModel.kt:com.velord.feature.movie.viewModel.MovieViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:MovieVoyagerScreen.kt:com.velord.navigation.voyager.screen.MovieVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:NavigationDataFragment.kt:com.velord.core.navigation.fragment.NavigationDataFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:NavigationDataVoyager.kt:com.velord.core.navigation.voyager.NavigationDataVoyager.kt</ID>
+    <ID>NewLineAtEndOfFile:NavigationLib.kt:com.velord.config.NavigationLib.kt</ID>
+    <ID>NewLineAtEndOfFile:ObserveSharedFlow.kt:com.velord.core.ui.utils.ObserveSharedFlow.kt</ID>
+    <ID>NewLineAtEndOfFile:OutputDirectory.kt:com.velord.util.file.OutputDirectory.kt</ID>
+    <ID>NewLineAtEndOfFile:PackageManager.kt:com.velord.util.packageManager.PackageManager.kt</ID>
+    <ID>NewLineAtEndOfFile:PermissionState.kt:com.velord.core.ui.utils.permission.PermissionState.kt</ID>
+    <ID>NewLineAtEndOfFile:PervasiveArcFromBottomLayout.kt:com.velord.core.ui.compose.component.PervasiveArcFromBottomLayout.kt</ID>
+    <ID>NewLineAtEndOfFile:PervasiveArcFromBottomShapeDemo.kt:com.velord.shapedemo.component.PervasiveArcFromBottomShapeDemo.kt</ID>
+    <ID>NewLineAtEndOfFile:PhoneNumber.kt:com.velord.util.activityResult.PhoneNumber.kt</ID>
+    <ID>NewLineAtEndOfFile:PopFadeTransition.kt:com.velord.navigation.compose.destinations.transition.PopFadeTransition.kt</ID>
+    <ID>NewLineAtEndOfFile:PopScaleOutTransition.kt:com.velord.navigation.compose.destinations.transition.PopScaleOutTransition.kt</ID>
+    <ID>NewLineAtEndOfFile:PreviewCombined.kt:com.velord.core.ui.compose.preview.PreviewCombined.kt</ID>
+    <ID>NewLineAtEndOfFile:PreviewDevice.kt:com.velord.core.ui.compose.preview.PreviewDevice.kt</ID>
+    <ID>NewLineAtEndOfFile:RecomposeHighlighter.kt:com.velord.core.ui.utils.modifier.RecomposeHighlighter.kt</ID>
+    <ID>NewLineAtEndOfFile:RefreshMovieDS.kt:com.velord.usecase.movie.dataSource.RefreshMovieDS.kt</ID>
+    <ID>NewLineAtEndOfFile:RefreshMovieUC.kt:com.velord.usecase.movie.RefreshMovieUC.kt</ID>
+    <ID>NewLineAtEndOfFile:RefreshMovieUCTest.kt:com.velord.usecase.movie.RefreshMovieUCTest.kt</ID>
+    <ID>NewLineAtEndOfFile:RefreshableImageWidget.kt:com.velord.refreshableimage.RefreshableImageWidget.kt</ID>
+    <ID>NewLineAtEndOfFile:RefreshableImageWidgetFileProvider.kt:com.velord.refreshableimage.RefreshableImageWidgetFileProvider.kt</ID>
+    <ID>NewLineAtEndOfFile:RefreshableImageWidgetScreen.kt:com.velord.refreshableimage.RefreshableImageWidgetScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:RefreshableImageWidgetWorker.kt:com.velord.refreshableimage.RefreshableImageWidgetWorker.kt</ID>
+    <ID>NewLineAtEndOfFile:ScreenRegistry.kt:com.velord.navigation.voyager.ScreenRegistry.kt</ID>
+    <ID>NewLineAtEndOfFile:ScreenSetup.kt:com.velord.bottomnavigation.screen.compose.ScreenSetup.kt</ID>
+    <ID>NewLineAtEndOfFile:ScreenSize.kt:com.velord.core.ui.utils.ScreenSize.kt</ID>
+    <ID>NewLineAtEndOfFile:SetContent.kt:com.velord.core.ui.utils.SetContent.kt</ID>
+    <ID>NewLineAtEndOfFile:SetMovieSortOptionUC.kt:com.velord.usecase.movie.SetMovieSortOptionUC.kt</ID>
+    <ID>NewLineAtEndOfFile:SetMovieSortOptionUCTest.kt:com.velord.usecase.movie.SetMovieSortOptionUCTest.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingFragment.kt:com.velord.setting.SettingFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingScreen.kt:com.velord.setting.SettingScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingsGraphFragment.kt:com.velord.navigation.jetpackNavigation.graph.SettingsGraphFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingsSourceFragment.kt:com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingsVoyagerScreen.kt:com.velord.navigation.voyager.screen.SettingsVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:Shape.kt:com.velord.core.ui.compose.shape.Shape.kt</ID>
+    <ID>NewLineAtEndOfFile:ShapeDemoFragment.kt:com.velord.shapedemo.ShapeDemoFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:ShapeDemoScreen.kt:com.velord.shapedemo.ShapeDemoScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:ShapeDemoVoyagerScreen.kt:com.velord.navigation.voyager.screen.ShapeDemoVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:SharedScreenVoyager.kt:com.velord.core.navigation.voyager.SharedScreenVoyager.kt</ID>
+    <ID>NewLineAtEndOfFile:Shimmering.kt:com.velord.core.ui.utils.modifier.Shimmering.kt</ID>
+    <ID>NewLineAtEndOfFile:ShimmeringDemo.kt:com.velord.modifierdemo.component.ShimmeringDemo.kt</ID>
+    <ID>NewLineAtEndOfFile:SplashScreen.kt:com.velord.splash.SplashScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:SpringOverflowInterpolator.kt:com.velord.core.ui.compose.animation.interpolator.SpringOverflowInterpolator.kt</ID>
+    <ID>NewLineAtEndOfFile:SupremeNavigatorDestinations.kt:com.velord.navigation.compose.destinations.navigator.SupremeNavigatorDestinations.kt</ID>
+    <ID>NewLineAtEndOfFile:SupremeNavigatorNav3.kt:com.velord.navigation.compose.nav3.navigator.SupremeNavigatorNav3.kt</ID>
+    <ID>NewLineAtEndOfFile:SupremeNavigatorVanilla.kt:com.velord.navigation.compose.vanilla.navigator.SupremeNavigatorVanilla.kt</ID>
+    <ID>NewLineAtEndOfFile:Swelling.kt:com.velord.core.ui.utils.modifier.Swelling.kt</ID>
+    <ID>NewLineAtEndOfFile:SwellingDemo.kt:com.velord.modifierdemo.component.SwellingDemo.kt</ID>
+    <ID>NewLineAtEndOfFile:SwitchAbideToOsThemeConfigUC.kt:com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC.kt</ID>
+    <ID>NewLineAtEndOfFile:SwitchDarkThemeConfigUC.kt:com.velord.usecase.setting.SwitchDarkThemeConfigUC.kt</ID>
+    <ID>NewLineAtEndOfFile:SwitchDynamicColorThemeConfigUC.kt:com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC.kt</ID>
+    <ID>NewLineAtEndOfFile:TestData.kt:com.velord.gateway.movie.TestData.kt</ID>
+    <ID>NewLineAtEndOfFile:TestFragment.kt:com.velord.navigation.jetpackNavigation.inDevelopment.TestFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:TestScreen.kt:com.velord.navigation.TestScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:TestVoyagerScreen.kt:com.velord.navigation.voyager.TestVoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:ThemeConfig.kt:com.velord.model.setting.ThemeConfig.kt</ID>
+    <ID>NewLineAtEndOfFile:ThemeViewModel.kt:com.velord.sharedviewmodel.ThemeViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:TicketPath.kt:com.velord.core.ui.compose.path.TicketPath.kt</ID>
+    <ID>NewLineAtEndOfFile:TicketShape.kt:com.velord.core.ui.compose.shape.TicketShape.kt</ID>
+    <ID>NewLineAtEndOfFile:TicketShapeDemo.kt:com.velord.shapedemo.component.TicketShapeDemo.kt</ID>
+    <ID>NewLineAtEndOfFile:TimeInterpolator.kt:com.velord.core.ui.compose.animation.interpolator.TimeInterpolator.kt</ID>
+    <ID>NewLineAtEndOfFile:Title.kt:com.velord.shapedemo.component.Title.kt</ID>
+    <ID>NewLineAtEndOfFile:Typography.kt:com.velord.core.ui.compose.theme.Typography.kt</ID>
+    <ID>NewLineAtEndOfFile:UpdateMovieLikeUC.kt:com.velord.usecase.movie.UpdateMovieLikeUC.kt</ID>
+    <ID>NewLineAtEndOfFile:UpdateMovieLikeUCTest.kt:com.velord.usecase.movie.UpdateMovieLikeUCTest.kt</ID>
+    <ID>NewLineAtEndOfFile:UpdateMovieResult.kt:com.velord.usecase.movie.result.UpdateMovieResult.kt</ID>
+    <ID>NewLineAtEndOfFile:UseCaseModule.kt:com.velord.di.UseCaseModule.kt</ID>
+    <ID>NewLineAtEndOfFile:UserProfile.kt:com.velord.model.UserProfile.kt</ID>
+    <ID>NewLineAtEndOfFile:Utils.kt:com.velord.refreshableimage.Utils.kt</ID>
+    <ID>NewLineAtEndOfFile:ViewModelModule.kt:com.velord.di.ViewModelModule.kt</ID>
+    <ID>NewLineAtEndOfFile:VoyagerModule.kt:com.velord.navigation.voyager.VoyagerModule.kt</ID>
+    <ID>NewLineAtEndOfFile:VoyagerScreen.kt:com.velord.bottomnavigation.screen.voyager.VoyagerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:WaveShape.kt:com.velord.core.ui.utils.modifier.WaveShape.kt</ID>
+    <ID>NewLineAtEndOfFile:WaveShapeDemo.kt:com.velord.shapedemo.component.WaveShapeDemo.kt</ID>
+    <ID>ReturnCount:SupremeNavigatorVanilla.kt:SupremeNavigatorVanilla$override fun getPopRouteOnTabClick: Int</ID>
+    <ID>SwallowedException:GetMovieSortOptionUCTest.kt:GetMovieSortOptionUCTest$e: RuntimeException</ID>
+    <ID>SwallowedException:Movie.kt:Movie.Companion$e: Exception</ID>
+    <ID>SwallowedException:RefreshableImageWidgetWorker.kt:RefreshableImageWidgetWorker$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetAllMovieUC.kt:GetAllMovieUC$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetFavoriteMovieUC.kt:GetFavoriteMovieUC$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:HttpException.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:LoadNewPageMovieUC.kt:LoadNewPageMovieUC$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MemoryDumpProvider.kt:MemoryDumpProvider$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MemoryLeakMonitor.kt:MemoryLeakMonitor$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:Movie.kt:Movie.Companion$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PhoneNumber.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RefreshMovieUC.kt:RefreshMovieUC$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RefreshableImageWidgetWorker.kt:RefreshableImageWidgetWorker$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:UpdateMovieLikeUC.kt:UpdateMovieLikeUC$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:GetMovieSortOptionUCTest.kt:GetMovieSortOptionUCTest$throw RuntimeException("Mocked Exception")</ID>
+    <ID>TooManyFunctions:CameraRecordingViewModel.kt:CameraRecordingViewModel : CoroutineScopeViewModel</ID>
+    <ID>UnusedParameter:MovieBottomSheet.kt:onOptionClick: (MovieFilterOptionUI) -&gt; Unit</ID>
+    <ID>UnusedParameter:MovieViewModel.kt:MovieViewModel$newOption: MovieFilterOptionUI</ID>
+    <ID>VariableNaming:GetAllMovieUCTest.kt:GetAllMovieUCTest$private val Ascending = MovieSortOption(SortType.DateAscending, true)</ID>
+    <ID>VariableNaming:GetAllMovieUCTest.kt:GetAllMovieUCTest$private val Descending = MovieSortOption(SortType.DateDescending, true)</ID>
+  </CurrentIssues>
+</SmellBaseline>
