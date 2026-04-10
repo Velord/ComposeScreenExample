@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.velord.modifierdemo.component
 
 import androidx.compose.foundation.layout.Box

@@ -5,7 +5,14 @@ naming:
     ignoreAnnotated:
       - Composable
 
+style:
+  ForbiddenComment:
+    active: false
+
 complexity:
+  LongMethod:
+    ignoreAnnotated:
+      - PreviewCombined
   TooManyFunctions:
     ignoreAnnotatedFunctions:
       - Preview

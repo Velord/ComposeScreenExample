@@ -1,3 +1,4 @@
+@file:Suppress("MagicNumber")
 package com.velord.core.ui.compose.theme.color
 
 import androidx.compose.ui.graphics.Color

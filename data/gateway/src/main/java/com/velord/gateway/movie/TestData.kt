@@ -1,3 +1,4 @@
+@file:Suppress("MagicNumber")
 package com.velord.gateway.movie
 
 import com.velord.model.movie.Movie

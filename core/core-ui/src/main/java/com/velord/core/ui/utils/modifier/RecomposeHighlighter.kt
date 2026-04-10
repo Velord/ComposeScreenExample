@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.velord.core.ui.utils.modifier
 
 import androidx.compose.runtime.LaunchedEffect

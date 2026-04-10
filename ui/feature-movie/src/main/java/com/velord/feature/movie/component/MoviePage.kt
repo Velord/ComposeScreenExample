@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -45,22 +46,20 @@ private fun LazyListState.getLastVisibleIndex(): Int {
     return layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
 }
 
+@Stable
+private class MoviePageState(
+    val listState: LazyListState,
+    val isAtBottom: Boolean,
+)
+
 @Composable
-internal fun MoviePage(
+private fun rememberMoviePageState(
     roster: List<Movie>,
     selectedSortOption: SortType?,
-    onLike: (Movie) -> Unit,
-    onClick: (Movie) -> Unit,
-    isPaginationAvailable: Boolean = false,
-    onEndList: (lastVisibleIndex: Int) -> Unit = {},
-) {
+    onEndList: (lastVisibleIndex: Int) -> Unit,
+): MoviePageState {
     val listState = rememberLazyListState()
-    val sortOptionState = remember {
-        mutableStateOf(selectedSortOption)
-    }
-    val rosterSizeState = remember {
-        mutableIntStateOf(roster.size)
-    }
+    val rosterSizeState = remember { mutableIntStateOf(roster.size) }
     val isAtBottomState = remember {
         derivedStateOf {
             Log.d("Pagination", "isAtBottomState: ${listState.getLastVisibleIndex()} ${rosterSizeState.intValue}")
@@ -70,6 +69,7 @@ internal fun MoviePage(
             )
         }
     }
+    val sortOptionState = remember { mutableStateOf(selectedSortOption) }
     val mostRecentDateState: MutableState<Long?> = remember {
         mutableStateOf(roster.findRecentTimeInMilli())
     }
@@ -112,13 +112,30 @@ internal fun MoviePage(
         mostRecentDateState.value = rosterRecentTime
     }
 
+    return MoviePageState(
+        listState = listState,
+        isAtBottom = isAtBottomState.value,
+    )
+}
+
+@Composable
+internal fun MoviePage(
+    roster: List<Movie>,
+    selectedSortOption: SortType?,
+    onLike: (Movie) -> Unit,
+    onClick: (Movie) -> Unit,
+    isPaginationAvailable: Boolean = false,
+    onEndList: (lastVisibleIndex: Int) -> Unit = {},
+) {
+    val state = rememberMoviePageState(roster, selectedSortOption, onEndList)
+
     PageContent(
         roster = roster,
         onLike = onLike,
         onClick = onClick,
         isPaginationAvailable = isPaginationAvailable,
-        pagerState = listState,
-        isAtBottomState = isAtBottomState.value
+        pagerState = state.listState,
+        isAtBottomState = state.isAtBottom,
     )
 }
 
@@ -155,12 +172,12 @@ private fun PageContent(
         }
     ) {
         LazyColumn(state = pagerState) {
-            MovieCardItems(
+            movieCardItems(
                 roster = roster,
                 onLike = onLike,
                 onClick = onClick,
             )
-            ProgressItem(
+            progressItem(
                 roster = roster,
                 isPaginationAvailable = isPaginationAvailable,
                 isAtBottomState = isAtBottomState
@@ -169,7 +186,7 @@ private fun PageContent(
     }
 }
 
-private fun LazyListScope.MovieCardItems(
+private fun LazyListScope.movieCardItems(
     roster: List<Movie>,
     onLike: (Movie) -> Unit,
     onClick: (Movie) -> Unit
@@ -193,7 +210,7 @@ private fun LazyListScope.MovieCardItems(
     }
 }
 
-private fun LazyListScope.ProgressItem(
+private fun LazyListScope.progressItem(
     roster: List<Movie>,
     isPaginationAvailable: Boolean,
     isAtBottomState: Boolean

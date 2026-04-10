@@ -2,180 +2,21 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ForbiddenComment:CreateNavigation.kt:/* TODO: add description */</ID>
-    <ID>ForbiddenComment:MainActivity.kt:MainActivity$// TODO: handle extra bundle</ID>
-    <ID>ForbiddenComment:MainViewModel.kt:MainViewModel$// TODO: save theme to data store</ID>
-    <ID>ForbiddenComment:MovieViewModel.kt:// TODO: Create Filter logic through layers. Use Default by now</ID>
-    <ID>ForbiddenComment:MovieViewModel.kt:MovieViewModel$// TODO: disabled for now</ID>
     <ID>FunctionNaming:ArcAtBottomCenterShape.kt:fun ArcAtBottomCenterShape : Shape</ID>
     <ID>FunctionNaming:CircularSpringInterpolator.kt:fun CircularSpringInterpolatorEasing: Easing</ID>
     <ID>FunctionNaming:DialogDefaults.kt:DialogActions.Companion$fun OneButton: DialogActions</ID>
     <ID>FunctionNaming:DialogDefaults.kt:DialogActions.Companion$fun TwoButton: DialogActions</ID>
-    <ID>FunctionNaming:MoviePage.kt:private fun LazyListScope.MovieCardItems</ID>
-    <ID>FunctionNaming:MoviePage.kt:private fun LazyListScope.ProgressItem</ID>
     <ID>FunctionNaming:SpringOverflowInterpolator.kt:fun SpringOverflowInterpolatorEasing: Easing</ID>
     <ID>FunctionNaming:TicketShape.kt:fun TicketShape: Shape</ID>
-    <ID>LongMethod:MoviePage.kt:@Composable internal fun MoviePage</ID>
-    <ID>LongMethod:MoviePage.kt:@PreviewCombined @Composable private fun MoviePagerPreview</ID>
-    <ID>LongMethod:MoviePager.kt:@PreviewCombined @Composable private fun MoviePagerPreview</ID>
-    <ID>LongMethod:PervasiveArcFromBottomShapeDemo.kt:@Composable internal fun PervasiveArcFromBottomShapeDemo</ID>
-    <ID>LongMethod:TicketPath.kt:fun ticketPath: Path</ID>
-    <ID>MagicNumber:AllMovieViewModel.kt:AllMovieViewModel$300</ID>
-    <ID>MagicNumber:ArcAtBottomCenterPath.kt:100.0f</ID>
-    <ID>MagicNumber:CollapsingToolbar.kt:3f</ID>
-    <ID>MagicNumber:Color.kt:0.114</ID>
-    <ID>MagicNumber:Color.kt:0.299</ID>
-    <ID>MagicNumber:Color.kt:0.5</ID>
-    <ID>MagicNumber:Color.kt:0.587</ID>
-    <ID>MagicNumber:Color.kt:0x00ffffff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0x7f000000</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF00131A</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF001F2A</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF001f2a</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF003641</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF00384D</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF004e5e</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF062A36</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF062F3D</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF063444</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF09465C</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF0B526B</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF2b2277</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF423b8e</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF47464F</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF47464f</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF500670</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF58d6f7</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF5A54A8</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF690005</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF692789</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF928f99</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFF93000a</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFBFE9FF</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFC5C0FF</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFb1ecff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFbfe9ff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFc5c0ff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFc8c5d0</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFe3dfff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFe9b3ff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFf7d8ff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFffb4ab</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorDarkTokens$0xFFffdad6</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF000000</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF001f27</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF001f2a</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF003547</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF00677c</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF140463</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF310048</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF410002</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF47464f</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF5A54A8</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF5a54a8</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF787680</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFF8341a3</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFAAAAAA</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFC4C4C4</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFC5C0FF</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFC8C5D0</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFCECECE</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFDADADA</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFE1F4FF</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFE2E2E2</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFFAFFFF</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFFFFFFF</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFb1ecff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFba1a1a</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFe3dfff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFe5e1ec</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFf7d8ff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFfafcff</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFffdad6</ID>
-    <ID>MagicNumber:ColorTokens.kt:ColorLightTokens$0xFFffffff</ID>
-    <ID>MagicNumber:DefaultTransition.kt:DefaultTransition$700</ID>
-    <ID>MagicNumber:HangingDemo.kt:10</ID>
-    <ID>MagicNumber:HangingDemo.kt:300</ID>
-    <ID>MagicNumber:HangingDemo.kt:3000</ID>
-    <ID>MagicNumber:HeartPolygon.kt:0.1f</ID>
-    <ID>MagicNumber:HeartPolygon.kt:0.6f</ID>
-    <ID>MagicNumber:HeartPolygon.kt:0.8f</ID>
-    <ID>MagicNumber:HeartPolygon.kt:180f</ID>
-    <ID>MagicNumber:LinearGradientShaderCanvas.kt:8f</ID>
-    <ID>MagicNumber:MorphDemoScreen.kt:0.36f</ID>
-    <ID>MagicNumber:MorphDemoScreen.kt:0.5f</ID>
-    <ID>MagicNumber:MorphDemoScreen.kt:0.7f</ID>
-    <ID>MagicNumber:MorphDemoScreen.kt:14</ID>
-    <ID>MagicNumber:MorphDemoScreen.kt:3</ID>
-    <ID>MagicNumber:MorphDemoScreen.kt:5</ID>
     <ID>MagicNumber:MovieCard.kt:2021</ID>
     <ID>MagicNumber:MovieFilterOption.kt:FilterType.Rating$10.0f</ID>
     <ID>MagicNumber:MovieFilterOption.kt:FilterType.VoteCount$1000</ID>
     <ID>MagicNumber:MovieHeader.kt:700</ID>
     <ID>MagicNumber:MoviePage.kt:300</ID>
-    <ID>MagicNumber:PervasiveArcFromBottomLayout.kt:100</ID>
     <ID>MagicNumber:PopFadeTransition.kt:PopFadeTransition$700</ID>
-    <ID>MagicNumber:RecomposeHighlighter.kt:100f</ID>
     <ID>MagicNumber:RefreshableImageWidgetWorker.kt:RefreshableImageWidgetWorker.Companion$365</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.1f</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.2f</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.35f</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.3f</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.7f</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.85f</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.8f</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.95f</ID>
-    <ID>MagicNumber:ShimmeringDemo.kt:0.9f</ID>
-    <ID>MagicNumber:SplashScreen.kt:2.65f</ID>
-    <ID>MagicNumber:SplashScreen.kt:500</ID>
     <ID>MagicNumber:SplashViewModel.kt:SplashViewModel$2000</ID>
-    <ID>MagicNumber:SpringOverflowInterpolator.kt:SpringOverflowInterpolator$10</ID>
-    <ID>MagicNumber:SpringOverflowInterpolator.kt:SpringOverflowInterpolator$4</ID>
     <ID>MagicNumber:SupremeNavigatorVanilla.kt:8</ID>
-    <ID>MagicNumber:TestData.kt:10</ID>
-    <ID>MagicNumber:TestData.kt:11</ID>
-    <ID>MagicNumber:TestData.kt:12</ID>
-    <ID>MagicNumber:TestData.kt:14</ID>
-    <ID>MagicNumber:TestData.kt:15</ID>
-    <ID>MagicNumber:TestData.kt:16</ID>
-    <ID>MagicNumber:TestData.kt:17</ID>
-    <ID>MagicNumber:TestData.kt:18</ID>
-    <ID>MagicNumber:TestData.kt:19</ID>
-    <ID>MagicNumber:TestData.kt:1957</ID>
-    <ID>MagicNumber:TestData.kt:1972</ID>
-    <ID>MagicNumber:TestData.kt:1974</ID>
-    <ID>MagicNumber:TestData.kt:1977</ID>
-    <ID>MagicNumber:TestData.kt:1987</ID>
-    <ID>MagicNumber:TestData.kt:1993</ID>
-    <ID>MagicNumber:TestData.kt:1994</ID>
-    <ID>MagicNumber:TestData.kt:1997</ID>
-    <ID>MagicNumber:TestData.kt:1999</ID>
-    <ID>MagicNumber:TestData.kt:20</ID>
-    <ID>MagicNumber:TestData.kt:2001</ID>
-    <ID>MagicNumber:TestData.kt:2003</ID>
-    <ID>MagicNumber:TestData.kt:2004</ID>
-    <ID>MagicNumber:TestData.kt:2006</ID>
-    <ID>MagicNumber:TestData.kt:2008</ID>
-    <ID>MagicNumber:TestData.kt:2010</ID>
-    <ID>MagicNumber:TestData.kt:2014</ID>
-    <ID>MagicNumber:TestData.kt:2015</ID>
-    <ID>MagicNumber:TestData.kt:2016</ID>
-    <ID>MagicNumber:TestData.kt:2019</ID>
-    <ID>MagicNumber:TestData.kt:21</ID>
-    <ID>MagicNumber:TestData.kt:22</ID>
-    <ID>MagicNumber:TestData.kt:23</ID>
-    <ID>MagicNumber:TestData.kt:24</ID>
-    <ID>MagicNumber:TestData.kt:25</ID>
-    <ID>MagicNumber:TestData.kt:26</ID>
-    <ID>MagicNumber:TestData.kt:27</ID>
-    <ID>MagicNumber:TestData.kt:3</ID>
-    <ID>MagicNumber:TestData.kt:30</ID>
-    <ID>MagicNumber:TestData.kt:4</ID>
-    <ID>MagicNumber:TestData.kt:5</ID>
-    <ID>MagicNumber:TestData.kt:6</ID>
-    <ID>MagicNumber:TestData.kt:7</ID>
-    <ID>MagicNumber:TestData.kt:8</ID>
-    <ID>MagicNumber:TestData.kt:9</ID>
     <ID>MagicNumber:TicketShapeDemo.kt:10f</ID>
     <ID>MagicNumber:TicketShapeDemo.kt:15f</ID>
     <ID>MagicNumber:TicketShapeDemo.kt:20f</ID>
@@ -247,6 +88,7 @@
     <ID>MaxLineLength:TestData.kt:description="When Joel Barish discovers that his girlfriend Clementine has erased all memories of their relationship, he undergoes the same procedure to erase her from his mind. However, as the procedure begins, Joel realizes that he may not want to forget everything."</ID>
     <ID>MaxLineLength:TestData.kt:description="Will Hunting, a young janitor at MIT, has a gift for mathematics but needs help from a therapist to find direction in his life."</ID>
     <ID>MaxLineLength:TestData.kt:description="Woody, Buzz Lightyear, and the gang find themselves on a new adventure when Bonnie takes a road trip with her family. Along the way, they encounter a new toy named Forky who doesn't understand why he's a toy."</ID>
+    <ID>MaxLineLength:TicketPath.kt:rect = Rect(size.width - cornerRadius, size.height - cornerRadius, size.width + cornerRadius, size.height + cornerRadius)</ID>
     <ID>NewLineAtEndOfFile:AlertDialog.kt:com.velord.core.ui.dialog.AlertDialog.kt</ID>
     <ID>NewLineAtEndOfFile:AllMovieViewModel.kt:com.velord.feature.movie.viewModel.AllMovieViewModel.kt</ID>
     <ID>NewLineAtEndOfFile:AndroidPermissionState.kt:com.velord.util.permission.AndroidPermissionState.kt</ID>
@@ -296,7 +138,6 @@
     <ID>NewLineAtEndOfFile:CheckCameraAndAudioRecordPermission.kt:com.velord.core.ui.utils.permission.CheckCameraAndAudioRecordPermission.kt</ID>
     <ID>NewLineAtEndOfFile:CheckPermission.kt:com.velord.core.ui.dialog.CheckPermission.kt</ID>
     <ID>NewLineAtEndOfFile:CircularSpringInterpolator.kt:com.velord.core.ui.compose.animation.interpolator.CircularSpringInterpolator.kt</ID>
-    <ID>NewLineAtEndOfFile:CollapsingToolbar.kt:com.velord.core.ui.compose.component.CollapsingToolbar.kt</ID>
     <ID>NewLineAtEndOfFile:Color.kt:com.velord.core.ui.utils.Color.kt</ID>
     <ID>NewLineAtEndOfFile:ColorScheme.kt:com.velord.core.ui.compose.theme.color.ColorScheme.kt</ID>
     <ID>NewLineAtEndOfFile:ColorScheme.kt:com.velord.core.ui.utils.ColorScheme.kt</ID>
@@ -369,7 +210,6 @@
     <ID>NewLineAtEndOfFile:Init.kt:com.velord.di.Init.kt</ID>
     <ID>NewLineAtEndOfFile:Install.kt:com.velord.splash.Install.kt</ID>
     <ID>NewLineAtEndOfFile:JetpackScreen.kt:com.velord.bottomnavigation.screen.jetpack.JetpackScreen.kt</ID>
-    <ID>NewLineAtEndOfFile:LinearGradientShaderCanvas.kt:com.velord.core.ui.compose.component.LinearGradientShaderCanvas.kt</ID>
     <ID>NewLineAtEndOfFile:LoadNewPageMovieUC.kt:com.velord.usecase.movie.LoadNewPageMovieUC.kt</ID>
     <ID>NewLineAtEndOfFile:LoadNewPageMovieUCTest.kt:com.velord.usecase.movie.LoadNewPageMovieUCTest.kt</ID>
     <ID>NewLineAtEndOfFile:LogBackStack.kt:com.velord.navigation.compose.LogBackStack.kt</ID>
@@ -429,14 +269,11 @@
     <ID>NewLineAtEndOfFile:OutputDirectory.kt:com.velord.util.file.OutputDirectory.kt</ID>
     <ID>NewLineAtEndOfFile:PackageManager.kt:com.velord.util.packageManager.PackageManager.kt</ID>
     <ID>NewLineAtEndOfFile:PermissionState.kt:com.velord.core.ui.utils.permission.PermissionState.kt</ID>
-    <ID>NewLineAtEndOfFile:PervasiveArcFromBottomLayout.kt:com.velord.core.ui.compose.component.PervasiveArcFromBottomLayout.kt</ID>
     <ID>NewLineAtEndOfFile:PervasiveArcFromBottomShapeDemo.kt:com.velord.shapedemo.component.PervasiveArcFromBottomShapeDemo.kt</ID>
     <ID>NewLineAtEndOfFile:PhoneNumber.kt:com.velord.util.activityResult.PhoneNumber.kt</ID>
-    <ID>NewLineAtEndOfFile:PopFadeTransition.kt:com.velord.navigation.compose.destinations.transition.PopFadeTransition.kt</ID>
     <ID>NewLineAtEndOfFile:PopScaleOutTransition.kt:com.velord.navigation.compose.destinations.transition.PopScaleOutTransition.kt</ID>
     <ID>NewLineAtEndOfFile:PreviewCombined.kt:com.velord.core.ui.compose.preview.PreviewCombined.kt</ID>
     <ID>NewLineAtEndOfFile:PreviewDevice.kt:com.velord.core.ui.compose.preview.PreviewDevice.kt</ID>
-    <ID>NewLineAtEndOfFile:RecomposeHighlighter.kt:com.velord.core.ui.utils.modifier.RecomposeHighlighter.kt</ID>
     <ID>NewLineAtEndOfFile:RefreshMovieDS.kt:com.velord.usecase.movie.dataSource.RefreshMovieDS.kt</ID>
     <ID>NewLineAtEndOfFile:RefreshMovieUC.kt:com.velord.usecase.movie.RefreshMovieUC.kt</ID>
     <ID>NewLineAtEndOfFile:RefreshMovieUCTest.kt:com.velord.usecase.movie.RefreshMovieUCTest.kt</ID>
@@ -460,13 +297,10 @@
     <ID>NewLineAtEndOfFile:ShapeDemoScreen.kt:com.velord.shapedemo.ShapeDemoScreen.kt</ID>
     <ID>NewLineAtEndOfFile:ShapeDemoVoyagerScreen.kt:com.velord.navigation.voyager.screen.ShapeDemoVoyagerScreen.kt</ID>
     <ID>NewLineAtEndOfFile:SharedScreenVoyager.kt:com.velord.core.navigation.voyager.SharedScreenVoyager.kt</ID>
-    <ID>NewLineAtEndOfFile:Shimmering.kt:com.velord.core.ui.utils.modifier.Shimmering.kt</ID>
     <ID>NewLineAtEndOfFile:ShimmeringDemo.kt:com.velord.modifierdemo.component.ShimmeringDemo.kt</ID>
     <ID>NewLineAtEndOfFile:SplashScreen.kt:com.velord.splash.SplashScreen.kt</ID>
-    <ID>NewLineAtEndOfFile:SpringOverflowInterpolator.kt:com.velord.core.ui.compose.animation.interpolator.SpringOverflowInterpolator.kt</ID>
     <ID>NewLineAtEndOfFile:SupremeNavigatorDestinations.kt:com.velord.navigation.compose.destinations.navigator.SupremeNavigatorDestinations.kt</ID>
     <ID>NewLineAtEndOfFile:SupremeNavigatorNav3.kt:com.velord.navigation.compose.nav3.navigator.SupremeNavigatorNav3.kt</ID>
-    <ID>NewLineAtEndOfFile:SupremeNavigatorVanilla.kt:com.velord.navigation.compose.vanilla.navigator.SupremeNavigatorVanilla.kt</ID>
     <ID>NewLineAtEndOfFile:Swelling.kt:com.velord.core.ui.utils.modifier.Swelling.kt</ID>
     <ID>NewLineAtEndOfFile:SwellingDemo.kt:com.velord.modifierdemo.component.SwellingDemo.kt</ID>
     <ID>NewLineAtEndOfFile:SwitchAbideToOsThemeConfigUC.kt:com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC.kt</ID>

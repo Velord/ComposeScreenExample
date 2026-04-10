@@ -4,74 +4,46 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Path
 
+private fun Path.cornerArc(
+    rect: Rect,
+    startAngleDegrees: Float,
+) {
+    arcTo(
+        rect = rect,
+        startAngleDegrees = startAngleDegrees,
+        sweepAngleDegrees = -90.0f,
+        forceMoveTo = false
+    )
+}
+
 fun ticketPath(
     cornerRadius: Float,
     size: Size
 ): Path = Path().apply {
     // Top left arc
-    arcTo(
-        rect = Rect(
-            left = -cornerRadius,
-            top = -cornerRadius,
-            right = cornerRadius,
-            bottom = cornerRadius
-        ),
+    cornerArc(
+        rect = Rect(-cornerRadius, -cornerRadius, cornerRadius, cornerRadius),
         startAngleDegrees = 90.0f,
-        sweepAngleDegrees = -90.0f,
-        forceMoveTo = false
     )
-    lineTo(
-        x = size.width - cornerRadius,
-        y = 0f
-    )
+    lineTo(x = size.width - cornerRadius, y = 0f)
     // Top right arc
-    arcTo(
-        rect = Rect(
-            left = size.width - cornerRadius,
-            top = -cornerRadius,
-            right = size.width + cornerRadius,
-            bottom = cornerRadius
-        ),
+    cornerArc(
+        rect = Rect(size.width - cornerRadius, -cornerRadius, size.width + cornerRadius, cornerRadius),
         startAngleDegrees = 180.0f,
-        sweepAngleDegrees = -90.0f,
-        forceMoveTo = false
     )
-    lineTo(
-        x = size.width,
-        y = size.height - cornerRadius
-    )
+    lineTo(x = size.width, y = size.height - cornerRadius)
     // Bottom right arc
-    arcTo(
-        rect = Rect(
-            left = size.width - cornerRadius,
-            top = size.height - cornerRadius,
-            right = size.width + cornerRadius,
-            bottom = size.height + cornerRadius
-        ),
+    cornerArc(
+        rect = Rect(size.width - cornerRadius, size.height - cornerRadius, size.width + cornerRadius, size.height + cornerRadius),
         startAngleDegrees = 270.0f,
-        sweepAngleDegrees = -90.0f,
-        forceMoveTo = false
     )
-    lineTo(
-        x = cornerRadius,
-        y = size.height
-    )
+    lineTo(x = cornerRadius, y = size.height)
     // Bottom left arc
-    arcTo(
-        rect = Rect(
-            left = -cornerRadius,
-            top = size.height - cornerRadius,
-            right = cornerRadius,
-            bottom = size.height + cornerRadius
-        ),
+    cornerArc(
+        rect = Rect(-cornerRadius, size.height - cornerRadius, cornerRadius, size.height + cornerRadius),
         startAngleDegrees = 0.0f,
-        sweepAngleDegrees = -90.0f,
-        forceMoveTo = false
     )
-    lineTo(
-        x = 0f,
-        y = cornerRadius
-    )
+    lineTo(x = 0f, y = cornerRadius)
 
     close()
 }

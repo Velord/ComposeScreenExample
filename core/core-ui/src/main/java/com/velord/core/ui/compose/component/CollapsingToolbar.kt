@@ -42,6 +42,7 @@ import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+private const val TOOLBAR_VISIBILITY_THRESHOLD_DIVISOR = 3f
 private const val SLIDING_OFFSET_CATALYST = 500
 
 @Composable
@@ -79,7 +80,11 @@ private fun Collaps() {
     // And listen to the scroll happening inside child LazyColumn
     val alphaState = remember {
         derivedStateOf {
-            min(1f, abs(toolbarOffsetHeightPxState.floatValue) / (toolbarHeightPxState.value / 3f))
+            min(
+                1f,
+                abs(toolbarOffsetHeightPxState.floatValue) /
+                    (toolbarHeightPxState.value / TOOLBAR_VISIBILITY_THRESHOLD_DIVISOR)
+            )
         }
     }
 

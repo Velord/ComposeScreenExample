@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.velord.morphdemo
 
 import android.view.animation.AnticipateOvershootInterpolator

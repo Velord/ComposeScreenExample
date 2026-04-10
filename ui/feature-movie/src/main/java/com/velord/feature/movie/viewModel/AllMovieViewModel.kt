@@ -58,6 +58,8 @@ sealed interface AllMovieUiAction {
     data class OnEndList(val triggerIndex: Int) : AllMovieUiAction
 }
 
+private const val PAGINATION_DEBOUNCE_MS = 300L
+
 class AllMovieViewModel(
     private val getAllMovieUC: GetAllMovieUC,
     private val updateMovieLikeUC: UpdateMovieLikeUC,
@@ -149,7 +151,7 @@ class AllMovieViewModel(
                 .distinctUntilChanged()
                 .filter { it != PaginationStatus.Init }
                 .filter { it !is PaginationStatus.Exausted }
-                .debounce(300)
+                .debounce(PAGINATION_DEBOUNCE_MS)
                 .collect {
                     loadNewPage()
                 }
