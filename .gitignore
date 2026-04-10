@@ -48,3 +48,10 @@ google-services.json
 
 /.kotlin
 /.kotlin/sessions
+
+# AI AI AI AI AI
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+.claudeignore
+.mcp.json
