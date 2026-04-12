@@ -34,7 +34,12 @@ fun ticketPath(
     lineTo(x = size.width, y = size.height - cornerRadius)
     // Bottom right arc
     cornerArc(
-        rect = Rect(size.width - cornerRadius, size.height - cornerRadius, size.width + cornerRadius, size.height + cornerRadius),
+        rect = Rect(
+            size.width - cornerRadius,
+            size.height - cornerRadius,
+            size.width + cornerRadius,
+            size.height + cornerRadius
+        ),
         startAngleDegrees = 270.0f,
     )
     lineTo(x = cornerRadius, y = size.height)

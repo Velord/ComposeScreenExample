@@ -13,7 +13,11 @@ interface MovieNetworkService {
 }
 
 private const val AUTHORIZATION_HEADER = "Authorization"
-private const val BEARER = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiOGJhNDk4ZGFiOTUzYmZhYzVhMTI4YzQ0ZWM2ZSIsIm5iZiI6MTcyMTMzNTMzOC4yMDgxMzYsInN1YiI6IjY2OTk3ZDE0OTU3YjM2NWNjOGZkNzIwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VoVoq1XiABNy-3i8BUe-WXvg7Sp5AjDfrF-yFMmh1eM"
+private const val BEARER =
+    "Bearer eyJhbGciOiJIUzI1NiJ9" +
+    ".eyJhdWQiOiJjYjNiOGJhNDk4ZGFiOTUzYmZhYzVhMTI4YzQ0ZWM2ZSIsIm5iZiI6MTcyMTMzNTMzOC4yMDgxMzYs" +
+    "InN1YiI6IjY2OTk3ZDE0OTU3YjM2NWNjOGZkNzIwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ" +
+    ".VoVoq1XiABNy-3i8BUe-WXvg7Sp5AjDfrF-yFMmh1eM"
 
 @Single
 class MovieNetworkServiceImpl(

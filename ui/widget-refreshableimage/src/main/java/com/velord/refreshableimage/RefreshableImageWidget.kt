@@ -133,7 +133,9 @@ internal class RefreshCallback : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        val newParameters: ImageParameters = requireNotNull(parameters[RefreshableImageWidget.refreshableImageWidgetKey]) {
+        val newParameters: ImageParameters = requireNotNull(
+            parameters[RefreshableImageWidget.refreshableImageWidgetKey]
+        ) {
             "Missing refreshableImageWidgetKey"
         }
         Log.d("RefreshableImageWidget", "RefreshCallback.onAction: $glanceId; Size: $newParameters")

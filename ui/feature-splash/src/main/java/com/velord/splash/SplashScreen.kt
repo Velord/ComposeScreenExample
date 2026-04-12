@@ -231,7 +231,9 @@ private fun BoxScope.IconAnimated(
     AnimatedVisibility(
         visible = isVisible,
         modifier = Modifier.align(Alignment.Center),
-        enter = fadeIn(animationSpec = tween(durationMillis = 50, delayMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME / 4)),
+        enter = fadeIn(
+            animationSpec = tween(durationMillis = 50, delayMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME / 4)
+        ),
         exit = fadeOut(animationSpec = tween(durationMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME))
     ) {
         content()
