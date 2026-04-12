@@ -1,4 +1,4 @@
-package com.velord.core.ui.utils
+package com.velord.core.ui.util
 
 import android.annotation.SuppressLint
 import androidx.activity.ComponentActivity

@@ -50,7 +50,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.core.resource.R
-import com.velord.core.ui.utils.ObserveSharedFlow
+import com.velord.core.ui.util.ObserveSharedFlow
 
 enum class CameraRecordingNavigationEvent {
     SETTINGS

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.velord.core.ui.utils.setContentWithTheme
+import com.velord.core.ui.util.setContentWithTheme
 import com.velord.navigation.R
 
 class CameraGraphFragment : Fragment() {

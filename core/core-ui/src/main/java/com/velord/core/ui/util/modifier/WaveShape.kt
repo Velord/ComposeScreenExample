@@ -1,4 +1,4 @@
-package com.velord.core.ui.utils.modifier
+package com.velord.core.ui.util.modifier
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip

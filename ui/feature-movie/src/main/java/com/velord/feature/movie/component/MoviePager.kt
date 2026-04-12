@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.core.resource.R
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.core.ui.utils.ObserveSharedFlow
+import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.feature.movie.viewModel.AllMovieUiAction
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieUiAction

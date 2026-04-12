@@ -18,7 +18,7 @@ import com.velord.composescreenexample.BuildConfig
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
 import com.velord.config.NavigationLib
-import com.velord.core.ui.utils.setContentWithTheme
+import com.velord.core.ui.util.setContentWithTheme
 import com.velord.navigation.CreateNavigationViaDestinations
 import com.velord.navigation.CreateNavigationViaNav3
 import com.velord.navigation.CreateNavigationViaVanilla

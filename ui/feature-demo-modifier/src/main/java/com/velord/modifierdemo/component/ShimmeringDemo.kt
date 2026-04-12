@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.core.ui.utils.modifier.shimmering
+import com.velord.core.ui.util.modifier.shimmering
 import com.velord.modifierdemo.Title
 
 private fun Modifier.default(): Modifier = this

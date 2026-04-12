@@ -9,7 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
-import com.velord.core.ui.utils.ObserveSharedFlow
+import com.velord.core.ui.util.ObserveSharedFlow
 import org.koin.androidx.compose.koinViewModel
 
 interface BottomNavigator {

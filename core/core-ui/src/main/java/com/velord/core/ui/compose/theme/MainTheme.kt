@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.velord.core.ui.compose.shape.MainShapes
 import com.velord.core.ui.compose.theme.color.DarkColorScheme
 import com.velord.core.ui.compose.theme.color.LightColorScheme
-import com.velord.core.ui.utils.defineScrimAndDarkScrimColorForSystemBar
+import com.velord.core.ui.util.defineScrimAndDarkScrimColorForSystemBar
 import com.velord.model.setting.AndroidThemeConfig
 import com.velord.model.setting.SpecialTheme
 

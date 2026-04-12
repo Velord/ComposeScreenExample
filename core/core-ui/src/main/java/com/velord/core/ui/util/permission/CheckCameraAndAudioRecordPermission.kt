@@ -1,4 +1,4 @@
-package com.velord.core.ui.utils.permission
+package com.velord.core.ui.util.permission
 
 import android.Manifest
 import android.content.Context
@@ -18,7 +18,7 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.velord.core.ui.dialog.showGoToSettingsForCamera
 import com.velord.core.ui.dialog.showGoToSettingsForMic
-import com.velord.core.ui.utils.ObserveSharedFlow
+import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.util.permission.AndroidPermissionState
 import kotlinx.coroutines.flow.MutableSharedFlow
 
