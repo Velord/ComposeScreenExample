@@ -2,8 +2,10 @@ package com.velord.core.ui.compose.animation.interpolator
 
 import android.view.animation.Interpolator
 import androidx.compose.animation.core.Easing
+import com.velord.core.ui.annotation.ConstructorLikeFunction
 import kotlin.math.sin
 
+@ConstructorLikeFunction
 fun CircularSpringInterpolatorEasing(tension: Float = 50f): Easing =
     CircularSpringInterpolator(tension).toEasing()
 

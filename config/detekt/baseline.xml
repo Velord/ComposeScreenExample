@@ -2,12 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>FunctionNaming:ArcAtBottomCenterShape.kt:fun ArcAtBottomCenterShape : Shape</ID>
-    <ID>FunctionNaming:CircularSpringInterpolator.kt:fun CircularSpringInterpolatorEasing: Easing</ID>
-    <ID>FunctionNaming:DialogDefaults.kt:DialogActions.Companion$fun OneButton: DialogActions</ID>
-    <ID>FunctionNaming:DialogDefaults.kt:DialogActions.Companion$fun TwoButton: DialogActions</ID>
-    <ID>FunctionNaming:SpringOverflowInterpolator.kt:fun SpringOverflowInterpolatorEasing: Easing</ID>
-    <ID>FunctionNaming:TicketShape.kt:fun TicketShape: Shape</ID>
     <ID>MagicNumber:MovieCard.kt:2021</ID>
     <ID>MagicNumber:MovieFilterOption.kt:FilterType.Rating$10.0f</ID>
     <ID>MagicNumber:MovieFilterOption.kt:FilterType.VoteCount$1000</ID>
