@@ -2,7 +2,6 @@ package com.velord.camerarecording
 
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Recorder
@@ -52,7 +51,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.core.resource.R
 import com.velord.core.ui.utils.ObserveSharedFlow
-import com.velord.core.ui.utils.permission.CheckCameraAndAudioRecordPermission
 
 enum class CameraRecordingNavigationEvent {
     SETTINGS
