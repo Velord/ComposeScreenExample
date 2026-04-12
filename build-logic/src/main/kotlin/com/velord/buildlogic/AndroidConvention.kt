@@ -17,6 +17,14 @@ internal fun Project.configureApplicationAndroid(applicationExtension: Applicati
             sourceCompatibility = JavaVersion.VERSION_21
             targetCompatibility = JavaVersion.VERSION_21
         }
+
+        lint {
+            lintConfig = rootProject.file("config/lint/lint.xml")
+            abortOnError = true
+            warningsAsErrors = false
+            checkDependencies = true
+            baseline = rootProject.file("config/lint/lint-baseline.xml")
+        }
     }
 }
 
@@ -41,6 +49,13 @@ internal fun Project.configureLibraryAndroid(libraryExtension: LibraryExtension)
                     "proguard-rules.pro"
                 )
             }
+        }
+
+        lint {
+            lintConfig = rootProject.file("config/lint/lint.xml")
+            abortOnError = true
+            warningsAsErrors = false
+            baseline = rootProject.file("config/lint/lint-baseline.xml")
         }
     }
 }
