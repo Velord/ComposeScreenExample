@@ -7,6 +7,11 @@ plugins {
     alias(libs.plugins.convention.koin)
     alias(libs.plugins.google.gms.services)
     alias(libs.plugins.google.firebase.crashlytic)
+    alias(libs.plugins.dependency.guard)
+}
+
+dependencyGuard {
+    configuration("productionReleaseRuntimeClasspath")
 }
 
 // When app incompatible with previous version change this value
