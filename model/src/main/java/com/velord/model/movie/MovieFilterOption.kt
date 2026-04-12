@@ -17,8 +17,8 @@ sealed class FilterType(
     ) : FilterType(start, end, min, max, steps) {
 
         init {
-            require(min >= 0.0f)
-            require(max <= 10.0f)
+            require(min >= MIN_RATING)
+            require(max <= MAX_RATING)
             require(start < end)
             require(min < max)
             require(start in min..max)
@@ -26,12 +26,18 @@ sealed class FilterType(
         }
 
         companion object {
+            private const val MIN_RATING = 0.0f
+            private const val MAX_RATING = 10.0f
+            private const val DEFAULT_START = 7f
+            private const val DEFAULT_END = 7.1f
+            private const val DEFAULT_STEPS = 100
+
             val Default = Rating(
-                start = 7f,
-                end = 7.1f,
-                min = 0f,
-                max = 10f,
-                steps = 100
+                start = DEFAULT_START,
+                end = DEFAULT_END,
+                min = MIN_RATING,
+                max = MAX_RATING,
+                steps = DEFAULT_STEPS
             )
         }
     }
@@ -45,8 +51,8 @@ sealed class FilterType(
     ) : FilterType(start, end, min, max, steps) {
 
         init {
-            require(min >= 0)
-            require(max <= 1000)
+            require(min >= MIN_VOTE_COUNT)
+            require(max <= MAX_VOTE_COUNT)
             require(start < end)
             require(min < max)
             require(start in min..max)
@@ -54,12 +60,18 @@ sealed class FilterType(
         }
 
         companion object {
+            private const val MIN_VOTE_COUNT = 0
+            private const val MAX_VOTE_COUNT = 1000
+            private const val DEFAULT_START = 100
+            private const val DEFAULT_END = 200
+            private const val DEFAULT_STEPS = 20
+
             val Default = VoteCount(
-                start = 100,
-                end = 200,
-                min = 0,
-                max = 1000,
-                steps = 20
+                start = DEFAULT_START,
+                end = DEFAULT_END,
+                min = MIN_VOTE_COUNT,
+                max = MAX_VOTE_COUNT,
+                steps = DEFAULT_STEPS
             )
         }
     }

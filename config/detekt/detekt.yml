@@ -7,6 +7,10 @@ naming:
       - ConstructorLikeFunction
 
 style:
+  MagicNumber:
+    ignoreAnnotated:
+      - Preview
+      - PreviewCombined
   ForbiddenComment:
     active: false
 

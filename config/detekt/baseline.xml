@@ -2,19 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>MagicNumber:MovieCard.kt:2021</ID>
-    <ID>MagicNumber:MovieFilterOption.kt:FilterType.Rating$10.0f</ID>
-    <ID>MagicNumber:MovieFilterOption.kt:FilterType.VoteCount$1000</ID>
-    <ID>MagicNumber:MovieHeader.kt:700</ID>
-    <ID>MagicNumber:MoviePage.kt:300</ID>
-    <ID>MagicNumber:PopFadeTransition.kt:PopFadeTransition$700</ID>
-    <ID>MagicNumber:RefreshableImageWidgetWorker.kt:RefreshableImageWidgetWorker.Companion$365</ID>
-    <ID>MagicNumber:SplashViewModel.kt:SplashViewModel$2000</ID>
-    <ID>MagicNumber:SupremeNavigatorVanilla.kt:8</ID>
-    <ID>MagicNumber:TicketShapeDemo.kt:10f</ID>
-    <ID>MagicNumber:TicketShapeDemo.kt:15f</ID>
-    <ID>MagicNumber:TicketShapeDemo.kt:20f</ID>
-    <ID>MagicNumber:TicketShapeDemo.kt:30f</ID>
     <ID>MatchingDeclarationName:BottomNavigationScreen.kt:BottomNavigator</ID>
     <ID>MatchingDeclarationName:BuildConfig.kt:BuildConfigResolver</ID>
     <ID>MatchingDeclarationName:CameraRecordingScreen.kt:CameraRecordingNavigationEvent</ID>

@@ -9,10 +9,12 @@ import androidx.compose.animation.fadeOut
 import androidx.navigation.NavBackStackEntry
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
 
+private const val FADE_IN_DURATION = 700
+
 internal object PopFadeTransition : NavHostAnimatedDestinationStyle() {
 
     override val enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition =
-        { fadeIn(animationSpec = tween(700)) }
+        { fadeIn(animationSpec = tween(FADE_IN_DURATION)) }
 
     override val exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition =
         { fadeOut() }

@@ -42,6 +42,8 @@ import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
 import java.util.Calendar
 
+private const val SCROLL_DELAY_MS = 300L
+
 private fun LazyListState.getLastVisibleIndex(): Int {
     return layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
 }
@@ -89,7 +91,7 @@ private fun rememberMoviePageState(
             .filterNotNull()
             .distinctUntilChanged()
             .collect {
-                delay(300)
+                delay(SCROLL_DELAY_MS)
                 listState.scrollToItem(0)
             }
     }
@@ -99,7 +101,7 @@ private fun rememberMoviePageState(
             .distinctUntilChanged()
             .filter { it != null }
             .collect {
-                delay(300)
+                delay(SCROLL_DELAY_MS)
                 listState.scrollToItem(0)
             }
     }
