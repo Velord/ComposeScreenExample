@@ -7,23 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
-import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
-import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.core.ui.util.ObserveSharedFlow
 import org.koin.androidx.compose.koinViewModel
-
-interface BottomNavigator {
-    fun onTabClick(tab: TabState)
-    @Composable fun CreateNavHostForBottom(
-        modifier: Modifier,
-        startRoute: BottomNavigationItem
-    )
-    @Composable
-    fun SetupNavController(
-        updateBackHandling: (startDestinationRoster: List<String?>, currentRoute: String?) -> Unit,
-        onTabChanged: (BottomNavigationItem) -> Unit,
-    )
-}
 
 @Composable
 fun BottomNavigationScreen(navigator: BottomNavigator) {

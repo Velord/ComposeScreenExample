@@ -52,10 +52,6 @@ import com.velord.camerarecording.model.createVideoCapture
 import com.velord.core.resource.R
 import com.velord.core.ui.util.ObserveSharedFlow
 
-enum class CameraRecordingNavigationEvent {
-    SETTINGS
-}
-
 @Composable
 fun CameraRecordingScreen(
     viewModel: CameraRecordingViewModel,

@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.velord.gateway
 
 import com.velord.appstate.AppStateModule

@@ -2,15 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>MatchingDeclarationName:BottomNavigationScreen.kt:BottomNavigator</ID>
-    <ID>MatchingDeclarationName:BuildConfig.kt:BuildConfigResolver</ID>
-    <ID>MatchingDeclarationName:CameraRecordingScreen.kt:CameraRecordingNavigationEvent</ID>
-    <ID>MatchingDeclarationName:DI.kt:AppStateModule</ID>
-    <ID>MatchingDeclarationName:DI.kt:BottomNavigationModule</ID>
-    <ID>MatchingDeclarationName:DI.kt:DataStoreModule</ID>
-    <ID>MatchingDeclarationName:DI.kt:GatewayModule</ID>
-    <ID>MatchingDeclarationName:DI.kt:OsModule</ID>
-    <ID>MatchingDeclarationName:MorphDemoScreen.kt:MorphDemoVoyagerScreen : Screen</ID>
     <ID>ReturnCount:SupremeNavigatorVanilla.kt:SupremeNavigatorVanilla$override fun getPopRouteOnTabClick: Int</ID>
     <ID>SwallowedException:GetMovieSortOptionUCTest.kt:GetMovieSortOptionUCTest$e: RuntimeException</ID>
     <ID>SwallowedException:Movie.kt:Movie.Companion$e: Exception</ID>
