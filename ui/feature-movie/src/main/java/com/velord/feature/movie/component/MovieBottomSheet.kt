@@ -128,6 +128,7 @@ private fun Sort(
     )
 }
 
+@Suppress("UnusedParameter") // TODO: Wire up filter option click
 @Composable
 private fun Filter(
     optionRoster: List<MovieFilterOptionUI>,

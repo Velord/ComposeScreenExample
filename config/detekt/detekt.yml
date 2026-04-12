@@ -7,6 +7,9 @@ naming:
       - ConstructorLikeFunction
 
 style:
+  ReturnCount:
+    max: 4
+    excludeGuardClauses: true
   MagicNumber:
     ignoreAnnotated:
       - Preview
@@ -14,10 +17,19 @@ style:
   ForbiddenComment:
     active: false
 
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
+  TooGenericExceptionThrown:
+    excludes:
+      - "**/test/**"
+      - "**/androidTest/**"
+
 complexity:
   LongMethod:
     ignoreAnnotated:
       - PreviewCombined
   TooManyFunctions:
+    allowedFunctionsPerClass: 15
     ignoreAnnotatedFunctions:
       - Preview

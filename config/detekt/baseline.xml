@@ -2,26 +2,5 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ReturnCount:SupremeNavigatorVanilla.kt:SupremeNavigatorVanilla$override fun getPopRouteOnTabClick: Int</ID>
-    <ID>SwallowedException:GetMovieSortOptionUCTest.kt:GetMovieSortOptionUCTest$e: RuntimeException</ID>
-    <ID>SwallowedException:Movie.kt:Movie.Companion$e: Exception</ID>
-    <ID>SwallowedException:RefreshableImageWidgetWorker.kt:RefreshableImageWidgetWorker$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:GetAllMovieUC.kt:GetAllMovieUC$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:GetFavoriteMovieUC.kt:GetFavoriteMovieUC$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:HttpException.kt:e: Exception</ID>
-    <ID>TooGenericExceptionCaught:LoadNewPageMovieUC.kt:LoadNewPageMovieUC$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:MemoryDumpProvider.kt:MemoryDumpProvider$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:MemoryLeakMonitor.kt:MemoryLeakMonitor$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:Movie.kt:Movie.Companion$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:PhoneNumber.kt:e: Exception</ID>
-    <ID>TooGenericExceptionCaught:RefreshMovieUC.kt:RefreshMovieUC$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:RefreshableImageWidgetWorker.kt:RefreshableImageWidgetWorker$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:UpdateMovieLikeUC.kt:UpdateMovieLikeUC$e: Exception</ID>
-    <ID>TooGenericExceptionThrown:GetMovieSortOptionUCTest.kt:GetMovieSortOptionUCTest$throw RuntimeException("Mocked Exception")</ID>
-    <ID>TooManyFunctions:CameraRecordingViewModel.kt:CameraRecordingViewModel : CoroutineScopeViewModel</ID>
-    <ID>UnusedParameter:MovieBottomSheet.kt:onOptionClick: (MovieFilterOptionUI) -&gt; Unit</ID>
-    <ID>UnusedParameter:MovieViewModel.kt:MovieViewModel$newOption: MovieFilterOptionUI</ID>
-    <ID>VariableNaming:GetAllMovieUCTest.kt:GetAllMovieUCTest$private val Ascending = MovieSortOption(SortType.DateAscending, true)</ID>
-    <ID>VariableNaming:GetAllMovieUCTest.kt:GetAllMovieUCTest$private val Descending = MovieSortOption(SortType.DateDescending, true)</ID>
   </CurrentIssues>
 </SmellBaseline>

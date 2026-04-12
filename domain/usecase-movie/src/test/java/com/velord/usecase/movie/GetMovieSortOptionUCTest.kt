@@ -122,7 +122,7 @@ class GetMovieSortOptionUCTest {
         val exceptionThrown = try {
             resultFlow.drop(1).first()
             false
-        } catch (e: RuntimeException) {
+        } catch (_: RuntimeException) {
             true
         }
 

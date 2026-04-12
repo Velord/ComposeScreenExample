@@ -62,7 +62,7 @@ data class Movie(
             }
 
             calendar
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             Calendar.getInstance()
         }
 

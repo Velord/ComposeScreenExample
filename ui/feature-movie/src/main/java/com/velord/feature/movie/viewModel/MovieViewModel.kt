@@ -74,6 +74,7 @@ class MovieViewModel(
         setMovieSortOptionUC(domain)
     }
 
+    @Suppress("UnusedParameter", "EmptyFunctionBlock")
     private fun onFilterOptionClick(newOption: MovieFilterOptionUI) {
         // TODO: disabled for now
     }

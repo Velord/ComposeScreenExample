@@ -30,8 +30,6 @@ import java.util.Calendar
 
 class GetAllMovieUCTest {
 
-    private val Descending = MovieSortOption(SortType.DateDescending, true)
-    private val Ascending = MovieSortOption(SortType.DateAscending, true)
 
     private val movie1 = Movie(
         1, "Movie 1", "Description 1", false, Calendar.getInstance(), 4.5f, 100, "imagePath1"
@@ -48,7 +46,7 @@ class GetAllMovieUCTest {
         every { getFlow() } returns flowOf(movieList)
     }
     private val movieSortDS = mockk<MovieSortDS> {
-        every { getSelectedFlow() } returns flowOf(Descending)
+        every { getSelectedFlow() } returns flowOf(DESCENDING)
     }
 
     @Test
@@ -67,7 +65,7 @@ class GetAllMovieUCTest {
     fun `invoke should return Success when movies are available and sorted by DateAscending`() = runTest {
         // ... (Similar to the previous test, but with SortType.DateAscending)
         val movieSortDS = mockk<MovieSortDS> {
-            every { getSelectedFlow() } returns flowOf(Ascending)
+            every { getSelectedFlow() } returns flowOf(ASCENDING)
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
@@ -103,7 +101,7 @@ class GetAllMovieUCTest {
             every { getFlow() } returns flowOf(listOf(movie1))
         }
         val movieSortDS = mockk<MovieSortDS> {
-            every { getSelectedFlow() } returns flowOf(Descending)
+            every { getSelectedFlow() } returns flowOf(DESCENDING)
         }
 
         val getAllMovieUC = GetAllMovieUC(movieDS, movieSortDS)
@@ -219,9 +217,9 @@ class GetAllMovieUCTest {
     fun `invoke should handle sort option changes and apply them correctly`() = runTest {
         val movieSortDS = mockk<MovieSortDS> {
             every { getSelectedFlow() } returns flow {
-                emit(Descending)
+                emit(DESCENDING)
                 delay(50)
-                emit(Ascending)
+                emit(ASCENDING)
             }
         }
 
@@ -237,9 +235,9 @@ class GetAllMovieUCTest {
         assertNotNull(firstEmission)
         assertNotNull(secondEmission)
         // Use safe calls to handle potential nulls in the lists
-        // Descending
+        // descending
         assertTrue(firstEmission?.get(0)?.date?.after(firstEmission[1].date) ?: false)
-        // Ascending
+        // ascending
         assertTrue(secondEmission?.get(0)?.date?.before(secondEmission[1].date) ?: false)
     }
 
@@ -325,7 +323,7 @@ class GetAllMovieUCTest {
         val movieSortDS = mockk<MovieSortDS> {
             every { getSelectedFlow() } returns flow {
                 delay(500) // Simulate a very late emission
-                emit(Descending)
+                emit(DESCENDING)
             }
         }
 
@@ -357,9 +355,9 @@ class GetAllMovieUCTest {
         val movieSortDS = mockk<MovieSortDS> {
             every { getSelectedFlow() } returns flow {
                 delay(25) // Emit a sort option slightly after the first movie emission
-                emit(Descending)
+                emit(DESCENDING)
                 delay(75) // Emit another sort option after the second movie emission
-                emit(Ascending)
+                emit(ASCENDING)
             }
         }
 
@@ -409,9 +407,9 @@ class GetAllMovieUCTest {
             every { getFlow() } returns flowOf(movieListWithSameDate)
         }
 
-        //Test with Descending order
+        //Test with descending order
         val movieSortDSDescending = mockk<MovieSortDS> {
-            every { getSelectedFlow() } returns flowOf(Descending)
+            every { getSelectedFlow() } returns flowOf(DESCENDING)
         }
         val getAllMovieUCDescending = GetAllMovieUC(movieDS, movieSortDSDescending)
         val resultDescending = getAllMovieUCDescending()
@@ -421,9 +419,9 @@ class GetAllMovieUCTest {
         assertEquals(movie3, moviesDescending[0])
         assertEquals(movie4, moviesDescending[1])
 
-        // Test with Ascending order
+        // Test with ascending order
         val movieSortDSAscending = mockk<MovieSortDS> {
-            every { getSelectedFlow() } returns flowOf(Ascending)
+            every { getSelectedFlow() } returns flowOf(ASCENDING)
         }
         val getAllMovieUCAscending = GetAllMovieUC(movieDS, movieSortDSAscending)
         val resultAscending = getAllMovieUCAscending()
@@ -432,5 +430,10 @@ class GetAllMovieUCTest {
         // Assuming you want to order by ID in ascending order
         assertEquals(movie3, moviesAscending[0])
         assertEquals(movie4, moviesAscending[1])
+    }
+
+    companion object {
+        private val DESCENDING = MovieSortOption(SortType.DateDescending, true)
+        private val ASCENDING = MovieSortOption(SortType.DateAscending, true)
     }
 }
