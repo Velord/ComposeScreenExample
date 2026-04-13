@@ -9,33 +9,35 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.navigation.NavBackStackEntry
 import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
 
+private const val TRANSITION_DURATION_MS = 700
+
 internal object DefaultTransition : NavHostAnimatedDestinationStyle() {
 
     override val enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
         slideInHorizontally(
             initialOffsetX = { 1000 },
-            animationSpec = tween(700)
+            animationSpec = tween(TRANSITION_DURATION_MS)
         )
     }
 
     override val exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
         slideOutHorizontally(
             targetOffsetX = { -1000 },
-            animationSpec = tween(700)
+            animationSpec = tween(TRANSITION_DURATION_MS)
         )
     }
 
     override val popEnterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
         slideInHorizontally(
             initialOffsetX = { -1000 },
-            animationSpec = tween(700)
+            animationSpec = tween(TRANSITION_DURATION_MS)
         )
     }
 
     override val popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
         slideOutHorizontally(
             targetOffsetX = { 1000 },
-            animationSpec = tween(700)
+            animationSpec = tween(TRANSITION_DURATION_MS)
         )
     }
 }

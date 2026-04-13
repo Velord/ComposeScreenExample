@@ -1,4 +1,4 @@
-package com.velord.core.ui.utils.modifier
+package com.velord.core.ui.util.modifier
 
 import androidx.compose.animation.core.InfiniteRepeatableSpec
 import androidx.compose.animation.core.RepeatMode

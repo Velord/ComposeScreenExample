@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.velord.core.ui.compose.polygon
 
 import android.graphics.PointF

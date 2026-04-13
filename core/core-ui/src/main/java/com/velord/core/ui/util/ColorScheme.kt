@@ -1,4 +1,4 @@
-package com.velord.core.ui.utils
+package com.velord.core.ui.util
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color

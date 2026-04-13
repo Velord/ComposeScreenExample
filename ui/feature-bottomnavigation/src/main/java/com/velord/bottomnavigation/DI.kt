@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.velord.bottomnavigation
 
 import org.koin.core.annotation.ComponentScan

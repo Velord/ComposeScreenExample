@@ -22,6 +22,7 @@ private const val HEIGHT_KEY = "height"
 private const val FORCE_KEY = "force"
 
 private const val PICSUM_BASE_URL = "https://picsum.photos"
+private const val WORKAROUND_DELAY_DAYS = 365L
 
 class RefreshableImageWidgetWorker(
     private val context: Context,
@@ -75,7 +76,7 @@ class RefreshableImageWidgetWorker(
                 "$uniqueWorkName-workaround",
                 ExistingWorkPolicy.KEEP,
                 OneTimeWorkRequestBuilder<RefreshableImageWidgetWorker>().apply {
-                    setInitialDelay(365, TimeUnit.DAYS)
+                    setInitialDelay(WORKAROUND_DELAY_DAYS, TimeUnit.DAYS)
                 }.build(),
             )
         }
@@ -104,7 +105,7 @@ class RefreshableImageWidgetWorker(
                 parameters = parameters
             )
             Result.success()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             Result.failure()
         }
     }

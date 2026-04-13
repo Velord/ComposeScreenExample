@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.feature.movie.model.MoviePage
 
+private const val HEADER_ANIMATION_DURATION = 700
+
 @Composable
 internal fun MovieHeader(
     currentPage: Int,
@@ -81,7 +83,7 @@ private fun RowScope.HeaderButton(
 
     LaunchedEffect(isActive) {
         val colorTo = if (isActive) high else low
-        containerColor.animateTo(colorTo, animationSpec = tween(700))
+        containerColor.animateTo(colorTo, animationSpec = tween(HEADER_ANIMATION_DURATION))
     }
 
     Button(

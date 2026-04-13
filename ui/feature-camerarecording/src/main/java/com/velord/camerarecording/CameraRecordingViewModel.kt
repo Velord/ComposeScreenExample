@@ -27,10 +27,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-interface CameraRecordingNavigator {
-    fun goToSettingFromCameraRecording()
-}
-
 data class CameraRecordingUiState(
     // Permission
     val permissionCamera: AndroidPermissionState,

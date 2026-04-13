@@ -16,11 +16,7 @@ class GetAllMovieUC(
 
     operator fun invoke(): GetMovieResult = try {
         val merged = mergeMovieWithSort()
-        try {
-            GetMovieResult.Success(merged)
-        } catch (e: Exception) {
-            GetMovieResult.DBError(merged, e.message.orEmpty())
-        }
+        GetMovieResult.Success(merged)
     } catch (e: Exception) {
         GetMovieResult.MergeError(e.message.orEmpty())
     }

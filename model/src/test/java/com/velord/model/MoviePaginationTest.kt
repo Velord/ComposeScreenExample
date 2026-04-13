@@ -24,10 +24,11 @@ class MoviePaginationTest {
     }
 
     @Test
-    fun `shouldLoadMore returns true when at the exact preload threshold`() {val result = MoviePagination.shouldLoadMore(
-        lastVisibleIndex = 290,
-        totalItemCount = 300
-    )
+    fun `shouldLoadMore returns true when at the exact preload threshold`() {
+        val result = MoviePagination.shouldLoadMore(
+            lastVisibleIndex = 290,
+            totalItemCount = 300
+        )
         assertEquals(true, result)
     }
 

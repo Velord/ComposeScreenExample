@@ -120,7 +120,8 @@ class MovieTest {
         val invalidCalendar = Movie.toCalendar("invalid-date")
         // Check if the calendar isset to the default time (current time) for invalid input
         val currentCalendar = Calendar.getInstance()
-        assert(invalidCalendar.timeInMillis >= currentCalendar.timeInMillis) // Check if time is at or after current time
+        // Check if time is at or after current time
+        assert(invalidCalendar.timeInMillis >= currentCalendar.timeInMillis)
     }
 
     @Test

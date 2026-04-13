@@ -1,4 +1,4 @@
-package com.velord.core.ui.utils.modifier
+package com.velord.core.ui.util.modifier
 
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
@@ -12,13 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.velord.core.ui.compose.component.LinearGradientShaderCanvas
+
+private val DEFAULT_SHIMMER_CORNER_RADIUS = 8.dp
 
 fun Modifier.drawBehindLinearGradientShaderCanvas(
     animatedValue: Float,
     startColor: Color = Color.Transparent,
     centerColor: Color = Color.White,
     endColor: Color = Color.Transparent,
+    cornerRadius: Dp = DEFAULT_SHIMMER_CORNER_RADIUS,
     gradientColorAndPosition: List<Pair<Color, Float>> = listOf(
         startColor to 0f,
         centerColor to animatedValue,
@@ -31,6 +36,7 @@ fun Modifier.drawBehindLinearGradientShaderCanvas(
             startColor = startColor,
             centerColor = centerColor,
             endColor = endColor,
+            cornerRadius = cornerRadius,
             gradientColorAndPosition = gradientColorAndPosition
         )
     }
@@ -43,6 +49,7 @@ fun Modifier.shimmering(
     startColor: Color = Color.Transparent,
     centerColor: Color = Color.White,
     endColor: Color = Color.Transparent,
+    cornerRadius: Dp = DEFAULT_SHIMMER_CORNER_RADIUS,
     gradientColorAndPosition: @Composable (animatedValue: Float) -> List<Pair<Color, Float>> = {
         listOf(
             startColor to 0f,
@@ -80,6 +87,7 @@ fun Modifier.shimmering(
         startColor = startColor,
         centerColor = centerColor,
         endColor = endColor,
+        cornerRadius = cornerRadius,
         gradientColorAndPosition = orReverse
     )
 }

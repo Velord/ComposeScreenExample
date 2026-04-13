@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.velord.appstate
 
 import org.koin.core.annotation.ComponentScan

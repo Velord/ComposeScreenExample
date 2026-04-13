@@ -44,108 +44,124 @@ internal fun PervasiveArcFromBottomShapeDemo() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val isVisibleState = remember { mutableStateOf(false) }
-        Button(
-            onClick = { isVisibleState.value = !isVisibleState.value },
+        ToggleButton(isVisibleState)
+        AbortOnEdgeDemo(isVisibleState.value)
+        WithoutAbortingDemo(isVisibleState.value)
+        SmoothAnimationDemo(isVisibleState.value)
+    }
+}
+
+@Composable
+private fun ToggleButton(isVisibleState: MutableState<Boolean>) {
+    Button(
+        onClick = { isVisibleState.value = !isVisibleState.value },
+        modifier = Modifier
+            .padding(vertical = 16.dp)
+            .clip(RoundedCornerShape(8.dp)),
+        colors = ButtonDefaults.buttonColors(
+            contentColor = MaterialTheme.colorScheme.surfaceVariant,
+        )
+    ) {
+        val text = if (isVisibleState.value) "Hide" else "Show"
+        Text(text = text)
+    }
+}
+
+@Composable
+private fun AbortOnEdgeDemo(isVisible: Boolean) {
+    PervasiveArcFromBottomLayout(
+        isVisible = isVisible,
+        abortAnimationOnEdge = true
+    ) { currentShape, defaultShape ->
+        Box(
             modifier = Modifier
-                .padding(vertical = 16.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = MaterialTheme.colorScheme.surfaceVariant,
-            )
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
+                .height(100.dp)
+                .fillMaxWidth()
+                .clip(currentShape)
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.error,
+                    shape = defaultShape
+                )
+                .background(color = MaterialTheme.colorScheme.inverseSurface),
+            contentAlignment = Alignment.Center
         ) {
-            val text = if (isVisibleState.value) "Hide" else "Show"
-            Text(text = text)
+            Text(
+                text = "When edge is reached animation is aborted",
+                modifier = Modifier.padding(16.dp),
+                color = MaterialTheme.colorScheme.tertiary,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+            )
         }
+    }
+}
 
-        PervasiveArcFromBottomLayout(
-            isVisible = isVisibleState.value,
-            abortAnimationOnEdge = true
-        ) { currentShape, defaultShape ->
-            Box(
+@Composable
+private fun WithoutAbortingDemo(isVisible: Boolean) {
+    PervasiveArcFromBottomLayout(
+        isVisible = isVisible,
+        abortAnimationOnEdge = false,
+        shape = RoundedCornerShape(32.dp)
+    ) { currentShape, defaultShape ->
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
+                .defaultMinSize(100.dp)
+                .clip(defaultShape)
+                .clip(currentShape)
+                .background(color = MaterialTheme.colorScheme.tertiaryContainer),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Without aborting",
+                modifier = Modifier.padding(8.dp),
+                fontSize = 30.sp,
+                color = MaterialTheme.colorScheme.onTertiaryContainer
+            )
+        }
+    }
+}
+
+@Composable
+private fun SmoothAnimationDemo(isVisible: Boolean) {
+    PervasiveArcFromBottomLayout(
+        isVisible = isVisible,
+        abortAnimationOnEdge = false,
+        shape = CircleShape,
+        animationDuration = 2300
+    ) { currentShape, defaultShape ->
+        val textWidthState: MutableState<Dp?> = remember { mutableStateOf(null) }
+        val modifierWithCalculatedSize: State<Modifier> = remember(textWidthState.value) {
+            val mod = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
+            derivedStateOf {
+                val currentWidth = textWidthState.value
+                if (currentWidth != null) mod.size(currentWidth) else mod
+            }
+        }
+        Box(
+            modifier = modifierWithCalculatedSize.value
+                .clip(defaultShape)
+                .clip(currentShape)
+                .background(color = MaterialTheme.colorScheme.secondaryContainer),
+            contentAlignment = Alignment.Center
+        ) {
+            val density = LocalDensity.current
+            Text(
+                text = "Smooth animation",
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp)
-                    .height(100.dp)
-                    .fillMaxWidth()
-                    .clip(currentShape)
-                    .border(
-                        width = 2.dp,
-                        color = MaterialTheme.colorScheme.error,
-                        shape = defaultShape
-                    )
-                    .background(color = MaterialTheme.colorScheme.inverseSurface),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "When edge is reached animation is aborted",
-                    modifier = Modifier.padding(16.dp),
-                    color = MaterialTheme.colorScheme.tertiary,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center,
-                )
-            }
-        }
-
-        PervasiveArcFromBottomLayout(
-            isVisible = isVisibleState.value,
-            abortAnimationOnEdge = false,
-            shape = RoundedCornerShape(32.dp)
-        ) { currentShape, defaultShape ->
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp)
-                    .defaultMinSize(100.dp)
-                    .clip(defaultShape)
-                    .clip(currentShape)
-                    .background(color = MaterialTheme.colorScheme.tertiaryContainer),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Without aborting",
-                    modifier = Modifier.padding(8.dp),
-                    fontSize = 30.sp,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer
-                )
-            }
-        }
-
-        PervasiveArcFromBottomLayout(
-            isVisible = isVisibleState.value,
-            abortAnimationOnEdge = false,
-            shape = CircleShape,
-            animationDuration = 2300
-        ) { currentShape, defaultShape ->
-            val textWidthState: MutableState<Dp?> = remember { mutableStateOf(null) }
-            val modifierWithCalculatedSize: State<Modifier> = remember(textWidthState.value) {
-                val mod = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp)
-                derivedStateOf {
-                    val currentWidth = textWidthState.value
-                    if (currentWidth != null) mod.size(currentWidth) else mod
-                }
-            }
-            Box(
-                modifier = modifierWithCalculatedSize.value
-                    .clip(defaultShape)
-                    .clip(currentShape)
-                    .background(color = MaterialTheme.colorScheme.secondaryContainer),
-                contentAlignment = Alignment.Center
-            ) {
-                val density = LocalDensity.current
-                Text(
-                    text = "Smooth animation",
-                    modifier = Modifier
-                        .onGloballyPositioned {
-                            textWidthState.value =  with(density) { it.size.width.toDp() }
-                        }
-                        .padding(8.dp)
-                    ,
-                    fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
-                )
-            }
+                    .onGloballyPositioned {
+                        textWidthState.value = with(density) { it.size.width.toDp() }
+                    }
+                    .padding(8.dp),
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         }
     }
 }

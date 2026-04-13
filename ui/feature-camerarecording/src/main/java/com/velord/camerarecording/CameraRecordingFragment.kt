@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.velord.bottomnavigation.screen.jetpack.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.core.ui.dialog.checkRecordVideoPermission
-import com.velord.core.ui.utils.setContentWithTheme
+import com.velord.core.ui.util.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import com.velord.util.permission.AndroidPermissionState
 import kotlinx.coroutines.flow.filterNotNull

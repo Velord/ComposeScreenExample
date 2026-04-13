@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,26 +42,26 @@ import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
 import java.util.Calendar
 
+private const val SCROLL_DELAY_MS = 300L
+
 private fun LazyListState.getLastVisibleIndex(): Int {
     return layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
 }
 
+@Stable
+private class MoviePageState(
+    val listState: LazyListState,
+    val isAtBottom: Boolean,
+)
+
 @Composable
-internal fun MoviePage(
+private fun rememberMoviePageState(
     roster: List<Movie>,
     selectedSortOption: SortType?,
-    onLike: (Movie) -> Unit,
-    onClick: (Movie) -> Unit,
-    isPaginationAvailable: Boolean = false,
-    onEndList: (lastVisibleIndex: Int) -> Unit = {},
-) {
+    onEndList: (lastVisibleIndex: Int) -> Unit,
+): MoviePageState {
     val listState = rememberLazyListState()
-    val sortOptionState = remember {
-        mutableStateOf(selectedSortOption)
-    }
-    val rosterSizeState = remember {
-        mutableIntStateOf(roster.size)
-    }
+    val rosterSizeState = remember { mutableIntStateOf(roster.size) }
     val isAtBottomState = remember {
         derivedStateOf {
             Log.d("Pagination", "isAtBottomState: ${listState.getLastVisibleIndex()} ${rosterSizeState.intValue}")
@@ -70,6 +71,7 @@ internal fun MoviePage(
             )
         }
     }
+    val sortOptionState = remember { mutableStateOf(selectedSortOption) }
     val mostRecentDateState: MutableState<Long?> = remember {
         mutableStateOf(roster.findRecentTimeInMilli())
     }
@@ -89,7 +91,7 @@ internal fun MoviePage(
             .filterNotNull()
             .distinctUntilChanged()
             .collect {
-                delay(300)
+                delay(SCROLL_DELAY_MS)
                 listState.scrollToItem(0)
             }
     }
@@ -99,7 +101,7 @@ internal fun MoviePage(
             .distinctUntilChanged()
             .filter { it != null }
             .collect {
-                delay(300)
+                delay(SCROLL_DELAY_MS)
                 listState.scrollToItem(0)
             }
     }
@@ -112,13 +114,30 @@ internal fun MoviePage(
         mostRecentDateState.value = rosterRecentTime
     }
 
+    return MoviePageState(
+        listState = listState,
+        isAtBottom = isAtBottomState.value,
+    )
+}
+
+@Composable
+internal fun MoviePage(
+    roster: List<Movie>,
+    selectedSortOption: SortType?,
+    onLike: (Movie) -> Unit,
+    onClick: (Movie) -> Unit,
+    isPaginationAvailable: Boolean = false,
+    onEndList: (lastVisibleIndex: Int) -> Unit = {},
+) {
+    val state = rememberMoviePageState(roster, selectedSortOption, onEndList)
+
     PageContent(
         roster = roster,
         onLike = onLike,
         onClick = onClick,
         isPaginationAvailable = isPaginationAvailable,
-        pagerState = listState,
-        isAtBottomState = isAtBottomState.value
+        pagerState = state.listState,
+        isAtBottomState = state.isAtBottom,
     )
 }
 
@@ -155,12 +174,12 @@ private fun PageContent(
         }
     ) {
         LazyColumn(state = pagerState) {
-            MovieCardItems(
+            movieCardItems(
                 roster = roster,
                 onLike = onLike,
                 onClick = onClick,
             )
-            ProgressItem(
+            progressItem(
                 roster = roster,
                 isPaginationAvailable = isPaginationAvailable,
                 isAtBottomState = isAtBottomState
@@ -169,7 +188,7 @@ private fun PageContent(
     }
 }
 
-private fun LazyListScope.MovieCardItems(
+private fun LazyListScope.movieCardItems(
     roster: List<Movie>,
     onLike: (Movie) -> Unit,
     onClick: (Movie) -> Unit
@@ -193,7 +212,7 @@ private fun LazyListScope.MovieCardItems(
     }
 }
 
-private fun LazyListScope.ProgressItem(
+private fun LazyListScope.progressItem(
     roster: List<Movie>,
     isPaginationAvailable: Boolean,
     isAtBottomState: Boolean
@@ -253,7 +272,8 @@ private fun MoviePagerPreview() {
             Movie(
                 id = 4,
                 title = "The Godfather",
-                description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+                description = "The aging patriarch of an organized crime dynasty " +
+                    "transfers control of his clandestine empire to his reluctant son.",
                 isLiked = false,
                 date = Calendar.getInstance(),
                 rating = 7.66f,
@@ -271,7 +291,8 @@ private fun MoviePagerPreview() {
             Movie(
                 id = 6,
                 title = "The Matrix",
-                description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+                description = "A computer hacker learns from mysterious rebels " +
+                    "about the true nature of his reality and his role in the war against its controllers.",
                 isLiked = false,
                 date = Calendar.getInstance(),
                 rating = 7.66f,

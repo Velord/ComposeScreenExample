@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.velord.core.ui.compose.component
 
 import androidx.compose.animation.core.LinearEasing

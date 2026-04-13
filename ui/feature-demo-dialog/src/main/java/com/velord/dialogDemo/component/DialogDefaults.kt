@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.velord.core.ui.annotation.ConstructorLikeFunction
 
 object DialogDefaults {
     val animations: DialogAnimations = DialogAnimations.Default
@@ -149,6 +150,7 @@ data class DialogActions(
 ) {
     companion object {
 
+        @ConstructorLikeFunction
         fun OneButton(
             onDismissRequest: () -> Unit,
         ): DialogActions = DialogActions(
@@ -157,6 +159,7 @@ data class DialogActions(
             onNegativeClick = null
         )
 
+        @ConstructorLikeFunction
         fun TwoButton(
             onDismissRequest: () -> Unit,
         ): DialogActions = DialogActions(

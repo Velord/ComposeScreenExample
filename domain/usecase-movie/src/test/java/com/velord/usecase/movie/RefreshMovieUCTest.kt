@@ -35,14 +35,15 @@ class RefreshMovieUCTest {
     }
 
     @Test
-    fun `invoke should return LoadPageFailed with empty message when refresh throws an exception with empty message`() = runTest {
-        val dataSource = mockk<MovieDS> {
-            coEvery { refresh() } throws Exception("")
+    fun `invoke should return LoadPageFailed with empty message when refresh throws an exception with empty message`() =
+        runTest {
+            val dataSource = mockk<MovieDS> {
+                coEvery { refresh() } throws Exception("")
+            }
+            val refreshMovieUC = RefreshMovieUC(dataSource)
+            val result = refreshMovieUC()
+            assertEquals(MovieLoadNewPageResult.LoadPageFailed(""), result)
         }
-        val refreshMovieUC = RefreshMovieUC(dataSource)
-        val result = refreshMovieUC()
-        assertEquals(MovieLoadNewPageResult.LoadPageFailed(""), result)
-    }
 
     @Test
     fun `invoke should return Success when refresh returns zero`() = runTest {

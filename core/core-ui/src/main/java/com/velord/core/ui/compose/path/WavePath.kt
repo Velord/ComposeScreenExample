@@ -7,8 +7,8 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
-import com.velord.core.ui.utils.modifier.WaveSide
-import com.velord.core.ui.utils.modifier.WaveSideApplier
+import com.velord.core.ui.util.modifier.WaveSide
+import com.velord.core.ui.util.modifier.WaveSideApplier
 import kotlin.math.ceil
 
 fun wavePath(

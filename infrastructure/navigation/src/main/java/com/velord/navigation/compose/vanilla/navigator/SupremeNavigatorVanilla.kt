@@ -172,6 +172,7 @@ internal fun logTabClick(controller: NavHostController, tab: TabState) {
         """.trimIndent())
 }
 
+@Suppress("MagicNumber")
 @SuppressLint("RestrictedApi")
 @Composable
 internal fun LogNavigationEvents(navController: NavHostController, label: String) {

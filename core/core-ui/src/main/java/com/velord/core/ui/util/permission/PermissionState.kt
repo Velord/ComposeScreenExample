@@ -1,4 +1,4 @@
-package com.velord.core.ui.utils.permission
+package com.velord.core.ui.util.permission
 
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus

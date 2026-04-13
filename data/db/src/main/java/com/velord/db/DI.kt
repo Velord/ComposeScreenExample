@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.velord.db
 
 import android.content.Context

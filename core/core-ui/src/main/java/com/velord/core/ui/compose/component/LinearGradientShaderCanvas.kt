@@ -1,4 +1,4 @@
-@file:Suppress("FunctionName", "FunctionName")
+@file:Suppress("FunctionName")
 
 package com.velord.core.ui.compose.component
 
@@ -11,13 +11,18 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.core.graphics.withSave
+
+private val DEFAULT_CORNER_RADIUS = 8.dp
 
 fun DrawScope.LinearGradientShaderCanvas(
     animatedValue: Float,
     startColor: Color = Color.Transparent,
     centerColor: Color = Color.White,
     endColor: Color = Color.Transparent,
+    cornerRadius: Dp = DEFAULT_CORNER_RADIUS,
     gradientColorAndPosition: List<Pair<Color, Float>> = listOf(
         startColor to 0f,
         centerColor to animatedValue,
@@ -27,6 +32,7 @@ fun DrawScope.LinearGradientShaderCanvas(
     drawIntoCanvas { canvas ->
         val width = size.width
         val height = size.height
+        val cornerRadiusPx = cornerRadius.toPx()
         val shader = LinearGradientShader(
             from = Offset(0f, 0f),
             to = Offset(width, height),
@@ -39,7 +45,7 @@ fun DrawScope.LinearGradientShaderCanvas(
 
         canvas.nativeCanvas.withSave {
             val rect = RectF(0f, 0f, width, height)
-            drawRoundRect(rect, 8f, 8f, paint)
+            drawRoundRect(rect, cornerRadiusPx, cornerRadiusPx, paint)
         }
     }
 }

@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.core.resource.R
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.core.ui.utils.ObserveSharedFlow
+import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.feature.movie.viewModel.AllMovieUiAction
 import com.velord.feature.movie.viewModel.AllMovieViewModel
 import com.velord.feature.movie.viewModel.FavoriteMovieUiAction
@@ -216,7 +216,8 @@ private fun MoviePagerPreview() {
         Movie(
             id = 4,
             title = "The Godfather",
-            description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+            description = "The aging patriarch of an organized crime dynasty " +
+                "transfers control of his clandestine empire to his reluctant son.",
             isLiked = false,
             date = Calendar.getInstance(),
             rating = 7.66f,
@@ -234,7 +235,8 @@ private fun MoviePagerPreview() {
         Movie(
             id = 6,
             title = "The Matrix",
-            description = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+            description = "A computer hacker learns from mysterious rebels about the true nature of his reality and" +
+                " his role in the war against its controllers.",
             isLiked = false,
             date = Calendar.getInstance(),
             rating = 7.66f,

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.velord.core.ui.compose.path.ticketPath
 import com.velord.core.ui.compose.shape.TicketShape
 
+@Suppress("MagicNumber")
 @Composable
 internal fun TicketShapeDemo() {
     Title(text = "Ticket shape demo")
@@ -85,6 +86,7 @@ internal fun TicketShapeDemo() {
     }
 }
 
+@Suppress("MagicNumber")
 @Composable
 private fun Ticket(
     innerStrokeColor: Color,

@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.velord.backend.ktor
 
 import com.velord.backend.model.BaseUrl

@@ -1,4 +1,4 @@
-package com.velord.core.ui.utils
+package com.velord.core.ui.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

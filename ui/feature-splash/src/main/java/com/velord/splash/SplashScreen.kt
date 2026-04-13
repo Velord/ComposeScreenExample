@@ -41,11 +41,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.core.resource.R
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.core.ui.utils.LocalTheme
+import com.velord.core.ui.util.LocalTheme
 import com.velord.model.setting.SpecialTheme
 
 private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 500
 private const val ROTATE_AFTER = ANIMATION_TRANSITION_TO_CURRENT_THEME + 1000
+private const val ICON_SCALE = 2.65f
+private const val ROTATION_ANIMATION_DURATION = 500
 /*
 Splash screen is the most refined copy representation of the OS splash screen.
 When app renders first frame, it will show this screen.
@@ -139,7 +141,7 @@ private fun BoxScope.CenterIcon() {
         initialValue = 0F,
         targetValue = 360F,
         animationSpec = infiniteRepeatable(
-            animation = tween(500, easing = LinearEasing),
+            animation = tween(ROTATION_ANIMATION_DURATION, easing = LinearEasing),
             initialStartOffset = StartOffset(ROTATE_AFTER)
         ),
         label = "rotation angle"
@@ -160,7 +162,7 @@ private fun BoxScope.CenterIcon() {
                     contentDescription = "Logo",
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .scale(2.65f)
+                        .scale(ICON_SCALE)
                         .rotate(angleState.value)
                 )
             }
@@ -174,7 +176,7 @@ private fun BoxScope.CenterIcon() {
                     contentDescription = "Logo",
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .scale(2.65f)
+                        .scale(ICON_SCALE)
                         .rotate(angleState.value)
                 )
             }
@@ -229,7 +231,9 @@ private fun BoxScope.IconAnimated(
     AnimatedVisibility(
         visible = isVisible,
         modifier = Modifier.align(Alignment.Center),
-        enter = fadeIn(animationSpec = tween(durationMillis = 50, delayMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME / 4)),
+        enter = fadeIn(
+            animationSpec = tween(durationMillis = 50, delayMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME / 4)
+        ),
         exit = fadeOut(animationSpec = tween(durationMillis = ANIMATION_TRANSITION_TO_CURRENT_THEME))
     ) {
         content()

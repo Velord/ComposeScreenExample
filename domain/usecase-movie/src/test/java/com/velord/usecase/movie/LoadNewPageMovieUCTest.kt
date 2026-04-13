@@ -49,30 +49,34 @@ class LoadNewPageMovieUCTest {
     }
 
     @Test
-    fun `invoke should return LoadPageFailed with empty message when dataSource throws an exception with empty message`() = runTest {
-        val dataSource = mockk<MovieDS> {
-            coEvery { loadNewPage() } throws Exception("")
+    @Suppress("MaxLineLength")
+    fun `invoke should return LoadPageFailed with empty message when dataSource throws an exception with empty message`() =
+        runTest {
+            val dataSource = mockk<MovieDS> {
+                coEvery { loadNewPage() } throws Exception("")
+            }
+
+            val loadNewPageMovieUC = LoadNewPageMovieUC(dataSource)
+            val result = loadNewPageMovieUC()
+
+            assertEquals(MovieLoadNewPageResult.LoadPageFailed(""), result)
         }
-
-        val loadNewPageMovieUC = LoadNewPageMovieUC(dataSource)
-        val result = loadNewPageMovieUC()
-
-        assertEquals(MovieLoadNewPageResult.LoadPageFailed(""), result)
-    }
 
     @Test
-    fun `invoke should return LoadPageFailed when dataSource throws an exception with a very long message`() = runTest {
-        val veryLongErrorMessage = "This is a very long error message that exceeds any reasonable length and should be truncated or handled appropriately bythe UI to avoid display issues."
-        val dataSource = mockk<MovieDS> {
-            coEvery { loadNewPage() } throws Exception(veryLongErrorMessage)
+    fun `invoke should return LoadPageFailed when dataSource throws an exception with a very long message`() =
+        runTest {
+            val veryLongErrorMessage = "This is a very long error message that exceeds any reasonable length" +
+                " and should be truncated or handled appropriately by the UI to avoid display issues."
+            val dataSource = mockk<MovieDS> {
+                coEvery { loadNewPage() } throws Exception(veryLongErrorMessage)
+            }
+
+            val loadNewPageMovieUC = LoadNewPageMovieUC(dataSource)
+            val result = loadNewPageMovieUC()
+
+            // Assert that the full error message is still captured in the result
+            assertEquals(MovieLoadNewPageResult.LoadPageFailed(veryLongErrorMessage), result)
         }
-
-        val loadNewPageMovieUC = LoadNewPageMovieUC(dataSource)
-        val result = loadNewPageMovieUC()
-
-        assertEquals(MovieLoadNewPageResult.LoadPageFailed(veryLongErrorMessage), result)
-        // Assert that the full error message is still captured in the result
-    }
 
     @Test
     fun `invoke should return Exausted when dataSource loads zero new items`() = runTest{
@@ -83,7 +87,8 @@ class LoadNewPageMovieUCTest {
         val loadNewPageMovieUC = LoadNewPageMovieUC(dataSource)
         val result = loadNewPageMovieUC()
 
-        assertEquals(MovieLoadNewPageResult.Exausted, result) // Expect Exausted as no new items were loaded
+        // Expect Exausted as no new items were loaded
+        assertEquals(MovieLoadNewPageResult.Exausted, result)
     }
 
     @Test
@@ -121,6 +126,7 @@ class LoadNewPageMovieUCTest {
         val loadNewPageMovieUC = LoadNewPageMovieUC(dataSource)
         val result = loadNewPageMovieUC()
 
-        assertEquals(MovieLoadNewPageResult.Exausted, result) // Expect Exausted as a negative count indicates no new items
+        // Expect Exausted as a negative count indicates no new items
+        assertEquals(MovieLoadNewPageResult.Exausted, result)
     }
 }
