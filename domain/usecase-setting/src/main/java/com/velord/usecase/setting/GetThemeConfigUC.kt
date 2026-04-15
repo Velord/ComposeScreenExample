@@ -3,6 +3,4 @@ package com.velord.usecase.setting
 import com.velord.model.setting.ThemeConfig
 import kotlinx.coroutines.flow.Flow
 
-class GetThemeConfigUC(private val dataSource: GetThemeConfigDS) {
-    suspend operator fun invoke(): Flow<ThemeConfig> = dataSource.getFlow()
-}
+fun interface GetThemeConfigUC : suspend () -> Flow<ThemeConfig>

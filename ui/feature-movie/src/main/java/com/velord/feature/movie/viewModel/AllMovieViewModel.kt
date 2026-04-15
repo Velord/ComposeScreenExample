@@ -7,9 +7,7 @@ import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.LoadNewPageMovieUC
 import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
-import com.velord.usecase.movie.result.GetMovieResult
-import com.velord.usecase.movie.result.MovieLoadNewPageResult
-import com.velord.usecase.movie.result.UpdateMovieResult
+import com.velord.usecase.movie.model.MovieLoadNewPageResult
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +17,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 data class AllMovieUiState(
     val roster: List<Movie>,
@@ -37,14 +36,14 @@ data class AllMovieUiState(
         )
     }
 
-    val isRefreshAvailable: Boolean get() = isRefreshing.not() && paginationStatus.isExausted.not()
+    val isRefreshAvailable: Boolean get() = isRefreshing.not() && paginationStatus.isExhausted.not()
     val isLoadPageAvailable: Boolean get() = isLoading.not() && isRefreshAvailable
-    val isPaginationAvailable: Boolean get() = paginationStatus.isExausted.not()
+    val isPaginationAvailable: Boolean get() = paginationStatus.isExhausted.not()
 }
 
 sealed class PaginationStatus  {
 
-    val isExausted: Boolean get() = this is Exausted
+    val isExhausted: Boolean get() = this is Exausted
 
     data object Init: PaginationStatus()
     data class Trigger(val index: Int): PaginationStatus()
@@ -83,12 +82,12 @@ class AllMovieViewModel(
 
     private fun onLikeClick(movie: Movie) {
         launch {
-            val result = updateMovieLikeUC(movie)
-            val newError = when(result) {
-                is UpdateMovieResult.Success -> null
-                is UpdateMovieResult.DbError -> result.message
+            try {
+                updateMovieLikeUC(movie)
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                uiStateFlow.value = uiStateFlow.value.copy(error = e.message)
             }
-            uiStateFlow.value = uiStateFlow.value.copy(error = newError)
         }
     }
 
@@ -128,20 +127,13 @@ class AllMovieViewModel(
     @OptIn(FlowPreview::class)
     private fun observe() {
         launch {
-            val result = getAllMovieUC()
-            val newError = when(result) {
-                is GetMovieResult.Success -> null
-                is GetMovieResult.DBError -> result.message
-                is GetMovieResult.MergeError -> result.message
-            }
-            uiStateFlow.value = uiStateFlow.value.copy(error = newError)
-
-            when(result) {
-                is GetMovieResult.Success -> result.flow
-                is GetMovieResult.DBError -> result.flow
-                is GetMovieResult.MergeError -> null
-            }?.collect { roster ->
-                uiStateFlow.value = uiStateFlow.value.copy(roster = roster)
+            try {
+                getAllMovieUC().flow.collect { roster ->
+                    uiStateFlow.value = uiStateFlow.value.copy(roster = roster)
+                }
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                uiStateFlow.value = uiStateFlow.value.copy(error = e.message)
             }
         }
 
@@ -187,7 +179,7 @@ class AllMovieViewModel(
                     )
                 }
             }
-            is MovieLoadNewPageResult.Exausted -> {
+            is MovieLoadNewPageResult.Exhausted -> {
                 uiStateFlow.update {
                     it.copy(
                         error = null,

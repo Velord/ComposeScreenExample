@@ -1,14 +1,13 @@
 package com.velord.gateway.movie
 
 import android.util.Log
-import com.velord.backend.ktor.MovieNetworkService
+import com.velord.backend.ktor.MovieNetworkDataSource
 import com.velord.backend.model.MoviePageRequest
-import com.velord.db.movie.MovieDbService
+import com.velord.db.movie.MovieDbDataSource
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.MoviePagination
 import com.velord.model.movie.MovieRosterSize
-import com.velord.usecase.movie.dataSource.LoadNewPageMovieDS
-import com.velord.usecase.movie.dataSource.RefreshMovieDS
+import com.velord.usecase.movie.model.MovieLoadNewPageResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,11 +23,11 @@ private const val TAG = "MoviePaginationGateway"
 // If Page is not full load form network
 @Single
 class MoviePaginationGateway(
-    private val http: MovieNetworkService,
-    private val db: MovieDbService,
+    private val http: MovieNetworkDataSource,
+    private val db: MovieDbDataSource,
     private val movieGateway: MovieGateway,
     private val movieSortGateway: MovieSortGateway
-) : LoadNewPageMovieDS, RefreshMovieDS {
+) {
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
         Log.d(TAG, "Error: $throwable")
@@ -46,7 +45,7 @@ class MoviePaginationGateway(
         }
     }
 
-    override suspend fun load(): MovieRosterSize {
+    suspend fun load(): MovieLoadNewPageResult = try {
         Log.d(TAG, "loadNewPage: $currentPage")
         val fromDb = loadFromDb(currentPage)
         val isPageFull = fromDb.value == MoviePagination.PAGE_COUNT
@@ -57,15 +56,25 @@ class MoviePaginationGateway(
             loadFromNetwork(currentPage)
         }
 
-        return newSize
+        val countOfNewItems = newSize.value
+        if (countOfNewItems < MoviePagination.PAGE_COUNT) {
+            MovieLoadNewPageResult.Exhausted
+        } else {
+            MovieLoadNewPageResult.Success
+        }
+    } catch (e: Exception) {
+        MovieLoadNewPageResult.LoadPageFailed(e.message.orEmpty())
     }
 
-    override suspend fun refresh(): MovieRosterSize {
+    suspend fun refresh(): MovieLoadNewPageResult = try {
         movieGateway.clearInMemory()
         db.clear()
 
         currentPage = INITIAL_PAGE
-        return load()
+        load()
+        MovieLoadNewPageResult.Success
+    } catch (e: Exception) {
+        MovieLoadNewPageResult.LoadPageFailed(e.message.orEmpty())
     }
 
     private suspend fun loadFromNetwork(page: Int): MovieRosterSize {

@@ -93,7 +93,7 @@ internal fun ColumnScope.MoviePager(
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
                 onLike = { allMovieViewModel.onAction(AllMovieUiAction.OnLikeClick(it)) },
                 onClick = { allMovieViewModel.onAction(AllMovieUiAction.OnClick(it)) },
-                isDataExausted = allMovieUiState.value.paginationStatus.isExausted,
+                isDataExausted = allMovieUiState.value.paginationStatus.isExhausted,
                 isPaginationAvailable = allMovieUiState.value.isPaginationAvailable,
                 onEndList = { allMovieViewModel.onAction(AllMovieUiAction.OnEndList(it)) },
                 isRefreshing = allMovieUiState.value.isRefreshing,

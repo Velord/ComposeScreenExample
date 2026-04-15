@@ -81,7 +81,7 @@ class MovieViewModel(
 
     private fun observe() {
         launch {
-            getMovieSortOptionUC().collect { newValue ->
+            getMovieSortOptionUC().flow.collect { newValue ->
                 uiStateFlow.update { state ->
                     state.copy(sortOptionRoster = newValue.map { MovieSortOptionUI.fromDomain(it) })
                 }

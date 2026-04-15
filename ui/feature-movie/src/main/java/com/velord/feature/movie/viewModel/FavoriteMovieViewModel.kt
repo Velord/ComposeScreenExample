@@ -4,11 +4,10 @@ import com.velord.model.movie.Movie
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetFavoriteMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
-import com.velord.usecase.movie.result.GetFavoriteMovieResult
-import com.velord.usecase.movie.result.UpdateMovieResult
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 data class FavoriteMovieUiState(
     val roster: List<Movie>,
@@ -46,30 +45,24 @@ class FavoriteMovieViewModel(
 
     private fun onLikeClick(movie: Movie) {
         launch {
-            val result = updateMovieLikeUC(movie)
-            val newError = when(result) {
-                is UpdateMovieResult.Success -> null
-                is UpdateMovieResult.DbError -> result.message
+            try {
+                updateMovieLikeUC(movie)
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                uiStateFlow.value = uiStateFlow.value.copy(error = e.message)
             }
-            uiStateFlow.value = uiStateFlow.value.copy(error = newError)
         }
     }
 
     private fun observe() {
         launch {
-            val result = getFavoriteMovieUC()
-            val newError = when(result) {
-                is GetFavoriteMovieResult.Success -> null
-                is GetFavoriteMovieResult.MergeError -> result.message
-            }
-
-            uiStateFlow.value = uiStateFlow.value.copy(error = newError)
-
-            when(result) {
-                is GetFavoriteMovieResult.Success -> result.flow
-                is GetFavoriteMovieResult.MergeError -> null
-            }?.collect { roster ->
-                uiStateFlow.value = uiStateFlow.value.copy(roster = roster)
+            try {
+                getFavoriteMovieUC().flow.collect { roster ->
+                    uiStateFlow.value = uiStateFlow.value.copy(roster = roster)
+                }
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                uiStateFlow.value = uiStateFlow.value.copy(error = e.message)
             }
         }
 
