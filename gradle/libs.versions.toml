@@ -4,7 +4,7 @@ minApi = "26"
 targetApi = "36"
 # Build
 buildTools = "30.0.3"
-gradle = "9.0.1"
+gradle = "9.1.1"
 jvmTarget = "24"
 jetifier = "1.0.0-beta10"
 # DI
