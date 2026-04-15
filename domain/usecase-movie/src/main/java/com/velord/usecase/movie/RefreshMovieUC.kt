@@ -3,9 +3,13 @@ package com.velord.usecase.movie
 import com.velord.usecase.movie.dataSource.RefreshMovieDS
 import com.velord.usecase.movie.result.MovieLoadNewPageResult
 
-class RefreshMovieUC(private val dataSource: RefreshMovieDS) {
+fun interface RefreshMovieUC : suspend () -> MovieLoadNewPageResult
 
-    suspend operator fun invoke() = try {
+class RefreshMovieUCImpl(
+    private val dataSource: RefreshMovieDS
+) : RefreshMovieUC {
+
+    override suspend operator fun invoke() = try {
         dataSource.refresh()
         MovieLoadNewPageResult.Success
     } catch (e: Exception) {

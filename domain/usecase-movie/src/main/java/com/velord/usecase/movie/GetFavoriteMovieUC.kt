@@ -4,21 +4,18 @@ import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieFavoriteDS
 import com.velord.usecase.movie.dataSource.MovieSortDS
-import com.velord.usecase.movie.result.GetFavoriteMovieResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 
-class GetFavoriteMovieUC(
+fun interface GetFavoriteMovieUC : () -> Flow<List<Movie>>
+
+class GetFavoriteMovieUCImpl(
     private val movieFavoriteDS: MovieFavoriteDS,
     private val movieSortDS: MovieSortDS
-) {
-    operator fun invoke(): GetFavoriteMovieResult = try {
-        val merged = mergeMovieWithSort()
-        GetFavoriteMovieResult.Success(merged)
-    } catch (e: Exception) {
-        GetFavoriteMovieResult.MergeError(e.message.orEmpty())
-    }
+) : GetFavoriteMovieUC {
+
+    override operator fun invoke(): Flow<List<Movie>> = mergeMovieWithSort()
 
     private fun mergeMovieWithSort(): Flow<List<Movie>> {
         val favorite = movieFavoriteDS.getFlow()

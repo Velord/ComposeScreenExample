@@ -4,13 +4,17 @@ import com.velord.model.movie.MoviePagination
 import com.velord.usecase.movie.dataSource.LoadNewPageMovieDS
 import com.velord.usecase.movie.result.MovieLoadNewPageResult
 
-class LoadNewPageMovieUC(private val dataSource: LoadNewPageMovieDS) {
+fun interface LoadNewPageMovieUC : suspend () -> MovieLoadNewPageResult
 
-    suspend operator fun invoke(): MovieLoadNewPageResult = try {
+class LoadNewPageMovieUCImpl(
+    private val dataSource: LoadNewPageMovieDS
+) : LoadNewPageMovieUC {
+
+    override suspend operator fun invoke(): MovieLoadNewPageResult = try {
         val countOfNewItems = dataSource.load().value
 
         if (countOfNewItems < MoviePagination.PAGE_COUNT) {
-            MovieLoadNewPageResult.Exausted
+            MovieLoadNewPageResult.Exhausted
         } else {
             MovieLoadNewPageResult.Success
         }

@@ -2,9 +2,13 @@ package com.velord.usecase.setting
 
 import com.velord.model.setting.ThemeConfig
 
-class SwitchDynamicColorThemeConfigUC(private val dataSource: GetThemeConfigDS) {
+fun interface SwitchDynamicColorThemeConfigUC : suspend (ThemeConfig) -> Unit
 
-    suspend operator fun invoke(config: ThemeConfig) {
+class SwitchDynamicColorThemeConfigUCImpl(
+    private val dataSource: GetThemeConfigDS
+) : SwitchDynamicColorThemeConfigUC {
+
+    override suspend operator fun invoke(config: ThemeConfig) {
         val newConfig = config.copy(useDynamicColor = config.useDynamicColor.not())
         dataSource.save(newConfig)
     }

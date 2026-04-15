@@ -4,22 +4,18 @@ import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieDS
 import com.velord.usecase.movie.dataSource.MovieSortDS
-import com.velord.usecase.movie.result.GetMovieResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 
-class GetAllMovieUC(
+fun interface GetAllMovieUC: () -> Flow<List<Movie>>
+
+class GetAllMovieUCImpl(
     private val movieDS: MovieDS,
     private val movieSortDS: MovieSortDS
-) {
+) : GetAllMovieUC {
 
-    operator fun invoke(): GetMovieResult = try {
-        val merged = mergeMovieWithSort()
-        GetMovieResult.Success(merged)
-    } catch (e: Exception) {
-        GetMovieResult.MergeError(e.message.orEmpty())
-    }
+    override operator fun invoke(): Flow<List<Movie>> = mergeMovieWithSort()
 
     private fun mergeMovieWithSort(): Flow<List<Movie>> {
         val all = movieDS.getFlow()

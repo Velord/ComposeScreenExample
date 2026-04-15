@@ -21,7 +21,7 @@ class UpdateMovieLikeUCTest {
     @Test
     fun `invoke should toggle isLiked and update dataSource`() = runTest {
         val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
-        val useCase = UpdateMovieLikeUC(dataSource)
+        val useCase = UpdateMovieLikeUCImpl(dataSource)
         val result = useCase(movie)
 
         assertEquals(UpdateMovieResult.Success, result)
@@ -31,7 +31,7 @@ class UpdateMovieLikeUCTest {
     @Test
     fun `invoke should handle toggling isLiked from true to false`() = runTest {
         val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
-        val useCase = UpdateMovieLikeUC(dataSource)
+        val useCase = UpdateMovieLikeUCImpl(dataSource)
         val result = useCase(movie.copy(isLiked = true))
 
         assertEquals(UpdateMovieResult.Success, result)
@@ -44,7 +44,7 @@ class UpdateMovieLikeUCTest {
         val dataSource = mockk<MovieFavoriteDS> {
             coEvery { update(any()) } throws Exception(errorMessage)
         }
-        val useCase = UpdateMovieLikeUC(dataSource)
+        val useCase = UpdateMovieLikeUCImpl(dataSource)
         val result = useCase(movie)
 
         assertEquals(UpdateMovieResult.DbError(errorMessage), result)
@@ -55,7 +55,7 @@ class UpdateMovieLikeUCTest {
         val dataSource = mockk<MovieFavoriteDS> {
             coEvery { update(any()) } throws Exception()
         }
-        val useCase = UpdateMovieLikeUC(dataSource)
+        val useCase = UpdateMovieLikeUCImpl(dataSource)
         val result = useCase(movie)
 
         assertEquals(UpdateMovieResult.DbError(""), result)
@@ -64,7 +64,7 @@ class UpdateMovieLikeUCTest {
     @Test
     fun `invoke should update dataSource with the correct movie ID`() = runTest {
         val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
-        val useCase = UpdateMovieLikeUC(dataSource)
+        val useCase = UpdateMovieLikeUCImpl(dataSource)
         useCase(movie)
 
         coVerify { dataSource.update(movie.copy(isLiked = true)) }
@@ -74,7 +74,7 @@ class UpdateMovieLikeUCTest {
     @Test
     fun `invoke should handle consecutive toggles on the same movie`() = runTest {
         val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
-        val useCase = UpdateMovieLikeUC(dataSource)
+        val useCase = UpdateMovieLikeUCImpl(dataSource)
 
         useCase(movie) // Toggle once
         val result = useCase(movie.copy(isLiked = true))// Toggle again, starting with isLiked = true
@@ -87,7 +87,7 @@ class UpdateMovieLikeUCTest {
     @Test
     fun `invoke should handle movies with same ID but different other properties`() = runTest {
         val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
-        val useCase = UpdateMovieLikeUC(dataSource)
+        val useCase = UpdateMovieLikeUCImpl(dataSource)
         val movie2 = movie.copy(title = "Different Title", rating = 3.0f) // Same ID, different properties
 
         useCase(movie)

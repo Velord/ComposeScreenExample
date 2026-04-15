@@ -14,7 +14,7 @@ class SetMovieSortOptionUCTest {
     fun `invoke should update movieSortDS with the selected option`() = runTest {
         val movieSortDS = mockk<MovieSortDS>(relaxed = true)
         val newOption = MovieSortOption(SortType.DateAscending, false)
-        val setMovieSortOptionUC = SetMovieSortOptionUC(movieSortDS)
+        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
 
         setMovieSortOptionUC(newOption)
 
@@ -25,7 +25,7 @@ class SetMovieSortOptionUCTest {
     fun `invoke should update movieSortDS with already selected option`() = runTest {
         val movieSortDS = mockk<MovieSortDS>(relaxed = true)
         val newOption = MovieSortOption(SortType.DateDescending, true)
-        val setMovieSortOptionUC = SetMovieSortOptionUC(movieSortDS)
+        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
 
         setMovieSortOptionUC(newOption)
 
@@ -37,7 +37,7 @@ class SetMovieSortOptionUCTest {
         val movieSortDS = mockk<MovieSortDS>(relaxed = true)
         val option1 = MovieSortOption(SortType.DateAscending, false)
         val option2 = MovieSortOption(SortType.DateDescending, false)
-        val setMovieSortOptionUC = SetMovieSortOptionUC(movieSortDS)
+        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
 
         setMovieSortOptionUC(option1)
         setMovieSortOptionUC(option2)
@@ -52,7 +52,7 @@ class SetMovieSortOptionUCTest {
     fun `invoke should update movieSortDS with the same option multiple times`() = runTest {
         val movieSortDS = mockk<MovieSortDS>(relaxed = true)
         val option = MovieSortOption(SortType.DateAscending, false)
-        val setMovieSortOptionUC = SetMovieSortOptionUC(movieSortDS)
+        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
 
         repeat(3) { setMovieSortOptionUC(option) }
 
@@ -62,7 +62,7 @@ class SetMovieSortOptionUCTest {
     @Test
     fun `invoke should update movieSortDS with Default option`() = runTest {
         val movieSortDS = mockk<MovieSortDS>(relaxed = true)
-        val setMovieSortOptionUC = SetMovieSortOptionUC(movieSortDS)
+        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
         setMovieSortOptionUC(MovieSortOption.Default)
 
         coVerify { movieSortDS.update(MovieSortOption.Default.copy(isSelected = true)) }
@@ -72,7 +72,7 @@ class SetMovieSortOptionUCTest {
     fun `invoke should only update movieSortDS once per invocation`() = runTest {
         val movieSortDS = mockk<MovieSortDS>(relaxed = true)
         val option = MovieSortOption(SortType.DateDescending, false)
-        val setMovieSortOptionUC = SetMovieSortOptionUC(movieSortDS)
+        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
 
         setMovieSortOptionUC(option)
 

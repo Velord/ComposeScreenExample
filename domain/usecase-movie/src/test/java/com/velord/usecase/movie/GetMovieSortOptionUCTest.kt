@@ -29,7 +29,7 @@ class GetMovieSortOptionUCTest {
             every { getFlow() } returns flow { emit(expectedOptions) }
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUC(movieSortDS)
+        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
         val actualOptions = resultFlow.first()
@@ -43,7 +43,7 @@ class GetMovieSortOptionUCTest {
             every { getFlow() } returns emptyFlow()
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUC(movieSortDS)
+        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
         val actualOptions = resultFlow.firstOrNull()
@@ -64,7 +64,7 @@ class GetMovieSortOptionUCTest {
             }
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUC(movieSortDS)
+        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
         val actualOptions1 = resultFlow.first()
@@ -91,7 +91,7 @@ class GetMovieSortOptionUCTest {
             }
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUC(movieSortDS)
+        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
         val actualOptions1 = resultFlow.first()
@@ -115,7 +115,7 @@ class GetMovieSortOptionUCTest {
             }
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUC(movieSortDS)
+        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
         val actualOptions = resultFlow.first()
@@ -138,7 +138,7 @@ class GetMovieSortOptionUCTest {
             every { getFlow() } returns flow { emit(expectedOptions) }
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUC(movieSortDS)
+        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
         val actualOptions = resultFlow.first()
@@ -156,7 +156,7 @@ class GetMovieSortOptionUCTest {
             }
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUC(movieSortDS)
+        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
         val emissionsCount = resultFlow.count()
@@ -178,7 +178,7 @@ class GetMovieSortOptionUCTest {
             }
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUC(movieSortDS)
+        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
         val actualOptions = resultFlow.drop(1).first() // Collect the non-empty emission

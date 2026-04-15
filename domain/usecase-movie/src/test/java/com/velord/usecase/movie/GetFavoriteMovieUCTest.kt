@@ -5,7 +5,6 @@ import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
 import com.velord.usecase.movie.dataSource.MovieFavoriteDS
 import com.velord.usecase.movie.dataSource.MovieSortDS
-import com.velord.usecase.movie.result.GetFavoriteMovieResult
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -44,7 +43,7 @@ class GetFavoriteMovieUCTest {
 
     @Test
     fun `invoke should return Success with sorted movies when favorites are available`() = runTest {
-        val getFavoriteMovieUC = GetFavoriteMovieUC(favoriteDS, movieSortDS)
+        val getFavoriteMovieUC = GetFavoriteMovieUCImpl(favoriteDS, movieSortDS)
         val result = getFavoriteMovieUC()
 
         assertTrue(result is GetFavoriteMovieResult.Success)
@@ -59,7 +58,7 @@ class GetFavoriteMovieUCTest {
         val emptyFavoriteDS = mockk<MovieFavoriteDS> {
             every { getFlow() } returns flowOf(emptyList())
         }
-        val getFavoriteMovieUC = GetFavoriteMovieUC(emptyFavoriteDS, movieSortDS)
+        val getFavoriteMovieUC = GetFavoriteMovieUCImpl(emptyFavoriteDS, movieSortDS)
         val result = getFavoriteMovieUC()
 
         assertTrue(result is GetFavoriteMovieResult.Success)
@@ -74,7 +73,7 @@ class GetFavoriteMovieUCTest {
         val errorFavoriteDS = mockk<MovieFavoriteDS> {
             every { getFlow() } throws exception
         }
-        val getFavoriteMovieUC = GetFavoriteMovieUC(errorFavoriteDS, movieSortDS)
+        val getFavoriteMovieUC = GetFavoriteMovieUCImpl(errorFavoriteDS, movieSortDS)
         val result = getFavoriteMovieUC()
 
         assertTrue(result is GetFavoriteMovieResult.MergeError)
@@ -90,7 +89,7 @@ class GetFavoriteMovieUCTest {
                 throw exception
             }
         }
-        val getFavoriteMovieUC = GetFavoriteMovieUC(errorFavoriteDS, movieSortDS)
+        val getFavoriteMovieUC = GetFavoriteMovieUCImpl(errorFavoriteDS, movieSortDS)
         val result = getFavoriteMovieUC()
 
         // Log the result object
@@ -118,7 +117,7 @@ class GetFavoriteMovieUCTest {
                 emit(expectedOptions[1]) // Then emit DateDescending
             }
         }
-        val getFavoriteMovieUC = GetFavoriteMovieUC(favoriteDS, dynamicMovieSortDS)
+        val getFavoriteMovieUC = GetFavoriteMovieUCImpl(favoriteDS, dynamicMovieSortDS)
         val result = getFavoriteMovieUC()
 
         assertTrue(result is GetFavoriteMovieResult.Success)
