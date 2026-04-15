@@ -1,10 +1,9 @@
 package com.velord.gateway.movie
 
 import android.util.Log
-import com.velord.appstate.AppStateService
-import com.velord.db.movie.MovieDbService
+import com.velord.appstate.AppStateDataSource
+import com.velord.db.movie.MovieDbDataSource
 import com.velord.model.movie.Movie
-import com.velord.usecase.movie.dataSource.MovieFavoriteDS
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,10 +15,10 @@ import org.koin.core.annotation.Single
 
 @Single
 class MovieFavoriteGateway(
-    private val appState: AppStateService,
-    private val db: MovieDbService,
+    private val appState: AppStateDataSource,
+    private val db: MovieDbDataSource,
     private val movieSortGateway: MovieSortGateway
-) : MovieFavoriteDS {
+) {
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
         Log.d("MovieFavoriteGateway", "CoroutineExceptionHandler: $throwable")
@@ -37,21 +36,22 @@ class MovieFavoriteGateway(
         }
     }
 
-    override fun get(): List<Movie> = appState.movieFavoriteRosterFlow.value
+    fun get(): List<Movie> = appState.movieFavoriteRosterFlow.value
 
-    override fun getFlow(): Flow<List<Movie>> = appState.movieFavoriteRosterFlow
+    fun getFlow(): Flow<List<Movie>> = appState.movieFavoriteRosterFlow
 
-    override suspend fun update(movie: Movie) {
+    suspend fun update(movie: Movie) {
+        val updated = movie.copy(isLiked = movie.isLiked.not())
         appState.movieRosterFlow.update { roster ->
             roster.map {
-                if (it.id == movie.id) {
-                    movie
+                if (it.id == updated.id) {
+                    updated
                 } else {
                     it
                 }
             }
         }
 
-        db.update(movie)
+        db.update(updated)
     }
 }

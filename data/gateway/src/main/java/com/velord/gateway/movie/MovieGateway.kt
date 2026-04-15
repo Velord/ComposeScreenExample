@@ -1,20 +1,17 @@
 package com.velord.gateway.movie
 
-import com.velord.appstate.AppStateService
+import com.velord.appstate.AppStateDataSource
 import com.velord.model.movie.Movie
-import com.velord.usecase.movie.dataSource.MovieDS
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.update
 import org.koin.core.annotation.Single
 
 @Single
-class MovieGateway(
-    private val appState: AppStateService
-) : MovieDS {
+class MovieGateway(private val appState: AppStateDataSource) {
 
-    override fun getFlow(): Flow<List<Movie>> = appState.movieRosterFlow
+    fun getFlow(): Flow<List<Movie>> = appState.movieRosterFlow
 
-    override fun get(): List<Movie> = appState.movieRosterFlow.value
+    fun get(): List<Movie> = appState.movieRosterFlow.value
 
     fun clearInMemory() {
         appState.movieRosterFlow.value = emptyList()

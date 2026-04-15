@@ -7,7 +7,7 @@ import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.LoadNewPageMovieUC
 import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
-import com.velord.usecase.movie.result.MovieLoadNewPageResult
+import com.velord.usecase.movie.model.MovieLoadNewPageResult
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -128,7 +128,7 @@ class AllMovieViewModel(
     private fun observe() {
         launch {
             try {
-                getAllMovieUC().collect { roster ->
+                getAllMovieUC().flow.collect { roster ->
                     uiStateFlow.value = uiStateFlow.value.copy(roster = roster)
                 }
             } catch (e: Exception) {

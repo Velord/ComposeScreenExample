@@ -8,7 +8,7 @@ import io.ktor.http.path
 import org.koin.core.annotation.Provided
 import org.koin.core.annotation.Single
 
-interface MovieNetworkService {
+interface MovieNetworkDataSource {
     suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse
 }
 
@@ -20,9 +20,9 @@ private const val BEARER =
     ".VoVoq1XiABNy-3i8BUe-WXvg7Sp5AjDfrF-yFMmh1eM"
 
 @Single
-class MovieNetworkServiceImpl(
+class MovieNetworkDataSourceImpl(
     @Provided private val client: BaseHttpClient
-) : MovieNetworkService {
+) : MovieNetworkDataSource {
 
     override suspend fun getMovie(page: MoviePageRequest): MovieRosterResponse {
         val url = "/3/discover/movie"

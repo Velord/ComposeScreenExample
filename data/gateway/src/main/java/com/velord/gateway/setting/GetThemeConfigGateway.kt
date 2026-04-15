@@ -1,7 +1,7 @@
 package com.velord.gateway.setting
 
-import com.velord.appstate.AppStateService
-import com.velord.datastore.DataStoreService
+import com.velord.appstate.AppStateDataSource
+import com.velord.datastore.DataStoreDataSource
 import com.velord.model.setting.ThemeConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -10,8 +10,8 @@ import org.koin.core.annotation.Single
 
 @Single
 class GetThemeConfigGateway(
-    private val dataStore: DataStoreService,
-    private val appState: AppStateService
+    private val dataStore: DataStoreDataSource,
+    private val appState: AppStateDataSource
 ) {
 
     private var isInitialized = false

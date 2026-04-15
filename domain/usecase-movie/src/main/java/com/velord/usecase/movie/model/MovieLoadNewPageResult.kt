@@ -1,4 +1,4 @@
-package com.velord.usecase.movie.result
+package com.velord.usecase.movie.model
 
 sealed class MovieLoadNewPageResult {
     data object Success : MovieLoadNewPageResult()

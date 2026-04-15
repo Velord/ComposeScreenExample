@@ -2,7 +2,6 @@ package com.velord.usecase.movie
 
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
-import com.velord.usecase.movie.dataSource.MovieSortDS
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.count

@@ -14,7 +14,7 @@ private fun SortType.toSortOrder(): Int = when (this) {
     SortType.DateDescending -> 0
 }
 
-interface MovieDbService {
+interface MovieDbDataSource {
     suspend fun getPage(
         page: Int,
         sortType: SortType,
@@ -27,9 +27,9 @@ interface MovieDbService {
 }
 
 @Single
-class MovieDbServiceImpl(
+class MovieDbDataSourceImpl(
     @Provided private val db: MovieDao
-) : MovieDbService {
+) : MovieDbDataSource {
 
     override suspend fun getPage(
         page: Int,

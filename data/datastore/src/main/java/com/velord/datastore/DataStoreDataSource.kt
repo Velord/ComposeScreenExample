@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Single
 
-interface DataStoreService {
+interface DataStoreDataSource {
     suspend fun checkAppFirstLaunch(): Boolean
     suspend fun setThemeConfig(theme: ThemeConfig)
     suspend fun getAppSettingFlow(): Flow<AppSetting>
 }
 
 @Single
-class DataStoreServiceImpl(
+class DataStoreDataSourceImpl(
     private val appSetting: AppSettingDataStore
-) : DataStoreService {
+) : DataStoreDataSource {
 
     private suspend fun setFirstLaunch() {
         appSetting.updateData {

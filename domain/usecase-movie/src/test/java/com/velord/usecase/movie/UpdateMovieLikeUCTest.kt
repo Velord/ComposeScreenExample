@@ -1,8 +1,7 @@
 package com.velord.usecase.movie
 
 import com.velord.model.movie.Movie
-import com.velord.usecase.movie.dataSource.MovieFavoriteDS
-import com.velord.usecase.movie.result.UpdateMovieResult
+import com.velord.usecase.movie.model.UpdateMovieResult
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

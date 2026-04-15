@@ -57,7 +57,7 @@ class FavoriteMovieViewModel(
     private fun observe() {
         launch {
             try {
-                getFavoriteMovieUC().collect { roster ->
+                getFavoriteMovieUC().flow.collect { roster ->
                     uiStateFlow.value = uiStateFlow.value.copy(roster = roster)
                 }
             } catch (e: Exception) {

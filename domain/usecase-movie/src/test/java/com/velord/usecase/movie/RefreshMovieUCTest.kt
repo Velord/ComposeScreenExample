@@ -1,8 +1,7 @@
 package com.velord.usecase.movie
 
 import com.velord.model.movie.MovieRosterSize
-import com.velord.usecase.movie.dataSource.RefreshMovieDS
-import com.velord.usecase.movie.result.MovieLoadNewPageResult
+import com.velord.usecase.movie.model.MovieLoadNewPageResult
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
