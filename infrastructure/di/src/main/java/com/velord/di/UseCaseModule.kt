@@ -1,5 +1,7 @@
 package com.velord.di
 
+import com.velord.gateway.setting.GetThemeConfigGateway
+import com.velord.gateway.setting.SwitchThemeConfigGateway
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetAllMovieUCImpl
 import com.velord.usecase.movie.GetFavoriteMovieUC
@@ -15,22 +17,26 @@ import com.velord.usecase.movie.SetMovieSortOptionUCImpl
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import com.velord.usecase.movie.UpdateMovieLikeUCImpl
 import com.velord.usecase.setting.GetThemeConfigUC
-import com.velord.usecase.setting.GetThemeConfigUCImpl
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
-import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUCImpl
 import com.velord.usecase.setting.SwitchDarkThemeConfigUC
-import com.velord.usecase.setting.SwitchDarkThemeConfigUCImpl
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
-import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUCImpl
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    singleOf(::GetThemeConfigUCImpl) bind GetThemeConfigUC::class
-    singleOf(::SwitchDarkThemeConfigUCImpl) bind SwitchDarkThemeConfigUC::class
-    singleOf(::SwitchAbideToOsThemeConfigUCImpl) bind SwitchAbideToOsThemeConfigUC::class
-    singleOf(::SwitchDynamicColorThemeConfigUCImpl) bind SwitchDynamicColorThemeConfigUC::class
+    single<GetThemeConfigUC> {
+        GetThemeConfigUC(get<GetThemeConfigGateway>()::getFlow)
+    }
+    single<SwitchDarkThemeConfigUC> {
+        SwitchDarkThemeConfigUC(get<SwitchThemeConfigGateway>()::switchDarkTheme)
+    }
+    single<SwitchAbideToOsThemeConfigUC> {
+        SwitchAbideToOsThemeConfigUC(get<SwitchThemeConfigGateway>()::switchAbideToOs)
+    }
+    single<SwitchDynamicColorThemeConfigUC> {
+        SwitchDynamicColorThemeConfigUC(get<SwitchThemeConfigGateway>()::switchDynamicColor)
+    }
     singleOf(::GetAllMovieUCImpl) bind GetAllMovieUC::class
     singleOf(::GetFavoriteMovieUCImpl) bind GetFavoriteMovieUC::class
     singleOf(::GetMovieSortOptionUCImpl) bind GetMovieSortOptionUC::class

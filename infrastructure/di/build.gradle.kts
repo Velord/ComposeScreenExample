@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(project(":infrastructure:config"))
+    implementation(project(":model"))
     // Module Domain
     implementation(project(":domain:usecase-setting"))
     implementation(project(":domain:usecase-movie"))
