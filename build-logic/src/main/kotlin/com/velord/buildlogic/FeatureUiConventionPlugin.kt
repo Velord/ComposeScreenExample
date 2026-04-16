@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class FeatureUiConventionPlugin : Plugin<Project> {
+
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("velord.android.library")
         pluginManager.apply("velord.android.compose")

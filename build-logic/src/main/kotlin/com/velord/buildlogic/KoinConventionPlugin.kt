@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
 class KoinConventionPlugin : Plugin<Project> {
+
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("com.google.devtools.ksp")
 

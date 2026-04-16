@@ -8,6 +8,7 @@ import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class AndroidComposeConventionPlugin : Plugin<Project> {
+
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
 

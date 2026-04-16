@@ -1243,13 +1243,17 @@ test = [
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 [plugins]
+# Android
 android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
+# Kotlin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+# 3-rd Party
 detekt = { id = "dev.detekt", version.ref = "detekt" }
 dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
@@ -1266,3 +1270,4 @@ convention-feature-ui = { id = "velord.feature.ui" }
 convention-feature-ui-koin = { id = "velord.feature.ui.koin" }
 convention-domain-usecase = { id = "velord.domain.usecase" }
 convention-widget-glance = { id = "velord.widget.glance" }
+convention-kmp-library = { id = "velord.kmp.library" }
