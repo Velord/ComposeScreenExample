@@ -16,7 +16,7 @@ import com.velord.core.ui.compose.shape.MainShapes
 import com.velord.core.ui.compose.theme.color.DarkColorScheme
 import com.velord.core.ui.compose.theme.color.LightColorScheme
 import com.velord.core.ui.util.defineScrimAndDarkScrimColorForSystemBar
-import com.velord.model.setting.AndroidThemeConfig
+import com.velord.model.setting.AppThemeConfig
 import com.velord.model.setting.SpecialTheme
 
 private fun SpecialTheme.toColorScheme(): ColorScheme = when (this) {
@@ -33,7 +33,7 @@ fun MainTheme(
     specialTheme: SpecialTheme,
     content: @Composable () -> Unit
 ) {
-    val apiAvailable = AndroidThemeConfig.isSystemDynamicColorAvailable()
+    val apiAvailable = AppThemeConfig.DEFAULT.isSystemDynamicColorAvailable
     val colorScheme: ColorScheme = when {
         abideToOsTheme.not() && dynamicColor && apiAvailable -> {
             val context = LocalContext.current

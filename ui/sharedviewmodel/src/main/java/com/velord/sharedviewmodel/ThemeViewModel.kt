@@ -1,6 +1,6 @@
 package com.velord.sharedviewmodel
 
-import com.velord.model.setting.AndroidThemeConfig
+import com.velord.model.setting.AppThemeConfig
 import com.velord.model.setting.ThemeConfig
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 // This means we should reduce unnecessary calls for switching theme.
 // Default AndroidThemeConfig is acceptable only inside the app(Compose).
 data class ThemeUiState(
-    val androidThemeConfig: AndroidThemeConfig?
+    val appThemeConfig: AppThemeConfig?
 ) {
     companion object {
         val DEFAULT = ThemeUiState(null)
@@ -50,7 +50,7 @@ class ThemeViewModel(
     }
 
     private fun onAbideToOsThemeSwitch() = launch {
-        uiStateFlow.value.androidThemeConfig?.let {
+        uiStateFlow.value.appThemeConfig?.let {
             switchAbideToOsThemeConfigUC.invoke(it.config)
         }
     }
@@ -68,7 +68,7 @@ class ThemeViewModel(
     }
 
     private fun switchConfig(f: suspend (ThemeConfig) -> Unit) {
-        val config = uiStateFlow.value.androidThemeConfig?.config ?: return
+        val config = uiStateFlow.value.appThemeConfig?.config ?: return
         if (config.abideToOs) return
 
         launch { f(config) }
@@ -77,10 +77,10 @@ class ThemeViewModel(
     private fun observe() {
         launch {
             getThemeConfigUC().map {
-                val newAndroidThemeConfig: AndroidThemeConfig = uiStateFlow.value.androidThemeConfig
+                val newAppThemeConfig: AppThemeConfig = uiStateFlow.value.appThemeConfig
                     ?.copy(config = it)
-                    ?: AndroidThemeConfig.invoke(it)
-                uiStateFlow.value.copy(androidThemeConfig = newAndroidThemeConfig)
+                    ?: AppThemeConfig.invoke(it)
+                uiStateFlow.value.copy(appThemeConfig = newAppThemeConfig)
             }.collect {
                 uiStateFlow.value = it
             }

@@ -77,16 +77,15 @@ sealed class FilterType(
     }
 
     companion object {
-        fun createAll(): List<FilterType> = listOf(
-            Rating.Default,
-            VoteCount.Default,
-        )
+
+        val ALL = listOf(Rating.Default, VoteCount.Default)
     }
 }
 
 data class MovieFilterOption(val type: FilterType) {
     companion object {
-        fun createAll() = listOf(
+
+        val ALL  = listOf(
             MovieFilterOption(FilterType.Rating.Default),
             MovieFilterOption(FilterType.VoteCount.Default),
         )

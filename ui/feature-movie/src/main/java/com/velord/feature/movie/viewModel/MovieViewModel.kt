@@ -32,7 +32,9 @@ data class MovieUiState(
             pageCount = 2,
             currentPage = 0,
             sortOptionRoster = listOf(),
-            movieFilterOptionRoster = MovieFilterOption.createAll().map { MovieFilterOptionUI.fromDomain(it) }
+            movieFilterOptionRoster = MovieFilterOption.ALL.map {
+                MovieFilterOptionUI.fromDomain(it)
+            }
         )
     }
 }

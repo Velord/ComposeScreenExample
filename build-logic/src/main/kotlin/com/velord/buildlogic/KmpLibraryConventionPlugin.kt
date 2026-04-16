@@ -1,9 +1,9 @@
 package com.velord.buildlogic
 
-import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.internal.Actions.with
+import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
@@ -13,23 +13,20 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply(libs.findPlugin("kotlin-multiplatform").get().get().pluginId)
-                apply(libs.findPlugin("android-library").get().get().pluginId)
+                apply(libs.findPlugin("android-multiplatform-library").get().get().pluginId)
             }
 
             val targetJvmVersion = version("jvmTarget")
 
             extensions.configure<KotlinMultiplatformExtension> {
-                androidTarget()
                 jvm("desktop")
 
                 jvmToolchain(targetJvmVersion.toInt())
-            }
 
-            extensions.configure<LibraryExtension> {
-                configureLibraryAndroid(this)
-
-                sourceSets.getByName("main").manifest.srcFile("src/androidMain/AndroidManifest.xml")
-                sourceSets.getByName("main").res.srcDirs("src/androidMain/res")
+                (this as ExtensionAware).extensions.configure<KotlinMultiplatformAndroidLibraryExtension>("androidLibrary") {
+                    compileSdk = version("targetApi").toInt()
+                    minSdk = version("minApi").toInt()
+                }
             }
         }
     }

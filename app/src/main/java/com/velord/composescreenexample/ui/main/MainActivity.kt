@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 themeViewModel.uiStateFlow.collect { theme ->
-                    viewModel.updateTheme(theme.androidThemeConfig?.config)
+                    viewModel.updateTheme(theme.appThemeConfig?.config)
                 }
             }
         }

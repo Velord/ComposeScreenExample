@@ -97,7 +97,7 @@ class MoviePaginationGateway(
 
     private suspend fun loadFromDb(page: Int): MovieRosterSize {
         val sortType = movieSortGateway.getSelected().type
-        val filterRoster = FilterType.createAll()
+        val filterRoster = FilterType.ALL
 
         val fromDb = db.getPage(
             page = page,
