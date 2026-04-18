@@ -10,15 +10,15 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 class AndroidComposeConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
+        applyPlugin("kotlin-plugin-compose")
 
-        pluginManager.withPlugin("com.android.application") {
+        withPlugin("android-application") {
             extensions.configure<ApplicationExtension> {
                 buildFeatures.compose = true
             }
         }
 
-        pluginManager.withPlugin("com.android.library") {
+        withPlugin("android-library") {
             extensions.configure<LibraryExtension> {
                 buildFeatures.compose = true
             }

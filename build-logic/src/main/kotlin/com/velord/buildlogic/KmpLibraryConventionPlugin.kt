@@ -11,21 +11,22 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                apply(libs.findPlugin("kotlin-multiplatform").get().get().pluginId)
-                apply(libs.findPlugin("android-multiplatform-library").get().get().pluginId)
-            }
+            applyPlugin("kotlin-multiplatform")
+            applyPlugin("android-multiplatform-library")
 
-            val targetJvmVersion = version("jvmTarget")
+            val targetJvmVersion = versionInt("jvmTarget")
 
             extensions.configure<KotlinMultiplatformExtension> {
                 jvm("desktop")
 
-                jvmToolchain(targetJvmVersion.toInt())
+                jvmToolchain(targetJvmVersion)
 
-                (this as ExtensionAware).extensions.configure<KotlinMultiplatformAndroidLibraryExtension>("androidLibrary") {
-                    compileSdk = version("targetApi").toInt()
-                    minSdk = version("minApi").toInt()
+                val ext = (this as ExtensionAware).extensions
+                ext.configure<KotlinMultiplatformAndroidLibraryExtension>(
+                    "androidLibrary"
+                ) {
+                    compileSdk = versionInt("targetApi")
+                    minSdk = versionInt("minApi")
                 }
             }
         }

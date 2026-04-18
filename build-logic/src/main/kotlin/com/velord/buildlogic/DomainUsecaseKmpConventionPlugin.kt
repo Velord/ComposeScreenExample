@@ -8,13 +8,11 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class DomainUsecaseKmpConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("velord.kmp.library")
+        applyPlugin("convention-kmp-library")
 
         extensions.configure<KotlinMultiplatformExtension> {
-            sourceSets.commonMain.dependencies {
-                implementation(project(":model"))
-                implementation(libs.findLibrary("kotlin-coroutine-core").get())
-            }
+            commonMainImplementationProject(target, ":model")
+            commonMainImplementationLibrary(target, "kotlin-coroutine-core")
         }
     }
 }

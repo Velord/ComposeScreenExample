@@ -9,13 +9,13 @@ import org.gradle.kotlin.dsl.configure
 class AndroidViewBindingConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        pluginManager.withPlugin("com.android.application") {
+        withPlugin("android-application") {
             extensions.configure<ApplicationExtension> {
                 buildFeatures.viewBinding = true
             }
         }
 
-        pluginManager.withPlugin("com.android.library") {
+        withPlugin("android-library") {
             extensions.configure<LibraryExtension> {
                 buildFeatures.viewBinding = true
             }

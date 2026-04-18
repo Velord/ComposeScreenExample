@@ -6,16 +6,16 @@ import org.gradle.api.Project
 class WidgetGlanceConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("velord.android.library")
-        pluginManager.apply("velord.android.compose")
+        applyPlugin("convention-android-library")
+        applyPlugin("convention-android-compose")
 
-        addProjectDependency("implementation", ":infrastructure:util")
-        addProjectDependency("implementation", ":core:core-resource")
-        addProjectDependency("implementation", ":core:core-ui")
+        implementationProject(":infrastructure:util")
+        implementationProject(":core:core-resource")
+        implementationProject(":core:core-ui")
 
-        addBundle("implementation", "kotlin-module")
-        addBundle("implementation", "androidx-glance")
-        addBundle("implementation", "androidx-workmanager")
-        addBundle("implementation", "compose-ui")
+        implementationBundle("kotlin-module")
+        implementationBundle("androidx-glance")
+        implementationBundle("androidx-workmanager")
+        implementationBundle("compose-ui")
     }
 }

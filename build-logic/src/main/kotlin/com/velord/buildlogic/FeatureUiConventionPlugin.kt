@@ -6,11 +6,11 @@ import org.gradle.api.Project
 class FeatureUiConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("velord.android.library")
-        pluginManager.apply("velord.android.compose")
-        pluginManager.apply("velord.android.viewbinding")
+        applyPlugin("convention-android-library")
+        applyPlugin("convention-android-compose")
+        applyPlugin("convention-android-viewbinding")
 
-        addBundle("implementation", "kotlin-module")
-        addBundle("implementation", "androidx-module")
+        implementationBundle("kotlin-module")
+        implementationBundle("androidx-module")
     }
 }

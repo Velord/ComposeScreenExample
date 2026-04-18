@@ -7,10 +7,10 @@ import org.gradle.api.Project
 
 internal fun Project.configureApplicationAndroid(applicationExtension: ApplicationExtension) {
     applicationExtension.apply {
-        compileSdk = version("targetApi").toInt()
+        compileSdk = versionInt("targetApi")
 
         defaultConfig {
-            minSdk = version("minApi").toInt()
+            minSdk = versionInt("minApi")
         }
 
         compileOptions {
@@ -30,10 +30,10 @@ internal fun Project.configureApplicationAndroid(applicationExtension: Applicati
 
 internal fun Project.configureLibraryAndroid(libraryExtension: LibraryExtension) {
     libraryExtension.apply {
-        compileSdk = version("targetApi").toInt()
+        compileSdk = versionInt("targetApi")
 
         defaultConfig {
-            minSdk = version("minApi").toInt()
+            minSdk = versionInt("minApi")
         }
 
         compileOptions {
