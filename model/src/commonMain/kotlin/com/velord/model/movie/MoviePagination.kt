@@ -1,6 +1,7 @@
 package com.velord.model.movie
 
-import android.util.Log
+// TODO(KMP): Migrate commonMain logging to a KMP-compatible logging library.
+// import android.util.Log
 
 data object MoviePagination {
 
@@ -14,7 +15,8 @@ data object MoviePagination {
         if (lastVisibleIndex == 0 && totalItemCount == 0) error("Invalid index and total count")
 
         val shouldLoadMore = lastVisibleIndex >= totalItemCount - PRELOAD_BEFORE_END
-        Log.d("Pagination", "shouldLoadMore: $shouldLoadMore")
+        // TODO(KMP): Migrate commonMain logging to a KMP-compatible logging library.
+        // Log.d("Pagination", "shouldLoadMore: $shouldLoadMore")
         return shouldLoadMore
     }
 
