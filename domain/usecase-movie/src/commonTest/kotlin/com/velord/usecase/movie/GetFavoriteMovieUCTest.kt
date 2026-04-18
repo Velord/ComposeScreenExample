@@ -36,6 +36,28 @@ class GetFavoriteMovieUCTest {
             imagePath = "imagePath2"
         )
     )
+    private val heterogeneousMovies = listOf(
+        Movie(
+            id = 21,
+            title = "Indie Film",
+            description = "Low budget",
+            isLiked = true,
+            date = Movie.toInstant("2001-01-01"),
+            rating = 2.0f,
+            voteCount = 3,
+            imagePath = null
+        ),
+        Movie(
+            id = 22,
+            title = "Blockbuster",
+            description = "High budget",
+            isLiked = false,
+            date = Movie.toInstant("2024-11-11"),
+            rating = 8.7f,
+            voteCount = 15000,
+            imagePath = "/favorite.jpg"
+        )
+    )
 
     @Test
     fun `invoke should return the exact movie flow from delegate`() = runTest {
@@ -101,5 +123,16 @@ class GetFavoriteMovieUCTest {
         }
 
         assertEquals("favorite flow failed", error.message)
+    }
+
+    @Test
+    fun `invoke should preserve heterogeneous favorite movie payloads and order`() = runTest {
+        val useCase = GetFavoriteMovieUC {
+            MovieFlow(flowOf(heterogeneousMovies))
+        }
+
+        val result = useCase()
+
+        assertEquals(heterogeneousMovies, result.flow.first())
     }
 }

@@ -36,6 +36,28 @@ class GetAllMovieUCTest {
             imagePath = "imagePath2"
         )
     )
+    private val heterogeneousMovies = listOf(
+        Movie(
+            id = 10,
+            title = "Classic Drama",
+            description = "Old movie",
+            isLiked = false,
+            date = Movie.toInstant("1999-12-31"),
+            rating = 1.5f,
+            voteCount = 7,
+            imagePath = null
+        ),
+        Movie(
+            id = 11,
+            title = "Future Sci-Fi",
+            description = "New movie",
+            isLiked = true,
+            date = Movie.toInstant("2025-08-20"),
+            rating = 9.8f,
+            voteCount = 9999,
+            imagePath = "/poster.png"
+        )
+    )
 
     @Test
     fun `invoke should return the exact movie flow from delegate`() = runTest {
@@ -99,5 +121,16 @@ class GetAllMovieUCTest {
         }
 
         assertEquals("movie flow failed", error.message)
+    }
+
+    @Test
+    fun `invoke should preserve heterogeneous movie payloads and order`() = runTest {
+        val useCase = GetAllMovieUC {
+            MovieFlow(flowOf(heterogeneousMovies))
+        }
+
+        val result = useCase()
+
+        assertEquals(heterogeneousMovies, result.flow.first())
     }
 }

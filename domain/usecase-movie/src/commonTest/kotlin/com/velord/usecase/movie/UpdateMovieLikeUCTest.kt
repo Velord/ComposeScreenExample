@@ -21,6 +21,16 @@ class UpdateMovieLikeUCTest {
         voteCount = 100,
         imagePath = "image.jpg"
     )
+    private val heterogeneousMovie = Movie(
+        id = 99,
+        title = "Silent Documentary",
+        description = "No poster available",
+        isLiked = true,
+        date = Movie.toInstant("1984-04-14"),
+        rating = 0.5f,
+        voteCount = 1,
+        imagePath = null
+    )
 
     @Test
     fun `invoke should pass movie to delegate`() = runTest {
@@ -87,5 +97,18 @@ class UpdateMovieLikeUCTest {
         useCase(movie)
 
         assertEquals(true, completed)
+    }
+
+    @Test
+    fun `invoke should forward heterogeneous movies unchanged and in order`() = runTest {
+        val capturedMovies = mutableListOf<Movie>()
+        val useCase = UpdateMovieLikeUC { updatedMovie ->
+            capturedMovies += updatedMovie
+        }
+
+        useCase(movie)
+        useCase(heterogeneousMovie)
+
+        assertEquals(listOf(movie, heterogeneousMovie), capturedMovies)
     }
 }
