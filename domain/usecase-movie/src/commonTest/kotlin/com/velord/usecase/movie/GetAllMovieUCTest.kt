@@ -1,87 +1,103 @@
 package com.velord.usecase.movie
 
 import com.velord.model.movie.Movie
-import com.velord.model.movie.MovieSortOption
-import com.velord.model.movie.SortType
-import dev.mokkery.every
-import dev.mokkery.mock
+import com.velord.usecase.movie.model.MovieFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.plus
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.assertFailsWith
+import kotlin.test.assertSame
 import kotlin.time.Clock
 
 class GetAllMovieUCTest {
 
-    private val now = Clock.System.now()
-
-    private val olderMovie = Movie(
-        id = 1,
-        title = "Movie 1",
-        description = "Description 1",
-        isLiked = false,
-        date = now,
-        rating = 4.5f,
-        voteCount = 100,
-        imagePath = "imagePath1"
-    )
-    private val newerMovie = Movie(
-        id = 2,
-        title = "Movie 2",
-        description = "Description 2",
-        isLiked = true,
-        date = now.plus(1, DateTimeUnit.DAY, TimeZone.UTC),
-        rating = 3.8f,
-        voteCount = 50,
-        imagePath = "imagePath2"
+    private val movies = listOf(
+        Movie(
+            id = 1,
+            title = "Movie 1",
+            description = "Description 1",
+            isLiked = false,
+            date = Clock.System.now(),
+            rating = 4.5f,
+            voteCount = 100,
+            imagePath = "imagePath1"
+        ),
+        Movie(
+            id = 2,
+            title = "Movie 2",
+            description = "Description 2",
+            isLiked = true,
+            date = Clock.System.now(),
+            rating = 3.8f,
+            voteCount = 50,
+            imagePath = "imagePath2"
+        )
     )
 
     @Test
-    fun `invoke should return movies sorted by descending date`() = runTest {
-        val movieDS = mock<MovieDS> {
-            every { getFlow() } returns flowOf(listOf(olderMovie, newerMovie))
-        }
-        val movieSortDS = mock<MovieSortDS> {
-            every { getSelectedFlow() } returns flowOf(MovieSortOption(SortType.DateDescending, true))
-        }
+    fun `invoke should return the exact movie flow from delegate`() = runTest {
+        val expectedFlow = flowOf(movies)
+        val useCase = GetAllMovieUC { MovieFlow(expectedFlow) }
 
-        val result = GetAllMovieUCImpl(movieDS, movieSortDS).invoke()
+        val result = useCase()
 
-        assertTrue(result is GetMovieResult.Success)
-        val movies = (result as GetMovieResult.Success).flow.first()
-        assertEquals(listOf(newerMovie, olderMovie), movies)
+        assertSame(expectedFlow, result.flow)
+        assertEquals(movies, result.flow.first())
     }
 
     @Test
-    fun `invoke should return movies sorted by ascending date`() = runTest {
-        val movieDS = mock<MovieDS> {
-            every { getFlow() } returns flowOf(listOf(newerMovie, olderMovie))
-        }
-        val movieSortDS = mock<MovieSortDS> {
-            every { getSelectedFlow() } returns flowOf(MovieSortOption(SortType.DateAscending, true))
+    fun `invoke should preserve all delegate emissions`() = runTest {
+        val firstEmission = movies.take(1)
+        val secondEmission = movies
+        val useCase = GetAllMovieUC {
+            MovieFlow(flowOf(firstEmission, secondEmission))
         }
 
-        val result = GetAllMovieUCImpl(movieDS, movieSortDS).invoke()
+        val result = useCase()
 
-        assertTrue(result is GetMovieResult.Success)
-        val movies = (result as GetMovieResult.Success).flow.first()
-        assertEquals(listOf(olderMovie, newerMovie), movies)
+        assertEquals(listOf(firstEmission, secondEmission), result.flow.toList())
     }
 
     @Test
-    fun `invoke should return merge error when datasource throws immediately`() {
-        val movieDS = mock<MovieDS> {
-            every { getFlow() } throws RuntimeException("boom")
+    fun `invoke should call delegate on each invocation`() = runTest {
+        var invocationCount = 0
+        val useCase = GetAllMovieUC {
+            invocationCount += 1
+            MovieFlow(flowOf(listOf(movies[invocationCount - 1])))
         }
-        val movieSortDS = mock<MovieSortDS>()
 
-        val result = GetAllMovieUCImpl(movieDS, movieSortDS).invoke()
+        val firstResult = useCase()
+        val secondResult = useCase()
 
-        assertEquals(GetMovieResult.MergeError("boom"), result)
+        assertEquals(2, invocationCount)
+        assertEquals(listOf(movies[0]), firstResult.flow.first())
+        assertEquals(listOf(movies[1]), secondResult.flow.first())
+    }
+
+    @Test
+    fun `invoke should support empty movie emission`() = runTest {
+        val useCase = GetAllMovieUC {
+            MovieFlow(flowOf(emptyList()))
+        }
+
+        val result = useCase()
+
+        assertEquals(emptyList(), result.flow.first())
+    }
+
+    @Test
+    fun `invoke should propagate delegate exception before flow creation`() {
+        val useCase = GetAllMovieUC {
+            throw IllegalStateException("movie flow failed")
+        }
+
+        val error = assertFailsWith<IllegalStateException> {
+            useCase()
+        }
+
+        assertEquals("movie flow failed", error.message)
     }
 }

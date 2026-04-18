@@ -2,186 +2,86 @@ package com.velord.usecase.movie
 
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
-import dev.mokkery.every
-import dev.mokkery.mock
-import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.flow.drop
-import kotlinx.coroutines.flow.emptyFlow
+import com.velord.usecase.movie.model.MovieSortOptionFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.assertFailsWith
+import kotlin.test.assertSame
 
 class GetMovieSortOptionUCTest {
 
-    @Test
-    fun `invoke should return the flow from movieSortDS`() = runTest {
-        val expectedOptions = listOf(
-            MovieSortOption(SortType.DateAscending, false),
-            MovieSortOption(SortType.DateDescending, true)
-        )
+    private val options = listOf(
+        MovieSortOption(SortType.DateAscending, false),
+        MovieSortOption(SortType.DateDescending, true)
+    )
 
-        val movieSortDS = mock<MovieSortDS> {
-            every { getFlow() } returns flow { emit(expectedOptions) }
+    @Test
+    fun `invoke should return the exact sort option flow from delegate`() = runTest {
+        val expectedFlow = flowOf(options)
+        val useCase = GetMovieSortOptionUC {
+            MovieSortOptionFlow(expectedFlow)
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
-        val resultFlow = getMovieSortOptionUC()
+        val result = useCase()
 
-        val actualOptions = resultFlow.first()
-
-        assertEquals(expectedOptions, actualOptions)
+        assertSame(expectedFlow, result.flow)
+        assertEquals(options, result.flow.first())
     }
 
     @Test
-    fun `invoke should return an empty flow when movieSortDS emits an empty flow`() = runTest {
-        val movieSortDS = mock<MovieSortDS> {
-            every { getFlow() } returns emptyFlow()
+    fun `invoke should preserve all delegate emissions`() = runTest {
+        val firstEmission = options.take(1)
+        val secondEmission = options
+        val useCase = GetMovieSortOptionUC {
+            MovieSortOptionFlow(flowOf(firstEmission, secondEmission))
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
-        val resultFlow = getMovieSortOptionUC()
+        val result = useCase()
 
-        val actualOptions = resultFlow.firstOrNull()
-
-        assertEquals(null, actualOptions)
+        assertEquals(listOf(firstEmission, secondEmission), result.flow.toList())
     }
 
     @Test
-    fun `invoke should handle exceptions in movieSortDS getFlow and terminate`() = runTest {
-        val expectedOptions = listOf(
-            MovieSortOption(SortType.DateAscending, false)
-        )
-
-        val movieSortDS = mock<MovieSortDS> {
-            every { getFlow() } returns flow {
-                emit(expectedOptions)
-                throw RuntimeException("Mocked Exception")
-            }
+    fun `invoke should call delegate on each invocation`() = runTest {
+        var invocationCount = 0
+        val useCase = GetMovieSortOptionUC {
+            invocationCount += 1
+            MovieSortOptionFlow(flowOf(listOf(options[invocationCount - 1])))
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
-        val resultFlow = getMovieSortOptionUC()
+        val firstResult = useCase()
+        val secondResult = useCase()
 
-        val actualOptions1 = resultFlow.first()
-        val actualOptions2 = resultFlow.drop(1).firstOrNull()
-
-        assertEquals(expectedOptions, actualOptions1)
-        assertEquals(null, actualOptions2) // Assert flow termination after exception
+        assertEquals(2, invocationCount)
+        assertEquals(listOf(options[0]), firstResult.flow.first())
+        assertEquals(listOf(options[1]), secondResult.flow.first())
     }
 
     @Test
-    fun `invoke should emit multiple lists from movieSortDS`() = runTest {
-        val expectedOptions1 = listOf(
-            MovieSortOption(SortType.DateAscending, false)
-        )
-        val expectedOptions2 = listOf(
-            MovieSortOption(SortType.DateAscending, false),
-            MovieSortOption(SortType.DateDescending, true)
-        )
-
-        val movieSortDS = mock<MovieSortDS> {
-            every { getFlow() } returns flow {
-                emit(expectedOptions1)
-                emit(expectedOptions2)
-            }
+    fun `invoke should support empty sort option emission`() = runTest {
+        val useCase = GetMovieSortOptionUC {
+            MovieSortOptionFlow(flowOf(emptyList()))
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
-        val resultFlow = getMovieSortOptionUC()
+        val result = useCase()
 
-        val actualOptions1 = resultFlow.first()
-        val actualOptions2 = resultFlow.drop(1).first()
-
-        assertEquals(expectedOptions1, actualOptions1)
-        assertEquals(expectedOptions2, actualOptions2)
+        assertEquals(emptyList(), result.flow.first())
     }
 
     @Test
-    fun `invoke should handle a delayed exception in movieSortDS getFlow and terminate`() = runTest {
-        val expectedOptions = listOf(
-            MovieSortOption(SortType.DateAscending, false)
-        )
-
-        val movieSortDS = mock<MovieSortDS> {
-            every { getFlow() } returns flow {
-                emit(expectedOptions)
-                kotlinx.coroutines.delay(100)
-                throw RuntimeException("Mocked Exception")
-            }
+    fun `invoke should propagate delegate exception before flow creation`() {
+        val useCase = GetMovieSortOptionUC {
+            throw IllegalStateException("sort option flow failed")
         }
 
-        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
-        val resultFlow = getMovieSortOptionUC()
-
-        val actualOptions = resultFlow.first()
-        val exceptionThrown = try {
-            resultFlow.drop(1).first()
-            false
-        } catch (_: RuntimeException) {
-            true
+        val error = assertFailsWith<IllegalStateException> {
+            useCase()
         }
 
-        assertEquals(expectedOptions, actualOptions)
-        assertTrue(exceptionThrown)
-    }
-
-    @Test
-    fun `invoke should handle a flow that emits an empty list`() = runTest {
-        val expectedOptions = emptyList<MovieSortOption>()
-
-        val movieSortDS = mock<MovieSortDS> {
-            every { getFlow() } returns flow { emit(expectedOptions) }
-        }
-
-        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
-        val resultFlow = getMovieSortOptionUC()
-
-        val actualOptions = resultFlow.first()
-
-        assertEquals(expectedOptions, actualOptions)
-    }
-
-    @Test
-    fun `invoke should handle a flow with multiple empty list emissions`() = runTest {
-        val movieSortDS = mock<MovieSortDS> {
-            every { getFlow() } returns flow {
-                emit(emptyList())
-                emit(emptyList())
-                emit(emptyList())
-            }
-        }
-
-        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
-        val resultFlow = getMovieSortOptionUC()
-
-        val emissionsCount = resultFlow.count()
-
-        assertEquals(3, emissionsCount)
-    }
-
-    @Test
-    fun `invoke should handle a flow with mixed empty and non-empty list emissions`() = runTest {
-        val expectedOptions = listOf(
-            MovieSortOption(SortType.DateDescending, true)
-        )
-
-        val movieSortDS = mock<MovieSortDS> {
-            every { getFlow() } returns flow {
-                emit(emptyList())
-                emit(expectedOptions)
-                emit(emptyList())
-            }
-        }
-
-        val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
-        val resultFlow = getMovieSortOptionUC()
-
-        val actualOptions = resultFlow.drop(1).first()
-
-        assertEquals(expectedOptions, actualOptions)
+        assertEquals("sort option flow failed", error.message)
     }
 }

@@ -1,47 +1,82 @@
 package com.velord.usecase.movie
 
-import com.velord.model.movie.MoviePagination
-import com.velord.model.movie.MovieRosterSize
-import com.velord.usecase.movie.dataSource.LoadNewPageMovieDS
 import com.velord.usecase.movie.model.MovieLoadNewPageResult
-import dev.mokkery.everySuspend
-import dev.mokkery.mock
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class LoadNewPageMovieUCTest {
 
     @Test
-    fun `invoke should return success when full page is loaded`() = runTest {
-        val dataSource = mock<LoadNewPageMovieDS> {
-            everySuspend { load() } returns MovieRosterSize(MoviePagination.PAGE_COUNT)
+    fun `invoke should return delegate result`() = runTest {
+        val useCase = LoadNewPageMovieUC {
+            MovieLoadNewPageResult.Success
         }
 
-        val result = LoadNewPageMovieUCImpl(dataSource).invoke()
+        val result = useCase()
 
         assertEquals(MovieLoadNewPageResult.Success, result)
     }
 
     @Test
-    fun `invoke should return exhausted when partial page is loaded`() = runTest {
-        val dataSource = mock<LoadNewPageMovieDS> {
-            everySuspend { load() } returns MovieRosterSize(MoviePagination.PAGE_COUNT - 1)
+    fun `invoke should call delegate on each invocation`() = runTest {
+        var invocationCount = 0
+        val useCase = LoadNewPageMovieUC {
+            invocationCount += 1
+            if (invocationCount == 1) {
+                MovieLoadNewPageResult.Success
+            } else {
+                MovieLoadNewPageResult.Exhausted
+            }
         }
 
-        val result = LoadNewPageMovieUCImpl(dataSource).invoke()
+        val firstResult = useCase()
+        val secondResult = useCase()
 
-        assertEquals(MovieLoadNewPageResult.Exhausted, result)
+        assertEquals(2, invocationCount)
+        assertEquals(MovieLoadNewPageResult.Success, firstResult)
+        assertEquals(MovieLoadNewPageResult.Exhausted, secondResult)
     }
 
     @Test
-    fun `invoke should return load page failed when datasource throws`() = runTest {
-        val dataSource = mock<LoadNewPageMovieDS> {
-            everySuspend { load() } throws RuntimeException("failed")
+    fun `invoke should propagate delegate exception`() = runTest {
+        val useCase = LoadNewPageMovieUC {
+            throw IllegalStateException("load failed")
         }
 
-        val result = LoadNewPageMovieUCImpl(dataSource).invoke()
+        val error = assertFailsWith<IllegalStateException> {
+            useCase()
+        }
 
-        assertEquals(MovieLoadNewPageResult.LoadPageFailed("failed"), result)
+        assertEquals("load failed", error.message)
+    }
+
+    @Test
+    fun `invoke should return load page failed result from delegate`() = runTest {
+        val expectedResult = MovieLoadNewPageResult.LoadPageFailed("network error")
+        val useCase = LoadNewPageMovieUC {
+            expectedResult
+        }
+
+        val result = useCase()
+
+        assertEquals(expectedResult, result)
+    }
+
+    @Test
+    fun `invoke should support suspended delegate before returning`() = runTest {
+        var completed = false
+        val useCase = LoadNewPageMovieUC {
+            delay(1)
+            completed = true
+            MovieLoadNewPageResult.Exhausted
+        }
+
+        val result = useCase()
+
+        assertEquals(true, completed)
+        assertEquals(MovieLoadNewPageResult.Exhausted, result)
     }
 }

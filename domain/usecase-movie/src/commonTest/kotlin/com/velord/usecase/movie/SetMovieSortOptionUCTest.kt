@@ -2,82 +2,80 @@ package com.velord.usecase.movie
 
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
-import dev.mokkery.MockMode
-import dev.mokkery.matcher.any
-import dev.mokkery.mock
-import dev.mokkery.verify.VerifyMode
-import dev.mokkery.verifySuspend
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertSame
 
 class SetMovieSortOptionUCTest {
 
     @Test
-    fun `invoke should update movieSortDS with the selected option`() = runTest {
-        val movieSortDS = mock<MovieSortDS>(MockMode.autoUnit)
-        val newOption = MovieSortOption(SortType.DateAscending, false)
-        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
-
-        setMovieSortOptionUC(newOption)
-
-        verifySuspend { movieSortDS.update(newOption.copy(isSelected = true)) }
-    }
-
-    @Test
-    fun `invoke should update movieSortDS with already selected option`() = runTest {
-        val movieSortDS = mock<MovieSortDS>(MockMode.autoUnit)
-        val newOption = MovieSortOption(SortType.DateDescending, true)
-        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
-
-        setMovieSortOptionUC(newOption)
-
-        verifySuspend { movieSortDS.update(newOption.copy(isSelected = true)) }
-    }
-
-    @Test
-    fun `invoke should update movieSortDS with different options consecutively`() = runTest {
-        val movieSortDS = mock<MovieSortDS>(MockMode.autoUnit)
-        val option1 = MovieSortOption(SortType.DateAscending, false)
-        val option2 = MovieSortOption(SortType.DateDescending, false)
-        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
-
-        setMovieSortOptionUC(option1)
-        setMovieSortOptionUC(option2)
-
-        verifySuspend {
-            movieSortDS.update(option1.copy(isSelected = true))
-            movieSortDS.update(option2.copy(isSelected = true))
+    fun `invoke should pass selected option to delegate`() {
+        var capturedOption: MovieSortOption? = null
+        val expectedOption = MovieSortOption(SortType.DateAscending, false)
+        val useCase = SetMovieSortOptionUC { option ->
+            capturedOption = option
         }
+
+        useCase(expectedOption)
+
+        assertSame(expectedOption, capturedOption)
+        assertEquals(expectedOption, capturedOption)
     }
 
     @Test
-    fun `invoke should update movieSortDS with the same option multiple times`() = runTest {
-        val movieSortDS = mock<MovieSortDS>(MockMode.autoUnit)
-        val option = MovieSortOption(SortType.DateAscending, false)
-        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
+    fun `invoke should preserve arguments across multiple invocations`() {
+        val capturedOptions = mutableListOf<MovieSortOption>()
+        val firstOption = MovieSortOption.Default
+        val secondOption = MovieSortOption(SortType.DateDescending, true)
+        val useCase = SetMovieSortOptionUC { option ->
+            capturedOptions += option
+        }
 
-        repeat(3) { setMovieSortOptionUC(option) }
+        useCase(firstOption)
+        useCase(secondOption)
 
-        verifySuspend(VerifyMode.exactly(3)) { movieSortDS.update(option.copy(isSelected = true)) }
+        assertEquals(listOf(firstOption, secondOption), capturedOptions)
     }
 
     @Test
-    fun `invoke should update movieSortDS with Default option`() = runTest {
-        val movieSortDS = mock<MovieSortDS>(MockMode.autoUnit)
-        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
-        setMovieSortOptionUC(MovieSortOption.Default)
+    fun `invoke should propagate delegate exception`() {
+        val useCase = SetMovieSortOptionUC {
+            throw IllegalArgumentException("unsupported option")
+        }
 
-        verifySuspend { movieSortDS.update(MovieSortOption.Default.copy(isSelected = true)) }
+        val error = assertFailsWith<IllegalArgumentException> {
+            useCase(MovieSortOption.Default)
+        }
+
+        assertEquals("unsupported option", error.message)
     }
 
     @Test
-    fun `invoke should only update movieSortDS once per invocation`() = runTest {
-        val movieSortDS = mock<MovieSortDS>(MockMode.autoUnit)
-        val option = MovieSortOption(SortType.DateDescending, false)
-        val setMovieSortOptionUC = SetMovieSortOptionUCImpl(movieSortDS)
+    fun `invoke should forward already selected option unchanged`() {
+        var capturedOption: MovieSortOption? = null
+        val expectedOption = MovieSortOption(SortType.DateDescending, true)
+        val useCase = SetMovieSortOptionUC { option ->
+            capturedOption = option
+        }
 
-        setMovieSortOptionUC(option)
+        useCase(expectedOption)
 
-        verifySuspend(VerifyMode.exactly(1)) { movieSortDS.update(any()) }
+        assertSame(expectedOption, capturedOption)
+        assertEquals(expectedOption, capturedOption)
+    }
+
+    @Test
+    fun `invoke should call delegate once per invocation`() {
+        var invocationCount = 0
+        val useCase = SetMovieSortOptionUC {
+            invocationCount += 1
+        }
+
+        useCase(MovieSortOption.Default)
+        useCase(MovieSortOption(SortType.DateAscending, false))
+        useCase(MovieSortOption(SortType.DateDescending, true))
+
+        assertEquals(3, invocationCount)
     }
 }
