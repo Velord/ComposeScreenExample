@@ -1,49 +1,54 @@
 package com.velord.model.movie
 
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
+import kotlinx.datetime.format.MonthNames
+import kotlinx.datetime.format.char
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
 private const val PICSUM_HOST = "https://picsum.photos/200/300"
-private const val DATE_FORMAT = "yyyy-MM-dd"
+
+private val cardFormat = LocalDateTime.Format {
+    year()
+    char(' ')
+    monthName(MonthNames.ENGLISH_ABBREVIATED)
+    char(' ')
+    dayOfMonth()
+}
+
+private val dividerFormat = LocalDateTime.Format {
+    monthName(MonthNames.ENGLISH_ABBREVIATED)
+    char(' ')
+    year()
+}
 
 data class Movie(
     val id: Int,
     val title: String,
     val description: String,
     val isLiked: Boolean,
-    val date: Calendar,
+    val date: Instant,
     val rating: Float,
     val voteCount: Int,
     val imagePath: String? = null,
 ) {
 
-    val formattedDateForCard: String get() {
-        val formatterYear = SimpleDateFormat("yyyy")
-        val formatterMonth = SimpleDateFormat("MMM")
-        val formatterDay = SimpleDateFormat("dd")
+    fun formattedDateForCard(tz: TimeZone): String =
+        cardFormat.format(date.toLocalDateTime(tz))
 
-        val year = formatterYear.format(date.time)
-        val month = formatterMonth.format(date.time)
-        val day = formatterDay.format(date.time)
+    fun formattedDateForDivider(tz: TimeZone): String =
+        dividerFormat.format(date.toLocalDateTime(tz))
 
-        return "$year $month $day"
+    fun isAnotherMonthOrYear(other: Instant?, tz: TimeZone): Boolean {
+        if (other == null) return true
+        val a = date.toLocalDateTime(tz)
+        val b = other.toLocalDateTime(tz)
+        return a.monthNumber != b.monthNumber || a.year != b.year
     }
-
-    val formattedDateForDivider: String get() {
-        val formatterYear = SimpleDateFormat("yyyy")
-        val formatterMonth = SimpleDateFormat("MMM")
-
-        val year = formatterYear.format(date.time)
-        val month = formatterMonth.format(date.time)
-
-        return "$month $year"
-    }
-
-    fun isAnotherMonthOrYear(calendar: Calendar?): Boolean =
-        date.get(Calendar.MONTH) != calendar?.get(Calendar.MONTH) ||
-                date.get(Calendar.YEAR) != calendar.get(Calendar.YEAR)
 
     val imageUrl: String get() = if (imagePath.isNullOrEmpty()) {
         PICSUM_HOST
@@ -53,25 +58,16 @@ data class Movie(
 
     companion object {
 
-        fun toCalendar(date: String): Calendar = try {
-            val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
-            val date: Date? = sdf.parse(date)
-            val calendar = Calendar.getInstance()
-            if (date != null) {
-                calendar.time = date
-            }
-
-            calendar
+        fun toInstant(date: String): Instant = try {
+            LocalDate.parse(date).atStartOfDayIn(TimeZone.UTC)
         } catch (_: Exception) {
-            Calendar.getInstance()
+            Clock.System.now()
         }
 
-        fun toRaw(calendar: Calendar): String {
-            val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
-            return sdf.format(calendar.time)
-        }
+        fun toRaw(instant: Instant): String =
+            instant.toLocalDateTime(TimeZone.UTC).date.toString()
     }
 }
 
 fun List<Movie>.findRecentTimeInMilli(): Long =
-    maxByOrNull { it.date.timeInMillis }?.date?.timeInMillis ?: 0L
+    maxByOrNull { it.date.toEpochMilliseconds() }?.date?.toEpochMilliseconds() ?: 0L

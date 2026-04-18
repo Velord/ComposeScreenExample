@@ -8,19 +8,24 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.plus
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.util.Calendar
+import kotlin.time.Clock
 
 class GetAllMovieUCTest {
+
+    private val now = Clock.System.now()
 
     private val olderMovie = Movie(
         id = 1,
         title = "Movie 1",
         description = "Description 1",
         isLiked = false,
-        date = Calendar.getInstance(),
+        date = now,
         rating = 4.5f,
         voteCount = 100,
         imagePath = "imagePath1"
@@ -30,7 +35,7 @@ class GetAllMovieUCTest {
         title = "Movie 2",
         description = "Description 2",
         isLiked = true,
-        date = Calendar.getInstance().apply { add(Calendar.DAY_OF_MONTH, 1) },
+        date = now.plus(1, DateTimeUnit.DAY, TimeZone.UTC),
         rating = 3.8f,
         voteCount = 50,
         imagePath = "imagePath2"

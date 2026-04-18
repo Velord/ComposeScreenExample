@@ -11,17 +11,20 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.plus
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.util.Calendar
 
 class GetFavoriteMovieUCTest {
 
-    private val calendar1 = Calendar.getInstance()
-    private val calendar2 = Calendar.getInstance().apply { add(Calendar.DAY_OF_MONTH, 1) } // Add a day to calendar2
-    private val movie1 = Movie(1, "Movie 1", "Description 1", false, calendar1, 4.5f, 100, "imagePath1")
-    private val movie2 = Movie(2, "Movie 2", "Description 2", true, calendar2, 3.8f, 50, "imagePath2")
+    private val date1 = Clock.System.now()
+    private val date2 = date1.plus(1, DateTimeUnit.DAY, TimeZone.UTC)
+    private val movie1 = Movie(1, "Movie 1", "Description 1", false, date1, 4.5f, 100, "imagePath1")
+    private val movie2 = Movie(2, "Movie 2", "Description 2", true, date2, 3.8f, 50, "imagePath2")
     private val expectedMovies = listOf(movie1, movie2)
 
     private val favoriteDS = mockk<MovieFavoriteDS> {
@@ -48,7 +51,7 @@ class GetFavoriteMovieUCTest {
         val movies = mutableListOf<Movie>()
         (result as GetFavoriteMovieResult.Success).flow.collect { movies.addAll(it) }
         assertEquals(expectedMovies.size, movies.size)
-        assertTrue(movies[0].date.after(movies[1].date)) // Verify sorting
+        assertTrue(movies[0].date > movies[1].date) // Verify sorting
     }
 
     @Test

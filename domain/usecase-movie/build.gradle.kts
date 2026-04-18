@@ -1,13 +1,19 @@
 plugins {
-    alias(libs.plugins.convention.domain.usecase)
+    alias(libs.plugins.convention.domain.usecase.kmp)
 }
 
-android {
-    namespace = "com.velord.usecase.movie"
-}
+kotlin {
+    android {
+        namespace = "com.velord.usecase.movie"
+    }
 
-dependencies {
-    // Test
-    testImplementation(libs.junit)
-    testImplementation(libs.bundles.test)
+    sourceSets {
+        desktopTest.dependencies {
+            implementation(libs.junit)
+            implementation(libs.coroutine.test)
+            implementation(libs.mock)
+            implementation(libs.mock.agent)
+            implementation(libs.turbine)
+        }
+    }
 }

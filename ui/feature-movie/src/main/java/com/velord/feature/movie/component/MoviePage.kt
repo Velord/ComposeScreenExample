@@ -38,9 +38,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
+import kotlinx.datetime.TimeZone
 import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
-import java.util.Calendar
+import kotlin.time.Clock
 
 private const val SCROLL_DELAY_MS = 300L
 
@@ -159,7 +160,7 @@ private fun PageContent(
             thumbSelectedColor = MaterialTheme.colorScheme.primary,
         ),
         indicatorContent =  { index, isThumbSelected ->
-            val date = roster.getOrNull(index)?.formattedDateForDivider ?: ""
+            val date = roster.getOrNull(index)?.formattedDateForDivider(TimeZone.currentSystemDefault()) ?: ""
             val alpha = if (isThumbSelected) 0.9f else 0.3f
             Text(
                 text = date,
@@ -193,14 +194,15 @@ private fun LazyListScope.movieCardItems(
     onLike: (Movie) -> Unit,
     onClick: (Movie) -> Unit
 ) {
+    val tz = TimeZone.currentSystemDefault()
     itemsIndexed(
         items = roster,
         key = { _, item -> item.id }
     ) { index, item ->
         val prevItem = roster.getOrNull(index - 1)
-        val isAnotherMonth = item.isAnotherMonthOrYear(prevItem?.date)
+        val isAnotherMonth = item.isAnotherMonthOrYear(prevItem?.date, tz)
         if (index == 0 || isAnotherMonth) {
-            MonthDivider(date = item.formattedDateForDivider)
+            MonthDivider(date = item.formattedDateForDivider(tz))
         }
 
         MovieCard(
@@ -247,7 +249,7 @@ private fun MoviePagerPreview() {
                 title = "Star Wars",
                 description = "A long time ago in a galaxy far, far away...",
                 isLiked = true,
-                date = Calendar.getInstance(),
+                date = Clock.System.now(),
                 rating = 7.66f,
                 voteCount = 300
             ),
@@ -256,7 +258,7 @@ private fun MoviePagerPreview() {
                 title = "The Lord of the Rings",
                 description = "One ring",
                 isLiked = false,
-                date = Calendar.getInstance(),
+                date = Clock.System.now(),
                 rating = 7.66f,
                 voteCount = 300
             ),
@@ -265,7 +267,7 @@ private fun MoviePagerPreview() {
                 title = "Shawshank Redemption",
                 description = "Two imprisoned",
                 isLiked = true,
-                date = Calendar.getInstance(),
+                date = Clock.System.now(),
                 rating = 7.66f,
                 voteCount = 300
             ),
@@ -275,7 +277,7 @@ private fun MoviePagerPreview() {
                 description = "The aging patriarch of an organized crime dynasty " +
                     "transfers control of his clandestine empire to his reluctant son.",
                 isLiked = false,
-                date = Calendar.getInstance(),
+                date = Clock.System.now(),
                 rating = 7.66f,
                 voteCount = 300
             ),
@@ -284,7 +286,7 @@ private fun MoviePagerPreview() {
                 title = "The Dark Knight",
                 description = "When the menace known as the Joker wreaks havoc and chaos on the",
                 isLiked = true,
-                date = Calendar.getInstance(),
+                date = Clock.System.now(),
                 rating = 7.66f,
                 voteCount = 300
             ),
@@ -294,7 +296,7 @@ private fun MoviePagerPreview() {
                 description = "A computer hacker learns from mysterious rebels " +
                     "about the true nature of his reality and his role in the war against its controllers.",
                 isLiked = false,
-                date = Calendar.getInstance(),
+                date = Clock.System.now(),
                 rating = 7.66f,
                 voteCount = 300
             ),

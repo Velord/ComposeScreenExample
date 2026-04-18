@@ -31,7 +31,7 @@ data class MovieEntity(
             title = title,
             description = description,
             isLiked = isLiked,
-            date = Movie.toCalendar(date),
+            date = Movie.toInstant(date),
             rating = rating,
             voteCount = voteCount,
             imagePath = imagePath,

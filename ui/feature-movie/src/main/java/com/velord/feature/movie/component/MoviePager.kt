@@ -40,7 +40,7 @@ import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
-import java.util.Calendar
+import kotlin.time.Clock
 
 private fun Activity.onClick(intent: Intent) {
     startActivity(intent, null)
@@ -191,7 +191,7 @@ private fun MoviePagerPreview() {
             title = "Star Wars",
             description = "A long time ago in a galaxy far, far away...",
             isLiked = true,
-            date = Calendar.getInstance(),
+            date = Clock.System.now(),
             rating = 7.66f,
             voteCount = 100
         ),
@@ -200,7 +200,7 @@ private fun MoviePagerPreview() {
             title = "The Lord of the Rings",
             description = "One ring",
             isLiked = false,
-            date = Calendar.getInstance(),
+            date = Clock.System.now(),
             rating = 7.66f,
             voteCount = 100
         ),
@@ -209,7 +209,7 @@ private fun MoviePagerPreview() {
             title = "Shawshank Redemption",
             description = "Two imprisoned",
             isLiked = true,
-            date = Calendar.getInstance(),
+            date = Clock.System.now(),
             rating = 7.66f,
             voteCount = 100
         ),
@@ -219,7 +219,7 @@ private fun MoviePagerPreview() {
             description = "The aging patriarch of an organized crime dynasty " +
                 "transfers control of his clandestine empire to his reluctant son.",
             isLiked = false,
-            date = Calendar.getInstance(),
+            date = Clock.System.now(),
             rating = 7.66f,
             voteCount = 100
         ),
@@ -228,7 +228,7 @@ private fun MoviePagerPreview() {
             title = "The Dark Knight",
             description = "When the menace known as the Joker wreaks havoc and chaos on the",
             isLiked = true,
-            date = Calendar.getInstance(),
+            date = Clock.System.now(),
             rating = 7.66f,
             voteCount = 100
         ),
@@ -238,7 +238,7 @@ private fun MoviePagerPreview() {
             description = "A computer hacker learns from mysterious rebels about the true nature of his reality and" +
                 " his role in the war against its controllers.",
             isLiked = false,
-            date = Calendar.getInstance(),
+            date = Clock.System.now(),
             rating = 7.66f,
             voteCount = 100
         ),

@@ -25,7 +25,7 @@ data class MovieResponse(
         title = title,
         description = description,
         isLiked = false,
-        date = Movie.toCalendar(date),
+        date = Movie.toInstant(date),
         rating = rating,
         voteCount = voteCount,
         imagePath = imageUrl,

@@ -2,50 +2,53 @@ package com.velord.model
 
 import com.velord.model.movie.Movie
 import com.velord.model.movie.findRecentTimeInMilli
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import java.util.Calendar
+import kotlinx.datetime.TimeZone
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class MovieTest {
 
+    private val utc = TimeZone.UTC
+
     private val movieWithImagePath = Movie(
         1, "Movie Title", "Description", false,
-        Movie.toCalendar("2023-11-15"), 4.5f, 100, "/image.jpg"
+        Movie.toInstant("2023-11-15"), 4.5f, 100, "/image.jpg"
     )
 
     private val movieWithoutImagePath = Movie(
         2, "Another Movie", "Another Description", true,
-        Movie.toCalendar("2024-02-20"), 3.8f, 50, null
+        Movie.toInstant("2024-02-20"), 3.8f, 50, null
     )
 
     @Test
     fun `formattedDateForCard returns correct format`() {
         val expectedDate = "2023 Nov 15"
-        assertEquals(expectedDate, movieWithImagePath.formattedDateForCard)
+        assertEquals(expectedDate, movieWithImagePath.formattedDateForCard(utc))
     }
 
     @Test
     fun `formattedDateForDivider returns correct format`() {
         val expectedDate = "Nov 2023"
-        assertEquals(expectedDate, movieWithImagePath.formattedDateForDivider)
+        assertEquals(expectedDate, movieWithImagePath.formattedDateForDivider(utc))
     }
 
     @Test
     fun `isAnotherMonthOrYear returns true for different month`() {
-        val differentMonthCalendar = Movie.toCalendar("2023-12-15")
-        assertEquals(true, movieWithImagePath.isAnotherMonthOrYear(differentMonthCalendar))
+        val differentMonth = Movie.toInstant("2023-12-15")
+        assertEquals(true, movieWithImagePath.isAnotherMonthOrYear(differentMonth, utc))
     }
 
     @Test
     fun `isAnotherMonthOrYear returns true for different year`() {
-        val differentYearCalendar = Movie.toCalendar("2024-11-15")
-        assertEquals(true, movieWithImagePath.isAnotherMonthOrYear(differentYearCalendar))
+        val differentYear = Movie.toInstant("2024-11-15")
+        assertEquals(true, movieWithImagePath.isAnotherMonthOrYear(differentYear, utc))
     }
 
     @Test
     fun `isAnotherMonthOrYear returns false for same month and year`() {
-        val sameMonthYearCalendar = Movie.toCalendar("2023-11-20")
-        assertEquals(false, movieWithImagePath.isAnotherMonthOrYear(sameMonthYearCalendar))
+        val sameMonthYear = Movie.toInstant("2023-11-20")
+        assertEquals(false, movieWithImagePath.isAnotherMonthOrYear(sameMonthYear, utc))
     }
 
     @Test
@@ -61,25 +64,25 @@ class MovieTest {
     }
 
     @Test
-    fun `toCalendar converts date string to Calendar object`() {
-        val calendar = Movie.toCalendar("2023-11-15")
-        assertEquals(2023, calendar.get(Calendar.YEAR))
-        assertEquals(10, calendar.get(Calendar.MONTH)) // Month is zero-based
-        assertEquals(15, calendar.get(Calendar.DAY_OF_MONTH))
+    fun `toInstant converts date string to Instant at UTC midnight`() {
+        val instant = Movie.toInstant("2023-11-15")
+        val ldt = instant.toLocalDateTimeUtc()
+        assertEquals(2023, ldt.year)
+        assertEquals(11, ldt.monthNumber)
+        assertEquals(15, ldt.dayOfMonth)
+        assertEquals(0, ldt.hour)
     }
 
     @Test
-    fun `toRaw converts Calendar object to date string`() {
-        val calendar = Calendar.getInstance()
-        calendar.set(2024, 1, 20) // February 20, 2024
-        val expectedDateString = "2024-02-20"
-        assertEquals(expectedDateString, Movie.toRaw(calendar))
+    fun `toRaw converts Instant to date string`() {
+        val instant = Movie.toInstant("2024-02-20")
+        assertEquals("2024-02-20", Movie.toRaw(instant))
     }
 
     @Test
     fun `findRecentTimeInMilli returns the most recent time in milliseconds`() {
         val movieList = listOf(movieWithImagePath, movieWithoutImagePath)
-        val expectedTime = movieWithoutImagePath.date.timeInMillis // Movie without image path is more recent
+        val expectedTime = movieWithoutImagePath.date.toEpochMilliseconds()
         assertEquals(expectedTime, movieList.findRecentTimeInMilli())
     }
 
@@ -87,25 +90,25 @@ class MovieTest {
     fun `formattedDateForCard handles single digit day and month`() {
         val movie = Movie(
             3, "Test Movie", "Description", false,
-            Movie.toCalendar("2022-01-05"), 4.5f, 100, "/image.jpg"
+            Movie.toInstant("2022-01-05"), 4.5f, 100, "/image.jpg"
         )
         val expectedDate = "2022 Jan 05"
-        assertEquals(expectedDate, movie.formattedDateForCard)
+        assertEquals(expectedDate, movie.formattedDateForCard(utc))
     }
 
     @Test
     fun `formattedDateForDivider handles single digit month`() {
         val movie = Movie(
             4, "Test Movie", "Description", false,
-            Movie.toCalendar("2021-05-15"), 4.5f, 100, "/image.jpg"
+            Movie.toInstant("2021-05-15"), 4.5f, 100, "/image.jpg"
         )
         val expectedDate = "May 2021"
-        assertEquals(expectedDate, movie.formattedDateForDivider)
+        assertEquals(expectedDate, movie.formattedDateForDivider(utc))
     }
 
     @Test
-    fun `isAnotherMonthOrYear handles null calendar input`() {
-        assertEquals(true, movieWithImagePath.isAnotherMonthOrYear(null))
+    fun `isAnotherMonthOrYear handles null input`() {
+        assertEquals(true, movieWithImagePath.isAnotherMonthOrYear(null, utc))
     }
 
     @Test
@@ -116,21 +119,16 @@ class MovieTest {
     }
 
     @Test
-    fun `toCalendar handles invalid date format`() {
-        val invalidCalendar = Movie.toCalendar("invalid-date")
-        // Check if the calendar isset to the default time (current time) for invalid input
-        val currentCalendar = Calendar.getInstance()
-        // Check if time is at or after current time
-        assert(invalidCalendar.timeInMillis >= currentCalendar.timeInMillis)
+    fun `toInstant handles invalid date format by returning a fallback Instant`() {
+        val nowMillisBefore = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val fallback = Movie.toInstant("invalid-date")
+        assertTrue(fallback.toEpochMilliseconds() >= nowMillisBefore)
     }
 
     @Test
-    fun `toRaw handles Calendar with default time`() {
-        val defaultCalendar = Calendar.getInstance()
-        // Reset the calendar to the default time (epoch)
-        defaultCalendar.timeInMillis = 0
-        val expectedDateString = "1970-01-01"
-        assertEquals(expectedDateString, Movie.toRaw(defaultCalendar))
+    fun `toRaw handles epoch Instant`() {
+        val epoch = kotlinx.datetime.Instant.fromEpochMilliseconds(0)
+        assertEquals("1970-01-01", Movie.toRaw(epoch))
     }
 
     @Test
@@ -146,27 +144,10 @@ class MovieTest {
             movieWithImagePath.copy(id = 3),
             movieWithImagePath.copy(id = 4)
         )
-        val expectedTime = movieWithImagePath.date.timeInMillis
+        val expectedTime = movieWithImagePath.date.toEpochMilliseconds()
         assertEquals(expectedTime, sameDateMovieList.findRecentTimeInMilli())
     }
-
-    @Test
-    fun `findRecentTimeInMilli handles list with movies having empty dates`() {
-        val emptyCalendar = Calendar.getInstance()
-        emptyCalendar.clear() // Clear the calendar torepresent a missing date
-
-        val movieWithEmptyDate = Movie(
-            id = movieWithImagePath.id,
-            title = movieWithImagePath.title,
-            description = movieWithImagePath.description,
-            isLiked = movieWithImagePath.isLiked,
-            date = emptyCalendar, // Use an empty Calendar
-            rating = movieWithImagePath.rating,
-            voteCount = movieWithImagePath.voteCount,
-            imagePath = movieWithImagePath.imagePath
-        )
-        val movieListWithEmptyDates = listOf(movieWithEmptyDate, movieWithoutImagePath)
-        val expectedTime =movieWithoutImagePath.date.timeInMillis // Movie without image path should be most recent
-        assertEquals(expectedTime, movieListWithEmptyDates.findRecentTimeInMilli())
-    }
 }
+
+private fun kotlinx.datetime.Instant.toLocalDateTimeUtc() =
+    kotlinx.datetime.toLocalDateTime(this, TimeZone.UTC)

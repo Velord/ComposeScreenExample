@@ -6,14 +6,14 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.util.Calendar
 
 class UpdateMovieLikeUCTest {
 
     private val movie = Movie(
-        1, "Movie Title", "Description", false, Calendar.getInstance(),
+        1, "Movie Title", "Description", false, Clock.System.now(),
         4.5f, 100, "image.jpg"
     )
 
