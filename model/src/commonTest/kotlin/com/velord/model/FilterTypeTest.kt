@@ -25,7 +25,7 @@ class FilterTypeTest {
 
     @Test
     fun `createAll returns list with both default filters`() {
-        val allFilters = FilterType.createAll()
+        val allFilters = FilterType.ALL
         assertEquals(2, allFilters.size)
         assertEquals(FilterType.Rating.Default, allFilters[0])
         assertEquals(FilterType.VoteCount.Default, allFilters[1])

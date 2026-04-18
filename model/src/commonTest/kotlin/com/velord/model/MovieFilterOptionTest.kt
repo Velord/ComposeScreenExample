@@ -10,7 +10,7 @@ class MovieFilterOptionTest {
 
     @Test
     fun `createAll returns list with both default filter options`() {
-        val allOptions = MovieFilterOption.createAll()
+        val allOptions = MovieFilterOption.ALL
         assertEquals(2, allOptions.size)
         assertEquals(FilterType.Rating.Default,allOptions[0].type)
         assertEquals(FilterType.VoteCount.Default, allOptions[1].type)

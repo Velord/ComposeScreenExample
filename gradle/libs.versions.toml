@@ -1272,5 +1272,6 @@ convention-koin = { id = "velord.koin" }
 convention-feature-ui = { id = "velord.feature.ui" }
 convention-feature-ui-koin = { id = "velord.feature.ui.koin" }
 convention-domain-usecase = { id = "velord.domain.usecase" }
+convention-domain-usecase-kmp = { id = "velord.domain.usecase.kmp" }
 convention-widget-glance = { id = "velord.widget.glance" }
 convention-kmp-library = { id = "velord.kmp.library" }

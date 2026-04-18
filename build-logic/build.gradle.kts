@@ -49,6 +49,10 @@ gradlePlugin {
             id = "velord.kmp.library"
             implementationClass = "com.velord.buildlogic.KmpLibraryConventionPlugin"
         }
+        register("domainUsecaseKmpConvention") {
+            id = "velord.domain.usecase.kmp"
+            implementationClass = "com.velord.buildlogic.DomainUsecaseKmpConventionPlugin"
+        }
     }
 }
 

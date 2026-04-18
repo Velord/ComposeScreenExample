@@ -1,7 +1,9 @@
 plugins {
-    alias(libs.plugins.convention.domain.usecase)
+    alias(libs.plugins.convention.domain.usecase.kmp)
 }
 
-android {
-    namespace = "com.velord.usecase.setting"
+kotlin {
+    android {
+        namespace = "com.velord.usecase.setting"
+    }
 }
