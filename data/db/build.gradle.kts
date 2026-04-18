@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    // Modules
+    // Module
     implementation(project(":model"))
     // Room
     ksp(libs.androidx.room.compiler)

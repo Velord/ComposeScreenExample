@@ -7,10 +7,10 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":infrastructure:util"))
-    implementation(project(":core:core-resource"))
-    implementation(project(":core:core-ui"))
-    // Templates
+    // Module
+    implementation(projects.infrastructure.util)
+    implementation(projects.core.coreResource)
+    implementation(projects.core.coreUi)
+    // Template
     implementation(libs.bundles.compose.all)
 }

@@ -9,8 +9,8 @@ android {
 }
 
 dependencies {
-    // Modules
+    // Module
     implementation(project(":model"))
-    // Templates
+    // Template
     implementation(libs.bundles.kotlin.module)
 }

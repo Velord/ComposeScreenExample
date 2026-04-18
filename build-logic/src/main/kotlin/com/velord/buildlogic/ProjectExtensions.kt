@@ -71,8 +71,14 @@ internal fun Project.kspLibrary(libraryName: String) {
     )
 }
 
-internal fun Project.projectDependency(projectPath: String) =
-    project(projectPath)
+internal fun Project.implementationProject(project: ProjectModule) {
+    implementationProject(project.path)
+}
+
+internal fun Project.projectDependency(projectPath: String) = project(projectPath)
+
+internal fun Project.projectDependency(project: ProjectModule) =
+    projectDependency(project.path)
 
 internal fun KotlinMultiplatformExtension.commonMainImplementationLibrary(
     project: Project,
@@ -90,4 +96,11 @@ internal fun KotlinMultiplatformExtension.commonMainImplementationProject(
     sourceSets.commonMain.dependencies {
         implementation(project.projectDependency(projectPath))
     }
+}
+
+internal fun KotlinMultiplatformExtension.commonMainImplementationProject(
+    project: Project,
+    projectPath: ProjectModule,
+) {
+    commonMainImplementationProject(project, projectPath.path)
 }

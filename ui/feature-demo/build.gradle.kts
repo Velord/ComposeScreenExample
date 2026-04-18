@@ -7,16 +7,16 @@ android {
 }
 
 dependencies {
-    // Modules Infrastructure
-    implementation(project(":infrastructure:util"))
-    implementation(project(":infrastructure:config"))
-    // Modules Core
-    implementation(project(":core:core-resource"))
-    implementation(project(":core:core-navigation"))
-    implementation(project(":core:core-ui"))
-    // Modules Ui
-    implementation(project(":ui:sharedviewmodel"))
-    implementation(project(":ui:feature-bottomnavigation"))
-    // Templates
+    // Module Infrastructure
+    implementation(projects.infrastructure.util)
+    implementation(projects.infrastructure.config)
+    // Module Core
+    implementation(projects.core.coreResource)
+    implementation(projects.core.coreNavigation)
+    implementation(projects.core.coreUi)
+    // Module Ui
+    implementation(projects.ui.sharedviewmodel)
+    implementation(projects.ui.featureBottomnavigation)
+    // Template
     implementation(libs.bundles.compose.all)
 }

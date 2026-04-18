@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    // Templates
+    // Template
     implementation(libs.bundles.kotlin.module)
 }
 

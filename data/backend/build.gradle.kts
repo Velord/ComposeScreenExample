@@ -10,10 +10,10 @@ android {
 
 dependencies {
     // Module
-    implementation(project(":model"))
-    implementation(project(":infrastructure:util"))
-    implementation(project(":data:datastore"))
-    // Templates
+    implementation(projects.model)
+    implementation(projects.infrastructure.util)
+    implementation(projects.data.datastore)
+    // Template
     implementation(libs.androidx.core.ktx)
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.network.all)

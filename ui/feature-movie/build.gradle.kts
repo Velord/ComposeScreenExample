@@ -7,14 +7,14 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":model"))
-    implementation(project(":infrastructure:util"))
-    implementation(project(":core:core-resource"))
-    implementation(project(":core:core-ui"))
-    implementation(project(":ui:sharedviewmodel"))
-    implementation(project(":domain:usecase-movie"))
-    // Templates
+    // Module
+    implementation(projects.model)
+    implementation(projects.infrastructure.util)
+    implementation(projects.core.coreResource)
+    implementation(projects.core.coreUi)
+    implementation(projects.ui.sharedviewmodel)
+    implementation(projects.domain.usecaseMovie)
+    // Template
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.coil)
     implementation(libs.androidx.constraint.compose)

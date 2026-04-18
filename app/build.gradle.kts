@@ -134,27 +134,27 @@ android {
 }
 
 dependencies {
-    implementation(project(":model"))
+    implementation(projects.model)
     // Module Infrastructure
-    implementation(project(":infrastructure:util"))
-    implementation(project(":infrastructure:navigation"))
-    implementation(project(":infrastructure:di"))
-    implementation(project(":infrastructure:config"))
+    implementation(projects.infrastructure.util)
+    implementation(projects.infrastructure.navigation)
+    implementation(projects.infrastructure.di)
+    implementation(projects.infrastructure.config)
     // Module Core
-    implementation(project(":core:core-ui"))
-    implementation(project(":core:core-navigation"))
-    implementation(project(":core:core-resource"))
+    implementation(projects.core.coreUi)
+    implementation(projects.core.coreNavigation)
+    implementation(projects.core.coreResource)
     // Module Data
-    implementation(project(":data:os"))
+    implementation(projects.data.os)
     // Module UI
-    implementation(project(":ui:sharedviewmodel"))
+    implementation(projects.ui.sharedviewmodel)
     // Module UI Feature
-    implementation(project(":ui:feature-bottomnavigation"))
-    implementation(project(":ui:feature-splash"))
+    implementation(projects.ui.featureBottomnavigation)
+    implementation(projects.ui.featureSplash)
     // Module UI Widget
-    implementation(project(":ui:widget-refreshableimage"))
-    implementation(project(":ui:widget-counter"))
-    // Templates
+    implementation(projects.ui.widgetRefreshableimage)
+    implementation(projects.ui.widgetCounter)
+    // Template
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.ui)

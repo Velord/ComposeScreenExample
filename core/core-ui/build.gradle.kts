@@ -10,10 +10,10 @@ android {
 
 dependencies {
     // Module
-    implementation(project(":model"))
-    implementation(project(":infrastructure:util"))
-    implementation(project(":core:core-resource"))
-    implementation(project(":ui:sharedviewmodel"))
+    implementation(projects.model)
+    implementation(projects.infrastructure.util)
+    implementation(projects.core.coreResource)
+    implementation(projects.ui.sharedviewmodel)
     // Template
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.androidx.module)

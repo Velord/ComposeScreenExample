@@ -8,7 +8,7 @@ class DomainUsecaseConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         applyPlugin("convention-android-library")
 
-        implementationProject(":model")
+        implementationProject(ProjectModule.MODEL)
         implementationBundle("kotlin-module")
     }
 }

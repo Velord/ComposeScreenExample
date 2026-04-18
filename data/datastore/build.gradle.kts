@@ -9,9 +9,9 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":model"))
-    // Templates
+    // Module
+    implementation(projects.model)
+    // Template
     implementation(libs.androidx.datastore)
     implementation(libs.kotlin.serialization.json)
 }

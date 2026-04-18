@@ -7,7 +7,7 @@ android {
 }
 
 dependencies {
-    // Templates
+    // Template
     implementation(libs.bundles.kotlin.all)
     implementation(libs.bundles.androidx.module)
     implementation(libs.androidx.core.splashscreen)

@@ -9,9 +9,9 @@ class WidgetGlanceConventionPlugin : Plugin<Project> {
         applyPlugin("convention-android-library")
         applyPlugin("convention-android-compose")
 
-        implementationProject(":infrastructure:util")
-        implementationProject(":core:core-resource")
-        implementationProject(":core:core-ui")
+        implementationProject(ProjectModule.INFRASTRUCTURE_UTIL)
+        implementationProject(ProjectModule.CORE_RESOURCE)
+        implementationProject(ProjectModule.CORE_UI)
 
         implementationBundle("kotlin-module")
         implementationBundle("androidx-glance")

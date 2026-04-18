@@ -8,14 +8,14 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":model"))
+    // Module
+    implementation(projects.model)
     // Data
-    implementation(project(":data:datastore"))
-    implementation(project(":data:appstate"))
-    implementation(project(":data:backend"))
-    implementation(project(":data:db"))
+    implementation(projects.data.datastore)
+    implementation(projects.data.appstate)
+    implementation(projects.data.backend)
+    implementation(projects.data.db)
     // Use case
-    implementation(project(":domain:usecase-setting"))
-    implementation(project(":domain:usecase-movie"))
+    implementation(projects.domain.usecaseSetting)
+    implementation(projects.domain.usecaseMovie)
 }

@@ -10,11 +10,11 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":model"))
-    implementation(project(":infrastructure:util"))
-    implementation(project(":domain:usecase-setting"))
-    // Templates
+    // Module
+    implementation(projects.model)
+    implementation(projects.infrastructure.util)
+    implementation(projects.domain.usecaseSetting)
+    // Template
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.androidx.module)
 }
