@@ -1,7 +1,7 @@
 package com.velord.navigation.compose.destinations.navigator
 
-import android.util.Log
 import androidx.navigation.NavHostController
+import co.touchlab.kermit.Logger
 import com.ramcosta.composedestinations.generated.navigation.destinations.DialogDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.FlowSummatorDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.HintPhoneNumberDestinationDestination
@@ -14,13 +14,15 @@ import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.feature.demo.DemoDestinationNavigationEvent
 import com.velord.feature.demo.DemoNavigator
 
+private val log = Logger.withTag("LogBackStack - BottomNavigatorDestinations")
+
 internal class BottomNavigatorDestinations(
     private val parent: SupremeNavigatorDestinations,
     private val navController: NavHostController
 ) : DemoNavigator, CameraRecordingNavigator by parent {
 
     init {
-        Log.d("LogBackStack - BottomNavigatorDestinations", "init: ${this.navController}")
+        log.d { "init: ${this.navController}" }
     }
 
     override fun goTo(dest: DemoDestinationNavigationEvent) {

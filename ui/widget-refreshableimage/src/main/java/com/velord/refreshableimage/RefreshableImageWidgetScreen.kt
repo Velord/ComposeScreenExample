@@ -1,6 +1,5 @@
 package com.velord.refreshableimage
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,12 +32,14 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
+import co.touchlab.kermit.Logger
 import com.velord.core.resource.R
 import com.velord.core.ui.compose.glance.MainGlanceTheme
 import kotlin.math.roundToInt
 
 // On emulator redundant compositions with wrong LocalSize.current ruin all flow
 private const val ERROR_COMPOSITION_WIDTH = 675
+private val log = Logger.withTag("RefreshableImageWidget")
 
 @Composable
 private fun Preferences.createImageParameters(generateNewSeed: Boolean): ImageParameters {
@@ -53,7 +54,7 @@ private fun Preferences.createImageParameters(generateNewSeed: Boolean): ImagePa
 
 private fun Preferences.getImageFilePath(parameters: ImageParameters): String {
     val imageKey = RefreshableImageWidget.getImageUriKey(parameters)
-    Log.d("RefreshableImageWidget", "Screen: seed - ${parameters.seed}; UriKey - $imageKey")
+    log.d { "Screen: seed - ${parameters.seed}; UriKey - $imageKey" }
     return this[imageKey] ?: ""
 }
 
@@ -67,7 +68,7 @@ internal fun NewImageWidgetScreen() {
     val sourceUrl = RefreshableImageWidgetWorker.createUrl(parameters)
     val isDownloading = prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] ?: false
 
-    Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl")
+    log.d { "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl" }
     MainGlanceTheme(RefreshableImageWidget()) {
         Content(
             filePath = filePath,
@@ -154,7 +155,7 @@ private fun CurrentSize(
 @Composable
 private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
     val isDownloading = if (url.isEmpty()) true else isDownloadingNewImage
-    Log.d("RefreshableImageWidget", "isDownloading: id - $isDownloading")
+    log.d { "isDownloading: id - $isDownloading" }
     val prefs = currentState<Preferences>()
     Row(
         modifier = GlanceModifier

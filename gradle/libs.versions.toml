@@ -249,6 +249,7 @@ composeDestinations = "2.3.0"
 voyager = "1.1.0-beta03"
 velordMultipleBackstack = "0.5.9.1"
 # Logging
+kermit = "2.1.0"
 slf4j = "1.7.36"
 takt = "2.1.1"
 rebugger = "1.0.1"
@@ -661,6 +662,7 @@ voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", v
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
 # Logging
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 slf4j-android = { module = "org.slf4j:slf4j-android", version.ref = "slf4j" }
 takt = { module = "jp.wasabeef:takt", version.ref = "takt" }
 rebugger = { module = "io.github.theapache64:rebugger", version.ref = "rebugger" }
@@ -1234,6 +1236,7 @@ voyager = [
 ## Compose Destinations
 compose-destinations = ["compose-destinations", "compose-destinations-bottomsheet"]
 # Logging
+logging-kmp = ["kermit"]
 logging = ["slf4j-android", "takt", "rebugger"]
 # Test
 test = [

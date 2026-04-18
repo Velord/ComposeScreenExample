@@ -1,6 +1,5 @@
 package com.velord.navigation.compose.nav3.navigator
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -11,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import co.touchlab.kermit.Logger
 import com.velord.bottomnavigation.screen.compose.BottomNavigator
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
@@ -23,6 +23,7 @@ private val BOTTOM_TAB_TOP_LEVEL_ROUTES = setOf(
     GraphNav3.BottomTab.Demo.DemoDestinationNav3,
     GraphNav3.BottomTab.SettingDestinationNav3
 )
+private val nav3Log = Logger.withTag("LogBackStack - SupremeNavigatorNav3")
 
 internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<NavKey>) :
     // BottomNavigationScreen setup
@@ -38,7 +39,7 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Nav
     private val backStackNavigatorState: MutableState<BackStackNavigator?> = mutableStateOf(null)
 
     init {
-        Log.d("LogBackStack - SupremeNavigatorNav3", "init: ${this.backStack}")
+        nav3Log.d { "init: ${this.backStack}" }
     }
 
     override fun onTabClick(tab: TabState) {
@@ -61,13 +62,13 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Nav
         // Nav3 relies on our custom `popToRoot()` extension which manually removes elements
         // from the `SnapshotStateList` of the currently active tab until only the root remains.
         if (isSelected) {
-            Log.d("LogBackStack", "onTabClickNav3: Selected same tab ($item). Popping to root.")
+            Logger.d(tag = "LogBackStack") { "onTabClickNav3: Selected same tab ($item). Popping to root." }
             backStackNavigator.popToRoot()
             return
         }
 
         val direction = getRouteOnTabClickNav3(item)
-        Log.d("LogBackStack", "onTabClickNav3: Navigating to $item")
+        Logger.d(tag = "LogBackStack") { "onTabClickNav3: Navigating to $item" }
 
         // DIFFERENCE FROM VANILLA:
         // Vanilla uses `popUpTo(rootGraph) { saveState = true }` and `restoreState = true`
@@ -163,13 +164,13 @@ private fun logTabClickNav3(tab: BottomNavigationItem, state: NavigationState) {
     val currentStack = state.backStacks[currentTopLevel]
     val currentDest = currentStack?.lastOrNull() ?: currentTopLevel
 
-    Log.d("LogBackStack", """
+    Logger.d(tag = "LogBackStack") { """
             --- ON TAB CLICK ($tab) ---
             Current Top Level Tab: $currentTopLevel
             Current Dest Location: $currentDest
             Stack Size for Tab: ${currentStack?.size ?: 0}
             -------------------------------------
-        """.trimIndent())
+        """.trimIndent() }
 }
 
 @Composable
@@ -194,6 +195,6 @@ private fun LogNavigationEventsNav3(navigationState: NavigationState, label: Str
             // so we omit the (Lifecycle: STARTED) log here, focusing on the Route keys.
         }
         sb.append("--------------------------------\n")
-        Log.d("LogBackStack", sb.toString())
+        Logger.d(tag = "LogBackStack") { sb.toString() }
     }
 }

@@ -1,6 +1,5 @@
 package com.velord.feature.movie.component
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,6 +27,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MoviePagination
@@ -44,6 +44,7 @@ import my.nanihadesuka.compose.ScrollbarSettings
 import kotlin.time.Clock
 
 private const val SCROLL_DELAY_MS = 300L
+private val log = Logger.withTag("Pagination")
 
 private fun LazyListState.getLastVisibleIndex(): Int {
     return layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
@@ -65,7 +66,7 @@ private fun rememberMoviePageState(
     val rosterSizeState = remember { mutableIntStateOf(roster.size) }
     val isAtBottomState = remember {
         derivedStateOf {
-            Log.d("Pagination", "isAtBottomState: ${listState.getLastVisibleIndex()} ${rosterSizeState.intValue}")
+            log.d { "isAtBottomState: ${listState.getLastVisibleIndex()} ${rosterSizeState.intValue}" }
             MoviePagination.shouldLoadMore(
                 lastVisibleIndex = listState.getLastVisibleIndex(),
                 totalItemCount = rosterSizeState.intValue
@@ -79,7 +80,7 @@ private fun rememberMoviePageState(
 
     LaunchedEffect(isAtBottomState) {
         snapshotFlow { isAtBottomState.value }
-            .onEach { Log.d("Pagination", "isAtBottomState: ${isAtBottomState.value}") }
+            .onEach { log.d { "isAtBottomState: ${isAtBottomState.value}" } }
             .filter { it }
             .collect {
                 val lastVisibleIndex = listState.getLastVisibleIndex()

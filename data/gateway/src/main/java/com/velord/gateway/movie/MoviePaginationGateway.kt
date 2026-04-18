@@ -1,6 +1,6 @@
 package com.velord.gateway.movie
 
-import android.util.Log
+import co.touchlab.kermit.Logger
 import com.velord.backend.ktor.MovieNetworkDataSource
 import com.velord.backend.model.MoviePageRequest
 import com.velord.db.movie.MovieDbDataSource
@@ -17,6 +17,7 @@ import org.koin.core.annotation.Single
 
 private const val INITIAL_PAGE = 1
 private const val TAG = "MoviePaginationGateway"
+private val log = Logger.withTag(TAG)
 
 // Load First Page at init
 // Than load from Db
@@ -30,7 +31,7 @@ class MoviePaginationGateway(
 ) {
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.d(TAG, "Error: $throwable")
+        log.d { "Error: $throwable" }
     }
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob() + errorHandler)
     private var currentPage = INITIAL_PAGE
@@ -46,10 +47,10 @@ class MoviePaginationGateway(
     }
 
     suspend fun load(): MovieLoadNewPageResult = try {
-        Log.d(TAG, "loadNewPage: $currentPage")
+        log.d { "loadNewPage: $currentPage" }
         val fromDb = loadFromDb(currentPage)
         val isPageFull = fromDb.value == MoviePagination.PAGE_COUNT
-        Log.d(TAG, "loadNewPage fromDb: $fromDb")
+        log.d { "loadNewPage fromDb: $fromDb" }
         val newSize = if (isPageFull) {
             fromDb
         } else {
@@ -85,8 +86,8 @@ class MoviePaginationGateway(
         )
         val movieRoster = http.getMovie(newPage)
         val newRoster = movieRoster.results.map { it.toDomain() }
-        Log.d(TAG, "loadFromNetwork newRoster: $newRoster")
-        Log.d(TAG, "loadFromNetwork size: ${newRoster.size}")
+        log.d { "loadFromNetwork newRoster: $newRoster" }
+        log.d { "loadFromNetwork size: ${newRoster.size}" }
         movieGateway.update { movies ->
             (movies + newRoster).toSet().toList()
         }
@@ -104,7 +105,7 @@ class MoviePaginationGateway(
             sortType = sortType,
             filterRoster = filterRoster
         )
-        Log.d(TAG, "loadFromDb: $fromDb")
+        log.d { "loadFromDb: $fromDb" }
         movieGateway.update { movies ->
             (movies + fromDb).toSet().toList()
         }

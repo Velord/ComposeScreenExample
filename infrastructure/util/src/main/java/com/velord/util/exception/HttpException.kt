@@ -1,6 +1,6 @@
 package com.velord.util.exception
 
-import android.util.Log
+import co.touchlab.kermit.Logger
 import kotlinx.serialization.json.Json
 import okhttp3.ResponseBody
 import retrofit2.HttpException
@@ -9,13 +9,15 @@ import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
+private val log = Logger.withTag("BaseException")
+
 fun Throwable.toBaseException(): BaseException = when (this) {
     is UnknownHostException, is ConnectException, is SocketTimeoutException -> BaseException.NoInternet
     is BaseException -> this
     is HttpException -> parseHttpException()
     else -> BaseException.Unknown
 }.also {
-    Log.d("BaseException", this.toString())
+    log.d { this.toString() }
 }
 
 private val json = Json {
@@ -34,6 +36,6 @@ private fun HttpException.parseHttpException(): BaseException = try {
         else -> BaseException.Unknown
     }
 } catch (e: Exception) {
-    Log.d("Throwable.toAppException", e.toString())
+    Logger.d(tag = "Throwable.toAppException") { e.toString() }
     BaseException.Unknown
 }

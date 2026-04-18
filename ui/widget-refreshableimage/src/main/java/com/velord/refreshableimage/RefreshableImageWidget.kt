@@ -3,7 +3,6 @@ package com.velord.refreshableimage
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Parcelable
-import android.util.Log
 import androidx.compose.ui.unit.DpSize
 import androidx.core.net.toUri
 import androidx.datastore.preferences.core.Preferences
@@ -22,8 +21,11 @@ import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
+import co.touchlab.kermit.Logger
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 import kotlinx.parcelize.Parcelize
+
+private val log = Logger.withTag("RefreshableImageWidget")
 
 @Parcelize
 internal class ImageParameters(
@@ -138,7 +140,7 @@ internal class RefreshCallback : ActionCallback {
         ) {
             "Missing refreshableImageWidgetKey"
         }
-        Log.d("RefreshableImageWidget", "RefreshCallback.onAction: $glanceId; Size: $newParameters")
+        log.d { "RefreshCallback.onAction: $glanceId; Size: $newParameters" }
 
         val manager = GlanceAppWidgetManager(context)
         manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {

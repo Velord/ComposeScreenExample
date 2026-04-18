@@ -1,7 +1,7 @@
 package com.velord.sharedviewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import co.touchlab.kermit.Logger
 import com.velord.util.exception.BaseException
 import com.velord.util.exception.toBaseException
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.coroutines.CoroutineContext
 
 private const val TAG = "CoroutineScopeViewModel"
+private val log = Logger.withTag(TAG)
 
 open class CoroutineScopeViewModel: ViewModel(), CoroutineScope {
 
@@ -20,7 +21,7 @@ open class CoroutineScopeViewModel: ViewModel(), CoroutineScope {
     private val errorHandler = CoroutineExceptionHandler { _, error ->
         runCatching {
             val exception = error.toBaseException()
-            Log.d(TAG, "Exception: $exception: $error")
+            log.d { "Exception: $exception: $error" }
             exceptionEvent.tryEmit(exception)
         }.onFailure {
             it.printStackTrace()

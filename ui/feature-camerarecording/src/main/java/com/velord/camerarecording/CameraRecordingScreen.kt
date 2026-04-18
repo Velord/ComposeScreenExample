@@ -1,7 +1,6 @@
 package com.velord.camerarecording
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Recorder
@@ -48,9 +47,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.touchlab.kermit.Logger
 import com.velord.camerarecording.model.createVideoCapture
 import com.velord.core.resource.R
 import com.velord.core.ui.util.ObserveSharedFlow
+
+private val log = Logger.withTag("CameraRecordingScreen")
 
 @Composable
 fun CameraRecordingScreen(
@@ -85,8 +87,8 @@ fun CameraRecordingScreen(
 //        )
     }
 
-    Log.d("CameraRecordingScreen", "permissionCameraState: ${uiState.value.permissionCamera}")
-    Log.d("CameraRecordingScreen", "permissionAudioState: ${uiState.value.permissionAudio}")
+    log.d { "permissionCameraState: ${uiState.value.permissionCamera}" }
+    log.d { "permissionAudioState: ${uiState.value.permissionAudio}" }
     Content(
         uiState = uiState.value,
         onAction = viewModel::onAction

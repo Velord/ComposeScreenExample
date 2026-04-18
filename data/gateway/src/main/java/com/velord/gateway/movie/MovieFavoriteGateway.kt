@@ -1,6 +1,6 @@
 package com.velord.gateway.movie
 
-import android.util.Log
+import co.touchlab.kermit.Logger
 import com.velord.appstate.AppStateDataSource
 import com.velord.db.movie.MovieDbDataSource
 import com.velord.model.movie.Movie
@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Single
 
+private val log = Logger.withTag("MovieFavoriteGateway")
+
 @Single
 class MovieFavoriteGateway(
     private val appState: AppStateDataSource,
@@ -21,7 +23,7 @@ class MovieFavoriteGateway(
 ) {
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.d("MovieFavoriteGateway", "CoroutineExceptionHandler: $throwable")
+        log.d { "CoroutineExceptionHandler: $throwable" }
     }
     private val scope = CoroutineScope(Job() + Dispatchers.IO + errorHandler)
 

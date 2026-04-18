@@ -1,11 +1,11 @@
 package com.velord.navigation.compose
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import co.touchlab.kermit.Logger
 import com.ramcosta.composedestinations.utils.route
 
 @SuppressLint("RestrictedApi")
@@ -23,7 +23,7 @@ fun LogBackStack(
 
 private fun Collection<NavBackStackEntry>.print(tag: String, prefix: String = "stack") {
     val stack = toMutableList().toRouteArgs().toTypedArray().contentToString()
-    Log.d("LogBackStack - $tag", "$prefix = $stack")
+    Logger.d(tag = "LogBackStack - $tag") { "$prefix = $stack" }
 }
 
 private fun MutableList<NavBackStackEntry>.toRouteArgs(): List<String> = map { entry ->
