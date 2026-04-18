@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.convention.domain.usecase.kmp)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
@@ -8,12 +9,8 @@ kotlin {
     }
 
     sourceSets {
-        desktopTest.dependencies {
-            implementation(libs.junit)
-            implementation(libs.coroutine.test)
-            implementation(libs.mock)
-            implementation(libs.mock.agent)
-            implementation(libs.turbine)
+        commonTest.dependencies {
+            implementation(libs.bundles.test.kmp)
         }
     }
 }

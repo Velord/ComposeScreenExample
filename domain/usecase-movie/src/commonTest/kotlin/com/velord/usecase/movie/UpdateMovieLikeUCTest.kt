@@ -2,13 +2,16 @@ package com.velord.usecase.movie
 
 import com.velord.model.movie.Movie
 import com.velord.usecase.movie.model.UpdateMovieResult
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
+import dev.mokkery.MockMode
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
+import dev.mokkery.verify.VerifyMode
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.time.Clock
 
 class UpdateMovieLikeUCTest {
 
@@ -19,29 +22,29 @@ class UpdateMovieLikeUCTest {
 
     @Test
     fun `invoke should toggle isLiked and update dataSource`() = runTest {
-        val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
+        val dataSource = mock<MovieFavoriteDS>(MockMode.autoUnit)
         val useCase = UpdateMovieLikeUCImpl(dataSource)
         val result = useCase(movie)
 
         assertEquals(UpdateMovieResult.Success, result)
-        coVerify { dataSource.update(movie.copy(isLiked = true)) }
+        verifySuspend { dataSource.update(movie.copy(isLiked = true)) }
     }
 
     @Test
     fun `invoke should handle toggling isLiked from true to false`() = runTest {
-        val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
+        val dataSource = mock<MovieFavoriteDS>(MockMode.autoUnit)
         val useCase = UpdateMovieLikeUCImpl(dataSource)
         val result = useCase(movie.copy(isLiked = true))
 
         assertEquals(UpdateMovieResult.Success, result)
-        coVerify { dataSource.update(movie.copy(isLiked = false)) }
+        verifySuspend { dataSource.update(movie.copy(isLiked = false)) }
     }
 
     @Test
     fun `invoke should return DbError when dataSource throws an exception`() = runTest {
         val errorMessage = "Database Error"
-        val dataSource = mockk<MovieFavoriteDS> {
-            coEvery { update(any()) } throws Exception(errorMessage)
+        val dataSource = mock<MovieFavoriteDS> {
+            everySuspend { update(any()) } throws Exception(errorMessage)
         }
         val useCase = UpdateMovieLikeUCImpl(dataSource)
         val result = useCase(movie)
@@ -51,8 +54,8 @@ class UpdateMovieLikeUCTest {
 
     @Test
     fun `invoke should return DbError with empty message when exception has no message`() = runTest {
-        val dataSource = mockk<MovieFavoriteDS> {
-            coEvery { update(any()) } throws Exception()
+        val dataSource = mock<MovieFavoriteDS> {
+            everySuspend { update(any()) } throws Exception()
         }
         val useCase = UpdateMovieLikeUCImpl(dataSource)
         val result = useCase(movie)
@@ -62,40 +65,39 @@ class UpdateMovieLikeUCTest {
 
     @Test
     fun `invoke should update dataSource with the correct movie ID`() = runTest {
-        val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
+        val dataSource = mock<MovieFavoriteDS>(MockMode.autoUnit)
         val useCase = UpdateMovieLikeUCImpl(dataSource)
         useCase(movie)
 
-        coVerify { dataSource.update(movie.copy(isLiked = true)) }
+        verifySuspend { dataSource.update(movie.copy(isLiked = true)) }
     }
-
 
     @Test
     fun `invoke should handle consecutive toggles on the same movie`() = runTest {
-        val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
+        val dataSource = mock<MovieFavoriteDS>(MockMode.autoUnit)
         val useCase = UpdateMovieLikeUCImpl(dataSource)
 
-        useCase(movie) // Toggle once
-        val result = useCase(movie.copy(isLiked = true))// Toggle again, starting with isLiked = true
+        useCase(movie)
+        val result = useCase(movie.copy(isLiked = true))
 
         assertEquals(UpdateMovieResult.Success, result)
-        coVerify(exactly = 2) { dataSource.update(any()) } // Verify update is called twice
-        coVerify { dataSource.update(movie.copy(isLiked = false)) } // Verify the final state is isLiked = false
+        verifySuspend(VerifyMode.exactly(2)) { dataSource.update(any()) }
+        verifySuspend { dataSource.update(movie.copy(isLiked = false)) }
     }
 
     @Test
     fun `invoke should handle movies with same ID but different other properties`() = runTest {
-        val dataSource = mockk<MovieFavoriteDS>(relaxed = true)
+        val dataSource = mock<MovieFavoriteDS>(MockMode.autoUnit)
         val useCase = UpdateMovieLikeUCImpl(dataSource)
-        val movie2 = movie.copy(title = "Different Title", rating = 3.0f) // Same ID, different properties
+        val movie2 = movie.copy(title = "Different Title", rating = 3.0f)
 
         useCase(movie)
         val result = useCase(movie2)
 
         assertEquals(UpdateMovieResult.Success, result)
-        coVerify {
+        verifySuspend {
             dataSource.update(movie.copy(isLiked = true))
-            dataSource.update(movie2.copy(isLiked = true)) // Verify both movies are updated independently
+            dataSource.update(movie2.copy(isLiked = true))
         }
     }
 }

@@ -3,17 +3,17 @@ package com.velord.usecase.movie
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
-import io.mockk.every
-import io.mockk.mockk
+import dev.mokkery.every
+import dev.mokkery.mock
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import kotlin.time.Clock
 
 class GetAllMovieUCTest {
@@ -43,10 +43,10 @@ class GetAllMovieUCTest {
 
     @Test
     fun `invoke should return movies sorted by descending date`() = runTest {
-        val movieDS = mockk<MovieDS> {
+        val movieDS = mock<MovieDS> {
             every { getFlow() } returns flowOf(listOf(olderMovie, newerMovie))
         }
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getSelectedFlow() } returns flowOf(MovieSortOption(SortType.DateDescending, true))
         }
 
@@ -59,10 +59,10 @@ class GetAllMovieUCTest {
 
     @Test
     fun `invoke should return movies sorted by ascending date`() = runTest {
-        val movieDS = mockk<MovieDS> {
+        val movieDS = mock<MovieDS> {
             every { getFlow() } returns flowOf(listOf(newerMovie, olderMovie))
         }
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getSelectedFlow() } returns flowOf(MovieSortOption(SortType.DateAscending, true))
         }
 
@@ -75,10 +75,10 @@ class GetAllMovieUCTest {
 
     @Test
     fun `invoke should return merge error when datasource throws immediately`() {
-        val movieDS = mockk<MovieDS> {
+        val movieDS = mock<MovieDS> {
             every { getFlow() } throws RuntimeException("boom")
         }
-        val movieSortDS = mockk<MovieSortDS>()
+        val movieSortDS = mock<MovieSortDS>()
 
         val result = GetAllMovieUCImpl(movieDS, movieSortDS).invoke()
 

@@ -3,21 +3,21 @@ package com.velord.usecase.movie
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
+import dev.mokkery.every
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+import kotlin.time.Clock
 
 class GetFavoriteMovieUCTest {
 
@@ -27,18 +27,18 @@ class GetFavoriteMovieUCTest {
     private val movie2 = Movie(2, "Movie 2", "Description 2", true, date2, 3.8f, 50, "imagePath2")
     private val expectedMovies = listOf(movie1, movie2)
 
-    private val favoriteDS = mockk<MovieFavoriteDS> {
+    private val favoriteDS = mock<MovieFavoriteDS> {
         every { getFlow() } returns flow { emit(expectedMovies) }
-        every { get() } returns emptyList() // Mocking to avoid unnecessary interactions
-        coEvery { update(any()) } returns Unit
+        every { get() } returns emptyList()
+        everySuspend { update(any()) } returns Unit
     }
 
     private val expectedOptions = listOf(
         MovieSortOption(SortType.DateAscending, false),
         MovieSortOption(SortType.DateDescending, true)
     )
-    private val movieSortDS = mockk<MovieSortDS> {
-        every { getSelectedFlow() } returns flowOf(expectedOptions[1]) // Default to DateDescending
+    private val movieSortDS = mock<MovieSortDS> {
+        every { getSelectedFlow() } returns flowOf(expectedOptions[1])
         every { getFlow() } returns flow { emit(expectedOptions) }
     }
 
@@ -51,12 +51,12 @@ class GetFavoriteMovieUCTest {
         val movies = mutableListOf<Movie>()
         (result as GetFavoriteMovieResult.Success).flow.collect { movies.addAll(it) }
         assertEquals(expectedMovies.size, movies.size)
-        assertTrue(movies[0].date > movies[1].date) // Verify sorting
+        assertTrue(movies[0].date > movies[1].date)
     }
 
     @Test
     fun `invoke should return Success with empty list when no favorites are available`() = runTest {
-        val emptyFavoriteDS = mockk<MovieFavoriteDS> {
+        val emptyFavoriteDS = mock<MovieFavoriteDS> {
             every { getFlow() } returns flowOf(emptyList())
         }
         val getFavoriteMovieUC = GetFavoriteMovieUCImpl(emptyFavoriteDS, movieSortDS)
@@ -71,7 +71,7 @@ class GetFavoriteMovieUCTest {
     @Test
     fun `invoke should handle exceptions from favoriteDS and return MergeError`() = runTest {
         val exception = RuntimeException("Simulated error from favoriteDS")
-        val errorFavoriteDS = mockk<MovieFavoriteDS> {
+        val errorFavoriteDS = mock<MovieFavoriteDS> {
             every { getFlow() } throws exception
         }
         val getFavoriteMovieUC = GetFavoriteMovieUCImpl(errorFavoriteDS, movieSortDS)
@@ -84,8 +84,8 @@ class GetFavoriteMovieUCTest {
     @Test
     fun `invoke should handle exceptions during sorting and return Success with initial movies`() = runTest {
         val exception = RuntimeException("Simulated sorting exception")
-        val errorFavoriteDS = mockk<MovieFavoriteDS> {
-            every { getFlow() }returns flow {
+        val errorFavoriteDS = mock<MovieFavoriteDS> {
+            every { getFlow() } returns flow {
                 emit(expectedMovies)
                 throw exception
             }
@@ -93,29 +93,25 @@ class GetFavoriteMovieUCTest {
         val getFavoriteMovieUC = GetFavoriteMovieUCImpl(errorFavoriteDS, movieSortDS)
         val result = getFavoriteMovieUC()
 
-        // Log the result object
         println("Result: $result")
 
         assertTrue(result is GetFavoriteMovieResult.Success)
         val movies = mutableListOf<Movie>()
         (result as GetFavoriteMovieResult.Success).flow.collect { movies.addAll(it) }
 
-        // Log the collected movies
         println("Collected Movies:$movies")
 
-        // Sort expectedMovies in descending order of date
         val expectedSortedMovies = expectedMovies.sortedByDescending { it.date }
-
-        assertEquals(expectedSortedMovies, movies) // Verify the initial emission
+        assertEquals(expectedSortedMovies, movies)
     }
 
     @Test
     fun `invoke should apply sort option changes correctly`() = runTest {
-        val dynamicMovieSortDS = mockk<MovieSortDS> {
+        val dynamicMovieSortDS = mock<MovieSortDS> {
             every { getSelectedFlow() } returns flow {
-                emit(expectedOptions[0]) // Emit DateAscending first
+                emit(expectedOptions[0])
                 delay(50)
-                emit(expectedOptions[1]) // Then emit DateDescending
+                emit(expectedOptions[1])
             }
         }
         val getFavoriteMovieUC = GetFavoriteMovieUCImpl(favoriteDS, dynamicMovieSortDS)
@@ -124,12 +120,10 @@ class GetFavoriteMovieUCTest {
         assertTrue(result is GetFavoriteMovieResult.Success)
         val resultFlow = (result as GetFavoriteMovieResult.Success).flow
         val emissions = mutableListOf<List<Movie>>()
-        resultFlow.take(2).collect { emissions.add(it) } // Collect two emissions
+        resultFlow.take(2).collect { emissions.add(it) }
 
-        assertEquals(2, emissions.size) // Verify we got two emissions
-        // Ascending (first emission) - Check IDs since dates might be very close
+        assertEquals(2, emissions.size)
         assertTrue(emissions[0][0].id < emissions[0][1].id)
-        // Descending (second emission) - Check IDs since dates might be very close
         assertTrue(emissions[1][0].id > emissions[1][1].id)
     }
 }

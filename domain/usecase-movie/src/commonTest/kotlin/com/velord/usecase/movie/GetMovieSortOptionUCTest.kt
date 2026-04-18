@@ -2,8 +2,8 @@ package com.velord.usecase.movie
 
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
-import io.mockk.every
-import io.mockk.mockk
+import dev.mokkery.every
+import dev.mokkery.mock
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.emptyFlow
@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class GetMovieSortOptionUCTest {
 
@@ -24,7 +24,7 @@ class GetMovieSortOptionUCTest {
             MovieSortOption(SortType.DateDescending, true)
         )
 
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getFlow() } returns flow { emit(expectedOptions) }
         }
 
@@ -38,7 +38,7 @@ class GetMovieSortOptionUCTest {
 
     @Test
     fun `invoke should return an empty flow when movieSortDS emits an empty flow`() = runTest {
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getFlow() } returns emptyFlow()
         }
 
@@ -56,7 +56,7 @@ class GetMovieSortOptionUCTest {
             MovieSortOption(SortType.DateAscending, false)
         )
 
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getFlow() } returns flow {
                 emit(expectedOptions)
                 throw RuntimeException("Mocked Exception")
@@ -83,7 +83,7 @@ class GetMovieSortOptionUCTest {
             MovieSortOption(SortType.DateDescending, true)
         )
 
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getFlow() } returns flow {
                 emit(expectedOptions1)
                 emit(expectedOptions2)
@@ -102,14 +102,14 @@ class GetMovieSortOptionUCTest {
 
     @Test
     fun `invoke should handle a delayed exception in movieSortDS getFlow and terminate`() = runTest {
-        val expectedOptions =listOf(
+        val expectedOptions = listOf(
             MovieSortOption(SortType.DateAscending, false)
         )
 
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getFlow() } returns flow {
                 emit(expectedOptions)
-                kotlinx.coroutines.delay(100) // Introduce a delay
+                kotlinx.coroutines.delay(100)
                 throw RuntimeException("Mocked Exception")
             }
         }
@@ -126,14 +126,14 @@ class GetMovieSortOptionUCTest {
         }
 
         assertEquals(expectedOptions, actualOptions)
-        assertTrue(exceptionThrown) // Assert that an exception was thrown after the first emission
+        assertTrue(exceptionThrown)
     }
 
     @Test
     fun `invoke should handle a flow that emits an empty list`() = runTest {
-        val expectedOptions = emptyList<MovieSortOption>() // Explicitly an empty list
+        val expectedOptions = emptyList<MovieSortOption>()
 
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getFlow() } returns flow { emit(expectedOptions) }
         }
 
@@ -142,12 +142,12 @@ class GetMovieSortOptionUCTest {
 
         val actualOptions = resultFlow.first()
 
-        assertEquals(expectedOptions, actualOptions) // Asserting an empty list emission
+        assertEquals(expectedOptions, actualOptions)
     }
 
     @Test
     fun `invoke should handle a flow with multiple empty list emissions`() = runTest {
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getFlow() } returns flow {
                 emit(emptyList())
                 emit(emptyList())
@@ -160,7 +160,7 @@ class GetMovieSortOptionUCTest {
 
         val emissionsCount = resultFlow.count()
 
-        assertEquals(3, emissionsCount) // Verify three empty list emissions
+        assertEquals(3, emissionsCount)
     }
 
     @Test
@@ -169,7 +169,7 @@ class GetMovieSortOptionUCTest {
             MovieSortOption(SortType.DateDescending, true)
         )
 
-        val movieSortDS = mockk<MovieSortDS> {
+        val movieSortDS = mock<MovieSortDS> {
             every { getFlow() } returns flow {
                 emit(emptyList())
                 emit(expectedOptions)
@@ -180,7 +180,7 @@ class GetMovieSortOptionUCTest {
         val getMovieSortOptionUC = GetMovieSortOptionUCImpl(movieSortDS)
         val resultFlow = getMovieSortOptionUC()
 
-        val actualOptions = resultFlow.drop(1).first() // Collect the non-empty emission
+        val actualOptions = resultFlow.drop(1).first()
 
         assertEquals(expectedOptions, actualOptions)
     }

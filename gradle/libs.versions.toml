@@ -255,6 +255,7 @@ rebugger = "1.0.1"
 # Testing
 junit = "4.13.2"
 mockk = "1.14.9"
+mokkery = "3.3.0"
 turbine = "1.2.1"
 # Code quality
 detekt = "2.0.0-alpha.2"
@@ -670,6 +671,7 @@ coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ver
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mock = { module = "io.mockk:mockk", version.ref = "mockk" }
 mock-agent = { module = "io.mockk:mockk-agent-jvm", version.ref = "mockk" }
+mokkery-coroutines = { module = "dev.mokkery:mokkery-coroutines", version.ref = "mokkery" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
@@ -1239,6 +1241,11 @@ test = [
     "androidx-test-ext-junit", "androidx-arch-testing",
     "turbine", "mock", "mock-agent"
 ]
+# KMP Test (commonTest)
+test-kmp = [
+    "kotlin-test", "coroutine-test",
+    "turbine", "mokkery-coroutines"
+]
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
@@ -1261,6 +1268,7 @@ detekt = { id = "dev.detekt", version.ref = "detekt" }
 dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "googleKsp" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 google-firebase-crashlytic = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlyticPlugin" }
 google-gms-services = { id = "com.google.gms.google-services", version.ref = "googleGmsServicesPlugin" }
 # Convention Plugin
