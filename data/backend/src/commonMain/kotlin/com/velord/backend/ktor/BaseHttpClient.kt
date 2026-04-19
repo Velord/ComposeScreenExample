@@ -19,6 +19,7 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import kotlin.time.Clock
 
 private const val DEVICE_TIME_HEADER = "deviceTime"
 private const val TIMEOUT = 2000L
@@ -66,7 +67,7 @@ class BaseHttpClient(
             url.protocol = URLProtocol.HTTPS
             url(baseUrl.full)
 
-            header(DEVICE_TIME_HEADER, System.currentTimeMillis().toString())
+            header(DEVICE_TIME_HEADER, Clock.System.now().toEpochMilliseconds().toString())
         }
     }
 

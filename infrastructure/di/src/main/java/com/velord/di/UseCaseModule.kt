@@ -1,11 +1,11 @@
 package com.velord.di
 
 import com.velord.gateway.movie.MovieByGateway
+import com.velord.gateway.movie.MovieFavoriteGateway
+import com.velord.gateway.movie.MoviePaginationGateway
 import com.velord.gateway.movie.MovieSortGateway
-import com.velord.gateway.movie.android.MovieFavoriteGateway
-import com.velord.gateway.movie.android.MoviePaginationGateway
+import com.velord.gateway.setting.GetThemeConfigGateway
 import com.velord.gateway.setting.SwitchThemeConfigGateway
-import com.velord.gateway.setting.android.GetThemeConfigGateway
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetFavoriteMovieUC
 import com.velord.usecase.movie.GetMovieSortOptionUC

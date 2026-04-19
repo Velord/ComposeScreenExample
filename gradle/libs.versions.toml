@@ -291,6 +291,8 @@ androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorl
 androidx-core-uwb = { module = "androidx.core.uwb:uwb", version.ref = "androidxCoreUWB" }
 androidx-cursoradapter = { module = "androidx.cursoradapter:cursoradapter", version.ref = "androidxCursorAdapter" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "androidxDatastore" }
+androidx-datastore-core-okio = { module = "androidx.datastore:datastore-core-okio", version.ref = "androidxDatastore" }
 androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "androidxDocumentFile" }
 androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
 androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "androidxDrawerLayout" }
@@ -441,6 +443,7 @@ androidx-recylerview-selection = { module = "androidx.recyclerview:recyclerview-
 androidx-resourceinspection-annotation = { module = "androidx.resourceinspection:resourceinspection-annotation", version.ref = "androidxResourceInspection" }
 androidx-resourceinspection-processor = { module = "androidx.resourceinspection:resourceinspection-processor", version.ref = "androidxResourceInspection" }
 # AndroidX Room
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxRoom" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidx-room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "androidxRoom" }

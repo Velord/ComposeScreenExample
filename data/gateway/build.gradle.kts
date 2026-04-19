@@ -12,17 +12,14 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.model)
             implementation(projects.data.appstate)
+            implementation(projects.data.backend)
+            implementation(projects.data.datastore)
+            implementation(projects.data.db)
             implementation(projects.domain.usecaseMovie)
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.kermit)
             implementation(libs.koin.core)
             api(libs.koin.annotation)
-        }
-
-        androidMain.dependencies {
-            implementation(projects.data.datastore)
-            implementation(projects.data.backend)
-            implementation(projects.data.db)
         }
 
         named("commonMain").configure {
