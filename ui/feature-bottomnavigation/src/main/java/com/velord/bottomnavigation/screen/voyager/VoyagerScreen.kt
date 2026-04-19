@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -23,9 +22,11 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.velord.bottomnavigation.screen.compose.BottomBar
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.press_again_to_exit
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.util.context.getActivity
+import org.jetbrains.compose.resources.stringResource
 
 private fun BottomNavigationItem.toTab(): BottomNavigationTab = when (this) {
     BottomNavigationItem.Camera -> BottomNavigationTab.Camera
@@ -58,7 +59,7 @@ fun VoyagerScreen(viewModel: BottomNavigationVoyagerVM) {
         onTabClick = viewModel::onTabClick,
     )
 
-    val str = stringResource(id = R.string.press_again_to_exit)
+    val str = stringResource(Res.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),

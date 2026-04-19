@@ -227,6 +227,7 @@ squareRetrofit = "3.0.0"
 squareOkhttp3Interceptor = "5.3.2"
 ktor = "3.4.1"
 # Compose
+composePlugin = "1.10.3"
 composeDefault = "1.10.4" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeIcon = "1.7.8"
 composeAccompanist = "0.37.3"
@@ -249,12 +250,14 @@ composeDestinations = "2.3.0"
 voyager = "1.1.0-beta03"
 velordMultipleBackstack = "0.5.9.1"
 # Logging
+kermit = "2.1.0"
 slf4j = "1.7.36"
 takt = "2.1.1"
 rebugger = "1.0.1"
 # Testing
 junit = "4.13.2"
 mockk = "1.14.9"
+mokkery = "3.3.0"
 turbine = "1.2.1"
 # Code quality
 detekt = "2.0.0-alpha.2"
@@ -288,6 +291,8 @@ androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorl
 androidx-core-uwb = { module = "androidx.core.uwb:uwb", version.ref = "androidxCoreUWB" }
 androidx-cursoradapter = { module = "androidx.cursoradapter:cursoradapter", version.ref = "androidxCursorAdapter" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "androidxDatastore" }
+androidx-datastore-core-okio = { module = "androidx.datastore:datastore-core-okio", version.ref = "androidxDatastore" }
 androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "androidxDocumentFile" }
 androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
 androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "androidxDrawerLayout" }
@@ -438,6 +443,7 @@ androidx-recylerview-selection = { module = "androidx.recyclerview:recyclerview-
 androidx-resourceinspection-annotation = { module = "androidx.resourceinspection:resourceinspection-annotation", version.ref = "androidxResourceInspection" }
 androidx-resourceinspection-processor = { module = "androidx.resourceinspection:resourceinspection-processor", version.ref = "androidxResourceInspection" }
 # AndroidX Room
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxRoom" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidx-room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "androidxRoom" }
@@ -534,6 +540,7 @@ androidx-workmanager-multiprocess = { module = "androidx.work:work-multiprocess"
 androidx-workmanager-testing = { module = "androidx.work:work-testing", version.ref = "androidxWorkManager" }
 # Compose Core  -------------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------------------------
+compose-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composePlugin" }
 compose-animation = { module = "androidx.compose.animation:animation", version.ref = "composeDefault" }
 # Compose Runtime
 compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeDefault" }
@@ -579,7 +586,7 @@ hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", ve
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 # DI koin
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
-koin-core = { module = "io.insert-koin:koin-core" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinBom" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-navigation = { module = "io.insert-koin:koin-androidx-navigation" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose" }
@@ -660,6 +667,7 @@ voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", v
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
 # Logging
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 slf4j-android = { module = "org.slf4j:slf4j-android", version.ref = "slf4j" }
 takt = { module = "jp.wasabeef:takt", version.ref = "takt" }
 rebugger = { module = "io.github.theapache64:rebugger", version.ref = "rebugger" }
@@ -670,6 +678,8 @@ coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ver
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mock = { module = "io.mockk:mockk", version.ref = "mockk" }
 mock-agent = { module = "io.mockk:mockk-agent-jvm", version.ref = "mockk" }
+mokkery-coroutines = { module = "dev.mokkery:mokkery-coroutines", version.ref = "mokkery" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
@@ -1231,6 +1241,7 @@ voyager = [
 ## Compose Destinations
 compose-destinations = ["compose-destinations", "compose-destinations-bottomsheet"]
 # Logging
+logging-kmp = ["kermit"]
 logging = ["slf4j-android", "takt", "rebugger"]
 # Test
 test = [
@@ -1238,22 +1249,36 @@ test = [
     "androidx-test-ext-junit", "androidx-arch-testing",
     "turbine", "mock", "mock-agent"
 ]
+# KMP Test (commonTest)
+test-kmp = [
+    "kotlin-test", "coroutine-test",
+    "turbine", "mokkery-coroutines"
+]
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 [plugins]
+# Android
 android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
+android-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "gradle" }
+# Kotlin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+# Compose
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
+# 3-rd Party
 detekt = { id = "dev.detekt", version.ref = "detekt" }
 dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "googleKsp" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 google-firebase-crashlytic = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlyticPlugin" }
 google-gms-services = { id = "com.google.gms.google-services", version.ref = "googleGmsServicesPlugin" }
 # Convention Plugin
@@ -1265,4 +1290,6 @@ convention-koin = { id = "velord.koin" }
 convention-feature-ui = { id = "velord.feature.ui" }
 convention-feature-ui-koin = { id = "velord.feature.ui.koin" }
 convention-domain-usecase = { id = "velord.domain.usecase" }
+convention-domain-usecase-kmp = { id = "velord.domain.usecase.kmp" }
 convention-widget-glance = { id = "velord.widget.glance" }
+convention-kmp-library = { id = "velord.kmp.library" }

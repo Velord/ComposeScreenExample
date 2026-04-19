@@ -1,7 +1,6 @@
 package com.velord.bottomnavigation.screen.compose
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,16 +30,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.touchlab.kermit.Logger
 import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.press_again_to_exit
 import com.velord.core.ui.compose.component.AnimatableLabeledIcon
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.util.context.getActivity
+import org.jetbrains.compose.resources.stringResource
+
+private val log = Logger.withTag("LogBackStack")
 
 @Composable
 internal fun ScreenSetup(
@@ -51,13 +54,13 @@ internal fun ScreenSetup(
 
     // Log whenever the state changes
     LaunchedEffect(backHandlingState.value) {
-        Log.d("LogBackStack", "ScreenSetup: State Changed -> ${backHandlingState.value}")
+        log.d { "ScreenSetup: State Changed -> ${backHandlingState.value}" }
     }
 
     val isEnabledState = remember {
         derivedStateOf {
             val enabled = backHandlingState.value.isEnabled
-            Log.d("LogBackStack", "ScreenSetup: Derived isEnabled -> $enabled")
+            log.d { "ScreenSetup: Derived isEnabled -> $enabled" }
             enabled
         }
     }
@@ -79,8 +82,8 @@ internal fun ScreenSetup(
     // In that case, we can simply not call graphCompletedHandling() at all,
     // and the back handling will not be enabled,
     // allowing the system to handle the back press as usual.
-    Log.d("LogBackStack", "ScreenSetup: Parent BackHandler Registered. Enabled=${isEnabledState.value}")
-    val str = stringResource(id = R.string.press_again_to_exit)
+    log.d { "ScreenSetup: Parent BackHandler Registered. Enabled=${isEnabledState.value}" }
+    val str = stringResource(Res.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),

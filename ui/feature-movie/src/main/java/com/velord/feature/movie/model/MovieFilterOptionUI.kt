@@ -1,14 +1,16 @@
 package com.velord.feature.movie.model
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.State
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.filter_by_rating
+import com.velord.core.resource.filter_by_vote_count
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.MovieFilterOption
+import org.jetbrains.compose.resources.StringResource
 
 data class MovieFilterOptionUI(
     val type: FilterType,
-    @StringRes val name: Int
+    val name: StringResource
 ) {
 
     fun getMinMaxStr(
@@ -34,8 +36,8 @@ data class MovieFilterOptionUI(
         fun fromDomain(option: MovieFilterOption): MovieFilterOptionUI = MovieFilterOptionUI(
             type = option.type,
             name = when (option.type) {
-                is FilterType.Rating -> R.string.filter_by_rating
-                is FilterType.VoteCount -> R.string.filter_by_vote_count
+                is FilterType.Rating -> Res.string.filter_by_rating
+                is FilterType.VoteCount -> Res.string.filter_by_vote_count
             }
         )
     }

@@ -2,7 +2,6 @@ package com.velord.bottomnavigation.screen.jetpack
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import co.touchlab.kermit.Logger
 import com.velord.bottomnavigation.R
 import com.velord.bottomnavigation.databinding.FragmentBottomNavigationBinding
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal const val TAG = "BottomNav"
+private val log = Logger.withTag(TAG)
 
 private fun Context.fireToast(text: String) {
     val description = "I am the first at $text"
@@ -41,7 +42,6 @@ fun Fragment.addTestCallback(
 //    ) {
 //        requireContext().fireToast(tag)
 //        viewModel.graphCompletedHandling()
-//        Log.d(TAG, "onBackPressedDispatcher")
 //    }
     requireActivity().onBackPressedDispatcher.addCallback(
         this,
@@ -50,7 +50,7 @@ fun Fragment.addTestCallback(
         requireContext().fireToast(tag)
         isEnabled = false
         viewModel.graphCompletedHandling()
-        Log.d(TAG, "onBackPressedDispatcher")
+        log.d { "onBackPressedDispatcher" }
     }
 }
 

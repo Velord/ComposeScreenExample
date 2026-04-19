@@ -4,10 +4,11 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class DomainUsecaseConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) = with(target) {
-        pluginManager.apply("velord.android.library")
 
-        addProjectDependency("implementation", ":model")
-        addBundle("implementation", "kotlin-module")
+    override fun apply(target: Project) = with(target) {
+        applyPlugin("convention-android-library")
+
+        implementationProject(ProjectModule.MODEL)
+        implementationBundle("kotlin-module")
     }
 }

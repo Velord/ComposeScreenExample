@@ -1,7 +1,6 @@
 package com.velord.navigation.compose.vanilla.navigator
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.collection.forEach
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
@@ -15,12 +14,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import co.touchlab.kermit.Logger
 import com.velord.bottomnavigation.screen.compose.BottomNavigator
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.TabState
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.navigation.compose.vanilla.GraphVanilla
 import com.velord.navigation.compose.vanilla.graph.setupBottomNavigationGraphVanilla
+
+private val vanillaLog = Logger.withTag("LogBackStack - SupremeNavigatorVanilla")
 
 internal class SupremeNavigatorVanilla(private val supremeNavController: NavHostController) :
     // BottomNavigationScreen setup
@@ -33,7 +35,7 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
     private val bottomTabNavControllerState: MutableState<NavHostController?> = mutableStateOf(null)
 
     init {
-        Log.d("LogBackStack - SupremeNavigatorVanilla", "init: ${this.supremeNavController}")
+        vanillaLog.d { "init: ${this.supremeNavController}" }
     }
 
     override fun onTabClick(tab: TabState) {
@@ -163,13 +165,13 @@ internal fun logTabClick(controller: NavHostController, tab: TabState) {
     val foundStartId = controller.graph.findStartDestination().id
     val currentDest = controller.currentDestination?.route
     val startName = controller.graph.findNode(foundStartId)?.route ?: "Unknown ID: $foundStartId"
-    Log.d("LogBackStack", """
+    Logger.d(tag = "LogBackStack") { """
             --- ON TAB CLICK (${tab.current}) ---
             Current Location: $currentDest
             Root Graph Start ID: $graphStartId
             FindStartDestination: $startName
             -------------------------------------
-        """.trimIndent())
+        """.trimIndent() }
 }
 
 @Suppress("MagicNumber")
@@ -190,7 +192,7 @@ internal fun LogNavigationEvents(navController: NavHostController, label: String
                 sb.append("      (Lifecycle: ${backStackEntry.lifecycle.currentState})\n")
             }
             sb.append("--------------------------------\n")
-            Log.d("LogBackStack", sb.toString())
+            Logger.d(tag = "LogBackStack") { sb.toString() }
         }
     }
 }

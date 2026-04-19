@@ -12,9 +12,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.ksp.generated.module
 
-fun Application.startKoin(
-    vararg moduleToInstall: Module
-) {
+fun Application.startKoin(vararg moduleToInstall: Module) {
     val app = this
     startKoin {
         androidLogger()

@@ -18,12 +18,19 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.open_dialog
+import com.velord.core.resource.open_flow_summator
+import com.velord.core.resource.open_hint_phone_number
+import com.velord.core.resource.open_modifier_demo
+import com.velord.core.resource.open_morph_demo
+import com.velord.core.resource.open_movie
+import com.velord.core.resource.open_shape_demo
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DemoScreen(
@@ -60,31 +67,31 @@ private fun Content(onAction: (DemoUiAction) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OpenButton(
-            text = stringResource(id = R.string.open_shape_demo),
+            text = stringResource(Res.string.open_shape_demo),
             onClick = { onAction(DemoUiAction.OpenShapeClick) }
         )
         OpenButton(
-            text = stringResource(id = R.string.open_modifier_demo),
+            text = stringResource(Res.string.open_modifier_demo),
             onClick = { onAction(DemoUiAction.OpenModifierClick) }
         )
         OpenButton(
-            text = stringResource(id = R.string.open_flow_summator),
+            text = stringResource(Res.string.open_flow_summator),
             onClick = { onAction(DemoUiAction.OpenSummatorClick) }
         )
         OpenButton(
-            text = stringResource(id = R.string.open_morph_demo),
+            text = stringResource(Res.string.open_morph_demo),
             onClick = { onAction(DemoUiAction.OpenMorphClick) }
         )
         OpenButton(
-            text = stringResource(id = R.string.open_hint_phone_number),
+            text = stringResource(Res.string.open_hint_phone_number),
             onClick = { onAction(DemoUiAction.OpenHintPhoneNumberClick) }
         )
         OpenButton(
-            text = stringResource(id = R.string.open_movie),
+            text = stringResource(Res.string.open_movie),
             onClick = { onAction(DemoUiAction.OpenMovieClick) }
         )
         OpenButton(
-            text = stringResource(id = R.string.open_dialog),
+            text = stringResource(Res.string.open_dialog),
             onClick = { onAction(DemoUiAction.OpenDialogClick) }
         )
     }

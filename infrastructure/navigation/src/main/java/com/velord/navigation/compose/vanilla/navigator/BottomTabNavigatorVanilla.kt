@@ -1,7 +1,7 @@
 package com.velord.navigation.compose.vanilla.navigator
 
-import android.util.Log
 import androidx.navigation.NavController
+import co.touchlab.kermit.Logger
 import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 
 internal interface BottomTabNavigatorVanilla {
@@ -18,7 +18,7 @@ internal fun onTabClickVanilla(
     navigator: BottomTabNavigatorVanilla,
 ) {
     if (isSelected) {
-        Log.d("LogBackStack", "onTabClickVanilla: Selected same tab ($item). Popping to start.")
+        Logger.d(tag = "LogBackStack") { "onTabClickVanilla: Selected same tab ($item). Popping to start." }
         // When we click again on a bottom bar item and it was already selected
         // we want to pop the back stack until the initial destination of this bottom bar item
         val start = navigator.getTabStartRoute(item)
@@ -27,7 +27,7 @@ internal fun onTabClickVanilla(
     }
 
     val destination = navigator.getRouteOnTabClick(item)
-    Log.d("LogBackStack", "onTabClickVanilla: Navigating to $item")
+    Logger.d(tag = "LogBackStack") { "onTabClickVanilla: Navigating to $item" }
 
     navController.navigate(destination) {
         // Pop up to the root of the graph to

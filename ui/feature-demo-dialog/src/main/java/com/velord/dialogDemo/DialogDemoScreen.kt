@@ -16,17 +16,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.show_one_button_dialog
+import com.velord.core.resource.show_two_buttons_dialog
 import com.velord.dialogDemo.component.DialogActions
 import com.velord.dialogDemo.component.DialogAnimations
 import com.velord.dialogDemo.component.DialogPredefinedAnimation
 import com.velord.dialogDemo.component.OneButtonDialog
 import com.velord.dialogDemo.component.TwoButtonDialog
+import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
@@ -68,11 +70,11 @@ private fun Content(onAction: (DialogDemoUiAction) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OpenButton(
-            text = stringResource(R.string.show_two_buttons_dialog),
+            text = stringResource(Res.string.show_two_buttons_dialog),
             onClick = { onAction(DialogDemoUiAction.OpenTwoButtonDialogClick) }
         )
         OpenButton(
-            text = stringResource(R.string.show_one_button_dialog),
+            text = stringResource(Res.string.show_one_button_dialog),
             onClick = { onAction(DialogDemoUiAction.OpenOneButtonDialogClick) },
         )
     }

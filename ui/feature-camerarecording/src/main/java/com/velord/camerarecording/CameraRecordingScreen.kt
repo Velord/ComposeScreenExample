@@ -1,8 +1,6 @@
 package com.velord.camerarecording
 
 import android.annotation.SuppressLint
-import android.util.Log
-import androidx.annotation.StringRes
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Recorder
 import androidx.camera.video.VideoCapture
@@ -42,15 +40,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.touchlab.kermit.Logger
 import com.velord.camerarecording.model.createVideoCapture
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.can_not_get_permission_for_camera
+import com.velord.core.resource.can_not_get_permission_for_mic
+import com.velord.core.resource.front
+import com.velord.core.resource.rear
 import com.velord.core.ui.util.ObserveSharedFlow
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+
+private val log = Logger.withTag("CameraRecordingScreen")
 
 @Composable
 fun CameraRecordingScreen(
@@ -85,8 +91,8 @@ fun CameraRecordingScreen(
 //        )
     }
 
-    Log.d("CameraRecordingScreen", "permissionCameraState: ${uiState.value.permissionCamera}")
-    Log.d("CameraRecordingScreen", "permissionAudioState: ${uiState.value.permissionAudio}")
+    log.d { "permissionCameraState: ${uiState.value.permissionCamera}" }
+    log.d { "permissionAudioState: ${uiState.value.permissionAudio}" }
     Content(
         uiState = uiState.value,
         onAction = viewModel::onAction
@@ -134,7 +140,7 @@ private fun PermissionInfo(
         if (uiState.permissionCamera.isForbidden) {
             PermissionIsNotGrantedState(
                 icon = Icons.Filled.CameraAlt,
-                label = R.string.can_not_get_permission_for_camera,
+                label = Res.string.can_not_get_permission_for_camera,
                 onClick = onCheckPermissionClick
             )
         }
@@ -142,7 +148,7 @@ private fun PermissionInfo(
             Spacer(modifier = Modifier.size(32.dp))
             PermissionIsNotGrantedState(
                 icon = Icons.Filled.PermCameraMic,
-                label = R.string.can_not_get_permission_for_mic,
+                label = Res.string.can_not_get_permission_for_mic,
                 onClick = onCheckPermissionClick
             )
         }
@@ -152,7 +158,7 @@ private fun PermissionInfo(
 @Composable
 private fun PermissionIsNotGrantedState(
     icon: ImageVector,
-    @StringRes label: Int,
+    label: StringResource,
     onClick: () -> Unit
 ) {
     Row(
@@ -174,7 +180,7 @@ private fun PermissionIsNotGrantedState(
             tint = MaterialTheme.colorScheme.error
         )
         Text(
-            text = stringResource(id = label),
+            text = stringResource(label),
             modifier = Modifier.padding(8.dp),
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             style = MaterialTheme.typography.bodyMedium,
@@ -297,9 +303,9 @@ private fun BoxScope.CameraSelector(
         horizontalAlignment = Alignment.Start
     ) {
         val label = if (uiState.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
-            R.string.rear
+            Res.string.rear
         } else {
-            R.string.front
+            Res.string.front
         }
         Text(
             text = stringResource(label),

@@ -9,11 +9,11 @@ android {
 
 dependencies {
     // Module
-    implementation(project(":infrastructure:util"))
-    implementation(project(":core:core-resource"))
-    implementation(project(":core:core-navigation"))
-    implementation(project(":core:core-ui"))
-    implementation(project(":ui:sharedviewmodel"))
+    implementation(projects.infrastructure.util)
+    implementation(projects.core.coreResource)
+    implementation(projects.core.coreNavigation)
+    implementation(projects.core.coreUi)
+    implementation(projects.ui.sharedviewmodel)
     // Template
     implementation(libs.bundles.compose.all)
     implementation(libs.bundles.kotlin.serialization)

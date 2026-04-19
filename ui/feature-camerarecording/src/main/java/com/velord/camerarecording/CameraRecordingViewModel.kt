@@ -11,10 +11,8 @@ import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
-import androidx.core.os.bundleOf
 import com.velord.camerarecording.model.createRecordingViaFileSystem
 import com.velord.core.navigation.fragment.NavigationDataFragment
-import com.velord.core.navigation.fragment.entryPoint.SETTINGS_SOURCE
 import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.navigation.voyager.NavigationDataVoyager
 import com.velord.core.navigation.voyager.SharedScreenVoyager
@@ -96,8 +94,10 @@ class CameraRecordingViewModel(
             )
             navigationEventVoyager.emit(nav)
 
-            val bundle = bundleOf(SETTINGS_SOURCE to SettingsSourceFragment.CameraRecording)
-            val data = NavigationDataFragment(R.id.from_cameraRecordingFragment_to_settingsFragment, bundle)
+            val data = NavigationDataFragment(
+                id = R.id.from_cameraRecordingFragment_to_settingsFragment,
+                payload = SettingsSourceFragment.CameraRecording.encode(),
+            )
             navigationEventJetpack.emit(data)
             navigationEventDestination.emit(CameraRecordingNavigationEvent.SETTINGS)
         }
@@ -169,15 +169,17 @@ class CameraRecordingViewModel(
     }
 
     private fun onNewRecording(newCapture: VideoCapture<Recorder>) {
-        val isAudioEnabled = uiStateFlow.value.isAudioEnabled
-        val newRecording = context.createRecordingViaFileSystem(
-            fileName = FileName(),
-            videoCapture = newCapture,
-            audioEnabled = isAudioEnabled,
-            consumer = ::onVideoRecordEvent,
-        )
-        uiStateFlow.update {
-            it.copy(recording = newRecording)
+        launch {
+            val isAudioEnabled = uiStateFlow.value.isAudioEnabled
+            val newRecording = context.createRecordingViaFileSystem(
+                fileName = FileName(),
+                videoCapture = newCapture,
+                audioEnabled = isAudioEnabled,
+                consumer = ::onVideoRecordEvent,
+            )
+            uiStateFlow.update {
+                it.copy(recording = newRecording)
+            }
         }
     }
 

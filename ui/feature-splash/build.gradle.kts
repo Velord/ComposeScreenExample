@@ -7,12 +7,12 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":model"))
-    implementation(project(":core:core-resource"))
-    implementation(project(":core:core-ui"))
-    // Templates
+    // Module
+    implementation(projects.model)
+    implementation(projects.core.coreResource)
+    implementation(projects.core.coreUi)
+    // Template
     implementation(libs.bundles.compose.all)
-    // Libs
+    // Lib
     implementation(libs.androidx.core.splashscreen)
 }

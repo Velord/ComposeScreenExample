@@ -1,7 +1,6 @@
 package com.velord.refreshableimage
 
 import android.content.Context
-import android.util.Log
 import androidx.glance.GlanceId
 import androidx.work.CoroutineWorker
 import androidx.work.Data
@@ -10,6 +9,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import co.touchlab.kermit.Logger
 import coil3.imageLoader
 import coil3.memory.MemoryCache
 import coil3.request.ErrorResult
@@ -23,6 +23,7 @@ private const val FORCE_KEY = "force"
 
 private const val PICSUM_BASE_URL = "https://picsum.photos"
 private const val WORKAROUND_DELAY_DAYS = 365L
+private val log = Logger.withTag("RefreshableImageWidget")
 
 class RefreshableImageWidgetWorker(
     private val context: Context,
@@ -96,7 +97,7 @@ class RefreshableImageWidgetWorker(
             val parameters = ImageParameters(seed, width, height)
             val url = createUrl(parameters)
             val uri = fetchImage(url, force)
-            Log.d("RefreshableImageWidget", "doWork url: $url\nuri: $uri")
+            log.d { "doWork url: $url\nuri: $uri" }
 
             RefreshableImageWidget.updatePreferences(
                 context = context,
@@ -118,7 +119,7 @@ class RefreshableImageWidgetWorker(
         url: String,
         force: Boolean
     ) : String {
-        Log.d("RefreshableImageWidget", "doWork url: $url")
+        log.d { "doWork url: $url" }
         executeRequest(url, force)
         val path = context.getUriForFileThanGrantPermissionThanGetUriPath(url)
 

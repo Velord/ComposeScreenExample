@@ -1,7 +1,6 @@
 package com.velord.util.activityResult
 
 import android.app.PendingIntent
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -10,8 +9,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import co.touchlab.kermit.Logger
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
+
+private val log = Logger.withTag("PhoneNumber")
 
 private val request = GetPhoneNumberHintIntentRequest.builder().build()
 private val resultLauncher: ComponentActivity.(
@@ -23,10 +25,10 @@ private val resultLauncher: ComponentActivity.(
     ) { result ->
         try {
             val phoneNumber = Identity.getSignInClient(this).getPhoneNumberFromIntent(result.data)
-            Log.d(this.localClassName,"Phone Number: $phoneNumber")
+            log.d { "Phone Number: $phoneNumber" }
             onHint(phoneNumber)
         } catch(e: Exception) {
-            Log.d(this.localClassName, "Phone Number Hint failed")
+            log.d { "Phone Number Hint failed" }
             onError(e)
         }
     }
@@ -46,12 +48,12 @@ fun ComponentActivity.registerPhoneNumberHint(
                 try {
                     launcher.launch(IntentSenderRequest.Builder(result).build())
                 } catch (e: Exception) {
-                    Log.d(this.localClassName, "Launching the PendingIntent failed")
+                    log.d { "Launching the PendingIntent failed" }
                     onExceptionLaunch(e)
                 }
             }
             .addOnFailureListener { e ->
-                Log.d(this.localClassName, "Failure: ${e.message}")
+                log.d { "Failure: ${e.message}" }
                 onFailure(e)
             }
     }
@@ -73,12 +75,12 @@ fun registerPhoneNumberHint(
                 try {
                     launcher.launch(IntentSenderRequest.Builder(result).build())
                 } catch (e: Exception) {
-                    Log.d(activity.localClassName, "Launching the PendingIntent failed")
+                    log.d { "Launching the PendingIntent failed" }
                     onExceptionLaunch(e)
                 }
             }
             .addOnFailureListener { e ->
-                Log.d(activity.localClassName, "Failure: ${e.message}")
+                log.d { "Failure: ${e.message}" }
                 onFailure(e)
             }
     }
@@ -95,11 +97,11 @@ val phoneNumberHintIntentResultLauncher
     ) { result ->
         try {
             val phoneNumber = Identity.getSignInClient(this).getPhoneNumberFromIntent(result.data)
-            Log.d(this.localClassName,"Phone Number: $phoneNumber")
+            log.d { "Phone Number: $phoneNumber" }
             onPhone(phoneNumber)
         } catch (e: Exception) {
             onError(e)
-            Log.d(this.localClassName, "Phone Number Hint failed")
+            log.d { "Phone Number Hint failed" }
         }
     }
 }

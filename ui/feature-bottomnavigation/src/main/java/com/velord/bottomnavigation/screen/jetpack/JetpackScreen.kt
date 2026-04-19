@@ -1,6 +1,5 @@
 package com.velord.bottomnavigation.screen.jetpack
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
@@ -13,14 +12,18 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.touchlab.kermit.Logger
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.press_again_to_exit
 import com.velord.core.ui.compose.component.AnimatableLabeledIcon
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
+import org.jetbrains.compose.resources.stringResource
+
+private val log = Logger.withTag(TAG)
 
 @Composable
 internal fun JetpackScreen(viewModel: BottomNavigationJetpackVM) {
@@ -32,9 +35,9 @@ internal fun JetpackScreen(viewModel: BottomNavigationJetpackVM) {
         onClick = viewModel::onTabClick,
     )
 
-    Log.d(TAG, "BottomNavScreen: ${backHandlingState.value}")
+    log.d { "BottomNavScreen: ${backHandlingState.value}" }
     if (backHandlingState.value.isEnabled) {
-        val str = stringResource(id = R.string.press_again_to_exit)
+        val str = stringResource(Res.string.press_again_to_exit)
         SnackBarOnBackPressHandler(
             message = str,
             modifier = Modifier.padding(horizontal = 8.dp),

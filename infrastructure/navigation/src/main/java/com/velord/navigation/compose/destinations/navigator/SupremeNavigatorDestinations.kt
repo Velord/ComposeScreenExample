@@ -1,7 +1,6 @@
 package com.velord.navigation.compose.destinations.navigator
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.collection.forEach
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +11,7 @@ import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import co.touchlab.kermit.Logger
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.navigation.destinations.BottomNavigationSettingsDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.MainSettingsDestinationDestination
@@ -31,6 +31,8 @@ import com.velord.navigation.compose.destinations.transition.PopFadeTransition
 import com.velord.navigation.compose.vanilla.navigator.LogNavigationEvents
 import com.velord.navigation.compose.vanilla.navigator.logTabClick
 
+private val log = Logger.withTag("LogBackStack - SupremeNavigatorDestinations")
+
 /*
 * !!!
 * It is crucial to use generated classes
@@ -47,7 +49,7 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
     private val bottomTabNavControllerState: MutableState<NavHostController?> = mutableStateOf(null)
 
     init {
-        Log.d("LogBackStack - SupremeNavigatorDestinations", "init: ${this.supremeNavController}")
+        log.d { "init: ${this.supremeNavController}" }
     }
 
     override fun onTabClick(tab: TabState) {

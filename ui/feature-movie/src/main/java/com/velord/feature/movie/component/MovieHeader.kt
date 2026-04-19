@@ -26,11 +26,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.feature.movie.model.MoviePage
+import org.jetbrains.compose.resources.stringResource
 
 private const val HEADER_ANIMATION_DURATION = 700
 
@@ -109,7 +109,7 @@ private fun RowScope.HeaderButton(
         Spacer(modifier = Modifier.padding(8.dp))
 
         Text(
-            text = stringResource(id = page.titleRes),
+            text = stringResource(page.titleRes),
             modifier = Modifier,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             style = MaterialTheme.typography.bodyMedium,

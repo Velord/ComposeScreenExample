@@ -7,14 +7,17 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.velord.core.navigation.voyager.SharedScreenVoyager
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.camera
+import com.velord.core.resource.demo
+import com.velord.core.resource.settings
+import org.jetbrains.compose.resources.stringResource
 
 sealed class BottomNavigationTab : Tab {
 
@@ -22,7 +25,7 @@ sealed class BottomNavigationTab : Tab {
         override val options: TabOptions
             @Composable
             get() {
-                val title = stringResource(id = R.string.camera)
+                val title = stringResource(Res.string.camera)
                 val icon = rememberVectorPainter(image = Icons.Outlined.Camera)
 
                 return remember {
@@ -45,7 +48,7 @@ sealed class BottomNavigationTab : Tab {
         override val options: TabOptions
             @Composable
             get() {
-                val title = stringResource(id = R.string.demo)
+                val title = stringResource(Res.string.demo)
                 val icon = rememberVectorPainter(image = Icons.Outlined.Hexagon)
 
                 return remember {
@@ -70,7 +73,7 @@ sealed class BottomNavigationTab : Tab {
         override val options: TabOptions
             @Composable
             get() {
-                val title = stringResource(id = R.string.settings)
+                val title = stringResource(Res.string.settings)
                 val icon = rememberVectorPainter(image = Icons.Outlined.Settings)
 
                 return remember {

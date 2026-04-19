@@ -1,6 +1,5 @@
 package com.velord.refreshableimage
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,12 +32,19 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
-import com.velord.core.resource.R
+import co.touchlab.kermit.Logger
+import com.velord.core.resource.Res
+import com.velord.core.resource.downloaded_from
+import com.velord.core.resource.image_widget
+import com.velord.core.resource.refresh
+import com.velord.core.resource.widget_size
 import com.velord.core.ui.compose.glance.MainGlanceTheme
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
 
 // On emulator redundant compositions with wrong LocalSize.current ruin all flow
 private const val ERROR_COMPOSITION_WIDTH = 675
+private val log = Logger.withTag("RefreshableImageWidget")
 
 @Composable
 private fun Preferences.createImageParameters(generateNewSeed: Boolean): ImageParameters {
@@ -53,7 +59,7 @@ private fun Preferences.createImageParameters(generateNewSeed: Boolean): ImagePa
 
 private fun Preferences.getImageFilePath(parameters: ImageParameters): String {
     val imageKey = RefreshableImageWidget.getImageUriKey(parameters)
-    Log.d("RefreshableImageWidget", "Screen: seed - ${parameters.seed}; UriKey - $imageKey")
+    log.d { "Screen: seed - ${parameters.seed}; UriKey - $imageKey" }
     return this[imageKey] ?: ""
 }
 
@@ -67,7 +73,7 @@ internal fun NewImageWidgetScreen() {
     val sourceUrl = RefreshableImageWidgetWorker.createUrl(parameters)
     val isDownloading = prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] ?: false
 
-    Log.d("RefreshableImageWidget", "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl")
+    log.d { "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl" }
     MainGlanceTheme(RefreshableImageWidget()) {
         Content(
             filePath = filePath,
@@ -100,7 +106,7 @@ private fun Content(
 @Composable
 private fun Title() {
     Text(
-        text = LocalContext.current.getString(R.string.image_widget),
+        text = stringResource(Res.string.image_widget),
         modifier = GlanceModifier.padding(top = 16.dp),
         style = TextStyle(
             color = GlanceTheme.colors.onBackground,
@@ -125,7 +131,7 @@ private fun CurrentSize(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = LocalContext.current.getString(R.string.widget_size, size.width.value, size.height.value),
+            text = stringResource(Res.string.widget_size, size.width.value, size.height.value),
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 color = GlanceTheme.colors.onBackground,
@@ -140,7 +146,7 @@ private fun CurrentSize(
         horizontalAlignment = Alignment.Start,
     ) {
         Text(
-            text = LocalContext.current.getString(R.string.downloaded_from, url),
+            text = stringResource(Res.string.downloaded_from, url),
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 textDecoration = TextDecoration.Underline,
@@ -154,7 +160,7 @@ private fun CurrentSize(
 @Composable
 private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
     val isDownloading = if (url.isEmpty()) true else isDownloadingNewImage
-    Log.d("RefreshableImageWidget", "isDownloading: id - $isDownloading")
+    log.d { "isDownloading: id - $isDownloading" }
     val prefs = currentState<Preferences>()
     Row(
         modifier = GlanceModifier
@@ -172,7 +178,7 @@ private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = LocalContext.current.getString(R.string.refresh),
+            text = stringResource(Res.string.refresh),
             modifier = GlanceModifier.padding(horizontal = 8.dp),
             style = TextStyle(
                 color = GlanceTheme.colors.onSecondaryContainer,

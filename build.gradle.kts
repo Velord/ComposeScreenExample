@@ -14,6 +14,8 @@ plugins {
     alias(libs.plugins.google.firebase.crashlytic) apply false
 }
 
+private val targetJvmVersion = libs.versions.jvmTarget.get()
+
 extensions.configure<DetektExtension> {
     config.setFrom(rootProject.file("config/detekt/detekt.yml"))
     baseline.set(rootProject.file("config/detekt/baseline.xml"))
@@ -37,7 +39,7 @@ subprojects {
         }
 
         tasks.withType(Detekt::class.java).configureEach {
-            jvmTarget.set("21")
+            jvmTarget.set(targetJvmVersion)
             exclude("**/build/**")
 
             reports {
@@ -49,11 +51,10 @@ subprojects {
         }
 
         tasks.withType(DetektCreateBaselineTask::class.java).configureEach {
-            jvmTarget.set("21")
+            jvmTarget.set(targetJvmVersion)
             exclude("**/build/**")
             enabled = false
         }
-
     }
 
     pluginManager.withPlugin("com.android.application") {
@@ -61,6 +62,10 @@ subprojects {
     }
 
     pluginManager.withPlugin("com.android.library") {
+        configureDetekt()
+    }
+
+    pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") {
         configureDetekt()
     }
 }
@@ -73,7 +78,8 @@ val detektProjectBaseline by tasks.registering(DetektCreateBaselineTask::class) 
     multiPlatformEnabled.set(false)
     noJdk.set(false)
     parallel.set(true)
-    jvmTarget.set("21")
+    // STRICT TOML COMPLIANCE
+    jvmTarget.set(targetJvmVersion)
     setSource(files(subprojects.map { it.projectDir }))
     config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
     baseline.set(file("$rootDir/config/detekt/baseline.xml"))

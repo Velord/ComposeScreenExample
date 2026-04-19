@@ -6,8 +6,10 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
+
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("com.android.library")
+        applyPlugin("android-library")
+        implementationBundle("logging-kmp")
 
         extensions.configure<LibraryExtension> {
             configureLibraryAndroid(this)

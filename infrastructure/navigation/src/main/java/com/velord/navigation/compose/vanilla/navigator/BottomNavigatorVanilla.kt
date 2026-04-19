@@ -1,11 +1,13 @@
 package com.velord.navigation.compose.vanilla.navigator
 
-import android.util.Log
 import androidx.navigation.NavHostController
+import co.touchlab.kermit.Logger
 import com.velord.camerarecording.CameraRecordingNavigator
 import com.velord.feature.demo.DemoDestinationNavigationEvent
 import com.velord.feature.demo.DemoNavigator
 import com.velord.navigation.compose.vanilla.GraphVanilla
+
+private val log = Logger.withTag("LogBackStack - BottomNavigatorVanilla")
 
 internal class BottomNavigatorVanilla(
     private val parent: SupremeNavigatorVanilla,
@@ -13,7 +15,7 @@ internal class BottomNavigatorVanilla(
 ) : DemoNavigator, CameraRecordingNavigator by parent {
 
     init {
-        Log.d("LogBackStack - BottomNavigatorVanilla", "init: ${this.navController}")
+        log.d { "init: ${this.navController}" }
     }
 
     override fun goTo(dest: DemoDestinationNavigationEvent) {

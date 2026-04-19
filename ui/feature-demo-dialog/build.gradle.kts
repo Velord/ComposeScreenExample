@@ -7,10 +7,10 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":core:core-resource"))
-    implementation(project(":core:core-ui"))
-    implementation(project(":ui:sharedviewmodel"))
-    // Templates
+    // Module
+    implementation(projects.core.coreResource)
+    implementation(projects.core.coreUi)
+    implementation(projects.ui.sharedviewmodel)
+    // Template
     implementation(libs.bundles.compose.all)
 }

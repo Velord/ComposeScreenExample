@@ -26,7 +26,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
@@ -35,7 +34,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.info_description_movie
+import com.velord.core.resource.info_description_movie_url
+import com.velord.core.resource.range
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.feature.movie.model.MovieFilterOptionUI
 import com.velord.feature.movie.model.MovieSortOptionUI
@@ -43,6 +45,7 @@ import com.velord.feature.movie.viewModel.MovieUiAction
 import com.velord.feature.movie.viewModel.MovieUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun MovieBottomSheet(
@@ -119,7 +122,7 @@ private fun Sort(
                         }
                     )
                     Text(
-                        text = stringResource(id = option.name),
+                        text = stringResource(option.name),
                         style = MaterialTheme.typography.labelLarge,
                     )
                 }
@@ -159,7 +162,7 @@ private fun Filter(
                         )
                 ) {
                     Text(
-                        text = stringResource(id = option.name),
+                        text = stringResource(option.name),
                         modifier = Modifier
                             .padding(horizontal = 12.dp)
                             .padding(top = 8.dp),
@@ -190,7 +193,7 @@ private fun Filter(
                         Text(text = minStr)
 
                         val rangeStr = option.getRangeStr(sliderRangeState)
-                        Text(text = stringResource(id = R.string.range, rangeStr))
+                        Text(text = stringResource(Res.string.range, rangeStr))
 
                         Text(text = maxStr)
                     }
@@ -211,7 +214,7 @@ private fun Info(
         isShowing = isShowing,
         onHide = { scope.hide(onHide) },
         content = {
-            val url = stringResource(id = R.string.info_description_movie_url)
+            val url = stringResource(Res.string.info_description_movie_url)
             Text(
                 buildAnnotatedString {
                     withLink(
@@ -232,7 +235,7 @@ private fun Info(
                 modifier = Modifier.padding(16.dp)
             )
             Text(
-                text = stringResource(id = R.string.info_description_movie),
+                text = stringResource(Res.string.info_description_movie),
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 8.dp)

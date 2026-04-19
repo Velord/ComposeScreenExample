@@ -47,7 +47,9 @@ import com.velord.core.ui.compose.animation.interpolator.toEasing
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.movie.Movie
 import kotlinx.coroutines.flow.filter
-import java.util.Calendar
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
 
 @Composable
 internal fun MovieCard(
@@ -128,7 +130,7 @@ private fun DateAndRating(movie: Movie) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = movie.formattedDateForCard,
+            text = movie.formattedDateForCard(TimeZone.currentSystemDefault()),
             modifier = Modifier,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             style = MaterialTheme.typography.labelSmall,
@@ -270,11 +272,7 @@ private fun PreviewCard() {
                 "sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et discing " +
                 "elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             isLiked = true,
-            date = Calendar.getInstance().apply {
-                set(Calendar.YEAR, 2021)
-                set(Calendar.MONTH, 1)
-                set(Calendar.DAY_OF_MONTH, 1)
-            },
+            date = LocalDate(2021, 2, 1).atStartOfDayIn(TimeZone.UTC),
             rating = 4.5f,
             voteCount = 100,
         ),

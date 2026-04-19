@@ -7,8 +7,8 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":core:core-ui"))
-    // Templates
+    // Module
+    implementation(projects.core.coreUi)
+    // Template
     implementation(libs.bundles.compose.all)
 }

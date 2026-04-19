@@ -3,8 +3,8 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_24
+    targetCompatibility = JavaVersion.VERSION_24
 }
 
 gradlePlugin {
@@ -44,6 +44,14 @@ gradlePlugin {
         register("widgetGlanceConvention") {
             id = "velord.widget.glance"
             implementationClass = "com.velord.buildlogic.WidgetGlanceConventionPlugin"
+        }
+        register("kmpLibraryConvention") {
+            id = "velord.kmp.library"
+            implementationClass = "com.velord.buildlogic.KmpLibraryConventionPlugin"
+        }
+        register("domainUsecaseKmpConvention") {
+            id = "velord.domain.usecase.kmp"
+            implementationClass = "com.velord.buildlogic.DomainUsecaseKmpConventionPlugin"
         }
     }
 }

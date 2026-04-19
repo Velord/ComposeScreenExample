@@ -1,19 +1,29 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    alias(libs.plugins.convention.android.compose)
-    alias(libs.plugins.convention.android.viewbinding)
+    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
-android {
-    namespace = "com.velord.core.navigation"
-}
+kotlin {
+    android {
+        namespace = "com.velord.core.navigation"
+    }
 
-dependencies {
-    // Template
-    implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.lifecycle.runtime)
-    implementation(libs.bundles.compose.all)
-    // Lib
-    implementation(libs.bundles.voyager)
-    implementation(libs.androidx.navigation.fragment)
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlin.coroutine.core)
+            implementation(libs.kotlin.serialization.json)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.resources)
+            implementation(libs.voyager.navigator)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.ktx)
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.fragment.ktx)
+            implementation(libs.androidx.navigation.fragment)
+        }
+    }
 }

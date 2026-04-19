@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
-import androidx.glance.LocalContext
 import androidx.glance.action.Action
 import androidx.glance.action.actionParametersOf
 import androidx.glance.appwidget.action.actionRunCallback
@@ -28,8 +27,13 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.count
+import com.velord.core.resource.counter_widget
+import com.velord.core.resource.minus_sign
+import com.velord.core.resource.plus_sign
 import com.velord.core.ui.compose.glance.MainGlanceTheme
+import org.jetbrains.compose.resources.stringResource
 
 private fun createAction(count: Int): Action = actionRunCallback<UpdateCountCallback>(
     parameters = actionParametersOf(CounterWidget.actionParameterKey to count)
@@ -56,7 +60,7 @@ private fun Content(count: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = LocalContext.current.getString(R.string.counter_widget),
+            text = stringResource(Res.string.counter_widget),
             modifier = GlanceModifier.padding(top = 8.dp),
             style = TextStyle(
                 color = GlanceTheme.colors.onSurface,
@@ -72,7 +76,7 @@ private fun Content(count: Int) {
 @Composable
 private fun Counter(count: Int) {
     Text(
-        text = LocalContext.current.getString(R.string.count, count),
+        text = stringResource(Res.string.count, count),
         modifier = GlanceModifier.padding(top = 8.dp),
         style = TextStyle(
             textDecoration = TextDecoration.Underline,
@@ -87,7 +91,7 @@ private fun Counter(count: Int) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
-            text = LocalContext.current.getString(R.string.plus_sign),
+            text = stringResource(Res.string.plus_sign),
             modifier = GlanceModifier
                 .width(100.dp)
                 .background(GlanceTheme.colors.surfaceVariant)
@@ -96,7 +100,7 @@ private fun Counter(count: Int) {
         )
         Spacer(modifier = GlanceModifier.width(32.dp))
         Button(
-            text = LocalContext.current.getString(R.string.minus_sign),
+            text = stringResource(Res.string.minus_sign),
             modifier = GlanceModifier
                 .width(100.dp)
                 .background(GlanceTheme.colors.surfaceVariant)
