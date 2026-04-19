@@ -14,7 +14,7 @@ interface AppStateDataSource {
     val movieSortFlow: MutableStateFlow<List<MovieSortOption>>
 }
 
-@Single
+@Single(binds = [AppStateDataSource::class])
 class AppStateDataSourceImpl : AppStateDataSource {
     override val themeConfigFlow = MutableStateFlow(ThemeConfig.DEFAULT)
     override val movieRosterFlow = MutableStateFlow<List<Movie>>(emptyList())
@@ -23,6 +23,6 @@ class AppStateDataSourceImpl : AppStateDataSource {
         listOf(
             MovieSortOption(SortType.DateDescending, isSelected = true),
             MovieSortOption(SortType.DateAscending, isSelected = false),
-        )
+        ),
     )
 }

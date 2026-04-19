@@ -13,7 +13,7 @@ import org.koin.core.module.Module
 import org.koin.ksp.generated.module
 
 fun Application.startKoin(
-    vararg moduleToInstall: Module
+    vararg moduleToInstall: Module,
 ) {
     val app = this
     startKoin {

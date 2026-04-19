@@ -26,6 +26,7 @@ sealed class FilterType(
         }
 
         companion object {
+
             private const val MIN_RATING = 0.0f
             private const val MAX_RATING = 10.0f
             private const val DEFAULT_START = 7f
@@ -37,7 +38,7 @@ sealed class FilterType(
                 end = DEFAULT_END,
                 min = MIN_RATING,
                 max = MAX_RATING,
-                steps = DEFAULT_STEPS
+                steps = DEFAULT_STEPS,
             )
         }
     }
@@ -60,6 +61,7 @@ sealed class FilterType(
         }
 
         companion object {
+
             private const val MIN_VOTE_COUNT = 0
             private const val MAX_VOTE_COUNT = 1000
             private const val DEFAULT_START = 100
@@ -71,21 +73,27 @@ sealed class FilterType(
                 end = DEFAULT_END,
                 min = MIN_VOTE_COUNT,
                 max = MAX_VOTE_COUNT,
-                steps = DEFAULT_STEPS
+                steps = DEFAULT_STEPS,
             )
         }
     }
 
     companion object {
 
-        val ALL = listOf(Rating.Default, VoteCount.Default)
+        val ALL: List<FilterType> get() = allFilterTypes()
+
+        private fun allFilterTypes(): List<FilterType> = listOf(
+            Rating.Default,
+            VoteCount.Default,
+        )
     }
 }
 
 data class MovieFilterOption(val type: FilterType) {
+
     companion object {
 
-        val ALL  = listOf(
+        val ALL = listOf(
             MovieFilterOption(FilterType.Rating.Default),
             MovieFilterOption(FilterType.VoteCount.Default),
         )
