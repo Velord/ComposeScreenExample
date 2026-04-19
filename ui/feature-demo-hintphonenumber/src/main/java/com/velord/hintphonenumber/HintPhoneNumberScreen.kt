@@ -18,11 +18,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.invoke_again
+import com.velord.core.resource.waiting
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.util.activityResult.registerPhoneNumberHint
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HintPhoneNumberScreen() {
@@ -60,7 +62,7 @@ private fun Content(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val defStr = stringResource(id = R.string.waiting)
+            val defStr = stringResource(Res.string.waiting)
             val str = phone ?: defStr
             Text(
                 text = str,
@@ -76,7 +78,7 @@ private fun Content(
                 )
             ) {
                 Text(
-                    text = stringResource(id = R.string.invoke_again),
+                    text = stringResource(Res.string.invoke_again),
                     color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.bodyMedium,
                 )

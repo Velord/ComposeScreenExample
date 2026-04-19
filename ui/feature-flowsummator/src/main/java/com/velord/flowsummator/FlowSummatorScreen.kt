@@ -31,13 +31,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.flow_summator
+import com.velord.core.resource.info_description_flow_summator
+import com.velord.core.resource.launch
+import com.velord.core.resource.please_enter_the_number
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
@@ -86,7 +90,7 @@ private fun Content(
 @Composable
 private fun Title() {
     Text(
-        text = stringResource(id = R.string.flow_summator),
+        text = stringResource(Res.string.flow_summator),
         modifier = Modifier.padding(top = 32.dp),
         color = MaterialTheme.colorScheme.onSurface,
         style = MaterialTheme.typography.bodyLarge,
@@ -103,7 +107,7 @@ private fun Start(
         modifier = Modifier.padding(top = 32.dp),
         enabled = isEnabled,
     ) {
-        Text(text = stringResource(id = R.string.launch))
+        Text(text = stringResource(Res.string.launch))
     }
 }
 
@@ -118,7 +122,7 @@ private fun EnterField(
         modifier = Modifier
             .padding(top = 16.dp)
             .padding(horizontal = 32.dp),
-        placeholder = { Text(text = stringResource(id = R.string.please_enter_the_number)) },
+        placeholder = { Text(text = stringResource(Res.string.please_enter_the_number)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
 }
@@ -155,7 +159,7 @@ private fun Info() {
             contentWindowInsets = { WindowInsets(top = 0.dp) },
         ) {
             Text(
-                text = stringResource(id = R.string.info_description_flow_summator),
+                text = stringResource(Res.string.info_description_flow_summator),
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 8.dp)

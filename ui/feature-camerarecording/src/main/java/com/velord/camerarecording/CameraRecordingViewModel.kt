@@ -169,15 +169,17 @@ class CameraRecordingViewModel(
     }
 
     private fun onNewRecording(newCapture: VideoCapture<Recorder>) {
-        val isAudioEnabled = uiStateFlow.value.isAudioEnabled
-        val newRecording = context.createRecordingViaFileSystem(
-            fileName = FileName(),
-            videoCapture = newCapture,
-            audioEnabled = isAudioEnabled,
-            consumer = ::onVideoRecordEvent,
-        )
-        uiStateFlow.update {
-            it.copy(recording = newRecording)
+        launch {
+            val isAudioEnabled = uiStateFlow.value.isAudioEnabled
+            val newRecording = context.createRecordingViaFileSystem(
+                fileName = FileName(),
+                videoCapture = newCapture,
+                audioEnabled = isAudioEnabled,
+                consumer = ::onVideoRecordEvent,
+            )
+            uiStateFlow.update {
+                it.copy(recording = newRecording)
+            }
         }
     }
 

@@ -1,8 +1,8 @@
 package com.velord.core.navigation.voyager
 
-import androidx.annotation.StringRes
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.registry.ScreenProvider
+import org.jetbrains.compose.resources.StringResource
 
 sealed class SharedScreenVoyager : ScreenProvider {
 
@@ -13,7 +13,7 @@ sealed class SharedScreenVoyager : ScreenProvider {
     }
 
     data class Test(
-        @StringRes val title: Int,
+        val title: StringResource,
         val modifier: Modifier = Modifier,
         val onClick: () -> Unit = {},
     ) : SharedScreenVoyager()

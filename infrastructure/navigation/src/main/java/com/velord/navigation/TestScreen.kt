@@ -1,6 +1,5 @@
 package com.velord.navigation
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,12 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.velord.core.resource.Res
+import com.velord.core.resource.settings
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TestScreen(
-    @StringRes title: Int,
+    title: StringResource,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
@@ -29,7 +31,7 @@ fun TestScreen(
 
 @Composable
 private fun Content(
-    @StringRes title: Int,
+    title: StringResource,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
@@ -61,5 +63,5 @@ private fun Content(
 @Preview
 @Composable
 private fun Preview() {
-    Content(title = com.velord.core.resource.R.string.settings)
+    Content(title = Res.string.settings)
 }

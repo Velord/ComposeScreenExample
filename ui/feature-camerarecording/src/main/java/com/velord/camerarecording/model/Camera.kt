@@ -20,10 +20,12 @@ import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.PreviewView
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.app_name
 import com.velord.util.file.FileName
 import com.velord.util.file.NewFile
 import com.velord.util.file.OutputDirectory
+import org.jetbrains.compose.resources.getString
 import java.io.File
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -76,13 +78,13 @@ suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutin
 }
 
 @SuppressLint("MissingPermission")
-fun Context.createRecordingViaFileSystem(
+suspend fun Context.createRecordingViaFileSystem(
     fileName: FileName,
     videoCapture: VideoCapture<Recorder>,
     audioEnabled: Boolean,
     consumer: Consumer<VideoRecordEvent>
 ): Recording {
-    val appDirName = getString(R.string.app_name)
+    val appDirName = getString(Res.string.app_name)
     val moviesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)
     val fullDirName = File(moviesDir, appDirName)
     val newFile = NewFile(
@@ -99,13 +101,13 @@ fun Context.createRecordingViaFileSystem(
 }
 
 @SuppressLint("MissingPermission")
-fun Context.createRecordingViaMediaStore(
+suspend fun Context.createRecordingViaMediaStore(
     fileName: FileName,
     videoCapture: VideoCapture<Recorder>,
     audioEnabled: Boolean,
     consumer: Consumer<VideoRecordEvent>
 ): Recording {
-    val appDirName = FOLDER_MOVIES + this.getString(R.string.app_name)
+    val appDirName = FOLDER_MOVIES + getString(Res.string.app_name)
     val contentValues = ContentValues().apply {
         put(MediaStore.MediaColumns.DISPLAY_NAME, fileName.value)
         put(MediaStore.MediaColumns.MIME_TYPE, MIME_TYPE)

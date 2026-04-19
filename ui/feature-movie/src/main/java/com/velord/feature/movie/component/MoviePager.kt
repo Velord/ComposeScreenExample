@@ -27,10 +27,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.all_movies
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.feature.movie.viewModel.AllMovieUiAction
@@ -40,6 +40,7 @@ import com.velord.feature.movie.viewModel.FavoriteMovieViewModel
 import com.velord.feature.movie.viewModel.MovieUiState
 import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
 private fun Activity.onClick(intent: Intent) {
@@ -153,7 +154,7 @@ private fun RefreshPage(
             if (isDataExausted) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        text = stringResource(id = R.string.all_movies),
+                        text = stringResource(Res.string.all_movies),
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp)

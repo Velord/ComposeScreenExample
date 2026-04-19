@@ -35,19 +35,25 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.ic_brand
+import com.velord.core.resource.ic_launcher_foreground_dark
+import com.velord.core.resource.ic_launcher_foreground_light
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.LocalTheme
 import com.velord.model.setting.SpecialTheme
+import org.jetbrains.compose.resources.painterResource
 
 private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 500
 private const val ROTATE_AFTER = ANIMATION_TRANSITION_TO_CURRENT_THEME + 1000
 private const val ICON_SCALE = 2.65f
 private const val ROTATION_ANIMATION_DURATION = 500
+private val SplashBackgroundLight = Color(0xFFFAFCFF)
+private val SplashBackgroundDark = Color(0xFF001F2A)
+private val SplashBrandLight = Color(0xFF001F2A)
+private val SplashBrandDark = Color(0xFFBFE9FF)
 /*
 Splash screen is the most refined copy representation of the OS splash screen.
 When app renders first frame, it will show this screen.
@@ -75,7 +81,11 @@ fun SplashScreen(
 @Composable
 private fun Content() {
     // Original background color is defined in the theme from Splash Api
-    val splashWindowBackground = colorResource(id = R.color.splash_background)
+    val splashWindowBackground = if (isSystemInDarkTheme()) {
+        SplashBackgroundDark
+    } else {
+        SplashBackgroundLight
+    }
     // If you need to change color to your own, you can use this state
     // Thus smooth color transition will be provided
     val colorState = remember { mutableStateOf(splashWindowBackground) }
@@ -106,7 +116,11 @@ private fun Content() {
 @Composable
 private fun BoxScope.SplashImitate() {
     // Original icon color used by Splash Api
-    val originalIconColor = colorResource(id = R.color.splash_icon_brand)
+    val originalIconColor = if (isSystemInDarkTheme()) {
+        SplashBrandDark
+    } else {
+        SplashBrandLight
+    }
     val colorState = remember { mutableStateOf(originalIconColor) }
     val tintColorState = animateColorAsState(
         targetValue = colorState.value,
@@ -158,7 +172,7 @@ private fun BoxScope.CenterIcon() {
                     .clip(CircleShape)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    painter = getOriginalSplashIconPainter(),
                     contentDescription = "Logo",
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -188,7 +202,7 @@ private fun BoxScope.CenterIcon() {
 @Composable
 private fun BoxScope.BrandIcon(colorState: State<Color>) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_brand),
+        painter = painterResource(Res.drawable.ic_brand),
         contentDescription = "Brand logo",
         modifier = Modifier
             .align(Alignment.BottomCenter)
@@ -241,18 +255,28 @@ private fun BoxScope.IconAnimated(
 }
 
 @Composable
+private fun getOriginalSplashIconPainter(): Painter {
+    val res = if (isSystemInDarkTheme()) {
+        Res.drawable.ic_launcher_foreground_dark
+    } else {
+        Res.drawable.ic_launcher_foreground_light
+    }
+    return painterResource(res)
+}
+
+@Composable
 private fun getIconPainter(): Painter {
     val themeConfig = LocalTheme.current
     val res = if (themeConfig.config.abideToOs)  {
         if (isSystemInDarkTheme()) {
-            R.drawable.ic_launcher_foreground_light
+            Res.drawable.ic_launcher_foreground_light
         } else {
-            R.drawable.ic_launcher_foreground_dark
+            Res.drawable.ic_launcher_foreground_dark
         }
     } else {
         when (themeConfig.config.current) {
-            SpecialTheme.LIGHT -> R.drawable.ic_launcher_foreground_light
-            SpecialTheme.DARK -> R.drawable.ic_launcher_foreground_dark
+            SpecialTheme.LIGHT -> Res.drawable.ic_launcher_foreground_light
+            SpecialTheme.DARK -> Res.drawable.ic_launcher_foreground_dark
         }
     }
     return painterResource(res)

@@ -13,16 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.velord.core.navigation.fragment.util.activityNavController
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.open_new
 import com.velord.core.ui.util.setContentWithTheme
 import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 class InDevelopmentFragment : Fragment() {
 
@@ -77,7 +78,7 @@ private fun Content(
                 .align(Alignment.BottomCenter)
                 .padding(32.dp)
         ) {
-            Text(text = stringResource(id = R.string.open_new))
+            Text(text = stringResource(Res.string.open_new))
         }
     }
 }

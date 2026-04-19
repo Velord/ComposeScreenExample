@@ -23,14 +23,21 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.abide_to_os_theme
+import com.velord.core.resource.disable_os_theme_switcher_first
+import com.velord.core.resource.not_available_on_android_11
+import com.velord.core.resource.os_does_not_support_theme_switching
+import com.velord.core.resource.settings
+import com.velord.core.resource.use_dark_theme
+import com.velord.core.resource.use_system_dynamic_theme
 import com.velord.core.ui.util.LocalTheme
 import com.velord.sharedviewmodel.ThemeUiAction
 import com.velord.sharedviewmodel.ThemeViewModel
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SettingScreen(
@@ -55,7 +62,7 @@ internal fun Content(onThemeAction: (ThemeUiAction) -> Unit) {
                 .padding(top = 16.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            Title(stringResource(id = R.string.settings))
+            Title(stringResource(Res.string.settings))
 
             Column(
                 modifier = Modifier
@@ -81,10 +88,10 @@ private fun AbideToOsSwitcher(onThemeAction: (ThemeUiAction) -> Unit) {
 
     val isEnabled = themeSwitcher.isSystemOsSwitchAvailable
     ThemeSwitcher(
-        title = stringResource(id = R.string.abide_to_os_theme),
+        title = stringResource(Res.string.abide_to_os_theme),
         isChecked = themeSwitcher.config.abideToOs,
         isEnabled = isEnabled,
-        textWhenNotEnabled = stringResource(id = R.string.os_does_not_support_theme_switching),
+        textWhenNotEnabled = stringResource(Res.string.os_does_not_support_theme_switching),
         onChange = { onThemeAction(ThemeUiAction.AbideToOsThemeSwitch) }
     )
 }
@@ -96,9 +103,9 @@ private fun DynamicThemeSwitcher(onThemeAction: (ThemeUiAction) -> Unit) {
     val themeSwitcher = LocalTheme.current
 
     val disabledText = StringBuilder()
-    val disableOsStr = stringResource(id = R.string.disable_os_theme_switcher_first)
+    val disableOsStr = stringResource(Res.string.disable_os_theme_switcher_first)
     if (themeSwitcher.isSystemDynamicColorAvailable.not()) {
-        val android11Str = stringResource(id = R.string.not_available_on_android_11)
+        val android11Str = stringResource(Res.string.not_available_on_android_11)
         disabledText.append(android11Str)
     }
     if (themeSwitcher.config.abideToOs) {
@@ -109,7 +116,7 @@ private fun DynamicThemeSwitcher(onThemeAction: (ThemeUiAction) -> Unit) {
     val isNotAbideToOs = themeSwitcher.config.abideToOs.not()
     val isEnabled = isDynamicColorAvailable && isNotAbideToOs
     ThemeSwitcher(
-        title = stringResource(id = R.string.use_system_dynamic_theme),
+        title = stringResource(Res.string.use_system_dynamic_theme),
         isChecked = themeSwitcher.config.useDynamicColor,
         isEnabled = isEnabled,
         textWhenNotEnabled = disabledText.toString(),
@@ -128,10 +135,10 @@ private fun DarkThemeSwitcher(onThemeAction: (ThemeUiAction) -> Unit) {
     val isNotAbideToOs = themeSwitcher.config.abideToOs.not()
     val isEnabled = isNotAvailableSystemOsSwitch || isNotAbideToOs
     ThemeSwitcher(
-        title = stringResource(id = R.string.use_dark_theme),
+        title = stringResource(Res.string.use_dark_theme),
         isChecked = themeSwitcher.config.useDarkTheme,
         isEnabled = isEnabled,
-        textWhenNotEnabled = stringResource(id = R.string.disable_os_theme_switcher_first),
+        textWhenNotEnabled = stringResource(Res.string.disable_os_theme_switcher_first),
         modifier = Modifier.padding(top = 8.dp),
         onChange = { onThemeAction(ThemeUiAction.DarkThemeSwitch) }
     )

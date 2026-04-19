@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.lifecycle.runtime)
     implementation(libs.bundles.compose.all)
+    implementation(libs.compose.resources)
     // Lib
     implementation(libs.bundles.voyager)
     implementation(libs.androidx.navigation.fragment)
