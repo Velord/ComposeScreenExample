@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.velord.bottomnavigation.screen.jetpack.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
-import com.velord.core.navigation.fragment.entryPoint.SETTINGS_SOURCE
+import com.velord.core.navigation.fragment.NAVIGATION_PAYLOAD
 import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.ui.util.setContentWithTheme
 import com.velord.sharedviewmodel.ThemeViewModel
@@ -32,7 +32,13 @@ class SettingFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val isActivated = this.arguments?.get(SETTINGS_SOURCE) == SettingsSourceFragment.SettingsGraph
+        val sourceFromPayload = arguments
+            ?.getString(NAVIGATION_PAYLOAD)
+            ?.let(SettingsSourceFragment::decode)
+        val sourceFromArgs = arguments
+            ?.get(SettingsSourceFragment.ARGUMENT) as? SettingsSourceFragment
+        val isActivated = (sourceFromPayload ?: sourceFromArgs) ==
+            SettingsSourceFragment.SettingsGraph
         if (isActivated.not()) return
         addTestCallback("Setting graph", viewModelBottom)
     }

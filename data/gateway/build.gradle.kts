@@ -1,21 +1,45 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    alias(libs.plugins.convention.koin)
+    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.ksp)
 }
 
-android {
-    namespace = "com.velord.gateway"
+kotlin {
+    android {
+        namespace = "com.velord.gateway"
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.model)
+            implementation(projects.data.appstate)
+            implementation(projects.domain.usecaseMovie)
+            implementation(libs.kotlin.coroutine.core)
+            implementation(libs.kermit)
+            implementation(libs.koin.core)
+            api(libs.koin.annotation)
+        }
+
+        androidMain.dependencies {
+            implementation(projects.data.datastore)
+            implementation(projects.data.backend)
+            implementation(projects.data.db)
+        }
+
+        named("commonMain").configure {
+            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+        }
+    }
 }
 
 dependencies {
-    // Module
-    implementation(projects.model)
-    // Data
-    implementation(projects.data.datastore)
-    implementation(projects.data.appstate)
-    implementation(projects.data.backend)
-    implementation(projects.data.db)
-    // Use case
-    implementation(projects.domain.usecaseSetting)
-    implementation(projects.domain.usecaseMovie)
+    add("kspCommonMainMetadata", libs.koin.ksp)
+    add("kspAndroid", libs.koin.ksp)
+    add("kspDesktop", libs.koin.ksp)
+}
+
+tasks.matching {
+    it.name.startsWith("ksp") &&
+        it.name != "kspCommonMainKotlinMetadata"
+}.configureEach {
+    dependsOn("kspCommonMainKotlinMetadata")
 }
