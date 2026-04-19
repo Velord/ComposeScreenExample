@@ -1,7 +1,9 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
+    alias(libs.plugins.convention.kmp.library)
 }
 
-android {
-    namespace = "com.velord.config"
+kotlin {
+    android {
+        namespace = "com.velord.config"
+    }
 }

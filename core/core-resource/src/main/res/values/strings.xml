@@ -55,7 +55,7 @@
     <string name="plus_sign">+</string>
     <string name="minus_sign">-</string>
     <string name="refresh">Refresh Image</string>
-    <string name="widget_size">Widget Size:\nW: %1f x H: %2f</string>
+    <string name="widget_size">Widget Size:\nW: %1$f x H: %2$f</string>
     <string name="image_widget">Image Widget</string>
     <string name="downloaded_from">Downloaded from:\n%s</string>
     <string name="rear">Rear</string>
@@ -116,7 +116,7 @@
 \nYou are free to implement your own design
 \nMake sure that anyone can build your project.
     </string>
-    <string name="range">Range: %1s</string>
+    <string name="range">Range: %1$s</string>
     <string name="info_description_movie_url">https://github.com/AppSci/android-test-task?tab=readme-ov-file</string>
     <string name="open_dialog">Open Dialog Demo</string>
     <string name="this_demo_is_deprecated">This demo is Deprecated on this navigation lib: %s</string>

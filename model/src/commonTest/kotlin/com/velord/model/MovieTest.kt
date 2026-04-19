@@ -3,9 +3,11 @@ package com.velord.model
 import com.velord.model.movie.Movie
 import com.velord.model.movie.findRecentTimeInMilli
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.time.Clock
 
 class MovieTest {
 
@@ -120,7 +122,7 @@ class MovieTest {
 
     @Test
     fun `toInstant handles invalid date format by returning a fallback Instant`() {
-        val nowMillisBefore = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val nowMillisBefore = Clock.System.now().toEpochMilliseconds()
         val fallback = Movie.toInstant("invalid-date")
         assertTrue(fallback.toEpochMilliseconds() >= nowMillisBefore)
     }
@@ -150,4 +152,4 @@ class MovieTest {
 }
 
 private fun kotlinx.datetime.Instant.toLocalDateTimeUtc() =
-    kotlinx.datetime.toLocalDateTime(this, TimeZone.UTC)
+    toLocalDateTime(TimeZone.UTC)

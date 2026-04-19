@@ -1,5 +1,4 @@
 package com.velord.core.ui.compose.theme
-
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
