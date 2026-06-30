@@ -86,7 +86,7 @@ fun registerPhoneNumberHint(
     }
 }
 
-// used inside of a composable(for outside use registerForActivityResult instead)
+// Use inside a composable(for outside use registerForActivityResult instead)
 val phoneNumberHintIntentResultLauncher
 : @Composable ComponentActivity.(
         (phoneNumber: String) -> Unit,
