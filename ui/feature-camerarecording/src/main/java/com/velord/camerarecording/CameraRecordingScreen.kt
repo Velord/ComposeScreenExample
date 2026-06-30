@@ -46,7 +46,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
-import com.velord.camerarecording.model.createVideoCapture
+import com.velord.camerarecording.util.createVideoCapture
 import com.velord.core.resource.Res
 import com.velord.core.resource.can_not_get_permission_for_camera
 import com.velord.core.resource.can_not_get_permission_for_mic

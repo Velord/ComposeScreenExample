@@ -15,16 +15,13 @@ kotlin {
             implementation(projects.data.backend)
             implementation(projects.data.datastore)
             implementation(projects.data.db)
+            implementation(projects.data.os)
             implementation(projects.domain.usecaseMovie)
+            implementation(projects.domain.usecaseCamera)
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.kermit)
             implementation(libs.koin.core)
             api(libs.koin.annotation)
-        }
-
-        androidMain.dependencies {
-            implementation(projects.data.os)
-            implementation(libs.androidx.camera.video)
         }
 
         named("commonMain").configure {
@@ -36,7 +33,6 @@ kotlin {
 dependencies {
     add("kspCommonMainMetadata", libs.koin.ksp)
     add("kspAndroid", libs.koin.ksp)
-    add("kspDesktop", libs.koin.ksp)
 }
 
 tasks.matching {

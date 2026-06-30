@@ -1,22 +1,18 @@
 package com.velord.camerarecording
 
-import android.content.Context
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Quality
 import androidx.camera.video.Recorder
-import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
-import androidx.camera.video.VideoRecordEvent
-import com.velord.camerarecording.model.createRecording
 import com.velord.core.navigation.fragment.NavigationDataFragment
 import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.navigation.voyager.NavigationDataVoyager
 import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
-import com.velord.model.file.FileName
+import com.velord.model.camera.RecordingSession
+import com.velord.model.camera.VideoCaptureRequest
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
-import com.velord.usecase.recording.CreateRecordingFileOutputOptionsUC
-import com.velord.usecase.recording.DeleteFailedRecordingOutputUC
+import com.velord.usecase.camera.StartRecordingUC
 import com.velord.util.permission.AndroidPermissionState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,10 +28,8 @@ data class CameraRecordingUiState(
     val cameraSelector: CameraSelector,
     val isAudioEnabled: Boolean,
     val isRecordingStarted: Boolean,
-    // A Recording is an object that allows us to control current active recording.
-    // It will allow us to stop, pause and resume the current recording.
-    // We create that object when we start recording.
-    val recording: Recording?,
+    // A RecordingSession controls the current active recording without exposing CameraX Recording.
+    val recording: RecordingSession?,
 ) {
     companion object {
         val DEFAULT = CameraRecordingUiState(
@@ -63,9 +57,7 @@ sealed interface CameraRecordingUiAction {
 }
 
 class CameraRecordingViewModel(
-    private val context: Context,
-    private val createRecordingFileOutputOptions: CreateRecordingFileOutputOptionsUC,
-    private val deleteFailedRecordingOutput: DeleteFailedRecordingOutputUC,
+    private val startRecording: StartRecordingUC,
 ) : CoroutineScopeViewModel() {
 
     val uiStateFlow = MutableStateFlow(CameraRecordingUiState.DEFAULT)
@@ -170,13 +162,9 @@ class CameraRecordingViewModel(
 
     private fun onNewRecording(newCapture: VideoCapture<Recorder>) {
         launch {
-            val isAudioEnabled = uiStateFlow.value.isAudioEnabled
-            val outputOptions = createRecordingFileOutputOptions(FileName())
-            val newRecording = context.createRecording(
-                outputOptions = outputOptions,
-                videoCapture = newCapture,
-                audioEnabled = isAudioEnabled,
-                consumer = ::onVideoRecordEvent,
+            val newRecording = startRecording(
+                videoCapture = VideoCaptureRequest(newCapture),
+                audioEnabled = uiStateFlow.value.isAudioEnabled,
             )
             uiStateFlow.update {
                 it.copy(recording = newRecording)
@@ -186,14 +174,6 @@ class CameraRecordingViewModel(
 
     private fun onStopRecording() {
         uiStateFlow.value.recording?.stop()
-    }
-
-    private fun onVideoRecordEvent(newEvent: VideoRecordEvent) {
-        if (newEvent is VideoRecordEvent.Finalize) {
-            val isNone = newEvent.error == VideoRecordEvent.Finalize.ERROR_NONE
-            if (isNone) return
-            deleteFailedRecordingOutput(newEvent)
-        }
     }
 
     private fun observe() {

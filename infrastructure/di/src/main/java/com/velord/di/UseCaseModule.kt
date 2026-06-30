@@ -1,12 +1,13 @@
 package com.velord.di
 
+import com.velord.gateway.camera.CameraGateway
 import com.velord.gateway.movie.MovieByGateway
 import com.velord.gateway.movie.MovieFavoriteGateway
 import com.velord.gateway.movie.MoviePaginationGateway
 import com.velord.gateway.movie.MovieSortGateway
-import com.velord.gateway.recording.RecordingOutputGateway
 import com.velord.gateway.setting.GetThemeConfigGateway
 import com.velord.gateway.setting.SwitchThemeConfigGateway
+import com.velord.usecase.camera.StartRecordingUC
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetFavoriteMovieUC
 import com.velord.usecase.movie.GetMovieSortOptionUC
@@ -14,8 +15,6 @@ import com.velord.usecase.movie.LoadNewPageMovieUC
 import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
-import com.velord.usecase.recording.CreateRecordingFileOutputOptionsUC
-import com.velord.usecase.recording.DeleteFailedRecordingOutputUC
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDarkThemeConfigUC
@@ -56,10 +55,7 @@ val useCaseModule = module {
     single<RefreshMovieUC> {
         RefreshMovieUC(get<MoviePaginationGateway>()::refresh)
     }
-    single<CreateRecordingFileOutputOptionsUC> {
-        CreateRecordingFileOutputOptionsUC(get<RecordingOutputGateway>()::createFileOutputOptions)
-    }
-    single<DeleteFailedRecordingOutputUC> {
-        DeleteFailedRecordingOutputUC(get<RecordingOutputGateway>()::deleteFailedOutput)
+    single<StartRecordingUC> {
+        StartRecordingUC(get<CameraGateway>()::startRecording)
     }
 }

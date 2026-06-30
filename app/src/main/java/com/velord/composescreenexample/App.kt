@@ -10,8 +10,8 @@ import com.velord.config.BuildConfigResolver
 import com.velord.config.NavigationLib
 import com.velord.di.startKoin
 import com.velord.navigation.voyager.initVoyager
-import com.velord.os.MemoryLeakMonitor
-import com.velord.os.MemoryLogger
+import com.velord.os.memory.MemoryLeakMonitor
+import com.velord.os.memory.MemoryLogger
 import org.koin.android.ext.android.inject
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
