@@ -15,9 +15,12 @@ kotlin {
         }
 
         androidMain.dependencies {
+            implementation(projects.model)
+            implementation(projects.core.coreResource)
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.koin.core)
             implementation(libs.koin.annotation)
+            implementation(libs.androidx.camera.video)
         }
 
         named("commonMain").configure {

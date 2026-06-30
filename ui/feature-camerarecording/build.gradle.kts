@@ -13,6 +13,7 @@ dependencies {
     implementation(projects.core.coreResource)
     implementation(projects.core.coreUi)
     implementation(projects.core.coreNavigation)
+    implementation(projects.domain.usecaseRecording)
     implementation(projects.ui.sharedviewmodel)
     implementation(projects.ui.featureBottomnavigation)
     // Template

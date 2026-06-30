@@ -22,6 +22,11 @@ kotlin {
             api(libs.koin.annotation)
         }
 
+        androidMain.dependencies {
+            implementation(projects.data.os)
+            implementation(libs.androidx.camera.video)
+        }
+
         named("commonMain").configure {
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
         }

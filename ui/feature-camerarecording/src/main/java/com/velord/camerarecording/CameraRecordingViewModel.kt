@@ -1,24 +1,22 @@
 package com.velord.camerarecording
 
 import android.content.Context
-import android.net.Uri
 import androidx.camera.core.CameraSelector
-import androidx.camera.video.FileDescriptorOutputOptions
-import androidx.camera.video.FileOutputOptions
-import androidx.camera.video.MediaStoreOutputOptions
 import androidx.camera.video.Quality
 import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
-import com.velord.camerarecording.model.createRecordingViaFileSystem
+import com.velord.camerarecording.model.createRecording
 import com.velord.core.navigation.fragment.NavigationDataFragment
 import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.navigation.voyager.NavigationDataVoyager
 import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
+import com.velord.model.file.FileName
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
-import com.velord.util.file.FileName
+import com.velord.usecase.recording.CreateRecordingFileOutputOptionsUC
+import com.velord.usecase.recording.DeleteFailedRecordingOutputUC
 import com.velord.util.permission.AndroidPermissionState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -66,6 +64,8 @@ sealed interface CameraRecordingUiAction {
 
 class CameraRecordingViewModel(
     private val context: Context,
+    private val createRecordingFileOutputOptions: CreateRecordingFileOutputOptionsUC,
+    private val deleteFailedRecordingOutput: DeleteFailedRecordingOutputUC,
 ) : CoroutineScopeViewModel() {
 
     val uiStateFlow = MutableStateFlow(CameraRecordingUiState.DEFAULT)
@@ -171,8 +171,9 @@ class CameraRecordingViewModel(
     private fun onNewRecording(newCapture: VideoCapture<Recorder>) {
         launch {
             val isAudioEnabled = uiStateFlow.value.isAudioEnabled
-            val newRecording = context.createRecordingViaFileSystem(
-                fileName = FileName(),
+            val outputOptions = createRecordingFileOutputOptions(FileName())
+            val newRecording = context.createRecording(
+                outputOptions = outputOptions,
                 videoCapture = newCapture,
                 audioEnabled = isAudioEnabled,
                 consumer = ::onVideoRecordEvent,
@@ -191,19 +192,7 @@ class CameraRecordingViewModel(
         if (newEvent is VideoRecordEvent.Finalize) {
             val isNone = newEvent.error == VideoRecordEvent.Finalize.ERROR_NONE
             if (isNone) return
-            // When error delete the file
-            when(val options = newEvent.outputOptions) {
-                is FileOutputOptions -> options.file.delete()
-                is MediaStoreOutputOptions -> {
-                    val uri: Uri = newEvent.outputResults.outputUri
-                    if (uri != Uri.EMPTY) {
-                        context.contentResolver.delete(uri, null, null)
-                    }
-                }
-                is FileDescriptorOutputOptions -> {
-                    // User has to clean up the referenced target of the file descriptor.
-                }
-            }
+            deleteFailedRecordingOutput(newEvent)
         }
     }
 

@@ -22,7 +22,7 @@ val viewModelModule = module {
     viewModel { MovieViewModel(get(), get()) }
     viewModel { AllMovieViewModel(get(), get(), get(), get()) }
     viewModel { FavoriteMovieViewModel(get(), get()) }
-    viewModel { CameraRecordingViewModel(get()) }
+    viewModel { CameraRecordingViewModel(get(), get(), get()) }
     viewModel { BottomNavigationJetpackVM(get()) }
     viewModel { DialogDemoViewModel() }
 }
