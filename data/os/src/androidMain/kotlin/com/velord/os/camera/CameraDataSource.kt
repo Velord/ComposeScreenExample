@@ -11,16 +11,11 @@ import androidx.camera.video.VideoRecordEvent
 import com.velord.core.resource.R
 import com.velord.model.camera.RecordingSession
 import com.velord.model.camera.VideoCaptureRequest
+import com.velord.model.file.FileName
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 import org.koin.core.scope.Scope
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
-private const val DEFAULT_EXTENSION = ".mp4"
-
 @Module
 actual class CameraPlatformModule {
 
@@ -49,13 +44,8 @@ private class AndroidCameraDataSource(private val context: Context) : CameraData
         val appDir = File(moviesDir, context.getString(R.string.app_name)).apply {
             mkdirs()
         }
-        val outputFile = File(appDir, createFileName())
+        val outputFile = File(appDir, FileName().value)
         return FileOutputOptions.Builder(outputFile).build()
-    }
-
-    private fun createFileName(extension: String = DEFAULT_EXTENSION): String {
-        val timestamp = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.US).format(Date())
-        return "$timestamp$extension"
     }
 
     private fun onVideoRecordEvent(newEvent: VideoRecordEvent) {
