@@ -3,7 +3,7 @@ package com.velord.gateway.movie
 import co.touchlab.kermit.Logger
 import com.velord.backend.ktor.MovieNetworkDataSource
 import com.velord.backend.model.MoviePageRequest
-import com.velord.db.movie.MovieDbDataSource
+import com.velord.db.movie.dataSource.MovieDbDataSource
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.MoviePagination
 import com.velord.model.movie.MovieRosterSize

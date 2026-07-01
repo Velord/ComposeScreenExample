@@ -14,7 +14,7 @@ interface DataStoreDataSource {
     suspend fun getAppSettingFlow(): Flow<AppSetting>
 }
 
-@Single
+@Single(binds = [DataStoreDataSource::class])
 class DataStoreDataSourceImpl(
     private val appSetting: AppSettingDataStore,
 ) : DataStoreDataSource {

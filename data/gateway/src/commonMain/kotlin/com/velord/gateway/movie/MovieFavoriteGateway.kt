@@ -2,7 +2,7 @@ package com.velord.gateway.movie
 
 import co.touchlab.kermit.Logger
 import com.velord.appstate.AppStateDataSource
-import com.velord.db.movie.MovieDbDataSource
+import com.velord.db.movie.dataSource.MovieDbDataSource
 import com.velord.model.movie.Movie
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

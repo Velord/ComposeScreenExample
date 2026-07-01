@@ -3,6 +3,7 @@ package com.velord.db.movie
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.velord.model.movie.Movie
 
 @Entity(tableName = "MovieEntity")
 data class MovieEntity(
@@ -24,29 +25,25 @@ data class MovieEntity(
     val imagePath: String?,
 ) {
 
-    fun toRecord(): MovieRecord {
-        return MovieRecord(
-            id = id,
-            title = title,
-            description = description,
-            isLiked = isLiked,
-            date = date,
-            rating = rating,
-            voteCount = voteCount,
-            imagePath = imagePath,
-        )
-    }
-
-    companion object {
-        fun fromRecord(record: MovieRecord): MovieEntity = MovieEntity(
-            id = record.id,
-            title = record.title,
-            description = record.description,
-            isLiked = record.isLiked,
-            date = record.date,
-            rating = record.rating,
-            voteCount = record.voteCount,
-            imagePath = record.imagePath,
-        )
-    }
+    fun toDomain(): Movie = Movie(
+        id = id,
+        title = title,
+        description = description,
+        isLiked = isLiked,
+        date = Movie.toInstant(date),
+        rating = rating,
+        voteCount = voteCount,
+        imagePath = imagePath,
+    )
 }
+
+internal fun Movie.toEntity(): MovieEntity = MovieEntity(
+    id = id,
+    title = title,
+    description = description,
+    isLiked = isLiked,
+    date = Movie.toRaw(date),
+    rating = rating,
+    voteCount = voteCount,
+    imagePath = imagePath,
+)
