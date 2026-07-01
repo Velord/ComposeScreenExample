@@ -11,7 +11,7 @@ import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
 import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.model.camera.RecordingSession
-import com.velord.model.camera.VideoCaptureRequest
+import com.velord.model.camera.VideoCaptureWrapper
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.camera.StartRecordingUC
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -163,7 +163,7 @@ class CameraRecordingViewModel(
     private fun onNewRecording(newCapture: VideoCapture<Recorder>) {
         launch {
             val newRecording = startRecording(
-                videoCapture = VideoCaptureRequest(newCapture),
+                videoCapture = VideoCaptureWrapper(newCapture),
                 audioEnabled = uiStateFlow.value.isAudioEnabled,
             )
             uiStateFlow.update {

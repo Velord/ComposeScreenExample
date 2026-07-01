@@ -1,7 +1,7 @@
 package com.velord.gateway.camera
 
 import com.velord.model.camera.RecordingSession
-import com.velord.model.camera.VideoCaptureRequest
+import com.velord.model.camera.VideoCaptureWrapper
 import com.velord.os.camera.CameraDataSource
 import org.koin.core.annotation.Single
 
@@ -9,7 +9,7 @@ import org.koin.core.annotation.Single
 class CameraGateway(private val dataSource: CameraDataSource) {
 
     fun startRecording(
-        videoCapture: VideoCaptureRequest,
+        videoCapture: VideoCaptureWrapper,
         audioEnabled: Boolean,
     ): RecordingSession = dataSource.startRecording(
         videoCapture = videoCapture,

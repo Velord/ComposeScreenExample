@@ -10,7 +10,7 @@ import androidx.camera.video.MediaStoreOutputOptions
 import androidx.camera.video.VideoRecordEvent
 import com.velord.core.resource.R
 import com.velord.model.camera.RecordingSession
-import com.velord.model.camera.VideoCaptureRequest
+import com.velord.model.camera.VideoCaptureWrapper
 import com.velord.model.file.FileName
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
@@ -28,7 +28,7 @@ private class AndroidCameraDataSource(private val context: Context) : CameraData
 
     @SuppressLint("MissingPermission")
     override fun startRecording(
-        videoCapture: VideoCaptureRequest,
+        videoCapture: VideoCaptureWrapper,
         audioEnabled: Boolean,
     ): RecordingSession {
         val outputOptions = createFileOutputOptions()

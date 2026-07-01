@@ -1,7 +1,7 @@
 package com.velord.os.camera
 
 import com.velord.model.camera.RecordingSession
-import com.velord.model.camera.VideoCaptureRequest
+import com.velord.model.camera.VideoCaptureWrapper
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 import org.koin.core.scope.Scope
@@ -17,7 +17,7 @@ actual class CameraPlatformModule {
 private class DesktopCameraDataSource : CameraDataSource {
 
     override fun startRecording(
-        videoCapture: VideoCaptureRequest,
+        videoCapture: VideoCaptureWrapper,
         audioEnabled: Boolean,
     ): RecordingSession {
         TODO("Not yet implemented")
