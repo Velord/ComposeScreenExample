@@ -1,9 +1,7 @@
 package com.velord.core.navigation.fragment.entryPoint
 
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
-@Serializable
 enum class SettingsSourceFragment {
     SettingsGraph,
     CameraRecording,

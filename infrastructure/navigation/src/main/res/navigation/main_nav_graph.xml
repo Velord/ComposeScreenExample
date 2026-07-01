@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/inDevelopmentFragment"
-        android:name="com.velord.navigation.jetpackNavigation.inDevelopment.InDevelopmentFragment"
+        android:name="com.velord.infrastructure.navigation.jetpackNavigation.inDevelopment.InDevelopmentFragment"
         android:label="InDevelopmentFragment" />
 
 </navigation>

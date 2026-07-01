@@ -19,17 +19,17 @@ import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
 import com.velord.config.NavigationLib
 import com.velord.core.ui.util.setContentWithTheme
-import com.velord.navigation.CreateNavigationViaDestinations
-import com.velord.navigation.CreateNavigationViaNav3
-import com.velord.navigation.CreateNavigationViaVanilla
-import com.velord.navigation.CreateNavigationViaVoyager
+import com.velord.infrastructure.navigation.CreateNavigationViaDestinations
+import com.velord.infrastructure.navigation.CreateNavigationViaNav3
+import com.velord.infrastructure.navigation.CreateNavigationViaVanilla
+import com.velord.infrastructure.navigation.CreateNavigationViaVoyager
 import com.velord.sharedviewmodel.ThemeViewModel
 import com.velord.splash.SplashScreen
 import com.velord.splash.SplashViewModel
 import com.velord.splash.installSplash
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.velord.navigation.R as RNavigation
+import com.velord.infrastructure.navigation.R as RNavigation
 
 class MainActivity : AppCompatActivity() {
 

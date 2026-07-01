@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 compose.resources {

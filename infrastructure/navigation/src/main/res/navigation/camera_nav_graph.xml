@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@id/bottom_nav_graph_left_start_destination"
-        android:name="com.velord.navigation.jetpackNavigation.graph.CameraGraphFragment"
+        android:name="com.velord.infrastructure.navigation.jetpackNavigation.graph.CameraGraphFragment"
         android:label="CameraGraphFragment" >
 
         <action

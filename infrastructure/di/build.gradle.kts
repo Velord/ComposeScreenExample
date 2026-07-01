@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.di"
+    namespace = "com.velord.infrastructure.di"
 }
 
 dependencies {
