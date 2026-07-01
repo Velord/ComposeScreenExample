@@ -14,8 +14,8 @@ import com.velord.bottomnavigation.screen.jetpack.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.core.ui.dialog.checkRecordVideoPermission
 import com.velord.core.ui.util.setContentWithTheme
-import com.velord.util.fragment.viewLifecycleScope
-import com.velord.util.permission.AndroidPermissionState
+import com.velord.infrastructure.util.fragment.viewLifecycleScope
+import com.velord.infrastructure.util.permission.PermissionGrantState
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,12 +41,12 @@ class CameraRecordingFragment : Fragment() {
             defaultValue = false
         )
 
-        val cameraPermissionState = AndroidPermissionState.invoke(isCameraGranted)
-        val cameraAction = CameraRecordingUiAction.UpdateCameraPermissionState(cameraPermissionState)
+        val cameraPermissionGrantState = PermissionGrantState.invoke(isCameraGranted)
+        val cameraAction = CameraRecordingUiAction.UpdateCameraPermissionGrantState(cameraPermissionGrantState)
         viewModel.onAction(cameraAction)
 
-        val audioPermissionState = AndroidPermissionState.invoke(isAudioGranted)
-        val audioAction = CameraRecordingUiAction.UpdateAudioPermissionState(audioPermissionState)
+        val audioPermissionGrantState = PermissionGrantState.invoke(isAudioGranted)
+        val audioAction = CameraRecordingUiAction.UpdateAudioPermissionGrantState(audioPermissionGrantState)
         viewModel.onAction(audioAction)
     }
 
@@ -105,11 +105,11 @@ class CameraRecordingFragment : Fragment() {
         checkRecordVideoPermission(
             actionLauncher = requestRecordVideoPermissionLauncher,
             onGranted = {
-                val action = CameraRecordingUiAction.UpdatePermissionState(AndroidPermissionState.Granted)
+                val action = CameraRecordingUiAction.UpdatePermissionGrantState(PermissionGrantState.Granted)
                 viewModel.onAction(action)
             },
             onDecline = {
-                val action = CameraRecordingUiAction.UpdatePermissionState(AndroidPermissionState.Denied)
+                val action = CameraRecordingUiAction.UpdatePermissionGrantState(PermissionGrantState.Denied)
                 viewModel.onAction(action)
             }
         )

@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.velord.bottomnavigation.screen.jetpack.addTestCallback
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.core.ui.util.setContentWithTheme
-import com.velord.util.fragment.viewLifecycleScope
+import com.velord.infrastructure.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

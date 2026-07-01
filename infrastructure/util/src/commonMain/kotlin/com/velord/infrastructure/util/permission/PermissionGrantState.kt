@@ -1,6 +1,6 @@
-package com.velord.util.permission
+package com.velord.infrastructure.util.permission
 
-enum class AndroidPermissionState {
+enum class PermissionGrantState {
     NotAsked,
     Granted,
     Denied,

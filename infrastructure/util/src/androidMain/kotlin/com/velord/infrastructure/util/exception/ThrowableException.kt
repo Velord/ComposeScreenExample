@@ -1,4 +1,4 @@
-package com.velord.util.exception
+﻿package com.velord.infrastructure.util.exception
 
 import co.touchlab.kermit.Logger
 import kotlinx.serialization.json.Json
@@ -11,7 +11,7 @@ import java.net.UnknownHostException
 
 private val log = Logger.withTag("BaseException")
 
-fun Throwable.toBaseException(): BaseException = when (this) {
+actual fun Throwable.toBaseException(): BaseException = when (this) {
     is UnknownHostException, is ConnectException, is SocketTimeoutException -> BaseException.NoInternet
     is BaseException -> this
     is HttpException -> parseHttpException()
@@ -36,6 +36,6 @@ private fun HttpException.parseHttpException(): BaseException = try {
         else -> BaseException.Unknown
     }
 } catch (e: Exception) {
-    Logger.d(tag = "Throwable.toAppException") { e.toString() }
+    Logger.d(tag = "Throwable.toBaseException") { e.toString() }
     BaseException.Unknown
 }

@@ -21,7 +21,7 @@ import com.velord.core.navigation.fragment.util.activityNavController
 import com.velord.core.resource.Res
 import com.velord.core.resource.open_new
 import com.velord.core.ui.util.setContentWithTheme
-import com.velord.util.fragment.viewLifecycleScope
+import com.velord.infrastructure.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 

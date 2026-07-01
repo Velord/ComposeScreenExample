@@ -9,11 +9,11 @@ import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.navigation.voyager.NavigationDataVoyager
 import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
+import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.model.camera.RecordingSession
 import com.velord.model.camera.VideoCaptureRequest
 import com.velord.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.camera.StartRecordingUC
-import com.velord.util.permission.AndroidPermissionState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 
 data class CameraRecordingUiState(
     // Permission
-    val permissionCamera: AndroidPermissionState,
-    val permissionAudio: AndroidPermissionState,
+    val permissionCamera: PermissionGrantState,
+    val permissionAudio: PermissionGrantState,
     // Video control
     val videoQuality: Quality,
     val cameraSelector: CameraSelector,
@@ -33,8 +33,8 @@ data class CameraRecordingUiState(
 ) {
     companion object {
         val DEFAULT = CameraRecordingUiState(
-            permissionCamera = AndroidPermissionState.NotAsked,
-            permissionAudio = AndroidPermissionState.NotAsked,
+            permissionCamera = PermissionGrantState.NotAsked,
+            permissionAudio = PermissionGrantState.NotAsked,
             videoQuality = Quality.HIGHEST,
             cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA,
             isAudioEnabled = true,
@@ -51,9 +51,9 @@ sealed interface CameraRecordingUiAction {
     data class ChangeVideoQuality(val quality: Quality) : CameraRecordingUiAction
     data class ChangeIsAudioEnabled(val enabled: Boolean) : CameraRecordingUiAction
     data class StartStopRecording(val newCapture: VideoCapture<Recorder>?) : CameraRecordingUiAction
-    data class UpdateCameraPermissionState(val state: AndroidPermissionState) : CameraRecordingUiAction
-    data class UpdateAudioPermissionState(val state: AndroidPermissionState) : CameraRecordingUiAction
-    data class UpdatePermissionState(val state: AndroidPermissionState) : CameraRecordingUiAction
+    data class UpdateCameraPermissionGrantState(val state: PermissionGrantState) : CameraRecordingUiAction
+    data class UpdateAudioPermissionGrantState(val state: PermissionGrantState) : CameraRecordingUiAction
+    data class UpdatePermissionGrantState(val state: PermissionGrantState) : CameraRecordingUiAction
 }
 
 class CameraRecordingViewModel(
@@ -95,18 +95,18 @@ class CameraRecordingViewModel(
         }
     }
 
-    private fun updatePermissionState(state: AndroidPermissionState) {
-        updateCameraPermissionState(state)
-        updateAudioPermissionState(state)
+    private fun updatePermissionGrantState(state: PermissionGrantState) {
+        updateCameraPermissionGrantState(state)
+        updateAudioPermissionGrantState(state)
     }
 
-    private fun updateCameraPermissionState(state: AndroidPermissionState) {
+    private fun updateCameraPermissionGrantState(state: PermissionGrantState) {
         uiStateFlow.update {
             it.copy(permissionCamera = state)
         }
     }
 
-    private fun updateAudioPermissionState(state: AndroidPermissionState) {
+    private fun updateAudioPermissionGrantState(state: PermissionGrantState) {
         uiStateFlow.update {
             it.copy(permissionAudio = state)
         }
@@ -186,9 +186,9 @@ class CameraRecordingViewModel(
                     is CameraRecordingUiAction.ChangeIsAudioEnabled -> onChangeIsAudioEnabled(action.enabled)
                     is CameraRecordingUiAction.StartStopRecording -> onStartStopRecording(action.newCapture)
                     is CameraRecordingUiAction.CheckPermissionClick -> onCheckPermission()
-                    is CameraRecordingUiAction.UpdatePermissionState -> updatePermissionState(action.state)
-                    is CameraRecordingUiAction.UpdateCameraPermissionState -> updateCameraPermissionState(action.state)
-                    is CameraRecordingUiAction.UpdateAudioPermissionState -> updateAudioPermissionState(action.state)
+                    is CameraRecordingUiAction.UpdatePermissionGrantState -> updatePermissionGrantState(action.state)
+                    is CameraRecordingUiAction.UpdateCameraPermissionGrantState -> updateCameraPermissionGrantState(action.state)
+                    is CameraRecordingUiAction.UpdateAudioPermissionGrantState -> updateAudioPermissionGrantState(action.state)
                 }
             }
         }

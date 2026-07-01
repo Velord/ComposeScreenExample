@@ -15,8 +15,8 @@ import com.velord.bottomnavigation.R
 import com.velord.bottomnavigation.databinding.FragmentBottomNavigationBinding
 import com.velord.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.core.ui.util.setContentWithTheme
+import com.velord.infrastructure.util.fragment.viewLifecycleScope
 import com.velord.multiplebackstackapplier.MultipleBackstack
-import com.velord.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

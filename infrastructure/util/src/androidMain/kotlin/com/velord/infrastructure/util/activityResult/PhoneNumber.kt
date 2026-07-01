@@ -1,4 +1,4 @@
-package com.velord.util.activityResult
+﻿package com.velord.infrastructure.util.activityResult
 
 import android.app.PendingIntent
 import androidx.activity.ComponentActivity
@@ -105,3 +105,4 @@ val phoneNumberHintIntentResultLauncher
         }
     }
 }
+

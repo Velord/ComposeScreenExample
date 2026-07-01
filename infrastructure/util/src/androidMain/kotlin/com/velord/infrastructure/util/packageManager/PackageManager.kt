@@ -1,4 +1,4 @@
-package com.velord.util.packageManager
+﻿package com.velord.infrastructure.util.packageManager
 
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -10,3 +10,4 @@ fun PackageManager.getPackageInfoCompat(packageName: String, flags: Int = 0): Pa
     } else {
         getPackageInfo(packageName, flags)
     }
+

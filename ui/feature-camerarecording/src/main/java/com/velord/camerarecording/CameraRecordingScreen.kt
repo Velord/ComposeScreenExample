@@ -81,11 +81,11 @@ fun CameraRecordingScreen(
 //        CheckCameraAndAudioRecordPermission(
 //            triggerCheckEvent = viewModel.checkPermissionEvent,
 //            onCameraUpdateState = {
-//                val action = CameraRecordingUiAction.UpdateCameraPermissionState(it)
+//                val action = CameraRecordingUiAction.UpdateCameraPermissionGrantState(it)
 //                viewModel.onAction(action)
 //            },
 //            onMicroUpdateState = {
-//                val action = CameraRecordingUiAction.UpdateAudioPermissionState(it)
+//                val action = CameraRecordingUiAction.UpdateAudioPermissionGrantState(it)
 //                viewModel.onAction(action)
 //            }
 //        )
@@ -359,4 +359,3 @@ private fun CameraRecordingPreview() {
         onAction = {}
     )
 }
-

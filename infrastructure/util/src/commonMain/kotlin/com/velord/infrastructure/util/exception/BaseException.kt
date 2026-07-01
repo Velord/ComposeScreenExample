@@ -1,4 +1,4 @@
-package com.velord.util.exception
+﻿package com.velord.infrastructure.util.exception
 
 sealed class BaseException(override val message: String? = null) : Exception(message) {
 
@@ -20,3 +20,4 @@ sealed class BaseException(override val message: String? = null) : Exception(mes
         }
     }
 }
+

@@ -1,21 +1,30 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    alias(libs.plugins.convention.android.compose)
-    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
+    alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
-android {
-    namespace = "com.velord.util"
-}
+kotlin {
+    android {
+        namespace = "com.velord.infrastructure.util"
+    }
 
-dependencies {
-    // Template
-    implementation(libs.bundles.kotlin.module)
-    implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.network.all)
-    implementation(libs.bundles.androidx.credentials)
-    implementation(libs.bundles.google.gms)
-    // Lib
-    implementation(libs.androidx.glance.appwidget)
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlin.serialization.json)
+            implementation(libs.kermit)
+            implementation(libs.compose.runtime)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.bundles.androidx.module)
+            implementation(libs.bundles.androidx.credentials)
+            implementation(libs.bundles.google.gms)
+            implementation(libs.bundles.network.retrofit)
+        }
+
+        desktopMain.dependencies {
+            implementation(libs.bundles.network.retrofit)
+        }
+    }
 }

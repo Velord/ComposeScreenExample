@@ -2,8 +2,8 @@ package com.velord.sharedviewmodel
 
 import androidx.lifecycle.ViewModel
 import co.touchlab.kermit.Logger
-import com.velord.util.exception.BaseException
-import com.velord.util.exception.toBaseException
+import com.velord.infrastructure.util.exception.BaseException
+import com.velord.infrastructure.util.exception.toBaseException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

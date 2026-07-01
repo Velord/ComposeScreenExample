@@ -13,7 +13,7 @@ import com.velord.core.resource.give_access_to_microphone
 import com.velord.core.resource.go_to_app_settings
 import com.velord.core.resource.require_camera_permission
 import com.velord.core.resource.require_microphone_permission
-import com.velord.util.context.createSettingsIntent
+import com.velord.infrastructure.util.context.createSettingsIntent
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 

@@ -24,8 +24,8 @@ import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
 import com.velord.core.resource.Res
 import com.velord.core.resource.press_again_to_exit
+import com.velord.infrastructure.util.context.getActivity
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
-import com.velord.util.context.getActivity
 import org.jetbrains.compose.resources.stringResource
 
 private fun BottomNavigationItem.toTab(): BottomNavigationTab = when (this) {

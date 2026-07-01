@@ -1,4 +1,4 @@
-package com.velord.util.exception
+﻿package com.velord.infrastructure.util.exception
 
 import kotlinx.serialization.Serializable
 

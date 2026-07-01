@@ -1,4 +1,4 @@
-package com.velord.util.context
+﻿package com.velord.infrastructure.util.context
 
 import android.app.Activity
 import android.content.Context
@@ -31,3 +31,4 @@ fun Context.createDirInCacheOrFilesDir(dirName: String): File {
     val mediaDir = createDirInCache(dirName)
     return if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
 }
+

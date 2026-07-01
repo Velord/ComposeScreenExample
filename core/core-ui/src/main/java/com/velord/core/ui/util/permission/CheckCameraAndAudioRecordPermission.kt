@@ -12,15 +12,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import co.touchlab.kermit.Logger
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.velord.core.ui.dialog.showGoToSettingsForCamera
 import com.velord.core.ui.dialog.showGoToSettingsForMic
 import com.velord.core.ui.util.ObserveSharedFlow
-import com.velord.util.permission.AndroidPermissionState
+import com.velord.infrastructure.util.permission.PermissionGrantState
 import kotlinx.coroutines.flow.MutableSharedFlow
+import com.google.accompanist.permissions.PermissionState as AccompanistPermissionState
 
 private val log = Logger.withTag("CheckCameraAndAudioRecordPermission")
 
@@ -28,8 +28,8 @@ private val log = Logger.withTag("CheckCameraAndAudioRecordPermission")
 @Composable
 fun CheckCameraAndAudioRecordPermission(
     triggerCheckEvent: MutableSharedFlow<Unit>,
-    onCameraUpdateState: (AndroidPermissionState) -> Unit,
-    onMicroUpdateState: (AndroidPermissionState) -> Unit,
+    onCameraUpdateState: (PermissionGrantState) -> Unit,
+    onMicroUpdateState: (PermissionGrantState) -> Unit,
 ) {
     val context = LocalContext.current
     // Fix the issue when the user first time asked for permission.
@@ -81,13 +81,13 @@ fun CheckCameraAndAudioRecordPermission(
 
     cameraState.value?.let {
         log.d { "Camera: ${it.status}" }
-        val androidPermState = it.status.toAndroidPermissionState(permissionAlreadyRequestedState.value)
-        onCameraUpdateState(androidPermState)
+        val permissionGrantState = it.status.toPermissionGrantState(permissionAlreadyRequestedState.value)
+        onCameraUpdateState(permissionGrantState)
     }
     microState.value?.let {
         log.d { "Micro: ${it.status}" }
-        val androidPermState = it.status.toAndroidPermissionState(permissionAlreadyRequestedState.value)
-        onMicroUpdateState(androidPermState)
+        val permissionGrantState = it.status.toPermissionGrantState(permissionAlreadyRequestedState.value)
+        onMicroUpdateState(permissionGrantState)
     }
 
     ObserveSharedFlow(flow = triggerCheckEvent) {
@@ -102,7 +102,7 @@ fun CheckCameraAndAudioRecordPermission(
 @OptIn(ExperimentalPermissionsApi::class)
 private fun checkCamera(
     permissionAlreadyRequestedState: State<Boolean>,
-    cameraState: State<PermissionState?>,
+    cameraState: State<AccompanistPermissionState?>,
     context: Context
 ) {
     baseCheck(
@@ -116,7 +116,7 @@ private fun checkCamera(
 @OptIn(ExperimentalPermissionsApi::class)
 private fun checkAudioRecord(
     permissionAlreadyRequestedState: State<Boolean>,
-    microState: State<PermissionState?>,
+    microState: State<AccompanistPermissionState?>,
     context: Context
 ) {
     baseCheck(
@@ -130,7 +130,7 @@ private fun checkAudioRecord(
 @OptIn(ExperimentalPermissionsApi::class)
 private fun baseCheck(
     permissionAlreadyRequestedState: State<Boolean>,
-    permState: State<PermissionState?>,
+    permState: State<AccompanistPermissionState?>,
     onCompletelyDenied: () -> Unit,
     tag: String
 ) {
@@ -138,7 +138,7 @@ private fun baseCheck(
         val isNotGranted = it.status.isGranted.not()
         val isNotShowRationale = it.status.shouldShowRationale.not()
         val isRequestedBefore = permissionAlreadyRequestedState.value
-        log.d { "$tag: ${it.status.toAndroidPermissionState(isRequestedBefore)}" }
+        log.d { "$tag: ${it.status.toPermissionGrantState(isRequestedBefore)}" }
         if (isNotGranted && isNotShowRationale && isRequestedBefore) {
             onCompletelyDenied()
         }

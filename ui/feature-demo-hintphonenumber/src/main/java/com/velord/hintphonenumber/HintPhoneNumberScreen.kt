@@ -23,7 +23,7 @@ import com.velord.core.resource.Res
 import com.velord.core.resource.invoke_again
 import com.velord.core.resource.waiting
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.util.activityResult.registerPhoneNumberHint
+import com.velord.infrastructure.util.activityResult.registerPhoneNumberHint
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
