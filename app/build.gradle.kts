@@ -63,9 +63,9 @@ android {
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
             buildConfigField(
-                "com.velord.config.NavigationLib",
+                "com.velord.infrastructure.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.config.NavigationLib.Nav3"
+                "com.velord.infrastructure.config.NavigationLib.Nav3"
             )
         }
         named("release") {
@@ -77,9 +77,9 @@ android {
             )
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
             buildConfigField(
-                "com.velord.config.NavigationLib",
+                "com.velord.infrastructure.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.config.NavigationLib.Destinations"
+                "com.velord.infrastructure.config.NavigationLib.Destinations"
             )
         }
     }

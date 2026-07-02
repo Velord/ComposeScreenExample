@@ -1,4 +1,4 @@
-package com.velord.config
+package com.velord.infrastructure.config
 
 enum class NavigationLib {
     Voyager,

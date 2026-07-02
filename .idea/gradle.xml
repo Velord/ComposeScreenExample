@@ -40,6 +40,7 @@
             <option value="$PROJECT_DIR$/infrastructure" />
             <option value="$PROJECT_DIR$/infrastructure/config" />
             <option value="$PROJECT_DIR$/infrastructure/di" />
+            <option value="$PROJECT_DIR$/infrastructure/konsist" />
             <option value="$PROJECT_DIR$/infrastructure/navigation" />
             <option value="$PROJECT_DIR$/infrastructure/util" />
             <option value="$PROJECT_DIR$/model" />

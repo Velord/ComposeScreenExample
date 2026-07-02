@@ -17,8 +17,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.velord.composescreenexample.BuildConfig
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
-import com.velord.config.NavigationLib
 import com.velord.core.ui.util.setContentWithTheme
+import com.velord.infrastructure.config.NavigationLib
 import com.velord.infrastructure.navigation.CreateNavigationViaDestinations
 import com.velord.infrastructure.navigation.CreateNavigationViaNav3
 import com.velord.infrastructure.navigation.CreateNavigationViaVanilla

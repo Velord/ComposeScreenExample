@@ -256,6 +256,9 @@ takt = "2.1.1"
 rebugger = "1.0.1"
 # Testing
 junit = "4.13.2"
+junitJupiter = "5.12.2"
+junitPlatform = "1.12.2"
+konsist = "0.17.3"
 mockk = "1.14.9"
 mokkery = "3.3.0"
 turbine = "1.2.1"
@@ -675,6 +678,10 @@ rebugger = { module = "io.github.theapache64:rebugger", version.ref = "rebugger"
 # Testing
 # Test
 junit = { module = "junit:junit", version.ref = "junit" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatform" }
+konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutine" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mock = { module = "io.mockk:mockk", version.ref = "mockk" }

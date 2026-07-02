@@ -6,10 +6,10 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import co.touchlab.kermit.Logger
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.velord.config.BuildConfigResolver
-import com.velord.config.NavigationLib
 import com.velord.data.os.memory.MemoryLeakMonitor
 import com.velord.data.os.memory.MemoryLogger
+import com.velord.infrastructure.config.BuildConfigResolver
+import com.velord.infrastructure.config.NavigationLib
 import com.velord.infrastructure.di.startKoin
 import com.velord.infrastructure.navigation.voyager.initVoyager
 import org.koin.android.ext.android.inject

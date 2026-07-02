@@ -1,10 +1,10 @@
 package com.velord.infrastructure.di
 
 import android.app.Application
-import com.velord.bottomnavigation.BottomNavigationModule
 import com.velord.data.backend.ktor.httpModule
 import com.velord.data.db.databaseModule
 import com.velord.data.gateway.GatewayModule
+import com.velord.ui.feature.bottomnavigation.BottomNavigationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

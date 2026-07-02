@@ -60,6 +60,7 @@ include(":infrastructure:util")
 include(":infrastructure:navigation")
 include(":infrastructure:di")
 include(":infrastructure:config")
+include(":infrastructure:konsist")
 // Core
 include(":core:core-ui")
 include(":core:core-navigation")

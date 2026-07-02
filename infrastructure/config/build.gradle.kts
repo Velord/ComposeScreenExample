@@ -4,6 +4,6 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.velord.config"
+        namespace = "com.velord.infrastructure.config"
     }
 }
