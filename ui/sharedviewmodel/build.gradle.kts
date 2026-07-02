@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.sharedviewmodel"
+    namespace = "com.velord.ui.sharedviewmodel"
 }
 
 dependencies {

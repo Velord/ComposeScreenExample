@@ -2,7 +2,7 @@ package com.velord.infrastructure.navigation.voyager.screen
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.velord.shapedemo.ShapeDemoScreen
+import com.velord.ui.feature.demo.shape.ShapeDemoScreen
 
 internal object ShapeDemoVoyagerScreen : Screen {
 

@@ -5,7 +5,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.velord.gateway"
+        namespace = "com.velord.data.gateway"
     }
 
     sourceSets {

@@ -1,12 +1,12 @@
 package com.velord.infrastructure.di
 
-import com.velord.gateway.camera.CameraGateway
-import com.velord.gateway.movie.MovieByGateway
-import com.velord.gateway.movie.MovieFavoriteGateway
-import com.velord.gateway.movie.MoviePaginationGateway
-import com.velord.gateway.movie.MovieSortGateway
-import com.velord.gateway.setting.GetThemeConfigGateway
-import com.velord.gateway.setting.SwitchThemeConfigGateway
+import com.velord.data.gateway.camera.CameraGateway
+import com.velord.data.gateway.movie.MovieByGateway
+import com.velord.data.gateway.movie.MovieFavoriteGateway
+import com.velord.data.gateway.movie.MoviePaginationGateway
+import com.velord.data.gateway.movie.MovieSortGateway
+import com.velord.data.gateway.setting.GetThemeConfigGateway
+import com.velord.data.gateway.setting.SwitchThemeConfigGateway
 import com.velord.usecase.camera.StartRecordingUC
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetFavoriteMovieUC

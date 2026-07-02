@@ -18,8 +18,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.velord.core.ui.compose.theme.MainTheme
 import com.velord.infrastructure.util.context.getActivity
 import com.velord.model.setting.AppThemeConfig
-import com.velord.sharedviewmodel.ThemeUiState
-import com.velord.sharedviewmodel.ThemeViewModel
+import com.velord.ui.sharedviewmodel.ThemeUiState
+import com.velord.ui.sharedviewmodel.ThemeViewModel
 
 fun ComponentActivity.setContentWithTheme(
     screen: @Composable ComposeView.() -> Unit

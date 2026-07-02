@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.demomorph"
+    namespace = "com.velord.ui.feature.demo.morph"
 }
 
 dependencies {

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.dialogdemo"
+    namespace = "com.velord.ui.feature.demo.dialog"
 }
 
 dependencies {

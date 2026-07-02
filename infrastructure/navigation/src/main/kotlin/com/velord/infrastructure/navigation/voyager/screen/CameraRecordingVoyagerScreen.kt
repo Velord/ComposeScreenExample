@@ -2,9 +2,9 @@ package com.velord.infrastructure.navigation.voyager.screen
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
-import com.velord.camerarecording.CameraRecordingScreen
-import com.velord.camerarecording.CameraRecordingViewModel
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.camerarecording.CameraRecordingScreen
+import com.velord.ui.feature.camerarecording.CameraRecordingViewModel
 import com.velord.core.navigation.voyager.ObserveNavigation
 import org.koin.androidx.compose.koinViewModel
 

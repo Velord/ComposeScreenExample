@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/cameraRecordingFragment"
-        android:name="com.velord.camerarecording.CameraRecordingFragment"
+        android:name="com.velord.ui.feature.camerarecording.CameraRecordingFragment"
         android:label="CameraRecordingFragment">
 
         <action
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.velord.setting.SettingFragment"
+        android:name="com.velord.ui.feature.setting.SettingFragment"
         android:label="SettingsFragment" >
 
         <argument

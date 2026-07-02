@@ -10,9 +10,9 @@ import com.ramcosta.composedestinations.generated.navigation.destinations.MorphD
 import com.ramcosta.composedestinations.generated.navigation.destinations.MovieDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.ShapeDemoDestinationDestination
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
-import com.velord.camerarecording.CameraRecordingNavigator
-import com.velord.feature.demo.DemoDestinationNavigationEvent
-import com.velord.feature.demo.DemoNavigator
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
+import com.velord.ui.feature.demo.DemoDestinationNavigationEvent
+import com.velord.ui.feature.demo.DemoNavigator
 
 private val log = Logger.withTag("LogBackStack - BottomNavigatorDestinations")
 

@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.velord.datastore"
+        namespace = "com.velord.data.datastore"
     }
 
     sourceSets {

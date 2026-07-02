@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.velord.backend"
+        namespace = "com.velord.data.backend"
     }
 
     sourceSets {

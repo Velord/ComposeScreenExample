@@ -1,0 +1,19 @@
+package com.velord.ui.feature.demo.morph
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.velord.core.ui.util.setContentWithTheme
+
+class MorphDemoFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = setContentWithTheme {
+        MorphDemoScreen()
+    }
+}

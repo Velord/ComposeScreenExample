@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.feature.demo"
+    namespace = "com.velord.ui.feature.demo"
 }
 
 dependencies {

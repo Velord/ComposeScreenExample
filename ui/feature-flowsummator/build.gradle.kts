@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.flowsummator"
+    namespace = "com.velord.ui.feature.flowsummator"
 }
 
 dependencies {

@@ -23,10 +23,10 @@ import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.ramcosta.composedestinations.spec.RouteOrDirection
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
-import com.velord.bottomnavigation.screen.compose.BottomNavigator
-import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
-import com.velord.bottomnavigation.viewmodel.TabState
-import com.velord.camerarecording.CameraRecordingNavigator
+import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.viewmodel.TabState
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.infrastructure.navigation.compose.destinations.transition.PopFadeTransition
 import com.velord.infrastructure.navigation.compose.vanilla.navigator.LogNavigationEvents
 import com.velord.infrastructure.navigation.compose.vanilla.navigator.logTabClick

@@ -15,10 +15,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import co.touchlab.kermit.Logger
-import com.velord.bottomnavigation.screen.compose.BottomNavigator
-import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
-import com.velord.bottomnavigation.viewmodel.TabState
-import com.velord.camerarecording.CameraRecordingNavigator
+import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.viewmodel.TabState
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 import com.velord.infrastructure.navigation.compose.vanilla.graph.setupBottomNavigationGraphVanilla
 

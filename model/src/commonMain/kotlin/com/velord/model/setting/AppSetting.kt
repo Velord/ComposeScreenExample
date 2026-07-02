@@ -8,6 +8,7 @@ data class AppSetting(
     val theme: ThemeConfig
 ) {
     companion object {
+
         val DEFAULT = AppSetting(
             isAppFirstLaunch = false,
             theme = ThemeConfig.DEFAULT

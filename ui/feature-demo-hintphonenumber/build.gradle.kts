@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.hintphonenumber"
+    namespace = "com.velord.ui.feature.demo.hintphonenumber"
 }
 
 dependencies {

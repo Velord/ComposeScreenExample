@@ -2,7 +2,7 @@ package com.velord.infrastructure.navigation.jetpackNavigation.inDevelopment
 
 import com.velord.core.navigation.fragment.NavigationDataFragment
 import com.velord.infrastructure.navigation.R
-import com.velord.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 

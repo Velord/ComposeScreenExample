@@ -7,9 +7,9 @@ import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
-import com.velord.feature.demo.DemoScreen
-import com.velord.feature.demo.DemoViewModel
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.demo.DemoScreen
+import com.velord.ui.feature.demo.DemoViewModel
 import org.koin.androidx.compose.koinViewModel
 
 internal object DemoVoyagerScreen : Screen {

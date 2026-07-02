@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.splash"
+    namespace = "com.velord.ui.feature.splash"
 }
 
 dependencies {

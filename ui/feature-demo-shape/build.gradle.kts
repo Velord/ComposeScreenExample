@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.shapedemo"
+    namespace = "com.velord.ui.feature.demo.shape"
 }
 
 dependencies {

@@ -5,7 +5,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.velord.db"
+        namespace = "com.velord.data.db"
     }
 
     sourceSets {

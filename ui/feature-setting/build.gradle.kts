@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.setting"
+    namespace = "com.velord.ui.feature.setting"
 }
 
 dependencies {

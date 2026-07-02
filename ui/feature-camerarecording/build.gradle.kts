@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.camerarecording"
+    namespace = "com.velord.ui.feature.camerarecording"
 }
 
 dependencies {

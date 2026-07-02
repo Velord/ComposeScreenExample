@@ -11,10 +11,10 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import co.touchlab.kermit.Logger
-import com.velord.bottomnavigation.screen.compose.BottomNavigator
-import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
-import com.velord.bottomnavigation.viewmodel.TabState
-import com.velord.camerarecording.CameraRecordingNavigator
+import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.viewmodel.TabState
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
 import com.velord.infrastructure.navigation.compose.nav3.graph.setupBottomNavigationGraphNav3
 

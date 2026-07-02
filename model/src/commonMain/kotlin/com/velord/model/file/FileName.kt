@@ -10,6 +10,7 @@ private const val DEFAULT_EXT = ".mp4"
 value class FileName private constructor(val value: String) {
 
     companion object {
+
         operator fun invoke(extension: String = DEFAULT_EXT): FileName = FileName(
             createValue(extension = extension)
         )

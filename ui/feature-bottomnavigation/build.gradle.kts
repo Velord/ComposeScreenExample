@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.bottomnavigation"
+    namespace = "com.velord.ui.feature.bottomnavigation"
 }
 
 dependencies {

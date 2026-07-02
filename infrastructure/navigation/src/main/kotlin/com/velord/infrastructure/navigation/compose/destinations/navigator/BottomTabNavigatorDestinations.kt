@@ -4,7 +4,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.ramcosta.composedestinations.spec.RouteOrDirection
-import com.velord.bottomnavigation.viewmodel.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
 
 internal interface BottomTabNavigatorDestinations {
     fun getRouteOnTabClick(route: BottomNavigationItem): Direction

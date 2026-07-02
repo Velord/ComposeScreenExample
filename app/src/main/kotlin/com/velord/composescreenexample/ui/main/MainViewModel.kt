@@ -5,9 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 import com.velord.core.ui.compose.glance.updateAll
 import com.velord.model.setting.ThemeConfig
-import com.velord.refreshableimage.RefreshableImageWidget
-import com.velord.sharedviewmodel.CoroutineScopeViewModel
-import com.velord.widgetcounter.CounterWidget
+import com.velord.ui.widget.refreshableimage.RefreshableImageWidget
+import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.widget.counter.CounterWidget
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 

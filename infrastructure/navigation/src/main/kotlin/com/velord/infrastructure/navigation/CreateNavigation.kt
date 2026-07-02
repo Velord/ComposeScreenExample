@@ -14,7 +14,7 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.navigation.navgraphs.MainNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
-import com.velord.bottomnavigation.screen.voyager.BottomNavigationVoyagerScreen
+import com.velord.ui.feature.bottomnavigation.screen.voyager.BottomNavigationVoyagerScreen
 import com.velord.infrastructure.navigation.compose.LogBackStack
 import com.velord.infrastructure.navigation.compose.destinations.navigator.SupremeNavigatorDestinations
 import com.velord.infrastructure.navigation.compose.destinations.transition.PopScaleOutTransition

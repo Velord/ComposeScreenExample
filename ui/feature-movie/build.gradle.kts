@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.movie"
+    namespace = "com.velord.ui.feature.movie"
 }
 
 dependencies {

@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
-import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
-import com.velord.camerarecording.CameraRecordingNavigationEvent
-import com.velord.camerarecording.CameraRecordingNavigator
-import com.velord.camerarecording.CameraRecordingScreen
-import com.velord.camerarecording.CameraRecordingViewModel
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
+import com.velord.ui.feature.camerarecording.CameraRecordingScreen
+import com.velord.ui.feature.camerarecording.CameraRecordingViewModel
 import org.koin.androidx.compose.koinViewModel
 
 private const val CAMERA_RECORDING_GRAPH = "camera_recording_graph"

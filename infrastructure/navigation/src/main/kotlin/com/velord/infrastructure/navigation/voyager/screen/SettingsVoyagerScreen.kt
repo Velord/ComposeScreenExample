@@ -2,9 +2,9 @@ package com.velord.infrastructure.navigation.voyager.screen
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.velord.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
-import com.velord.setting.SettingScreen
-import com.velord.sharedviewmodel.ThemeViewModel
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
+import com.velord.ui.feature.setting.SettingScreen
+import com.velord.ui.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 internal object SettingsVoyagerScreen : Screen {

@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
-import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.infrastructure.navigation.compose.destinations.transition.PopFadeTransition
-import com.velord.setting.SettingScreen
-import com.velord.sharedviewmodel.ThemeViewModel
+import com.velord.ui.feature.setting.SettingScreen
+import com.velord.ui.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"

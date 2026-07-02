@@ -2,11 +2,11 @@ package com.velord.infrastructure.navigation.compose.nav3.graph
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import com.velord.bottomnavigation.screen.compose.BottomNavigationScreen
+import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigationScreen
 import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
 import com.velord.infrastructure.navigation.compose.nav3.navigator.SupremeNavigatorNav3
-import com.velord.setting.SettingScreen
-import com.velord.sharedviewmodel.ThemeViewModel
+import com.velord.ui.feature.setting.SettingScreen
+import com.velord.ui.sharedviewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 internal fun EntryProviderScope<NavKey>.setupMainGraphNav3(navigator: SupremeNavigatorNav3)  {

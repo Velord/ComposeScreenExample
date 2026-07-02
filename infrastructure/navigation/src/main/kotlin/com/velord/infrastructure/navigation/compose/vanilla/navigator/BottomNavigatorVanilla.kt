@@ -2,9 +2,9 @@ package com.velord.infrastructure.navigation.compose.vanilla.navigator
 
 import androidx.navigation.NavHostController
 import co.touchlab.kermit.Logger
-import com.velord.camerarecording.CameraRecordingNavigator
-import com.velord.feature.demo.DemoDestinationNavigationEvent
-import com.velord.feature.demo.DemoNavigator
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
+import com.velord.ui.feature.demo.DemoDestinationNavigationEvent
+import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 
 private val log = Logger.withTag("LogBackStack - BottomNavigatorVanilla")

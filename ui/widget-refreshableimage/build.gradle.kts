@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.refreshableimage"
+    namespace = "com.velord.ui.widget.refreshableimage"
 }
 
 dependencies {

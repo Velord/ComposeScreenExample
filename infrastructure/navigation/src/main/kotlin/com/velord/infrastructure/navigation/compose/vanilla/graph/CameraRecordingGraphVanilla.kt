@@ -3,11 +3,11 @@ package com.velord.infrastructure.navigation.compose.vanilla.graph
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.velord.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
-import com.velord.camerarecording.CameraRecordingNavigationEvent
-import com.velord.camerarecording.CameraRecordingNavigator
-import com.velord.camerarecording.CameraRecordingScreen
-import com.velord.camerarecording.CameraRecordingViewModel
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
+import com.velord.ui.feature.camerarecording.CameraRecordingScreen
+import com.velord.ui.feature.camerarecording.CameraRecordingViewModel
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 import org.koin.androidx.compose.koinViewModel
 

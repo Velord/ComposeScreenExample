@@ -40,7 +40,7 @@
         </activity>
 
         <receiver
-            android:name="com.velord.refreshableimage.RefreshableImageWidgetReceiver"
+            android:name="com.velord.ui.widget.refreshableimage.RefreshableImageWidgetReceiver"
             android:enabled="true"
             android:exported="false">
 
@@ -54,7 +54,7 @@
         </receiver>
 
         <provider
-            android:name="com.velord.refreshableimage.RefreshableImageWidgetFileProvider"
+            android:name="com.velord.ui.widget.refreshableimage.RefreshableImageWidgetFileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -65,7 +65,7 @@
         </provider>
 
         <receiver
-            android:name="com.velord.widgetcounter.CounterWidgetReceiver"
+            android:name="com.velord.ui.widget.counter.CounterWidgetReceiver"
             android:enabled="true"
             android:exported="false">
 
