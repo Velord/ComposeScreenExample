@@ -1,4 +1,4 @@
-﻿package com.velord.infrastructure.util.activityResult
+package com.velord.infrastructure.util.activityResult
 
 import android.app.PendingIntent
 import androidx.activity.ComponentActivity

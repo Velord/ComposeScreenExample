@@ -54,6 +54,7 @@ private fun Preferences.createImageParameters(generateNewSeed: Boolean): ImagePa
     } else {
         this[RefreshableImageWidget.seedPreferenceKey] ?: ImageParameters.DEFAULT_SEED
     }
+
     return ImageParameters(seed, size)
 }
 

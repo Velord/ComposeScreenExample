@@ -149,12 +149,9 @@ class FilterTypeTest {
 
     @Test
     fun `VoteCount equality check works correctly`() {
-        val voteCount1 =
-            FilterType.VoteCount(start = 50, end = 500, min = 0, max = 1000, steps = 10)
-        val voteCount2 =
-            FilterType.VoteCount(start = 50, end = 500, min = 0, max = 1000, steps = 10)
-        val voteCount3 =
-            FilterType.VoteCount(start = 100, end = 600, min = 0, max = 1000, steps = 10)
+        val voteCount1 = FilterType.VoteCount(start = 50, end = 500, min = 0, max = 1000, steps = 10)
+        val voteCount2 = FilterType.VoteCount(start = 50, end = 500, min = 0, max = 1000, steps = 10)
+        val voteCount3 = FilterType.VoteCount(start = 100, end = 600, min = 0, max = 1000, steps = 10)
 
         assertEquals(voteCount1, voteCount2) // Same values
         assertNotEquals(voteCount1, voteCount3) // Different start and end

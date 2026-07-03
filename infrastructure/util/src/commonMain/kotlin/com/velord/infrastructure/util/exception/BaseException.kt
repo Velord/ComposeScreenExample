@@ -1,14 +1,12 @@
-﻿package com.velord.infrastructure.util.exception
+package com.velord.infrastructure.util.exception
 
 sealed class BaseException(override val message: String? = null) : Exception(message) {
-
     data object Unknown : BaseException()
     data object NoInternet : BaseException()
 
     sealed class Http(
         open val value: String
     ) : BaseException(value) {
-
         sealed class Client(override val value: String) : Http(value) {
             class Unauthorized(override val value: String) : Client(value)
             class AccessDenied(override val value: String) : Client(value)

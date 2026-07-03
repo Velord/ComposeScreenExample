@@ -157,10 +157,7 @@ internal fun CollapsingToolbar(
                 .onGloballyPositioned {
                     onHeightReceive(it.size.height.dp)
                 }
-                .bottomBorder(
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.primary,
-                )
+                .bottomBorder(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             ,
             title = {
                 Row(

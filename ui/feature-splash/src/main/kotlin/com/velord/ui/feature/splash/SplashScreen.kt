@@ -261,6 +261,7 @@ private fun getOriginalSplashIconPainter(): Painter {
     } else {
         Res.drawable.ic_launcher_foreground_light
     }
+
     return painterResource(res)
 }
 
@@ -279,6 +280,7 @@ private fun getIconPainter(): Painter {
             SpecialTheme.DARK -> Res.drawable.ic_launcher_foreground_dark
         }
     }
+
     return painterResource(res)
 }
 

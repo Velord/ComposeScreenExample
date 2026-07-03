@@ -55,6 +55,7 @@ class FlowCreator(
         } else {
             ranges += IntRange(0, countOfFlowToCreate)
         }
+
         return ranges
     }
 
@@ -72,6 +73,7 @@ class FlowCreator(
                 emit(shift + 1)
             }
         }
+
         return flows
     }
 

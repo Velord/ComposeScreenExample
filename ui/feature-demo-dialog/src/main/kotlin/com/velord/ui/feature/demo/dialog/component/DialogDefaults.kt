@@ -36,6 +36,7 @@ data class DialogAnimations(
     val background: DialogPredefinedAnimation
 ) {
     companion object {
+
         val Default = DialogAnimations(
             mainBox = DialogPredefinedAnimation.Default(),
             background = DialogPredefinedAnimation.Fade.Default
@@ -66,6 +67,7 @@ sealed class DialogPredefinedAnimation(
     ) : DialogPredefinedAnimation(enter = enter, exit = exit) {
 
         companion object {
+
             val Default = Fade(
                 initialAlpha = 0.3f,
                 durationMillis = 300
@@ -79,6 +81,7 @@ sealed class DialogPredefinedAnimation(
     ) : DialogPredefinedAnimation(enter = enter, exit = exit) {
 
         companion object {
+
             val Default = None(
                 enter = EnterTransition.None,
                 exit = ExitTransition.None
@@ -106,6 +109,7 @@ sealed class DialogPredefinedAnimation(
     ) : DialogPredefinedAnimation(enter = enter, exit = exit) {
 
         companion object {
+
             val Default = FadeAndSlide(
                 initialAlpha = 0.3f,
                 durationMillis = 300
@@ -125,6 +129,7 @@ data class DialogModifiers(
     val divider: Modifier,
 ) {
     companion object {
+
         val Default = DialogModifiers(
             mainBox = Modifier
                 .pointerInput(Unit) { detectTapGestures { } }

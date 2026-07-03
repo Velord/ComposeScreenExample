@@ -142,8 +142,7 @@ private fun ColumnScope.PillToPolygon() {
                     progress = animatedProgress.value,
                     rotationZ = animatedProgress.value * 360f
                 )
-            )
-            .background(MaterialTheme.colorScheme.secondary)
+            ).background(MaterialTheme.colorScheme.secondary)
             .size(200.dp)
     ) {
         Text(

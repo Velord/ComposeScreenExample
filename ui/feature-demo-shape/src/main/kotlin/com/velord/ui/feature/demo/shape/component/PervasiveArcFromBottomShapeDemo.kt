@@ -84,8 +84,7 @@ private fun AbortOnEdgeDemo(isVisible: Boolean) {
                     width = 2.dp,
                     color = MaterialTheme.colorScheme.error,
                     shape = defaultShape
-                )
-                .background(color = MaterialTheme.colorScheme.inverseSurface),
+                ).background(color = MaterialTheme.colorScheme.inverseSurface),
             contentAlignment = Alignment.Center
         ) {
             Text(

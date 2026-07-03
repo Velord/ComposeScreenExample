@@ -103,6 +103,7 @@ class MoviePaginationGateway(
         movieGateway.update { movies ->
             (movies + fromDb).toSet().toList()
         }
+
         return MovieRosterSize(fromDb.size)
     }
 

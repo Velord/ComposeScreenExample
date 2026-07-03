@@ -78,8 +78,7 @@ class FlowSummatorViewModel : CoroutineScopeViewModel() {
         }
     }
 
-    private fun getPrevEmittedValue(): BigInteger =
-        sumFlow.replayCache.firstOrNull() ?: BigInteger.ZERO
+    private fun getPrevEmittedValue(): BigInteger = sumFlow.replayCache.firstOrNull() ?: BigInteger.ZERO
 
     private fun observe() {
         launch {

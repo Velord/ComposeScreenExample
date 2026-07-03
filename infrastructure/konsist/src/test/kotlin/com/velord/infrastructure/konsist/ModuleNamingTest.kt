@@ -2,8 +2,23 @@ package com.velord.infrastructure.konsist
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
-import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.Test
+
+private const val BUILD_LOGIC_MODULE_PATH = "build-logic"
+private const val APP_MODULE_PATH = ":app"
+private const val MODEL_MODULE_PATH = ":model"
+private const val SHARED_VIEW_MODEL_MODULE_PATH = ":ui:sharedviewmodel"
+private const val BUILD_LOGIC_PACKAGE_ROOT = "com.velord.buildlogic"
+private const val APP_PACKAGE_ROOT = "com.velord.composescreenexample"
+private const val MODEL_PACKAGE_ROOT = "com.velord.model"
+private const val SHARED_VIEW_MODEL_PACKAGE_ROOT = "com.velord.ui.sharedviewmodel"
+private const val SHARED_VIEW_MODEL_NAME = "sharedviewmodel"
+private val LOWER_CASE_LEAF_REGEX = Regex("""[a-z0-9]+(?:-[a-z0-9]+)*""")
+private val USE_CASE_REGEX = Regex("""usecase-[a-z0-9]+(?:-[a-z0-9]+)*""")
+private val CORE_REGEX = Regex("""core-[a-z0-9]+(?:-[a-z0-9]+)*""")
+private val FEATURE_REGEX = Regex("""feature-[a-z0-9]+(?:-[a-z0-9]+)*""")
+private val WIDGET_REGEX = Regex("""widget-[a-z0-9]+(?:-[a-z0-9]+)*""")
 
 class ModuleNamingTest {
 
@@ -24,7 +39,8 @@ class ModuleNamingTest {
 
                 if (isValid.not()) {
                     println(
-                        "Name: ${file.name}. FAILED. Module path '$modulePath' does not match the allowed naming families."
+                        "Name: ${file.name}. FAILED. " +
+                            "Module path '$modulePath' does not match the allowed naming families."
                     )
                 }
 
@@ -40,17 +56,22 @@ class ModuleNamingTest {
             .filter { file ->
                 val modulePath = modulePathOrNull(file.path)
                 val packageName = file.packagee?.name
-                modulePath != null && packageName != null && file.path.contains("${File.separator}src${File.separator}")
+                modulePath != null &&
+                    packageName != null &&
+                    file.path.contains("${File.separator}src${File.separator}")
             }
             .assertTrue { file ->
                 val modulePath = modulePathOrNull(file.path) ?: return@assertTrue false
                 val packageName = file.packagee?.name ?: return@assertTrue false
                 val expectedPackageRoot = modulePath.expectedPackageRoot()
-                val isValid = expectedPackageRoot?.let { packageName == it || packageName.startsWith("$it.") } == true
+                val isValid = expectedPackageRoot?.let { expectedPackage ->
+                    packageName == expectedPackage || packageName.startsWith("$expectedPackage.")
+                } == true
 
                 if (isValid.not()) {
                     println(
-                        "Name: ${file.name}. FAILED. Package '$packageName' does not match module '$modulePath'. " +
+                        "Name: ${file.name}. FAILED. " +
+                            "Package '$packageName' does not match module '$modulePath'. " +
                             "Expected root: '$expectedPackageRoot'."
                     )
                 }
@@ -59,23 +80,22 @@ class ModuleNamingTest {
             }
     }
 
-    private fun locateRepoRoot(): File =
-        generateSequence(File(System.getProperty("user.dir")).absoluteFile) { currentDirectory ->
-            currentDirectory.parentFile
-        }.firstOrNull { currentDirectory ->
-            File(currentDirectory, "settings.gradle.kts").isFile
-        } ?: error("Cannot locate repo root from ${System.getProperty("user.dir")}")
+    private fun locateRepoRoot(): File = generateSequence(
+        File(System.getProperty("user.dir")).absoluteFile,
+    ) { currentDirectory ->
+        currentDirectory.parentFile
+    }.firstOrNull { currentDirectory ->
+        File(currentDirectory, "settings.gradle.kts").isFile
+    } ?: error("Cannot locate repo root from ${System.getProperty("user.dir")}")
 
     private fun modulePathOrNull(filePath: String): ModulePath? {
-        val relativePath = File(filePath).absoluteFile
-            .relativeTo(repoRoot)
-            .invariantSeparatorsPath
+        val relativePath = File(filePath).absoluteFile.relativeTo(repoRoot).invariantSeparatorsPath
 
         val pathSegmentRoster = relativePath.split('/')
         if (pathSegmentRoster.isEmpty()) return null
 
-        if (pathSegmentRoster.first() == "build-logic") {
-            return ModulePath("build-logic")
+        if (pathSegmentRoster.first() == BUILD_LOGIC_MODULE_PATH) {
+            return ModulePath(BUILD_LOGIC_MODULE_PATH)
         }
 
         val srcIndex = pathSegmentRoster.indexOf("src")
@@ -86,50 +106,50 @@ class ModuleNamingTest {
     }
 }
 
-private data class ModulePath(
-    val value: String,
-) {
+private data class ModulePath(val value: String) {
+
     private val segmentRoster = value.removePrefix(":").split(":")
     private val leafName = segmentRoster.last()
 
-    fun matchesNamingFamily(): Boolean =
-        when {
-            value == "build-logic" -> true
-            value == ":app" -> true
-            value == ":model" -> true
-            value == ":ui:sharedviewmodel" -> true
-            value.startsWith(":domain:") -> segmentRoster.size == 2 && leafName.matches(usecaseRegex)
-            value.startsWith(":data:") -> segmentRoster.size == 2 && leafName.matches(lowerCaseLeafRegex)
-            value.startsWith(":core:") -> segmentRoster.size == 2 && leafName.matches(coreRegex)
-            value.startsWith(":infrastructure:") -> segmentRoster.size == 2 && leafName.matches(lowerCaseLeafRegex)
-            value.startsWith(":ui:") -> segmentRoster.size == 2 && (
-                leafName.matches(featureRegex) || leafName == sharedViewModelName || leafName.matches(widgetRegex)
-            )
-            else -> false
-        }
+    fun matchesNamingFamily(): Boolean = when {
+        value == BUILD_LOGIC_MODULE_PATH -> true
+        value == APP_MODULE_PATH -> true
+        value == MODEL_MODULE_PATH -> true
+        value == SHARED_VIEW_MODEL_MODULE_PATH -> true
+        value.startsWith(":domain:") ->
+            segmentRoster.size == 2 && leafName.matches(USE_CASE_REGEX)
+        value.startsWith(":data:") ->
+            segmentRoster.size == 2 && leafName.matches(LOWER_CASE_LEAF_REGEX)
+        value.startsWith(":core:") ->
+            segmentRoster.size == 2 && leafName.matches(CORE_REGEX)
+        value.startsWith(":infrastructure:") ->
+            segmentRoster.size == 2 && leafName.matches(LOWER_CASE_LEAF_REGEX)
+        value.startsWith(":ui:") -> segmentRoster.size == 2 && (
+            leafName.matches(FEATURE_REGEX) ||
+                leafName == SHARED_VIEW_MODEL_NAME ||
+                leafName.matches(WIDGET_REGEX)
+        )
+        else -> false
+    }
 
     fun expectedPackageRoot(): String? = when {
-            value == "build-logic" -> "com.velord.buildlogic"
-            value == ":app" -> "com.velord.composescreenexample"
-            value == ":model" -> "com.velord.model"
-            value == ":ui:sharedviewmodel" -> "com.velord.ui.sharedviewmodel"
-            value.startsWith(":domain:usecase-") -> "com.velord.usecase.${leafName.removePrefix("usecase-").replace('-', '.')}"
-            value.startsWith(":data:") -> "com.velord.data.${leafName.replace('-', '.')}"
-            value.startsWith(":core:core-") -> "com.velord.core.${leafName.removePrefix("core-").replace('-', '.')}"
-            value.startsWith(":infrastructure:") -> "com.velord.infrastructure.${leafName.replace('-', '.')}"
-            value.startsWith(":ui:feature-") -> "com.velord.ui.feature.${leafName.removePrefix("feature-").replace('-', '.')}"
-            value.startsWith(":ui:widget-") -> "com.velord.ui.widget.${leafName.removePrefix("widget-").replace('-', '.')}"
-            else -> null
-        }
+        value == BUILD_LOGIC_MODULE_PATH -> BUILD_LOGIC_PACKAGE_ROOT
+        value == APP_MODULE_PATH -> APP_PACKAGE_ROOT
+        value == MODEL_MODULE_PATH -> MODEL_PACKAGE_ROOT
+        value == SHARED_VIEW_MODEL_MODULE_PATH -> SHARED_VIEW_MODEL_PACKAGE_ROOT
+        value.startsWith(":domain:usecase-") ->
+            "com.velord.usecase.${leafName.removePrefix("usecase-").replace('-', '.')}"
+        value.startsWith(":data:") -> "com.velord.data.${leafName.replace('-', '.')}"
+        value.startsWith(":core:core-") ->
+            "com.velord.core.${leafName.removePrefix("core-").replace('-', '.')}"
+        value.startsWith(":infrastructure:") ->
+            "com.velord.infrastructure.${leafName.replace('-', '.')}"
+        value.startsWith(":ui:feature-") ->
+            "com.velord.ui.feature.${leafName.removePrefix("feature-").replace('-', '.')}"
+        value.startsWith(":ui:widget-") ->
+            "com.velord.ui.widget.${leafName.removePrefix("widget-").replace('-', '.')}"
+        else -> null
+    }
 
     override fun toString(): String = value
-
-    private companion object {
-        private const val sharedViewModelName = "sharedviewmodel"
-        private val lowerCaseLeafRegex = Regex("""[a-z0-9]+(?:-[a-z0-9]+)*""")
-        private val usecaseRegex = Regex("""usecase-[a-z0-9]+(?:-[a-z0-9]+)*""")
-        private val coreRegex = Regex("""core-[a-z0-9]+(?:-[a-z0-9]+)*""")
-        private val featureRegex = Regex("""feature-[a-z0-9]+(?:-[a-z0-9]+)*""")
-        private val widgetRegex = Regex("""widget-[a-z0-9]+(?:-[a-z0-9]+)*""")
-    }
 }

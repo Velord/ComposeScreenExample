@@ -37,11 +37,9 @@ data class Movie(
     val imagePath: String? = null,
 ) {
 
-    fun formattedDateForCard(tz: TimeZone): String =
-        cardFormat.format(date.toLocalDateTime(tz))
+    fun formattedDateForCard(tz: TimeZone): String = cardFormat.format(date.toLocalDateTime(tz))
 
-    fun formattedDateForDivider(tz: TimeZone): String =
-        dividerFormat.format(date.toLocalDateTime(tz))
+    fun formattedDateForDivider(tz: TimeZone): String = dividerFormat.format(date.toLocalDateTime(tz))
 
     fun isAnotherMonthOrYear(other: Instant?, tz: TimeZone): Boolean {
         if (other == null) return true
@@ -64,8 +62,7 @@ data class Movie(
             Clock.System.now()
         }
 
-        fun toRaw(instant: Instant): String =
-            instant.toLocalDateTime(TimeZone.UTC).date.toString()
+        fun toRaw(instant: Instant): String = instant.toLocalDateTime(TimeZone.UTC).date.toString()
     }
 }
 

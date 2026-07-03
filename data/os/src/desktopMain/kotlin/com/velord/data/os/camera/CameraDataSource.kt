@@ -8,10 +8,8 @@ import org.koin.core.scope.Scope
 
 @Module
 actual class CameraPlatformModule {
-
     @Single
-    actual fun provideCameraDataSource(scope: Scope): CameraDataSource =
-        DesktopCameraDataSource()
+    actual fun provideCameraDataSource(scope: Scope): CameraDataSource = DesktopCameraDataSource()
 }
 
 private class DesktopCameraDataSource : CameraDataSource {

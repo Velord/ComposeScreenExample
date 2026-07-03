@@ -7,7 +7,6 @@ import org.koin.core.annotation.Single
 
 @Single
 class CameraGateway(private val dataSource: CameraDataSource) {
-
     fun startRecording(
         videoCapture: VideoCaptureWrapper,
         audioEnabled: Boolean,

@@ -97,11 +97,11 @@ internal actual class MemoryDumpProvider actual constructor(
         } catch (exception: Exception) {
             logger.log("Error reading /proc/self/status: ${exception.message}")
         }
+
         return swap.kbToMb() to pageTable.kbToMb()
     }
 
-    private fun parseValue(line: String): Long =
-        line.replace(DIGIT_REGEX, "").toLongOrNull() ?: 0L
+    private fun parseValue(line: String): Long = line.replace(DIGIT_REGEX, "").toLongOrNull() ?: 0L
 
     private fun String?.toLongCompat(): Long = this?.toLongOrNull() ?: 0L
     private fun Long.bytesToMb(): Long = (this.toDouble() / BYTES_IN_MB).roundToLong()

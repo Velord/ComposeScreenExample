@@ -19,9 +19,7 @@ value class FileName private constructor(val value: String) {
             extension: String = DEFAULT_EXT,
             timeZone: TimeZone = TimeZone.currentSystemDefault(),
         ): String {
-            val now = Instant
-                .fromEpochMilliseconds(currentEpochMilliseconds())
-                .toLocalDateTime(timeZone)
+            val now = Instant.fromEpochMilliseconds(currentEpochMilliseconds()).toLocalDateTime(timeZone)
             val date = listOf(now.year, now.monthNumber, now.dayOfMonth)
                 .joinToString(separator = "-") { it.toString().padStart(2, '0') }
             val time = listOf(now.hour, now.minute, now.second, now.nanosecond / 1_000_000)

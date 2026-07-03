@@ -37,8 +37,7 @@ class SettingFragment : Fragment() {
             ?.let(SettingsSourceFragment::decode)
         val sourceFromArgs = arguments
             ?.get(SettingsSourceFragment.ARGUMENT) as? SettingsSourceFragment
-        val isActivated = (sourceFromPayload ?: sourceFromArgs) ==
-            SettingsSourceFragment.SettingsGraph
+        val isActivated = (sourceFromPayload ?: sourceFromArgs) == SettingsSourceFragment.SettingsGraph
         if (isActivated.not()) return
         addTestCallback("Setting graph", viewModelBottom)
     }

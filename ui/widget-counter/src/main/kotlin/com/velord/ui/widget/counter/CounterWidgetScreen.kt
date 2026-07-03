@@ -86,7 +86,9 @@ private fun Counter(count: Int) {
     )
 
     Row(
-        modifier = GlanceModifier.fillMaxWidth().padding(top = 8.dp),
+        modifier = GlanceModifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {

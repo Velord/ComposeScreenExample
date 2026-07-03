@@ -77,10 +77,11 @@ class RefreshableImageWidget :
 
         internal fun getImageUriKey(imageParameters: ImageParameters) = createPreferenceKey(imageParameters)
 
-        private fun createPreferenceKey(imageParameters: ImageParameters) =
-            stringPreferencesKey("uri" +
-                    "/seed - ${imageParameters.seed}" +
-                    "/size - w:${imageParameters.getSimpleWidth()}, h:${imageParameters.getSimpleHeight()}")
+        private fun createPreferenceKey(imageParameters: ImageParameters) = stringPreferencesKey(
+            "uri" +
+                "/seed - ${imageParameters.seed}" +
+                "/size - w:${imageParameters.getSimpleWidth()}, h:${imageParameters.getSimpleHeight()}",
+        )
 
 
         internal suspend fun updatePreferences(
@@ -123,6 +124,7 @@ class RefreshableImageWidget :
             val bitmap = context.contentResolver.openInputStream(path.toUri()).use { data ->
                 BitmapFactory.decodeStream(data)
             }
+
             return ImageProvider(bitmap)
         }
     }

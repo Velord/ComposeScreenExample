@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlin.math.min
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val HIGHLIGHT_DURATION = 3000L
 /**
@@ -50,8 +51,8 @@ fun Modifier.recomposeHighlighter(
     // Start the timeout, and reset everytime there's a recomposition. (Using totalCompositions
     // as the key is really just to cause the timer to restart every composition).
     LaunchedEffect(totalCompositions[0]) {
-        delay(highlightDuration)
-        totalCompositionsAtLastTimeout.value = totalCompositions[0]
+        delay(highlightDuration.milliseconds)
+        totalCompositionsAtLastTimeout.longValue = totalCompositions[0]
     }
 
     Modifier.drawWithCache {
@@ -61,8 +62,8 @@ fun Modifier.recomposeHighlighter(
 
             // Below is to draw the highlight, if necessary. A lot of the logic is copied from
             // Modifier.border
-            val numCompositionsSinceTimeout =
-                totalCompositions[0] - totalCompositionsAtLastTimeout.value
+            val numCompositionsSinceTimeout = totalCompositions[0] -
+                totalCompositionsAtLastTimeout.longValue
 
             val hasValidBorderParams = size.minDimension > 0f
             if (!hasValidBorderParams || numCompositionsSinceTimeout <= 0) {

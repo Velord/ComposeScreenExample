@@ -46,9 +46,7 @@ private fun GreenReverse() {
                 duration = 3000,
                 spotColor = Color.Green
             ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onSurface,
-        )
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onSurface)
     ) {
         Box(Modifier.fillMaxSize()) {
             Text("Green Reverse", Modifier.align(Alignment.Center))
@@ -69,9 +67,7 @@ private fun RedReverse() {
                 duration = 500,
                 spotColor = Color.Red
             ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.errorContainer,
-        )
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
     ) {
         Box(Modifier.fillMaxSize()) {
             Text("Red Reverse", Modifier.align(Alignment.Center))

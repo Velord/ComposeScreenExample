@@ -87,28 +87,26 @@ class RefreshableImageWidgetWorker(
         }
     }
 
-    override suspend fun doWork(): Result {
-        return try {
-            val seed: String = inputData.getString(SEED_KEY) ?: ImageParameters.DEFAULT_SEED
-            val width: Float = inputData.getFloat(WIDTH_KEY, 0f)
-            val height: Float = inputData.getFloat(HEIGHT_KEY, 0f)
-            val force: Boolean = inputData.getBoolean(FORCE_KEY, false)
+    override suspend fun doWork(): Result = try {
+        val seed: String = inputData.getString(SEED_KEY) ?: ImageParameters.DEFAULT_SEED
+        val width: Float = inputData.getFloat(WIDTH_KEY, 0f)
+        val height: Float = inputData.getFloat(HEIGHT_KEY, 0f)
+        val force: Boolean = inputData.getBoolean(FORCE_KEY, false)
 
-            val parameters = ImageParameters(seed, width, height)
-            val url = createUrl(parameters)
-            val uri = fetchImage(url, force)
-            log.d { "doWork url: $url\nuri: $uri" }
+        val parameters = ImageParameters(seed, width, height)
+        val url = createUrl(parameters)
+        val uri = fetchImage(url, force)
+        log.d { "doWork url: $url\nuri: $uri" }
 
-            RefreshableImageWidget.updatePreferences(
-                context = context,
-                url = url,
-                uri = uri,
-                parameters = parameters
-            )
-            Result.success()
-        } catch (_: Exception) {
-            Result.failure()
-        }
+        RefreshableImageWidget.updatePreferences(
+            context = context,
+            url = url,
+            uri = uri,
+            parameters = parameters,
+        )
+        Result.success()
+    } catch (_: Exception) {
+        Result.failure()
     }
 
     /**
@@ -129,9 +127,7 @@ class RefreshableImageWidgetWorker(
     }
 
     private suspend fun executeRequest(url: String, force: Boolean) {
-        val request = ImageRequest.Builder(context)
-            .data(url)
-            .build()
+        val request = ImageRequest.Builder(context).data(url).build()
 
         // Request the image to be loaded and throw error if it failed
         with(context.imageLoader) {

@@ -142,8 +142,7 @@ private fun Reverse() {
                     bottomLeft = 32.dp,
                     bottomRight = 32.dp
                 )
-            )
-            .background(MaterialTheme.colorScheme.tertiaryContainer)
+            ).background(MaterialTheme.colorScheme.tertiaryContainer)
             .shimmering(
                 duration = 3000,
                 gradientColorAndPosition = { animatedValue ->
@@ -173,8 +172,7 @@ private fun ReverseRainbow() {
                     bottomLeft = 16.dp,
                     bottomRight = 24.dp
                 )
-            )
-            .shimmering(
+            ).shimmering(
                 duration = 3000,
                 gradientColorAndPosition = { animatedValue ->
                     listOf(

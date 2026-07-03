@@ -42,7 +42,6 @@ data class AllMovieUiState(
 }
 
 sealed class PaginationStatus  {
-
     val isExhausted: Boolean get() = this is Exausted
 
     data object Init: PaginationStatus()

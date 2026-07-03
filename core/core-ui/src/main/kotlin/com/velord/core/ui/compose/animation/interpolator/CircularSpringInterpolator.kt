@@ -10,6 +10,7 @@ fun CircularSpringInterpolatorEasing(tension: Float = 50f): Easing =
     CircularSpringInterpolator(tension).toEasing()
 
 class CircularSpringInterpolator(private val tension: Float = 50f) : Interpolator {
+
     override fun getInterpolation(input: Float): Float {
         val sinusOne = sin(tension * input)
         val sinusTwo = sin(Math.PI * input)

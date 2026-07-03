@@ -116,10 +116,7 @@ private fun rememberMoviePageState(
         mostRecentDateState.value = rosterRecentTime
     }
 
-    return MoviePageState(
-        listState = listState,
-        isAtBottom = isAtBottomState.value,
-    )
+    return MoviePageState(listState = listState, isAtBottom = isAtBottomState.value)
 }
 
 @Composable

@@ -10,10 +10,7 @@ import org.koin.dsl.module
 private const val PROTOCOL_HTTPS = "https"
 private const val MOVIE_HOST = "api.themoviedb.org"
 
-private fun createMovieBaseUrl() = BaseUrl(
-    protocol = PROTOCOL_HTTPS,
-    host = MOVIE_HOST,
-)
+private fun createMovieBaseUrl() = BaseUrl(protocol = PROTOCOL_HTTPS, host = MOVIE_HOST)
 
 val httpModule = module {
     single { BaseHttpClient(createMovieBaseUrl()) }

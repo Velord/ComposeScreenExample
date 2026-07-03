@@ -12,20 +12,12 @@ object AppSettingDataStoreSerializer : OkioSerializer<AppSetting> {
     override val defaultValue: AppSetting = AppSetting.DEFAULT
 
     override suspend fun readFrom(source: BufferedSource): AppSetting = try {
-        Json.decodeFromString(
-            deserializer = AppSetting.serializer(),
-            string = source.readUtf8(),
-        )
+        Json.decodeFromString(deserializer = AppSetting.serializer(), string = source.readUtf8())
     } catch (exception: SerializationException) {
         defaultValue
     }
 
     override suspend fun writeTo(t: AppSetting, sink: BufferedSink) {
-        sink.writeUtf8(
-            Json.encodeToString(
-                serializer = AppSetting.serializer(),
-                value = t,
-            )
-        )
+        sink.writeUtf8(Json.encodeToString(serializer = AppSetting.serializer(), value = t))
     }
 }

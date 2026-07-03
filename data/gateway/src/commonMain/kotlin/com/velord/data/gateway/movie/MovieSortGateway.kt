@@ -4,8 +4,7 @@ import com.velord.data.appstate.AppStateDataSource
 import com.velord.model.movie.MovieSortOption
 import com.velord.usecase.movie.model.MovieSortOptionFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.update
 import org.koin.core.annotation.Single
 
@@ -15,8 +14,7 @@ class MovieSortGateway(private val appState: AppStateDataSource) {
     fun getFlow(): MovieSortOptionFlow = MovieSortOptionFlow(appState.movieSortFlow)
 
     fun getSelectedFlow(): Flow<MovieSortOption> = appState.movieSortFlow
-        .map { roster -> roster.firstOrNull { it.isSelected } }
-        .filterNotNull()
+        .mapNotNull { roster -> roster.firstOrNull { it.isSelected } }
 
     fun update(newOption: MovieSortOption) {
         val updated = newOption.copy(isSelected = true)

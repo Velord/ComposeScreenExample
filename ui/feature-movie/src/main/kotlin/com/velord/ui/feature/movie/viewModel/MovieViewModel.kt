@@ -23,8 +23,7 @@ data class MovieUiState(
 ) {
     val pageRoster = MoviePage.entries
 
-    fun getSelectedSortOption(): MovieSortOptionUI? =
-        sortOptionRoster.firstOrNull { it.isSelected }
+    fun getSelectedSortOption(): MovieSortOptionUI? = sortOptionRoster.firstOrNull { it.isSelected }
 
     companion object {
         val DEFAULT: MovieUiState = MovieUiState(

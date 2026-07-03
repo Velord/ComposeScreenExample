@@ -13,9 +13,7 @@ fun Context.alertDialog(
     negativeCallback: (() -> Unit)? = null,
     positiveCallback: () -> Unit = {}
 ) {
-    val dialog = MaterialAlertDialogBuilder(this)
-        .setCancelable(cancelable)
-        .create()
+    val dialog = MaterialAlertDialogBuilder(this).setCancelable(cancelable).create()
 
     positiveText?.let {
         dialog.setButton(

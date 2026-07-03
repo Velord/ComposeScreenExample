@@ -56,10 +56,7 @@ class HangingAnimation internal constructor(
     companion object {
         internal const val DefaultDuration = 1000
 
-        val Default = HangingAnimation(
-            duration = DefaultDuration,
-            easing = LinearEasing,
-        )
+        val Default = HangingAnimation(duration = DefaultDuration, easing = LinearEasing)
     }
 }
 
