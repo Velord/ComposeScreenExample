@@ -15,9 +15,7 @@ import kotlinx.coroutines.launch
 // Also theme is not only available inside the app. It is also available in the widgets.
 // This means we should reduce unnecessary calls for switching theme.
 // Default AndroidThemeConfig is acceptable only inside the app(Compose).
-data class ThemeUiState(
-    val appThemeConfig: AppThemeConfig?
-) {
+data class ThemeUiState(val appThemeConfig: AppThemeConfig?) {
     companion object {
         val DEFAULT = ThemeUiState(null)
     }
@@ -33,8 +31,8 @@ class ThemeViewModel(
     private val getThemeConfigUC: GetThemeConfigUC,
     private val switchDynamicColorThemeConfigUC: SwitchDynamicColorThemeConfigUC,
     private val switchAbideToOsThemeConfigUC: SwitchAbideToOsThemeConfigUC,
-    private val switchDarkThemeConfigUC: SwitchDarkThemeConfigUC
-): CoroutineScopeViewModel() {
+    private val switchDarkThemeConfigUC: SwitchDarkThemeConfigUC,
+) : CoroutineScopeViewModel() {
 
     val uiStateFlow = MutableStateFlow(ThemeUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<ThemeUiAction>()

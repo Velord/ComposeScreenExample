@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 private const val TAG = "CoroutineScopeViewModel"
 private val log = Logger.withTag(TAG)
 
-open class CoroutineScopeViewModel: ViewModel(), CoroutineScope {
+open class CoroutineScopeViewModel : ViewModel(), CoroutineScope {
 
     private val job = SupervisorJob()
     private val errorHandler = CoroutineExceptionHandler { _, error ->
@@ -33,7 +33,7 @@ open class CoroutineScopeViewModel: ViewModel(), CoroutineScope {
 
     val exceptionEvent = MutableSharedFlow<BaseException>(
         extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
     override fun onCleared() {

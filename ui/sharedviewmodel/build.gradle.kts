@@ -1,20 +1,24 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
-    alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.convention.koin)
+    alias(libs.plugins.convention.kmp.library)
 }
 
-android {
-    namespace = "com.velord.ui.sharedviewmodel"
-}
+kotlin {
+    android {
+        namespace = "com.velord.ui.sharedviewmodel"
+    }
 
-dependencies {
-    // Module
-    implementation(projects.model)
-    implementation(projects.infrastructure.util)
-    implementation(projects.domain.usecaseSetting)
-    // Template
-    implementation(libs.bundles.kotlin.core)
-    implementation(libs.bundles.androidx.module)
+    sourceSets {
+        commonMain.dependencies {
+            // Module
+            api(projects.model)
+            api(projects.infrastructure.util)
+            api(projects.domain.usecaseSetting)
+
+            // Template
+            implementation(libs.bundles.kotlin.core)
+            api(libs.kotlin.coroutine.core)
+            api(libs.androidx.lifecycle.viewmodel.core)
+            implementation(libs.kermit)
+        }
+    }
 }
