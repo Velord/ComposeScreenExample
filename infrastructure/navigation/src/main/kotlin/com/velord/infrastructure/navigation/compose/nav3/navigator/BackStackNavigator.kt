@@ -90,9 +90,7 @@ internal fun NavigationState.toEntries(
 ): SnapshotStateList<NavEntry<NavKey>> {
 
     val decoratedEntries = backStacks.mapValues { (_, stack) ->
-        val decorators = listOf(
-            rememberSaveableStateHolderNavEntryDecorator<NavKey>(),
-        )
+        val decorators = listOf(rememberSaveableStateHolderNavEntryDecorator<NavKey>())
         rememberDecoratedNavEntries(
             backStack = stack,
             entryDecorators = decorators,

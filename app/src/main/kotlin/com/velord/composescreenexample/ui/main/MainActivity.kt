@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() {
         private val fragmentContainer = R.id.navHostFragment
 
         fun startIntent(context: Context, bundle: Bundle) = Intent(
-            context, MainActivity::class.java
+            context,
+            MainActivity::class.java,
         ).apply {
             putExtra(NAVIGATION_EXTRA, bundle)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

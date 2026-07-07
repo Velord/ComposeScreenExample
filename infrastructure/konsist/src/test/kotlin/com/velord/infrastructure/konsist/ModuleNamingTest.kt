@@ -4,6 +4,7 @@ import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
 import java.io.File
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 private const val BUILD_LOGIC_MODULE_PATH = "build-logic"
 private const val APP_MODULE_PATH = ":app"
@@ -23,12 +24,11 @@ private val WIDGET_REGEX = Regex("""widget-[a-z0-9]+(?:-[a-z0-9]+)*""")
 class ModuleNamingTest {
 
     private val repoRoot = locateRepoRoot()
+    private val projectFileRoster = Konsist.scopeFromProject().files
 
     @Test
     fun `kotlin file should live under an allowed module naming family`() {
-        Konsist
-            .scopeFromProject()
-            .files
+        projectFileRoster
             .filter { file ->
                 val modulePath = modulePathOrNull(file.path)
                 modulePath != null && file.path.contains("${File.separator}src${File.separator}")
@@ -40,7 +40,7 @@ class ModuleNamingTest {
                 if (isValid.not()) {
                     println(
                         "Name: ${file.name}. FAILED. " +
-                            "Module path '$modulePath' does not match the allowed naming families."
+                                "Module path '$modulePath' does not match the allowed naming families."
                     )
                 }
 
@@ -50,15 +50,13 @@ class ModuleNamingTest {
 
     @Test
     fun `kotlin file package root should match its module path`() {
-        Konsist
-            .scopeFromProject()
-            .files
+        projectFileRoster
             .filter { file ->
                 val modulePath = modulePathOrNull(file.path)
                 val packageName = file.packagee?.name
                 modulePath != null &&
-                    packageName != null &&
-                    file.path.contains("${File.separator}src${File.separator}")
+                        packageName != null &&
+                        file.path.contains("${File.separator}src${File.separator}")
             }
             .assertTrue { file ->
                 val modulePath = modulePathOrNull(file.path) ?: return@assertTrue false
@@ -71,13 +69,44 @@ class ModuleNamingTest {
                 if (isValid.not()) {
                     println(
                         "Name: ${file.name}. FAILED. " +
-                            "Package '$packageName' does not match module '$modulePath'. " +
-                            "Expected root: '$expectedPackageRoot'."
+                                "Package '$packageName' does not match module '$modulePath'. " +
+                                "Expected root: '$expectedPackageRoot'."
                     )
                 }
 
                 isValid
             }
+    }
+
+    @Test
+    fun `module naming governance should centralize core module path and package root literals`() {
+        val file = projectFileRoster.firstOrNull { file ->
+            file.path.endsWith("ModuleNamingTest.kt")
+        } ?: error("ModuleNamingTest.kt not found in project scope")
+
+        val literalRoster = listOf(
+            BUILD_LOGIC_MODULE_PATH,
+            APP_MODULE_PATH,
+            MODEL_MODULE_PATH,
+            SHARED_VIEW_MODEL_MODULE_PATH,
+            BUILD_LOGIC_PACKAGE_ROOT,
+            APP_PACKAGE_ROOT,
+            MODEL_PACKAGE_ROOT,
+            SHARED_VIEW_MODEL_PACKAGE_ROOT,
+        )
+
+        val violationRoster = literalRoster.filter { literal ->
+            file.text.split("\"$literal\"").size - 1 > 1
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "Name: ${file.name}. FAILED. " +
+                    "Duplicate governance literals must be centralized: " +
+                    "${violationRoster.joinToString()}."
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
     }
 
     private fun locateRepoRoot(): File = generateSequence(
@@ -125,10 +154,10 @@ private data class ModulePath(val value: String) {
         value.startsWith(":infrastructure:") ->
             segmentRoster.size == 2 && leafName.matches(LOWER_CASE_LEAF_REGEX)
         value.startsWith(":ui:") -> segmentRoster.size == 2 && (
-            leafName.matches(FEATURE_REGEX) ||
-                leafName == SHARED_VIEW_MODEL_NAME ||
-                leafName.matches(WIDGET_REGEX)
-        )
+                leafName.matches(FEATURE_REGEX) ||
+                        leafName == SHARED_VIEW_MODEL_NAME ||
+                        leafName.matches(WIDGET_REGEX)
+                )
         else -> false
     }
 

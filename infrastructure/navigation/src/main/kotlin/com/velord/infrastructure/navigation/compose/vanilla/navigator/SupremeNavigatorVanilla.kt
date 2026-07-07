@@ -15,12 +15,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import co.touchlab.kermit.Logger
+import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
+import com.velord.infrastructure.navigation.compose.vanilla.graph.setupBottomNavigationGraphVanilla
 import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.viewmodel.TabState
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
-import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
-import com.velord.infrastructure.navigation.compose.vanilla.graph.setupBottomNavigationGraphVanilla
 
 private val vanillaLog = Logger.withTag("LogBackStack - SupremeNavigatorVanilla")
 
@@ -85,7 +85,10 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
             bottomTabNavControllerState.value = navController
         }
 
-        LogNavigationEvents(navController = navController, label = "BottomTab")
+        LogNavigationEvents(
+            navController = navController,
+            label = "BottomTab",
+        )
 
         val bottomTabNavController = bottomTabNavControllerState.value
         val backStackEntry = bottomTabNavController!!.currentBackStackEntryAsState()

@@ -55,9 +55,7 @@ actual class MemoryLeakMonitor actual constructor(
                     publishMemoryDump(snapshot)
                     logger.recordException(exception)
                 } catch (monitorException: Exception) {
-                    logger.log(
-                        "Failed to capture OOM snapshot: ${monitorException.message}",
-                    )
+                    logger.log("Failed to capture OOM snapshot: ${monitorException.message}")
                 }
             }
             defaultHandler?.uncaughtException(thread, exception)

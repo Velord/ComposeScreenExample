@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 // This means we should reduce unnecessary calls for switching theme.
 // Default AndroidThemeConfig is acceptable only inside the app(Compose).
 data class ThemeUiState(val appThemeConfig: AppThemeConfig?) {
+
     companion object {
         val DEFAULT = ThemeUiState(null)
     }

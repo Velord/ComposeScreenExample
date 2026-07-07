@@ -10,7 +10,6 @@ import org.koin.core.annotation.Single
 
 @Single
 class MovieSortGateway(private val appState: AppStateDataSource) {
-
     fun getFlow(): MovieSortOptionFlow = MovieSortOptionFlow(appState.movieSortFlow)
 
     fun getSelectedFlow(): Flow<MovieSortOption> = appState.movieSortFlow

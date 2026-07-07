@@ -17,7 +17,25 @@ private val COLLECTION_CALL_REGEX = Regex(
         "find|any|all|none|count|map|filter|filterNot" +
         ")\\b",
 )
-private val projectFileRoster = Konsist.scopeFromProject().files
+// TOOD: rid of it as it can be changed
+private val BUILT_IN_COMPOSE_CALL_NAME_ROSTER = setOf(
+    "AsyncImage",
+    "Button",
+    "ExtendedFloatingActionButton",
+    "FloatingActionButton",
+    "Icon",
+    "IconButton",
+    "Image",
+    "NavigationBarItem",
+    "RadioButton",
+    "Snackbar",
+    "Text",
+    "TextButton",
+)
+private val EXPRESSION_BODY_MAPPING_CALL_REGEX = Regex(
+    """\bfun\b.+?\(([^)]*)\)\s*:\s*([A-Z][A-Za-z0-9_]*)\s*=\s*\2\(""",
+)
+internal val projectFileRoster = Konsist.scopeFromProject().files
 private val governanceFileRoster = projectFileRoster.filter { file ->
     file.path.contains("infrastructure/konsist/src/test/kotlin/")
 }
@@ -174,8 +192,10 @@ class CodeStyleTest {
     fun `one or two argument calls should stay on one line when they fit`() {
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()
+            val composeCallNameRoster = composeCallNameRoster(file.text)
             val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
                 isSplitOneOrTwoArgumentCall(
+                    composeCallNameRoster = composeCallNameRoster,
                     currentLine = lineRoster[lineIndex],
                     nextLine = lineRoster.getOrNull(lineIndex + 1),
                     thirdLine = lineRoster.getOrNull(lineIndex + 2),
@@ -186,6 +206,44 @@ class CodeStyleTest {
             if (violation != null) {
                 val msg = "Name: ${file.name}. FAILED. " +
                     "One or two argument call at line ${violation + 1} should stay on one line."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `compose calls with several parameters should use one parameter per line`() {
+        projectFileRoster.assertTrue { file ->
+            val composeCallNameRoster = composeCallNameRoster(file.text)
+            val violation = file.text.lines().withIndex().firstOrNull { (_, line) ->
+                isCompactComposeCallWithSeveralParameters(composeCallNameRoster, line)
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Compose call at line ${violation.index + 1} " +
+                    "should use one parameter per line."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `object mapping calls with several arguments should use multiline arguments`() {
+        projectFileRoster.assertTrue { file ->
+            val lineRoster = file.text.lines()
+            val violation = lineRoster.withIndex().firstOrNull { (_, line) ->
+                isInlineExpressionBodyObjectMapping(line)
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Object mapping call at line ${violation.index + 1} " +
+                    "should use multiline arguments."
                 println(msg)
             }
 
@@ -318,6 +376,29 @@ class CodeStyleTest {
             if (violation != null) {
                 val msg = "Name: ${file.name}. FAILED. " +
                     "When branches must not be separated by blank line ${violation + 1}."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `single expression when branches should not use braces`() {
+        projectFileRoster.assertTrue { file ->
+            val lineRoster = file.text.lines()
+            val violation = (0 until (lineRoster.lastIndex - 2)).firstOrNull { lineIndex ->
+                isSingleExpressionWhenBranchWithBraces(
+                    currentLine = lineRoster[lineIndex],
+                    nextLine = lineRoster[lineIndex + 1],
+                    thirdLine = lineRoster[lineIndex + 2],
+                )
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Single expression when branch at line ${violation + 1} " +
+                    "should not use braces."
                 println(msg)
             }
 
@@ -482,34 +563,7 @@ class CodeStyleTest {
         }
     }
 
-    @Test
-    fun `module naming governance should centralize core module path and package root literals`() {
-        val file = projectFileRoster.firstOrNull { file ->
-            file.path.endsWith("ModuleNamingTest.kt")
-        } ?: error("ModuleNamingTest.kt not found in project scope")
-        val literalRoster = listOf(
-            "build-logic",
-            ":app",
-            ":model",
-            ":ui:sharedviewmodel",
-            "com.velord.buildlogic",
-            "com.velord.composescreenexample",
-            "com.velord.model",
-            "com.velord.ui.sharedviewmodel",
-        )
-        val violationRoster = literalRoster.filter { literal ->
-            file.text.split("\"$literal\"").size - 1 > 1
-        }
 
-        if (violationRoster.isNotEmpty()) {
-            val msg = "Name: ${file.name}. FAILED. " +
-                "Duplicate governance literals must be centralized: " +
-                "${violationRoster.joinToString()}."
-            println(msg)
-        }
-
-        kotlin.test.assertTrue(violationRoster.isEmpty())
-    }
 
     private fun isShortWrappedDeclaration(
         currentLine: String,
@@ -542,6 +596,7 @@ class CodeStyleTest {
     }
 
     private fun isSplitOneOrTwoArgumentCall(
+        composeCallNameRoster: Set<String>,
         currentLine: String,
         nextLine: String?,
         thirdLine: String?,
@@ -552,20 +607,127 @@ class CodeStyleTest {
         val thirdLineTrimmed = thirdLine?.trim().orEmpty()
         val fourthLineTrimmed = fourthLine?.trim().orEmpty()
         if (currentLineTrimmed.endsWith("(").not()) return false
-        if (nextLineTrimmed.contains(" = ").not()) return false
+        if (isDeclarationOpening(currentLineTrimmed)) return false
+        if (isComposeCallOpening(composeCallNameRoster, currentLineTrimmed)) return false
+        if (isExpressionBodyMappingCallOpening(currentLineTrimmed)) return false
         if (nextLineTrimmed.endsWith(",").not()) return false
         if (thirdLineTrimmed == ")") {
             val joinedLine = currentLineTrimmed.removeSuffix("(") +
                 "(${nextLineTrimmed.removeSuffix(",")})"
             return joinedLine.length <= HARD_WRAP
         }
-        if (thirdLineTrimmed.contains(" = ").not()) return false
         if (thirdLineTrimmed.endsWith(",").not()) return false
         if (fourthLineTrimmed != ")") return false
 
         val joinedLine = currentLineTrimmed.removeSuffix("(") +
             "(${nextLineTrimmed.removeSuffix(",")}, ${thirdLineTrimmed.removeSuffix(",")})"
         return joinedLine.length <= HARD_WRAP
+    }
+
+    private fun isDeclarationOpening(line: String): Boolean {
+        val lineTrimmed = line.trimStart()
+        if (lineTrimmed.startsWith("@")) return true
+        if (lineTrimmed.contains(" fun ")) return true
+        if (lineTrimmed.startsWith("fun ")) return true
+        if (lineTrimmed.contains(" class ")) return true
+        if (lineTrimmed.startsWith("class ")) return true
+        if (lineTrimmed.startsWith("data class ")) return true
+        if (lineTrimmed.startsWith("sealed class ")) return true
+        if (lineTrimmed.startsWith("abstract class ")) return true
+        if (lineTrimmed.startsWith("interface ")) return true
+
+        return lineTrimmed.startsWith("internal interface ")
+    }
+
+    private fun isCompactComposeCallWithSeveralParameters(
+        composeCallNameRoster: Set<String>,
+        line: String,
+    ): Boolean {
+        val lineTrimmed = line.trimStart()
+        if (lineTrimmed.firstOrNull()?.isUpperCase() != true) return false
+        if (lineTrimmed.contains("(").not()) return false
+        if (lineTrimmed.contains(")").not()) return false
+        if (lineTrimmed.endsWith("{")) return false
+
+        val callName = lineTrimmed.substringBefore("(")
+        if (callName.contains(".")) return false
+        if (composeCallNameRoster.contains(callName).not()) return false
+
+        return hasSeveralTopLevelArguments(lineTrimmed)
+    }
+
+    private fun composeCallNameRoster(fileText: String): Set<String> {
+        if (fileText.contains("@Composable").not()) return emptySet()
+
+        val localNameRoster = fileText.lines()
+            .zipWithNext()
+            .filter { (previousLine, currentLine) ->
+                previousLine.trim() == "@Composable" && currentLine.contains("fun ")
+            }
+            .map { (_, currentLine) ->
+                currentLine.substringAfter("fun ").substringBefore("(").substringAfterLast(".")
+            }
+            .toSet()
+        return BUILT_IN_COMPOSE_CALL_NAME_ROSTER + localNameRoster
+    }
+
+    private fun hasSeveralTopLevelArguments(line: String): Boolean {
+        val argumentText = line.substringAfter("(").substringBeforeLast(")")
+        var depth = 0
+        argumentText.forEach { char ->
+            if (char == '(' || char == '[' || char == '{') depth++
+            if (char == ')' || char == ']' || char == '}') depth--
+            if (char == ',' && depth == 0) return true
+        }
+
+        return false
+    }
+
+    private fun isComposeCallOpening(
+        composeCallNameRoster: Set<String>,
+        line: String,
+    ): Boolean {
+        val lineTrimmed = line.trimStart()
+        if (lineTrimmed.firstOrNull()?.isUpperCase() != true) return false
+        if (lineTrimmed.contains("(").not()) return false
+
+        val callName = lineTrimmed
+            .substringBefore("(")
+            .substringAfter("=")
+            .substringAfter("return ")
+            .trim()
+            .substringAfterLast(".")
+        return composeCallNameRoster.contains(callName)
+    }
+
+    private fun isExpressionBodyMappingCallOpening(line: String): Boolean {
+        val match = EXPRESSION_BODY_MAPPING_CALL_REGEX.find(line) ?: return false
+        val parameterText = match.groupValues[1]
+        return topLevelArgumentCount(parameterText) == 1
+    }
+
+    private fun isInlineExpressionBodyObjectMapping(line: String): Boolean {
+        val match = EXPRESSION_BODY_MAPPING_CALL_REGEX.find(line) ?: return false
+        val parameterText = match.groupValues[1]
+        if (topLevelArgumentCount(parameterText) != 1) return false
+        if (line.substring(match.range.last + 1).contains(")").not()) return false
+
+        val argumentPart = line.substring(match.range.last + 1).substringBeforeLast(")")
+        return topLevelArgumentCount(argumentPart) > 1
+    }
+
+    private fun topLevelArgumentCount(argumentText: String): Int {
+        if (argumentText.isBlank()) return 0
+
+        var depth = 0
+        var count = 1
+        argumentText.forEach { char ->
+            if (char == '(' || char == '[' || char == '{') depth++
+            if (char == ')' || char == ']' || char == '}') depth--
+            if (char == ',' && depth == 0) count++
+        }
+
+        return count
     }
 
     private fun isSplitShortElvisExpression(
@@ -692,6 +854,22 @@ class CodeStyleTest {
 
         val nextLineTrimmed = nextLine.trimStart()
         return nextLineTrimmed.startsWith("is ") || nextLineTrimmed.startsWith("else ->")
+    }
+
+    private fun isSingleExpressionWhenBranchWithBraces(
+        currentLine: String,
+        nextLine: String,
+        thirdLine: String,
+    ): Boolean {
+        val currentLineTrimmed = currentLine.trimStart()
+        val nextLineTrimmed = nextLine.trimStart()
+        val thirdLineTrimmed = thirdLine.trimStart()
+        if (currentLineTrimmed.contains("-> {").not()) return false
+        if (nextLineTrimmed.isBlank()) return false
+        if (nextLineTrimmed.endsWith("{")) return false
+        if (nextLineTrimmed.contains("=")) return false
+
+        return thirdLineTrimmed == "}"
     }
 
     private fun isCallChainViolation(

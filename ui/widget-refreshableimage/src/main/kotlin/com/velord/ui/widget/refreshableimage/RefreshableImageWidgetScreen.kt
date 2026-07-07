@@ -99,7 +99,10 @@ private fun Content(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Title()
-        CurrentSize(url, isDownloadingNewImage)
+        CurrentSize(
+            url = url,
+            isDownloadingNewImage = isDownloadingNewImage,
+        )
         RefreshableImage(filePath)
     }
 }
@@ -140,7 +143,10 @@ private fun CurrentSize(
             ),
         )
 
-        Refresh(url, isDownloadingNewImage)
+        Refresh(
+            url,
+            isDownloadingNewImage,
+        )
     }
     Row(
         modifier = GlanceModifier.fillMaxWidth(),

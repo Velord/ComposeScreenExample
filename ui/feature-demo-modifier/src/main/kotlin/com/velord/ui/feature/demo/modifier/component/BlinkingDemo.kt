@@ -49,7 +49,10 @@ private fun GreenReverse() {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onSurface)
     ) {
         Box(Modifier.fillMaxSize()) {
-            Text("Green Reverse", Modifier.align(Alignment.Center))
+            Text(
+                "Green Reverse",
+                Modifier.align(Alignment.Center),
+            )
         }
     }
 }
@@ -70,7 +73,10 @@ private fun RedReverse() {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
     ) {
         Box(Modifier.fillMaxSize()) {
-            Text("Red Reverse", Modifier.align(Alignment.Center))
+            Text(
+                "Red Reverse",
+                Modifier.align(Alignment.Center),
+            )
         }
     }
 }
@@ -93,7 +99,10 @@ private fun CyanRestart() {
         shape = shape,
     ) {
         Box(Modifier.fillMaxSize()) {
-            Text("Cyan Restart", Modifier.align(Alignment.Center))
+            Text(
+                "Cyan Restart",
+                Modifier.align(Alignment.Center),
+            )
         }
     }
 }

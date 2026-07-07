@@ -33,39 +33,24 @@ private fun Project.bundle(bundleName: String) = libs.findBundle(bundleName).get
 
 internal fun Project.implementationBundle(bundleName: String) {
     bundle(bundleName).forEach { dependency ->
-        dependencies.add(
-            "implementation",
-            dependency,
-        )
+        dependencies.add("implementation", dependency)
     }
 }
 
 internal fun Project.implementationLibrary(libraryName: String) {
-    dependencies.add(
-        "implementation",
-        library(libraryName),
-    )
+    dependencies.add("implementation", library(libraryName))
 }
 
 internal fun Project.implementationPlatformLibrary(libraryName: String) {
-    dependencies.add(
-        "implementation",
-        dependencies.platform(library(libraryName)),
-    )
+    dependencies.add("implementation", dependencies.platform(library(libraryName)))
 }
 
 internal fun Project.implementationProject(projectPath: String) {
-    dependencies.add(
-        "implementation",
-        projectDependency(projectPath),
-    )
+    dependencies.add("implementation", projectDependency(projectPath))
 }
 
 internal fun Project.kspLibrary(libraryName: String) {
-    dependencies.add(
-        "ksp",
-        library(libraryName),
-    )
+    dependencies.add("ksp", library(libraryName))
 }
 
 internal fun Project.implementationProject(project: ProjectModule) {

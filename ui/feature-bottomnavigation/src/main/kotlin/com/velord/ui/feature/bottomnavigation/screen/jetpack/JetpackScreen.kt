@@ -30,7 +30,10 @@ internal fun JetpackScreen(viewModel: BottomNavigationJetpackVM) {
     val tabFlow = viewModel.currentTabStateFlow.collectAsStateWithLifecycle()
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
 
-    Content(selectedItem = tabFlow.value, onClick = viewModel::onTabClick)
+    Content(
+        selectedItem = tabFlow.value,
+        onClick = viewModel::onTabClick,
+    )
 
     log.d { "BottomNavScreen: ${backHandlingState.value}" }
     if (backHandlingState.value.isEnabled) {
@@ -87,5 +90,8 @@ private fun Content(
 @PreviewCombined
 @Composable
 private fun BottomNavContentPreview() {
-    Content(selectedItem = BottomNavigationItem.Camera, onClick = {})
+    Content(
+        selectedItem = BottomNavigationItem.Camera,
+        onClick = {},
+    )
 }

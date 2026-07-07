@@ -84,11 +84,10 @@ internal actual class MemoryDumpProvider actual constructor(
                 while (reader.readLine().also { line = it } != null) {
                     when {
                         line!!.startsWith("VmSwap:") -> {
-                            swap = parseValue(line!!)
+                            swap = parseValue(line)
                         }
-
-                        line!!.startsWith("VmPTE:") -> {
-                            pageTable = parseValue(line!!)
+                        line.startsWith("VmPTE:") -> {
+                            pageTable = parseValue(line)
                         }
                     }
                     if (swap > 0 && pageTable > 0) break
