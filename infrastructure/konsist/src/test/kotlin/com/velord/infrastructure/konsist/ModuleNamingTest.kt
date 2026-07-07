@@ -118,7 +118,8 @@ class ModuleNamingTest {
     } ?: error("Cannot locate repo root from ${System.getProperty("user.dir")}")
 
     private fun modulePathOrNull(filePath: String): ModulePath? {
-        val relativePath = File(filePath).absoluteFile.relativeTo(repoRoot).invariantSeparatorsPath
+        val relativePath = File(filePath).absoluteFile
+            .relativeTo(repoRoot).invariantSeparatorsPath
 
         val pathSegmentRoster = relativePath.split('/')
         if (pathSegmentRoster.isEmpty()) return null

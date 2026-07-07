@@ -565,8 +565,8 @@ compose-material3-adaptive-layout = { module = "androidx.compose.material3.adapt
 compose-material3-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "composeMaterial3Adaptive" }
 # Compose Ui
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeDefault" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeDefault" }
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeDefault" }
+compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composePlugin" }
+compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composePlugin" }
 compose-ui-geometry = { module = "androidx.compose.ui:ui-geometry", version.ref = "composeDefault" }
 compose-ui-geometry-android = { module = "androidx.compose.ui:ui-geometry-android", version.ref = "composeDefault" }
 # Compose 3-rd party

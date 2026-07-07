@@ -4,6 +4,7 @@ import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
 import java.io.File
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 private const val HARD_WRAP = 100
 private const val LOOKBACK_LINE_COUNT = 6
@@ -113,7 +114,9 @@ class CodeStyleTest {
         val violation = locateRepoRoot()
             .walkTopDown()
             .filter { file -> file.isFile && file.name.endsWith(".gradle.kts") }
-            .filter { file -> file.path.contains("${File.separator}build${File.separator}").not() }
+            .filter { file -> file.path.contains(
+                other = "${File.separator}build${File.separator}").not()
+            }
             .firstOrNull { file -> file.readText().contains("kotlin(\"test\")") }
 
         if (violation != null) {
@@ -122,7 +125,7 @@ class CodeStyleTest {
             println(msg)
         }
 
-        kotlin.test.assertTrue(violation == null)
+        assertTrue(violation == null)
     }
 
     @Test
@@ -665,14 +668,18 @@ class CodeStyleTest {
                 previousLine.trim() == "@Composable" && currentLine.contains("fun ")
             }
             .map { (_, currentLine) ->
-                currentLine.substringAfter("fun ").substringBefore("(").substringAfterLast(".")
+                currentLine.substringAfter("fun ")
+                    .substringBefore("(")
+                    .substringAfterLast(".")
             }
             .toSet()
         return BUILT_IN_COMPOSE_CALL_NAME_ROSTER + localNameRoster
     }
 
     private fun hasSeveralTopLevelArguments(line: String): Boolean {
-        val argumentText = line.substringAfter("(").substringBeforeLast(")")
+        val argumentText = line
+            .substringAfter("(")
+            .substringBeforeLast(")")
         var depth = 0
         argumentText.forEach { char ->
             if (char == '(' || char == '[' || char == '{') depth++
@@ -712,7 +719,9 @@ class CodeStyleTest {
         if (topLevelArgumentCount(parameterText) != 1) return false
         if (line.substring(match.range.last + 1).contains(")").not()) return false
 
-        val argumentPart = line.substring(match.range.last + 1).substringBeforeLast(")")
+        val argumentPart = line
+            .substring(match.range.last + 1)
+            .substringBeforeLast(")")
         return topLevelArgumentCount(argumentPart) > 1
     }
 
@@ -785,7 +794,9 @@ class CodeStyleTest {
     }
 
     private fun joinLine(currentLine: String, nextLine: String): String =
-        "${currentLine.trimEnd()} ${nextLine.trimStart()}".replace(WHITESPACE_REGEX, " ").trim()
+        "${currentLine.trimEnd()} ${nextLine.trimStart()}"
+            .replace(WHITESPACE_REGEX, " ")
+            .trim()
 
     private fun isSplitIfOpeningCondition(
         currentLine: String,
@@ -806,9 +817,11 @@ class CodeStyleTest {
         val currentLineTrimmed = currentLine.trim()
         val nextLineTrimmed = nextLine.trimStart()
         val isGuardReturnLine = currentLineTrimmed == "}" ||
-            currentLineTrimmed.contains(" return ") ||
-            currentLineTrimmed.startsWith("if (") && currentLineTrimmed.endsWith("return false") ||
-            currentLineTrimmed.startsWith("if (") && currentLineTrimmed.endsWith("return null")
+                currentLineTrimmed.contains(" return ") ||
+                currentLineTrimmed.startsWith("if (") &&
+                currentLineTrimmed.endsWith("return false") ||
+                currentLineTrimmed.startsWith("if (") &&
+                currentLineTrimmed.endsWith("return null")
         if (isGuardReturnLine.not()) return false
         if (nextLineTrimmed.startsWith("return ").not()) return false
 
@@ -853,7 +866,8 @@ class CodeStyleTest {
         if (previousLine.trimStart().contains("->").not()) return false
 
         val nextLineTrimmed = nextLine.trimStart()
-        return nextLineTrimmed.startsWith("is ") || nextLineTrimmed.startsWith("else ->")
+        return nextLineTrimmed.startsWith("is ") ||
+                nextLineTrimmed.startsWith("else ->")
     }
 
     private fun isSingleExpressionWhenBranchWithBraces(
@@ -983,7 +997,8 @@ class CodeStyleTest {
         val thirdLineTrimmed = thirdLine?.trim().orEmpty()
         if (currentLineTrimmed.contains("class ").not()) return false
         if (currentLineTrimmed.endsWith("(").not()) return false
-        if (nextLineTrimmed.startsWith("val ").not() && nextLineTrimmed.startsWith("var ").not()) {
+        if (nextLineTrimmed.startsWith("val ").not() &&
+            nextLineTrimmed.startsWith("var ").not()) {
             return false
         }
         if (nextLineTrimmed.endsWith(",").not()) return false
@@ -1142,7 +1157,9 @@ class CodeStyleTest {
                 thirdLineTrimmed.startsWith("."))
         if (hasMultilineContinuation.not()) return false
 
-        val chainSegmentCount = Regex("""\.\w+\(""").findAll(currentLineTrimmed).count()
+        val chainSegmentCount = Regex("""\.\w+\(""")
+            .findAll(currentLineTrimmed)
+            .count()
         val closesThenChains = currentLineTrimmed.contains(").") ||
             currentLineTrimmed.contains("}.") ||
             currentLineTrimmed.contains("].")
@@ -1163,7 +1180,8 @@ class CodeStyleTest {
             lineTrimmed.startsWith("}.") ||
             lineTrimmed.startsWith("].")
         ) {
-            return Regex("""^[)}]]\.\w+(?:\(|\s*\{)""").containsMatchIn(lineTrimmed)
+            return Regex("""^[)}]]\.\w+(?:\(|\s*\{)""")
+                .containsMatchIn(lineTrimmed)
         }
 
         var depth = 0
@@ -1176,7 +1194,8 @@ class CodeStyleTest {
             if (char == '}') braceDepth--
             if (char == '.' && depth == 0 && braceDepth == 0) {
                 val chainedCall = lineTrimmed.substring(charIndex)
-                return Regex("""^\.\w+(?:\(|\s*\{)""").containsMatchIn(chainedCall)
+                return Regex("""^\.\w+(?:\(|\s*\{)""")
+                    .containsMatchIn(chainedCall)
             }
         }
 

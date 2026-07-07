@@ -3,10 +3,10 @@
 package com.velord.data.gateway.movie
 
 import com.velord.model.movie.Movie
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
+import kotlin.time.Instant
 
 private fun createDate(year: Int, month: Int, day: Int): Instant =
     LocalDate(year, month, day).atStartOfDayIn(TimeZone.UTC)

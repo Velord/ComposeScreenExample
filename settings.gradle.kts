@@ -55,7 +55,7 @@ rootProject.name = "ComposeScreenExample"
 include(":app")
 // Model
 include(":model")
-// Specific
+// Infrastructure
 include(":infrastructure:util")
 include(":infrastructure:navigation")
 include(":infrastructure:di")
