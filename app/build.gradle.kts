@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.convention.android.viewbinding)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.convention.koin)
     alias(libs.plugins.google.gms.services)
     alias(libs.plugins.google.firebase.crashlytic)
@@ -161,6 +162,9 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.ui.core)
+    // Koin annotations
+    implementation(libs.koin.annotation)
+    ksp(libs.koin.ksp)
     // Tool
     coreLibraryDesugaring(libs.android.desugar)
     // Other

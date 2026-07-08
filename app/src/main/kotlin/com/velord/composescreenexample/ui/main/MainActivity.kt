@@ -28,9 +28,7 @@ import com.velord.ui.feature.splash.SplashScreen
 import com.velord.ui.feature.splash.SplashViewModel
 import com.velord.ui.feature.splash.installSplash
 import com.velord.ui.sharedviewmodel.ThemeViewModel
-import com.velord.usecase.event.GetToastConfigUC
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.velord.infrastructure.navigation.R as RNavigation
 
@@ -52,7 +50,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModel()
     private val themeViewModel: ThemeViewModel by viewModel()
     private val splashViewModel: SplashViewModel by viewModel()
-    private val getToastConfigUC by inject<GetToastConfigUC>()
 //    Activity root
 //    ├─ mainNavHost          // Compose navigation(Voyager, Vanilla, Destinations, Nav3)
 //    ├─ navHostFragment      // Jetpack navigation
@@ -83,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     private fun setContent() {
         b.apply {
             setContentView(root)
-            toastOverlay.setToastOverlayWithTheme(toastEventFlow = getToastConfigUC())
+            toastOverlay.setToastOverlayWithTheme(toastEventFlow = viewModel.toastConfigFlow)
         }
     }
 
@@ -208,7 +205,8 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 themeViewModel.uiStateFlow.collect { theme ->
-                    viewModel.updateTheme(theme.appThemeConfig?.config)
+                    val action = MainUiAction.UpdateTheme(theme.appThemeConfig?.config)
+                    viewModel.onAction(action)
                 }
             }
         }

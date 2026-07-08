@@ -9,7 +9,7 @@ import com.velord.data.gateway.setting.GetThemeConfigGateway
 import com.velord.data.gateway.setting.SwitchThemeConfigGateway
 import com.velord.data.gateway.toast.ToastGateway
 import com.velord.usecase.camera.StartRecordingUC
-import com.velord.usecase.event.GetToastConfigUC
+import com.velord.usecase.event.GetToastConfigFlowUC
 import com.velord.usecase.event.ShowToastUC
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetFavoriteMovieUC
@@ -25,8 +25,8 @@ import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    single<GetToastConfigUC> {
-        GetToastConfigUC(get<ToastGateway>()::getFlow)
+    single<GetToastConfigFlowUC> {
+        GetToastConfigFlowUC(get<ToastGateway>()::getFlow)
     }
     single<ShowToastUC> {
         ShowToastUC(get<ToastGateway>()::show)
