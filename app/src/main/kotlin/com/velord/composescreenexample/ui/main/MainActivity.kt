@@ -19,7 +19,6 @@ import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
 import com.velord.core.ui.util.setContentWithTheme
 import com.velord.core.ui.util.setToastOverlayWithTheme
-import com.velord.data.appstate.AppStateDataSource
 import com.velord.infrastructure.config.NavigationLib
 import com.velord.infrastructure.navigation.CreateNavigationViaDestinations
 import com.velord.infrastructure.navigation.CreateNavigationViaNav3
@@ -29,6 +28,7 @@ import com.velord.ui.feature.splash.SplashScreen
 import com.velord.ui.feature.splash.SplashViewModel
 import com.velord.ui.feature.splash.installSplash
 import com.velord.ui.sharedviewmodel.ThemeViewModel
+import com.velord.usecase.event.GetToastConfigUC
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModel()
     private val themeViewModel: ThemeViewModel by viewModel()
     private val splashViewModel: SplashViewModel by viewModel()
-    private val appState by inject<AppStateDataSource>()
+    private val getToastConfigUC by inject<GetToastConfigUC>()
 //    Activity root
 //    ├─ mainNavHost          // Compose navigation(Voyager, Vanilla, Destinations, Nav3)
 //    ├─ navHostFragment      // Jetpack navigation
@@ -71,19 +71,23 @@ class MainActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        binding = ActivityMainBinding.inflate(layoutInflater).also {
-            it.setContent()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding?.apply {
+            setContent()
+            handleIntent(savedInstanceState)
         }
-
-        handleIntent(savedInstanceState)
         initObserving()
     }
 
-    private fun ActivityMainBinding.setContent() {
-        setContentView(root)
-        toastOverlay.setToastOverlayWithTheme(toastEventFlow = appState.toastConfigFlow)
+    context(b: ActivityMainBinding)
+    private fun setContent() {
+        b.apply {
+            setContentView(root)
+            toastOverlay.setToastOverlayWithTheme(toastEventFlow = getToastConfigUC())
+        }
     }
 
+    context(b: ActivityMainBinding)
     private fun handleIntent(savedInstanceState: Bundle?) {
         /** The Intent provided by getIntent() (and its extras) always persist the same
          * as it has been provided to activity first time(even process death has occurred).
@@ -112,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    context(b: ActivityMainBinding)
     private fun setNavGraph() {
         when (BuildConfig.NAVIGATION_LIB) {
             NavigationLib.Voyager -> setNavGraphViaVoyager()
@@ -123,8 +128,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    context(b: ActivityMainBinding)
     private fun setNavGraphViaVoyager() {
-        binding?.apply {
+        b.apply {
             navHostFragment.isVisible = false
             mainNavHost.apply {
                 isVisible = true
@@ -136,10 +142,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    context(b: ActivityMainBinding)
     private fun setNavGraphViaJetpack(
         @IdRes destination: Int? = null,
         bundle: Bundle? = bundleOf()
     ) {
+        b.apply {
+            mainNavHost.isVisible = false
+            navHostFragment.isVisible = true
+        }
+
         val navHostFragment =
             (supportFragmentManager.findFragmentById(fragmentContainer) as? NavHostFragment)
                 ?: supportFragmentManager.fragments[0] as NavHostFragment

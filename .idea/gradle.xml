@@ -35,6 +35,7 @@
             <option value="$PROJECT_DIR$/data/os" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/usecase-camera" />
+            <option value="$PROJECT_DIR$/domain/usecase-event" />
             <option value="$PROJECT_DIR$/domain/usecase-movie" />
             <option value="$PROJECT_DIR$/domain/usecase-setting" />
             <option value="$PROJECT_DIR$/infrastructure" />

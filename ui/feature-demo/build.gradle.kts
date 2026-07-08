@@ -11,8 +11,12 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Module Model
+            implementation(projects.model)
             // Module Infrastructure
             api(projects.infrastructure.config)
+            // Module Domain
+            implementation(projects.domain.usecaseEvent)
             // Module Core
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)

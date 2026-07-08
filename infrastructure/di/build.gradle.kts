@@ -15,6 +15,7 @@ dependencies {
     implementation(projects.domain.usecaseSetting)
     implementation(projects.domain.usecaseMovie)
     implementation(projects.domain.usecaseCamera)
+    implementation(projects.domain.usecaseEvent)
     // Module Data Source
     implementation(projects.data.backend)
     implementation(projects.data.datastore)

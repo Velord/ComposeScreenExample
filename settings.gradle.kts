@@ -76,6 +76,7 @@ include(":data:os")
 include(":domain:usecase-setting")
 include(":domain:usecase-movie")
 include(":domain:usecase-camera")
+include(":domain:usecase-event")
 // UI
 include(":ui:sharedviewmodel")
 // UI Feature

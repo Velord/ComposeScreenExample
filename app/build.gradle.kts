@@ -65,7 +65,7 @@ android {
             buildConfigField(
                 "com.velord.infrastructure.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.infrastructure.config.NavigationLib.Jetpack"
+                "com.velord.infrastructure.config.NavigationLib.Nav3"
             )
         }
         named("release") {
@@ -140,6 +140,8 @@ dependencies {
     implementation(projects.infrastructure.navigation)
     implementation(projects.infrastructure.di)
     implementation(projects.infrastructure.config)
+    // Module Domain
+    implementation(projects.domain.usecaseEvent)
     // Module Core
     implementation(projects.core.coreUi)
     implementation(projects.core.coreNavigation)

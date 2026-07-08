@@ -2,11 +2,11 @@ package com.velord.ui.feature.demo
 
 import com.velord.core.resource.Res
 import com.velord.core.resource.this_demo_is_deprecated
-import com.velord.data.appstate.AppStateDataSource
 import com.velord.infrastructure.config.BuildConfigResolver
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
 import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.usecase.event.ShowToastUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -23,7 +23,7 @@ sealed interface DemoUiAction {
 
 class DemoViewModel(
     private val buildConfigResolver: BuildConfigResolver,
-    private val appState: AppStateDataSource,
+    private val showToastUC: ShowToastUC,
 ) : CoroutineScopeViewModel() {
 
     val navigationEventDestination = MutableSharedFlow<DemoDestinationNavigationEvent>()
@@ -71,7 +71,7 @@ class DemoViewModel(
         if (lib.isJetpack) {
             val message = getString(Res.string.this_demo_is_deprecated, lib.name)
             val toastConfig = ToastConfig(message = message, duration = ToastDuration.Long)
-            appState.toastConfigFlow.emit(toastConfig)
+            showToastUC(toastConfig)
         }
     }
 
