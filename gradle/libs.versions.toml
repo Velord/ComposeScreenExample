@@ -119,7 +119,7 @@ androidxGlance = "1.1.1"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha07"
 ## Graphics
 androidxGraphicsCore = "1.0.4"
-androidxGraphicsPath = "1.0.1"
+androidxGraphicsPath = "1.1.0"
 androidxGraphicsShapes = "1.1.0"
 ## G
 androidxGridlayout = "1.1.0"
@@ -1083,15 +1083,18 @@ androidx-all = [
 # Compose
 compose-core = ["compose-runtime", "compose-animation"]
 # Compose Accompanist
-compose-accompanist-all = [
-    "compose-accompanist-drawable",
-    "compose-accompanist-permission"
-]
+compose-accompanist-all = ["compose-accompanist-drawable", "compose-accompanist-permission"]
 # Compose Foundation
 compose-foundation = ["compose-foundation", "compose-foundation-layout"]
 # Compose Ui
-compose-ui = [
-    "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview",
+compose-ui-core = [
+    "compose-ui",
+    "compose-ui-tooling", "compose-ui-tooling-preview"
+]
+compose-ui-geometry = ["compose-ui-geometry", "compose-ui-geometry-android"]
+compose-ui-all = [
+    "compose-ui",
+    "compose-ui-tooling", "compose-ui-tooling-preview",
     "compose-ui-geometry", "compose-ui-geometry-android"
 ]
 # Compose Material
@@ -1294,7 +1297,6 @@ convention-android-viewbinding = { id = "velord.android.viewbinding" }
 convention-koin = { id = "velord.koin" }
 convention-feature-ui = { id = "velord.feature.ui" }
 convention-feature-ui-koin = { id = "velord.feature.ui.koin" }
-convention-domain-usecase = { id = "velord.domain.usecase" }
 convention-domain-usecase-kmp = { id = "velord.domain.usecase.kmp" }
 convention-widget-glance = { id = "velord.widget.glance" }
 convention-kmp-library = { id = "velord.kmp.library" }

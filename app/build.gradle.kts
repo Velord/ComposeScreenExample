@@ -65,7 +65,7 @@ android {
             buildConfigField(
                 "com.velord.infrastructure.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.infrastructure.config.NavigationLib.Nav3"
+                "com.velord.infrastructure.config.NavigationLib.Jetpack"
             )
         }
         named("release") {
@@ -157,7 +157,7 @@ dependencies {
     // Template
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.compose.ui)
+    implementation(libs.bundles.compose.ui.core)
     // Tool
     coreLibraryDesugaring(libs.android.desugar)
     // Other

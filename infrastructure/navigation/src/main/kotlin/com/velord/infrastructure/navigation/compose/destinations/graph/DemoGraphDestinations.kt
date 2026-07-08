@@ -1,25 +1,26 @@
 package com.velord.infrastructure.navigation.compose.destinations.graph
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
-import com.velord.ui.feature.demo.dialog.DialogDemoScreen
-import com.velord.ui.feature.demo.dialog.DialogDemoViewModel
 import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.ui.feature.demo.DemoScreen
 import com.velord.ui.feature.demo.DemoViewModel
-import com.velord.ui.feature.movie.MovieScreen
-import com.velord.ui.feature.movie.viewModel.AllMovieViewModel
-import com.velord.ui.feature.movie.viewModel.FavoriteMovieViewModel
-import com.velord.ui.feature.movie.viewModel.MovieViewModel
-import com.velord.ui.feature.flowsummator.FlowSummatorScreen
-import com.velord.ui.feature.flowsummator.FlowSummatorViewModel
+import com.velord.ui.feature.demo.dialog.DialogDemoScreen
+import com.velord.ui.feature.demo.dialog.DialogDemoViewModel
 import com.velord.ui.feature.demo.hintphonenumber.HintPhoneNumberScreen
 import com.velord.ui.feature.demo.modifier.ModifierDemoScreen
 import com.velord.ui.feature.demo.morph.MorphDemoScreen
 import com.velord.ui.feature.demo.shape.ShapeDemoScreen
+import com.velord.ui.feature.flowsummator.FlowSummatorScreen
+import com.velord.ui.feature.flowsummator.FlowSummatorViewModel
+import com.velord.ui.feature.movie.MovieScreen
+import com.velord.ui.feature.movie.viewModel.AllMovieViewModel
+import com.velord.ui.feature.movie.viewModel.FavoriteMovieViewModel
+import com.velord.ui.feature.movie.viewModel.MovieViewModel
 import org.koin.androidx.compose.koinViewModel
 
 private const val DEMO_GRAPH = "demo_graph"
@@ -35,6 +36,7 @@ annotation class DemoGraph
 internal fun DemoDestination(navigator: DemoNavigator) {
     val viewModel = koinViewModel<DemoViewModel>()
     val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+    val context = LocalContext.current
 
     DemoScreen(
         viewModel = viewModel,
@@ -45,7 +47,7 @@ internal fun DemoDestination(navigator: DemoNavigator) {
             // To enable System Back Button handling
             // via Bottom Navigation -> comment the line below
             // bottomNavViewModel.graphCompletedHandling()
-        }
+        },
     )
 }
 

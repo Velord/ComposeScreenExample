@@ -21,6 +21,7 @@ kotlin {
             implementation(libs.bundles.androidx.credentials)
             implementation(libs.bundles.google.gms)
             implementation(libs.bundles.network.retrofit)
+            implementation(libs.bundles.ui)
         }
 
         desktopMain.dependencies {

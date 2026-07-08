@@ -28,7 +28,8 @@ class BottomNavigationJetpackVM(
     fun onTabClick(newTab: BottomNavigationItem) {
         val current = currentTabStateFlow.value
         if (current == newTab) return
-        currentTabStateFlow.value = current
+
+        currentTabStateFlow.value = newTab
     }
 
     fun onBackDoubleClick() = launch {

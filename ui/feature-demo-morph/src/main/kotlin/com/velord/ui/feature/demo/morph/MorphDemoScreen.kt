@@ -2,7 +2,6 @@
 
 package com.velord.ui.feature.demo.morph
 
-import android.view.animation.AnticipateOvershootInterpolator
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
@@ -44,7 +43,7 @@ import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.pillStar
 import androidx.graphics.shapes.star
-import com.velord.core.ui.compose.animation.interpolator.toEasing
+import com.velord.core.ui.compose.animation.easing.AnticipateOvershootInterpolatorEasing
 import com.velord.core.ui.compose.path.toComposePath
 import com.velord.core.ui.compose.polygon.heart
 import com.velord.core.ui.compose.shape.MorphShape
@@ -142,7 +141,8 @@ private fun ColumnScope.PillToPolygon() {
                     progress = animatedProgress.value,
                     rotationZ = animatedProgress.value * 360f
                 )
-            ).background(MaterialTheme.colorScheme.secondary)
+            )
+            .background(MaterialTheme.colorScheme.secondary)
             .size(200.dp)
     ) {
         Text(
@@ -168,7 +168,7 @@ private fun ColumnScope.Heart() {
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = 800,
-                easing = AnticipateOvershootInterpolator().toEasing()
+                easing = AnticipateOvershootInterpolatorEasing()
             ),
             repeatMode = RepeatMode.Reverse
         )

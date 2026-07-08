@@ -1,6 +1,5 @@
 package com.velord.ui.feature.movie.component
 
-import android.view.animation.AnticipateOvershootInterpolator
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -43,7 +42,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.velord.core.ui.compose.animation.interpolator.toEasing
+import com.velord.core.ui.compose.animation.easing.AnticipateOvershootInterpolatorEasing
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.movie.Movie
 import kotlinx.coroutines.flow.filter
@@ -225,7 +224,7 @@ private fun BoxScope.HeartContent(
         label = "HeartContent progress",
         animationSpec = tween(
             durationMillis = animationDuration,
-            easing = AnticipateOvershootInterpolator().toEasing()
+            easing = AnticipateOvershootInterpolatorEasing()
         ),
     )
     LaunchedEffect(key1 = animatedProgress) {

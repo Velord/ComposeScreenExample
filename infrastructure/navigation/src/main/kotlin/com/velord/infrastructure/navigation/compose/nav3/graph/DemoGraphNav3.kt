@@ -36,7 +36,7 @@ internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNaviga
                 // via Bottom Navigation -> comment the line below
                 // bottomNavViewModel.graphCompletedHandling()
                 bottomNavViewModel.graphTakeResponsibility()
-            }
+            },
         )
     }
 
