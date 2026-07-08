@@ -146,6 +146,7 @@ dependencies {
     implementation(projects.core.coreResource)
     // Module Data
     implementation(projects.data.os)
+    implementation(projects.data.appstate)
     // Module UI
     implementation(projects.ui.sharedviewmodel)
     // Module UI Feature

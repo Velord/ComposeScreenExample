@@ -18,6 +18,8 @@ kotlin {
             implementation(projects.core.coreUi)
             // Module Ui
             api(projects.ui.sharedviewmodel)
+            // Module DaTA
+            api(projects.data.appstate)
             // Template
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.compose.runtime)

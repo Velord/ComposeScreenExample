@@ -17,7 +17,7 @@ val viewModelModule = module {
     // VieModel that can not be instantiated here has their own module DI
     viewModel { ThemeViewModel(get(), get(), get(), get()) }
     viewModel { SplashViewModel() }
-    viewModel { DemoViewModel(get()) }
+    viewModel { DemoViewModel(get(), get()) }
     viewModel { FlowSummatorViewModel() }
     viewModel { MovieViewModel(get(), get()) }
     viewModel { AllMovieViewModel(get(), get(), get(), get()) }

@@ -26,9 +26,6 @@ import com.velord.core.resource.open_modifier_demo
 import com.velord.core.resource.open_morph_demo
 import com.velord.core.resource.open_movie
 import com.velord.core.resource.open_shape_demo
-import com.velord.core.ui.compose.component.ToastDuration
-import com.velord.core.ui.compose.component.ToastHost
-import com.velord.core.ui.compose.component.rememberToastHostState
 import com.velord.core.ui.util.ObserveSharedFlow
 import org.jetbrains.compose.resources.stringResource
 
@@ -47,14 +44,7 @@ fun DemoScreen(
         onNavigationEvent(it)
     }
 
-    val toastHostState = rememberToastHostState()
-    ObserveSharedFlow(flow = viewModel.toastEvent) { message ->
-        toastHostState.show(text = message, duration = ToastDuration.Long)
-    }
-
-    ToastHost(state = toastHostState) {
-        Content(onAction = viewModel::onAction)
-    }
+    Content(onAction = viewModel::onAction)
 }
 
 @Composable

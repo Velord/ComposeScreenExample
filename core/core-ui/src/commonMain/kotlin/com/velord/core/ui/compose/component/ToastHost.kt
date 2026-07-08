@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,14 +30,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.dp
+import com.velord.model.ToastConfig
+import com.velord.model.ToastDuration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
-
-private const val SHORT_TOAST_DURATION_MILLIS = 2_000L
-private const val LONG_TOAST_DURATION_MILLIS = 3_500L
 
 private const val TOAST_ENTER_DURATION_MILLIS = 360
 private const val TOAST_EXIT_DURATION_MILLIS = 180
@@ -58,11 +59,6 @@ private val ToastExitEasing = CubicBezierEasing(
     c = 0.84f,
     d = 0f,
 )
-
-enum class ToastDuration(internal val millis: Long) {
-    Short(SHORT_TOAST_DURATION_MILLIS),
-    Long(LONG_TOAST_DURATION_MILLIS),
-}
 
 internal data class ToastMessage(
     val id: Int,
@@ -112,11 +108,22 @@ fun rememberToastHostState(): ToastHostState {
 
 @Composable
 fun ToastHost(
-    state: ToastHostState,
+    toastEventFlow: Flow<ToastConfig>,
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.BottomCenter,
     content: @Composable BoxScope.() -> Unit,
 ) {
+    val toastHostState = rememberToastHostState()
+
+    LaunchedEffect(toastEventFlow) {
+        toastEventFlow.collect { config ->
+            toastHostState.show(
+                text = config.message,
+                duration = config.duration,
+            )
+        }
+    }
+
     Box(modifier = modifier.fillMaxSize()) {
         content()
 
@@ -124,7 +131,7 @@ fun ToastHost(
             modifier = Modifier.matchParentSize(),
             contentAlignment = alignment,
         ) {
-            ToastContent(state = state)
+            ToastContent(state = toastHostState)
         }
     }
 }
