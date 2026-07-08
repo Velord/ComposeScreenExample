@@ -1,10 +1,10 @@
 package com.velord.ui.feature.demo
 
-import android.content.Context
 import com.velord.core.navigation.fragment.NavigationDataFragment
 import com.velord.core.navigation.voyager.NavigationDataVoyager
 import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
+import com.velord.core.resource.Res
 import com.velord.core.resource.this_demo_is_deprecated
 import com.velord.infrastructure.config.BuildConfigResolver
 import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
@@ -22,9 +22,7 @@ sealed interface DemoUiAction {
     data object OpenDialogClick : DemoUiAction
 }
 
-
 class DemoViewModel(
-    private val context: Context,
     private val buildConfigResolver: BuildConfigResolver
 ) : CoroutineScopeViewModel() {
 
@@ -99,7 +97,7 @@ class DemoViewModel(
     private suspend fun checkJetpackLib() {
         val lib = buildConfigResolver.getNavigationLib()
         if (lib.isJetpack) {
-            val str = getString(com.velord.core.resource.Res.string.this_demo_is_deprecated, lib.name)
+            val str = getString(Res.string.this_demo_is_deprecated, lib.name)
             toastEvent.emit(str)
         }
     }
