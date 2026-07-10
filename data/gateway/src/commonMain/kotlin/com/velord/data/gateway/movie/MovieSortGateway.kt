@@ -31,5 +31,5 @@ class MovieSortGateway(private val appState: AppStateDataSource) {
 
     fun getSelected(): MovieSortOption = appState.movieSortFlow.value
         .firstOrNull { it.isSelected }
-        ?: MovieSortOption.Default
+        ?: MovieSortOption.DEFAULT
 }

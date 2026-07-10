@@ -10,7 +10,6 @@ enum class SettingsSourceFragment {
     fun encode(): String = Json.encodeToString(this)
 
     companion object {
-
         const val ARGUMENT = "source"
 
         fun decode(payload: String): SettingsSourceFragment = Json.decodeFromString(payload)

@@ -15,9 +15,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 
 object HangingDefaults {
 
-    val shift: HangingShift = HangingShift.Default
+    val shift: HangingShift = HangingShift.DEFAULT
 
-    val animation: HangingAnimation = HangingAnimation.Default
+    val animation: HangingAnimation = HangingAnimation.DEFAULT
 
     val pivotPoint: HangingPivotPoint = HangingPivotPoint.Top
 
@@ -28,7 +28,7 @@ object HangingDefaults {
     ): HangingShift = HangingShift(startRotationAngle, endRotationAngle)
 
     fun animation(
-        duration: Int = HangingAnimation.DefaultDuration,
+        duration: Int = HangingAnimation.DEFAULT_DURATION,
         easing: Easing = LinearEasing,
     ): HangingAnimation = HangingAnimation(duration, easing)
 
@@ -44,7 +44,7 @@ class HangingShift internal constructor(
     internal val rightRotationAngle: Int
 ) {
     companion object {
-        val Default = HangingShift(leftRotationAngle = 25, rightRotationAngle = -25)
+        val DEFAULT = HangingShift(leftRotationAngle = 25, rightRotationAngle = -25)
     }
 }
 
@@ -54,9 +54,9 @@ class HangingAnimation internal constructor(
     internal val easing: Easing
 ) {
     companion object {
-        internal const val DefaultDuration = 1000
+        internal const val DEFAULT_DURATION = 1000
 
-        val Default = HangingAnimation(duration = DefaultDuration, easing = LinearEasing)
+        val DEFAULT = HangingAnimation(duration = DEFAULT_DURATION, easing = LinearEasing)
     }
 }
 

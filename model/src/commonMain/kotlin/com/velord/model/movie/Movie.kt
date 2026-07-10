@@ -55,7 +55,6 @@ data class Movie(
     }
 
     companion object {
-
         fun toInstant(date: String): Instant = try {
             LocalDate.parse(date).atStartOfDayIn(TimeZone.UTC)
         } catch (_: Exception) {

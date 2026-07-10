@@ -21,7 +21,7 @@ enum class WaveSide {
     Bottom;
 
     companion object {
-        val Default = Top
+        val DEFAULT = Top
     }
 }
 

@@ -15,7 +15,7 @@ data class BottomNavBackHandlingState(
 class BottomNavEventService {
 
     val backHandlingStateFlow = MutableStateFlow(BottomNavBackHandlingState())
-    val currentTabStateFlow = MutableStateFlow(TabState.Default)
+    val currentTabStateFlow = MutableStateFlow(TabState.DEFAULT)
 
     fun updateBackHandlingState(newState: BottomNavBackHandlingState) {
         backHandlingStateFlow.value =  newState

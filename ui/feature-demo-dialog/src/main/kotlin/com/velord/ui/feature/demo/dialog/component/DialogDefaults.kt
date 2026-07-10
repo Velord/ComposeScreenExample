@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.velord.core.ui.annotation.ConstructorLikeFunction
 
 object DialogDefaults {
-    val animations: DialogAnimations = DialogAnimations.Default
-    val modifiers: DialogModifiers = DialogModifiers.Default
+    val animations: DialogAnimations = DialogAnimations.DEFAULT
+    val modifiers: DialogModifiers = DialogModifiers.DEFAULT
     val colors: @Composable () -> DialogColors = { DialogColors.Default() }
     val textStyles: @Composable () -> DialogTextStyles = { DialogTextStyles.Default() }
 }
@@ -36,10 +36,9 @@ data class DialogAnimations(
     val background: DialogPredefinedAnimation
 ) {
     companion object {
-
-        val Default = DialogAnimations(
+        val DEFAULT = DialogAnimations(
             mainBox = DialogPredefinedAnimation.Default(),
-            background = DialogPredefinedAnimation.Fade.Default
+            background = DialogPredefinedAnimation.Fade.DEFAULT
         )
     }
 }
@@ -67,8 +66,7 @@ sealed class DialogPredefinedAnimation(
     ) : DialogPredefinedAnimation(enter = enter, exit = exit) {
 
         companion object {
-
-            val Default = Fade(
+            val DEFAULT = Fade(
                 initialAlpha = 0.3f,
                 durationMillis = 300
             )
@@ -81,8 +79,7 @@ sealed class DialogPredefinedAnimation(
     ) : DialogPredefinedAnimation(enter = enter, exit = exit) {
 
         companion object {
-
-            val Default = None(
+            val DEFAULT = None(
                 enter = EnterTransition.None,
                 exit = ExitTransition.None
             )
@@ -109,8 +106,7 @@ sealed class DialogPredefinedAnimation(
     ) : DialogPredefinedAnimation(enter = enter, exit = exit) {
 
         companion object {
-
-            val Default = FadeAndSlide(
+            val DEFAULT = FadeAndSlide(
                 initialAlpha = 0.3f,
                 durationMillis = 300
             )
@@ -129,8 +125,7 @@ data class DialogModifiers(
     val divider: Modifier,
 ) {
     companion object {
-
-        val Default = DialogModifiers(
+        val DEFAULT = DialogModifiers(
             mainBox = Modifier
                 .pointerInput(Unit) { detectTapGestures { } }
                 .shadow(elevation = 8.dp, shape = RoundedCornerShape(16.dp))
@@ -154,7 +149,6 @@ data class DialogActions(
     val onNegativeClick: (() -> Unit)?
 ) {
     companion object {
-
         @ConstructorLikeFunction
         fun OneButton(
             onDismissRequest: () -> Unit,
@@ -185,7 +179,6 @@ data class DialogColors(
     val divider: Color,
 ) {
     companion object {
-
         @Composable
         fun Default(): DialogColors = DialogColors(
             background = Color.Black.copy(alpha = 0.5f),
@@ -206,7 +199,6 @@ data class DialogTextStyles(
     val negativeButton: TextStyle
 ) {
     companion object {
-
         @Composable
         fun Default(): DialogTextStyles = DialogTextStyles(
             title = MaterialTheme.typography.titleMedium,

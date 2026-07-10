@@ -75,8 +75,8 @@ class MoviePaginationGateway(
     private suspend fun loadFromNetwork(page: Int): MovieRosterSize {
         val newPage = MoviePageRequest(
             page = page,
-            rating = FilterType.Rating.Default,
-            voteCount = FilterType.VoteCount.Default,
+            rating = FilterType.Rating.DEFAULT,
+            voteCount = FilterType.VoteCount.DEFAULT,
         )
         val movieRoster = http.getMovie(newPage)
         val newRoster = movieRoster.results.map { it.toDomain() }

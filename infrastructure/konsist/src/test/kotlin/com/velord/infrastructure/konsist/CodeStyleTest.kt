@@ -40,6 +40,10 @@ private val BUILT_IN_COMPOSE_CALL_NAME_ROSTER = setOf(
 private val EXPRESSION_BODY_MAPPING_CALL_REGEX = Regex(
     """\bfun\b.+?\(([^)]*)\)\s*:\s*([A-Z][A-Za-z0-9_]*)\s*=\s*\2\(""",
 )
+private val COMPANION_DEFAULT_VALUE_REGEX = Regex(
+    "^(?:(?:private|internal|public|protected)\\s+)*" +
+        "(?:const\\s+)?(?:val|var)\\s+[Dd]efault(?:\\s*[:=].*)?",
+)
 internal val projectFileRoster = Konsist.scopeFromProject().files
 private val governanceFileRoster = projectFileRoster.filter { file ->
     file.path.contains("infrastructure/konsist/src/test/kotlin/")
@@ -576,6 +580,50 @@ class CodeStyleTest {
                 val msg = "Name: ${file.name}. FAILED. " +
                     "Compact enum header at line ${violation + 1} " +
                     "must not have a blank line before first entry."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `companion objects should not start with a blank line`() {
+        projectFileRoster.assertTrue { file ->
+            val lineRoster = file.text.lines()
+            val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
+                isBlankLineAfterCompanionObjectOpening(
+                    currentLine = lineRoster[lineIndex],
+                    nextLine = lineRoster[lineIndex + 1],
+                )
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Companion object at line ${violation + 1} " +
+                    "must not start with a blank line."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `companion default value declarations should use DEFAULT name`() {
+        projectFileRoster.assertTrue { file ->
+            val lineRoster = file.text.lines()
+            val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
+                isCompanionDefaultValueDeclaration(
+                    lineRoster = lineRoster,
+                    lineIndex = lineIndex,
+                    currentLine = lineRoster[lineIndex],
+                )
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Default value at line ${violation + 1} must be named DEFAULT."
                 println(msg)
             }
 
@@ -1159,6 +1207,37 @@ class CodeStyleTest {
         ).not()
     }
 
+    private fun isBlankLineAfterCompanionObjectOpening(
+        currentLine: String,
+        nextLine: String,
+    ): Boolean = currentLine.trimEnd() == "companion object {" && nextLine.isBlank()
+
+    private fun isCompanionDefaultValueDeclaration(
+        lineRoster: List<String>,
+        lineIndex: Int,
+        currentLine: String,
+    ): Boolean {
+        val currentLineTrimmed = currentLine.trimStart()
+        val isDefaultValue = COMPANION_DEFAULT_VALUE_REGEX.containsMatchIn(currentLineTrimmed)
+        if (isDefaultValue.not()) return false
+
+        return isInsideCompanionObject(lineRoster = lineRoster, lineIndex = lineIndex)
+    }
+
+    private fun isInsideCompanionObject(
+        lineRoster: List<String>,
+        lineIndex: Int,
+    ): Boolean {
+        var depth = 0
+        for (candidateIndex in lineIndex downTo 0) {
+            val line = lineRoster[candidateIndex]
+            depth -= line.count { it == '}' }
+            depth += line.count { it == '{' }
+            if (line.trimEnd() == "companion object {" && depth > 0) return true
+        }
+
+        return false
+    }
     private fun isBlankLineAfterCompactEnumHeader(
         currentLine: String,
         nextLine: String,

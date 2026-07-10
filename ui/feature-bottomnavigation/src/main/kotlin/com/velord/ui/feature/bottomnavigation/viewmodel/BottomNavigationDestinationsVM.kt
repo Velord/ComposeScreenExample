@@ -19,7 +19,7 @@ data class TabState(
     val isSame: Boolean get() = previous == current
 
     companion object {
-        val Default = TabState(
+        val DEFAULT = TabState(
             previous = BottomNavigationItem.Demo,
             current = BottomNavigationItem.Demo
         )

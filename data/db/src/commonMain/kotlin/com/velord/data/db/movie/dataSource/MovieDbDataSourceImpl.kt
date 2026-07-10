@@ -27,10 +27,10 @@ class MovieDbDataSourceImpl internal constructor(private val dao: MovieDao) : Mo
         val sortOrder = sortType.toSortOrder()
         val rating: FilterType.Rating = filterRoster
             .firstOrNull { it is FilterType.Rating } as? FilterType.Rating
-            ?: FilterType.Rating.Default
+            ?: FilterType.Rating.DEFAULT
         val voteCount: FilterType.VoteCount = filterRoster
             .firstOrNull { it is FilterType.VoteCount } as? FilterType.VoteCount
-            ?: FilterType.VoteCount.Default
+            ?: FilterType.VoteCount.DEFAULT
 
         val offset = MoviePagination.calculateOffset(page)
 

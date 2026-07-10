@@ -9,12 +9,12 @@ class MovieSortOptionTest {
 
     @Test
     fun `Default option should have DateDescending type`() {
-        assertEquals(SortType.DateDescending, MovieSortOption.Default.type)
+        assertEquals(SortType.DateDescending, MovieSortOption.DEFAULT.type)
     }
 
     @Test
     fun `Default option should be selected`() {
-        assertEquals(true, MovieSortOption.Default.isSelected)
+        assertEquals(true, MovieSortOption.DEFAULT.isSelected)
     }
 
     @Test
