@@ -15,7 +15,6 @@ interface CameraDataSource {
 
 @Module
 expect class CameraPlatformModule() {
-
     @Single
     fun provideCameraDataSource(scope: Scope): CameraDataSource
 }

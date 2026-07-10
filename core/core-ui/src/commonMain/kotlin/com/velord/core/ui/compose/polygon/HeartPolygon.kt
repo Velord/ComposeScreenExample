@@ -9,9 +9,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-internal fun Float.toRadians(): Float {
-    return this * PI.toFloat() / 180f
-}
+internal fun Float.toRadians(): Float = this * PI.toFloat() / 180f
 
 internal val PointZero: Offset = Offset.Zero
 
@@ -19,16 +17,12 @@ internal fun radialToCartesian(
     radius: Float,
     angleRadians: Float,
     center: Offset = PointZero,
-): Offset {
-    return directionVectorOffset(angleRadians) * radius + center
-}
+): Offset = directionVectorOffset(angleRadians) * radius + center
 
-internal fun directionVectorOffset(angleRadians: Float): Offset {
-    return Offset(
-        x = cos(angleRadians.toDouble()).toFloat(),
-        y = sin(angleRadians.toDouble()).toFloat(),
-    )
-}
+internal fun directionVectorOffset(angleRadians: Float): Offset = Offset(
+    x = cos(angleRadians.toDouble()).toFloat(),
+    y = sin(angleRadians.toDouble()).toFloat(),
+)
 
 fun RoundedPolygon.Companion.heart(): RoundedPolygon {
     val radius = 1f
@@ -69,8 +63,5 @@ fun RoundedPolygon.Companion.heart(): RoundedPolygon {
         CornerRounding(roundingNormal),
     )
 
-    return RoundedPolygon(
-        vertices = vertices,
-        perVertexRounding = rounding,
-    )
+    return RoundedPolygon(vertices = vertices, perVertexRounding = rounding)
 }

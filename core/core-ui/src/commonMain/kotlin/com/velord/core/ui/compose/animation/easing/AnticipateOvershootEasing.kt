@@ -12,10 +12,7 @@ private const val DOUBLE_FRACTION = 2f
 fun AnticipateOvershootInterpolatorEasing(
     tension: Float = DEFAULT_TENSION,
     extraTension: Float = DEFAULT_EXTRA_TENSION,
-): Easing = AnticipateOvershootEasing(
-    tension = tension,
-    extraTension = extraTension,
-)
+): Easing = AnticipateOvershootEasing(tension = tension, extraTension = extraTension)
 
 class AnticipateOvershootEasing(
     tension: Float = DEFAULT_TENSION,
@@ -24,11 +21,8 @@ class AnticipateOvershootEasing(
 
     private val totalTension = tension * extraTension
 
-    override fun transform(fraction: Float): Float  = if (fraction < HALF_FRACTION) {
-        val anticipateCalc = anticipate(
-            value = fraction * DOUBLE_FRACTION,
-            tension = totalTension,
-        )
+    override fun transform(fraction: Float): Float = if (fraction < HALF_FRACTION) {
+        val anticipateCalc = anticipate(value = fraction * DOUBLE_FRACTION, tension = totalTension)
         HALF_FRACTION * anticipateCalc
     } else {
         val overshootCalc = overshoot(
@@ -41,10 +35,10 @@ class AnticipateOvershootEasing(
     private fun anticipate(
         value: Float,
         tension: Float,
-    ): Float  = value * value * ((tension + 1f) * value - tension)
+    ): Float = value * value * ((tension + 1f) * value - tension)
 
     private fun overshoot(
         value: Float,
         tension: Float,
-    ): Float  = value * value * ((tension + 1f) * value + tension)
+    ): Float = value * value * ((tension + 1f) * value + tension)
 }

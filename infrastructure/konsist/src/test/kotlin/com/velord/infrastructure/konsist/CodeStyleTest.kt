@@ -18,6 +18,10 @@ private val COLLECTION_CALL_REGEX = Regex(
         "find|any|all|none|count|map|filter|filterNot" +
         ")\\b",
 )
+private val EXPLICIT_LAMBDA_PARAMETER_REGEX = Regex("""\{\s*[A-Za-z_][A-Za-z0-9_]*\s*->""")
+private val TOP_LEVEL_MEMBER_REGEX = Regex(
+    "^(?:(?:override|private|internal|actual|expect|abstract|suspend)\\s+)*(fun|val|var)\\b",
+)
 // TOOD: rid of it as it can be changed
 private val BUILT_IN_COMPOSE_CALL_NAME_ROSTER = setOf(
     "AsyncImage",
@@ -45,7 +49,6 @@ private val hardWrapFileRoster = governanceFileRoster + projectFileRoster.filter
 }
 
 class CodeStyleTest {
-
     @Test
     fun `expression-bodied when declarations should keep = and when on the same line`() {
         projectFileRoster.assertTrue { file ->
@@ -365,6 +368,17 @@ class CodeStyleTest {
     }
 
     @Test
+    fun `explicit lambda parameter collection calls may keep multiline bodies`() {
+        val isViolation = isSplitSingleCollectionCallAfterShortReceiver(
+            currentLine = "    val colorStops = gradientColorAndPosition",
+            nextLine = "        .map { colorAndPosition ->",
+            thirdLine = "            colorAndPosition.second to colorAndPosition.first",
+        )
+
+        assertTrue(isViolation.not())
+    }
+
+    @Test
     fun `when branches should not be separated by blank lines`() {
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()
@@ -438,6 +452,8 @@ class CodeStyleTest {
             val lineRoster = file.text.lines()
             val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
                 isMissingBlankLineAfterCompactClassHeader(
+                    lineRoster = lineRoster,
+                    lineIndex = lineIndex,
                     currentLine = lineRoster[lineIndex],
                     nextLine = lineRoster[lineIndex + 1],
                 )
@@ -455,14 +471,15 @@ class CodeStyleTest {
     }
 
     @Test
-    fun `compact class headers before one-line members should not be followed by a blank line`() {
+    fun `compact class headers before single one-line members should not have blank line`() {
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()
-            val violation = (0 until (lineRoster.lastIndex - 1)).firstOrNull { lineIndex ->
+            val violation = (0 until (lineRoster.lastIndex - 2)).firstOrNull { lineIndex ->
                 isBlankLineAfterCompactClassHeaderBeforeOneLineMember(
                     currentLine = lineRoster[lineIndex],
                     nextLine = lineRoster[lineIndex + 1],
-                    thirdLine = lineRoster[lineIndex + 2],
+                    lineRoster = lineRoster,
+                    lineIndex = lineIndex,
                 )
             }
 
@@ -475,6 +492,25 @@ class CodeStyleTest {
 
             violation == null
         }
+    }
+
+    @Test
+    fun `compact class headers before non one-line members should keep a blank line`() {
+        val lineRoster = listOf(
+            "class ToastGateway(private val appState: AppStateDataSource) {",
+            "    fun getFlow(): Flow<ToastConfig> = appState.toastConfigFlow",
+            "",
+            "    suspend fun show(config: ToastConfig) {",
+        )
+
+        val isViolation = isMissingBlankLineAfterCompactClassHeader(
+            lineRoster = lineRoster,
+            lineIndex = 0,
+            currentLine = lineRoster[0],
+            nextLine = lineRoster[1],
+        )
+
+        assertTrue(isViolation)
     }
 
     @Test
@@ -793,10 +829,13 @@ class CodeStyleTest {
         return joinLine(currentLine, nextLine).length <= HARD_WRAP
     }
 
-    private fun joinLine(currentLine: String, nextLine: String): String =
-        "${currentLine.trimEnd()} ${nextLine.trimStart()}"
-            .replace(WHITESPACE_REGEX, " ")
-            .trim()
+    private fun joinLine(currentLine: String, nextLine: String): String = compactWhitespace(
+        "${currentLine.trimEnd()} ${nextLine.trimStart()}",
+    )
+
+    private fun compactWhitespace(value: String): String = value
+        .replace(WHITESPACE_REGEX, " ")
+        .trim()
 
     private fun isSplitIfOpeningCondition(
         currentLine: String,
@@ -851,11 +890,19 @@ class CodeStyleTest {
         val thirdLineTrimmed = thirdLine?.trimStart().orEmpty()
         if (currentLineTrimmed.contains("=").not()) return false
         if (COLLECTION_CALL_REGEX.containsMatchIn(nextLineTrimmed).not()) return false
+        if (hasExplicitLambdaParameter(nextLineTrimmed) &&
+            thirdLineTrimmed.isNotBlank()
+        ) {
+            return false
+        }
         if (thirdLineTrimmed.startsWith(".")) return false
         if (thirdLineTrimmed.startsWith("?:")) return false
 
         return joinLine(currentLine, nextLine).length <= HARD_WRAP
     }
+
+    private fun hasExplicitLambdaParameter(line: String): Boolean =
+        EXPLICIT_LAMBDA_PARAMETER_REGEX.containsMatchIn(line)
 
     private fun isBlankLineBetweenWhenBranches(
         previousLine: String,
@@ -1011,36 +1058,55 @@ class CodeStyleTest {
     }
 
     private fun isMissingBlankLineAfterCompactClassHeader(
+        lineRoster: List<String>,
+        lineIndex: Int,
         currentLine: String,
         nextLine: String,
     ): Boolean {
         val currentLineTrimmed = currentLine.trimEnd()
-        if (currentLineTrimmed.startsWith("class ").not() &&
-            currentLineTrimmed.startsWith("data class ").not() &&
-            currentLineTrimmed.startsWith("value class ").not() &&
-            currentLineTrimmed.startsWith("internal class ").not() &&
-            currentLineTrimmed.startsWith("actual class ").not() &&
-            currentLineTrimmed.startsWith("expect class ").not()
-        ) {
-            return false
-        }
-        if (currentLineTrimmed.endsWith("{").not()) return false
+        if (isCompactClassHeader(currentLineTrimmed).not()) return false
         if (nextLine.trimStart().startsWith("@")) return false
-        if (isOneLineMemberAllowedAfterCompactHeader(nextLine)) return false
+        if (isSingleOneLineMemberCompactClass(lineRoster, lineIndex)) return false
 
         return nextLine.isBlank().not()
     }
 
     private fun isBlankLineAfterCompactClassHeaderBeforeOneLineMember(
+        lineRoster: List<String>,
+        lineIndex: Int,
         currentLine: String,
         nextLine: String,
-        thirdLine: String,
     ): Boolean {
         val currentLineTrimmed = currentLine.trimEnd()
         if (isCompactClassHeader(currentLineTrimmed).not()) return false
         if (nextLine.isBlank().not()) return false
 
-        return isOneLineMemberAllowedAfterCompactHeader(thirdLine)
+        return isSingleOneLineMemberCompactClass(lineRoster, lineIndex)
+    }
+
+    private fun isSingleOneLineMemberCompactClass(
+        lineRoster: List<String>,
+        lineIndex: Int,
+    ): Boolean = countTopLevelMember(lineRoster, lineIndex) == 1 &&
+        isOneLineMemberAllowedAfterCompactHeader(lineRoster[lineIndex + 1])
+
+    private fun countTopLevelMember(
+        lineRoster: List<String>,
+        lineIndex: Int,
+    ): Int {
+        var depth = 1
+        var count = 0
+        for (candidateIndex in (lineIndex + 1)..lineRoster.lastIndex) {
+            val line = lineRoster[candidateIndex]
+            val lineTrimmed = line.trimStart()
+            if (depth == 1 && TOP_LEVEL_MEMBER_REGEX.containsMatchIn(lineTrimmed)) count++
+
+            depth += line.count { it == '{' }
+            depth -= line.count { it == '}' }
+            if (depth == 0) return count
+        }
+
+        return count
     }
 
     private fun isCompactClassHeader(line: String): Boolean {

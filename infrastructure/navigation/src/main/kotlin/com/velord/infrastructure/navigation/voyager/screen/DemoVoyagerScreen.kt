@@ -45,8 +45,7 @@ internal object DemoVoyagerScreen : Screen {
     }
 }
 
-private fun DemoNavigationEvent.voyagerScreenProvider(): SharedScreenVoyager.Demo =
-    when (this) {
+private fun DemoNavigationEvent.voyagerScreenProvider(): SharedScreenVoyager.Demo = when (this) {
         DemoNavigationEvent.Shape -> SharedScreenVoyager.Demo.Shape
         DemoNavigationEvent.Modifier -> SharedScreenVoyager.Demo.Modifier
         DemoNavigationEvent.FlowSummator -> SharedScreenVoyager.Demo.FlowSummator

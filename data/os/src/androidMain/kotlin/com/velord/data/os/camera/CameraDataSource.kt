@@ -18,7 +18,6 @@ import org.koin.core.scope.Scope
 import java.io.File
 @Module
 actual class CameraPlatformModule {
-
     @Single
     actual fun provideCameraDataSource(scope: Scope): CameraDataSource =
         AndroidCameraDataSource(scope.get())

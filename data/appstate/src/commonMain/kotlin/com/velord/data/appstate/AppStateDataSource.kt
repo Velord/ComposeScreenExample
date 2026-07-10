@@ -19,7 +19,9 @@ interface AppStateDataSource {
 
 @Single(binds = [AppStateDataSource::class])
 class AppStateDataSourceImpl : AppStateDataSource {
+
     override val themeConfigFlow = MutableStateFlow(ThemeConfig.DEFAULT)
+
     override val movieRosterFlow = MutableStateFlow<List<Movie>>(emptyList())
     override val movieFavoriteRosterFlow = MutableStateFlow<List<Movie>>(emptyList())
     override val movieSortFlow = MutableStateFlow(
@@ -28,5 +30,6 @@ class AppStateDataSourceImpl : AppStateDataSource {
             MovieSortOption(SortType.DateAscending, isSelected = false),
         ),
     )
+
     override val toastConfigFlow = MutableSharedFlow<ToastConfig>()
 }

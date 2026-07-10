@@ -8,6 +8,7 @@ import org.koin.core.annotation.Single
 
 @Single
 class MovieGateway(private val appState: AppStateDataSource) {
+
     fun getFlow(): Flow<List<Movie>> = appState.movieRosterFlow
 
     fun get(): List<Movie> = appState.movieRosterFlow.value

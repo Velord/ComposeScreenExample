@@ -80,10 +80,7 @@ class ToastHostState internal constructor(private val scope: CoroutineScope) {
     ) {
         dismissJob?.cancel()
 
-        message = ToastMessage(
-            id = nextId++,
-            text = text,
-        )
+        message = ToastMessage(id = nextId++, text = text)
 
         dismissJob = scope.launch {
             delay(duration.millis.milliseconds)
@@ -117,10 +114,7 @@ fun ToastHost(
 
     LaunchedEffect(toastEventFlow) {
         toastEventFlow.collect { config ->
-            toastHostState.show(
-                text = config.message,
-                duration = config.duration,
-            )
+            toastHostState.show(text = config.message, duration = config.duration)
         }
     }
 
