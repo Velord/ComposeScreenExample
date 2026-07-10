@@ -26,13 +26,14 @@ import com.velord.core.resource.open_modifier_demo
 import com.velord.core.resource.open_morph_demo
 import com.velord.core.resource.open_movie
 import com.velord.core.resource.open_shape_demo
+import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DemoScreen(
     viewModel: DemoViewModel,
-    onNavigationEvent: (DemoDestinationNavigationEvent) -> Unit,
+    onNavigationEvent: (DemoNavigationEvent) -> Unit,
     onBackClick: () -> Unit,
 ) {
     SideEffect {
@@ -40,7 +41,7 @@ fun DemoScreen(
         onBackClick()
     }
 
-    ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
+    ObserveSharedFlow(flow = viewModel.navigationEvent) {
         onNavigationEvent(it)
     }
 
@@ -108,4 +109,10 @@ private fun OpenButton(
             style = MaterialTheme.typography.displaySmall.copy(fontSize = 22.sp),
         )
     }
+}
+
+@PreviewCombined
+@Composable
+private fun Preview() {
+    Content(onAction = {})
 }

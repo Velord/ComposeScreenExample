@@ -1,10 +1,10 @@
 package com.velord.infrastructure.navigation.compose.nav3.navigator
 
 import co.touchlab.kermit.Logger
-import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
-import com.velord.ui.feature.demo.DemoDestinationNavigationEvent
-import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
+import com.velord.ui.feature.demo.DemoNavigationEvent
+import com.velord.ui.feature.demo.DemoNavigator
 
 private val log = Logger.withTag("LogBackStack - BottomNavigatorNav3")
 
@@ -17,15 +17,15 @@ internal class BottomNavigatorNav3(
         log.d { "init: ${this.backStackNavigator}" }
     }
 
-    override fun goTo(dest: DemoDestinationNavigationEvent) {
+    override fun goTo(dest: DemoNavigationEvent) {
         val dest = when(dest) {
-            DemoDestinationNavigationEvent.Shape -> GraphNav3.BottomTab.Demo.ShapeDemoDestinationNav3
-            DemoDestinationNavigationEvent.Modifier -> GraphNav3.BottomTab.Demo.ModifierDestinationNav3
-            DemoDestinationNavigationEvent.FlowSummator -> GraphNav3.BottomTab.Demo.FlowSummatorDestinationNav3
-            DemoDestinationNavigationEvent.Morph -> GraphNav3.BottomTab.Demo.MorphDemoDestinationNav3
-            DemoDestinationNavigationEvent.HintPhoneNumber -> GraphNav3.BottomTab.Demo.HintPhoneDestinationNav3
-            DemoDestinationNavigationEvent.Movie -> GraphNav3.BottomTab.Demo.MovieDestinationNav3
-            DemoDestinationNavigationEvent.Dialog -> GraphNav3.BottomTab.Demo.DialogDestinationNav3
+            DemoNavigationEvent.Shape -> GraphNav3.BottomTab.Demo.ShapeDemoDestinationNav3
+            DemoNavigationEvent.Modifier -> GraphNav3.BottomTab.Demo.ModifierDestinationNav3
+            DemoNavigationEvent.FlowSummator -> GraphNav3.BottomTab.Demo.FlowSummatorDestinationNav3
+            DemoNavigationEvent.Morph -> GraphNav3.BottomTab.Demo.MorphDemoDestinationNav3
+            DemoNavigationEvent.HintPhoneNumber -> GraphNav3.BottomTab.Demo.HintPhoneDestinationNav3
+            DemoNavigationEvent.Movie -> GraphNav3.BottomTab.Demo.MovieDestinationNav3
+            DemoNavigationEvent.Dialog -> GraphNav3.BottomTab.Demo.DialogDestinationNav3
         }
         backStackNavigator.navigate(dest)
     }

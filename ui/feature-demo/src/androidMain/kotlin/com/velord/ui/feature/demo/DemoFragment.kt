@@ -40,18 +40,18 @@ class DemoFragment : Fragment() {
         addTestCallback(TAG, viewModelBottom)
     }
 
-    private fun handleNavigationEvent(event: DemoDestinationNavigationEvent) {
+    private fun handleNavigationEvent(event: DemoNavigationEvent) {
         val destinationId = event.jetpackDestinationId ?: return
         findNavController().navigate(destinationId)
     }
 }
 
-private val DemoDestinationNavigationEvent.jetpackDestinationId: Int? get() = when (this) {
-    DemoDestinationNavigationEvent.Shape -> R.id.from_demoFragment_to_shapeDemoFragment
-    DemoDestinationNavigationEvent.Modifier -> R.id.from_demoFragment_to_modifierDemoFragment
-    DemoDestinationNavigationEvent.FlowSummator -> R.id.from_demoFragment_to_flowSummatorFragment
-    DemoDestinationNavigationEvent.Morph -> R.id.from_demoFragment_to_morphDemoFragment
-    DemoDestinationNavigationEvent.HintPhoneNumber -> null
-    DemoDestinationNavigationEvent.Movie -> null
-    DemoDestinationNavigationEvent.Dialog -> null
+private val DemoNavigationEvent.jetpackDestinationId: Int? get() = when (this) {
+    DemoNavigationEvent.Shape -> R.id.from_demoFragment_to_shapeDemoFragment
+    DemoNavigationEvent.Modifier -> R.id.from_demoFragment_to_modifierDemoFragment
+    DemoNavigationEvent.FlowSummator -> R.id.from_demoFragment_to_flowSummatorFragment
+    DemoNavigationEvent.Morph -> R.id.from_demoFragment_to_morphDemoFragment
+    DemoNavigationEvent.HintPhoneNumber -> null
+    DemoNavigationEvent.Movie -> null
+    DemoNavigationEvent.Dialog -> null
 }

@@ -9,7 +9,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
-import com.velord.ui.feature.demo.DemoDestinationNavigationEvent
+import com.velord.ui.feature.demo.DemoNavigationEvent
 import com.velord.ui.feature.demo.DemoScreen
 import com.velord.ui.feature.demo.DemoViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -21,7 +21,7 @@ internal object DemoVoyagerScreen : Screen {
         val viewModel = koinViewModel<DemoViewModel>()
         val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
         val navigator = LocalNavigator.currentOrThrow
-        val navigationEvent = viewModel.navigationEventDestination.collectAsStateWithLifecycle(
+        val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle(
             initialValue = null,
         )
         val screen = navigationEvent.value?.let {
@@ -45,13 +45,13 @@ internal object DemoVoyagerScreen : Screen {
     }
 }
 
-private fun DemoDestinationNavigationEvent.voyagerScreenProvider(): SharedScreenVoyager.Demo =
+private fun DemoNavigationEvent.voyagerScreenProvider(): SharedScreenVoyager.Demo =
     when (this) {
-        DemoDestinationNavigationEvent.Shape -> SharedScreenVoyager.Demo.Shape
-        DemoDestinationNavigationEvent.Modifier -> SharedScreenVoyager.Demo.Modifier
-        DemoDestinationNavigationEvent.FlowSummator -> SharedScreenVoyager.Demo.FlowSummator
-        DemoDestinationNavigationEvent.Morph -> SharedScreenVoyager.Demo.Morph
-        DemoDestinationNavigationEvent.HintPhoneNumber -> SharedScreenVoyager.Demo.HintPhoneNumber
-        DemoDestinationNavigationEvent.Movie -> SharedScreenVoyager.Demo.Movie
-        DemoDestinationNavigationEvent.Dialog -> SharedScreenVoyager.Demo.Dialog
+        DemoNavigationEvent.Shape -> SharedScreenVoyager.Demo.Shape
+        DemoNavigationEvent.Modifier -> SharedScreenVoyager.Demo.Modifier
+        DemoNavigationEvent.FlowSummator -> SharedScreenVoyager.Demo.FlowSummator
+        DemoNavigationEvent.Morph -> SharedScreenVoyager.Demo.Morph
+        DemoNavigationEvent.HintPhoneNumber -> SharedScreenVoyager.Demo.HintPhoneNumber
+        DemoNavigationEvent.Movie -> SharedScreenVoyager.Demo.Movie
+        DemoNavigationEvent.Dialog -> SharedScreenVoyager.Demo.Dialog
 }

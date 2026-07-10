@@ -231,7 +231,7 @@ private fun RefreshableImage(filePath: String) {
 
 @Preview
 @Composable
-private fun ContentPreview() {
+private fun Preview() {
     Content(
         filePath = "",
         url = "",

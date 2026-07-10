@@ -200,6 +200,6 @@ private fun ColumnScope.Title(
 
 @Preview
 @Composable
-private fun SettingsPreview() {
+private fun Preview() {
     Content(onThemeAction = {})
 }

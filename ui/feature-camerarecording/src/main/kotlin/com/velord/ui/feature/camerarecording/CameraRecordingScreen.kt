@@ -70,7 +70,7 @@ fun CameraRecordingScreen(
         onBackClick()
     }
 
-    ObserveSharedFlow(flow = viewModel.navigationEventDestination) {
+    ObserveSharedFlow(flow = viewModel.navigationEvent) {
         onNavigationEvent(it)
     }
 
@@ -353,7 +353,7 @@ private fun BoxScope.SettingsIcon(
 @SuppressLint("UnrememberedMutableState")
 @Preview
 @Composable
-private fun CameraRecordingPreview() {
+private fun Preview() {
     Content(
         uiState = CameraRecordingUiState.DEFAULT,
         onAction = {}

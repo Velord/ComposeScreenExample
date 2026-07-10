@@ -114,6 +114,6 @@ private fun Counter(count: Int) {
 
 @Preview
 @Composable
-private fun ContentPreview() {
+private fun Preview() {
     Content(count = 5)
 }

@@ -26,7 +26,7 @@ class DemoViewModel(
     private val showToastUC: ShowToastUC,
 ) : CoroutineScopeViewModel() {
 
-    val navigationEventDestination = MutableSharedFlow<DemoDestinationNavigationEvent>()
+    val navigationEvent = MutableSharedFlow<DemoNavigationEvent>()
     private val actionFlow = MutableSharedFlow<DemoUiAction>()
 
     init {
@@ -39,31 +39,31 @@ class DemoViewModel(
         }
     }
 
-    private fun onOpenShape() = navigateTo(DemoDestinationNavigationEvent.Shape)
+    private fun onOpenShape() = navigateTo(DemoNavigationEvent.Shape)
 
-    private fun onOpenModifier() = navigateTo(DemoDestinationNavigationEvent.Modifier)
+    private fun onOpenModifier() = navigateTo(DemoNavigationEvent.Modifier)
 
-    private fun onOpenSummator() = navigateTo(DemoDestinationNavigationEvent.FlowSummator)
+    private fun onOpenSummator() = navigateTo(DemoNavigationEvent.FlowSummator)
 
-    private fun onOpenMorph() = navigateTo(DemoDestinationNavigationEvent.Morph)
+    private fun onOpenMorph() = navigateTo(DemoNavigationEvent.Morph)
 
     private fun onOpenHintPhoneNumber() = launch {
         checkJetpackLib()
-        navigationEventDestination.emit(DemoDestinationNavigationEvent.HintPhoneNumber)
+        navigationEvent.emit(DemoNavigationEvent.HintPhoneNumber)
     }
 
     private fun onOpenMovie() = launch {
         checkJetpackLib()
-        navigationEventDestination.emit(DemoDestinationNavigationEvent.Movie)
+        navigationEvent.emit(DemoNavigationEvent.Movie)
     }
 
     private fun onOpenDialog() = launch {
         checkJetpackLib()
-        navigationEventDestination.emit(DemoDestinationNavigationEvent.Dialog)
+        navigationEvent.emit(DemoNavigationEvent.Dialog)
     }
 
-    private fun navigateTo(destination: DemoDestinationNavigationEvent) = launch {
-        navigationEventDestination.emit(destination)
+    private fun navigateTo(destination: DemoNavigationEvent) = launch {
+        navigationEvent.emit(destination)
     }
 
     private suspend fun checkJetpackLib() {

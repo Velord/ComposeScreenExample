@@ -188,7 +188,7 @@ private fun InfoIcon(onClick: () -> Unit) {
 @SuppressLint("UnrememberedMutableState")
 @Preview
 @Composable
-private fun FlowSummatorPreview() {
+private fun Preview() {
     Content(
         uiState = FlowSummatorUiState.DEFAULT,
         isStartEnabledState = mutableStateOf(true),

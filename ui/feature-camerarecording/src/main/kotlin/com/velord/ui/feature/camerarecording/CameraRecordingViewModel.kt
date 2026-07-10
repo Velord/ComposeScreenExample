@@ -65,7 +65,7 @@ class CameraRecordingViewModel(
     val checkPermissionEvent = MutableSharedFlow<Unit>()
     val navigationEventVoyager = MutableSharedFlow<NavigationDataVoyager?>()
     val navigationEventJetpack = MutableSharedFlow<NavigationDataFragment?>()
-    val navigationEventDestination = MutableSharedFlow<CameraRecordingNavigationEvent>()
+    val navigationEvent = MutableSharedFlow<CameraRecordingNavigationEvent>()
     private val actionFlow = MutableSharedFlow<CameraRecordingUiAction>()
 
     init {
@@ -91,7 +91,7 @@ class CameraRecordingViewModel(
                 payload = SettingsSourceFragment.CameraRecording.encode(),
             )
             navigationEventJetpack.emit(data)
-            navigationEventDestination.emit(CameraRecordingNavigationEvent.SETTINGS)
+            navigationEvent.emit(CameraRecordingNavigationEvent.SETTINGS)
         }
     }
 

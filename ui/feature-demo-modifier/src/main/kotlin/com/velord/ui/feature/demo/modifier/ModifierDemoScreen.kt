@@ -56,6 +56,6 @@ internal fun Title(
 
 @Preview
 @Composable
-private fun ModifierDemoPreview() {
+private fun Preview() {
     Content()
 }

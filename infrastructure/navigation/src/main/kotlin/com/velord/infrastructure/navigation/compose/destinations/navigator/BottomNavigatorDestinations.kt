@@ -11,7 +11,7 @@ import com.ramcosta.composedestinations.generated.navigation.destinations.MovieD
 import com.ramcosta.composedestinations.generated.navigation.destinations.ShapeDemoDestinationDestination
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
-import com.velord.ui.feature.demo.DemoDestinationNavigationEvent
+import com.velord.ui.feature.demo.DemoNavigationEvent
 import com.velord.ui.feature.demo.DemoNavigator
 
 private val log = Logger.withTag("LogBackStack - BottomNavigatorDestinations")
@@ -25,15 +25,15 @@ internal class BottomNavigatorDestinations(
         log.d { "init: ${this.navController}" }
     }
 
-    override fun goTo(dest: DemoDestinationNavigationEvent) {
+    override fun goTo(dest: DemoNavigationEvent) {
         val dest = when(dest) {
-            DemoDestinationNavigationEvent.Shape -> ShapeDemoDestinationDestination
-            DemoDestinationNavigationEvent.Modifier -> ModifierDemoDestinationDestination
-            DemoDestinationNavigationEvent.FlowSummator -> FlowSummatorDestinationDestination
-            DemoDestinationNavigationEvent.Morph -> MorphDemoDestinationDestination
-            DemoDestinationNavigationEvent.HintPhoneNumber -> HintPhoneNumberDestinationDestination
-            DemoDestinationNavigationEvent.Movie -> MovieDestinationDestination
-            DemoDestinationNavigationEvent.Dialog -> DialogDestinationDestination
+            DemoNavigationEvent.Shape -> ShapeDemoDestinationDestination
+            DemoNavigationEvent.Modifier -> ModifierDemoDestinationDestination
+            DemoNavigationEvent.FlowSummator -> FlowSummatorDestinationDestination
+            DemoNavigationEvent.Morph -> MorphDemoDestinationDestination
+            DemoNavigationEvent.HintPhoneNumber -> HintPhoneNumberDestinationDestination
+            DemoNavigationEvent.Movie -> MovieDestinationDestination
+            DemoNavigationEvent.Dialog -> DialogDestinationDestination
         }
         navController.toDestinationsNavigator().navigate(dest)
     }

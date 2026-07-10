@@ -89,7 +89,7 @@ private fun Content(
 
 @PreviewCombined
 @Composable
-private fun BottomNavContentPreview() {
+private fun Preview() {
     Content(
         selectedItem = BottomNavigationItem.Camera,
         onClick = {},

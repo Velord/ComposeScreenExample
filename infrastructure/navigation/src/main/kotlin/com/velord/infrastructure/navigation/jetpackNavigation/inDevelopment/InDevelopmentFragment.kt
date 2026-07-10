@@ -85,7 +85,7 @@ private fun Content(
 
 @Preview
 @Composable
-private fun InDevelopmentPreview() {
+private fun Preview() {
     Content(
         text = "Now",
         onOpenNew = {}

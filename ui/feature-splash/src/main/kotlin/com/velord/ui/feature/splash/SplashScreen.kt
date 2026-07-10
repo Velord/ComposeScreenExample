@@ -284,8 +284,8 @@ private fun getIconPainter(): Painter {
     return painterResource(res)
 }
 
-@Composable
 @PreviewCombined
+@Composable
 private fun Preview() {
     Content()
 }

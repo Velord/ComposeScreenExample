@@ -103,8 +103,6 @@ private fun OpenButton(
 
 @Preview
 @Composable
-private fun ShapeDemoPreview() {
-    Content(
-        onAction = {}
-    )
+private fun Preview() {
+    Content(onAction = {})
 }

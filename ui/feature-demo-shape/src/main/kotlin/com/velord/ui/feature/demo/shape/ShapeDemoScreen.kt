@@ -41,6 +41,6 @@ private fun Content() {
 
 @Preview
 @Composable
-private fun ShapeDemoPreview() {
+private fun Preview() {
     Content()
 }
