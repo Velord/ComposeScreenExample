@@ -40,6 +40,7 @@ googleGmsWallet = "20.0.0"
 # Kotlin
 kotlin = "2.4.0"
 kotlinCoroutine = "1.11.0"
+kotlinBignum = "0.3.10"
 kotlinCollectionsImmutable = "0.4.0"
 kotlinDateTime = "0.7.1"
 # Kotlin Json Serialization
@@ -628,6 +629,7 @@ google-gms-wallet = { module = "com.google.android.gms:play-services-wallet", ve
 # ---------------------------------------------------------------------------------------------------
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-bignum = { module = "com.ionspin.kotlin:bignum", version.ref = "kotlinBignum" }
 # Kotlin Coroutine
 kotlin-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutine" }
 kotlin-coroutine-play-service = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinCoroutine" }
