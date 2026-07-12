@@ -3,7 +3,10 @@ package com.velord.ui.feature.demo.dialog.component
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
+
+internal actual fun platformDialogProperties(): DialogProperties = DialogProperties()
 
 @Composable
 internal actual fun ConfigureDialogWindow() {

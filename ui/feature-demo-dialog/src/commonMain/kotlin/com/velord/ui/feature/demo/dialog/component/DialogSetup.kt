@@ -46,9 +46,11 @@ internal fun DialogSetup(
             onDismissRequest = action.onDismissRequest
         )
 
-        BasicAlertDialog(onDismissRequest = action.onDismissRequest) {
+        BasicAlertDialog(
+            onDismissRequest = action.onDismissRequest,
+            properties = platformDialogProperties(),
+        ) {
             ConfigureDialogWindow()
-
             MainBoxVisibility(
                 isVisibleState = isVisibleState,
                 animationInProgressState = animationInProgressState,
