@@ -1,7 +1,5 @@
 package com.velord.ui.feature.demo.hintphonenumber
 
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.velord.core.resource.Res
 import com.velord.core.resource.invoke_again
+import com.velord.core.resource.phone_number_hint_not_available_on_desktop
 import com.velord.core.resource.waiting
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.infrastructure.util.activityResult.registerPhoneNumberHint
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -32,14 +30,14 @@ fun HintPhoneNumberScreen() {
         mutableStateOf(null)
     }
 
-    val activity = LocalActivity.current as ComponentActivity
-    val register = registerPhoneNumberHint(
-        activity = activity,
-        onExceptionLaunch = { e -> phoneState.value = e.message },
-        onFailure = { e -> phoneState.value = e.message },
-        onHint = { phoneNumber -> phoneState.value = phoneNumber },
-        onHintError = { e -> phoneState.value = e.message }
-    )
+    val unavailableMessage = stringResource(Res.string.phone_number_hint_not_available_on_desktop)
+    val register = rememberPhoneNumberHintLauncher { result ->
+        phoneState.value = when (result) {
+            is PhoneNumberHintResult.Hint -> result.phoneNumber
+            is PhoneNumberHintResult.Failure -> result.message
+            PhoneNumberHintResult.Unavailable -> unavailableMessage
+        }
+    }
     if (phoneState.value == null) register()
 
     Content(

@@ -1,19 +1,39 @@
 plugins {
-    alias(libs.plugins.convention.feature.ui.koin)
+    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
-android {
-    namespace = "com.velord.ui.feature.setting"
-}
+kotlin {
+    android {
+        namespace = "com.velord.ui.feature.setting"
+    }
 
-dependencies {
-    // Module
-    implementation(projects.model)
-    implementation(projects.core.coreNavigation)
-    implementation(projects.core.coreUi)
-    implementation(projects.core.coreResource)
-    implementation(projects.ui.sharedviewmodel)
-    implementation(projects.ui.featureBottomnavigation)
-    // Template
-    implementation(libs.bundles.compose.all)
+    sourceSets {
+        commonMain.dependencies {
+            // Module
+            implementation(projects.model)
+            implementation(projects.core.coreResource)
+            implementation(projects.core.coreUi)
+            implementation(projects.ui.sharedviewmodel)
+            // Template
+            implementation(libs.compose.animation)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.resources)
+        }
+
+        androidMain.dependencies {
+            // Module
+            implementation(projects.core.coreNavigation)
+            implementation(projects.core.coreUi)
+            implementation(projects.ui.featureBottomnavigation)
+            // Template
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.android)
+            implementation(libs.androidx.fragment.ktx)
+        }
+    }
 }
