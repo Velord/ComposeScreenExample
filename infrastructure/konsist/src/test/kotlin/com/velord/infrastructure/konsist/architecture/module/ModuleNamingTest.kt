@@ -1,4 +1,4 @@
-package com.velord.infrastructure.konsist
+﻿package com.velord.infrastructure.konsist.architecture.module
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
@@ -15,11 +15,15 @@ private const val APP_PACKAGE_ROOT = "com.velord.composescreenexample"
 private const val MODEL_PACKAGE_ROOT = "com.velord.model"
 private const val SHARED_VIEW_MODEL_PACKAGE_ROOT = "com.velord.ui.sharedviewmodel"
 private const val SHARED_VIEW_MODEL_NAME = "sharedviewmodel"
+private const val SOURCE_FOLDER_NAME = "src"
+private const val KOTLIN_FOLDER_NAME = "kotlin"
+private const val JAVA_FOLDER_NAME = "java"
 private val LOWER_CASE_LEAF_REGEX = Regex("""[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val USE_CASE_REGEX = Regex("""usecase-[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val CORE_REGEX = Regex("""core-[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val FEATURE_REGEX = Regex("""feature-[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val WIDGET_REGEX = Regex("""widget-[a-z0-9]+(?:-[a-z0-9]+)*""")
+private val PACKAGE_DIRECTIVE_REGEX = Regex("""(?m)^\uFEFF?package\s+([A-Za-z0-9_.]+)\s*$""")
 
 class ModuleNamingTest {
 
@@ -73,6 +77,26 @@ class ModuleNamingTest {
                                 "Package '$packageName' does not match module '$modulePath'. " +
                                 "Expected root: '$expectedPackageRoot'."
                     )
+                }
+
+                isValid
+            }
+    }
+
+    @Test
+    fun `package directive should match kotlin file location`() {
+        projectFileRoster
+            .filter { file -> expectedPackageNameOrNull(file.path) != null }
+            .assertTrue { file ->
+                val packageName = declaredPackageNameOrNull(file.text)
+                val expectedPackageName = expectedPackageNameOrNull(file.path)
+                val isValid = packageName == expectedPackageName
+
+                if (isValid.not()) {
+                    val msg = "Name: ${file.name}. FAILED. " +
+                        "Package '$packageName' does not match file location. " +
+                        "Expected: '$expectedPackageName'."
+                    println(msg)
                 }
 
                 isValid
@@ -134,6 +158,25 @@ class ModuleNamingTest {
         val moduleSegmentRoster = pathSegmentRoster.take(srcIndex)
         return ModulePath(":" + moduleSegmentRoster.joinToString(":"))
     }
+
+    private fun expectedPackageNameOrNull(filePath: String): String? {
+        val pathSegmentRoster = File(filePath).invariantSeparatorsPath.split('/')
+        val sourceIndex = pathSegmentRoster.indexOf(SOURCE_FOLDER_NAME)
+        if (sourceIndex == -1) return null
+
+        val sourceRootIndex = pathSegmentRoster.indexOfFirst { segment ->
+            segment == KOTLIN_FOLDER_NAME || segment == JAVA_FOLDER_NAME
+        }
+        if (sourceRootIndex <= sourceIndex) return null
+        if (sourceRootIndex >= pathSegmentRoster.lastIndex) return null
+
+        return pathSegmentRoster
+            .subList(sourceRootIndex + 1, pathSegmentRoster.lastIndex)
+            .joinToString(".")
+    }
+
+    private fun declaredPackageNameOrNull(fileText: String): String? =
+        PACKAGE_DIRECTIVE_REGEX.find(fileText)?.groupValues?.get(1)
 }
 
 private data class ModulePath(val value: String) {

@@ -1,4 +1,4 @@
-package com.velord.infrastructure.konsist
+﻿package com.velord.infrastructure.konsist.architecture.ui
 
 import com.lemonappdev.konsist.api.Konsist
 import java.io.File
@@ -11,7 +11,7 @@ private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
 private val DIRECT_VIEW_MODEL_COLLECTION_REGEX =
     Regex("""\bviewModel\.[A-Za-z][A-Za-z0-9]*\.collectAsStateWithLifecycle\(""")
 
-class UiTest {
+class UiArchitectureTest {
 
     private val projectFileRoster = Konsist.scopeFromExternalDirectory(locateRepoRoot().path).files
 

@@ -1,0 +1,88 @@
+﻿package com.velord.infrastructure.konsist.codestyle.expression
+
+import com.velord.infrastructure.konsist.codestyle.HARD_WRAP
+import com.velord.infrastructure.konsist.codestyle.joinLine
+
+internal fun isShortWrappedDeclaration(
+    currentLine: String,
+    nextLine: String,
+    thirdLine: String?,
+): Boolean {
+    if (currentLine.trimEnd().endsWith("=").not()) return false
+
+    val nextLineTrimmed = nextLine.trimStart()
+    if (nextLineTrimmed.isBlank()) return false
+    if (nextLineTrimmed.startsWith("//")) return false
+    if (nextLineTrimmed.startsWith("/*")) return false
+    if (nextLineTrimmed.startsWith("*")) return false
+    if (nextLineTrimmed.endsWith("+")) return false
+    if (nextLineTrimmed.endsWith("-")) return false
+    if (nextLineTrimmed.endsWith("&&")) return false
+    if (nextLineTrimmed.endsWith("||")) return false
+    if (nextLineTrimmed.endsWith("?:")) return false
+    if (nextLineTrimmed.endsWith("(")) return false
+
+    val thirdLineTrimmed = thirdLine?.trimStart().orEmpty()
+    if (thirdLineTrimmed.startsWith(".")) return false
+    if (thirdLineTrimmed.startsWith("?.")) return false
+    if (thirdLineTrimmed.startsWith("?:")) return false
+    if (thirdLineTrimmed.startsWith("+")) return false
+    if (thirdLineTrimmed.startsWith("&&")) return false
+    if (thirdLineTrimmed.startsWith("||")) return false
+
+    return joinLine(currentLine, nextLine).length <= HARD_WRAP
+}
+
+internal fun isSplitShortElvisExpression(
+    currentLine: String,
+    nextLine: String,
+): Boolean {
+    val currentLineTrimmed = currentLine.trimEnd()
+    val currentLineStartTrimmed = currentLine.trimStart()
+    val nextLineTrimmed = nextLine.trimStart()
+    if (currentLineStartTrimmed.startsWith(".")) return false
+    if (currentLineStartTrimmed.startsWith("?.")) return false
+    if (currentLineTrimmed.contains("=").not()) return false
+    if (nextLineTrimmed.startsWith("?:").not()) return false
+
+    return joinLine(currentLine, nextLine).length <= HARD_WRAP
+}
+
+internal fun isSingleReturnBlockFunction(
+    currentLine: String,
+    nextLine: String,
+): Boolean {
+    val currentLineTrimmed = currentLine.trimEnd()
+    val nextLineTrimmed = nextLine.trimStart()
+    if (currentLineTrimmed.contains("fun ").not()) return false
+    if (currentLineTrimmed.endsWith("{").not()) return false
+    if (nextLineTrimmed.startsWith("return ").not()) return false
+
+    return joinLine(
+        currentLine = currentLineTrimmed.removeSuffix("{").trimEnd(),
+        nextLine = nextLineTrimmed.removePrefix("return ").trimStart(),
+    ).length <= HARD_WRAP
+}
+
+internal fun isSplitExpressionBodyOpeningCall(
+    currentLine: String,
+    nextLine: String,
+): Boolean {
+    val currentLineTrimmed = currentLine.trimEnd()
+    val nextLineTrimmed = nextLine.trimStart()
+    if (currentLineTrimmed.endsWith("=").not()) return false
+    if (nextLineTrimmed.startsWith("when ") ||
+        nextLineTrimmed.startsWith("when{")
+    ) {
+        return false
+    }
+    if (nextLineTrimmed.contains("(").not()) return false
+    if (nextLineTrimmed.startsWith(".") ||
+        nextLineTrimmed.startsWith("?.") ||
+        nextLineTrimmed.startsWith("?:")
+    ) {
+        return false
+    }
+
+    return joinLine(currentLine, nextLine).length <= HARD_WRAP
+}

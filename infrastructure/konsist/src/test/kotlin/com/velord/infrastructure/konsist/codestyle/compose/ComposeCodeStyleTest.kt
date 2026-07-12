@@ -1,7 +1,9 @@
-package com.velord.infrastructure.konsist
+﻿package com.velord.infrastructure.konsist.codestyle.compose
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
+import com.velord.infrastructure.konsist.codestyle.call.composeCallNameRoster
+import com.velord.infrastructure.konsist.codestyle.call.isCompactComposeCallWithSeveralParameters
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -14,6 +16,10 @@ private const val PREVIEW_COMBINED_ANNOTATION = "@PreviewCombined"
 private const val COMPOSABLE_ANNOTATION = "@Composable"
 private const val PREVIEW_FUNCTION = "private fun Preview() {"
 private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
+private val DELEGATED_REMEMBERED_MUTABLE_STATE_REGEX = Regex(
+    """\bvar\s+\w+\s+by\s+remember(?:Saveable)?\s*""" +
+        """(?:\([^)]*\))?\s*\{\s*mutable(?:Int|Long|Float|Double)?StateOf\(""",
+)
 
 class ComposeCodeStyleTest {
 
@@ -95,4 +101,40 @@ class ComposeCodeStyleTest {
     } ?: error("Cannot locate repo root from ${System.getProperty("user.dir")}")
 
     private fun String.invariantPath(): String = replace(File.separatorChar, '/')
+
+    @Test
+    fun `remembered mutable state should use State suffixed value holders`() {
+        projectFileRoster.assertTrue { file ->
+            val violation = DELEGATED_REMEMBERED_MUTABLE_STATE_REGEX.find(file.text)
+
+            if (violation != null) {
+                val lineNumber = file.text.take(violation.range.first).count { it == '\n' } + 1
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Delegated remembered mutable state at line $lineNumber."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `compose calls with several parameters should use one parameter per line`() {
+        projectFileRoster.assertTrue { file ->
+            val composeCallNameRoster = composeCallNameRoster(file.text)
+            val violation = file.text.lines().withIndex().firstOrNull { (_, line) ->
+                isCompactComposeCallWithSeveralParameters(composeCallNameRoster, line)
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Compose call at line ${violation.index + 1} " +
+                    "should use one parameter per line."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
 }

@@ -19,7 +19,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
@@ -77,15 +76,15 @@ private fun MovieDateIndicator(
             roster.getOrNull(state.firstVisibleItemIndex)?.formattedDateForDivider(timeZone) ?: ""
         }
     }
-    var indicatorHeightPx by remember { mutableIntStateOf(0) }
-    val maxOffsetPx = (availableHeightPx - indicatorHeightPx).coerceAtLeast(0)
+    val indicatorHeightPxState = remember { mutableIntStateOf(0) }
+    val maxOffsetPx = (availableHeightPx - indicatorHeightPxState.value).coerceAtLeast(0)
     val alpha = if (isSelected) 0.9f else 0.3f
 
     Text(
         text = date,
         modifier = modifier
             .padding(end = 14.dp)
-            .onSizeChanged { size -> indicatorHeightPx = size.height }
+            .onSizeChanged { size -> indicatorHeightPxState.value = size.height }
             .offsetY { (maxOffsetPx * progress).roundToInt() }
             .background(
                 color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = alpha),
