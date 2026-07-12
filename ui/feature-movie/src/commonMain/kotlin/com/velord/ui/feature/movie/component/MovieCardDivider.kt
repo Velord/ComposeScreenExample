@@ -9,8 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.velord.core.ui.compose.preview.PreviewCombined
 
 @Composable
 internal fun MonthDivider(date: String) {
@@ -35,7 +35,7 @@ internal fun MonthDivider(date: String) {
     }
 }
 
-@Preview(showBackground = true)
+@PreviewCombined
 @Composable
 private fun Preview() {
     MonthDivider(date = "April 2026")

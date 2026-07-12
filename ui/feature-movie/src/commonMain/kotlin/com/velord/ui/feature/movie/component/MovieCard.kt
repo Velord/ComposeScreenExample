@@ -265,10 +265,11 @@ private fun PreviewCard() {
         movie = Movie(
             id = 1,
             title = "Title sdsdfssdsfsd ddfd",
-            description = "Lorem ipsum dolor sit amet, consectetur adipLorem ipsum dolor sit amet, consectetur " +
-                "adipiscing elit, sed do eiusmod tempor incididunt ut labore et dLorem ipsum dolor sit amet, " +
-                "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dLorem ipsum dolor " +
-                "sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et discing " +
+            description = "Lorem ipsum dolor sit amet, consectetur adipLorem ipsum dolor " +
+                "sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
+                "labore et dLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+                "eiusmod tempor incididunt ut labore et dLorem ipsum dolor sit amet, consectetur " +
+                "adipiscing elit, sed do eiusmod tempor incididunt ut labore et discing " +
                 "elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             isLiked = true,
             date = LocalDate(2021, 2, 1).atStartOfDayIn(TimeZone.UTC),

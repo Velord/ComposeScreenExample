@@ -29,7 +29,8 @@ data class MovieFilterOptionUI(
         is FilterType.Rating ->
             sliderRangeState.value.toString()
         is FilterType.VoteCount ->
-            "${sliderRangeState.value.start.toInt()}..${sliderRangeState.value.endInclusive.toInt()}"
+            "${sliderRangeState.value.start.toInt()}.." +
+                sliderRangeState.value.endInclusive.toInt()
     }
 
     companion object {

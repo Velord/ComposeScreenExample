@@ -1,8 +1,5 @@
 package com.velord.ui.feature.movie.component
 
-import android.app.Activity
-import android.content.Intent
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -32,7 +29,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.core.resource.Res
 import com.velord.core.resource.all_movies
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
 import com.velord.ui.feature.movie.viewModel.AllMovieUiAction
@@ -43,10 +39,6 @@ import com.velord.ui.feature.movie.viewModel.MovieUiState
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
-private fun Activity.onClick(intent: Intent) {
-    startActivity(intent, null)
-}
-
 @Composable
 internal fun ColumnScope.MoviePager(
     allMovieViewModel: AllMovieViewModel,
@@ -56,14 +48,6 @@ internal fun ColumnScope.MoviePager(
 ) {
     val allMovieUiState = allMovieViewModel.uiStateFlow.collectAsStateWithLifecycle()
     val favoriteMovieUiState = favoriteMovieViewModel.uiStateFlow.collectAsStateWithLifecycle()
-
-    val activity = LocalActivity.current
-    ObserveSharedFlow(
-        flow = allMovieViewModel.shareEvent,
-        onEvent = {
-            activity?.onClick(it)
-        }
-    )
 
     val pagerState = rememberPagerState(
         initialPage = uiState.initialPage,
@@ -236,7 +220,8 @@ private fun MoviePagerPreview() {
         Movie(
             id = 6,
             title = "The Matrix",
-            description = "A computer hacker learns from mysterious rebels about the true nature of his reality and" +
+            description = "A computer hacker learns from mysterious rebels about the true " +
+                "nature of his reality and" +
                 " his role in the war against its controllers.",
             isLiked = false,
             date = Clock.System.now(),

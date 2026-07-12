@@ -30,7 +30,9 @@ class FavoriteMovieViewModel(
     private val updateMovieLikeUC: UpdateMovieLikeUC
 ) : CoroutineScopeViewModel() {
 
-    val uiStateFlow: MutableStateFlow<FavoriteMovieUiState> = MutableStateFlow(FavoriteMovieUiState.DEFAULT)
+    val uiStateFlow: MutableStateFlow<FavoriteMovieUiState> = MutableStateFlow(
+        FavoriteMovieUiState.DEFAULT
+    )
     private val actionFlow = MutableSharedFlow<FavoriteMovieUiAction>()
 
     init {

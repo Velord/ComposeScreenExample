@@ -1,13 +1,17 @@
 package com.velord.data.gateway.movie
 
 import com.velord.data.appstate.AppStateDataSource
+import com.velord.data.os.share.ShareDataSource
 import com.velord.model.movie.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.update
 import org.koin.core.annotation.Single
 
 @Single
-class MovieGateway(private val appState: AppStateDataSource) {
+class MovieGateway(
+    private val appState: AppStateDataSource,
+    private val shareDataSource: ShareDataSource,
+) {
 
     fun getFlow(): Flow<List<Movie>> = appState.movieRosterFlow
 
@@ -21,5 +25,9 @@ class MovieGateway(private val appState: AppStateDataSource) {
         appState.movieRosterFlow.update {
             function(it)
         }
+    }
+
+    suspend fun share(movie: Movie) {
+        shareDataSource.share(movie.toString())
     }
 }

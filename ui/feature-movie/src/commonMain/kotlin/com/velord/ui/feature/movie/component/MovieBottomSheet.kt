@@ -231,7 +231,10 @@ private fun Info(
                         append(url)
                     }
                 },
-                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp, color = Color.White),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontSize = 14.sp,
+                    color = Color.White,
+                ),
                 modifier = Modifier.padding(16.dp)
             )
             Text(

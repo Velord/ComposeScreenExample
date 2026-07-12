@@ -3,6 +3,7 @@ package com.velord.infrastructure.di
 import com.velord.data.gateway.camera.CameraGateway
 import com.velord.data.gateway.movie.MovieByGateway
 import com.velord.data.gateway.movie.MovieFavoriteGateway
+import com.velord.data.gateway.movie.MovieGateway
 import com.velord.data.gateway.movie.MoviePaginationGateway
 import com.velord.data.gateway.movie.MovieSortGateway
 import com.velord.data.gateway.setting.GetThemeConfigGateway
@@ -17,6 +18,7 @@ import com.velord.usecase.movie.GetMovieSortOptionUC
 import com.velord.usecase.movie.LoadNewPageMovieUC
 import com.velord.usecase.movie.RefreshMovieUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
+import com.velord.usecase.movie.ShareMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
@@ -63,6 +65,9 @@ val useCaseModule = module {
     }
     single<RefreshMovieUC> {
         RefreshMovieUC(get<MoviePaginationGateway>()::refresh)
+    }
+    single<ShareMovieUC> {
+        ShareMovieUC(get<MovieGateway>()::share)
     }
     single<StartRecordingUC> {
         StartRecordingUC(get<CameraGateway>()::startRecording)

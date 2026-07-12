@@ -1,11 +1,11 @@
 package com.velord.ui.feature.movie.viewModel
 
-import android.content.Intent
 import com.velord.model.movie.Movie
 import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.LoadNewPageMovieUC
 import com.velord.usecase.movie.RefreshMovieUC
+import com.velord.usecase.movie.ShareMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import com.velord.usecase.movie.model.MovieLoadNewPageResult
 import kotlinx.coroutines.FlowPreview
@@ -63,10 +63,10 @@ class AllMovieViewModel(
     private val updateMovieLikeUC: UpdateMovieLikeUC,
     private val loadNewPageMovieUC: LoadNewPageMovieUC,
     private val refreshMovieUC: RefreshMovieUC,
+    private val shareMovieUC: ShareMovieUC,
 ) : CoroutineScopeViewModel() {
 
     val uiStateFlow: MutableStateFlow<AllMovieUiState> = MutableStateFlow(AllMovieUiState.DEFAULT)
-    val shareEvent = MutableSharedFlow<Intent>()
     private val actionFlow = MutableSharedFlow<AllMovieUiAction>()
 
     init {
@@ -112,14 +112,8 @@ class AllMovieViewModel(
     }
 
     private fun onClick(movie: Movie) {
-        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-            putExtra(Intent.EXTRA_TEXT, movie.toString())
-            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            type = "text/plain"
-        }
-        val shareIntent = Intent.createChooser(sendIntent, null)
         launch {
-            shareEvent.emit(shareIntent)
+            shareMovieUC(movie)
         }
     }
 
@@ -169,7 +163,8 @@ class AllMovieViewModel(
 
     private fun MovieLoadNewPageResult.handleLoadPageResult() {
         when(this) {
-            MovieLoadNewPageResult.Success -> uiStateFlow.value = uiStateFlow.value.copy(error = null)
+            MovieLoadNewPageResult.Success ->
+                uiStateFlow.value = uiStateFlow.value.copy(error = null)
             is MovieLoadNewPageResult.LoadPageFailed -> {
                 uiStateFlow.update {
                     it.copy(
