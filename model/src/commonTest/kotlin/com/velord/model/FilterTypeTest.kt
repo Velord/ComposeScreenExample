@@ -10,15 +10,15 @@ import org.junit.Test
 class FilterTypeTest {
 
     @Test
-    fun `Rating Default has correct values`() {
-        val default = FilterType.Rating.Default
+    fun `Rating DEFAULT has correct values`() {
+        val default = FilterType.Rating.DEFAULT
         assertEquals(7f, default.start)
         assertEquals(7.1f, default.end)
     }
 
     @Test
-    fun `VoteCount Default has correct values`() {
-        val default = FilterType.VoteCount.Default
+    fun `VoteCount DEFAULT has correct values`() {
+        val default = FilterType.VoteCount.DEFAULT
         assertEquals(100, default.start) // Updated assertion
         assertEquals(200, default.end)   // Updated assertion
     }
@@ -27,8 +27,8 @@ class FilterTypeTest {
     fun `createAll returns list with both default filters`() {
         val allFilters = FilterType.ALL
         assertEquals(2, allFilters.size)
-        assertEquals(FilterType.Rating.Default, allFilters[0])
-        assertEquals(FilterType.VoteCount.Default, allFilters[1])
+        assertEquals(FilterType.Rating.DEFAULT, allFilters[0])
+        assertEquals(FilterType.VoteCount.DEFAULT, allFilters[1])
     }
 
     @Test
@@ -149,12 +149,9 @@ class FilterTypeTest {
 
     @Test
     fun `VoteCount equality check works correctly`() {
-        val voteCount1 =
-            FilterType.VoteCount(start = 50, end = 500, min = 0, max = 1000, steps = 10)
-        val voteCount2 =
-            FilterType.VoteCount(start = 50, end = 500, min = 0, max = 1000, steps = 10)
-        val voteCount3 =
-            FilterType.VoteCount(start = 100, end = 600, min = 0, max = 1000, steps = 10)
+        val voteCount1 = FilterType.VoteCount(start = 50, end = 500, min = 0, max = 1000, steps = 10)
+        val voteCount2 = FilterType.VoteCount(start = 50, end = 500, min = 0, max = 1000, steps = 10)
+        val voteCount3 = FilterType.VoteCount(start = 100, end = 600, min = 0, max = 1000, steps = 10)
 
         assertEquals(voteCount1, voteCount2) // Same values
         assertNotEquals(voteCount1, voteCount3) // Different start and end

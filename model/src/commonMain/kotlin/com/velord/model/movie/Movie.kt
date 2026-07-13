@@ -1,6 +1,5 @@
 package com.velord.model.movie
 
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -9,6 +8,7 @@ import kotlinx.datetime.format.MonthNames
 import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
+import kotlin.time.Instant
 
 private const val PICSUM_HOST = "https://picsum.photos/200/300"
 
@@ -37,11 +37,9 @@ data class Movie(
     val imagePath: String? = null,
 ) {
 
-    fun formattedDateForCard(tz: TimeZone): String =
-        cardFormat.format(date.toLocalDateTime(tz))
+    fun formattedDateForCard(tz: TimeZone): String = cardFormat.format(date.toLocalDateTime(tz))
 
-    fun formattedDateForDivider(tz: TimeZone): String =
-        dividerFormat.format(date.toLocalDateTime(tz))
+    fun formattedDateForDivider(tz: TimeZone): String = dividerFormat.format(date.toLocalDateTime(tz))
 
     fun isAnotherMonthOrYear(other: Instant?, tz: TimeZone): Boolean {
         if (other == null) return true
@@ -57,15 +55,13 @@ data class Movie(
     }
 
     companion object {
-
         fun toInstant(date: String): Instant = try {
             LocalDate.parse(date).atStartOfDayIn(TimeZone.UTC)
         } catch (_: Exception) {
             Clock.System.now()
         }
 
-        fun toRaw(instant: Instant): String =
-            instant.toLocalDateTime(TimeZone.UTC).date.toString()
+        fun toRaw(instant: Instant): String = instant.toLocalDateTime(TimeZone.UTC).date.toString()
     }
 }
 

@@ -22,13 +22,13 @@
 
     <fragment
         android:id="@+id/bottomNavFragment"
-        android:name="com.velord.bottomnavigation.screen.jetpack.BottomNavigationFragment"
+        android:name="com.velord.ui.feature.bottomnavigation.screen.BottomNavigationFragment"
         android:label="BottomNavFragment"
         />
 
     <fragment
         android:id="@+id/inDevelopmentFragment"
-        android:name="com.velord.navigation.jetpackNavigation.inDevelopment.InDevelopmentFragment"
+        android:name="com.velord.infrastructure.navigation.jetpackNavigation.inDevelopment.InDevelopmentFragment"
         android:label="InDevelopmentFragment" />
 
 </navigation>

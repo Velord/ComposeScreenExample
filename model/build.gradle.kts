@@ -16,5 +16,8 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+        androidMain.dependencies {
+            implementation(libs.bundles.androidx.camera.all)
+        }
     }
 }

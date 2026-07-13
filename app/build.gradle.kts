@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.convention.android.viewbinding)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.convention.koin)
     alias(libs.plugins.google.gms.services)
     alias(libs.plugins.google.firebase.crashlytic)
@@ -63,9 +64,9 @@ android {
         named("debug") {
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
             buildConfigField(
-                "com.velord.config.NavigationLib",
+                "com.velord.infrastructure.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.config.NavigationLib.Nav3"
+                "com.velord.infrastructure.config.NavigationLib.Nav3"
             )
         }
         named("release") {
@@ -77,9 +78,9 @@ android {
             )
             buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
             buildConfigField(
-                "com.velord.config.NavigationLib",
+                "com.velord.infrastructure.config.NavigationLib",
                 "NAVIGATION_LIB",
-                "com.velord.config.NavigationLib.Destinations"
+                "com.velord.infrastructure.config.NavigationLib.Destinations"
             )
         }
     }
@@ -140,12 +141,15 @@ dependencies {
     implementation(projects.infrastructure.navigation)
     implementation(projects.infrastructure.di)
     implementation(projects.infrastructure.config)
+    // Module Domain
+    implementation(projects.domain.usecaseEvent)
     // Module Core
     implementation(projects.core.coreUi)
     implementation(projects.core.coreNavigation)
     implementation(projects.core.coreResource)
     // Module Data
     implementation(projects.data.os)
+    implementation(projects.data.appstate)
     // Module UI
     implementation(projects.ui.sharedviewmodel)
     // Module UI Feature
@@ -157,7 +161,10 @@ dependencies {
     // Template
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.compose.ui)
+    implementation(libs.bundles.compose.ui.core)
+    // Koin annotations
+    implementation(libs.koin.annotation)
+    ksp(libs.koin.ksp)
     // Tool
     coreLibraryDesugaring(libs.android.desugar)
     // Other

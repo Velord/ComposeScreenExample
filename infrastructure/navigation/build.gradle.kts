@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.navigation"
+    namespace = "com.velord.infrastructure.navigation"
 }
 
 dependencies {

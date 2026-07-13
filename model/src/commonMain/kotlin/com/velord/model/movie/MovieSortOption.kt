@@ -10,6 +10,6 @@ data class MovieSortOption(
     val isSelected: Boolean
 ) {
     companion object {
-        val Default = MovieSortOption(SortType.DateDescending, true)
+        val DEFAULT = MovieSortOption(SortType.DateDescending, true)
     }
 }

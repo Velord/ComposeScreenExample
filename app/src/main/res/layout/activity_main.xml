@@ -19,4 +19,12 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true" />
 
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/toastOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:focusable="false"
+        android:elevation="100dp" />
+
 </FrameLayout>

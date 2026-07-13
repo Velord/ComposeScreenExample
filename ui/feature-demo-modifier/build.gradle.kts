@@ -1,14 +1,26 @@
 plugins {
-    alias(libs.plugins.convention.feature.ui)
+    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
-android {
-    namespace = "com.velord.modifierdemo"
-}
+kotlin {
+    android {
+        namespace = "com.velord.ui.feature.demo.modifier"
+    }
 
-dependencies {
-    // Module
-    implementation(projects.core.coreUi)
-    // Template
-    implementation(libs.bundles.compose.all)
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.core.coreUi)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material.icons.extended)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.ui)
+        }
+
+        androidMain.dependencies {
+            implementation(projects.core.coreUi)
+            implementation(libs.androidx.fragment.ktx)
+        }
+    }
 }

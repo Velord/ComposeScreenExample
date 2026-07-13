@@ -1,0 +1,108 @@
+package com.velord.ui.feature.demo.dialog
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.core.resource.Res
+import com.velord.core.resource.show_one_button_dialog
+import com.velord.core.resource.show_two_buttons_dialog
+import com.velord.core.ui.compose.preview.PreviewCombined
+import com.velord.ui.feature.demo.dialog.component.DialogActions
+import com.velord.ui.feature.demo.dialog.component.DialogAnimations
+import com.velord.ui.feature.demo.dialog.component.DialogPredefinedAnimation
+import com.velord.ui.feature.demo.dialog.component.OneButtonDialog
+import com.velord.ui.feature.demo.dialog.component.TwoButtonDialog
+import org.jetbrains.compose.resources.stringResource
+
+
+@Composable
+fun DialogDemoScreen(viewModel: DialogDemoVM) {
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
+    val isVisibleTwoButtonDialogState = rememberUpdatedState(uiState.value.isVisibleTwoButtonDialog)
+    val isVisibleOneButtonDialogState = rememberUpdatedState(uiState.value.isVisibleOneButtonDialog)
+
+    Content(onAction = viewModel::onAction)
+
+    TwoButtonDialog(
+        isVisibleState = isVisibleTwoButtonDialogState,
+        title = "Two Button Dialog",
+        action = DialogActions.TwoButton {
+            viewModel.onAction(DialogDemoUiAction.TwoButtonDialogDismiss)
+        }
+    )
+
+    OneButtonDialog(
+        isVisibleState = isVisibleOneButtonDialogState,
+        title = "One Button Dialog",
+        action = DialogActions.OneButton {
+            viewModel.onAction(DialogDemoUiAction.OneButtonDialogDismiss)
+        },
+        animation = DialogAnimations.DEFAULT.copy(
+            mainBox = DialogPredefinedAnimation.Fade.DEFAULT
+        )
+    )
+}
+
+@Composable
+private fun Content(onAction: (DialogDemoUiAction) -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+            .statusBarsPadding()
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        OpenButton(
+            text = stringResource(Res.string.show_two_buttons_dialog),
+            onClick = { onAction(DialogDemoUiAction.OpenTwoButtonDialogClick) }
+        )
+        OpenButton(
+            text = stringResource(Res.string.show_one_button_dialog),
+            onClick = { onAction(DialogDemoUiAction.OpenOneButtonDialogClick) },
+        )
+    }
+}
+
+@Composable
+private fun OpenButton(
+    text: String,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.padding(top = 32.dp),
+        shape = RoundedCornerShape(10.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+        )
+    ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            style = MaterialTheme.typography.displaySmall.copy(fontSize = 22.sp)
+        )
+    }
+}
+
+@PreviewCombined
+@Composable
+private fun Preview() {
+    Content(onAction = {})
+}

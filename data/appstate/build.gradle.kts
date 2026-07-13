@@ -5,7 +5,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.velord.appstate"
+        namespace = "com.velord.data.appstate"
     }
 
     sourceSets {

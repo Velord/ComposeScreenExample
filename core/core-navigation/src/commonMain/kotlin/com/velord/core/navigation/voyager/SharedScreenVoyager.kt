@@ -5,7 +5,6 @@ import cafe.adriel.voyager.core.registry.ScreenProvider
 import org.jetbrains.compose.resources.StringResource
 
 sealed class SharedScreenVoyager : ScreenProvider {
-
     sealed class BottomNavigationTab : SharedScreenVoyager() {
         data object Camera : BottomNavigationTab()
         data object Demo : BottomNavigationTab()

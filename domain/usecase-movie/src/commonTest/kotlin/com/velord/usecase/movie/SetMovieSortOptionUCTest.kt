@@ -26,7 +26,7 @@ class SetMovieSortOptionUCTest {
     @Test
     fun `invoke should preserve arguments across multiple invocations`() {
         val capturedOptions = mutableListOf<MovieSortOption>()
-        val firstOption = MovieSortOption.Default
+        val firstOption = MovieSortOption.DEFAULT
         val secondOption = MovieSortOption(SortType.DateDescending, true)
         val useCase = SetMovieSortOptionUC { option ->
             capturedOptions += option
@@ -45,7 +45,7 @@ class SetMovieSortOptionUCTest {
         }
 
         val error = assertFailsWith<IllegalArgumentException> {
-            useCase(MovieSortOption.Default)
+            useCase(MovieSortOption.DEFAULT)
         }
 
         assertEquals("unsupported option", error.message)
@@ -72,7 +72,7 @@ class SetMovieSortOptionUCTest {
             invocationCount += 1
         }
 
-        useCase(MovieSortOption.Default)
+        useCase(MovieSortOption.DEFAULT)
         useCase(MovieSortOption(SortType.DateAscending, false))
         useCase(MovieSortOption(SortType.DateDescending, true))
 

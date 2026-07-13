@@ -9,7 +9,6 @@ data class AppThemeConfig(
     val isSystemDynamicColorAvailable: Boolean
 ) {
     companion object {
-
         operator fun invoke(config: ThemeConfig): AppThemeConfig = AppThemeConfig(
             config = config,
             isSystemOsSwitchAvailable = currentThemeCapabilities.isSystemOsSwitchAvailable,

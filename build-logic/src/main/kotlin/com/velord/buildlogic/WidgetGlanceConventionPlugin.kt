@@ -16,6 +16,6 @@ class WidgetGlanceConventionPlugin : Plugin<Project> {
         implementationBundle("kotlin-module")
         implementationBundle("androidx-glance")
         implementationBundle("androidx-workmanager")
-        implementationBundle("compose-ui")
+        implementationBundle("compose-ui.core")
     }
 }

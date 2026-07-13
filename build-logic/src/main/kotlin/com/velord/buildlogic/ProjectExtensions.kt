@@ -7,12 +7,9 @@ import org.gradle.plugin.use.PluginDependency
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal val Project.libs: VersionCatalog
-    get() = extensions
-        .getByType(VersionCatalogsExtension::class.java)
-        .named("libs")
+    get() = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
 
-internal fun Project.version(name: String): String =
-    libs.findVersion(name).get().requiredVersion
+internal fun Project.version(name: String): String = libs.findVersion(name).get().requiredVersion
 
 internal fun Project.versionInt(name: String): Int = version(name).toInt()
 
@@ -36,39 +33,24 @@ private fun Project.bundle(bundleName: String) = libs.findBundle(bundleName).get
 
 internal fun Project.implementationBundle(bundleName: String) {
     bundle(bundleName).forEach { dependency ->
-        dependencies.add(
-            "implementation",
-            dependency,
-        )
+        dependencies.add("implementation", dependency)
     }
 }
 
 internal fun Project.implementationLibrary(libraryName: String) {
-    dependencies.add(
-        "implementation",
-        library(libraryName),
-    )
+    dependencies.add("implementation", library(libraryName))
 }
 
 internal fun Project.implementationPlatformLibrary(libraryName: String) {
-    dependencies.add(
-        "implementation",
-        dependencies.platform(library(libraryName)),
-    )
+    dependencies.add("implementation", dependencies.platform(library(libraryName)))
 }
 
 internal fun Project.implementationProject(projectPath: String) {
-    dependencies.add(
-        "implementation",
-        projectDependency(projectPath),
-    )
+    dependencies.add("implementation", projectDependency(projectPath))
 }
 
 internal fun Project.kspLibrary(libraryName: String) {
-    dependencies.add(
-        "ksp",
-        library(libraryName),
-    )
+    dependencies.add("ksp", library(libraryName))
 }
 
 internal fun Project.implementationProject(project: ProjectModule) {
@@ -77,8 +59,7 @@ internal fun Project.implementationProject(project: ProjectModule) {
 
 internal fun Project.projectDependency(projectPath: String) = project(projectPath)
 
-internal fun Project.projectDependency(project: ProjectModule) =
-    projectDependency(project.path)
+internal fun Project.projectDependency(project: ProjectModule) = projectDependency(project.path)
 
 internal fun KotlinMultiplatformExtension.commonMainImplementationLibrary(
     project: Project,

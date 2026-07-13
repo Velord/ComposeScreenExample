@@ -5,19 +5,24 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.velord.os"
+        namespace = "com.velord.data.os"
     }
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.model)
             implementation(libs.koin.core)
             api(libs.koin.annotation)
         }
 
         androidMain.dependencies {
+            implementation(projects.model)
+            implementation(projects.core.coreResource)
+            implementation(projects.domain.usecaseCamera)
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.koin.core)
             implementation(libs.koin.annotation)
+            implementation(libs.androidx.camera.video)
         }
 
         named("commonMain").configure {

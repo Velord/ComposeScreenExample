@@ -18,7 +18,6 @@ data class ThemeConfig(
     val current: SpecialTheme
 ) {
     companion object {
-
         val DEFAULT = ThemeConfig(
             abideToOs = true,
             useDarkTheme = false,

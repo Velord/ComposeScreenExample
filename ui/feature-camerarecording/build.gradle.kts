@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.camerarecording"
+    namespace = "com.velord.ui.feature.camerarecording"
 }
 
 dependencies {
@@ -13,6 +13,7 @@ dependencies {
     implementation(projects.core.coreResource)
     implementation(projects.core.coreUi)
     implementation(projects.core.coreNavigation)
+    implementation(projects.domain.usecaseCamera)
     implementation(projects.ui.sharedviewmodel)
     implementation(projects.ui.featureBottomnavigation)
     // Template

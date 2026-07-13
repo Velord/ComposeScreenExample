@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@id/bottom_nav_graph_center_start_destination"
-        android:name="com.velord.navigation.jetpackNavigation.graph.DemoGraphFragment"
+        android:name="com.velord.infrastructure.navigation.jetpackNavigation.graph.DemoGraphFragment"
         android:label="DemoGraphFragment">
 
         <action
@@ -17,27 +17,27 @@
 
     <fragment
         android:id="@+id/shapeDemoFragment"
-        android:name="com.velord.shapedemo.ShapeDemoFragment"
+        android:name="com.velord.ui.feature.demo.shape.ShapeDemoFragment"
         android:label="ShapeDemoFragment" />
 
     <fragment
         android:id="@+id/modifierDemoFragment"
-        android:name="com.velord.modifierdemo.ModifierDemoFragment"
+        android:name="com.velord.ui.feature.demo.modifier.ModifierDemoFragment"
         android:label="ModifierDemoFragment" />
 
     <fragment
         android:id="@+id/flowSummatorFragment"
-        android:name="com.velord.flowsummator.FlowSummatorFragment"
+        android:name="com.velord.ui.feature.flowsummator.FlowSummatorFragment"
         android:label="FlowSummatorFragment" />
 
     <fragment
         android:id="@+id/morphDemoFragment"
-        android:name="com.velord.morphdemo.MorphDemoFragment"
+        android:name="com.velord.ui.feature.demo.morph.MorphDemoFragment"
         android:label="MorphDemoFragment" />
 
     <fragment
         android:id="@id/demoFragment"
-        android:name="com.velord.feature.demo.DemoFragment"
+        android:name="com.velord.ui.feature.demo.DemoFragment"
         android:label="DemoFragment">
 
         <action

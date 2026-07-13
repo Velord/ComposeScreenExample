@@ -11,10 +11,7 @@ class DomainUsecaseKmpConventionPlugin : Plugin<Project> {
         applyPlugin("convention-kmp-library")
 
         extensions.configure<KotlinMultiplatformExtension> {
-            commonMainImplementationProject(
-                target,
-                ProjectModule.MODEL,
-            )
+            commonMainImplementationProject(target, ProjectModule.MODEL)
             commonMainImplementationLibrary(target, "kotlin-coroutine-core")
         }
     }

@@ -151,5 +151,4 @@ class MovieTest {
     }
 }
 
-private fun kotlinx.datetime.Instant.toLocalDateTimeUtc() =
-    toLocalDateTime(TimeZone.UTC)
+private fun kotlinx.datetime.Instant.toLocalDateTimeUtc() = toLocalDateTime(TimeZone.UTC)
