@@ -1,10 +1,7 @@
 package com.velord.ui.feature.bottomnavigation.screen.jetpack
 
-import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -23,14 +20,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 internal const val TAG = "BottomNav"
 private val log = Logger.withTag(TAG)
 
-private fun Context.fireToast(text: String) {
-    val description = "I am the first at $text"
-    Toast.makeText(this, description, Toast.LENGTH_SHORT).apply {
-        setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-        show()
-    }
-}
-
 fun Fragment.addTestCallback(
     tag: String,
     viewModel: BottomNavigationJetpackVM
@@ -47,7 +36,7 @@ fun Fragment.addTestCallback(
         this,
         true
     ) {
-        requireContext().fireToast(tag)
+        viewModel.showBackPressToast(tag)
         isEnabled = false
         viewModel.graphCompletedHandling()
         log.d { "onBackPressedDispatcher" }

@@ -1,30 +1,12 @@
 package com.velord.ui.feature.bottomnavigation.viewmodel
 
 import com.velord.ui.feature.bottomnavigation.BottomNavEventService
+import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.TabState
 import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
-
-enum class BottomNavigationItem {
-    Camera,
-    Demo,
-    Setting;
-}
-
-data class TabState(
-    val previous: BottomNavigationItem,
-    val current: BottomNavigationItem
-) {
-    val isSame: Boolean get() = previous == current
-
-    companion object {
-        val DEFAULT = TabState(
-            previous = BottomNavigationItem.Demo,
-            current = BottomNavigationItem.Demo
-        )
-    }
-}
 
 @KoinViewModel
 class BottomNavigationDestinationsVM(

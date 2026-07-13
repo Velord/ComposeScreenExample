@@ -2,7 +2,7 @@ package com.velord.infrastructure.navigation.compose.vanilla.navigator
 
 import androidx.navigation.NavController
 import co.touchlab.kermit.Logger
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
 
 internal interface BottomTabNavigatorVanilla {
     fun getRouteOnTabClick(route: BottomNavigationItem): Any

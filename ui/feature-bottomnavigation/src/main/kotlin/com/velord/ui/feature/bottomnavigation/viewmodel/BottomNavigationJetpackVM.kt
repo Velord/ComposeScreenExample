@@ -2,15 +2,22 @@ package com.velord.ui.feature.bottomnavigation.viewmodel
 
 import androidx.navigation.NavDestination
 import com.velord.core.resource.R
+import com.velord.core.resource.Res
+import com.velord.core.resource.bottom_navigation_first_back_press
+import com.velord.model.ToastConfig
+import com.velord.model.ToastDuration
 import com.velord.ui.feature.bottomnavigation.BottomNavEventService
 import com.velord.ui.feature.bottomnavigation.screen.jetpack.BottomNavigationItem
 import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.usecase.event.ShowToastUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 
 class BottomNavigationJetpackVM(
-    private val bottomNavEventService: BottomNavEventService
+    private val bottomNavEventService: BottomNavEventService,
+    private val showToastUC: ShowToastUC,
 ): CoroutineScopeViewModel() {
 
     val currentTabStateFlow = MutableStateFlow(BottomNavigationItem.Setting)
@@ -34,6 +41,12 @@ class BottomNavigationJetpackVM(
 
     fun onBackDoubleClick() = launch {
         finishAppEvent.emit(Unit)
+    }
+
+    fun showBackPressToast(tag: String) = launch {
+        val message = getString(Res.string.bottom_navigation_first_back_press, tag)
+        val toastConfig = ToastConfig(message = message, duration = ToastDuration.Short)
+        showToastUC(toastConfig)
     }
 
     fun updateBackHandling(currentNavigationDestination: NavDestination?) {

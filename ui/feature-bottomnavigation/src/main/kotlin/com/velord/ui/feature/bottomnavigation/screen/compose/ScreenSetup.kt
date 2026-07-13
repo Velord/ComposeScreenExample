@@ -39,8 +39,8 @@ import com.velord.core.ui.compose.component.AnimatableLabeledIcon
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.infrastructure.util.context.getActivity
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
+import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
 import org.jetbrains.compose.resources.stringResource
 
 private val log = Logger.withTag("LogBackStack")

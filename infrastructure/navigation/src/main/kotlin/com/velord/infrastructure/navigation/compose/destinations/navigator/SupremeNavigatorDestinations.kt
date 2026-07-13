@@ -23,13 +23,13 @@ import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.spec.NavHostGraphSpec
 import com.ramcosta.composedestinations.spec.RouteOrDirection
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
-import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
-import com.velord.ui.feature.bottomnavigation.viewmodel.TabState
-import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.infrastructure.navigation.compose.destinations.transition.PopFadeTransition
 import com.velord.infrastructure.navigation.compose.vanilla.navigator.LogNavigationEvents
 import com.velord.infrastructure.navigation.compose.vanilla.navigator.logTabClick
+import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.TabState
+import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 
 private val log = Logger.withTag("LogBackStack - SupremeNavigatorDestinations")
 

@@ -1,6 +1,5 @@
 package com.velord.ui.feature.bottomnavigation
 
-import com.velord.ui.feature.bottomnavigation.viewmodel.TabState
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.annotation.Single
 

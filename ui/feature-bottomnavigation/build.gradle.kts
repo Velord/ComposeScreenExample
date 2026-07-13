@@ -13,6 +13,7 @@ dependencies {
     implementation(projects.core.coreResource)
     implementation(projects.core.coreNavigation)
     implementation(projects.core.coreUi)
+    implementation(projects.domain.usecaseEvent)
     implementation(projects.ui.sharedviewmodel)
     // Template
     implementation(libs.bundles.compose.all)

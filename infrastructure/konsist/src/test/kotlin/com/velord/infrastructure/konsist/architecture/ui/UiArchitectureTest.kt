@@ -8,6 +8,11 @@ import kotlin.test.assertTrue
 private const val SCREEN_FILE_SUFFIX = "Screen.kt"
 private const val LIFECYCLE_COLLECTION = "collectAsStateWithLifecycle"
 private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
+private const val UI_PACKAGE_PREFIX = "com.velord.ui."
+private const val ANDROID_TOAST_TYPE = "android.widget.Toast"
+private const val TOAST_CONFIG_TYPE = "ToastConfig"
+private val HARDCODED_MESSAGE_REGEX =
+    Regex("""(?:\bval\s+\w*[Mm]essage\w*\s*=\s*|message\s*=\s*)"[^"]+"""")
 private val DIRECT_VIEW_MODEL_COLLECTION_REGEX =
     Regex("""\bviewModel\.[A-Za-z][A-Za-z0-9]*\.collectAsStateWithLifecycle\(""")
 
@@ -34,6 +39,39 @@ class UiArchitectureTest {
         }
     }
 
+    @Test
+    fun `ui should not use Android Toast directly`() {
+        val violationRoster = projectFileRoster.filter { file ->
+            file.packagee?.name?.startsWith(UI_PACKAGE_PREFIX) == true &&
+                file.text.lines().any(::containsAndroidToastUsage)
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "UI must emit toast through ShowToastUC: " +
+                violationRoster.joinToString { file -> file.name }
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
+    @Test
+    fun `toast messages should come from resources`() {
+        val violationRoster = projectFileRoster.filter { file ->
+            file.packagee?.name?.startsWith(UI_PACKAGE_PREFIX) == true &&
+                file.text.contains(TOAST_CONFIG_TYPE) &&
+                HARDCODED_MESSAGE_REGEX.containsMatchIn(file.text)
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "Toast messages must come from resources: " +
+                violationRoster.joinToString { file -> file.name }
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
     private fun screenFileRoster() = projectFileRoster.filter { file ->
         file.name.endsWith(SCREEN_FILE_SUFFIX)
     }
@@ -42,6 +80,11 @@ class UiArchitectureTest {
         val lineTrimmed = line.trimStart()
         return lineTrimmed.startsWith("import ").not() &&
             line.contains(LIFECYCLE_COLLECTION)
+    }
+
+    private fun containsAndroidToastUsage(line: String): Boolean {
+        val code = line.substringBefore("//")
+        return code.contains(ANDROID_TOAST_TYPE)
     }
 
     private fun locateRepoRoot(): File = generateSequence(

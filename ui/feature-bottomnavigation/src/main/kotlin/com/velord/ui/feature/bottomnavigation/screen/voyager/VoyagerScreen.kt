@@ -23,8 +23,8 @@ import com.velord.core.resource.Res
 import com.velord.core.resource.press_again_to_exit
 import com.velord.infrastructure.util.context.getActivity
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
+import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.screen.compose.BottomBar
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
 import org.jetbrains.compose.resources.stringResource
 

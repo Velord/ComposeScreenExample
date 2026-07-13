@@ -4,6 +4,7 @@
     <string name="demo">Demo</string>
     <string name="settings">Settings</string>
     <string name="press_again_to_exit">Press again to exit</string>
+    <string name="bottom_navigation_first_back_press">I am the first at %1$s</string>
     <string name="go_to_app_settings">Go to App Settings</string>
     <string name="decline">Decline</string>
     <string name="require_microphone_permission">Require microphone permission</string>
