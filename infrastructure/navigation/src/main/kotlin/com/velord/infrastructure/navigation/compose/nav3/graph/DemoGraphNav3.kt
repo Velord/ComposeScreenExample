@@ -3,6 +3,7 @@ package com.velord.infrastructure.navigation.compose.nav3.graph
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.ui.feature.demo.DemoScreen
@@ -35,7 +36,9 @@ internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNaviga
                 // To enable System Back Button handling
                 // via Bottom Navigation -> comment the line below
                 // bottomNavViewModel.graphCompletedHandling()
-                bottomNavVM.graphTakeResponsibility()
+                bottomNavVM.onAction(
+                    BottomNavigationDestinationsUiAction.GraphTakeResponsibility
+                )
             },
         )
     }

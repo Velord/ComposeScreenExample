@@ -51,7 +51,7 @@ class MainVM(
         launch {
             actionFlow.collect { action ->
                 when (action) {
-                    is MainUiAction.UpdateTheme -> updateTheme(action.themeConfig)
+                    is MainUiAction.UpdateTheme -> onUpdateTheme(action.themeConfig)
                 }
             }
         }
@@ -62,7 +62,7 @@ class MainVM(
         }
     }
 
-    private fun updateTheme(themeConfig: ThemeConfig?) {
+    private fun onUpdateTheme(themeConfig: ThemeConfig?) {
         if (themeConfig == null) return
 
         updateAllWidgets(themeConfig)

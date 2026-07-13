@@ -21,6 +21,7 @@ import com.velord.core.ui.compose.component.AnimatableLabeledIcon
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import org.jetbrains.compose.resources.stringResource
 
@@ -28,22 +29,25 @@ private val log = Logger.withTag(TAG)
 
 @Composable
 internal fun BottomNavigationJetpackScreen(viewModel: BottomNavigationJetpackVM) {
-    val tabFlow = viewModel.currentTabStateFlow.collectAsStateWithLifecycle()
-    val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     Content(
-        selectedItem = tabFlow.value,
-        onClick = viewModel::onTabClick,
+        selectedItem = uiState.value.currentTab,
+        onClick = { tab ->
+            viewModel.onAction(BottomNavigationJetpackUiAction.TabClick(tab))
+        },
     )
 
-    log.d { "BottomNavScreen: ${backHandlingState.value}" }
-    if (backHandlingState.value.isEnabled) {
+    log.d { "BottomNavScreen: ${uiState.value.backHandlingState}" }
+    if (uiState.value.backHandlingState.isEnabled) {
         val str = stringResource(Res.string.press_again_to_exit)
         SnackBarOnBackPressHandler(
             message = str,
             modifier = Modifier.padding(horizontal = 8.dp),
-            enabled = backHandlingState.value.isEnabled,
-            onBackClickLessThanDuration = viewModel::onBackDoubleClick,
+            enabled = uiState.value.backHandlingState.isEnabled,
+            onBackClickLessThanDuration = {
+                viewModel.onAction(BottomNavigationJetpackUiAction.BackDoubleClick)
+            },
         ) {
             Snackbar {
                 Text(text = it.visuals.message)

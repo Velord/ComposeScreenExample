@@ -5,6 +5,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
 import com.velord.infrastructure.navigation.compose.destinations.transition.PopFadeTransition
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.setting.SettingScreen
 import com.velord.ui.sharedviewmodel.ThemeVM
@@ -27,7 +28,7 @@ internal fun SettingsDestination() {
     SettingScreen(
         viewModel = viewModel,
         onBackClick = {
-            bottomNavVM.graphCompletedHandling()
+            bottomNavVM.onAction(BottomNavigationDestinationsUiAction.GraphCompletedHandling)
         }
     )
 }

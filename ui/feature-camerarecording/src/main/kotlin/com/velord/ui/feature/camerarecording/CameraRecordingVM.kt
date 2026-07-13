@@ -51,8 +51,12 @@ sealed interface CameraRecordingUiAction {
     data class ChangeVideoQuality(val quality: Quality) : CameraRecordingUiAction
     data class ChangeIsAudioEnabled(val enabled: Boolean) : CameraRecordingUiAction
     data class StartStopRecording(val newCapture: VideoCapture<Recorder>?) : CameraRecordingUiAction
-    data class UpdateCameraPermissionGrantState(val state: PermissionGrantState) : CameraRecordingUiAction
-    data class UpdateAudioPermissionGrantState(val state: PermissionGrantState) : CameraRecordingUiAction
+    data class UpdateCameraPermissionGrantState(
+        val state: PermissionGrantState,
+    ) : CameraRecordingUiAction
+    data class UpdateAudioPermissionGrantState(
+        val state: PermissionGrantState,
+    ) : CameraRecordingUiAction
     data class UpdatePermissionGrantState(val state: PermissionGrantState) : CameraRecordingUiAction
 }
 
@@ -95,24 +99,24 @@ class CameraRecordingVM(
         }
     }
 
-    private fun updatePermissionGrantState(state: PermissionGrantState) {
-        updateCameraPermissionGrantState(state)
-        updateAudioPermissionGrantState(state)
+    private fun onUpdatePermissionGrantState(state: PermissionGrantState) {
+        onUpdateCameraPermissionGrantState(state)
+        onUpdateAudioPermissionGrantState(state)
     }
 
-    private fun updateCameraPermissionGrantState(state: PermissionGrantState) {
+    private fun onUpdateCameraPermissionGrantState(state: PermissionGrantState) {
         uiStateFlow.update {
             it.copy(permissionCamera = state)
         }
     }
 
-    private fun updateAudioPermissionGrantState(state: PermissionGrantState) {
+    private fun onUpdateAudioPermissionGrantState(state: PermissionGrantState) {
         uiStateFlow.update {
             it.copy(permissionAudio = state)
         }
     }
 
-    private fun onCheckPermission() {
+    private fun onCheckPermissionClick() {
         launch {
             checkPermissionEvent.emit(Unit)
         }
@@ -124,7 +128,7 @@ class CameraRecordingVM(
         }
     }
 
-    private fun onChangeVideoCameraSelector() {
+    private fun onChangeCameraSelector() {
         val selector = uiStateFlow.value.cameraSelector
         val isBackCamera = selector == CameraSelector.DEFAULT_BACK_CAMERA
         val newCamera = if (isBackCamera) {
@@ -181,14 +185,20 @@ class CameraRecordingVM(
             actionFlow.collect { action ->
                 when (action) {
                     is CameraRecordingUiAction.SettingsClick -> onSettingsClick()
-                    is CameraRecordingUiAction.ChangeCameraSelector -> onChangeVideoCameraSelector()
-                    is CameraRecordingUiAction.ChangeVideoQuality -> onChangeVideoQuality(action.quality)
-                    is CameraRecordingUiAction.ChangeIsAudioEnabled -> onChangeIsAudioEnabled(action.enabled)
-                    is CameraRecordingUiAction.StartStopRecording -> onStartStopRecording(action.newCapture)
-                    is CameraRecordingUiAction.CheckPermissionClick -> onCheckPermission()
-                    is CameraRecordingUiAction.UpdatePermissionGrantState -> updatePermissionGrantState(action.state)
-                    is CameraRecordingUiAction.UpdateCameraPermissionGrantState -> updateCameraPermissionGrantState(action.state)
-                    is CameraRecordingUiAction.UpdateAudioPermissionGrantState -> updateAudioPermissionGrantState(action.state)
+                    is CameraRecordingUiAction.ChangeCameraSelector -> onChangeCameraSelector()
+                    is CameraRecordingUiAction.ChangeVideoQuality ->
+                        onChangeVideoQuality(action.quality)
+                    is CameraRecordingUiAction.ChangeIsAudioEnabled ->
+                        onChangeIsAudioEnabled(action.enabled)
+                    is CameraRecordingUiAction.StartStopRecording ->
+                        onStartStopRecording(action.newCapture)
+                    is CameraRecordingUiAction.CheckPermissionClick -> onCheckPermissionClick()
+                    is CameraRecordingUiAction.UpdatePermissionGrantState ->
+                        onUpdatePermissionGrantState(action.state)
+                    is CameraRecordingUiAction.UpdateCameraPermissionGrantState ->
+                        onUpdateCameraPermissionGrantState(action.state)
+                    is CameraRecordingUiAction.UpdateAudioPermissionGrantState ->
+                        onUpdateAudioPermissionGrantState(action.state)
                 }
             }
         }

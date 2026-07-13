@@ -58,7 +58,7 @@ private fun InDevelopmentScreen(viewModel: InDevelopmentVM) {
     val time = remember { System.currentTimeMillis().toString() }
     Content(
         text = time,
-        onOpenNew = viewModel::onOpenNew
+        onOpenNew = { viewModel.onAction(InDevelopmentUiAction.OpenNew) }
     )
 }
 

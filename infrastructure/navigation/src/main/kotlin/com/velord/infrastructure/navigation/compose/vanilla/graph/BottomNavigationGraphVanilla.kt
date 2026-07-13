@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 import com.velord.infrastructure.navigation.compose.vanilla.navigator.BottomNavigatorVanilla
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.setting.SettingScreen
 import com.velord.ui.sharedviewmodel.ThemeVM
@@ -19,7 +20,7 @@ internal fun NavGraphBuilder.setupBottomNavigationGraphVanilla(navigator: Bottom
         SettingScreen(
             viewModel = viewModel,
             onBackClick = {
-                bottomNavVM.graphCompletedHandling()
+                bottomNavVM.onAction(BottomNavigationDestinationsUiAction.GraphCompletedHandling)
             }
         )
     }

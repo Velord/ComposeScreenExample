@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
@@ -33,7 +34,7 @@ internal fun CameraRecordingDestination(navigator: CameraRecordingNavigator) {
             }
         },
         onBackClick = {
-            bottomNavVM.graphCompletedHandling()
+            bottomNavVM.onAction(BottomNavigationDestinationsUiAction.GraphCompletedHandling)
         }
     )
 }

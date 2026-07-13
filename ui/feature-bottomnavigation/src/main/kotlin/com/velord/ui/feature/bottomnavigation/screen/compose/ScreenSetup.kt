@@ -35,6 +35,7 @@ import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.infrastructure.util.context.getActivity
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import org.jetbrains.compose.resources.stringResource
 
@@ -45,16 +46,16 @@ internal fun ScreenSetup(
     viewModel: BottomNavigationDestinationsVM,
     content: @Composable () -> Unit,
 ) {
-    val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     // Log whenever the state changes
-    LaunchedEffect(backHandlingState.value) {
-        log.d { "ScreenSetup: State Changed -> ${backHandlingState.value}" }
+    LaunchedEffect(uiState.value.backHandlingState) {
+        log.d { "ScreenSetup: State Changed -> ${uiState.value.backHandlingState}" }
     }
 
     val isEnabledState = remember {
         derivedStateOf {
-            val enabled = backHandlingState.value.isEnabled
+            val enabled = uiState.value.backHandlingState.isEnabled
             log.d { "ScreenSetup: Derived isEnabled -> $enabled" }
             enabled
         }
@@ -83,7 +84,9 @@ internal fun ScreenSetup(
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),
         enabled = isEnabledState.value,
-        onBackClickLessThanDuration = viewModel::onBackDoubleClick,
+        onBackClickLessThanDuration = {
+            viewModel.onAction(BottomNavigationDestinationsUiAction.BackDoubleClick)
+        },
     ) {
         Box(
             Modifier

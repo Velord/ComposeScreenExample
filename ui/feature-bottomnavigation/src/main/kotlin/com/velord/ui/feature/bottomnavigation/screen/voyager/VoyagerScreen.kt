@@ -25,6 +25,7 @@ import com.velord.infrastructure.util.context.getActivity
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.screen.compose.BottomBar
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVoyagerUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVoyagerVM
 import org.jetbrains.compose.resources.stringResource
 
@@ -36,8 +37,7 @@ private fun BottomNavigationItem.toTab(): BottomNavigationTab = when (this) {
 
 @Composable
 fun VoyagerScreen(viewModel: BottomNavigationVoyagerVM) {
-    val tabState = viewModel.currentTabFlow.collectAsStateWithLifecycle()
-    val isBackHandlingEnabledState = viewModel.isBackHandlingEnabledFlow.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
     val finishAppEventState = viewModel.finishAppEvent.collectAsStateWithLifecycle(initialValue = false)
 
     val context = LocalContext.current
@@ -50,21 +50,25 @@ fun VoyagerScreen(viewModel: BottomNavigationVoyagerVM) {
     val navigator = LocalNavigator.current
     val lastItem = navigator?.lastItemOrNull
     LaunchedEffect(lastItem) {
-        viewModel.updateBackHandling(lastItem)
+        viewModel.onAction(BottomNavigationVoyagerUiAction.UpdateBackHandling(lastItem))
     }
 
     Content(
-        currentItem = tabState.value,
+        currentItem = uiState.value.currentTab,
         getNavigationItems = viewModel::getNavigationItems,
-        onTabClick = viewModel::onTabClick,
+        onTabClick = { tab ->
+            viewModel.onAction(BottomNavigationVoyagerUiAction.TabClick(tab))
+        },
     )
 
     val str = stringResource(Res.string.press_again_to_exit)
     SnackBarOnBackPressHandler(
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),
-        enabled = isBackHandlingEnabledState.value,
-        onBackClickLessThanDuration = viewModel::onBackDoubleClick,
+        enabled = uiState.value.isBackHandlingEnabled,
+        onBackClickLessThanDuration = {
+            viewModel.onAction(BottomNavigationVoyagerUiAction.BackDoubleClick)
+        },
     ) {
         Box(
             Modifier

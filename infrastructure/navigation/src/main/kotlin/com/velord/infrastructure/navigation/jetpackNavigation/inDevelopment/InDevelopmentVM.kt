@@ -9,8 +9,29 @@ import kotlinx.coroutines.launch
 class InDevelopmentVM : CoroutineScopeVM() {
 
     val navigationEvent = MutableSharedFlow<NavigationDataFragment>()
+    private val actionFlow = MutableSharedFlow<InDevelopmentUiAction>()
 
-    fun onOpenNew() = launch {
+    init {
+        observe()
+    }
+
+    fun onAction(action: InDevelopmentUiAction) {
+        launch {
+            actionFlow.emit(action)
+        }
+    }
+
+    private fun onOpenNew() = launch {
         navigationEvent.emit(NavigationDataFragment(R.id.toInDevelopmentFragment))
+    }
+
+    private fun observe() {
+        launch {
+            actionFlow.collect { action ->
+                when (action) {
+                    is InDevelopmentUiAction.OpenNew -> onOpenNew()
+                }
+            }
+        }
     }
 }

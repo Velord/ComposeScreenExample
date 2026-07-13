@@ -8,6 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import org.koin.androidx.compose.koinViewModel
 
@@ -19,15 +20,20 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
 
     navigator.SetupNavController(
         updateBackHandling = { startDestinationRoster, currentDestination ->
-            viewModel.updateBackHandling(startDestinationRoster, currentDestination)
+            viewModel.onAction(
+                BottomNavigationDestinationsUiAction.UpdateBackHandling(
+                    startDestinationRoster = startDestinationRoster,
+                    currentRoute = currentDestination,
+                )
+            )
         },
         onTabChanged = { tab ->
-            viewModel.onTabDestinationChanged(tab)
+            viewModel.onAction(BottomNavigationDestinationsUiAction.TabDestinationChanged(tab))
         }
     )
 
     ScreenSetup(viewModel = viewModel) {
-        val currentTabState = viewModel.currentTabStateFlow.collectAsStateWithLifecycle()
+        val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
         // Observe all clicks, not just state(state can't be changed when you click on same tab)
         ObserveSharedFlow(flow = viewModel.onTabClickEvent) { tab ->
@@ -36,17 +42,19 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
         }
 
         Content(
-            tab = currentTabState.value.current,
+            tab = uiState.value.tabState.current,
             createNavHost = {
                 navigator.CreateNavHostForBottom(
                     modifier = Modifier
                         .padding(bottom = it.calculateBottomPadding())
                         .fillMaxSize(),
-                    startRoute = currentTabState.value.current
+                    startRoute = uiState.value.tabState.current
                 )
             },
             getNavigationItems = viewModel::getNavigationItems,
-            onTabClick = viewModel::onTabClick,
+            onTabClick = { tab ->
+                viewModel.onAction(BottomNavigationDestinationsUiAction.TabClick(tab))
+            },
         )
     }
 }

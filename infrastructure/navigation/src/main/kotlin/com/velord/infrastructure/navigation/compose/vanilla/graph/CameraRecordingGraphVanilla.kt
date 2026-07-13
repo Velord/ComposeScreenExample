@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
@@ -28,7 +29,9 @@ internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraR
                     }
                 },
                 onBackClick = {
-                    bottomNavVM.graphCompletedHandling()
+                    bottomNavVM.onAction(
+                        BottomNavigationDestinationsUiAction.GraphCompletedHandling
+                    )
                 }
             )
         }

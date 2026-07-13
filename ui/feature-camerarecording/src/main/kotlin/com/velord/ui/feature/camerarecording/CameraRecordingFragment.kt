@@ -15,6 +15,7 @@ import com.velord.core.ui.util.setContentWithTheme
 import com.velord.infrastructure.util.fragment.viewLifecycleScope
 import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.ui.feature.bottomnavigation.screen.jetpack.addTestCallback
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -42,11 +43,15 @@ class CameraRecordingFragment : Fragment() {
         )
 
         val cameraPermissionGrantState = PermissionGrantState.invoke(isCameraGranted)
-        val cameraAction = CameraRecordingUiAction.UpdateCameraPermissionGrantState(cameraPermissionGrantState)
+        val cameraAction = CameraRecordingUiAction.UpdateCameraPermissionGrantState(
+            cameraPermissionGrantState,
+        )
         viewModel.onAction(cameraAction)
 
         val audioPermissionGrantState = PermissionGrantState.invoke(isAudioGranted)
-        val audioAction = CameraRecordingUiAction.UpdateAudioPermissionGrantState(audioPermissionGrantState)
+        val audioAction = CameraRecordingUiAction.UpdateAudioPermissionGrantState(
+            audioPermissionGrantState,
+        )
         viewModel.onAction(audioAction)
     }
 
@@ -65,7 +70,7 @@ class CameraRecordingFragment : Fragment() {
             needToHandlePermission = false,
             onNavigationEvent = {},
             onBackClick = {
-                viewModelBottom.graphCompletedHandling()
+                viewModelBottom.onAction(BottomNavigationJetpackUiAction.GraphCompletedHandling)
             }
         )
     }
@@ -105,11 +110,15 @@ class CameraRecordingFragment : Fragment() {
         checkRecordVideoPermission(
             actionLauncher = requestRecordVideoPermissionLauncher,
             onGranted = {
-                val action = CameraRecordingUiAction.UpdatePermissionGrantState(PermissionGrantState.Granted)
+                val action = CameraRecordingUiAction.UpdatePermissionGrantState(
+                    PermissionGrantState.Granted,
+                )
                 viewModel.onAction(action)
             },
             onDecline = {
-                val action = CameraRecordingUiAction.UpdatePermissionGrantState(PermissionGrantState.Denied)
+                val action = CameraRecordingUiAction.UpdatePermissionGrantState(
+                    PermissionGrantState.Denied,
+                )
                 viewModel.onAction(action)
             }
         )

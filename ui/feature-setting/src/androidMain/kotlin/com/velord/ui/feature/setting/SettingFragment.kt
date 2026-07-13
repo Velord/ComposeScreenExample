@@ -10,6 +10,7 @@ import com.velord.core.navigation.fragment.NAVIGATION_PAYLOAD
 import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.ui.util.setContentWithTheme
 import com.velord.ui.feature.bottomnavigation.screen.jetpack.addTestCallback
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +26,7 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
         SettingScreen(viewModel) {
-            viewModelBottom.graphCompletedHandling()
+            viewModelBottom.onAction(BottomNavigationJetpackUiAction.GraphCompletedHandling)
         }
     }
 

@@ -15,6 +15,7 @@ import kotlin.coroutines.CoroutineContext
 private const val TAG = "CoroutineScopeVM"
 private val log = Logger.withTag(TAG)
 
+@UiContractExempt(UiContractExemptionReason.Base)
 open class CoroutineScopeVM : ViewModel(), CoroutineScope {
 
     private val job = SupervisorJob()

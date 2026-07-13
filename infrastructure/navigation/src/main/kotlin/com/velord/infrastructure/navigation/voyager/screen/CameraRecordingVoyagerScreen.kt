@@ -3,6 +3,7 @@ package com.velord.infrastructure.navigation.voyager.screen
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.velord.core.navigation.voyager.ObserveNavigation
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.camerarecording.CameraRecordingScreen
 import com.velord.ui.feature.camerarecording.CameraRecordingVM
@@ -22,7 +23,7 @@ internal object CameraRecordingVoyagerScreen : Screen {
             needToHandlePermission = true,
             onNavigationEvent = {}, // Handled by ObserveNavigation
             onBackClick = {
-                bottomNavVM.graphCompletedHandling()
+                bottomNavVM.onAction(BottomNavigationDestinationsUiAction.GraphCompletedHandling)
             }
         )
     }

@@ -14,6 +14,7 @@ import com.velord.multiplebackstackapplier.MultipleBackstack
 import com.velord.ui.feature.bottomnavigation.R
 import com.velord.ui.feature.bottomnavigation.databinding.FragmentBottomNavigationBinding
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -38,9 +39,9 @@ fun Fragment.addTestCallback(
         this,
         true
     ) {
-        viewModel.showBackPressToast(tag)
+        viewModel.onAction(BottomNavigationJetpackUiAction.ShowBackPressToast(tag))
         isEnabled = false
-        viewModel.graphCompletedHandling()
+        viewModel.onAction(BottomNavigationJetpackUiAction.GraphCompletedHandling)
         log.d { "onBackPressedDispatcher" }
     }
 }
@@ -61,12 +62,12 @@ class BottomNavigationFragment : Fragment(R.layout.fragment_bottom_navigation) {
             items = BottomNavigationItem.entries.map { item ->
                 item.toMultipleBackstackGraphItem()
             },
-            flowOnSelect = viewModel.currentTabStateFlow.map { item ->
-                item.toMultipleBackstackGraphItem()
+            flowOnSelect = viewModel.uiStateFlow.map { state ->
+                state.currentTab.toMultipleBackstackGraphItem()
             },
             onMenuChange = {
                 val current = navController.currentDestination
-                viewModel.updateBackHandling(current)
+                viewModel.onAction(BottomNavigationJetpackUiAction.UpdateBackHandling(current))
             }
         )
     }

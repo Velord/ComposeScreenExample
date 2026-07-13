@@ -25,7 +25,6 @@ sealed interface DialogDemoUiAction {
     data object OneButtonDialogDismiss : DialogDemoUiAction
 }
 
-
 class DialogDemoVM : CoroutineScopeVM() {
 
     val uiStateFlow = MutableStateFlow(DialogDemoUiState.DEFAULT)
@@ -41,18 +40,30 @@ class DialogDemoVM : CoroutineScopeVM() {
         }
     }
 
+    private fun onOpenTwoButtonDialogClick() {
+        uiStateFlow.update { state -> state.copy(isVisibleTwoButtonDialog = true) }
+    }
+
+    private fun onTwoButtonDialogDismiss() {
+        uiStateFlow.update { state -> state.copy(isVisibleTwoButtonDialog = false) }
+    }
+
+    private fun onOpenOneButtonDialogClick() {
+        uiStateFlow.update { state -> state.copy(isVisibleOneButtonDialog = true) }
+    }
+
+    private fun onOneButtonDialogDismiss() {
+        uiStateFlow.update { state -> state.copy(isVisibleOneButtonDialog = false) }
+    }
+
     private fun observe() {
         launch {
             actionFlow.collect { action ->
                 when (action) {
-                    is DialogDemoUiAction.OpenTwoButtonDialogClick ->
-                        uiStateFlow.update { it.copy(isVisibleTwoButtonDialog = true) }
-                    is DialogDemoUiAction.TwoButtonDialogDismiss ->
-                        uiStateFlow.update { it.copy(isVisibleTwoButtonDialog = false) }
-                    is DialogDemoUiAction.OpenOneButtonDialogClick ->
-                        uiStateFlow.update { it.copy(isVisibleOneButtonDialog = true) }
-                    is DialogDemoUiAction.OneButtonDialogDismiss ->
-                        uiStateFlow.update { it.copy(isVisibleOneButtonDialog = false) }
+                    is DialogDemoUiAction.OpenTwoButtonDialogClick -> onOpenTwoButtonDialogClick()
+                    is DialogDemoUiAction.TwoButtonDialogDismiss -> onTwoButtonDialogDismiss()
+                    is DialogDemoUiAction.OpenOneButtonDialogClick -> onOpenOneButtonDialogClick()
+                    is DialogDemoUiAction.OneButtonDialogDismiss -> onOneButtonDialogDismiss()
                 }
             }
         }

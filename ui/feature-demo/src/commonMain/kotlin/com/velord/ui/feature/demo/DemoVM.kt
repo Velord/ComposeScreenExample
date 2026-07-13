@@ -39,25 +39,25 @@ class DemoVM(
         }
     }
 
-    private fun onOpenShape() = navigateTo(DemoNavigationEvent.Shape)
+    private fun onOpenShapeClick() = navigateTo(DemoNavigationEvent.Shape)
 
-    private fun onOpenModifier() = navigateTo(DemoNavigationEvent.Modifier)
+    private fun onOpenModifierClick() = navigateTo(DemoNavigationEvent.Modifier)
 
-    private fun onOpenSummator() = navigateTo(DemoNavigationEvent.FlowSummator)
+    private fun onOpenSummatorClick() = navigateTo(DemoNavigationEvent.FlowSummator)
 
-    private fun onOpenMorph() = navigateTo(DemoNavigationEvent.Morph)
+    private fun onOpenMorphClick() = navigateTo(DemoNavigationEvent.Morph)
 
-    private fun onOpenHintPhoneNumber() = launch {
+    private fun onOpenHintPhoneNumberClick() = launch {
         checkJetpackLib()
         navigationEvent.emit(DemoNavigationEvent.HintPhoneNumber)
     }
 
-    private fun onOpenMovie() = launch {
+    private fun onOpenMovieClick() = launch {
         checkJetpackLib()
         navigationEvent.emit(DemoNavigationEvent.Movie)
     }
 
-    private fun onOpenDialog() = launch {
+    private fun onOpenDialogClick() = launch {
         checkJetpackLib()
         navigationEvent.emit(DemoNavigationEvent.Dialog)
     }
@@ -79,13 +79,13 @@ class DemoVM(
         launch {
             actionFlow.collect { action ->
                 when (action) {
-                    DemoUiAction.OpenShapeClick -> onOpenShape()
-                    DemoUiAction.OpenModifierClick -> onOpenModifier()
-                    DemoUiAction.OpenSummatorClick -> onOpenSummator()
-                    DemoUiAction.OpenMorphClick -> onOpenMorph()
-                    DemoUiAction.OpenHintPhoneNumberClick -> onOpenHintPhoneNumber()
-                    DemoUiAction.OpenMovieClick -> onOpenMovie()
-                    DemoUiAction.OpenDialogClick -> onOpenDialog()
+                    DemoUiAction.OpenShapeClick -> onOpenShapeClick()
+                    DemoUiAction.OpenModifierClick -> onOpenModifierClick()
+                    DemoUiAction.OpenSummatorClick -> onOpenSummatorClick()
+                    DemoUiAction.OpenMorphClick -> onOpenMorphClick()
+                    DemoUiAction.OpenHintPhoneNumberClick -> onOpenHintPhoneNumberClick()
+                    DemoUiAction.OpenMovieClick -> onOpenMovieClick()
+                    DemoUiAction.OpenDialogClick -> onOpenDialogClick()
                 }
             }
         }

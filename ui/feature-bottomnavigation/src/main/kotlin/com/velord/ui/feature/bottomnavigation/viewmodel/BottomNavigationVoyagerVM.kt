@@ -6,29 +6,58 @@ import com.velord.ui.feature.bottomnavigation.screen.voyager.BottomNavigationVoy
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class BottomNavigationVoyagerVM : CoroutineScopeVM() {
 
-    val currentTabFlow = MutableStateFlow(BottomNavigationItem.Camera)
-    val isBackHandlingEnabledFlow = MutableStateFlow(true)
+    val uiStateFlow = MutableStateFlow(
+        BottomNavigationVoyagerUiState(
+            currentTab = BottomNavigationItem.Camera,
+            isBackHandlingEnabled = true,
+        )
+    )
     val finishAppEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    private val actionFlow = MutableSharedFlow<BottomNavigationVoyagerUiAction>()
+
+    init {
+        observe()
+    }
 
     fun getNavigationItems(): List<BottomNavigationItem> = BottomNavigationItem.entries
 
-    fun onTabClick(newTab: BottomNavigationItem) {
-        if (newTab == currentTabFlow.value) return
-        currentTabFlow.value = newTab
+    fun onAction(action: BottomNavigationVoyagerUiAction) {
+        launch {
+            actionFlow.emit(action)
+        }
     }
 
-    fun onBackDoubleClick() = launch {
+    private fun onTabClick(newTab: BottomNavigationItem) {
+        if (newTab == uiStateFlow.value.currentTab) return
+        uiStateFlow.update { state -> state.copy(currentTab = newTab) }
+    }
+
+    private fun onBackDoubleClick() = launch {
         finishAppEvent.emit(true)
     }
 
-    fun updateBackHandling(currentNavigationDestination: Screen?) {
+    private fun onUpdateBackHandling(currentNavigationDestination: Screen?) {
         val isStart = currentNavigationDestination == BottomNavigationVoyagerScreen
-        isBackHandlingEnabledFlow.value = isStart
+        uiStateFlow.update { state -> state.copy(isBackHandlingEnabled = isStart) }
+    }
+
+    private fun observe() {
+        launch {
+            actionFlow.collect { action ->
+                when (action) {
+                    is BottomNavigationVoyagerUiAction.TabClick -> onTabClick(action.newTab)
+                    is BottomNavigationVoyagerUiAction.BackDoubleClick -> onBackDoubleClick()
+                    is BottomNavigationVoyagerUiAction.UpdateBackHandling ->
+                        onUpdateBackHandling(action.currentNavigationDestination)
+                }
+            }
+        }
     }
 }

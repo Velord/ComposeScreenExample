@@ -1,10 +1,13 @@
 package com.velord.ui.feature.bottomnavigation.viewmodel
 
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavBackHandlingState
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavEventService
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.navigation.TabState
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
@@ -13,20 +16,28 @@ class BottomNavigationDestinationsVM(
     private val bottomNavEventService: BottomNavEventService
 ): CoroutineScopeVM() {
 
-    val currentTabStateFlow = bottomNavEventService.currentTabStateFlow
-    val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
+    val uiStateFlow = MutableStateFlow(
+        BottomNavigationDestinationsUiState(
+            tabState = bottomNavEventService.currentTabStateFlow.value,
+            backHandlingState = bottomNavEventService.backHandlingStateFlow.value,
+        )
+    )
     val finishAppEvent = MutableSharedFlow<Unit>()
     val onTabClickEvent = MutableSharedFlow<TabState>()
+    private val actionFlow = MutableSharedFlow<BottomNavigationDestinationsUiAction>()
 
-    fun onTabClick(newTab: BottomNavigationItem) {
+    init {
+        observe()
+    }
+
+    fun onAction(action: BottomNavigationDestinationsUiAction) {
         launch {
-            val newState = updateTabStateInternal(newTab)
-            onTabClickEvent.emit(newState)
+            actionFlow.emit(action)
         }
     }
 
     // (Back Press -> Updates State ONLY)
-    fun onTabDestinationChanged(newTab: BottomNavigationItem) {
+    private fun onTabDestinationChanged(newTab: BottomNavigationItem) {
         // Previous solution was to reset all time we enter a new tab,
         // But this causes sync issues at a startup time.
         // The "bottom navigation" screen and the "first destination" screen
@@ -39,52 +50,85 @@ class BottomNavigationDestinationsVM(
 
         // We only update the UI state so the bottom bar highlights correctly.
         // We do NOT emit to onTabClickEvent, preventing the navigation loop.
-        if (currentTabStateFlow.value.current == newTab) return
+        if (uiStateFlow.value.tabState.current == newTab) return
 
         updateTabStateInternal(newTab)
     }
 
     private fun updateTabStateInternal(newTab: BottomNavigationItem): TabState {
-        val current = currentTabStateFlow.value
+        val current = uiStateFlow.value.tabState
         val new = current.copy(previous = current.current, current = newTab)
         bottomNavEventService.updateTab(new)
+        uiStateFlow.update { state -> state.copy(tabState = new) }
         return new
     }
 
-    fun onBackDoubleClick() = launch {
+    private fun onTabClick(newTab: BottomNavigationItem) = launch {
+        val newState = updateTabStateInternal(newTab)
+        onTabClickEvent.emit(newState)
+    }
+
+    private fun onBackDoubleClick() = launch {
         finishAppEvent.emit(Unit)
     }
 
     fun getNavigationItems() = BottomNavigationItem.entries
 
-    fun updateBackHandling(
+    private fun onUpdateBackHandling(
         startDestinationRoster: List<String?>,
         currentRoute: String?
     ) {
         val isStart = startDestinationRoster.contains(currentRoute)
-        val newState = backHandlingStateFlow.value.copy(
+        val newState = uiStateFlow.value.backHandlingState.copy(
             isAtStartGraphDestination = isStart,
             // Auto-revoke the grant if we navigate deep into the stack.
             // If we are at the start, keep whatever the screen requested.
             isGrantedToProceed = if (isStart) {
-                backHandlingStateFlow.value.isGrantedToProceed
+                uiStateFlow.value.backHandlingState.isGrantedToProceed
             } else {
                 false
             }
         )
-        bottomNavEventService.updateBackHandlingState(newState)
+        updateBackHandlingState(newState)
     }
 
-    fun graphCompletedHandling() {
+    private fun onGraphCompletedHandling() {
         changeGrantedToProceed(true)
     }
 
-    fun graphTakeResponsibility() {
+    private fun onGraphTakeResponsibility() {
         changeGrantedToProceed(false)
     }
 
     private fun changeGrantedToProceed(isGranted: Boolean) {
-        val newState = backHandlingStateFlow.value.copy(isGrantedToProceed = isGranted)
+        val newState = uiStateFlow.value.backHandlingState.copy(isGrantedToProceed = isGranted)
+        updateBackHandlingState(newState)
+    }
+
+    private fun updateBackHandlingState(newState: BottomNavBackHandlingState) {
         bottomNavEventService.updateBackHandlingState(newState)
+        uiStateFlow.update { state -> state.copy(backHandlingState = newState) }
+    }
+
+    private fun observe() {
+        launch {
+            actionFlow.collect { action ->
+                when (action) {
+                    is BottomNavigationDestinationsUiAction.TabClick -> onTabClick(action.newTab)
+                    is BottomNavigationDestinationsUiAction.TabDestinationChanged ->
+                        onTabDestinationChanged(action.newTab)
+                    is BottomNavigationDestinationsUiAction.BackDoubleClick -> onBackDoubleClick()
+                    is BottomNavigationDestinationsUiAction.UpdateBackHandling ->
+                        onUpdateBackHandling(
+                            startDestinationRoster = action.startDestinationRoster,
+                            currentRoute = action.currentRoute,
+                        )
+                    is BottomNavigationDestinationsUiAction.GraphCompletedHandling ->
+                        onGraphCompletedHandling()
+                    is BottomNavigationDestinationsUiAction.GraphTakeResponsibility ->
+                        onGraphTakeResponsibility()
+                }
+            }
+        }
     }
 }
