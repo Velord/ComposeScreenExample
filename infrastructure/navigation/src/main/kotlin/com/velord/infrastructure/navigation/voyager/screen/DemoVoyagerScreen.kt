@@ -11,15 +11,15 @@ import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.demo.DemoNavigationEvent
 import com.velord.ui.feature.demo.DemoScreen
-import com.velord.ui.feature.demo.DemoViewModel
+import com.velord.ui.feature.demo.DemoVM
 import org.koin.androidx.compose.koinViewModel
 
 internal object DemoVoyagerScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel = koinViewModel<DemoViewModel>()
-        val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+        val viewModel = koinViewModel<DemoVM>()
+        val bottomNavVM = koinViewModel<BottomNavigationDestinationsVM>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle(
             initialValue = null,

@@ -17,9 +17,9 @@ import androidx.navigation.compose.rememberNavController
 import co.touchlab.kermit.Logger
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 import com.velord.infrastructure.navigation.compose.vanilla.graph.setupBottomNavigationGraphVanilla
-import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
-import com.velord.ui.feature.bottomnavigation.TabState
-import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.navigation.TabState
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 
 private val vanillaLog = Logger.withTag("LogBackStack - SupremeNavigatorVanilla")

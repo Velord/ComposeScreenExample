@@ -13,7 +13,9 @@ import com.velord.infrastructure.util.fragment.viewLifecycleScope
 import com.velord.multiplebackstackapplier.MultipleBackstack
 import com.velord.ui.feature.bottomnavigation.R
 import com.velord.ui.feature.bottomnavigation.databinding.FragmentBottomNavigationBinding
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -56,8 +58,12 @@ class BottomNavigationFragment : Fragment(R.layout.fragment_bottom_navigation) {
             navController = lazy { navController },
             lifecycleOwner = this,
             context = requireContext(),
-            items = viewModel.getNavigationItems(),
-            flowOnSelect = viewModel.currentTabStateFlow,
+            items = BottomNavigationItem.entries.map { item ->
+                item.toMultipleBackstackGraphItem()
+            },
+            flowOnSelect = viewModel.currentTabStateFlow.map { item ->
+                item.toMultipleBackstackGraphItem()
+            },
             onMenuChange = {
                 val current = navController.currentDestination
                 viewModel.updateBackHandling(current)
@@ -88,7 +94,7 @@ class BottomNavigationFragment : Fragment(R.layout.fragment_bottom_navigation) {
     context(b: FragmentBottomNavigationBinding)
     private fun initView() {
         b.bottomNavBarView.setContentWithTheme {
-            JetpackScreen(viewModel)
+            BottomNavigationJetpackScreen(viewModel)
         }
     }
 

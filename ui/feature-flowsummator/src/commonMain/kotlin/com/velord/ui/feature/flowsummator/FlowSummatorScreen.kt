@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun FlowSummatorScreen(viewModel: FlowSummatorViewModel) {
+fun FlowSummatorScreen(viewModel: FlowSummatorVM) {
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     val isStartEnabledState = remember {

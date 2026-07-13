@@ -6,25 +6,25 @@ import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.ui.feature.demo.DemoScreen
-import com.velord.ui.feature.demo.DemoViewModel
+import com.velord.ui.feature.demo.DemoVM
 import com.velord.ui.feature.demo.dialog.DialogDemoScreen
-import com.velord.ui.feature.demo.dialog.DialogDemoViewModel
+import com.velord.ui.feature.demo.dialog.DialogDemoVM
 import com.velord.ui.feature.demo.hintphonenumber.HintPhoneNumberScreen
 import com.velord.ui.feature.demo.modifier.ModifierDemoScreen
 import com.velord.ui.feature.demo.morph.MorphDemoScreen
 import com.velord.ui.feature.demo.shape.ShapeDemoScreen
 import com.velord.ui.feature.flowsummator.FlowSummatorScreen
-import com.velord.ui.feature.flowsummator.FlowSummatorViewModel
+import com.velord.ui.feature.flowsummator.FlowSummatorVM
 import com.velord.ui.feature.movie.MovieScreen
-import com.velord.ui.feature.movie.viewModel.AllMovieViewModel
-import com.velord.ui.feature.movie.viewModel.FavoriteMovieViewModel
-import com.velord.ui.feature.movie.viewModel.MovieViewModel
+import com.velord.ui.feature.movie.viewModel.AllMovieVM
+import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
+import com.velord.ui.feature.movie.viewModel.MovieVM
 import org.koin.androidx.compose.koinViewModel
 
 internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNavigator) {
     entry<GraphNav3.BottomTab.Demo.DemoDestinationNav3> {
-        val viewModel = koinViewModel<DemoViewModel>()
-        val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+        val viewModel = koinViewModel<DemoVM>()
+        val bottomNavVM = koinViewModel<BottomNavigationDestinationsVM>()
 
         DemoScreen(
             viewModel = viewModel,
@@ -35,7 +35,7 @@ internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNaviga
                 // To enable System Back Button handling
                 // via Bottom Navigation -> comment the line below
                 // bottomNavViewModel.graphCompletedHandling()
-                bottomNavViewModel.graphTakeResponsibility()
+                bottomNavVM.graphTakeResponsibility()
             },
         )
     }
@@ -49,7 +49,7 @@ internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNaviga
     }
 
     entry<GraphNav3.BottomTab.Demo.FlowSummatorDestinationNav3> {
-        val viewModel = koinViewModel<FlowSummatorViewModel>()
+        val viewModel = koinViewModel<FlowSummatorVM>()
         FlowSummatorScreen(viewModel)
     }
 
@@ -62,14 +62,14 @@ internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNaviga
     }
 
     entry<GraphNav3.BottomTab.Demo.MovieDestinationNav3> {
-        val viewModel = koinViewModel<MovieViewModel>()
-        val allMovieViewModel = koinViewModel<AllMovieViewModel>()
-        val favoriteMovieViewModel = koinViewModel<FavoriteMovieViewModel>()
-        MovieScreen(viewModel, allMovieViewModel, favoriteMovieViewModel)
+        val viewModel = koinViewModel<MovieVM>()
+        val allMovieVM = koinViewModel<AllMovieVM>()
+        val favoriteMovieVM = koinViewModel<FavoriteMovieVM>()
+        MovieScreen(viewModel, allMovieVM, favoriteMovieVM)
     }
 
     entry<GraphNav3.BottomTab.Demo.DialogDestinationNav3> {
-        val viewModel = koinViewModel<DialogDemoViewModel>()
+        val viewModel = koinViewModel<DialogDemoVM>()
         DialogDemoScreen(viewModel)
     }
 }

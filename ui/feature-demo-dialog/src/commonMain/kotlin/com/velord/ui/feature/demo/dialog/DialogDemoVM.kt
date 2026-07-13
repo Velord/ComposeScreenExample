@@ -1,6 +1,6 @@
 package com.velord.ui.feature.demo.dialog
 
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -26,7 +26,7 @@ sealed interface DialogDemoUiAction {
 }
 
 
-class DialogDemoViewModel : CoroutineScopeViewModel() {
+class DialogDemoVM : CoroutineScopeVM() {
 
     val uiStateFlow = MutableStateFlow(DialogDemoUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<DialogDemoUiAction>()

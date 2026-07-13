@@ -1,11 +1,19 @@
 ﻿package com.velord.infrastructure.konsist.codestyle.declaration
 
+import com.lemonappdev.konsist.api.Konsist
+import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
+import com.lemonappdev.konsist.api.ext.koscope.declarationsOf
 import com.lemonappdev.konsist.api.verify.assertTrue
 import com.velord.infrastructure.konsist.codestyle.projectFileRoster
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
+private const val VIEW_MODEL_SUFFIX = "VM"
+private val VIEW_MODEL_PARENT_NAME_ROSTER = setOf("ViewModel", "CoroutineScopeVM")
+
 class DeclarationCodeStyleTest {
+
+    private val projectScope = Konsist.scopeFromProject()
     @Test
     fun `function bodies should not start with a blank line`() {
         projectFileRoster.assertTrue { file ->
@@ -232,4 +240,19 @@ class DeclarationCodeStyleTest {
         }
     }
 
+    @Test
+    fun `view model classes and files should use VM suffix`() {
+        projectScope
+            .declarationsOf<KoClassDeclaration>()
+            .filter { declaration ->
+                declaration.hasParentWithName(
+                    names = VIEW_MODEL_PARENT_NAME_ROSTER,
+                    indirectParents = true,
+                )
+            }
+            .assertTrue { declaration ->
+                declaration.name.endsWith(VIEW_MODEL_SUFFIX) &&
+                    declaration.containingFile.name == declaration.name
+            }
+    }
 }

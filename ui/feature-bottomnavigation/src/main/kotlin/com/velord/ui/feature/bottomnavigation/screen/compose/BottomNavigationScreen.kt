@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
 import com.velord.core.ui.util.ObserveSharedFlow
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigator
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import org.koin.androidx.compose.koinViewModel
 

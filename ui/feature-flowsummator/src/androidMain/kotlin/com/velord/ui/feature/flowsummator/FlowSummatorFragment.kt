@@ -10,7 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FlowSummatorFragment : Fragment() {
 
-    private val viewModel by viewModel<FlowSummatorViewModel>()
+    private val viewModel by viewModel<FlowSummatorVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

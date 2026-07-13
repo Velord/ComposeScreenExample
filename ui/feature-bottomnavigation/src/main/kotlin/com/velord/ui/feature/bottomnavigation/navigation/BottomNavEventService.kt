@@ -1,4 +1,4 @@
-package com.velord.ui.feature.bottomnavigation
+package com.velord.ui.feature.bottomnavigation.navigation
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.annotation.Single
@@ -7,7 +7,7 @@ data class BottomNavBackHandlingState(
     val isAtStartGraphDestination: Boolean = true,
     val isGrantedToProceed: Boolean = false
 ) {
-    val isEnabled: Boolean get() = isAtStartGraphDestination && isGrantedToProceed
+    val isEnabled: Boolean = isAtStartGraphDestination && isGrantedToProceed
 }
 
 @Single

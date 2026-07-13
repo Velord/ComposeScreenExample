@@ -19,7 +19,7 @@ import com.velord.infrastructure.util.context.getActivity
 import com.velord.model.ToastConfig
 import com.velord.model.setting.AppThemeConfig
 import com.velord.ui.sharedviewmodel.ThemeUiState
-import com.velord.ui.sharedviewmodel.ThemeViewModel
+import com.velord.ui.sharedviewmodel.ThemeVM
 import kotlinx.coroutines.flow.Flow
 
 fun ComponentActivity.setContentWithTheme(
@@ -64,10 +64,8 @@ private fun AppThemeContainer(
     content: @Composable () -> Unit,
 ) {
     val activity = LocalContext.current.getActivity()
-    val themeViewModel = viewModel<ThemeViewModel>(
-        viewModelStoreOwner = activity as ViewModelStoreOwner,
-    )
-    val themeState: State<ThemeUiState?> = themeViewModel.uiStateFlow.collectAsStateWithLifecycle()
+    val themeVM = viewModel<ThemeVM>(viewModelStoreOwner = activity as ViewModelStoreOwner)
+    val themeState: State<ThemeUiState?> = themeVM.uiStateFlow.collectAsStateWithLifecycle()
 
     val theme = themeState.value?.appThemeConfig ?: AppThemeConfig.DEFAULT
 

@@ -32,7 +32,7 @@ import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
-fun DialogDemoScreen(viewModel: DialogDemoViewModel) {
+fun DialogDemoScreen(viewModel: DialogDemoVM) {
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
     val isVisibleTwoButtonDialogState = rememberUpdatedState(uiState.value.isVisibleTwoButtonDialog)
     val isVisibleOneButtonDialogState = rememberUpdatedState(uiState.value.isVisibleOneButtonDialog)

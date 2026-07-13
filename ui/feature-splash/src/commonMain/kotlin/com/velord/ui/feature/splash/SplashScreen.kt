@@ -70,7 +70,7 @@ Initialize any data you need than change isAppReadyState to true.
  */
 @Composable
 fun SplashScreen(
-    viewModel: SplashViewModel,
+    viewModel: SplashVM,
     contentWhenAppIsReady: @Composable () -> Unit,
 ) {
     val isAppReadyState = viewModel.isAppReadyFlow.collectAsStateWithLifecycle()

@@ -82,23 +82,20 @@ internal class NavigationState(
         if (topLevelRoute != startRoute) stacksInUse += topLevelRoute
         return stacksInUse
     }
-}
 
-@Composable
-internal fun NavigationState.toEntries(
-    entryProvider: (NavKey) -> NavEntry<NavKey>
-): SnapshotStateList<NavEntry<NavKey>> {
+    @Composable
+    fun toEntries(entryProvider: (NavKey) -> NavEntry<NavKey>): SnapshotStateList<NavEntry<NavKey>> {
+        val decoratedEntries = backStacks.mapValues { (_, stack) ->
+            val decorators = listOf(rememberSaveableStateHolderNavEntryDecorator<NavKey>())
+            rememberDecoratedNavEntries(
+                backStack = stack,
+                entryDecorators = decorators,
+                entryProvider = entryProvider
+            )
+        }
 
-    val decoratedEntries = backStacks.mapValues { (_, stack) ->
-        val decorators = listOf(rememberSaveableStateHolderNavEntryDecorator<NavKey>())
-        rememberDecoratedNavEntries(
-            backStack = stack,
-            entryDecorators = decorators,
-            entryProvider = entryProvider
-        )
+        return stacksInUse
+            .flatMap { decoratedEntries[it] ?: emptyList() }
+            .toMutableStateList()
     }
-
-    return stacksInUse
-        .flatMap { decoratedEntries[it] ?: emptyList() }
-        .toMutableStateList()
 }

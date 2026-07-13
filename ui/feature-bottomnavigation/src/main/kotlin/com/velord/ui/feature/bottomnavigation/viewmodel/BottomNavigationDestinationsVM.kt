@@ -1,9 +1,9 @@
 package com.velord.ui.feature.bottomnavigation.viewmodel
 
-import com.velord.ui.feature.bottomnavigation.BottomNavEventService
-import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
-import com.velord.ui.feature.bottomnavigation.TabState
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavEventService
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.navigation.TabState
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
@@ -11,7 +11,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class BottomNavigationDestinationsVM(
     private val bottomNavEventService: BottomNavEventService
-): CoroutineScopeViewModel() {
+): CoroutineScopeVM() {
 
     val currentTabStateFlow = bottomNavEventService.currentTabStateFlow
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow

@@ -19,17 +19,17 @@ import com.velord.ui.feature.movie.component.MovieAction
 import com.velord.ui.feature.movie.component.MovieBottomSheet
 import com.velord.ui.feature.movie.component.MovieHeader
 import com.velord.ui.feature.movie.component.MoviePager
-import com.velord.ui.feature.movie.viewModel.AllMovieViewModel
-import com.velord.ui.feature.movie.viewModel.FavoriteMovieViewModel
+import com.velord.ui.feature.movie.viewModel.AllMovieVM
+import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieUiAction
 import com.velord.ui.feature.movie.viewModel.MovieUiState
-import com.velord.ui.feature.movie.viewModel.MovieViewModel
+import com.velord.ui.feature.movie.viewModel.MovieVM
 
 @Composable
 fun MovieScreen(
-    viewModel: MovieViewModel,
-    allMovieViewModel: AllMovieViewModel,
-    favoriteMovieViewModel: FavoriteMovieViewModel,
+    viewModel: MovieVM,
+    allMovieVM: AllMovieVM,
+    favoriteMovieVM: FavoriteMovieVM,
 ) {
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
@@ -38,8 +38,8 @@ fun MovieScreen(
         onAction = viewModel::onAction,
     ) {
         MoviePager(
-            allMovieViewModel = allMovieViewModel,
-            favoriteMovieViewModel = favoriteMovieViewModel,
+            allMovieVM = allMovieVM,
+            favoriteMovieVM = favoriteMovieVM,
             uiState = uiState.value,
             onSwipe = {
                 viewModel.onAction(MovieUiAction.PageSwipe(it))

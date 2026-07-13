@@ -16,7 +16,7 @@ private const val TAG = "Demo graph"
 
 class DemoFragment : Fragment() {
 
-    private val viewModel by viewModel<DemoViewModel>()
+    private val viewModel by viewModel<DemoVM>()
     private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     override fun onCreateView(
@@ -41,12 +41,12 @@ class DemoFragment : Fragment() {
     }
 
     private fun handleNavigationEvent(event: DemoNavigationEvent) {
-        val destinationId = event.jetpackDestinationId ?: return
+        val destinationId = event.toJetpackDestinationId() ?: return
         findNavController().navigate(destinationId)
     }
 }
 
-private val DemoNavigationEvent.jetpackDestinationId: Int? get() = when (this) {
+private fun DemoNavigationEvent.toJetpackDestinationId(): Int? = when(this) {
     DemoNavigationEvent.Shape -> R.id.from_demoFragment_to_shapeDemoFragment
     DemoNavigationEvent.Modifier -> R.id.from_demoFragment_to_modifierDemoFragment
     DemoNavigationEvent.FlowSummator -> R.id.from_demoFragment_to_flowSummatorFragment

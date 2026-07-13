@@ -21,6 +21,7 @@ import org.jetbrains.compose.resources.stringResource
 
 sealed class BottomNavigationTab : Tab {
     data object Camera : BottomNavigationTab() {
+
         override val options: TabOptions
             @Composable
             get() {
@@ -44,6 +45,7 @@ sealed class BottomNavigationTab : Tab {
     }
 
     data object Demo : BottomNavigationTab() {
+
         override val options: TabOptions
             @Composable
             get() {
@@ -69,6 +71,7 @@ sealed class BottomNavigationTab : Tab {
     }
 
     data object Settings : BottomNavigationTab() {
+
         override val options: TabOptions
             @Composable
             get() {

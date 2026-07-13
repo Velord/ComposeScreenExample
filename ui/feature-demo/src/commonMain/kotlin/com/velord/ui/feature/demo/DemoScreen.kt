@@ -32,7 +32,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DemoScreen(
-    viewModel: DemoViewModel,
+    viewModel: DemoVM,
     onNavigationEvent: (DemoNavigationEvent) -> Unit,
     onBackClick: () -> Unit,
 ) {

@@ -4,7 +4,7 @@ import com.velord.model.movie.MovieFilterOption
 import com.velord.ui.feature.movie.model.MovieFilterOptionUI
 import com.velord.ui.feature.movie.model.MoviePage
 import com.velord.ui.feature.movie.model.MovieSortOptionUI
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.movie.GetMovieSortOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -44,10 +44,10 @@ sealed interface MovieUiAction {
     data class FilterOptionClick(val newOption: MovieFilterOptionUI) : MovieUiAction
 }
 
-class MovieViewModel(
+class MovieVM(
     private val getMovieSortOptionUC: GetMovieSortOptionUC,
     private val setMovieSortOptionUC: SetMovieSortOptionUC
-) : CoroutineScopeViewModel() {
+) : CoroutineScopeVM() {
 
     val uiStateFlow: MutableStateFlow<MovieUiState> = MutableStateFlow(MovieUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<MovieUiAction>()

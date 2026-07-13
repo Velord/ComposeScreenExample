@@ -7,13 +7,13 @@ import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinat
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.ui.feature.camerarecording.CameraRecordingScreen
-import com.velord.ui.feature.camerarecording.CameraRecordingViewModel
+import com.velord.ui.feature.camerarecording.CameraRecordingVM
 import org.koin.androidx.compose.koinViewModel
 
 internal fun EntryProviderScope<NavKey>.setupCameraRecordingGraphNav3(navigator: CameraRecordingNavigator)  {
     entry<GraphNav3.BottomTab.CameraRecording.CameraRecordingDestinationNav3> {
-        val viewModel = koinViewModel<CameraRecordingViewModel>()
-        val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+        val viewModel = koinViewModel<CameraRecordingVM>()
+        val bottomNavVM = koinViewModel<BottomNavigationDestinationsVM>()
         CameraRecordingScreen(
             viewModel = viewModel,
             needToHandlePermission = true,
@@ -23,7 +23,7 @@ internal fun EntryProviderScope<NavKey>.setupCameraRecordingGraphNav3(navigator:
                 }
             },
             onBackClick = {
-                bottomNavViewModel.graphCompletedHandling()
+                bottomNavVM.graphCompletedHandling()
             }
         )
     }

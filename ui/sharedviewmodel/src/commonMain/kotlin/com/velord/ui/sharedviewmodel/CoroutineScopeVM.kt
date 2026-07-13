@@ -12,10 +12,10 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.coroutines.CoroutineContext
 
-private const val TAG = "CoroutineScopeViewModel"
+private const val TAG = "CoroutineScopeVM"
 private val log = Logger.withTag(TAG)
 
-open class CoroutineScopeViewModel : ViewModel(), CoroutineScope {
+open class CoroutineScopeVM : ViewModel(), CoroutineScope {
 
     private val job = SupervisorJob()
     private val errorHandler = CoroutineExceptionHandler { _, error ->

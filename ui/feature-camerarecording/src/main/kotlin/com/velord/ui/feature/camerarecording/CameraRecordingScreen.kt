@@ -60,7 +60,7 @@ private val log = Logger.withTag("CameraRecordingScreen")
 
 @Composable
 fun CameraRecordingScreen(
-    viewModel: CameraRecordingViewModel,
+    viewModel: CameraRecordingVM,
     needToHandlePermission: Boolean = false,
     onNavigationEvent : (CameraRecordingNavigationEvent) -> Unit,
     onBackClick: () -> Unit,

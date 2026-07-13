@@ -12,7 +12,7 @@ import com.velord.core.resource.R
 import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.model.camera.RecordingSession
 import com.velord.model.camera.VideoCaptureWrapper
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.camera.StartRecordingUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,9 +56,9 @@ sealed interface CameraRecordingUiAction {
     data class UpdatePermissionGrantState(val state: PermissionGrantState) : CameraRecordingUiAction
 }
 
-class CameraRecordingViewModel(
+class CameraRecordingVM(
     private val startRecording: StartRecordingUC,
-) : CoroutineScopeViewModel() {
+) : CoroutineScopeVM() {
 
     val uiStateFlow = MutableStateFlow(CameraRecordingUiState.DEFAULT)
     // User interaction

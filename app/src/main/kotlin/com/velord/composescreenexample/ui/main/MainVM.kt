@@ -5,7 +5,7 @@ import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 import com.velord.core.ui.compose.glance.updateAll
 import com.velord.model.ToastConfig
 import com.velord.model.setting.ThemeConfig
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.ui.widget.counter.CounterWidget
 import com.velord.ui.widget.refreshableimage.RefreshableImageWidget
 import com.velord.usecase.event.GetToastConfigFlowUC
@@ -24,10 +24,10 @@ sealed interface MainUiAction {
 // Mixing them together derives telling compile time verification that GetToastConfigFlowUC
 // will be provided during runtime.
 @KoinViewModel
-class MainViewModel(
+class MainVM(
     private val context: Context,
     @Provided private val getToastConfigFlowUC: GetToastConfigFlowUC,
-) : CoroutineScopeViewModel() {
+) : CoroutineScopeVM() {
 
     val toastConfigFlow = MutableSharedFlow<ToastConfig>()
 

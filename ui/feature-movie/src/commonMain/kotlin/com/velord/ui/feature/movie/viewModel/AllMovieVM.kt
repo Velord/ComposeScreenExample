@@ -1,7 +1,7 @@
 package com.velord.ui.feature.movie.viewModel
 
 import com.velord.model.movie.Movie
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.LoadNewPageMovieUC
 import com.velord.usecase.movie.RefreshMovieUC
@@ -58,13 +58,13 @@ sealed interface AllMovieUiAction {
 
 private const val PAGINATION_DEBOUNCE_MS = 300L
 
-class AllMovieViewModel(
+class AllMovieVM(
     private val getAllMovieUC: GetAllMovieUC,
     private val updateMovieLikeUC: UpdateMovieLikeUC,
     private val loadNewPageMovieUC: LoadNewPageMovieUC,
     private val refreshMovieUC: RefreshMovieUC,
     private val shareMovieUC: ShareMovieUC,
-) : CoroutineScopeViewModel() {
+) : CoroutineScopeVM() {
 
     val uiStateFlow: MutableStateFlow<AllMovieUiState> = MutableStateFlow(AllMovieUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<AllMovieUiAction>()

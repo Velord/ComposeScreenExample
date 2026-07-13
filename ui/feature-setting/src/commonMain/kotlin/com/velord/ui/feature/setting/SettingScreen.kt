@@ -36,12 +36,12 @@ import com.velord.core.resource.use_system_dynamic_theme
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.LocalTheme
 import com.velord.ui.sharedviewmodel.ThemeUiAction
-import com.velord.ui.sharedviewmodel.ThemeViewModel
+import com.velord.ui.sharedviewmodel.ThemeVM
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SettingScreen(
-    viewModel: ThemeViewModel,
+    viewModel: ThemeVM,
     onBackClick: () -> Unit,
 ) {
     SideEffect {

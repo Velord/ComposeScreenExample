@@ -20,13 +20,14 @@ import com.velord.core.resource.press_again_to_exit
 import com.velord.core.ui.compose.component.AnimatableLabeledIcon
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import org.jetbrains.compose.resources.stringResource
 
 private val log = Logger.withTag(TAG)
 
 @Composable
-internal fun JetpackScreen(viewModel: BottomNavigationJetpackVM) {
+internal fun BottomNavigationJetpackScreen(viewModel: BottomNavigationJetpackVM) {
     val tabFlow = viewModel.currentTabStateFlow.collectAsStateWithLifecycle()
     val backHandlingState = viewModel.backHandlingStateFlow.collectAsStateWithLifecycle()
 

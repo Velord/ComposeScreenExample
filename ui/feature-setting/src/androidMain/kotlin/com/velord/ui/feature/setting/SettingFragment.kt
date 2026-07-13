@@ -11,12 +11,12 @@ import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.ui.util.setContentWithTheme
 import com.velord.ui.feature.bottomnavigation.screen.jetpack.addTestCallback
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
-import com.velord.ui.sharedviewmodel.ThemeViewModel
+import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingFragment : Fragment() {
 
-    private val viewModel by activityViewModels<ThemeViewModel>()
+    private val viewModel by activityViewModels<ThemeVM>()
     private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     override fun onCreateView(

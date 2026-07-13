@@ -7,10 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Camera
-import androidx.compose.material.icons.outlined.Hexagon
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -27,7 +23,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -39,7 +34,7 @@ import com.velord.core.ui.compose.component.AnimatableLabeledIcon
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.infrastructure.util.context.getActivity
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
-import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import org.jetbrains.compose.resources.stringResource
 
@@ -103,7 +98,6 @@ internal fun ScreenSetup(
         }
     }
 }
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 internal fun Content(
@@ -147,7 +141,7 @@ internal fun BottomBar(
                     val color = MaterialTheme.colorScheme.run {
                         if (isSelected) secondary else onSurface
                     }
-                    val painter = rememberVectorPainter(image = item.getIcon())
+                    val painter = rememberVectorPainter(image = item.icon)
                     AnimatableLabeledIcon(
                         label = item.name,
                         painter = painter,
@@ -165,11 +159,4 @@ internal fun BottomBar(
             )
         }
     }
-}
-
-@Composable
-private fun BottomNavigationItem.getIcon(): ImageVector = when (this) {
-    BottomNavigationItem.Camera -> Icons.Outlined.Camera
-    BottomNavigationItem.Demo -> Icons.Outlined.Hexagon
-    BottomNavigationItem.Setting -> Icons.Outlined.Settings
 }

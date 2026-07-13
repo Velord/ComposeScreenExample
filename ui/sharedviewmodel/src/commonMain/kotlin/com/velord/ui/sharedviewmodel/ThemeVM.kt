@@ -28,12 +28,12 @@ sealed interface ThemeUiAction {
     data object DarkThemeSwitch : ThemeUiAction
 }
 
-class ThemeViewModel(
+class ThemeVM(
     private val getThemeConfigUC: GetThemeConfigUC,
     private val switchDynamicColorThemeConfigUC: SwitchDynamicColorThemeConfigUC,
     private val switchAbideToOsThemeConfigUC: SwitchAbideToOsThemeConfigUC,
     private val switchDarkThemeConfigUC: SwitchDarkThemeConfigUC,
-) : CoroutineScopeViewModel() {
+) : CoroutineScopeVM() {
 
     val uiStateFlow = MutableStateFlow(ThemeUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<ThemeUiAction>()

@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
-import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigationScreen
-import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
 import com.velord.infrastructure.navigation.compose.destinations.transition.PopScaleOutTransition
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigationScreen
 
 private const val MAIN_GRAPH = "main_nav_graph"
 @NavHostGraph(

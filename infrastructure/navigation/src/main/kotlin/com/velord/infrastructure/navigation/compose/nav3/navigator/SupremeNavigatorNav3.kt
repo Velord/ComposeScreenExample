@@ -13,9 +13,9 @@ import androidx.navigation3.ui.NavDisplay
 import co.touchlab.kermit.Logger
 import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
 import com.velord.infrastructure.navigation.compose.nav3.graph.setupBottomNavigationGraphNav3
-import com.velord.ui.feature.bottomnavigation.BottomNavigationItem
-import com.velord.ui.feature.bottomnavigation.TabState
-import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigator
+import com.velord.ui.feature.bottomnavigation.navigation.TabState
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 
 private val BOTTOM_TAB_TOP_LEVEL_ROUTES = setOf(

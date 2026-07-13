@@ -5,7 +5,7 @@ import com.velord.core.resource.this_demo_is_deprecated
 import com.velord.infrastructure.config.BuildConfigResolver
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.event.ShowToastUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -21,10 +21,10 @@ sealed interface DemoUiAction {
     data object OpenDialogClick : DemoUiAction
 }
 
-class DemoViewModel(
+class DemoVM(
     private val buildConfigResolver: BuildConfigResolver,
     private val showToastUC: ShowToastUC,
-) : CoroutineScopeViewModel() {
+) : CoroutineScopeVM() {
 
     val navigationEvent = MutableSharedFlow<DemoNavigationEvent>()
     private val actionFlow = MutableSharedFlow<DemoUiAction>()

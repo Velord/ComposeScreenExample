@@ -2,11 +2,11 @@ package com.velord.infrastructure.navigation.jetpackNavigation.inDevelopment
 
 import com.velord.core.navigation.fragment.NavigationDataFragment
 import com.velord.infrastructure.navigation.R
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
-class InDevelopmentViewModel : CoroutineScopeViewModel() {
+class InDevelopmentVM : CoroutineScopeVM() {
 
     val navigationEvent = MutableSharedFlow<NavigationDataFragment>()
 

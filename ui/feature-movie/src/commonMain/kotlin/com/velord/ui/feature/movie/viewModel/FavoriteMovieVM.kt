@@ -1,7 +1,7 @@
 package com.velord.ui.feature.movie.viewModel
 
 import com.velord.model.movie.Movie
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.movie.GetFavoriteMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,10 +25,10 @@ sealed interface FavoriteMovieUiAction {
     data class OnLikeClick(val movie: Movie) : FavoriteMovieUiAction
 }
 
-class FavoriteMovieViewModel(
+class FavoriteMovieVM(
     private val getFavoriteMovieUC: GetFavoriteMovieUC,
     private val updateMovieLikeUC: UpdateMovieLikeUC
-) : CoroutineScopeViewModel() {
+) : CoroutineScopeVM() {
 
     val uiStateFlow: MutableStateFlow<FavoriteMovieUiState> = MutableStateFlow(
         FavoriteMovieUiState.DEFAULT

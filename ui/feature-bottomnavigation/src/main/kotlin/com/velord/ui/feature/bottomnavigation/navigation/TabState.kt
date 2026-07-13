@@ -1,10 +1,4 @@
-package com.velord.ui.feature.bottomnavigation
-
-enum class BottomNavigationItem {
-    Camera,
-    Demo,
-    Setting;
-}
+package com.velord.ui.feature.bottomnavigation.navigation
 
 data class TabState(
     val previous: BottomNavigationItem,

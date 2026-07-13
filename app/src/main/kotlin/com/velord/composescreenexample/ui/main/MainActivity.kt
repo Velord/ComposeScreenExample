@@ -25,9 +25,9 @@ import com.velord.infrastructure.navigation.CreateNavigationViaNav3
 import com.velord.infrastructure.navigation.CreateNavigationViaVanilla
 import com.velord.infrastructure.navigation.CreateNavigationViaVoyager
 import com.velord.ui.feature.splash.SplashScreen
-import com.velord.ui.feature.splash.SplashViewModel
+import com.velord.ui.feature.splash.SplashVM
 import com.velord.ui.feature.splash.installSplash
-import com.velord.ui.sharedviewmodel.ThemeViewModel
+import com.velord.ui.sharedviewmodel.ThemeVM
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.velord.infrastructure.navigation.R as RNavigation
@@ -47,9 +47,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val viewModel: MainViewModel by viewModel()
-    private val themeViewModel: ThemeViewModel by viewModel()
-    private val splashViewModel: SplashViewModel by viewModel()
+    private val viewModel: MainVM by viewModel()
+    private val themeVM: ThemeVM by viewModel()
+    private val splashVM: SplashVM by viewModel()
 //    Activity root
 //    ├─ mainNavHost          // Compose navigation(Voyager, Vanilla, Destinations, Nav3)
 //    ├─ navHostFragment      // Jetpack navigation
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun ComposeView.setContentAfterSplash(content: @Composable ComposeView.() -> Unit) {
         setContentWithTheme {
-            SplashScreen(viewModel = splashViewModel) {
+            SplashScreen(viewModel = splashVM) {
                 content()
             }
         }
@@ -204,7 +204,7 @@ class MainActivity : AppCompatActivity() {
     private fun initObserving() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                themeViewModel.uiStateFlow.collect { theme ->
+                themeVM.uiStateFlow.collect { theme ->
                     val action = MainUiAction.UpdateTheme(theme.appThemeConfig?.config)
                     viewModel.onAction(action)
                 }

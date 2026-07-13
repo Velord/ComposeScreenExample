@@ -2,11 +2,11 @@ package com.velord.infrastructure.navigation.compose.vanilla.graph
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigationScreen
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 import com.velord.infrastructure.navigation.compose.vanilla.navigator.SupremeNavigatorVanilla
+import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigationScreen
 import com.velord.ui.feature.setting.SettingScreen
-import com.velord.ui.sharedviewmodel.ThemeViewModel
+import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.androidx.compose.koinViewModel
 
 internal fun NavGraphBuilder.setupMainGraphVanilla(navigator: SupremeNavigatorVanilla)  {
@@ -15,7 +15,7 @@ internal fun NavGraphBuilder.setupMainGraphVanilla(navigator: SupremeNavigatorVa
     }
 
     composable<GraphVanilla.Main.SettingDestinationVanilla> {
-        val viewModel = koinViewModel<ThemeViewModel>()
+        val viewModel = koinViewModel<ThemeVM>()
         SettingScreen(
             viewModel = viewModel,
             onBackClick = {

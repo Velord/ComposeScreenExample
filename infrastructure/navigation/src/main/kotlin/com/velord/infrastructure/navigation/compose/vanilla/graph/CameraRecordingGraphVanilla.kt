@@ -3,12 +3,12 @@ package com.velord.infrastructure.navigation.compose.vanilla.graph
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.ui.feature.camerarecording.CameraRecordingScreen
-import com.velord.ui.feature.camerarecording.CameraRecordingViewModel
-import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
+import com.velord.ui.feature.camerarecording.CameraRecordingVM
 import org.koin.androidx.compose.koinViewModel
 
 internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraRecordingNavigator)  {
@@ -16,8 +16,8 @@ internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraR
         startDestination = GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla
     ) {
         composable<GraphVanilla.BottomTab.CameraRecording.CameraRecordingDestinationVanilla> {
-            val viewModel = koinViewModel<CameraRecordingViewModel>()
-            val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+            val viewModel = koinViewModel<CameraRecordingVM>()
+            val bottomNavVM = koinViewModel<BottomNavigationDestinationsVM>()
 
             CameraRecordingScreen(
                 viewModel = viewModel,
@@ -28,7 +28,7 @@ internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraR
                     }
                 },
                 onBackClick = {
-                    bottomNavViewModel.graphCompletedHandling()
+                    bottomNavVM.graphCompletedHandling()
                 }
             )
         }

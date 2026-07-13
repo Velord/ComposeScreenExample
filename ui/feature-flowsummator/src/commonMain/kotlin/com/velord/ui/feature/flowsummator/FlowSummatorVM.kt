@@ -2,7 +2,7 @@ package com.velord.ui.feature.flowsummator
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.toBigInteger
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
@@ -31,7 +31,7 @@ sealed interface FlowSummatorUiAction {
     data class NewEnteredValue(val newValue: String) : FlowSummatorUiAction
 }
 
-class FlowSummatorViewModel : CoroutineScopeViewModel() {
+class FlowSummatorVM : CoroutineScopeVM() {
 
     val uiStateFlow = MutableStateFlow(FlowSummatorUiState.DEFAULT)
     private val actionFlow = MutableSharedFlow<FlowSummatorUiAction>()

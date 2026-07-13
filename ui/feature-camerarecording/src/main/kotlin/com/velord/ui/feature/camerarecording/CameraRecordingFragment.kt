@@ -25,7 +25,7 @@ private val log = Logger.withTag("CameraRecordingFragment")
 
 class CameraRecordingFragment : Fragment() {
 
-    private val viewModel by viewModel<CameraRecordingViewModel>()
+    private val viewModel by viewModel<CameraRecordingVM>()
     private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     private val requestRecordVideoPermissionLauncher = registerForActivityResult(

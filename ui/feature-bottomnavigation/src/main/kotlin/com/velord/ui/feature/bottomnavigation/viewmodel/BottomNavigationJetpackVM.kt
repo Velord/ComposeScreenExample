@@ -6,9 +6,9 @@ import com.velord.core.resource.Res
 import com.velord.core.resource.bottom_navigation_first_back_press
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
-import com.velord.ui.feature.bottomnavigation.BottomNavEventService
-import com.velord.ui.feature.bottomnavigation.screen.jetpack.BottomNavigationItem
-import com.velord.ui.sharedviewmodel.CoroutineScopeViewModel
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavEventService
+import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
+import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.event.ShowToastUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,7 @@ import org.jetbrains.compose.resources.getString
 class BottomNavigationJetpackVM(
     private val bottomNavEventService: BottomNavEventService,
     private val showToastUC: ShowToastUC,
-): CoroutineScopeViewModel() {
+): CoroutineScopeVM() {
 
     val currentTabStateFlow = MutableStateFlow(BottomNavigationItem.Setting)
     val backHandlingStateFlow = bottomNavEventService.backHandlingStateFlow
@@ -29,8 +29,6 @@ class BottomNavigationJetpackVM(
         R.id.demoFragment to BottomNavigationItem.Demo,
         R.id.cameraRecordingFragment to BottomNavigationItem.Camera,
     )
-
-    fun getNavigationItems() = BottomNavigationItem.entries
 
     fun onTabClick(newTab: BottomNavigationItem) {
         val current = currentTabStateFlow.value

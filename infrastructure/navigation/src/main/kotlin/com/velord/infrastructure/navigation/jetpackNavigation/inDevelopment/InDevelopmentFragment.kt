@@ -29,7 +29,7 @@ class InDevelopmentFragment : Fragment() {
 
     // For Koin use `by viewModel<InDevelopmentViewModel>()`
     // Add libs to build.gradle.kts:
-    private val viewModel by viewModels<InDevelopmentViewModel>()
+    private val viewModel by viewModels<InDevelopmentVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +54,7 @@ class InDevelopmentFragment : Fragment() {
 }
 
 @Composable
-private fun InDevelopmentScreen(viewModel: InDevelopmentViewModel) {
+private fun InDevelopmentScreen(viewModel: InDevelopmentVM) {
     val time = remember { System.currentTimeMillis().toString() }
     Content(
         text = time,

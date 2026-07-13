@@ -32,22 +32,22 @@ import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.movie.Movie
 import com.velord.model.movie.SortType
 import com.velord.ui.feature.movie.viewModel.AllMovieUiAction
-import com.velord.ui.feature.movie.viewModel.AllMovieViewModel
+import com.velord.ui.feature.movie.viewModel.AllMovieVM
 import com.velord.ui.feature.movie.viewModel.FavoriteMovieUiAction
-import com.velord.ui.feature.movie.viewModel.FavoriteMovieViewModel
+import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieUiState
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
 @Composable
 internal fun ColumnScope.MoviePager(
-    allMovieViewModel: AllMovieViewModel,
-    favoriteMovieViewModel: FavoriteMovieViewModel,
+    allMovieVM: AllMovieVM,
+    favoriteMovieVM: FavoriteMovieVM,
     uiState: MovieUiState,
     onSwipe: (Int) -> Unit
 ) {
-    val allMovieUiState = allMovieViewModel.uiStateFlow.collectAsStateWithLifecycle()
-    val favoriteMovieUiState = favoriteMovieViewModel.uiStateFlow.collectAsStateWithLifecycle()
+    val allMovieUiState = allMovieVM.uiStateFlow.collectAsStateWithLifecycle()
+    val favoriteMovieUiState = favoriteMovieVM.uiStateFlow.collectAsStateWithLifecycle()
 
     val pagerState = rememberPagerState(
         initialPage = uiState.initialPage,
@@ -76,19 +76,19 @@ internal fun ColumnScope.MoviePager(
             0 -> RefreshPage(
                 roster = allMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
-                onLike = { allMovieViewModel.onAction(AllMovieUiAction.OnLikeClick(it)) },
-                onClick = { allMovieViewModel.onAction(AllMovieUiAction.OnClick(it)) },
+                onLike = { allMovieVM.onAction(AllMovieUiAction.OnLikeClick(it)) },
+                onClick = { allMovieVM.onAction(AllMovieUiAction.OnClick(it)) },
                 isDataExausted = allMovieUiState.value.paginationStatus.isExhausted,
                 isPaginationAvailable = allMovieUiState.value.isPaginationAvailable,
-                onEndList = { allMovieViewModel.onAction(AllMovieUiAction.OnEndList(it)) },
+                onEndList = { allMovieVM.onAction(AllMovieUiAction.OnEndList(it)) },
                 isRefreshing = allMovieUiState.value.isRefreshing,
-                onRefresh = { allMovieViewModel.onAction(AllMovieUiAction.OnRefresh) },
+                onRefresh = { allMovieVM.onAction(AllMovieUiAction.OnRefresh) },
             )
             1 -> RefreshPage(
                 roster = favoriteMovieUiState.value.roster,
                 selectedSortOption = uiState.getSelectedSortOption()?.type,
-                onLike = { favoriteMovieViewModel.onAction(FavoriteMovieUiAction.OnLikeClick(it)) },
-                onClick = { allMovieViewModel.onAction(AllMovieUiAction.OnClick(it)) },
+                onLike = { favoriteMovieVM.onAction(FavoriteMovieUiAction.OnLikeClick(it)) },
+                onClick = { allMovieVM.onAction(AllMovieUiAction.OnClick(it)) },
             )
         }
     }

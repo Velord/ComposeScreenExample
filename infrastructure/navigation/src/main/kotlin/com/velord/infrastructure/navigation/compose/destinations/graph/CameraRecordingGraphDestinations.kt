@@ -8,7 +8,7 @@ import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinat
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.ui.feature.camerarecording.CameraRecordingScreen
-import com.velord.ui.feature.camerarecording.CameraRecordingViewModel
+import com.velord.ui.feature.camerarecording.CameraRecordingVM
 import org.koin.androidx.compose.koinViewModel
 
 private const val CAMERA_RECORDING_GRAPH = "camera_recording_graph"
@@ -22,8 +22,8 @@ annotation class CameraRecordingGraph
 @Destination<CameraRecordingGraph>(start = true)
 @Composable
 internal fun CameraRecordingDestination(navigator: CameraRecordingNavigator) {
-    val viewModel = koinViewModel<CameraRecordingViewModel>()
-    val bottomNavViewModel = koinViewModel<BottomNavigationDestinationsVM>()
+    val viewModel = koinViewModel<CameraRecordingVM>()
+    val bottomNavVM = koinViewModel<BottomNavigationDestinationsVM>()
     CameraRecordingScreen(
         viewModel = viewModel,
         needToHandlePermission = true,
@@ -33,7 +33,7 @@ internal fun CameraRecordingDestination(navigator: CameraRecordingNavigator) {
             }
         },
         onBackClick = {
-            bottomNavViewModel.graphCompletedHandling()
+            bottomNavVM.graphCompletedHandling()
         }
     )
 }
