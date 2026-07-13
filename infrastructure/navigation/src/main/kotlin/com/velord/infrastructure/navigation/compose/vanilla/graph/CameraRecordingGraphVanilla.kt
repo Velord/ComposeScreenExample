@@ -9,7 +9,7 @@ import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavig
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.ui.feature.camerarecording.CameraRecordingScreen
-import com.velord.ui.feature.camerarecording.CameraRecordingVM
+import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
 import org.koin.compose.viewmodel.koinViewModel
 
 internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraRecordingNavigator)  {

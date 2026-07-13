@@ -1,4 +1,4 @@
-package com.velord.ui.feature.camerarecording
+package com.velord.ui.feature.camerarecording.viewModel
 
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Quality
@@ -10,55 +10,14 @@ import com.velord.core.navigation.voyager.NavigationDataVoyager
 import com.velord.core.navigation.voyager.SharedScreenVoyager
 import com.velord.core.resource.R
 import com.velord.infrastructure.util.permission.PermissionGrantState
-import com.velord.model.camera.RecordingSession
 import com.velord.model.camera.VideoCaptureWrapper
+import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.camera.StartRecordingUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-data class CameraRecordingUiState(
-    // Permission
-    val permissionCamera: PermissionGrantState,
-    val permissionAudio: PermissionGrantState,
-    // Video control
-    val videoQuality: Quality,
-    val cameraSelector: CameraSelector,
-    val isAudioEnabled: Boolean,
-    val isRecordingStarted: Boolean,
-    // A RecordingSession controls the current active recording without exposing CameraX Recording.
-    val recording: RecordingSession?,
-) {
-    companion object {
-        val DEFAULT = CameraRecordingUiState(
-            permissionCamera = PermissionGrantState.NotAsked,
-            permissionAudio = PermissionGrantState.NotAsked,
-            videoQuality = Quality.HIGHEST,
-            cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA,
-            isAudioEnabled = true,
-            isRecordingStarted = false,
-            recording = null,
-        )
-    }
-}
-
-sealed interface CameraRecordingUiAction {
-    data object SettingsClick : CameraRecordingUiAction
-    data object ChangeCameraSelector : CameraRecordingUiAction
-    data object CheckPermissionClick : CameraRecordingUiAction
-    data class ChangeVideoQuality(val quality: Quality) : CameraRecordingUiAction
-    data class ChangeIsAudioEnabled(val enabled: Boolean) : CameraRecordingUiAction
-    data class StartStopRecording(val newCapture: VideoCapture<Recorder>?) : CameraRecordingUiAction
-    data class UpdateCameraPermissionGrantState(
-        val state: PermissionGrantState,
-    ) : CameraRecordingUiAction
-    data class UpdateAudioPermissionGrantState(
-        val state: PermissionGrantState,
-    ) : CameraRecordingUiAction
-    data class UpdatePermissionGrantState(val state: PermissionGrantState) : CameraRecordingUiAction
-}
 
 class CameraRecordingVM(
     private val startRecording: StartRecordingUC,

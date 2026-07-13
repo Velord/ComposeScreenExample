@@ -17,6 +17,8 @@ import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.ui.feature.bottomnavigation.screen.addTestCallback
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
+import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiAction
+import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel

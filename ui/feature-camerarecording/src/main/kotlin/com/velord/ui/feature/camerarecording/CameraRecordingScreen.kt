@@ -53,6 +53,9 @@ import com.velord.core.resource.front
 import com.velord.core.resource.rear
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.ui.feature.camerarecording.util.createVideoCapture
+import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiAction
+import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
+import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -194,7 +197,7 @@ private fun BoxScope.Recording(
     onStartStopRecording: (VideoCapture<Recorder>?) -> Unit
 ) {
     // VideoCapture is a generic class that provides a camera stream suitable for video applications.
-    // Here we pass the Recorder class which is an implementation of the VideoOutput interface
+    // Here we pass the Recorder class which is an implementation of the VideoOutput interface,
     // and it allows us to start recording.
     val videoCaptureState: MutableState<VideoCapture<Recorder>?> = remember { mutableStateOf(null) }
 

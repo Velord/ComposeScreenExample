@@ -3,7 +3,7 @@ package com.velord.infrastructure.di
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
 import com.velord.ui.feature.bottomnavigation.viewmodel.voyager.BottomNavigationVoyagerVM
-import com.velord.ui.feature.camerarecording.CameraRecordingVM
+import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
 import com.velord.ui.feature.demo.DemoVM
 import com.velord.ui.feature.demo.dialog.DialogDemoVM
 import com.velord.ui.feature.flowsummator.FlowSummatorVM

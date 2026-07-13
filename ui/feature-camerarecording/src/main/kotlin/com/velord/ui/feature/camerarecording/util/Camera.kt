@@ -22,7 +22,7 @@ suspend fun Context.createVideoCapture(
 ): VideoCapture<Recorder> {
     val preview = Preview.Builder()
         .build()
-        .apply { setSurfaceProvider(previewView.surfaceProvider) }
+        .apply { surfaceProvider = previewView.surfaceProvider }
 
     val qualitySelector = QualitySelector.from(
         preferredQuality,
