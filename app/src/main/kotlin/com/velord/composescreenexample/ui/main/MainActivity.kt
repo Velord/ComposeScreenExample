@@ -24,6 +24,7 @@ import com.velord.infrastructure.navigation.CreateNavigationViaDestinations
 import com.velord.infrastructure.navigation.CreateNavigationViaNav3
 import com.velord.infrastructure.navigation.CreateNavigationViaVanilla
 import com.velord.infrastructure.navigation.CreateNavigationViaVoyager
+import com.velord.model.AppEvent
 import com.velord.ui.feature.splash.SplashScreen
 import com.velord.ui.feature.splash.SplashVM
 import com.velord.ui.feature.splash.installSplash
@@ -207,6 +208,16 @@ class MainActivity : AppCompatActivity() {
                 themeVM.uiStateFlow.collect { theme ->
                     val action = MainUiAction.UpdateTheme(theme.appThemeConfig?.config)
                     viewModel.onAction(action)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.appEventFlow.collect { event ->
+                    when (event) {
+                        AppEvent.Exit -> finish()
+                        is AppEvent.Toast -> Unit
+                    }
                 }
             }
         }

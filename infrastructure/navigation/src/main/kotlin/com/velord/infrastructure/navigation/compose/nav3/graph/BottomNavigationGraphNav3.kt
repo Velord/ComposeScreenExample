@@ -4,11 +4,11 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
 import com.velord.infrastructure.navigation.compose.nav3.navigator.BottomNavigatorNav3
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsUiAction
+import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
 import com.velord.ui.feature.setting.SettingScreen
 import com.velord.ui.sharedviewmodel.ThemeVM
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 internal fun EntryProviderScope<NavKey>.setupBottomNavigationGraphNav3(navigator: BottomNavigatorNav3) {
     setupCameraRecordingGraphNav3(navigator)

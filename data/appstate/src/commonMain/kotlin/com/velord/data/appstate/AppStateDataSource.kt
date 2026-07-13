@@ -1,6 +1,6 @@
 package com.velord.data.appstate
 
-import com.velord.model.ToastConfig
+import com.velord.model.AppEvent
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
@@ -14,7 +14,7 @@ interface AppStateDataSource {
     val movieRosterFlow: MutableStateFlow<List<Movie>>
     val movieFavoriteRosterFlow: MutableStateFlow<List<Movie>>
     val movieSortFlow: MutableStateFlow<List<MovieSortOption>>
-    val toastConfigFlow: MutableSharedFlow<ToastConfig>
+    val appEventFlow: MutableSharedFlow<AppEvent>
 }
 
 @Single(binds = [AppStateDataSource::class])
@@ -31,5 +31,5 @@ class AppStateDataSourceImpl : AppStateDataSource {
         ),
     )
 
-    override val toastConfigFlow = MutableSharedFlow<ToastConfig>()
+    override val appEventFlow = MutableSharedFlow<AppEvent>()
 }

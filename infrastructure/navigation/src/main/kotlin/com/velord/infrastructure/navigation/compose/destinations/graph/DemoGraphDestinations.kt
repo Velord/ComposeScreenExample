@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
 import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.ui.feature.demo.DemoScreen
 import com.velord.ui.feature.demo.DemoVM
@@ -21,7 +21,7 @@ import com.velord.ui.feature.movie.MovieScreen
 import com.velord.ui.feature.movie.viewModel.AllMovieVM
 import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieVM
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 private const val DEMO_GRAPH = "demo_graph"
 @NavGraph<BottomNavigationGraph>(

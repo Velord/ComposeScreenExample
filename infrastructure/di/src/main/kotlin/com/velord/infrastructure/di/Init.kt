@@ -4,7 +4,7 @@ import android.app.Application
 import com.velord.data.backend.ktor.httpModule
 import com.velord.data.db.databaseModule
 import com.velord.data.gateway.GatewayModule
-import com.velord.ui.feature.bottomnavigation.BottomNavigationModule
+import com.velord.ui.feature.bottomnavigation.bottomNavigationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -24,7 +24,7 @@ fun Application.startKoin(vararg moduleToInstall: Module) {
         modules(httpModule)
         modules(databaseModule)
         // Load Annotation-based modules
-        modules(BottomNavigationModule().module)
+        modules(bottomNavigationModule)
         modules(GatewayModule().module)
         //modules(OsModule().module)
     }

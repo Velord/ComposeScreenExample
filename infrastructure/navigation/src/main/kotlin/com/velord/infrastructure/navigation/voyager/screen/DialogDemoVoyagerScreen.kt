@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.velord.ui.feature.demo.dialog.DialogDemoScreen
 import com.velord.ui.feature.demo.dialog.DialogDemoVM
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 internal object DialogDemoVoyagerScreen : Screen {
 

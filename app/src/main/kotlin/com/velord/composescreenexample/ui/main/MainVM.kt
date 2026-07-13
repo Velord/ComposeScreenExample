@@ -3,11 +3,13 @@ package com.velord.composescreenexample.ui.main
 import android.content.Context
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 import com.velord.core.ui.compose.glance.updateAll
+import com.velord.model.AppEvent
 import com.velord.model.ToastConfig
 import com.velord.model.setting.ThemeConfig
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.ui.widget.counter.CounterWidget
 import com.velord.ui.widget.refreshableimage.RefreshableImageWidget
+import com.velord.usecase.event.GetAppEventFlowUC
 import com.velord.usecase.event.GetToastConfigFlowUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -26,9 +28,11 @@ sealed interface MainUiAction {
 @KoinViewModel
 class MainVM(
     private val context: Context,
+    @Provided private val getAppEventFlowUC: GetAppEventFlowUC,
     @Provided private val getToastConfigFlowUC: GetToastConfigFlowUC,
 ) : CoroutineScopeVM() {
 
+    val appEventFlow = MutableSharedFlow<AppEvent>()
     val toastConfigFlow = MutableSharedFlow<ToastConfig>()
 
     private val widgets = listOf<GlanceWidgetThemeSustainer<*>>(
@@ -58,6 +62,11 @@ class MainVM(
         launch {
             getToastConfigFlowUC().collect { toastConfig ->
                 toastConfigFlow.emit(toastConfig)
+            }
+        }
+        launch {
+            getAppEventFlowUC().collect { appEvent ->
+                appEventFlow.emit(appEvent)
             }
         }
     }

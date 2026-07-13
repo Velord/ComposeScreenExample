@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.velord.core.navigation.fragment.NAVIGATION_PAYLOAD
 import com.velord.core.navigation.fragment.entryPoint.SettingsSourceFragment
 import com.velord.core.ui.util.setContentWithTheme
-import com.velord.ui.feature.bottomnavigation.screen.jetpack.addTestCallback
+import com.velord.ui.feature.bottomnavigation.screen.addTestCallback
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.ui.sharedviewmodel.ThemeVM

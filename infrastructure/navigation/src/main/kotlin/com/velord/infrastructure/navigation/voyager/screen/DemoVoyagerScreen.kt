@@ -8,11 +8,11 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.velord.core.navigation.voyager.SharedScreenVoyager
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
 import com.velord.ui.feature.demo.DemoNavigationEvent
 import com.velord.ui.feature.demo.DemoScreen
 import com.velord.ui.feature.demo.DemoVM
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 internal object DemoVoyagerScreen : Screen {
 

@@ -1,6 +1,7 @@
 package com.velord.infrastructure.di
 
 import com.velord.data.gateway.camera.CameraGateway
+import com.velord.data.gateway.event.AppEventGateway
 import com.velord.data.gateway.movie.MovieByGateway
 import com.velord.data.gateway.movie.MovieFavoriteGateway
 import com.velord.data.gateway.movie.MovieGateway
@@ -8,9 +9,11 @@ import com.velord.data.gateway.movie.MoviePaginationGateway
 import com.velord.data.gateway.movie.MovieSortGateway
 import com.velord.data.gateway.setting.GetThemeConfigGateway
 import com.velord.data.gateway.setting.SwitchThemeConfigGateway
-import com.velord.data.gateway.toast.ToastGateway
+import com.velord.model.AppEvent
 import com.velord.usecase.camera.StartRecordingUC
+import com.velord.usecase.event.GetAppEventFlowUC
 import com.velord.usecase.event.GetToastConfigFlowUC
+import com.velord.usecase.event.RequestAppExitUC
 import com.velord.usecase.event.ShowToastUC
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetFavoriteMovieUC
@@ -28,10 +31,18 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
     single<GetToastConfigFlowUC> {
-        GetToastConfigFlowUC(get<ToastGateway>()::getFlow)
+        GetToastConfigFlowUC(get<AppEventGateway>()::getToastFlow)
+    }
+    single<GetAppEventFlowUC> {
+        GetAppEventFlowUC(get<AppEventGateway>()::getFlow)
     }
     single<ShowToastUC> {
-        ShowToastUC(get<ToastGateway>()::show)
+        val gateway = get<AppEventGateway>()
+        ShowToastUC { config -> gateway.emit(AppEvent.Toast(config)) }
+    }
+    single<RequestAppExitUC> {
+        val gateway = get<AppEventGateway>()
+        RequestAppExitUC { gateway.emit(AppEvent.Exit) }
     }
     single<GetThemeConfigUC> {
         GetThemeConfigUC(get<GetThemeConfigGateway>()::getFlow)

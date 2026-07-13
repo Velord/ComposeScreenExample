@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
 import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.ui.feature.demo.DemoScreen
 import com.velord.ui.feature.demo.DemoVM
@@ -20,7 +20,7 @@ import com.velord.ui.feature.movie.MovieScreen
 import com.velord.ui.feature.movie.viewModel.AllMovieVM
 import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieVM
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
     navigation<GraphVanilla.BottomTab.Demo.Self>(

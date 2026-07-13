@@ -3,8 +3,8 @@ package com.velord.infrastructure.navigation.compose.nav3.graph
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsUiAction
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationDestinationsVM
+import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsUiAction
+import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
 import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.ui.feature.demo.DemoScreen
 import com.velord.ui.feature.demo.DemoVM
@@ -20,7 +20,7 @@ import com.velord.ui.feature.movie.MovieScreen
 import com.velord.ui.feature.movie.viewModel.AllMovieVM
 import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieVM
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNavigator) {
     entry<GraphNav3.BottomTab.Demo.DemoDestinationNav3> {

@@ -14,7 +14,7 @@ import com.velord.core.ui.dialog.checkRecordVideoPermission
 import com.velord.core.ui.util.setContentWithTheme
 import com.velord.infrastructure.util.fragment.viewLifecycleScope
 import com.velord.infrastructure.util.permission.PermissionGrantState
-import com.velord.ui.feature.bottomnavigation.screen.jetpack.addTestCallback
+import com.velord.ui.feature.bottomnavigation.screen.addTestCallback
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import kotlinx.coroutines.flow.filterNotNull

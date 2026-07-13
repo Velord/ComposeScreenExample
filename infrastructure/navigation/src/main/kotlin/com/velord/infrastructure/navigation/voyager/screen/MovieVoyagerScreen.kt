@@ -6,7 +6,7 @@ import com.velord.ui.feature.movie.MovieScreen
 import com.velord.ui.feature.movie.viewModel.AllMovieVM
 import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieVM
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 internal object MovieVoyagerScreen : Screen {
 
