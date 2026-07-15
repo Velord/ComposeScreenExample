@@ -9,10 +9,10 @@ android {
 dependencies {
     // Module
     implementation(projects.model)
-    implementation(projects.infrastructure.util)
     implementation(projects.core.coreResource)
     implementation(projects.core.coreUi)
     implementation(projects.core.coreNavigation)
+    implementation(projects.infrastructure.util)
     implementation(projects.domain.usecaseCamera)
     implementation(projects.ui.sharedviewmodel)
     implementation(projects.ui.featureBottomnavigation)
@@ -21,4 +21,6 @@ dependencies {
     implementation(libs.bundles.compose.all)
     // Navigation
     ksp(libs.compose.destinations.ksp)
+    // 3-rd Party
+    implementation(libs.bundles.kamera.all)
 }
