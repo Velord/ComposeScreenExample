@@ -30,7 +30,7 @@ internal fun CameraRecordingDestination(navigator: CameraRecordingNavigator) {
         needToHandlePermission = true,
         onNavigationEvent = {
             when (it) {
-                CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingFromCameraRecording()
+                CameraRecordingNavigationEvent.Setting -> navigator.goToSettingFromCameraRecording()
             }
         },
         onBackClick = {

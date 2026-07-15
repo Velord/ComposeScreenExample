@@ -11,18 +11,23 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.model)
+            implementation(libs.kotlin.coroutine.core)
+            implementation(libs.kamera.core)
             implementation(libs.koin.core)
             api(libs.koin.annotation)
         }
 
         androidMain.dependencies {
-            implementation(projects.model)
-            implementation(projects.core.coreResource)
-            implementation(projects.domain.usecaseCamera)
-            implementation(libs.kotlin.coroutine.core)
             implementation(libs.koin.core)
             implementation(libs.koin.annotation)
-            implementation(libs.androidx.camera.video)
+            implementation(libs.androidx.lifecycle.process)
+            implementation(libs.kamera.core)
+        }
+
+        desktopMain.dependencies {
+            implementation(libs.koin.core)
+            implementation(libs.koin.annotation)
+            implementation(libs.kamera.core)
         }
 
         named("commonMain").configure {

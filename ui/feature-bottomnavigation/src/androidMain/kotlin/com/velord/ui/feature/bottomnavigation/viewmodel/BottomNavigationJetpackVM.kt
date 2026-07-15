@@ -74,8 +74,7 @@ class BottomNavigationJetpackVM(
 
     private fun NavDestination?.isCurrentStartDestination(
         items: List<Pair<Int, BottomNavigationItem>>,
-    ): Boolean = items
-        .firstOrNull { it.first == this?.id }
+    ): Boolean = items.firstOrNull { it.first == this?.id }
         ?.second == uiStateFlow.value.tabState.current
 
     private fun onGraphCompletedHandling() {

@@ -20,7 +20,7 @@ internal fun EntryProviderScope<NavKey>.setupCameraRecordingGraphNav3(navigator:
             needToHandlePermission = true,
             onNavigationEvent = {
                 when (it) {
-                    CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingFromCameraRecording()
+                    CameraRecordingNavigationEvent.Setting -> navigator.goToSettingFromCameraRecording()
                 }
             },
             onBackClick = {

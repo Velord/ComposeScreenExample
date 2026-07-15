@@ -32,8 +32,10 @@ class RefreshableImageWidget :
     override val name: Class<RefreshableImageWidget> = RefreshableImageWidget::class.java
     override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = RefreshableImageWidget.useDarkThemePreferenceKey
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) =
-        provideContent { RefreshableImageWidgetScreen() }
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId
+    ) = provideContent { RefreshableImageWidgetScreen() }
 
     override suspend fun onDelete(context: Context, glanceId: GlanceId) {
         super.onDelete(context, glanceId)

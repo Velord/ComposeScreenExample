@@ -8,13 +8,7 @@ import java.awt.datatransfer.StringSelection
 import javax.swing.JOptionPane
 import javax.swing.SwingUtilities
 
-@Module
-actual class SharePlatformModule {
-    @Single
-    actual fun provideShareDataSource(scope: Scope): ShareDataSource = DesktopShareDataSource()
-}
-
-private class DesktopShareDataSource : ShareDataSource {
+class DesktopShareDataSource : ShareDataSource {
 
     override suspend fun share(text: String) {
         SwingUtilities.invokeAndWait {
@@ -23,4 +17,10 @@ private class DesktopShareDataSource : ShareDataSource {
             JOptionPane.showMessageDialog(null, "Movie information was copied to the clipboard")
         }
     }
+}
+
+@Module
+actual class SharePlatformModule {
+    @Single
+    actual fun provideShareDataSource(scope: Scope): ShareDataSource = DesktopShareDataSource()
 }

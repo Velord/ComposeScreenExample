@@ -192,8 +192,9 @@ class UiArchitectureTest {
     }
 
     private fun hasInvalidUiActionBranch(text: String): Boolean {
-        val branchRoster = UI_ACTION_BRANCH_REGEX.findAll(text).toList()
-        val delegateRoster = UI_ACTION_DELEGATE_REGEX.findAll(text).toList()
+        val code = text.lines().joinToString("\n") { line -> line.substringBefore("//") }
+        val branchRoster = UI_ACTION_BRANCH_REGEX.findAll(code).toList()
+        val delegateRoster = UI_ACTION_DELEGATE_REGEX.findAll(code).toList()
         if (branchRoster.size != delegateRoster.size) return true
 
         return delegateRoster.any { match ->
@@ -205,7 +206,7 @@ class UiArchitectureTest {
                 actionName
             }
             val expectedHandlerName = "on$handlerActionName"
-            handlerName != expectedHandlerName || hasPrivateHandler(text, handlerName).not()
+            handlerName != expectedHandlerName || hasPrivateHandler(code, handlerName).not()
         }
     }
 

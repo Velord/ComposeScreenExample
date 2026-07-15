@@ -23,9 +23,8 @@ fun Application.startKoin(vararg moduleToInstall: Module) {
         modules(viewModelModule)
         modules(httpModule)
         modules(databaseModule)
-        // Load Annotation-based modules
         modules(bottomNavigationModule)
+        // Load Annotation-based modules
         modules(GatewayModule().module)
-        //modules(OsModule().module)
     }
 }

@@ -11,13 +11,11 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(libs.kotlin.datetime)
+            api(libs.kamera.core)
             implementation(libs.kotlin.serialization.json)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-        }
-        androidMain.dependencies {
-            implementation(libs.bundles.androidx.camera.all)
         }
     }
 }

@@ -61,6 +61,7 @@
     <string name="downloaded_from">Downloaded from:\n%1$s</string>
     <string name="rear">Rear</string>
     <string name="front">Front</string>
+    <string name="recording_restarted_after_camera_switch">Recording restarted after switching camera</string>
     <string name="waiting">Waiting</string>
     <string name="invoke_again">Invoke again</string>
     <string name="phone_number_hint_not_available_on_desktop">Phone number hint is not available on desktop</string>

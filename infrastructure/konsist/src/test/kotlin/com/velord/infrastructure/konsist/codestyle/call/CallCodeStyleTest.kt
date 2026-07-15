@@ -85,6 +85,19 @@ class CallCodeStyleTest {
     }
 
     @Test
+    fun `aliased compose imports should remain compose calls`() {
+        val fileText = """
+            import com.kashif.cameraK.ui.CameraPreviewView as KameraPreviewView
+
+            @Composable
+            fun Content() = Unit
+        """.trimIndent()
+        val composeCallNameRoster = composeCallNameRoster(fileText)
+
+        assertTrue(isComposeCallOpening(composeCallNameRoster, "KameraPreviewView("))
+    }
+
+    @Test
     fun `call chains should use one-line form or one call per wrapped line`() {
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()
@@ -102,7 +115,4 @@ class CallCodeStyleTest {
             violation == null
         }
     }
-
-
-
 }

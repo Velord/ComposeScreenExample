@@ -16,12 +16,11 @@ import kotlin.test.assertTrue
 private const val UI_FOLDER_NAME = "ui"
 private const val BUILD_FILE_NAME = "build.gradle.kts"
 private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
+private const val KAMERA_IMPORT_PREFIX = "import com.kashif.cameraK."
 private val DATA_PROJECT_ACCESSOR_REGEX = Regex("""projects\.data\.[A-Za-z][A-Za-z0-9]*""")
 private val DATA_PROJECT_PATH_REGEX = Regex("""project\(\s*[\"']:data:[^\"']+[\"']\s*\)""")
-private val SAME_TARGET_EXTENSION_DEBT_ROSTER = setOf(
-    "AndroidBottomNavigationGraphItem:toMultipleBackstackGraphItem",
-    "VoyagerScreen:toTab",
-)
+private val KAMERA_ALIAS_REGEX = Regex("""\s+as\s+[A-Za-z0-9]*[Kk]amera[A-Za-z0-9]*$""")
+private val SAME_TARGET_EXTENSION_DEBT_ROSTER = emptySet<String>()
 
 class ModuleDependencyTest {
 
@@ -71,12 +70,36 @@ class ModuleDependencyTest {
             println(msg)
         }
         if (staleDebtRoster.isNotEmpty()) {
-            val msg = "Remove migrated same-target extension debt: " + staleDebtRoster.joinToString()
+            val msg = "Remove migrated same-target extension debt: " +
+                staleDebtRoster.joinToString()
             println(msg)
         }
 
         assertTrue(unexpectedViolationRoster.isEmpty())
         assertTrue(staleDebtRoster.isEmpty())
+    }
+
+    @Test
+    fun `kamera imports should use library prefixed aliases`() {
+        val violationRoster = projectScope.files.flatMap { file ->
+            file.text.lines().withIndex().mapNotNull { (lineIndex, line) ->
+                val isKameraImport = line.startsWith(KAMERA_IMPORT_PREFIX)
+                val hasLibraryAlias = KAMERA_ALIAS_REGEX.containsMatchIn(line)
+                if (isKameraImport && hasLibraryAlias.not()) {
+                    "${file.name}:${lineIndex + 1}"
+                } else {
+                    null
+                }
+            }
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "Kamera imports without library-prefixed aliases: " +
+                violationRoster.joinToString()
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
     }
 
     private fun isDirectDataDependency(line: String): Boolean {

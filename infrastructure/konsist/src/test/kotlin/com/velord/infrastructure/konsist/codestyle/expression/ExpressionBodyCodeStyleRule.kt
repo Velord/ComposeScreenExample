@@ -86,3 +86,31 @@ internal fun isSplitExpressionBodyOpeningCall(
 
     return joinLine(currentLine, nextLine).length <= HARD_WRAP
 }
+
+internal fun isInlineParameterFunctionWithWrappedOpeningCall(
+    currentLine: String,
+    nextLine: String,
+): Boolean {
+    val currentLineTrimmed = currentLine.trimEnd()
+    val nextLineTrimmed = nextLine.trimStart()
+    if (currentLineTrimmed.contains("fun ").not()) return false
+    if (currentLineTrimmed.endsWith("=").not()) return false
+    if (nextLineTrimmed.contains("(").not()) return false
+    if (nextLineTrimmed.startsWith(".") || nextLineTrimmed.startsWith("?.")) return false
+    if (nextLineTrimmed.endsWith("(").not() &&
+        nextLineTrimmed.endsWith("{").not() &&
+        nextLineTrimmed.endsWith("[").not()
+    ) {
+        return false
+    }
+
+    val parameterStart = currentLineTrimmed.indexOf('(')
+    val parameterEnd = currentLineTrimmed.lastIndexOf(')')
+    if (parameterStart < 0 || parameterEnd <= parameterStart + 1) return false
+
+    val declarationClose = currentLineTrimmed.substring(parameterEnd).removeSuffix("=").trimEnd()
+    val joinedClosingLine = currentLine.takeWhile(Char::isWhitespace) +
+        declarationClose + " = " + nextLineTrimmed
+
+    return joinedClosingLine.length <= HARD_WRAP
+}
