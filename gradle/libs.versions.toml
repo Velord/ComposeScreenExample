@@ -241,6 +241,8 @@ composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
 composeHaze = "1.7.2"
+# Camera
+kamera = "1.1"
 # Image loader
 coil = "3.5.0"
 # Permission
@@ -654,6 +656,13 @@ ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", 
 ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 # ---------------------------------------------------------------------------------------------------
+# Camera
+kamera-core = { module = "io.github.kashif-mehmood-km:camerak", version.ref = "kamera" }
+kamera-image-saver = { module = "io.github.kashif-mehmood-km:image_saver_plugin", version.ref = "kamera" }
+kamera-qr-scanner = { module = "io.github.kashif-mehmood-km:qr_scanner_plugin", version.ref = "kamera" }
+kamera-ocr = { module = "io.github.kashif-mehmood-km:ocr_plugin", version.ref = "kamera" }
+kamera-analyzer = { module = "io.github.kashif-mehmood-km:analyzer_plugin", version.ref = "kamera" }
+kamera-video-recorder = { module = "io.github.kashif-mehmood-km:video_recorder_plugin", version.ref = "kamera" }
 # Permission
 sagar-coroutine-permission = { module = "com.sagar:coroutinespermission", version.ref = "sagarCoroutinePermission" }
 # Image loader
@@ -1236,6 +1245,12 @@ network-all = [
     "ktor-client-logging", "ktor-client-negotiation",
     "ktor-serialization",
     "ktor-client-auth", "slf4j-android"
+]
+# Camera
+kamera-all = [
+    "kamera-core", "kamera-analyzer",
+    "kamera-image-saver", "kamera-ocr",
+    "kamera-qr-scanner", "kamera-video-recorder"
 ]
 # Image Loader
 coil = ["coil-network-ktor3", "coil-compose", "coil-gif"]

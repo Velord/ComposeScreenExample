@@ -25,7 +25,7 @@ internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(navigator: CameraR
                 needToHandlePermission = true,
                 onNavigationEvent = {
                     when (it) {
-                        CameraRecordingNavigationEvent.SETTINGS -> navigator.goToSettingFromCameraRecording()
+                        CameraRecordingNavigationEvent.Setting -> navigator.goToSettingFromCameraRecording()
                     }
                 },
                 onBackClick = {

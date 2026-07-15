@@ -1,8 +1,11 @@
 package com.velord.infrastructure.navigation.voyager.screen
 
 import androidx.compose.runtime.Composable
+import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
-import com.velord.core.navigation.voyager.ObserveNavigation
+import cafe.adriel.voyager.navigator.LocalNavigator
+import com.velord.core.navigation.voyager.SharedScreenVoyager
+import com.velord.core.navigation.voyager.findRootNavigatorOrCurrent
 import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
 import com.velord.ui.feature.camerarecording.CameraRecordingScreen
@@ -15,16 +18,16 @@ internal object CameraRecordingVoyagerScreen : Screen {
     override fun Content() {
         val viewModel = koinViewModel<CameraRecordingVM>()
         val bottomNavVM = koinViewModel<BottomNavigationDestinationsVM>()
-
-        ObserveNavigation(viewModel.navigationEventVoyager)
+        val navigator = LocalNavigator.current.findRootNavigatorOrCurrent()
+        val settingScreen = rememberScreen(SharedScreenVoyager.BottomNavigationTab.Settings)
 
         CameraRecordingScreen(
             viewModel = viewModel,
             needToHandlePermission = true,
-            onNavigationEvent = {}, // Handled by ObserveNavigation
+            onNavigationEvent = { navigator?.push(settingScreen) },
             onBackClick = {
                 bottomNavVM.onAction(BottomNavigationDestinationsUiAction.GraphCompletedHandling)
-            }
+            },
         )
     }
 }

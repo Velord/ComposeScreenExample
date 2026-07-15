@@ -8,14 +8,7 @@ import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 import org.koin.core.scope.Scope
 
-@Module
-actual class SharePlatformModule {
-    @Single
-    actual fun provideShareDataSource(scope: Scope): ShareDataSource =
-        AndroidShareDataSource(scope.get())
-}
-
-private class AndroidShareDataSource(private val context: Context) : ShareDataSource {
+class AndroidShareDataSource(private val context: Context) : ShareDataSource {
 
     override suspend fun share(text: String) {
         val sendIntent = Intent(Intent.ACTION_SEND).apply {
@@ -30,4 +23,10 @@ private class AndroidShareDataSource(private val context: Context) : ShareDataSo
             context.startActivity(shareIntent)
         }
     }
+}
+
+@Module
+actual class SharePlatformModule {
+    @Single
+    actual fun provideShareDataSource(scope: Scope): ShareDataSource = AndroidShareDataSource(scope.get())
 }

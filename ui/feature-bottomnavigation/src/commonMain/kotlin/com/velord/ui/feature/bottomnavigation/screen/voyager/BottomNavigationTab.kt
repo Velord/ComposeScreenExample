@@ -20,7 +20,6 @@ import com.velord.core.resource.settings
 import org.jetbrains.compose.resources.stringResource
 
 sealed class BottomNavigationTab : Tab {
-
     data object Camera : BottomNavigationTab() {
 
         override val options: TabOptions

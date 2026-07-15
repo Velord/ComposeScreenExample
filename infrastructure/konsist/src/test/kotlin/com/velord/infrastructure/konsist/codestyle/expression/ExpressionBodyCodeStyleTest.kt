@@ -51,6 +51,28 @@ class ExpressionBodyCodeStyleTest {
     }
 
     @Test
+    fun `expression-bodied functions should split parameters before wrapping opening call after =`() {
+        projectFileRoster.assertTrue { file ->
+            val lineRoster = file.text.lines()
+            val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
+                isInlineParameterFunctionWithWrappedOpeningCall(
+                    currentLine = lineRoster[lineIndex],
+                    nextLine = lineRoster[lineIndex + 1],
+                )
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Inline function parameters at line ${violation + 1} " +
+                    "force the opening call after = onto a broken indentation level."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
     fun `single return functions should use expression bodies when they fit`() {
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()
@@ -115,5 +137,4 @@ class ExpressionBodyCodeStyleTest {
             violation == null
         }
     }
-
 }

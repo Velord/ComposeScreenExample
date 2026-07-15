@@ -39,37 +39,22 @@ import com.velord.core.resource.image_widget
 import com.velord.core.resource.refresh
 import com.velord.core.resource.widget_size
 import com.velord.core.ui.compose.glance.MainGlanceTheme
+import com.velord.ui.widget.refreshableimage.util.createImageParameter
+import com.velord.ui.widget.refreshableimage.util.getImageFilePath
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
 
 // On emulator redundant compositions with wrong LocalSize.current ruin all flow
 private const val ERROR_COMPOSITION_WIDTH = 675
-private val log = Logger.withTag("RefreshableImageWidget")
+
+internal val log = Logger.withTag("RefreshableImageWidgetScreen")
 
 @Composable
-private fun Preferences.createImageParameters(generateNewSeed: Boolean): ImageParameters {
-    val size = LocalSize.current
-    val seed = if (generateNewSeed) {
-        randomStringByKotlinRandom()
-    } else {
-        this[RefreshableImageWidget.seedPreferenceKey] ?: ImageParameters.DEFAULT_SEED
-    }
-
-    return ImageParameters(seed, size)
-}
-
-private fun Preferences.getImageFilePath(parameters: ImageParameters): String {
-    val imageKey = RefreshableImageWidget.getImageUriKey(parameters)
-    log.d { "Screen: seed - ${parameters.seed}; UriKey - $imageKey" }
-    return this[imageKey] ?: ""
-}
-
-@Composable
-internal fun NewImageWidgetScreen() {
+internal fun RefreshableImageWidgetScreen() {
     if (LocalSize.current.width.value.roundToInt() == ERROR_COMPOSITION_WIDTH) return
 
     val prefs = currentState<Preferences>()
-    val parameters = prefs.createImageParameters(false)
+    val parameters = prefs.createImageParameter(false)
     val filePath = prefs.getImageFilePath(parameters)
     val sourceUrl = RefreshableImageWidgetWorker.createUrl(parameters)
     val isDownloading = prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] ?: false
@@ -178,7 +163,7 @@ private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
             .clickable(
                 actionRunCallback<RefreshCallback>(
                 parameters = actionParametersOf(
-                    RefreshableImageWidget.refreshableImageWidgetKey to prefs.createImageParameters(true)
+                    RefreshableImageWidget.refreshableImageWidgetKey to prefs.createImageParameter(true)
                 )
             )),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -222,7 +207,7 @@ private fun RefreshableImage(filePath: String) {
 
         val context = LocalContext.current
         val glanceId = LocalGlanceId.current
-        val parameters = currentState<Preferences>().createImageParameters(false)
+        val parameters = currentState<Preferences>().createImageParameter(false)
         SideEffect {
             RefreshableImageWidgetWorker.enqueue(context, glanceId, parameters)
         }

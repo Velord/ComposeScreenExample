@@ -13,8 +13,9 @@ internal val hardWrapFileRoster = governanceFileRoster + projectFileRoster.filte
     file.path.replace(File.separatorChar, '/').endsWith(RECOMPOSE_HIGHLIGHTER_PATH)
 }
 
-internal fun isAllowedHardWrapTestName(line: String): Boolean =
-    line.trimStart().startsWith("fun `") && line.trimEnd().endsWith("`() {")
+internal fun isAllowedHardWrapTestName(
+    line: String
+): Boolean = line.trimStart().startsWith("fun `") && line.trimEnd().endsWith("`() {")
 
 internal fun isLateConstDeclaration(
     lineRoster: List<String>,

@@ -68,7 +68,11 @@ internal fun EntryProviderScope<NavKey>.setupDemoGraphNav3(navigator: DemoNaviga
         val viewModel = koinViewModel<MovieVM>()
         val allMovieVM = koinViewModel<AllMovieVM>()
         val favoriteMovieVM = koinViewModel<FavoriteMovieVM>()
-        MovieScreen(viewModel, allMovieVM, favoriteMovieVM)
+        MovieScreen(
+            viewModel,
+            allMovieVM,
+            favoriteMovieVM,
+        )
     }
 
     entry<GraphNav3.BottomTab.Demo.DialogDestinationNav3> {

@@ -175,8 +175,9 @@ class ModuleNamingTest {
             .joinToString(".")
     }
 
-    private fun declaredPackageNameOrNull(fileText: String): String? =
-        PACKAGE_DIRECTIVE_REGEX.find(fileText)?.groupValues?.get(1)
+    private fun declaredPackageNameOrNull(
+        fileText: String
+    ): String? = PACKAGE_DIRECTIVE_REGEX.find(fileText)?.groupValues?.get(1)
 }
 
 private data class ModulePath(val value: String) {

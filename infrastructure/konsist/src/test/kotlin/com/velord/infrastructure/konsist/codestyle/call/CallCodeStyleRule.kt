@@ -15,6 +15,7 @@ private val EXPLICIT_LAMBDA_PARAMETER_REGEX = Regex("""\{\s*[A-Za-z_][A-Za-z0-9_
 private val BUILT_IN_COMPOSE_CALL_NAME_ROSTER = setOf(
     "AsyncImage",
     "Button",
+    "CameraPreviewView",
     "ExtendedFloatingActionButton",
     "FloatingActionButton",
     "Icon",
@@ -94,6 +95,17 @@ internal fun isCompactComposeCallWithSeveralParameters(
 internal fun composeCallNameRoster(fileText: String): Set<String> {
     if (fileText.contains("@Composable").not()) return emptySet()
 
+    val importedAliasNameRoster = fileText.lines().mapNotNull { line ->
+        val importedName = line.substringBefore(" as ").substringAfterLast(".")
+        if (line.startsWith("import ") &&
+            line.contains(" as ") &&
+            importedName in BUILT_IN_COMPOSE_CALL_NAME_ROSTER
+        ) {
+            line.substringAfter(" as ").trim()
+        } else {
+            null
+        }
+    }.toSet()
     val localNameRoster = fileText.lines()
         .zipWithNext()
         .filter { (previousLine, currentLine) ->
@@ -105,7 +117,7 @@ internal fun composeCallNameRoster(fileText: String): Set<String> {
                 .substringAfterLast(".")
         }
         .toSet()
-    return BUILT_IN_COMPOSE_CALL_NAME_ROSTER + localNameRoster
+    return BUILT_IN_COMPOSE_CALL_NAME_ROSTER + importedAliasNameRoster + localNameRoster
 }
 
 internal fun hasSeveralTopLevelArguments(line: String): Boolean {

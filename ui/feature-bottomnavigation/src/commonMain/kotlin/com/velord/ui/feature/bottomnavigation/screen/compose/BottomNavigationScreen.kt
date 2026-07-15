@@ -13,7 +13,7 @@ import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigator
-import com.velord.ui.feature.bottomnavigation.screen.component.BottomNavigationContent
+import com.velord.ui.feature.bottomnavigation.screen.component.Content
 import com.velord.ui.feature.bottomnavigation.screen.component.ScreenSetup
 import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
@@ -67,7 +67,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
             navigator.onTabClick(tab)
         }
 
-        BottomNavigationContent(
+        Content(
             selectedItem = uiState.value.tabState.current,
             navigationItemRoster = viewModel.getNavigationItems(),
             onClick = { tab ->
@@ -88,7 +88,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
 @PreviewCombined
 @Composable
 private fun Preview() {
-    BottomNavigationContent(
+    Content(
         selectedItem = BottomNavigationItem.Camera,
         navigationItemRoster = BottomNavigationItem.entries,
         onClick = {},

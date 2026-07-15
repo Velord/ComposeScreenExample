@@ -130,7 +130,6 @@ private fun DateAndRating(movie: Movie) {
     ) {
         Text(
             text = movie.formattedDateForCard(TimeZone.currentSystemDefault()),
-            modifier = Modifier,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             style = MaterialTheme.typography.labelSmall,
             fontSize = 10.sp
@@ -261,7 +260,6 @@ private fun BoxScope.HeartContent(
 @Composable
 private fun PreviewCard() {
     MovieCard(
-        modifier = Modifier,
         movie = Movie(
             id = 1,
             title = "Title sdsdfssdsfsd ddfd",

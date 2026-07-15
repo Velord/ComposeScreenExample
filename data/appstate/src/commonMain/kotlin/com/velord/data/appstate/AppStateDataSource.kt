@@ -1,6 +1,8 @@
 package com.velord.data.appstate
 
 import com.velord.model.AppEvent
+import com.velord.model.camera.CameraSessionWrapper
+import com.velord.model.camera.CameraState
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
@@ -15,6 +17,8 @@ interface AppStateDataSource {
     val movieFavoriteRosterFlow: MutableStateFlow<List<Movie>>
     val movieSortFlow: MutableStateFlow<List<MovieSortOption>>
     val appEventFlow: MutableSharedFlow<AppEvent>
+    val cameraSessionFlow: MutableStateFlow<CameraSessionWrapper?>
+    val cameraStateFlow: MutableStateFlow<CameraState>
 }
 
 @Single(binds = [AppStateDataSource::class])
@@ -32,4 +36,6 @@ class AppStateDataSourceImpl : AppStateDataSource {
     )
 
     override val appEventFlow = MutableSharedFlow<AppEvent>()
+    override val cameraSessionFlow = MutableStateFlow<CameraSessionWrapper?>(null)
+    override val cameraStateFlow = MutableStateFlow(CameraState.DEFAULT)
 }

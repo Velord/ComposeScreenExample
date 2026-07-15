@@ -10,7 +10,15 @@ import com.velord.data.gateway.movie.MovieSortGateway
 import com.velord.data.gateway.setting.GetThemeConfigGateway
 import com.velord.data.gateway.setting.SwitchThemeConfigGateway
 import com.velord.model.AppEvent
+import com.velord.usecase.camera.CreateCameraSessionUC
+import com.velord.usecase.camera.GetCameraSessionUC
+import com.velord.usecase.camera.GetCameraStateUC
+import com.velord.usecase.camera.PauseRecordingUC
+import com.velord.usecase.camera.ReleaseCameraSessionUC
+import com.velord.usecase.camera.ResumeRecordingUC
 import com.velord.usecase.camera.StartRecordingUC
+import com.velord.usecase.camera.StopRecordingUC
+import com.velord.usecase.camera.ToggleCameraLensUC
 import com.velord.usecase.event.GetAppEventFlowUC
 import com.velord.usecase.event.GetToastConfigFlowUC
 import com.velord.usecase.event.RequestAppExitUC
@@ -82,5 +90,29 @@ val useCaseModule = module {
     }
     single<StartRecordingUC> {
         StartRecordingUC(get<CameraGateway>()::startRecording)
+    }
+    single<StopRecordingUC> {
+        StopRecordingUC(get<CameraGateway>()::stopRecording)
+    }
+    single<PauseRecordingUC> {
+        PauseRecordingUC(get<CameraGateway>()::pauseRecording)
+    }
+    single<ResumeRecordingUC> {
+        ResumeRecordingUC(get<CameraGateway>()::resumeRecording)
+    }
+    single<ToggleCameraLensUC> {
+        ToggleCameraLensUC(get<CameraGateway>()::toggleCameraLens)
+    }
+    single<CreateCameraSessionUC> {
+        CreateCameraSessionUC(get<CameraGateway>()::createSession)
+    }
+    single<ReleaseCameraSessionUC> {
+        ReleaseCameraSessionUC(get<CameraGateway>()::releaseSession)
+    }
+    single<GetCameraSessionUC> {
+        GetCameraSessionUC(get<CameraGateway>()::getSession)
+    }
+    single<GetCameraStateUC> {
+        GetCameraStateUC(get<CameraGateway>()::getState)
     }
 }

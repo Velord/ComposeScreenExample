@@ -110,7 +110,6 @@ private fun RowScope.HeaderButton(
 
         Text(
             text = stringResource(page.titleRes),
-            modifier = Modifier,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,

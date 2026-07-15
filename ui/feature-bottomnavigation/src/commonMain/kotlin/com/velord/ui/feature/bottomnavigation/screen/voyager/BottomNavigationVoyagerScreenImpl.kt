@@ -16,12 +16,12 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
-import com.velord.ui.feature.bottomnavigation.screen.component.BottomNavigationContent
 import com.velord.ui.feature.bottomnavigation.screen.component.ScreenSetup
 import com.velord.ui.feature.bottomnavigation.viewmodel.voyager.BottomNavigationVoyagerUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.voyager.BottomNavigationVoyagerVM
+import com.velord.ui.feature.bottomnavigation.screen.component.Content as BottomNavigationContent
 
-private fun BottomNavigationItem.toTab(): BottomNavigationTab = when (this) {
+private fun createBottomNavigationTab(item: BottomNavigationItem): BottomNavigationTab = when (item) {
     BottomNavigationItem.Camera -> BottomNavigationTab.Camera
     BottomNavigationItem.Demo -> BottomNavigationTab.Demo
     BottomNavigationItem.Setting -> BottomNavigationTab.Settings
@@ -68,7 +68,7 @@ private fun Content(
     getNavigationItems: () -> List<BottomNavigationItem>,
     onTabClick: (BottomNavigationItem) -> Unit,
 ) {
-    val tab = currentItem.toTab()
+    val tab = createBottomNavigationTab(currentItem)
     TabNavigator(tab) {
         val tabNavigator = LocalTabNavigator.current
         LaunchedEffect(tab) {

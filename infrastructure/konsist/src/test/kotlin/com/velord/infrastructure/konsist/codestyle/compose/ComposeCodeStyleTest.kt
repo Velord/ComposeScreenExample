@@ -20,10 +20,14 @@ private val DELEGATED_REMEMBERED_MUTABLE_STATE_REGEX = Regex(
     """\bvar\s+\w+\s+by\s+remember(?:Saveable)?\s*""" +
         """(?:\([^)]*\))?\s*\{\s*mutable(?:Int|Long|Float|Double)?StateOf\(""",
 )
+private val EMPTY_MODIFIER_ARGUMENT_REGEX = Regex("""(?m)^\s*modifier\s*=\s*Modifier\s*,\s*$""")
 
 class ComposeCodeStyleTest {
 
     private val projectFileRoster = Konsist.scopeFromExternalDirectory(locateRepoRoot().path).files
+    private val projectComposeCallNameRoster = projectFileRoster
+        .flatMap { file -> composeCallNameRoster(file.text) }
+        .toSet()
 
     @Test
     fun `compose screen roster should not be empty`() {
@@ -121,9 +125,8 @@ class ComposeCodeStyleTest {
     @Test
     fun `compose calls with several parameters should use one parameter per line`() {
         projectFileRoster.assertTrue { file ->
-            val composeCallNameRoster = composeCallNameRoster(file.text)
             val violation = file.text.lines().withIndex().firstOrNull { (_, line) ->
-                isCompactComposeCallWithSeveralParameters(composeCallNameRoster, line)
+                isCompactComposeCallWithSeveralParameters(projectComposeCallNameRoster, line)
             }
 
             if (violation != null) {
@@ -135,6 +138,42 @@ class ComposeCodeStyleTest {
 
             violation == null
         }
+    }
+
+    @Test
+    fun `empty Modifier arguments should be omitted`() {
+        projectFileRoster.assertTrue { file ->
+            val violation = EMPTY_MODIFIER_ARGUMENT_REGEX.find(file.text)
+
+            if (violation != null) {
+                val lineNumber = file.text.take(violation.range.first).count { it == '\n' } + 1
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Empty Modifier argument at line $lineNumber should be omitted."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `default Modifier parameters should be used by callers`() {
+        val sourceRoster = projectFileRoster.map { file ->
+            ModifierSource(
+                name = file.name,
+                packageName = file.packagee?.name.orEmpty(),
+                text = file.text,
+            )
+        }
+        val violation = findUnnecessaryDefaultModifier(sourceRoster)
+
+        if (violation != null) {
+            val msg = "Name: ${violation.sourceName}. FAILED. " +
+                "${violation.functionName} has an unused default Modifier parameter."
+            println(msg)
+        }
+
+        assertTrue(violation == null)
     }
 
 }

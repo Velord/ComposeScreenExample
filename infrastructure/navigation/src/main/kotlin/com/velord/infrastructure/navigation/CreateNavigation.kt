@@ -14,7 +14,6 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.navigation.navgraphs.MainNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
-import com.velord.ui.feature.bottomnavigation.screen.voyager.BottomNavigationVoyagerScreen
 import com.velord.infrastructure.navigation.compose.LogBackStack
 import com.velord.infrastructure.navigation.compose.destinations.navigator.SupremeNavigatorDestinations
 import com.velord.infrastructure.navigation.compose.destinations.transition.PopScaleOutTransition
@@ -24,13 +23,17 @@ import com.velord.infrastructure.navigation.compose.nav3.navigator.SupremeNaviga
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 import com.velord.infrastructure.navigation.compose.vanilla.graph.setupMainGraphVanilla
 import com.velord.infrastructure.navigation.compose.vanilla.navigator.SupremeNavigatorVanilla
+import com.velord.ui.feature.bottomnavigation.screen.voyager.BottomNavigationVoyagerScreen
 
 @Composable
 fun CreateNavigationViaDestinations() {
     val navController: NavHostController = rememberNavController()
     val navigator = SupremeNavigatorDestinations(navController)
 
-    LogBackStack(navController = navController, tag = "CreateNavigationViaDestinations")
+    LogBackStack(
+        navController = navController,
+        tag = "CreateNavigationViaDestinations",
+    )
     /*
     Start route is determined by below code. And this parameter @Destination<XGraph>(start = true)
     First is MainGraph

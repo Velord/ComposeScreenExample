@@ -88,7 +88,11 @@ internal fun MovieDestination() {
     val viewModel = koinViewModel<MovieVM>()
     val allMovieVM = koinViewModel<AllMovieVM>()
     val favoriteMovieVM = koinViewModel<FavoriteMovieVM>()
-    MovieScreen(viewModel, allMovieVM, favoriteMovieVM)
+    MovieScreen(
+        viewModel,
+        allMovieVM,
+        favoriteMovieVM,
+    )
 }
 
 @Destination<DemoGraph>

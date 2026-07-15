@@ -68,7 +68,11 @@ internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
             val viewModel = koinViewModel<MovieVM>()
             val allMovieVM = koinViewModel<AllMovieVM>()
             val favoriteMovieVM = koinViewModel<FavoriteMovieVM>()
-            MovieScreen(viewModel, allMovieVM, favoriteMovieVM)
+            MovieScreen(
+                viewModel,
+                allMovieVM,
+                favoriteMovieVM,
+            )
         }
 
         composable<GraphVanilla.BottomTab.Demo.DialogDestinationVanilla> {

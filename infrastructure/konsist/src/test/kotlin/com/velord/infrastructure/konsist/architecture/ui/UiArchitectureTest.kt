@@ -6,6 +6,10 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 private const val SCREEN_FILE_SUFFIX = "Screen.kt"
+private const val UI_FEATURE_IMPORT_PREFIX = "import com.velord.ui.feature."
+private const val COMPONENT_IMPORT_SEGMENT = ".component."
+private const val CONTENT_NAME = "Content"
+private const val CONTENT_FILE_NAME = "Content.kt"
 private const val LIFECYCLE_COLLECTION = "collectAsStateWithLifecycle"
 private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
 private const val UI_PACKAGE_PREFIX = "com.velord.ui."
@@ -152,8 +156,44 @@ class UiArchitectureTest {
         assertTrue(violationRoster.isEmpty())
     }
 
+    @Test
+    fun `extracted screen root composable should use Content name`() {
+        val violationRoster = screenFileRoster().filter { file ->
+            file.text.lineSequence().any { line ->
+                isFeaturePrefixedRootContentImport(line)
+            }
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "Extracted screen root composable must use Content name: " +
+                violationRoster.joinToString { file -> file.name }
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
+    @Test
+    fun `screen Content should not expose Modifier`() {
+        val violationRoster = contentOwnerFileRoster().filter { file ->
+            hasContentModifier(file.text)
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "Screen Content must own its root layout without Modifier: " +
+                violationRoster.joinToString { file -> file.name }
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
     private fun screenFileRoster() = projectFileRoster.filter { file ->
         file.name.endsWith(SCREEN_FILE_SUFFIX)
+    }
+
+    private fun contentOwnerFileRoster() = projectFileRoster.filter { file ->
+        file.name.endsWith(SCREEN_FILE_SUFFIX) || file.name == CONTENT_FILE_NAME
     }
 
     private fun viewModelFileRoster() = projectFileRoster.filter { file ->
@@ -192,8 +232,9 @@ class UiArchitectureTest {
     }
 
     private fun hasInvalidUiActionBranch(text: String): Boolean {
-        val branchRoster = UI_ACTION_BRANCH_REGEX.findAll(text).toList()
-        val delegateRoster = UI_ACTION_DELEGATE_REGEX.findAll(text).toList()
+        val code = text.lines().joinToString("\n") { line -> line.substringBefore("//") }
+        val branchRoster = UI_ACTION_BRANCH_REGEX.findAll(code).toList()
+        val delegateRoster = UI_ACTION_DELEGATE_REGEX.findAll(code).toList()
         if (branchRoster.size != delegateRoster.size) return true
 
         return delegateRoster.any { match ->
@@ -205,7 +246,7 @@ class UiArchitectureTest {
                 actionName
             }
             val expectedHandlerName = "on$handlerActionName"
-            handlerName != expectedHandlerName || hasPrivateHandler(text, handlerName).not()
+            handlerName != expectedHandlerName || hasPrivateHandler(code, handlerName).not()
         }
     }
 
@@ -224,6 +265,34 @@ class UiArchitectureTest {
     private fun containsAndroidToastUsage(line: String): Boolean {
         val code = line.substringBefore("//")
         return code.contains(ANDROID_TOAST_TYPE)
+    }
+
+    private fun isFeaturePrefixedRootContentImport(line: String): Boolean {
+        val importedName = line
+            .takeIf { it.startsWith("import ") }
+            ?.substringAfterLast('.')
+            ?.substringBefore(" as ")
+            ?: return false
+
+        return line.startsWith(UI_FEATURE_IMPORT_PREFIX) &&
+            line.contains(COMPONENT_IMPORT_SEGMENT) &&
+            importedName.endsWith(CONTENT_NAME) &&
+            importedName != CONTENT_NAME
+    }
+
+    private fun hasContentModifier(text: String): Boolean {
+        val lineRoster = text.lines()
+        return lineRoster.indices.any { lineIndex ->
+            val line = lineRoster[lineIndex]
+            if (line.contains("fun Content(").not()) return@any false
+
+            buildString {
+                for (declarationLine in lineRoster.drop(lineIndex)) {
+                    appendLine(declarationLine)
+                    if (declarationLine.trimEnd().endsWith(") {")) break
+                }
+            }.contains("modifier: Modifier")
+        }
     }
 
     private fun locateRepoRoot(): File = generateSequence(

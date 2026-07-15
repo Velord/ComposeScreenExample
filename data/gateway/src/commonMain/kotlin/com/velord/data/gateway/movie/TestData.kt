@@ -8,8 +8,11 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlin.time.Instant
 
-private fun createDate(year: Int, month: Int, day: Int): Instant =
-    LocalDate(year, month, day).atStartOfDayIn(TimeZone.UTC)
+private fun createDate(
+    year: Int,
+    month: Int,
+    day: Int
+): Instant = LocalDate(year, month, day).atStartOfDayIn(TimeZone.UTC)
 
 internal val testMovieRoster = listOf<Movie>(
     Movie(

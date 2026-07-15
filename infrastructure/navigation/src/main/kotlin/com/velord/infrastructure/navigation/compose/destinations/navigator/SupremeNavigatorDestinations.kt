@@ -102,7 +102,10 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
             bottomTabNavControllerState.value = navController
         }
 
-        LogNavigationEvents(navController = navController, label = "DestinationsLib")
+        LogNavigationEvents(
+            navController = navController,
+            label = "DestinationsLib",
+        )
 
         val bottomTabNavController = bottomTabNavControllerState.value
         val backStackEntry = bottomTabNavController!!.currentBackStackEntryAsState()
