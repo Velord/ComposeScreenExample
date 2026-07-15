@@ -9,13 +9,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun Title(
-    text: String,
-    modifier: Modifier = Modifier
-) {
+internal fun Title(text: String) {
     Text(
         text = text,
-        modifier = modifier.padding(top = 32.dp, start = 16.dp),
+        modifier = Modifier.padding(top = 32.dp, start = 16.dp),
         color = MaterialTheme.colorScheme.primary,
         textAlign = TextAlign.Start,
         style = MaterialTheme.typography.bodyMedium,

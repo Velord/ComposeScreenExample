@@ -14,6 +14,10 @@ internal data class TestVoyagerScreen(
 
     @Composable
     override fun Content() {
-        TestScreen(title, modifier, onClick)
+        TestScreen(
+            title,
+            modifier,
+            onClick,
+        )
     }
 }

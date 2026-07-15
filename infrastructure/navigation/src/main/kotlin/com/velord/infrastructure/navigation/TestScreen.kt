@@ -32,13 +32,13 @@ fun TestScreen(
 @Composable
 private fun Content(
     title: StringResource,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     onClick: () -> Unit = {},
 ) {
     val time = remember { System.currentTimeMillis().toString() }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.surface),
     ) {
@@ -63,5 +63,8 @@ private fun Content(
 @Preview
 @Composable
 private fun Preview() {
-    Content(title = Res.string.settings)
+    Content(
+        title = Res.string.settings,
+        modifier = Modifier.fillMaxSize()
+    )
 }

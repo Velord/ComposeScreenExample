@@ -47,7 +47,6 @@ internal fun BoxScope.MovieAction(
         }
         ExtendedFloatingActionButton(
             onClick = onSortClick,
-            modifier = Modifier,
             text = {
                 Text(stringResource(Res.string.sort_by))
             },
@@ -61,7 +60,6 @@ internal fun BoxScope.MovieAction(
         )
         ExtendedFloatingActionButton(
             onClick = onFilterClick,
-            modifier = Modifier,
             text = {
                 Text(stringResource(Res.string.filter_by))
             },

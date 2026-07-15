@@ -183,13 +183,10 @@ private fun SwitcherDivider() {
 }
 
 @Composable
-private fun ColumnScope.Title(
-    text: String,
-    modifier: Modifier = Modifier
-) {
+private fun ColumnScope.Title(text: String) {
     Text(
         text = text,
-        modifier = modifier
+        modifier = Modifier
             .padding(top = 8.dp)
             .align(alignment = Alignment.CenterHorizontally),
         color = MaterialTheme.colorScheme.primary,

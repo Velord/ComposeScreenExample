@@ -8,12 +8,14 @@ import kotlin.test.assertTrue
 class CallCodeStyleTest {
     @Test
     fun `one or two argument calls should stay on one line when they fit`() {
+        val projectComposeCallNameRoster = projectFileRoster
+            .flatMap { file -> composeCallNameRoster(file.text) }
+            .toSet()
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()
-            val composeCallNameRoster = composeCallNameRoster(file.text)
             val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
                 isSplitOneOrTwoArgumentCall(
-                    composeCallNameRoster = composeCallNameRoster,
+                    composeCallNameRoster = projectComposeCallNameRoster,
                     currentLine = lineRoster[lineIndex],
                     nextLine = lineRoster.getOrNull(lineIndex + 1),
                     thirdLine = lineRoster.getOrNull(lineIndex + 2),

@@ -19,7 +19,7 @@ import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 
 @Composable
-internal fun BottomNavigationContent(
+internal fun Content(
     selectedItem: BottomNavigationItem,
     navigationItemRoster: List<BottomNavigationItem>,
     onClick: (BottomNavigationItem) -> Unit,
@@ -64,7 +64,6 @@ internal fun BottomBar(
                         painter = painter,
                         scale = if (isSelected) 1.5f else 1f,
                         color = color,
-                        modifier = Modifier,
                         iconSize = 28.dp,
                     )
                 },
@@ -81,7 +80,7 @@ internal fun BottomBar(
 @PreviewCombined
 @Composable
 private fun Preview() {
-    BottomNavigationContent(
+    Content(
         selectedItem = BottomNavigationItem.Camera,
         navigationItemRoster = BottomNavigationItem.entries,
         onClick = {},
