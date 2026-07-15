@@ -68,6 +68,8 @@ fun CameraRecordingScreen(
     onNavigationEvent : (CameraRecordingNavigationEvent) -> Unit,
     onBackClick: () -> Unit,
 ) {
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
     SideEffect {
         // Simulate we completed back stack handling
         onBackClick()
@@ -77,7 +79,6 @@ fun CameraRecordingScreen(
         onNavigationEvent(it)
     }
 
-    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     if (needToHandlePermission) {
         // To annoying. Return back later.
@@ -94,8 +95,8 @@ fun CameraRecordingScreen(
 //        )
     }
 
-    log.d { "permissionCameraState: ${uiState.value.permissionCamera}" }
-    log.d { "permissionAudioState: ${uiState.value.permissionAudio}" }
+    log.d { "permissionCameraState: ${uiState.value.permissionState.camera}" }
+    log.d { "permissionAudioState: ${uiState.value.permissionState.audio}" }
     Content(
         uiState = uiState.value,
         onAction = viewModel::onAction
@@ -140,14 +141,14 @@ private fun PermissionInfo(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center
     ) {
-        if (uiState.permissionCamera.isForbidden) {
+        if (uiState.permissionState.camera.isForbidden) {
             PermissionIsNotGrantedState(
                 icon = Icons.Filled.CameraAlt,
                 label = Res.string.can_not_get_permission_for_camera,
                 onClick = onCheckPermissionClick
             )
         }
-        if (uiState.permissionAudio.isForbidden && uiState.isAudioEnabled) {
+        if (uiState.permissionState.audio.isForbidden && uiState.isAudioEnabled) {
             Spacer(modifier = Modifier.size(32.dp))
             PermissionIsNotGrantedState(
                 icon = Icons.Filled.PermCameraMic,
@@ -201,8 +202,8 @@ private fun BoxScope.Recording(
     // and it allows us to start recording.
     val videoCaptureState: MutableState<VideoCapture<Recorder>?> = remember { mutableStateOf(null) }
 
-    val permissionCamera = uiState.permissionCamera
-    val permissionAudio = uiState.permissionAudio
+    val permissionCamera = uiState.permissionState.camera
+    val permissionAudio = uiState.permissionState.audio
     if (permissionCamera.isGranted && permissionAudio.isGranted) {
         CameraRecordingPreview(
             uiState = uiState,
@@ -323,9 +324,7 @@ private fun BoxScope.CameraSelector(
 }
 
 @Composable
-private fun CameraSelectorIcon(
-    onClick: () -> Unit
-) {
+private fun CameraSelectorIcon(onClick: () -> Unit) {
     IconButton(onClick = onClick) {
         Icon(
             imageVector = Icons.Filled.SwitchVideo,
@@ -337,9 +336,7 @@ private fun CameraSelectorIcon(
 }
 
 @Composable
-private fun BoxScope.SettingsIcon(
-    onClick: () -> Unit
-) {
+private fun BoxScope.SettingsIcon(onClick: () -> Unit) {
     Icon(
         imageVector = Icons.Filled.SettingsApplications,
         contentDescription = null,

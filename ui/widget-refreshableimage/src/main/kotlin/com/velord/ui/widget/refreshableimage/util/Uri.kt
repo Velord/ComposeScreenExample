@@ -1,4 +1,4 @@
-package com.velord.ui.widget.refreshableimage
+package com.velord.ui.widget.refreshableimage.util
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,16 @@ import android.os.Build
 import androidx.core.content.FileProvider
 import coil3.imageLoader
 import kotlin.random.Random
+
+// See manifest for correct path
+private fun Context.createAuthorityForFile(): String =
+    "${applicationContext.packageName}.fileprovider"
+
+private const val STRING_LENGTH = 6
+private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+internal fun randomStringByKotlinRandom() = (1..STRING_LENGTH)
+    .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
+    .joinToString("")
 
 internal fun Context.getUriForFileThanGrantPermissionThanGetUriPath(url: String): String? {
     return imageLoader.diskCache?.openSnapshot(url)?.use { snapshot ->
@@ -38,13 +48,3 @@ internal fun Context.getUriForFileThanGrantPermissionThanGetUriPath(url: String)
         contentUri.toString()
     }
 }
-
-// See manifest for correct path
-private fun Context.createAuthorityForFile(): String =
-    "${applicationContext.packageName}.fileprovider"
-
-private const val STRING_LENGTH = 6
-private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-internal fun randomStringByKotlinRandom() = (1..STRING_LENGTH)
-    .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
-    .joinToString("")

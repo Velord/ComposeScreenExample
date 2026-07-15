@@ -2,8 +2,6 @@ package com.velord.ui.widget.refreshableimage
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.os.Parcelable
-import androidx.compose.ui.unit.DpSize
 import androidx.core.net.toUri
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -13,53 +11,29 @@ import androidx.glance.ImageProvider
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
-import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.SizeMode
-import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import co.touchlab.kermit.Logger
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
-import kotlinx.parcelize.Parcelize
-
-private val log = Logger.withTag("RefreshableImageWidget")
-
-@Parcelize
-internal class ImageParameters(
-    val seed: String,
-    val width: Float,
-    val height: Float
-) : Parcelable {
-
-    constructor(seed: String, size: DpSize) :
-            this(seed, width = size.width.value, height = size.height.value)
-
-    override fun toString(): String = "Seed = $seed x Width = $width x Height=$height"
-
-    fun getSimpleWidth() = width.toInt()
-
-    fun getSimpleHeight() = height.toInt()
-
-    companion object {
-        const val DEFAULT_SEED = "seed"
-    }
-}
+import com.velord.ui.widget.refreshableimage.model.ImageParameter
 
 class RefreshableImageWidget :
     GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout),
     GlanceWidgetThemeSustainer<RefreshableImageWidget> {
+
     // GlanceAppWidget
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
     override val sizeMode: SizeMode = SizeMode.Exact
+
     // GlanceWidgetThemeSustainer
     override val name: Class<RefreshableImageWidget> = RefreshableImageWidget::class.java
     override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = RefreshableImageWidget.useDarkThemePreferenceKey
 
     override suspend fun provideGlance(context: Context, id: GlanceId) =
-        provideContent { NewImageWidgetScreen() }
+        provideContent { RefreshableImageWidgetScreen() }
 
     override suspend fun onDelete(context: Context, glanceId: GlanceId) {
         super.onDelete(context, glanceId)
@@ -73,22 +47,21 @@ class RefreshableImageWidget :
         internal val isDownloadingNewImagePreferenceKey = booleanPreferencesKey("image_is_downloading")
         internal val useDarkThemePreferenceKey = booleanPreferencesKey("use_dark_theme")
         // ActionParameters keys
-        internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameters>("refreshableImageWidgetKey")
+        internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameter>("refreshableImageWidgetKey")
 
-        internal fun getImageUriKey(imageParameters: ImageParameters) = createPreferenceKey(imageParameters)
+        internal fun getImageUriKey(imageParameters: ImageParameter) = createPreferenceKey(imageParameters)
 
-        private fun createPreferenceKey(imageParameters: ImageParameters) = stringPreferencesKey(
+        private fun createPreferenceKey(imageParameters: ImageParameter) = stringPreferencesKey(
             "uri" +
                 "/seed - ${imageParameters.seed}" +
                 "/size - w:${imageParameters.getSimpleWidth()}, h:${imageParameters.getSimpleHeight()}",
         )
 
-
         internal suspend fun updatePreferences(
             context: Context,
             url: String,
             uri: String,
-            parameters: ImageParameters,
+            parameters: ImageParameter,
         ) {
             val manager = GlanceAppWidgetManager(context)
             manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {
@@ -128,33 +101,4 @@ class RefreshableImageWidget :
             return ImageProvider(bitmap)
         }
     }
-}
-
-internal class RefreshCallback : ActionCallback {
-
-    override suspend fun onAction(
-        context: Context,
-        glanceId: GlanceId,
-        parameters: ActionParameters
-    ) {
-        val newParameters: ImageParameters = requireNotNull(
-            parameters[RefreshableImageWidget.refreshableImageWidgetKey]
-        ) {
-            "Missing refreshableImageWidgetKey"
-        }
-        log.d { "RefreshCallback.onAction: $glanceId; Size: $newParameters" }
-
-        val manager = GlanceAppWidgetManager(context)
-        manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {
-            updateAppWidgetState(context, it) { prefs ->
-                prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] = true
-            }
-        }
-        RefreshableImageWidget().update(context, glanceId)
-        RefreshableImageWidgetWorker.enqueue(context, glanceId, newParameters, force = true)
-    }
-}
-
-class RefreshableImageWidgetReceiver : GlanceAppWidgetReceiver() {
-    override val glanceAppWidget: GlanceAppWidget = RefreshableImageWidget()
 }

@@ -14,6 +14,8 @@ import coil3.imageLoader
 import coil3.memory.MemoryCache
 import coil3.request.ErrorResult
 import coil3.request.ImageRequest
+import com.velord.ui.widget.refreshableimage.model.ImageParameter
+import com.velord.ui.widget.refreshableimage.util.getUriForFileThanGrantPermissionThanGetUriPath
 import java.util.concurrent.TimeUnit
 
 private const val SEED_KEY = "seed"
@@ -23,7 +25,7 @@ private const val FORCE_KEY = "force"
 
 private const val PICSUM_BASE_URL = "https://picsum.photos"
 private const val WORKAROUND_DELAY_DAYS = 365L
-private val log = Logger.withTag("RefreshableImageWidget")
+private const val TAG = "RefreshableImageWidgetWorker"
 
 class RefreshableImageWidgetWorker(
     private val context: Context,
@@ -31,18 +33,18 @@ class RefreshableImageWidgetWorker(
 ) : CoroutineWorker(context, workerParams) {
 
     companion object {
-        private val uniqueWorkName =
-            RefreshableImageWidgetWorker::class.simpleName ?: "RefreshableImageWidgetWorker"
+        private val log = Logger.withTag(TAG)
 
-        internal fun createUrl(imageParameters: ImageParameters): String =
-            PICSUM_BASE_URL +
-                    "/seed/${imageParameters.seed}" +
-                    "/${imageParameters.getSimpleWidth()}/${imageParameters.getSimpleHeight()}"
+        private val uniqueWorkName = RefreshableImageWidgetWorker::class.simpleName ?: TAG
+
+        internal fun createUrl(imageParameters: ImageParameter): String = PICSUM_BASE_URL +
+                "/seed/${imageParameters.seed}" +
+                "/${imageParameters.getSimpleWidth()}/${imageParameters.getSimpleHeight()}"
 
         internal fun enqueue(
             context: Context,
             glanceId: GlanceId,
-            parameters: ImageParameters,
+            parameters: ImageParameter,
             force: Boolean = false
         ) {
             val manager = WorkManager.getInstance(context)
@@ -88,12 +90,12 @@ class RefreshableImageWidgetWorker(
     }
 
     override suspend fun doWork(): Result = try {
-        val seed: String = inputData.getString(SEED_KEY) ?: ImageParameters.DEFAULT_SEED
+        val seed: String = inputData.getString(SEED_KEY) ?: ImageParameter.DEFAULT_SEED
         val width: Float = inputData.getFloat(WIDTH_KEY, 0f)
         val height: Float = inputData.getFloat(HEIGHT_KEY, 0f)
         val force: Boolean = inputData.getBoolean(FORCE_KEY, false)
 
-        val parameters = ImageParameters(seed, width, height)
+        val parameters = ImageParameter(seed, width, height)
         val url = createUrl(parameters)
         val uri = fetchImage(url, force)
         log.d { "doWork url: $url\nuri: $uri" }

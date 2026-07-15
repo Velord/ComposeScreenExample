@@ -16,6 +16,7 @@ import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 import org.koin.core.scope.Scope
 import java.io.File
+
 @Module
 actual class CameraPlatformModule {
     @Single
@@ -51,6 +52,7 @@ private class AndroidCameraDataSource(private val context: Context) : CameraData
         if (newEvent is VideoRecordEvent.Finalize) {
             val isNone = newEvent.error == VideoRecordEvent.Finalize.ERROR_NONE
             if (isNone) return
+
             deleteFailedOutput(newEvent)
         }
     }
