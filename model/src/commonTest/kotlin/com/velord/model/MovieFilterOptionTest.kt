@@ -10,10 +10,10 @@ class MovieFilterOptionTest {
 
     @Test
     fun `createAll returns list with both default filter options`() {
-        val allOptions = MovieFilterOption.ALL
-        assertEquals(2, allOptions.size)
-        assertEquals(FilterType.Rating.DEFAULT,allOptions[0].type)
-        assertEquals(FilterType.VoteCount.DEFAULT, allOptions[1].type)
+        val optionRoster = MovieFilterOption.ALL
+        assertEquals(2, optionRoster.size)
+        assertEquals(FilterType.Rating.DEFAULT, optionRoster[0].type)
+        assertEquals(FilterType.VoteCount.DEFAULT, optionRoster[1].type)
     }
 
     @Test
@@ -29,7 +29,8 @@ class MovieFilterOptionTest {
     @Test
     fun `toString provides meaningful representation`() {
         val option = MovieFilterOption(FilterType.Rating.DEFAULT)
-        val expectedString = "MovieFilterOption(type=Rating(start=7.0, end=7.1, min=0.0, max=10.0, steps=100))"
+        val expectedString = "MovieFilterOption(type=Rating(start=7.0, end=7.1, " +
+            "min=0.0, max=10.0, stepCount=100))"
         assertEquals(expectedString, option.toString())
     }
 

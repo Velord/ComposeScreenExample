@@ -21,7 +21,9 @@ import com.velord.ui.feature.bottomnavigation.viewmodel.voyager.BottomNavigation
 import com.velord.ui.feature.bottomnavigation.viewmodel.voyager.BottomNavigationVoyagerVM
 import com.velord.ui.feature.bottomnavigation.screen.component.Content as BottomNavigationContent
 
-private fun createBottomNavigationTab(item: BottomNavigationItem): BottomNavigationTab = when (item) {
+private fun createBottomNavigationTab(
+    item: BottomNavigationItem
+): BottomNavigationTab = when (item) {
     BottomNavigationItem.Camera -> BottomNavigationTab.Camera
     BottomNavigationItem.Demo -> BottomNavigationTab.Demo
     BottomNavigationItem.Setting -> BottomNavigationTab.Settings
@@ -54,7 +56,7 @@ fun BottomNavigationVoyagerScreenImpl(viewModel: BottomNavigationVoyagerVM) {
     ) {
         Content(
             currentItem = uiState.value.currentTab,
-            getNavigationItems = viewModel::getNavigationItems,
+            getNavigationItemRoster = viewModel::getNavigationItemRoster,
             onTabClick = { tab ->
                 viewModel.onAction(BottomNavigationVoyagerUiAction.TabClick(tab))
             },
@@ -65,7 +67,7 @@ fun BottomNavigationVoyagerScreenImpl(viewModel: BottomNavigationVoyagerVM) {
 @Composable
 private fun Content(
     currentItem: BottomNavigationItem,
-    getNavigationItems: () -> List<BottomNavigationItem>,
+    getNavigationItemRoster: () -> List<BottomNavigationItem>,
     onTabClick: (BottomNavigationItem) -> Unit,
 ) {
     val tab = createBottomNavigationTab(currentItem)
@@ -77,7 +79,7 @@ private fun Content(
 
         BottomNavigationContent(
             selectedItem = currentItem,
-            navigationItemRoster = getNavigationItems(),
+            navigationItemRoster = getNavigationItemRoster(),
             onClick = onTabClick,
             content = { padding ->
                 Surface(Modifier.padding(bottom = padding.calculateBottomPadding())) {

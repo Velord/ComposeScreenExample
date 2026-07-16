@@ -80,12 +80,12 @@ fun Fragment.checkRecordVideoPermission(
 ) {
     val permRecordAudio = Manifest.permission.RECORD_AUDIO
     val permCamera = Manifest.permission.CAMERA
-    val permissions = arrayOf(
+    val permissionRoster = arrayOf(
         permRecordAudio,
         permCamera
     )
 
-    val isGranted = permissions.all { permission ->
+    val isGranted = permissionRoster.all { permission ->
         ContextCompat.checkSelfPermission(
             requireContext(),
             permission
@@ -98,6 +98,6 @@ fun Fragment.checkRecordVideoPermission(
             requireContext().showGoToSettingsForMic(onDecline)
         shouldShowRequestPermissionRationale(permCamera) ->
             requireContext().showGoToSettingsForCamera(onDecline)
-        else -> actionLauncher.launch(permissions)
+        else -> actionLauncher.launch(permissionRoster)
     }
 }

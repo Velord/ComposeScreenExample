@@ -26,17 +26,17 @@ internal fun directionVectorOffset(angleRadians: Float): Offset = Offset(
 
 fun RoundedPolygon.Companion.heart(): RoundedPolygon {
     val radius = 1f
-    val radiusSides = 0.8f
+    val sideRadius = 0.8f
     val innerRadius = 0.1f
 
-    val right = radialToCartesian(radiusSides, 0f.toRadians())
+    val right = radialToCartesian(sideRadius, 0f.toRadians())
     val top = radialToCartesian(radius, 90f.toRadians())
-    val left = radialToCartesian(radiusSides, 180f.toRadians())
+    val left = radialToCartesian(sideRadius, 180f.toRadians())
     val bottomLeft = radialToCartesian(radius, 250f.toRadians())
     val innerBottom = radialToCartesian(innerRadius, 270f.toRadians())
     val bottomRight = radialToCartesian(radius, 290f.toRadians())
 
-    val vertices = floatArrayOf(
+    val vertexRoster = floatArrayOf(
         right.x,
         right.y,
         top.x,
@@ -63,5 +63,5 @@ fun RoundedPolygon.Companion.heart(): RoundedPolygon {
         CornerRounding(roundingNormal),
     )
 
-    return RoundedPolygon(vertices = vertices, perVertexRounding = rounding)
+    return RoundedPolygon(vertices = vertexRoster, perVertexRounding = rounding)
 }

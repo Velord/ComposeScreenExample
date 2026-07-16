@@ -62,6 +62,11 @@ internal fun BoxScope.CameraControlSection(
                 },
                 modifier = Modifier.weight(2f),
             )
+            OpenVideoFolderButton(
+                uiState = uiState,
+                onClick = { onAction(CameraRecordingUiAction.OpenVideoFolder) },
+                modifier = Modifier.weight(1f),
+            )
         }
     }
 }

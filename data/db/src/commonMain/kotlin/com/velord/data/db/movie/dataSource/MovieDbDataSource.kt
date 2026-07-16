@@ -12,7 +12,7 @@ interface MovieDbDataSource {
         filterRoster: List<FilterType>,
     ): List<Movie>
 
-    suspend fun insertAll(movies: List<Movie>)
+    suspend fun insertAll(movieRoster: List<Movie>)
     suspend fun update(movie: Movie)
     fun getAllLikedFlow(sortType: SortType): Flow<List<Movie>>
     suspend fun clear()

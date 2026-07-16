@@ -1,5 +1,7 @@
 package com.velord.model.camera
 
+import com.velord.model.camera.config.CameraLens
+
 data class CameraState(
     val isReady: Boolean,
     val lens: CameraLens,

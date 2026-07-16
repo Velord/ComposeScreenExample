@@ -4,9 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ProcessLifecycleOwner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.annotation.Module
-import org.koin.core.annotation.Single
-import org.koin.core.scope.Scope
 import com.kashif.cameraK.builder.createAndroidCameraControllerBuilder as kameraAndroidBuilder
 import com.kashif.cameraK.controller.CameraController as KameraController
 import com.kashif.cameraK.state.CameraConfiguration as KameraConfiguration
@@ -31,14 +28,6 @@ class AndroidCameraControllerFactory(
             config.targetResolution?.let { resolution ->
                 setResolution(resolution.first, resolution.second)
             }
-        }
-            .build()
+        }.build()
     }
-}
-
-@Module
-actual class CameraPlatformModule {
-    @Single
-    actual fun provideCameraControllerFactory(scope: Scope): CameraControllerFactory =
-        AndroidCameraControllerFactory(scope.get())
 }

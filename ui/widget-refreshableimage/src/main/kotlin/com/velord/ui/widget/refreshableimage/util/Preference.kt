@@ -19,8 +19,8 @@ internal fun Preferences.createImageParameter(generateNewSeed: Boolean): ImagePa
     return ImageParameter(seed, size)
 }
 
-internal fun Preferences.getImageFilePath(parameters: ImageParameter): String {
-    val imageKey = RefreshableImageWidget.getImageUriKey(parameters)
-    log.d { "Screen: seed - ${parameters.seed}; UriKey - $imageKey" }
+internal fun Preferences.getImageFilePath(imageParameter: ImageParameter): String {
+    val imageKey = RefreshableImageWidget.getImageUriKey(imageParameter)
+    log.d { "Screen: seed - ${imageParameter.seed}; UriKey - $imageKey" }
     return this[imageKey] ?: ""
 }

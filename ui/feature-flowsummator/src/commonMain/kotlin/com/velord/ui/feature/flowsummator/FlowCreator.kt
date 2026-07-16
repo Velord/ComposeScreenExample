@@ -12,60 +12,60 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 
 private const val SPLIT_FLOW_CREATION_BY_CHUNK = 10000
-private const val WAIT_FOR_BEFORE_ADD_NEW_CHUNK_OF_FLOWS = 10L
+private const val WAIT_BEFORE_ADDING_NEW_FLOW_CHUNK = 10L
 private const val DELAY_BEFORE_EMIT = 100L
 
 class FlowCreator(
-    private val countOfFlowToCreate: Int,
+    private val flowCountToCreate: Int,
     private val splitCreatingBy: Int = SPLIT_FLOW_CREATION_BY_CHUNK,
     private val parallelism: Boolean = true,
     private val onEmit: suspend (Int) -> Unit,
 ) {
     // It is necessary to create an array of Flow<Int> of N.
-    private val flows = mutableListOf<Flow<Int>>()
+    private val flowRoster = mutableListOf<Flow<Int>>()
 
     fun start(scope: CoroutineScope): Job = scope.launch {
-        val ranges = if (parallelism) {
-            createRanges()
+        val rangeRoster = if (parallelism) {
+            createRangeRoster()
         } else {
-            listOf(IntRange(0, countOfFlowToCreate))
+            listOf(IntRange(0, flowCountToCreate))
         }
-        ranges.map {
+        rangeRoster.map {
             // Waiting gives more precise putting flows to the list
-            delay(WAIT_FOR_BEFORE_ADD_NEW_CHUNK_OF_FLOWS)
+            delay(WAIT_BEFORE_ADDING_NEW_FLOW_CHUNK)
             scope.async {
-                flows.addAll(createFlowsByRange(it))
+                flowRoster.addAll(createFlowRosterByRange(it))
             }
         }.awaitAll()
-        launchAllFlow(flows.toTypedArray())
+        launchAllFlow(flowRoster.toTypedArray())
     }
 
-    private fun createRanges(): List<IntRange> {
-        val ranges = mutableListOf<IntRange>()
-        if (countOfFlowToCreate > splitCreatingBy) {
-            val countOfRanges = countOfFlowToCreate / splitCreatingBy
-            repeat(countOfRanges) { index ->
+    private fun createRangeRoster(): List<IntRange> {
+        val rangeRoster = mutableListOf<IntRange>()
+        if (flowCountToCreate > splitCreatingBy) {
+            val rangeCount = flowCountToCreate / splitCreatingBy
+            repeat(rangeCount) { index ->
                 val start = index * splitCreatingBy
                 val end = start + splitCreatingBy
-                ranges += IntRange(start, end)
+                rangeRoster += IntRange(start, end)
             }
-            if (countOfFlowToCreate % splitCreatingBy != 0) {
-                ranges += IntRange(countOfRanges * splitCreatingBy, countOfFlowToCreate)
+            if (flowCountToCreate % splitCreatingBy != 0) {
+                rangeRoster += IntRange(rangeCount * splitCreatingBy, flowCountToCreate)
             }
         } else {
-            ranges += IntRange(0, countOfFlowToCreate)
+            rangeRoster += IntRange(0, flowCountToCreate)
         }
 
-        return ranges
+        return rangeRoster
     }
 
-    private suspend fun createFlowsByRange(indexRange: IntRange): MutableList<Flow<Int>> {
-        val flows = mutableListOf<Flow<Int>>()
-        val countOfFlowToCreate = indexRange.last - indexRange.first
-        repeat(countOfFlowToCreate) { index ->
+    private suspend fun createFlowRosterByRange(indexRange: IntRange): MutableList<Flow<Int>> {
+        val flowRoster = mutableListOf<Flow<Int>>()
+        val flowCountToCreate = indexRange.last - indexRange.first
+        repeat(flowCountToCreate) { index ->
             yield()
             val shift = indexRange.first + index
-            flows += flow {
+            flowRoster += flow {
                 // After a delay of (index + 1) * 100
                 val waitFor = (shift + 1) * DELAY_BEFORE_EMIT
                 delay(waitFor)
@@ -74,11 +74,11 @@ class FlowCreator(
             }
         }
 
-        return flows
+        return flowRoster
     }
 
-    private fun CoroutineScope.launchAllFlow(flows: Array<Flow<Int>>) {
-        flows.forEach { flow ->
+    private fun CoroutineScope.launchAllFlow(flowRoster: Array<Flow<Int>>) {
+        flowRoster.forEach { flow ->
             launch {
                 flow.collect { newNumber ->
                     ensureActive()

@@ -1,7 +1,7 @@
 package com.velord.ui.feature.camerarecording.viewModel
 
 import com.velord.infrastructure.util.permission.PermissionGrantState
-import com.velord.model.camera.CameraVideoQuality
+import com.velord.model.camera.config.CameraVideoQuality
 
 sealed interface CameraRecordingUiAction {
     data object CreateCameraSession : CameraRecordingUiAction
@@ -9,6 +9,7 @@ sealed interface CameraRecordingUiAction {
     data object ChangeCameraSelector : CameraRecordingUiAction
     data object CheckPermissionClick : CameraRecordingUiAction
     data object StartStopRecording : CameraRecordingUiAction
+    data object OpenVideoFolder : CameraRecordingUiAction
     data class ChangeVideoQuality(val quality: CameraVideoQuality) : CameraRecordingUiAction
     data class ChangeIsAudioEnabled(val enabled: Boolean) : CameraRecordingUiAction
     data class UpdateCameraPermissionGrantState(

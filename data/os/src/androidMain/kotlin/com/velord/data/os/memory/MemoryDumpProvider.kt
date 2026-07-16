@@ -65,9 +65,9 @@ internal actual class MemoryDumpProvider actual constructor(
     private fun getRssAndShared(): Pair<Long, Long> = try {
         BufferedReader(FileReader("/proc/self/statm")).use { reader ->
             val line = reader.readLine() ?: return 0L to 0L
-            val parts = line.split(" ")
-            val rss = (parts.getOrNull(1)?.toLongOrNull() ?: 0L) * pageSize
-            val shared = (parts.getOrNull(2)?.toLongOrNull() ?: 0L) * pageSize
+            val partRoster = line.split(" ")
+            val rss = (partRoster.getOrNull(1)?.toLongOrNull() ?: 0L) * pageSize
+            val shared = (partRoster.getOrNull(2)?.toLongOrNull() ?: 0L) * pageSize
             rss.bytesToMb() to shared.bytesToMb()
         }
     } catch (exception: Exception) {

@@ -51,8 +51,8 @@ class MoviePaginationGateway(
             loadFromNetwork(currentPage)
         }
 
-        val countOfNewItems = newSize.value
-        if (countOfNewItems < MoviePagination.PAGE_COUNT) {
+        val newItemCount = newSize.value
+        if (newItemCount < MoviePagination.PAGE_COUNT) {
             MovieLoadNewPageResult.Exhausted
         } else {
             MovieLoadNewPageResult.Success
@@ -79,11 +79,11 @@ class MoviePaginationGateway(
             voteCount = FilterType.VoteCount.DEFAULT,
         )
         val movieRoster = http.getMovie(newPage)
-        val newRoster = movieRoster.results.map { it.toDomain() }
+        val newRoster = movieRoster.roster.map { it.toDomain() }
         log.d { "loadFromNetwork newRoster: $newRoster" }
         log.d { "loadFromNetwork size: ${newRoster.size}" }
-        movieGateway.update { movies ->
-            (movies + newRoster).toSet().toList()
+        movieGateway.update { currentRoster ->
+            (currentRoster + newRoster).toSet().toList()
         }
 
         db.insertAll(newRoster)
@@ -100,8 +100,8 @@ class MoviePaginationGateway(
             filterRoster = filterRoster,
         )
         log.d { "loadFromDb: $fromDb" }
-        movieGateway.update { movies ->
-            (movies + fromDb).toSet().toList()
+        movieGateway.update { currentRoster ->
+            (currentRoster + fromDb).toSet().toList()
         }
 
         return MovieRosterSize(fromDb.size)

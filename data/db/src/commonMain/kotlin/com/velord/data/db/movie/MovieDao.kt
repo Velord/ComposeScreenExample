@@ -53,7 +53,7 @@ interface MovieDao {
     suspend fun update(movie: MovieEntity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg movies: MovieEntity)
+    suspend fun insertAll(vararg movieRoster: MovieEntity)
 
     @Delete
     suspend fun delete(movie: MovieEntity)

@@ -4,7 +4,8 @@ import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.model.camera.CameraRecordingState
 import com.velord.model.camera.CameraSessionWrapper
 import com.velord.model.camera.CameraState
-import com.velord.model.camera.CameraVideoQuality
+import com.velord.model.camera.CameraVideoAsset
+import com.velord.model.camera.config.CameraVideoQuality
 
 data class PermissionUiState(
     val camera: PermissionGrantState,
@@ -17,6 +18,7 @@ data class CameraRecordingUiState(
     val isAudioEnabled: Boolean,
     val cameraState: CameraState,
     val cameraSession: CameraSessionWrapper?,
+    val lastVideoAsset: CameraVideoAsset?,
 ) {
     val isRecordingStarted: Boolean
         get() = cameraState.recordingState != CameraRecordingState.Idle
@@ -28,6 +30,7 @@ data class CameraRecordingUiState(
             isAudioEnabled = true,
             cameraState = CameraState.DEFAULT,
             cameraSession = null,
+            lastVideoAsset = null,
         )
     }
 }

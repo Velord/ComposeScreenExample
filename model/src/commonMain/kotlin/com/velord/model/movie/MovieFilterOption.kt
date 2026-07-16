@@ -5,7 +5,7 @@ sealed class FilterType(
     open val end: Number,
     open val min: Number,
     open val max: Number,
-    open val steps: Int
+    open val stepCount: Int
 ) {
 
     data class Rating(
@@ -13,8 +13,8 @@ sealed class FilterType(
         override val end: Float,
         override val min: Float,
         override val max: Float,
-        override val steps: Int
-    ) : FilterType(start, end, min, max, steps) {
+        override val stepCount: Int
+    ) : FilterType(start, end, min, max, stepCount) {
 
         init {
             require(min >= MIN_RATING)
@@ -31,14 +31,14 @@ sealed class FilterType(
             private const val MAX_RATING = 10.0f
             private const val DEFAULT_START = 7f
             private const val DEFAULT_END = 7.1f
-            private const val DEFAULT_STEPS = 100
+            private const val DEFAULT_STEP_COUNT = 100
 
             val DEFAULT = Rating(
                 start = DEFAULT_START,
                 end = DEFAULT_END,
                 min = MIN_RATING,
                 max = MAX_RATING,
-                steps = DEFAULT_STEPS,
+                stepCount = DEFAULT_STEP_COUNT,
             )
         }
     }
@@ -48,8 +48,8 @@ sealed class FilterType(
         override val end: Int,
         override val min: Int,
         override val max: Int,
-        override val steps: Int
-    ) : FilterType(start, end, min, max, steps) {
+        override val stepCount: Int
+    ) : FilterType(start, end, min, max, stepCount) {
 
         init {
             require(min >= MIN_VOTE_COUNT)
@@ -66,22 +66,22 @@ sealed class FilterType(
             private const val MAX_VOTE_COUNT = 1000
             private const val DEFAULT_START = 100
             private const val DEFAULT_END = 200
-            private const val DEFAULT_STEPS = 20
+            private const val DEFAULT_STEP_COUNT = 20
 
             val DEFAULT = VoteCount(
                 start = DEFAULT_START,
                 end = DEFAULT_END,
                 min = MIN_VOTE_COUNT,
                 max = MAX_VOTE_COUNT,
-                steps = DEFAULT_STEPS,
+                stepCount = DEFAULT_STEP_COUNT,
             )
         }
     }
 
     companion object {
-        val ALL: List<FilterType> get() = allFilterTypes()
+        val ALL: List<FilterType> get() = filterTypeRoster()
 
-        private fun allFilterTypes(): List<FilterType> = listOf(
+        private fun filterTypeRoster(): List<FilterType> = listOf(
             Rating.DEFAULT,
             VoteCount.DEFAULT,
         )

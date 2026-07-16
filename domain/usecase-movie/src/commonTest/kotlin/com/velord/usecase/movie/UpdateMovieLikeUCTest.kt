@@ -47,16 +47,16 @@ class UpdateMovieLikeUCTest {
 
     @Test
     fun `invoke should preserve movies across multiple invocations`() = runTest {
-        val capturedMovies = mutableListOf<Movie>()
+        val capturedMovieRoster = mutableListOf<Movie>()
         val secondMovie = movie.copy(id = 2, isLiked = true)
         val useCase = UpdateMovieLikeUC { updatedMovie ->
-            capturedMovies += updatedMovie
+            capturedMovieRoster += updatedMovie
         }
 
         useCase(movie)
         useCase(secondMovie)
 
-        assertEquals(listOf(movie, secondMovie), capturedMovies)
+        assertEquals(listOf(movie, secondMovie), capturedMovieRoster)
     }
 
     @Test
@@ -101,14 +101,14 @@ class UpdateMovieLikeUCTest {
 
     @Test
     fun `invoke should forward heterogeneous movies unchanged and in order`() = runTest {
-        val capturedMovies = mutableListOf<Movie>()
+        val capturedMovieRoster = mutableListOf<Movie>()
         val useCase = UpdateMovieLikeUC { updatedMovie ->
-            capturedMovies += updatedMovie
+            capturedMovieRoster += updatedMovie
         }
 
         useCase(movie)
         useCase(heterogeneousMovie)
 
-        assertEquals(listOf(movie, heterogeneousMovie), capturedMovies)
+        assertEquals(listOf(movie, heterogeneousMovie), capturedMovieRoster)
     }
 }

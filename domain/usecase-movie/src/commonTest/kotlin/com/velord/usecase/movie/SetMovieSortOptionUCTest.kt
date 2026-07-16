@@ -25,17 +25,17 @@ class SetMovieSortOptionUCTest {
 
     @Test
     fun `invoke should preserve arguments across multiple invocations`() {
-        val capturedOptions = mutableListOf<MovieSortOption>()
+        val capturedOptionRoster = mutableListOf<MovieSortOption>()
         val firstOption = MovieSortOption.DEFAULT
         val secondOption = MovieSortOption(SortType.DateDescending, true)
         val useCase = SetMovieSortOptionUC { option ->
-            capturedOptions += option
+            capturedOptionRoster += option
         }
 
         useCase(firstOption)
         useCase(secondOption)
 
-        assertEquals(listOf(firstOption, secondOption), capturedOptions)
+        assertEquals(listOf(firstOption, secondOption), capturedOptionRoster)
     }
 
     @Test

@@ -29,7 +29,7 @@ fun DrawScope.LinearGradientShaderCanvas(
     val height = size.height
     val cornerRadiusPx = cornerRadius.toPx()
 
-    val colorStops = gradientColorAndPosition
+    val colorStopRoster = gradientColorAndPosition
         .map { colorAndPosition ->
             colorAndPosition.second to colorAndPosition.first
         }
@@ -37,7 +37,7 @@ fun DrawScope.LinearGradientShaderCanvas(
 
     drawRoundRect(
         brush = Brush.linearGradient(
-            colorStops = colorStops,
+            colorStops = colorStopRoster,
             start = Offset.Zero,
             end = Offset(width, height),
             tileMode = TileMode.Clamp,
