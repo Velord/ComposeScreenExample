@@ -1,4 +1,4 @@
-package com.velord.model.camera
+package com.velord.model.camera.config
 
 enum class CameraVideoQuality {
     Sd,

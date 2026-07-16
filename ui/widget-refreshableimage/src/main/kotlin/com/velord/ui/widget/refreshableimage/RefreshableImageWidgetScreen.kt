@@ -54,9 +54,9 @@ internal fun RefreshableImageWidgetScreen() {
     if (LocalSize.current.width.value.roundToInt() == ERROR_COMPOSITION_WIDTH) return
 
     val prefs = currentState<Preferences>()
-    val parameters = prefs.createImageParameter(false)
-    val filePath = prefs.getImageFilePath(parameters)
-    val sourceUrl = RefreshableImageWidgetWorker.createUrl(parameters)
+    val imageParameter = prefs.createImageParameter(false)
+    val filePath = prefs.getImageFilePath(imageParameter)
+    val sourceUrl = RefreshableImageWidgetWorker.createUrl(imageParameter)
     val isDownloading = prefs[RefreshableImageWidget.isDownloadingNewImagePreferenceKey] ?: false
 
     log.d { "Screen: id - ${LocalGlanceId.current};\nPath - $filePath;\nUrl - $sourceUrl" }
@@ -163,7 +163,8 @@ private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
             .clickable(
                 actionRunCallback<RefreshCallback>(
                 parameters = actionParametersOf(
-                    RefreshableImageWidget.refreshableImageWidgetKey to prefs.createImageParameter(true)
+                    RefreshableImageWidget.refreshableImageWidgetKey to
+                        prefs.createImageParameter(true)
                 )
             )),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -207,9 +208,9 @@ private fun RefreshableImage(filePath: String) {
 
         val context = LocalContext.current
         val glanceId = LocalGlanceId.current
-        val parameters = currentState<Preferences>().createImageParameter(false)
+        val imageParameter = currentState<Preferences>().createImageParameter(false)
         SideEffect {
-            RefreshableImageWidgetWorker.enqueue(context, glanceId, parameters)
+            RefreshableImageWidgetWorker.enqueue(context, glanceId, imageParameter)
         }
     }
 }

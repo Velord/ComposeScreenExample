@@ -35,7 +35,7 @@ class MainVM(
     val appEventFlow = MutableSharedFlow<AppEvent>()
     val toastConfigFlow = MutableSharedFlow<ToastConfig>()
 
-    private val widgets = listOf<GlanceWidgetThemeSustainer<*>>(
+    private val widgetRoster = listOf<GlanceWidgetThemeSustainer<*>>(
         RefreshableImageWidget(), CounterWidget()
     )
 
@@ -79,7 +79,7 @@ class MainVM(
     }
 
     private fun updateAllWidgets(themeConfig: ThemeConfig) = launch {
-        widgets.updateAll(context, themeConfig)
+        widgetRoster.updateAll(context, themeConfig)
     }
 
     private fun updateDataStore() {

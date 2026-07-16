@@ -16,7 +16,7 @@ import com.velord.core.resource.Res
 import com.velord.core.resource.front
 import com.velord.core.resource.rear
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.model.camera.CameraLens
+import com.velord.model.camera.config.CameraLens
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
 import org.jetbrains.compose.resources.stringResource
 

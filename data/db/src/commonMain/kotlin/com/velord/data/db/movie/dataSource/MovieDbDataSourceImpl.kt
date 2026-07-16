@@ -48,8 +48,8 @@ class MovieDbDataSourceImpl internal constructor(private val dao: MovieDao) : Mo
         return movieFromDbRoster
     }
 
-    override suspend fun insertAll(movies: List<Movie>) {
-        val entityRoster = movies
+    override suspend fun insertAll(movieRoster: List<Movie>) {
+        val entityRoster = movieRoster
             .map(Movie::toEntity)
             .toTypedArray()
         dao.insertAll(*entityRoster)

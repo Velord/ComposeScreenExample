@@ -1,15 +1,14 @@
 package com.velord.data.os.camera
 
-import com.velord.model.camera.CameraRecordingConfig
 import com.velord.model.camera.CameraSessionWrapper
-import com.velord.model.camera.CameraVideoQuality
+import com.velord.model.camera.CameraVideoRecordingRequest
+import com.velord.model.camera.config.CameraLens
+import com.velord.model.camera.config.CameraVideoQuality
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
-import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
-import org.koin.core.scope.Scope
 import com.kashif.cameraK.enums.CameraLens as KameraLens
 import com.kashif.cameraK.state.CameraConfiguration as KameraConfiguration
 import com.kashif.cameraK.state.CameraKStateHolder as KameraStateHolder
@@ -18,21 +17,12 @@ import com.kashif.cameraK.video.VideoQuality as KameraVideoQuality
 
 interface CameraDataSource {
     suspend fun createSession(): CameraSessionWrapper
-    fun startRecording(session: CameraSessionWrapper, config: CameraRecordingConfig)
+    fun startRecording(request: CameraVideoRecordingRequest)
     fun stopRecording(session: CameraSessionWrapper)
     fun pauseRecording(session: CameraSessionWrapper)
     fun resumeRecording(session: CameraSessionWrapper)
-    suspend fun toggleCameraLens(
-        session: CameraSessionWrapper,
-        config: CameraRecordingConfig,
-    ): Boolean
+    suspend fun toggleCameraLens(request: CameraVideoRecordingRequest): Boolean
     fun releaseSession(session: CameraSessionWrapper)
-}
-
-@Module
-expect class CameraPlatformModule() {
-    @Single
-    fun provideCameraControllerFactory(scope: Scope): CameraControllerFactory
 }
 
 @Single(binds = [CameraDataSource::class])
@@ -53,11 +43,13 @@ class CameraDataSourceImpl(
         return CameraSessionWrapper(stateHolder)
     }
 
-    override fun startRecording(session: CameraSessionWrapper, config: CameraRecordingConfig) {
-        session.value.startRecording(
+    override fun startRecording(request: CameraVideoRecordingRequest) {
+        request.session.value.startRecording(
             KameraVideoConfiguration(
-                quality = config.quality.toVideoQuality(),
-                enableAudio = config.isAudioEnabled,
+                quality = request.config.quality.toKameraVideoQuality(),
+                enableAudio = request.config.audioConfig.isEnabled,
+                outputDirectory = request.outputDirectory,
+                filePrefix = request.filePrefix.value,
             ),
         )
     }
@@ -74,11 +66,12 @@ class CameraDataSourceImpl(
         session.value.resumeRecording()
     }
 
-    override suspend fun toggleCameraLens(
-        session: CameraSessionWrapper,
-        config: CameraRecordingConfig,
-    ): Boolean {
-        val stateHolder = session.value
+    override suspend fun toggleCameraLens(request: CameraVideoRecordingRequest): Boolean {
+        val stateHolder = request.session.value
+        if (stateHolder.uiState.value.cameraLens.toCameraLens() == request.config.lens) {
+            return false
+        }
+
         val shouldRestartRecording = stateHolder.uiState.value.isRecording
         if (shouldRestartRecording) {
             stateHolder.stopRecording()
@@ -86,7 +79,9 @@ class CameraDataSourceImpl(
         }
 
         stateHolder.toggleCameraLens()
-        if (shouldRestartRecording) startRecording(session, config)
+        if (shouldRestartRecording) {
+            startRecording(request)
+        }
 
         return shouldRestartRecording
     }
@@ -94,11 +89,16 @@ class CameraDataSourceImpl(
     override fun releaseSession(session: CameraSessionWrapper) {
         session.value.shutdown()
     }
-}
 
-private fun CameraVideoQuality.toVideoQuality(): KameraVideoQuality = when (this) {
-    CameraVideoQuality.Sd -> KameraVideoQuality.SD
-    CameraVideoQuality.Hd -> KameraVideoQuality.HD
-    CameraVideoQuality.FullHd -> KameraVideoQuality.FHD
-    CameraVideoQuality.UltraHd -> KameraVideoQuality.UHD
+    private fun KameraLens?.toCameraLens(): CameraLens = when (this) {
+        KameraLens.BACK -> CameraLens.Back
+        KameraLens.FRONT, null -> CameraLens.Front
+    }
+
+    private fun CameraVideoQuality.toKameraVideoQuality(): KameraVideoQuality = when (this) {
+        CameraVideoQuality.Sd -> KameraVideoQuality.SD
+        CameraVideoQuality.Hd -> KameraVideoQuality.HD
+        CameraVideoQuality.FullHd -> KameraVideoQuality.FHD
+        CameraVideoQuality.UltraHd -> KameraVideoQuality.UHD
+    }
 }

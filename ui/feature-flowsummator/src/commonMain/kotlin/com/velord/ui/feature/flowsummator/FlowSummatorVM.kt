@@ -79,7 +79,9 @@ class FlowSummatorVM : CoroutineScopeVM() {
         }
     }
 
-    private fun getPrevEmittedValue(): BigInteger = sumFlow.replayCache.firstOrNull() ?: BigInteger.ZERO
+    private fun getPrevEmittedValue(): BigInteger = sumFlow.replayCache
+        .firstOrNull()
+        ?: BigInteger.ZERO
 
     private fun observe() {
         launch {
@@ -98,7 +100,7 @@ class FlowSummatorVM : CoroutineScopeVM() {
                     // During cancellation some items can be emitted, need to clear them
                     sumFlow.emit(BigInteger.ZERO)
                     launchSumJob = FlowCreator(
-                        countOfFlowToCreate = flowCount,
+                        flowCountToCreate = flowCount,
                         parallelism = true,
                         onEmit = {
                             // The summing Flow must return a value after updating each of the N Flows

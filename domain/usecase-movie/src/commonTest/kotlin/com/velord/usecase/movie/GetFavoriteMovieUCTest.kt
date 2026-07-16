@@ -14,7 +14,7 @@ import kotlin.time.Clock
 
 class GetFavoriteMovieUCTest {
 
-    private val movies = listOf(
+    private val movieRoster = listOf(
         Movie(
             id = 1,
             title = "Movie 1",
@@ -36,7 +36,7 @@ class GetFavoriteMovieUCTest {
             imagePath = "imagePath2"
         )
     )
-    private val heterogeneousMovies = listOf(
+    private val heterogeneousMovieRoster = listOf(
         Movie(
             id = 21,
             title = "Indie Film",
@@ -61,7 +61,7 @@ class GetFavoriteMovieUCTest {
 
     @Test
     fun `invoke should return the exact movie flow from delegate`() = runTest {
-        val expectedFlow = flowOf(movies)
+        val expectedFlow = flowOf(movieRoster)
         val useCase = GetFavoriteMovieUC {
             MovieFlow(expectedFlow)
         }
@@ -69,13 +69,13 @@ class GetFavoriteMovieUCTest {
         val result = useCase()
 
         assertSame(expectedFlow, result.flow)
-        assertEquals(movies, result.flow.first())
+        assertEquals(movieRoster, result.flow.first())
     }
 
     @Test
     fun `invoke should preserve all delegate emissions`() = runTest {
-        val firstEmission = movies.take(1)
-        val secondEmission = movies
+        val firstEmission = movieRoster.take(1)
+        val secondEmission = movieRoster
         val useCase = GetFavoriteMovieUC {
             MovieFlow(flowOf(firstEmission, secondEmission))
         }
@@ -90,15 +90,15 @@ class GetFavoriteMovieUCTest {
         var invocationCount = 0
         val useCase = GetFavoriteMovieUC {
             invocationCount += 1
-            MovieFlow(flowOf(listOf(movies[invocationCount - 1])))
+            MovieFlow(flowOf(listOf(movieRoster[invocationCount - 1])))
         }
 
         val firstResult = useCase()
         val secondResult = useCase()
 
         assertEquals(2, invocationCount)
-        assertEquals(listOf(movies[0]), firstResult.flow.first())
-        assertEquals(listOf(movies[1]), secondResult.flow.first())
+        assertEquals(listOf(movieRoster[0]), firstResult.flow.first())
+        assertEquals(listOf(movieRoster[1]), secondResult.flow.first())
     }
 
     @Test
@@ -128,11 +128,11 @@ class GetFavoriteMovieUCTest {
     @Test
     fun `invoke should preserve heterogeneous favorite movie payloads and order`() = runTest {
         val useCase = GetFavoriteMovieUC {
-            MovieFlow(flowOf(heterogeneousMovies))
+            MovieFlow(flowOf(heterogeneousMovieRoster))
         }
 
         val result = useCase()
 
-        assertEquals(heterogeneousMovies, result.flow.first())
+        assertEquals(heterogeneousMovieRoster, result.flow.first())
     }
 }

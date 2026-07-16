@@ -16,7 +16,7 @@ import com.velord.core.resource.video_quality_hd
 import com.velord.core.resource.video_quality_sd
 import com.velord.core.resource.video_quality_ultra_hd
 import com.velord.core.ui.compose.preview.PreviewCombined
-import com.velord.model.camera.CameraVideoQuality
+import com.velord.model.camera.config.CameraVideoQuality
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource

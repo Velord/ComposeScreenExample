@@ -1,8 +1,5 @@
 package com.velord.data.os.share
 
-import org.koin.core.annotation.Module
-import org.koin.core.annotation.Single
-import org.koin.core.scope.Scope
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import javax.swing.JOptionPane
@@ -17,10 +14,4 @@ class DesktopShareDataSource : ShareDataSource {
             JOptionPane.showMessageDialog(null, "Movie information was copied to the clipboard")
         }
     }
-}
-
-@Module
-actual class SharePlatformModule {
-    @Single
-    actual fun provideShareDataSource(scope: Scope): ShareDataSource = DesktopShareDataSource()
 }

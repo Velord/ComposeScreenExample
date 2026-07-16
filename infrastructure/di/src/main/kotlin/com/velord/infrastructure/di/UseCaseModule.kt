@@ -1,7 +1,10 @@
 package com.velord.infrastructure.di
 
-import com.velord.data.gateway.camera.CameraGateway
+import com.velord.data.gateway.camera.CameraRecordingGateway
+import com.velord.data.gateway.camera.CameraSessionGateway
+import com.velord.data.gateway.camera.CameraStateGateway
 import com.velord.data.gateway.event.AppEventGateway
+import com.velord.data.gateway.file.FileGateway
 import com.velord.data.gateway.movie.MovieByGateway
 import com.velord.data.gateway.movie.MovieFavoriteGateway
 import com.velord.data.gateway.movie.MovieGateway
@@ -13,6 +16,8 @@ import com.velord.model.AppEvent
 import com.velord.usecase.camera.CreateCameraSessionUC
 import com.velord.usecase.camera.GetCameraSessionUC
 import com.velord.usecase.camera.GetCameraStateUC
+import com.velord.usecase.camera.GetLastCameraVideoAssetUC
+import com.velord.usecase.camera.OpenCameraVideoFolderUC
 import com.velord.usecase.camera.PauseRecordingUC
 import com.velord.usecase.camera.ReleaseCameraSessionUC
 import com.velord.usecase.camera.ResumeRecordingUC
@@ -89,30 +94,36 @@ val useCaseModule = module {
         ShareMovieUC(get<MovieGateway>()::share)
     }
     single<StartRecordingUC> {
-        StartRecordingUC(get<CameraGateway>()::startRecording)
+        StartRecordingUC(get<CameraRecordingGateway>()::startRecording)
     }
     single<StopRecordingUC> {
-        StopRecordingUC(get<CameraGateway>()::stopRecording)
+        StopRecordingUC(get<CameraRecordingGateway>()::stopRecording)
     }
     single<PauseRecordingUC> {
-        PauseRecordingUC(get<CameraGateway>()::pauseRecording)
+        PauseRecordingUC(get<CameraRecordingGateway>()::pauseRecording)
     }
     single<ResumeRecordingUC> {
-        ResumeRecordingUC(get<CameraGateway>()::resumeRecording)
+        ResumeRecordingUC(get<CameraRecordingGateway>()::resumeRecording)
     }
     single<ToggleCameraLensUC> {
-        ToggleCameraLensUC(get<CameraGateway>()::toggleCameraLens)
+        ToggleCameraLensUC(get<CameraRecordingGateway>()::toggleCameraLens)
     }
     single<CreateCameraSessionUC> {
-        CreateCameraSessionUC(get<CameraGateway>()::createSession)
+        CreateCameraSessionUC(get<CameraSessionGateway>()::createSession)
     }
     single<ReleaseCameraSessionUC> {
-        ReleaseCameraSessionUC(get<CameraGateway>()::releaseSession)
+        ReleaseCameraSessionUC(get<CameraSessionGateway>()::releaseSession)
     }
     single<GetCameraSessionUC> {
-        GetCameraSessionUC(get<CameraGateway>()::getSession)
+        GetCameraSessionUC(get<CameraSessionGateway>()::getSession)
     }
     single<GetCameraStateUC> {
-        GetCameraStateUC(get<CameraGateway>()::getState)
+        GetCameraStateUC(get<CameraStateGateway>()::getState)
+    }
+    single<GetLastCameraVideoAssetUC> {
+        GetLastCameraVideoAssetUC(get<CameraStateGateway>()::getLastVideoAsset)
+    }
+    single<OpenCameraVideoFolderUC> {
+        OpenCameraVideoFolderUC(get<FileGateway>()::openDirectory)
     }
 }

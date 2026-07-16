@@ -62,15 +62,15 @@ fun Modifier.recomposeHighlighter(
 
             // Below is to draw the highlight, if necessary. A lot of the logic is copied from
             // Modifier.border
-            val numCompositionsSinceTimeout = totalCompositions[0] -
+            val compositionCountSinceTimeout = totalCompositions[0] -
                 totalCompositionsAtLastTimeout.longValue
 
-            val hasValidBorderParams = size.minDimension > 0f
-            if (!hasValidBorderParams || numCompositionsSinceTimeout <= 0) {
+            val hasValidBorderSize = size.minDimension > 0f
+            if (!hasValidBorderSize || compositionCountSinceTimeout <= 0) {
                 return@onDrawWithContent
             }
 
-            val (color, strokeWidthPx) = when (numCompositionsSinceTimeout) {
+            val (color, strokeWidthPx) = when (compositionCountSinceTimeout) {
                 // We need at least one composition to draw, so draw the smallest border
                 // color in blue.
                 1L -> initialColor to 1f
@@ -82,8 +82,8 @@ fun Modifier.recomposeHighlighter(
                     lerp(
                         warningColor.copy(alpha = 0.8f),
                         errorColor.copy(alpha = 0.5f),
-                        min(1f, (numCompositionsSinceTimeout - 1).toFloat() / 100f)
-                    ) to numCompositionsSinceTimeout.toInt().dp.toPx()
+                        min(1f, (compositionCountSinceTimeout - 1).toFloat() / 100f)
+                    ) to compositionCountSinceTimeout.toInt().dp.toPx()
                 }
             }
 

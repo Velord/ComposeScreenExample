@@ -71,7 +71,7 @@ class BottomNavigationDestinationsVM(
         requestAppExitUC()
     }
 
-    fun getNavigationItems() = BottomNavigationItem.entries
+    fun getNavigationItemRoster() = BottomNavigationItem.entries
 
     private fun onUpdateBackHandling(
         startDestinationRoster: List<String?>,

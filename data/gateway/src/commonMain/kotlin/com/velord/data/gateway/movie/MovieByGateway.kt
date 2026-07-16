@@ -17,10 +17,10 @@ class MovieByGateway(
         val all = movieGateway.getFlow()
         val sort = movieSortGateway.getSelectedFlow()
         return MovieFlow(
-            all.combine(sort) { movies, sortOption ->
+            all.combine(sort) { movieRoster, sortOption ->
                 when (sortOption.type) {
-                    SortType.DateDescending -> movies.sortedByDescending { it.date }
-                    SortType.DateAscending -> movies.sortedBy { it.date }
+                    SortType.DateDescending -> movieRoster.sortedByDescending { it.date }
+                    SortType.DateAscending -> movieRoster.sortedBy { it.date }
                 }
             }.catch {},
         )
@@ -30,10 +30,10 @@ class MovieByGateway(
         val favorite = movieFavoriteReader.getFlow()
         val sort = movieSortGateway.getSelectedFlow()
         return MovieFlow(
-            favorite.combine(sort) { movies, sortOption ->
+            favorite.combine(sort) { movieRoster, sortOption ->
                 when (sortOption.type) {
-                    SortType.DateDescending -> movies.sortedByDescending { it.date }
-                    SortType.DateAscending -> movies.sortedBy { it.date }
+                    SortType.DateDescending -> movieRoster.sortedByDescending { it.date }
+                    SortType.DateAscending -> movieRoster.sortedBy { it.date }
                 }
             }.catch {},
         )

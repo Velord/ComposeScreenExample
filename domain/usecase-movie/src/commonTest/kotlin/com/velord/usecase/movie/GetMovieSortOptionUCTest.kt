@@ -14,14 +14,14 @@ import kotlin.test.assertSame
 
 class GetMovieSortOptionUCTest {
 
-    private val options = listOf(
+    private val optionRoster = listOf(
         MovieSortOption(SortType.DateAscending, false),
         MovieSortOption(SortType.DateDescending, true)
     )
 
     @Test
     fun `invoke should return the exact sort option flow from delegate`() = runTest {
-        val expectedFlow = flowOf(options)
+        val expectedFlow = flowOf(optionRoster)
         val useCase = GetMovieSortOptionUC {
             MovieSortOptionFlow(expectedFlow)
         }
@@ -29,13 +29,13 @@ class GetMovieSortOptionUCTest {
         val result = useCase()
 
         assertSame(expectedFlow, result.flow)
-        assertEquals(options, result.flow.first())
+        assertEquals(optionRoster, result.flow.first())
     }
 
     @Test
     fun `invoke should preserve all delegate emissions`() = runTest {
-        val firstEmission = options.take(1)
-        val secondEmission = options
+        val firstEmission = optionRoster.take(1)
+        val secondEmission = optionRoster
         val useCase = GetMovieSortOptionUC {
             MovieSortOptionFlow(flowOf(firstEmission, secondEmission))
         }
@@ -50,15 +50,15 @@ class GetMovieSortOptionUCTest {
         var invocationCount = 0
         val useCase = GetMovieSortOptionUC {
             invocationCount += 1
-            MovieSortOptionFlow(flowOf(listOf(options[invocationCount - 1])))
+            MovieSortOptionFlow(flowOf(listOf(optionRoster[invocationCount - 1])))
         }
 
         val firstResult = useCase()
         val secondResult = useCase()
 
         assertEquals(2, invocationCount)
-        assertEquals(listOf(options[0]), firstResult.flow.first())
-        assertEquals(listOf(options[1]), secondResult.flow.first())
+        assertEquals(listOf(optionRoster[0]), firstResult.flow.first())
+        assertEquals(listOf(optionRoster[1]), secondResult.flow.first())
     }
 
     @Test

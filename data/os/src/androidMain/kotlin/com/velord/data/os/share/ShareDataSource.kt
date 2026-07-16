@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.Intent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.annotation.Module
-import org.koin.core.annotation.Single
-import org.koin.core.scope.Scope
 
 class AndroidShareDataSource(private val context: Context) : ShareDataSource {
 
@@ -23,10 +20,4 @@ class AndroidShareDataSource(private val context: Context) : ShareDataSource {
             context.startActivity(shareIntent)
         }
     }
-}
-
-@Module
-actual class SharePlatformModule {
-    @Single
-    actual fun provideShareDataSource(scope: Scope): ShareDataSource = AndroidShareDataSource(scope.get())
 }

@@ -37,14 +37,14 @@ class RefreshableImageWidgetWorker(
 
         private val uniqueWorkName = RefreshableImageWidgetWorker::class.simpleName ?: TAG
 
-        internal fun createUrl(imageParameters: ImageParameter): String = PICSUM_BASE_URL +
-                "/seed/${imageParameters.seed}" +
-                "/${imageParameters.getSimpleWidth()}/${imageParameters.getSimpleHeight()}"
+        internal fun createUrl(imageParameter: ImageParameter): String = PICSUM_BASE_URL +
+                "/seed/${imageParameter.seed}" +
+                "/${imageParameter.getSimpleWidth()}/${imageParameter.getSimpleHeight()}"
 
         internal fun enqueue(
             context: Context,
             glanceId: GlanceId,
-            parameters: ImageParameter,
+            imageParameter: ImageParameter,
             force: Boolean = false
         ) {
             val manager = WorkManager.getInstance(context)
@@ -53,9 +53,9 @@ class RefreshableImageWidgetWorker(
                 setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 setInputData(
                     Data.Builder()
-                        .putString(SEED_KEY, parameters.seed)
-                        .putFloat(WIDTH_KEY, parameters.width)
-                        .putFloat(HEIGHT_KEY, parameters.height)
+                        .putString(SEED_KEY, imageParameter.seed)
+                        .putFloat(WIDTH_KEY, imageParameter.width)
+                        .putFloat(HEIGHT_KEY, imageParameter.height)
                         .putBoolean(FORCE_KEY, force)
                         .build()
                 )
@@ -66,7 +66,10 @@ class RefreshableImageWidgetWorker(
                 ExistingWorkPolicy.KEEP
             }
 
-            val workName = uniqueWorkName + parameters.seed + parameters.width + parameters.height
+            val workName = uniqueWorkName +
+                imageParameter.seed +
+                imageParameter.width +
+                imageParameter.height
             manager.enqueueUniqueWork(
                 workName,
                 workPolicy,
@@ -95,8 +98,8 @@ class RefreshableImageWidgetWorker(
         val height: Float = inputData.getFloat(HEIGHT_KEY, 0f)
         val force: Boolean = inputData.getBoolean(FORCE_KEY, false)
 
-        val parameters = ImageParameter(seed, width, height)
-        val url = createUrl(parameters)
+        val imageParameter = ImageParameter(seed, width, height)
+        val url = createUrl(imageParameter)
         val uri = fetchImage(url, force)
         log.d { "doWork url: $url\nuri: $uri" }
 
@@ -104,7 +107,7 @@ class RefreshableImageWidgetWorker(
             context = context,
             url = url,
             uri = uri,
-            parameters = parameters,
+            imageParameter = imageParameter,
         )
         Result.success()
     } catch (_: Exception) {

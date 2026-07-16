@@ -47,7 +47,9 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
                     )
                 },
                 onTabChanged = { tab ->
-                    viewModel.onAction(BottomNavigationDestinationsUiAction.TabDestinationChanged(tab))
+                    viewModel.onAction(
+                        BottomNavigationDestinationsUiAction.TabDestinationChanged(tab)
+                    )
                 }
             )
             // What if we want to not block system back and allow just exit the app ?
@@ -69,7 +71,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
 
         Content(
             selectedItem = uiState.value.tabState.current,
-            navigationItemRoster = viewModel.getNavigationItems(),
+            navigationItemRoster = viewModel.getNavigationItemRoster(),
             onClick = { tab ->
                 viewModel.onAction(BottomNavigationDestinationsUiAction.TabClick(tab))
             },

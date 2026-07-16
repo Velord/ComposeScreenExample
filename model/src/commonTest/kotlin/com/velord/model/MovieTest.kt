@@ -83,9 +83,9 @@ class MovieTest {
 
     @Test
     fun `findRecentTimeInMilli returns the most recent time in milliseconds`() {
-        val movieList = listOf(movieWithImagePath, movieWithoutImagePath)
+        val movieRoster = listOf(movieWithImagePath, movieWithoutImagePath)
         val expectedTime = movieWithoutImagePath.date.toEpochMilliseconds()
-        assertEquals(expectedTime, movieList.findRecentTimeInMilli())
+        assertEquals(expectedTime, movieRoster.findRecentTimeInMilli())
     }
 
     @Test
@@ -135,19 +135,19 @@ class MovieTest {
 
     @Test
     fun `findRecentTimeInMilli handles empty movie list`() {
-        val emptyMovieList = emptyList<Movie>()
-        assertEquals(0, emptyMovieList.findRecentTimeInMilli())
+        val emptyMovieRoster = emptyList<Movie>()
+        assertEquals(0, emptyMovieRoster.findRecentTimeInMilli())
     }
 
     @Test
     fun `findRecentTimeInMilli handles list with all movies having same date`() {
-        val sameDateMovieList = listOf(
+        val sameDateMovieRoster = listOf(
             movieWithImagePath,
             movieWithImagePath.copy(id = 3),
             movieWithImagePath.copy(id = 4)
         )
         val expectedTime = movieWithImagePath.date.toEpochMilliseconds()
-        assertEquals(expectedTime, sameDateMovieList.findRecentTimeInMilli())
+        assertEquals(expectedTime, sameDateMovieRoster.findRecentTimeInMilli())
     }
 }
 

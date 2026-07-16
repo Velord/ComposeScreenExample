@@ -12,7 +12,9 @@ import java.net.UnknownHostException
 private val log = Logger.withTag("BaseException")
 
 actual fun Throwable.toBaseException(): BaseException = when (this) {
-    is UnknownHostException, is ConnectException, is SocketTimeoutException -> BaseException.NoInternet
+    is UnknownHostException,
+    is ConnectException,
+    is SocketTimeoutException -> BaseException.NoInternet
     is BaseException -> this
     is HttpException -> parseHttpException()
     else -> BaseException.Unknown
@@ -27,11 +29,12 @@ private val json = Json {
 private fun HttpException.parseHttpException(): BaseException = try {
     val errorBody: ResponseBody = response()?.errorBody() ?: error("Error body is null")
     val error: ErrorResponse = json.decodeFromString(errorBody.string())
-    val errorMessage = error.errors.values.joinToString(", ")
+    val errorMessage = error.errorRoster.values.joinToString(", ")
     when (response()?.code()) {
         HttpURLConnection.HTTP_FORBIDDEN -> BaseException.Http.Client.AccessDenied(errorMessage)
         HttpURLConnection.HTTP_UNAUTHORIZED -> BaseException.Http.Client.Unauthorized(errorMessage)
-        HttpURLConnection.HTTP_UNAVAILABLE -> BaseException.Http.Server.ServiceUnavailable(errorMessage)
+        HttpURLConnection.HTTP_UNAVAILABLE ->
+            BaseException.Http.Server.ServiceUnavailable(errorMessage)
         HttpURLConnection.HTTP_NOT_FOUND -> BaseException.Http.Client.NotFound(errorMessage)
         else -> BaseException.Unknown
     }

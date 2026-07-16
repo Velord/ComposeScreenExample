@@ -73,6 +73,28 @@ class ExpressionBodyCodeStyleTest {
     }
 
     @Test
+    fun `block-bodied property getter openings should stay on one line when they fit`() {
+        projectFileRoster.assertTrue { file ->
+            val lineRoster = file.text.lines()
+            val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
+                isSplitBlockBodyPropertyGetterOpening(
+                    currentLine = lineRoster[lineIndex],
+                    nextLine = lineRoster[lineIndex + 1],
+                )
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Block-bodied property getter opening at " +
+                    "line ${violation + 1} should stay on one line."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
     fun `single return functions should use expression bodies when they fit`() {
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()

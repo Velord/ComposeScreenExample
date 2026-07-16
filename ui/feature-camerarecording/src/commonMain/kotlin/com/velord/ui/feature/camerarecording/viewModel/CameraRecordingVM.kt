@@ -5,14 +5,18 @@ import com.velord.core.resource.recording_restarted_after_camera_switch
 import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
-import com.velord.model.camera.CameraRecordingConfig
 import com.velord.model.camera.CameraRecordingState
-import com.velord.model.camera.CameraVideoQuality
+import com.velord.model.camera.config.CameraAudioConfig
+import com.velord.model.camera.config.CameraLens
+import com.velord.model.camera.config.CameraRecordingConfig
+import com.velord.model.camera.config.CameraVideoQuality
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigationEvent
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.camera.CreateCameraSessionUC
 import com.velord.usecase.camera.GetCameraSessionUC
 import com.velord.usecase.camera.GetCameraStateUC
+import com.velord.usecase.camera.GetLastCameraVideoAssetUC
+import com.velord.usecase.camera.OpenCameraVideoFolderUC
 import com.velord.usecase.camera.StartRecordingUC
 import com.velord.usecase.camera.StopRecordingUC
 import com.velord.usecase.camera.ToggleCameraLensUC
@@ -27,9 +31,11 @@ class CameraRecordingVM(
     private val createCameraSession: CreateCameraSessionUC,
     private val getCameraSession: GetCameraSessionUC,
     private val getCameraState: GetCameraStateUC,
+    private val getLastCameraVideoAsset: GetLastCameraVideoAssetUC,
     private val startRecording: StartRecordingUC,
     private val stopRecording: StopRecordingUC,
     private val toggleCameraLens: ToggleCameraLensUC,
+    private val openCameraVideoFolder: OpenCameraVideoFolderUC,
     private val showToastUC: ShowToastUC,
 ) : CoroutineScopeVM() {
 
@@ -90,8 +96,9 @@ class CameraRecordingVM(
     private fun onChangeCameraSelector() = launch {
         val uiState = uiStateFlow.value
         val config = CameraRecordingConfig(
+            lens = uiState.cameraState.lens.next(),
             quality = uiState.videoQuality,
-            isAudioEnabled = uiState.isAudioEnabled,
+            audioConfig = CameraAudioConfig(isEnabled = uiState.isAudioEnabled),
         )
         val wasRecordingRestarted = toggleCameraLens(config)
         if (wasRecordingRestarted) showRecordingRestartedWarning()
@@ -114,13 +121,19 @@ class CameraRecordingVM(
         if (uiState.cameraState.recordingState == CameraRecordingState.Idle) {
             startRecording(
                 CameraRecordingConfig(
+                    lens = uiState.cameraState.lens,
                     quality = uiState.videoQuality,
-                    isAudioEnabled = uiState.isAudioEnabled,
+                    audioConfig = CameraAudioConfig(isEnabled = uiState.isAudioEnabled),
                 ),
             )
         } else {
             stopRecording()
         }
+    }
+
+    private fun onOpenVideoFolder() {
+        val directoryPath = uiStateFlow.value.lastVideoAsset?.directoryPath ?: return
+        openCameraVideoFolder(directoryPath)
     }
 
     private fun handleUiAction(action: CameraRecordingUiAction) {
@@ -130,6 +143,7 @@ class CameraRecordingVM(
             CameraRecordingUiAction.ChangeCameraSelector -> onChangeCameraSelector()
             CameraRecordingUiAction.CheckPermissionClick -> onCheckPermissionClick()
             CameraRecordingUiAction.StartStopRecording -> onStartStopRecording()
+            CameraRecordingUiAction.OpenVideoFolder -> onOpenVideoFolder()
             is CameraRecordingUiAction.ChangeVideoQuality -> onChangeVideoQuality(action.quality)
             is CameraRecordingUiAction.ChangeIsAudioEnabled ->
                 onChangeIsAudioEnabled(action.enabled)
@@ -140,6 +154,11 @@ class CameraRecordingVM(
             is CameraRecordingUiAction.UpdateAudioPermissionGrantState ->
                 onUpdateAudioPermissionGrantState(action.state)
         }
+    }
+
+    private fun CameraLens.next(): CameraLens = when (this) {
+        CameraLens.Front -> CameraLens.Back
+        CameraLens.Back -> CameraLens.Front
     }
 
     private fun observe() {
@@ -154,6 +173,13 @@ class CameraRecordingVM(
             getCameraState().collect { cameraState ->
                 uiStateFlow.update { uiState ->
                     uiState.copy(cameraState = cameraState)
+                }
+            }
+        }
+        launch {
+            getLastCameraVideoAsset().collect { asset ->
+                uiStateFlow.update { uiState ->
+                    uiState.copy(lastVideoAsset = asset)
                 }
             }
         }

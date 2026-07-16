@@ -16,12 +16,12 @@ internal class RefreshCallback : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        val newParameters: ImageParameter = requireNotNull(
+        val newParameter: ImageParameter = requireNotNull(
             parameters[RefreshableImageWidget.refreshableImageWidgetKey]
         ) {
             "Missing refreshableImageWidgetKey"
         }
-        log.d { "RefreshCallback.onAction: $glanceId; Size: $newParameters" }
+        log.d { "RefreshCallback.onAction: $glanceId; Size: $newParameter" }
 
         val manager = GlanceAppWidgetManager(context)
         manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {
@@ -30,7 +30,7 @@ internal class RefreshCallback : ActionCallback {
             }
         }
         RefreshableImageWidget().update(context, glanceId)
-        RefreshableImageWidgetWorker.enqueue(context, glanceId, newParameters, force = true)
+        RefreshableImageWidgetWorker.enqueue(context, glanceId, newParameter, force = true)
     }
 
     companion object {

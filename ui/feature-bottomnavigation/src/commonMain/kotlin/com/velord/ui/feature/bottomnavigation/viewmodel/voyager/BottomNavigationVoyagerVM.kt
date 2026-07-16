@@ -21,7 +21,7 @@ class BottomNavigationVoyagerVM(
         observe()
     }
 
-    fun getNavigationItems(): List<BottomNavigationItem> = BottomNavigationItem.entries
+    fun getNavigationItemRoster(): List<BottomNavigationItem> = BottomNavigationItem.entries
 
     fun onAction(action: BottomNavigationVoyagerUiAction) {
         launch {

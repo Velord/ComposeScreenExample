@@ -30,7 +30,8 @@ class RefreshableImageWidget :
 
     // GlanceWidgetThemeSustainer
     override val name: Class<RefreshableImageWidget> = RefreshableImageWidget::class.java
-    override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = RefreshableImageWidget.useDarkThemePreferenceKey
+    override val useDarkThemePreferenceKey: Preferences.Key<Boolean> =
+        RefreshableImageWidget.useDarkThemePreferenceKey
 
     override suspend fun provideGlance(
         context: Context,
@@ -46,31 +47,38 @@ class RefreshableImageWidget :
         // Preferences keys
         private val sourceUrlPreferenceKey = stringPreferencesKey("image_source_url")
         internal val seedPreferenceKey = stringPreferencesKey("image_seed")
-        internal val isDownloadingNewImagePreferenceKey = booleanPreferencesKey("image_is_downloading")
+        internal val isDownloadingNewImagePreferenceKey = booleanPreferencesKey(
+            "image_is_downloading",
+        )
         internal val useDarkThemePreferenceKey = booleanPreferencesKey("use_dark_theme")
         // ActionParameters keys
-        internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameter>("refreshableImageWidgetKey")
+        internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameter>(
+            "refreshableImageWidgetKey",
+        )
 
-        internal fun getImageUriKey(imageParameters: ImageParameter) = createPreferenceKey(imageParameters)
+        internal fun getImageUriKey(
+            imageParameter: ImageParameter,
+        ) = createPreferenceKey(imageParameter)
 
-        private fun createPreferenceKey(imageParameters: ImageParameter) = stringPreferencesKey(
+        private fun createPreferenceKey(imageParameter: ImageParameter) = stringPreferencesKey(
             "uri" +
-                "/seed - ${imageParameters.seed}" +
-                "/size - w:${imageParameters.getSimpleWidth()}, h:${imageParameters.getSimpleHeight()}",
+                "/seed - ${imageParameter.seed}" +
+                "/size - w:${imageParameter.getSimpleWidth()}, " +
+                "h:${imageParameter.getSimpleHeight()}",
         )
 
         internal suspend fun updatePreferences(
             context: Context,
             url: String,
             uri: String,
-            parameters: ImageParameter,
+            imageParameter: ImageParameter,
         ) {
             val manager = GlanceAppWidgetManager(context)
             manager.getGlanceIds(RefreshableImageWidget::class.java).forEach {
                 updateAppWidgetState(context, it) { prefs ->
                     prefs[sourceUrlPreferenceKey] = url
-                    prefs[getImageUriKey(parameters)] = uri
-                    prefs[seedPreferenceKey] = parameters.seed
+                    prefs[getImageUriKey(imageParameter)] = uri
+                    prefs[seedPreferenceKey] = imageParameter.seed
                     prefs[isDownloadingNewImagePreferenceKey] = false
                 }
             }

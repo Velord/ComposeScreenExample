@@ -1,5 +1,5 @@
 package com.velord.usecase.camera
 
-import com.velord.model.camera.CameraRecordingConfig
+import com.velord.model.camera.config.CameraRecordingConfig
 
 fun interface ToggleCameraLensUC : suspend (CameraRecordingConfig) -> Boolean

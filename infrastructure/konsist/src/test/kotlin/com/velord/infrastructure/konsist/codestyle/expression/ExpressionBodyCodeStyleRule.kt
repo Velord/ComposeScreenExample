@@ -114,3 +114,23 @@ internal fun isInlineParameterFunctionWithWrappedOpeningCall(
 
     return joinedClosingLine.length <= HARD_WRAP
 }
+
+internal fun isSplitBlockBodyPropertyGetterOpening(
+    currentLine: String,
+    nextLine: String,
+): Boolean {
+    val currentLineStartTrimmed = currentLine.trimStart()
+    val currentLineTrimmed = currentLine.trimEnd()
+    val nextLineTrimmed = nextLine.trimStart()
+    if (nextLineTrimmed.startsWith("get() {").not()) return false
+    if (currentLineTrimmed.endsWith("{") || currentLineTrimmed.endsWith("=")) return false
+    if (currentLineStartTrimmed.startsWith("val ").not() &&
+        currentLineStartTrimmed.startsWith("var ").not() &&
+        currentLineStartTrimmed.contains(" val ").not() &&
+        currentLineStartTrimmed.contains(" var ").not()
+    ) {
+        return false
+    }
+
+    return joinLine(currentLine, nextLine).length <= HARD_WRAP
+}

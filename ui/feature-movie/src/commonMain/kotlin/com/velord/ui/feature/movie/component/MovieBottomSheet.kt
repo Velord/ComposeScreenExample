@@ -176,7 +176,7 @@ private fun Filter(
                             .padding(horizontal = 4.dp),
                         enabled = false,
                         valueRange = sliderMinState.floatValue..sliderMaxState.floatValue,
-                        steps = option.type.steps,
+                        steps = option.type.stepCount,
                         colors = SliderDefaults.colors(
                             inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
                         ),
