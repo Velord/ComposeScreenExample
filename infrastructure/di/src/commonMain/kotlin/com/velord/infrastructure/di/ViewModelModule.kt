@@ -1,6 +1,5 @@
 package com.velord.infrastructure.di
 
-import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
 import com.velord.ui.feature.bottomnavigation.viewmodel.voyager.BottomNavigationVoyagerVM
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
@@ -25,8 +24,7 @@ val viewModelModule = module {
     viewModel { AllMovieVM(get(), get(), get(), get(), get()) }
     viewModel { FavoriteMovieVM(get(), get()) }
     viewModel { CameraRecordingVM(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { BottomNavigationJetpackVM(get(), get(), get()) }
     viewModel { BottomNavigationDestinationsVM(get(), get()) }
-    viewModel { BottomNavigationVoyagerVM(get())  }
+    viewModel { BottomNavigationVoyagerVM(get()) }
     viewModel { DialogDemoVM() }
 }

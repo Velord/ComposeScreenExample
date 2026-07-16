@@ -10,13 +10,11 @@ import com.velord.data.os.memory.MemoryLeakMonitor
 import com.velord.data.os.memory.MemoryLogger
 import com.velord.infrastructure.config.BuildConfigResolver
 import com.velord.infrastructure.config.NavigationLib
-import com.velord.infrastructure.di.startKoin
 import com.velord.infrastructure.navigation.voyager.initVoyager
 import org.koin.android.ext.android.inject
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
-import org.koin.ksp.generated.module
 
 @Module
 @ComponentScan("com.velord.composescreenexample")
@@ -82,8 +80,7 @@ class App : Application() {
     }
 
     private fun initKoin() {
-        val moduleRoster = AppModule().module
-        startKoin(moduleRoster)
+        startKoin()
     }
 
     private fun initStrictMode() {

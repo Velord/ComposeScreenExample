@@ -33,6 +33,7 @@ kotlin {
 dependencies {
     add("kspCommonMainMetadata", libs.koin.ksp)
     add("kspAndroid", libs.koin.ksp)
+    add("kspDesktop", libs.koin.ksp)
 }
 
 tasks.matching {
