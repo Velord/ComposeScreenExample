@@ -13,7 +13,8 @@ private const val MOVIE_HOST = "api.themoviedb.org"
 private fun createMovieBaseUrl() = BaseUrl(protocol = PROTOCOL_HTTPS, host = MOVIE_HOST)
 
 val httpModule = module {
-    single { BaseHttpClient(createMovieBaseUrl()) }
+    single { createMovieBaseUrl() }
+    single { BaseHttpClient(get()) }
 }
 
 @Module

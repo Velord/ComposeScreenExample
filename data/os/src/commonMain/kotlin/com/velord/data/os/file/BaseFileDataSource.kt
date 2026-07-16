@@ -25,11 +25,9 @@ abstract class BaseFileDataSource : FileDataSource {
                 appFolderName,
                 directory.childDirectoryName,
             )
-            FileStorageScope.AppPrivate -> joinPath(
-                rootDirectoryPath,
-                directory.childDirectoryName,
-            )
+            FileStorageScope.AppPrivate -> joinPath(rootDirectoryPath, directory.childDirectoryName)
         }
+
         return createDirectory(path)
     }
 

@@ -1,4 +1,4 @@
-﻿package com.velord.infrastructure.konsist.codestyle.expression
+package com.velord.infrastructure.konsist.codestyle.expression
 
 import com.lemonappdev.konsist.api.verify.assertTrue
 import com.velord.infrastructure.konsist.codestyle.projectFileRoster
@@ -65,6 +65,25 @@ class ExpressionBodyCodeStyleTest {
                 val msg = "Name: ${file.name}. FAILED. " +
                     "Inline function parameters at line ${violation + 1} " +
                     "force the opening call after = onto a broken indentation level."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `expression-bodied declarations should not put multiline calls after operators`() {
+        projectFileRoster.assertTrue { file ->
+            val lineRoster = file.text.lines()
+            val violation = lineRoster.indexOfFirst { line ->
+                isExpressionBodyOperatorBeforeMultilineCall(line)
+            }.takeIf { index -> index >= 0 }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Expression body at line ${violation + 1} puts a " +
+                    "multiline call after an operator."
                 println(msg)
             }
 

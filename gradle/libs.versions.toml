@@ -598,6 +598,7 @@ koin-navigation = { module = "io.insert-koin:koin-androidx-navigation" }
 koin-compose-android = { module = "io.insert-koin:koin-androidx-compose" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinBom" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinBom" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinBom" }
 koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koinKsp"  }
 koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKsp" }
 # Gradle

@@ -79,6 +79,7 @@ class CameraStateGateway(private val appState: AppStateDataSource) {
 
     private fun KameraVideoCaptureResult.toCameraVideoAsset(): CameraVideoAsset? {
         val success = this as? KameraVideoCaptureResult.Success ?: return null
+
         return CameraVideoAsset(fullFilePath = success.filePath)
     }
 

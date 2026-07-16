@@ -1,7 +1,11 @@
-﻿package com.velord.infrastructure.konsist.codestyle.expression
+package com.velord.infrastructure.konsist.codestyle.expression
 
 import com.velord.infrastructure.konsist.codestyle.HARD_WRAP
 import com.velord.infrastructure.konsist.codestyle.joinLine
+
+private val EXPRESSION_BODY_OPERATOR_MULTILINE_CALL_REGEX = Regex(
+    """=\s+.+\s[+\-*/]\s+[A-Za-z_][A-Za-z0-9_]*\("""
+)
 
 internal fun isShortWrappedDeclaration(
     currentLine: String,
@@ -133,4 +137,12 @@ internal fun isSplitBlockBodyPropertyGetterOpening(
     }
 
     return joinLine(currentLine, nextLine).length <= HARD_WRAP
+}
+
+internal fun isExpressionBodyOperatorBeforeMultilineCall(line: String): Boolean {
+    val lineTrimmed = line.trimEnd()
+    if (lineTrimmed.endsWith("(").not()) return false
+    if (lineTrimmed.contains("=").not()) return false
+
+    return EXPRESSION_BODY_OPERATOR_MULTILINE_CALL_REGEX.containsMatchIn(lineTrimmed)
 }
