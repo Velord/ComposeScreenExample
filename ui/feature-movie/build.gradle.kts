@@ -18,8 +18,10 @@ kotlin {
             implementation(projects.ui.sharedviewmodel)
             implementation(projects.domain.usecaseMovie)
             // Template
+            // Lib
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.kotlin.datetime)
+            // Compose
             implementation(libs.compose.animation)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material.icons.extended)

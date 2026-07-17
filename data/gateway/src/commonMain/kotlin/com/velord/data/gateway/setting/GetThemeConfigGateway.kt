@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Single
 
-@Single(binds = [ThemeConfigSaver::class])
+@Single
 class GetThemeConfigGateway(
     private val dataStore: DataStoreDataSource,
     private val appState: AppStateDataSource,
-) : ThemeConfigSaver {
+) {
 
     private var isInitialized = false
 
@@ -30,7 +30,7 @@ class GetThemeConfigGateway(
         return appState.themeConfigFlow
     }
 
-    override suspend fun save(config: ThemeConfig) {
+    suspend fun save(config: ThemeConfig) {
         runCatching {
             dataStore.setThemeConfig(config)
         }

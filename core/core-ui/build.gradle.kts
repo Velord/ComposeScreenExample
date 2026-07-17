@@ -25,8 +25,8 @@ kotlin {
             implementation(libs.bundles.compose.foundation)
             implementation(libs.bundles.compose.core)
             implementation(libs.bundles.compose.material3.all)
-            implementation(libs.androidx.graphics.shapes)
             // Lib
+            implementation(libs.androidx.graphics.shapes)
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.coil.compose)
         }

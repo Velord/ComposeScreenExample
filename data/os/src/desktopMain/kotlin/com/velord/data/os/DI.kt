@@ -6,6 +6,8 @@ import com.velord.data.os.camera.CameraControllerFactory
 import com.velord.data.os.camera.DesktopCameraControllerFactory
 import com.velord.data.os.file.DesktopFileDataSource
 import com.velord.data.os.file.FileDataSource
+import com.velord.data.os.memory.DesktopMemoryLogger
+import com.velord.data.os.memory.MemoryLogger
 import com.velord.data.os.share.DesktopShareDataSource
 import com.velord.data.os.share.ShareDataSource
 import org.koin.core.annotation.Module
@@ -24,6 +26,12 @@ actual class CameraPlatformModule {
 actual class FilePlatformModule {
     @Single
     actual fun provideFileDataSource(scope: Scope): FileDataSource = DesktopFileDataSource()
+}
+
+@Module
+actual class MemoryLoggerPlatformModule {
+    @Single
+    actual fun provideMemoryLogger(scope: Scope): MemoryLogger = DesktopMemoryLogger()
 }
 
 @Module

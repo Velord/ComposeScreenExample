@@ -16,7 +16,7 @@ import org.koin.core.annotation.Module
         DbModule::class,
         BackendModule::class,
         DataStoreModule::class,
-        OsModule::class
+        OsModule::class,
     ],
 )
 @ComponentScan("com.velord.data.gateway")

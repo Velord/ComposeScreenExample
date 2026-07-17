@@ -17,6 +17,7 @@ kotlin {
             implementation(projects.core.coreUi)
             implementation(projects.ui.sharedviewmodel)
             // Template
+            // Compose
             implementation(libs.compose.animation)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -31,8 +32,10 @@ kotlin {
             implementation(projects.core.coreUi)
             implementation(projects.ui.featureBottomnavigation)
             // Template
+            // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.android)
+            // AndroidX
             implementation(libs.androidx.fragment.ktx)
         }
     }

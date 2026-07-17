@@ -49,12 +49,22 @@ gradlePlugin {
             id = "velord.domain.usecase.kmp"
             implementationClass = "com.velord.buildlogic.DomainUsecaseKmpConventionPlugin"
         }
+        register("buildConfigConvention") {
+            id = "velord.buildconfig"
+            implementationClass = "com.velord.buildlogic.BuildConfigConventionPlugin"
+        }
     }
 }
 
+// TODO: tech debt. Names are not from toml.
 dependencies {
+    val buildKonfigVersion = libs.versions.buildkonfig.get()
+    val googleKspPlugin = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:" +
+        libs.versions.googleKsp.get()
+
     implementation(libs.gradle.android)
     implementation(libs.gradle.kotlin)
     implementation(libs.gradle.compose)
-    implementation("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:${libs.versions.googleKsp.get()}")
+    implementation("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:$buildKonfigVersion")
+    implementation(googleKspPlugin)
 }

@@ -4,6 +4,7 @@ minApi = "26"
 targetApi = "37"
 # Build
 buildTools = "36.0.0"
+buildkonfig = "0.22.0"
 gradle = "9.2.1"
 jvmTarget = "24"
 jetifier = "1.0.0-beta10"
@@ -1301,6 +1302,7 @@ jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composePlugin
 # 3-rd Party
 detekt = { id = "dev.detekt", version.ref = "detekt" }
 dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
+buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "googleKsp" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
@@ -1315,5 +1317,6 @@ convention-koin = { id = "velord.koin" }
 convention-feature-ui = { id = "velord.feature.ui" }
 convention-feature-ui-koin = { id = "velord.feature.ui.koin" }
 convention-domain-usecase-kmp = { id = "velord.domain.usecase.kmp" }
+convention-buildconfig = { id = "velord.buildconfig" }
 convention-widget-glance = { id = "velord.widget.glance" }
 convention-kmp-library = { id = "velord.kmp.library" }

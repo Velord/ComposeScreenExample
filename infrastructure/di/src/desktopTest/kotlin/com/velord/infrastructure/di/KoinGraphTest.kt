@@ -1,7 +1,6 @@
 package com.velord.infrastructure.di
 
 import com.velord.data.os.memory.MemoryLogger
-import com.velord.infrastructure.config.BuildConfigResolver
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.module
 import org.koin.test.verify.verify
@@ -16,11 +15,6 @@ class KoinGraphTest {
             includes(createCommonAppModuleRoster())
         }
 
-        appModule.verify(
-            extraTypes = listOf(
-                BuildConfigResolver::class,
-                MemoryLogger::class,
-            ),
-        )
+        appModule.verify(extraTypes = listOf(MemoryLogger::class))
     }
 }

@@ -14,6 +14,7 @@ kotlin {
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.kamera.core)
             implementation(libs.koin.core)
+            implementation(libs.kermit)
             api(libs.koin.annotation)
         }
 
@@ -22,6 +23,8 @@ kotlin {
             implementation(libs.koin.annotation)
             implementation(libs.androidx.lifecycle.process)
             implementation(libs.kamera.core)
+            implementation(project.dependencies.platform(libs.google.firebase.bom))
+            implementation(libs.google.firebase.crashlytic)
         }
 
         desktopMain.dependencies {

@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.convention.android.compose)
     id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
     alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.convention.koin)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -44,6 +44,10 @@ dependencies {
     // Navigation 3-rd Party
     // Navigation Voyager
     implementation(libs.bundles.voyager)
+    // Koin
+    implementation(project.dependencies.platform(libs.koin.bom))
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
     // Navigation Compose Destinations
     implementation(libs.bundles.compose.destinations)
     ksp(libs.compose.destinations.ksp)

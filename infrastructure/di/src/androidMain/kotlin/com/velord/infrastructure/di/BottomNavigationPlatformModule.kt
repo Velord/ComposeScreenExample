@@ -1,4 +1,4 @@
-package com.velord.ui.feature.bottomnavigation
+package com.velord.infrastructure.di
 
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import org.koin.core.module.dsl.viewModel

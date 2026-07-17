@@ -1,4 +1,4 @@
-package com.velord.ui.feature.bottomnavigation
+package com.velord.infrastructure.di
 
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavEventService
 import org.koin.core.module.Module
