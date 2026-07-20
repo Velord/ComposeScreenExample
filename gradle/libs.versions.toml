@@ -606,6 +606,8 @@ koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKsp
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-compose = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+gradle-buildkonfig = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildkonfig" }
+gradle-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "googleKsp" }
 # Google Firebase -----------------------------------------------------------------------------------
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "googleFirebaseBom" }
 google-firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
@@ -1179,7 +1181,11 @@ koin = [
     "koin-compose-viewmodel", "koin-annotation"
 ]
 # Gradle
-gradle = ["gradle-android", "gradle-kotlin", "gradle-compose"]
+gradle = [
+    "gradle-android", "gradle-kotlin",
+    "gradle-compose", "gradle-ksp",
+    "gradle-buildkonfig"
+]
 # --------------------------------------------------------------------------------------------------
 # Google
 google-firebase = [
@@ -1288,35 +1294,37 @@ test-kmp = [
 # Android
 android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
-android-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "gradle" }
+# Multiplatform
+multiplatform-kotlin = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+multiplatform-android-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "gradle" }
+multiplatform-compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 # Kotlin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-# Compose
-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
-# 3-rd Party
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+# Standalone
+room = { id = "androidx.room", version.ref = "androidxRoom" }
 detekt = { id = "dev.detekt", version.ref = "detekt" }
 dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
-dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "googleKsp" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+# Google
 google-firebase-crashlytic = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlyticPlugin" }
 google-gms-services = { id = "com.google.gms.google-services", version.ref = "googleGmsServicesPlugin" }
-# Convention Plugin
+# Convention
 convention-android-application = { id = "velord.android.application" }
 convention-android-library = { id = "velord.android.library" }
 convention-android-compose = { id = "velord.android.compose" }
 convention-android-viewbinding = { id = "velord.android.viewbinding" }
+convention-multiplatform-library = { id = "velord.kmp.library" }
+convention-domain-usecase = { id = "velord.domain.usecase" }
 convention-koin = { id = "velord.koin" }
 convention-feature-ui = { id = "velord.feature.ui" }
 convention-feature-ui-koin = { id = "velord.feature.ui.koin" }
-convention-domain-usecase-kmp = { id = "velord.domain.usecase.kmp" }
-convention-buildconfig = { id = "velord.buildconfig" }
+convention-build-config = { id = "velord.buildconfig" }
 convention-widget-glance = { id = "velord.widget.glance" }
-convention-kmp-library = { id = "velord.kmp.library" }

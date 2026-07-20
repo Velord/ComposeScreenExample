@@ -13,8 +13,8 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            applyPlugin("kotlin-multiplatform")
-            applyPlugin("android-multiplatform-library")
+            applyPlugin("multiplatform-kotlin")
+            applyPlugin("multiplatform-android-library")
 
             val targetJvmVersion = versionInt("jvmTarget")
 

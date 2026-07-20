@@ -18,8 +18,8 @@ class BuildEnvironmentTest {
             .filterNot { environment -> environment == BuildEnvironment.Production }
             .forEach { environment ->
                 val environmentBlock = appBuildScript.environmentBlock(environment)
-                val expectedSuffix =
-                    "applicationIdSuffix = \".\${BuildEnvironment.${environment.name}.value}\""
+                val environmentName = environment.name
+                val expectedSuffix = "applicationIdSuffix = \".\${BuildEnvironment.$environmentName.value}\""
 
                 assertContains(environmentBlock, expectedSuffix)
             }

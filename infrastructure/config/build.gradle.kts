@@ -10,7 +10,7 @@ private val debugNavigationLib = "Nav3"
 private val releaseNavigationLib = "Destinations"
 
 plugins {
-    alias(libs.plugins.convention.buildconfig)
+    alias(libs.plugins.convention.build.config)
 }
 
 kotlin {

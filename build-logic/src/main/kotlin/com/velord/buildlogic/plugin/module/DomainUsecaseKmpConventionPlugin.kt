@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class DomainUsecaseKmpConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        applyPlugin("convention-kmp-library")
+        applyPlugin("convention-multiplatform-library")
 
         extensions.configure<KotlinMultiplatformExtension> {
             commonMainImplementationProject(target, ProjectModule.MODEL)

@@ -101,6 +101,13 @@ class CallCodeStyleTest {
 
     @Test
     fun `call chains should use one-line form or one call per wrapped line`() {
+        val splitReceiverViolation = isSplitExpressionBodyChainReceiver(
+            currentLine = "private fun String.camelWordRoster(): List<String> =",
+            nextLine = "    CAMEL_WORD_REGEX",
+            thirdLine = "        .findAll(this)",
+        )
+
+        assertTrue(splitReceiverViolation)
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()
             val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->

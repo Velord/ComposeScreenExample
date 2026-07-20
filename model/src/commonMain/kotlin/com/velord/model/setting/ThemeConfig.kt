@@ -43,9 +43,8 @@ data class ThemeConfig(
             )
         }
 
-        private fun findDefaultTheme(isDark: Boolean): SpecialTheme =
-            SpecialTheme.entries
-                .find { it.isDark == isDark && it.default }
-                ?: error("No default theme found")
+        private fun findDefaultTheme(isDark: Boolean): SpecialTheme = SpecialTheme.entries
+            .find { it.isDark == isDark && it.default }
+            ?: error("No default theme found")
     }
 }

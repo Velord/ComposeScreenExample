@@ -18,12 +18,36 @@ private const val SHARED_VIEW_MODEL_NAME = "sharedviewmodel"
 private const val SOURCE_FOLDER_NAME = "src"
 private const val KOTLIN_FOLDER_NAME = "kotlin"
 private const val JAVA_FOLDER_NAME = "java"
+private const val VERSION_CATALOG_PATH = "gradle/libs.versions.toml"
+private const val PLUGIN_SECTION_HEADER = "[plugins]"
+private const val ANDROID_PLUGIN_SECTION = "# Android"
+private const val MULTIPLATFORM_PLUGIN_SECTION = "# Multiplatform"
+private const val KOTLIN_PLUGIN_SECTION = "# Kotlin"
+private const val STANDALONE_PLUGIN_SECTION = "# Standalone"
+private const val GOOGLE_PLUGIN_SECTION = "# Google"
+private const val CONVENTION_PLUGIN_SECTION = "# Convention"
 private val LOWER_CASE_LEAF_REGEX = Regex("""[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val USE_CASE_REGEX = Regex("""usecase-[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val CORE_REGEX = Regex("""core-[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val FEATURE_REGEX = Regex("""feature-[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val WIDGET_REGEX = Regex("""widget-[a-z0-9]+(?:-[a-z0-9]+)*""")
 private val PACKAGE_DIRECTIVE_REGEX = Regex("""(?m)^\uFEFF?package\s+([A-Za-z0-9_.]+)\s*$""")
+private val PLUGIN_DECLARATION_REGEX = Regex("""^[a-z0-9-]+\s*=\s*\{.+}$""")
+private val PLUGIN_SECTION_ROSTER = setOf(
+    ANDROID_PLUGIN_SECTION,
+    MULTIPLATFORM_PLUGIN_SECTION,
+    KOTLIN_PLUGIN_SECTION,
+    STANDALONE_PLUGIN_SECTION,
+    GOOGLE_PLUGIN_SECTION,
+    CONVENTION_PLUGIN_SECTION,
+)
+private val PLUGIN_PREFIX_BY_SECTION = mapOf(
+    ANDROID_PLUGIN_SECTION to "android-",
+    MULTIPLATFORM_PLUGIN_SECTION to "multiplatform-",
+    KOTLIN_PLUGIN_SECTION to "kotlin-",
+    GOOGLE_PLUGIN_SECTION to "google-",
+    CONVENTION_PLUGIN_SECTION to "convention-",
+)
 
 class ModuleNamingTest {
 
@@ -132,6 +156,69 @@ class ModuleNamingTest {
         }
 
         assertTrue(violationRoster.isEmpty())
+    }
+
+    @Test
+    fun `plugin aliases should match concern sections`() {
+        val violationRoster = pluginDeclarationBySection().filter { (section, declaration) ->
+            val alias = declaration.substringBefore("=").trim()
+            if (section !in PLUGIN_SECTION_ROSTER || alias.matches(LOWER_CASE_LEAF_REGEX).not()) {
+                return@filter true
+            }
+
+            val prefix = PLUGIN_PREFIX_BY_SECTION[section]
+            if (section == STANDALONE_PLUGIN_SECTION) {
+                PLUGIN_PREFIX_BY_SECTION.values.any(alias::startsWith)
+            } else {
+                prefix == null || alias.startsWith(prefix).not()
+            }
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            println("Plugin aliases do not match their concern sections: ${violationRoster.joinToString()}")
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
+    @Test
+    fun `plugin declarations should stay on one line`() {
+        val violationRoster = pluginDeclarationRoster().filterNot { declaration ->
+            declaration.matches(PLUGIN_DECLARATION_REGEX)
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            println("Plugin declarations must stay on one line: ${violationRoster.joinToString()}")
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
+    private fun pluginDeclarationRoster(): List<String> = pluginSectionLineRoster().filter { line ->
+        line.isNotBlank() && line.startsWith("#").not()
+    }
+
+    private fun pluginDeclarationBySection(): List<Pair<String, String>> {
+        var section: String? = null
+        return pluginSectionLineRoster().mapNotNull { line ->
+            if (line.startsWith("#")) {
+                section = line
+                return@mapNotNull null
+            }
+            if (line.isBlank()) return@mapNotNull null
+
+            (section ?: error("Plugin declaration '$line' has no concern section")) to line
+        }
+    }
+
+    private fun pluginSectionLineRoster(): List<String> {
+        val lineRoster = File(repoRoot, VERSION_CATALOG_PATH).readLines()
+        val pluginSectionIndex = lineRoster.indexOf(PLUGIN_SECTION_HEADER)
+        if (pluginSectionIndex == -1) error("$PLUGIN_SECTION_HEADER not found")
+
+        return lineRoster.drop(pluginSectionIndex + 1).takeWhile { line ->
+            line.startsWith("[").not()
+        }
     }
 
     private fun locateRepoRoot(): File = generateSequence(

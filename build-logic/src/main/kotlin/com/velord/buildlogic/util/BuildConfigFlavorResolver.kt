@@ -13,7 +13,7 @@ private val VARIANT_SENSITIVE_TASK_ROSTER = listOf(
     "install",
 )
 
-internal object BuildKonfigFlavorResolver {
+internal object BuildConfigFlavorResolver {
 
     // Gradle keeps requested abbreviations in StartParameter. Token matching resolves unique
     // abbreviations while rejecting aggregate, incomplete, ambiguous, and multi-variant requests.
@@ -22,36 +22,37 @@ internal object BuildKonfigFlavorResolver {
             .flatMap { taskName -> taskName.resolveVariantRoster() }
             .distinct()
         require(variantRoster.size <= 1) {
-            "BuildKonfig can generate only one flavor per Gradle invocation: " +
-                variantRoster.map(BuildKonfigVariant::flavor)
+            "Build configuration can generate only one flavor per Gradle invocation: " +
+                variantRoster.map(BuildConfigVariant::flavor)
         }
 
         val incompleteAppTask = taskNameRoster.firstOrNull { taskName ->
             taskName.isIncompleteAppBuildTask()
         }
         require(incompleteAppTask == null) {
-            "BuildKonfig requires one Android variant per Gradle invocation. " +
+            "Build configuration requires one Android variant per Gradle invocation. " +
                 "Run a task such as :app:assembleProductionRelease."
         }
+
         return variantRoster.singleOrNull()?.flavor
     }
 }
 
-private data class BuildKonfigVariant(
+private data class BuildConfigVariant(
     val environment: BuildEnvironment,
     val buildType: BuildType,
 ) {
     val flavor = environment.variantName(buildType)
 }
 
-private fun String.resolveVariantRoster(): List<BuildKonfigVariant> {
+private fun String.resolveVariantRoster(): List<BuildConfigVariant> {
     val wordRoster = taskName().camelWordRoster()
     val variantRoster = wordRoster
         .zipWithNext()
         .flatMap { (environmentWord, buildTypeWord) ->
             BuildEnvironment.entries.flatMap { environment ->
                 BuildType.entries.mapNotNull { buildType ->
-                    BuildKonfigVariant(environment, buildType).takeIf {
+                    BuildConfigVariant(environment, buildType).takeIf {
                         environment.value.startsWith(environmentWord, ignoreCase = true) &&
                             buildType.value.startsWith(buildTypeWord, ignoreCase = true)
                     }
@@ -60,9 +61,10 @@ private fun String.resolveVariantRoster(): List<BuildKonfigVariant> {
         }
         .distinct()
     require(variantRoster.size <= 1) {
-        "BuildKonfig task '$this' resolves to multiple Android variants: " +
-            variantRoster.map(BuildKonfigVariant::flavor)
+        "Build configuration task '$this' resolves to multiple Android variants: " +
+            variantRoster.map(BuildConfigVariant::flavor)
     }
+
     return variantRoster
 }
 
@@ -76,6 +78,7 @@ private fun String.isIncompleteAppBuildTask(): Boolean {
     val hasBuildType = wordRoster.any { word ->
         BuildType.entries.any { buildType -> buildType.value.startsWith(word, ignoreCase = true) }
     }
+
     return hasVariantSensitiveOperation || hasBuildType
 }
 
@@ -87,6 +90,7 @@ private fun String.isAppTask(): Boolean {
 
 private fun String.taskName(): String = removePrefix(":").substringAfterLast(":")
 
-private fun String.camelWordRoster(): List<String> = CAMEL_WORD_REGEX.findAll(this)
+private fun String.camelWordRoster(): List<String> = CAMEL_WORD_REGEX
+    .findAll(this)
     .map(MatchResult::value)
     .toList()

@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.detekt)
-    alias(libs.plugins.dagger.hilt) apply false
+    alias(libs.plugins.hilt) apply false
 
     // Add Firebase plugins here
     alias(libs.plugins.google.gms.services) apply false
@@ -70,7 +70,7 @@ subprojects {
     }
 }
 
-val detektProjectBaseline by tasks.registering(DetektCreateBaselineTask::class) {
+val detektProjectBaseline = tasks.register<DetektCreateBaselineTask>("detektProjectBaseline") {
     description = "Creates a shared detekt baseline for all Gradle modules."
     buildUponDefaultConfig.set(true)
     debug.set(false)
