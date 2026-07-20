@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.multiplatform.library)
     alias(libs.plugins.ksp)
 }
 
@@ -10,10 +10,12 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.infrastructure.config)
             implementation(projects.model)
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.kamera.core)
             implementation(libs.koin.core)
+            implementation(libs.kermit)
             api(libs.koin.annotation)
         }
 
@@ -22,6 +24,8 @@ kotlin {
             implementation(libs.koin.annotation)
             implementation(libs.androidx.lifecycle.process)
             implementation(libs.kamera.core)
+            implementation(project.dependencies.platform(libs.google.firebase.bom))
+            implementation(libs.google.firebase.crashlytic)
         }
 
         desktopMain.dependencies {

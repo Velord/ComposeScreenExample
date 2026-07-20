@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.convention.kmp.library)
-    alias(libs.plugins.jetbrains.compose)
-    alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.convention.multiplatform.library)
+    alias(libs.plugins.multiplatform.compose)
+    alias(libs.plugins.kotlin.compose)
 }
 
 kotlin {

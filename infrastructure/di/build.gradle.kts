@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.multiplatform.library)
 }
 
 kotlin {
@@ -36,8 +36,12 @@ kotlin {
             implementation(projects.ui.featureDemoDialog)
             // Template
             implementation(libs.bundles.kotlin.all)
+            // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
+        }
+        androidMain.dependencies {
+            implementation(projects.core.coreUi)
         }
         desktopTest.dependencies {
             implementation(projects.infrastructure.config)

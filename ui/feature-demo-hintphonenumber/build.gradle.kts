@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.convention.kmp.library)
-    alias(libs.plugins.jetbrains.compose)
-    alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.convention.multiplatform.library)
+    alias(libs.plugins.multiplatform.compose)
+    alias(libs.plugins.kotlin.compose)
 }
 
 kotlin {
@@ -15,6 +15,7 @@ kotlin {
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
             // Template
+            // Compose
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.runtime)
@@ -26,6 +27,7 @@ kotlin {
             // Module
             implementation(projects.infrastructure.util)
             // Template
+            // AndroidX
             implementation(libs.androidx.activity.compose)
         }
     }

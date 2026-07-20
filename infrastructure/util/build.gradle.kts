@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.convention.kmp.library)
-    alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.convention.multiplatform.library)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose)
 }
 
 kotlin {

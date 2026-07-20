@@ -12,7 +12,6 @@ import com.velord.data.gateway.movie.MoviePaginationGateway
 import com.velord.data.gateway.movie.MovieSortGateway
 import com.velord.data.gateway.setting.GetThemeConfigGateway
 import com.velord.data.gateway.setting.SwitchThemeConfigGateway
-import com.velord.model.AppEvent
 import com.velord.usecase.camera.CreateCameraSessionUC
 import com.velord.usecase.camera.GetCameraSessionUC
 import com.velord.usecase.camera.GetCameraStateUC
@@ -50,12 +49,10 @@ val useCaseModule = module {
         GetAppEventFlowUC(get<AppEventGateway>()::getFlow)
     }
     single<ShowToastUC> {
-        val gateway = get<AppEventGateway>()
-        ShowToastUC { config -> gateway.emit(AppEvent.Toast(config)) }
+        ShowToastUC(get<AppEventGateway>()::showToast)
     }
     single<RequestAppExitUC> {
-        val gateway = get<AppEventGateway>()
-        RequestAppExitUC { gateway.emit(AppEvent.Exit) }
+        RequestAppExitUC(get<AppEventGateway>()::requestExit)
     }
     single<GetThemeConfigUC> {
         GetThemeConfigUC(get<GetThemeConfigGateway>()::getFlow)

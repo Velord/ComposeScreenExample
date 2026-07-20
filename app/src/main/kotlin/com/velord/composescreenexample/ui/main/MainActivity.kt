@@ -14,9 +14,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
-import com.velord.composescreenexample.BuildConfig
 import com.velord.composescreenexample.R
 import com.velord.composescreenexample.databinding.ActivityMainBinding
+import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
+import com.velord.core.ui.compose.glance.updateAll
 import com.velord.core.ui.util.setContentWithTheme
 import com.velord.core.ui.util.setToastOverlayWithTheme
 import com.velord.infrastructure.config.NavigationLib
@@ -28,7 +29,11 @@ import com.velord.model.AppEvent
 import com.velord.ui.feature.splash.SplashScreen
 import com.velord.ui.feature.splash.SplashVM
 import com.velord.ui.feature.splash.installSplash
+import com.velord.ui.sharedviewmodel.MainVM
 import com.velord.ui.sharedviewmodel.ThemeVM
+import com.velord.ui.widget.counter.CounterWidget
+import com.velord.ui.widget.refreshableimage.RefreshableImageWidget
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.velord.infrastructure.navigation.R as RNavigation
@@ -39,6 +44,10 @@ class MainActivity : AppCompatActivity() {
         private const val NAVIGATION_EXTRA = "navigation_extra"
         private val fragmentContainer = R.id.navHostFragment
 
+        private val widgetRoster = listOf<GlanceWidgetThemeSustainer<*>>(
+            RefreshableImageWidget(), CounterWidget()
+        )
+
         fun startIntent(context: Context, bundle: Bundle) = Intent(
             context,
             MainActivity::class.java,
@@ -48,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val viewModel: MainVM by viewModel()
+    private val mainVM: MainVM by viewModel()
     private val themeVM: ThemeVM by viewModel()
     private val splashVM: SplashVM by viewModel()
 //    Activity root
@@ -81,7 +90,7 @@ class MainActivity : AppCompatActivity() {
     private fun setContent() {
         b.apply {
             setContentView(root)
-            toastOverlay.setToastOverlayWithTheme(toastEventFlow = viewModel.toastConfigFlow)
+            toastOverlay.setToastOverlayWithTheme(toastEventFlow = mainVM.toastConfigFlow)
         }
     }
 
@@ -116,13 +125,12 @@ class MainActivity : AppCompatActivity() {
 
     context(b: ActivityMainBinding)
     private fun setNavGraph() {
-        when (BuildConfig.NAVIGATION_LIB) {
+        when (mainVM.navigationLib) {
             NavigationLib.Voyager -> setNavGraphViaVoyager()
             NavigationLib.Jetpack -> setNavGraphViaJetpack()
             NavigationLib.Destinations -> setNavGraphViaComposeDestinations()
             NavigationLib.Compose -> setNavGraphViaCompose()
             NavigationLib.Nav3 -> setNavGraphViaNav3()
-            else -> setNavGraphViaJetpack()
         }
     }
 
@@ -205,15 +213,14 @@ class MainActivity : AppCompatActivity() {
     private fun initObserving() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                themeVM.uiStateFlow.collect { theme ->
-                    val action = MainUiAction.UpdateTheme(theme.appThemeConfig?.config)
-                    viewModel.onAction(action)
+                themeVM.uiStateFlow.mapNotNull { it.appThemeConfig?.config }.collect { theme ->
+                    widgetRoster.updateAll(this@MainActivity, theme)
                 }
             }
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.appEventFlow.collect { event ->
+                mainVM.appEventFlow.collect { event ->
                     when (event) {
                         AppEvent.Exit -> finish()
                         is AppEvent.Toast -> Unit

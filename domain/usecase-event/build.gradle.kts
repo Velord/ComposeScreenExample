@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.domain.usecase.kmp)
+    alias(libs.plugins.convention.domain.usecase)
 }
 
 kotlin {

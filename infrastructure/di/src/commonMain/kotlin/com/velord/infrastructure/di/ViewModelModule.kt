@@ -10,6 +10,7 @@ import com.velord.ui.feature.movie.viewModel.AllMovieVM
 import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieVM
 import com.velord.ui.feature.splash.SplashVM
+import com.velord.ui.sharedviewmodel.MainVM
 import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -27,4 +28,5 @@ val viewModelModule = module {
     viewModel { BottomNavigationDestinationsVM(get(), get()) }
     viewModel { BottomNavigationVoyagerVM(get()) }
     viewModel { DialogDemoVM() }
+    viewModel { MainVM(get(), get(), get()) }
 }

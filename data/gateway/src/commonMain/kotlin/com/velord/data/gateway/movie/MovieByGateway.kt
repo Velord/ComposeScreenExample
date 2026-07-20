@@ -10,7 +10,7 @@ import org.koin.core.annotation.Single
 class MovieByGateway(
     private val movieGateway: MovieGateway,
     private val movieSortGateway: MovieSortGateway,
-    private val movieFavoriteReader: MovieFavoriteReader,
+    private val movieFavoriteGateway: MovieFavoriteGateway,
 ) {
 
     fun getBySort(): MovieFlow {
@@ -27,7 +27,7 @@ class MovieByGateway(
     }
 
     fun getByFavorite(): MovieFlow {
-        val favorite = movieFavoriteReader.getFlow()
+        val favorite = movieFavoriteGateway.getFlow()
         val sort = movieSortGateway.getSelectedFlow()
         return MovieFlow(
             favorite.combine(sort) { movieRoster, sortOption ->

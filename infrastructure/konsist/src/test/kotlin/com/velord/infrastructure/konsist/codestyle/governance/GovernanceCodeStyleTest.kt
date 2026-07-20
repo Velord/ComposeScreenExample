@@ -9,6 +9,7 @@ import kotlin.test.assertTrue
 
 private const val KONSIST_TEST_PATH = "infrastructure/konsist/src/test"
 private const val TEST_ANNOTATION = "@Test"
+private const val GRADLE_BUILD_FILE_SUFFIX = ".gradle.kts"
 
 class GovernanceCodeStyleTest {
     @Test
@@ -51,7 +52,7 @@ class GovernanceCodeStyleTest {
     fun `gradle test dependencies should use version catalog aliases`() {
         val violation = locateRepoRoot()
             .walkTopDown()
-            .filter { file -> file.isFile && file.name.endsWith(".gradle.kts") }
+            .filter { file -> file.isFile && file.name.endsWith(GRADLE_BUILD_FILE_SUFFIX) }
             .filter { file -> file.path.contains(
                 other = "${File.separator}build${File.separator}").not()
             }
@@ -60,6 +61,28 @@ class GovernanceCodeStyleTest {
         if (violation != null) {
             val msg = "Name: ${violation.name}. FAILED. " +
                 "Use libs.kotlin.test instead of kotlin(\"test\")."
+            println(msg)
+        }
+
+        assertTrue(violation == null)
+    }
+
+    @Test
+    fun `template gradle dependencies should use version catalog bundles`() {
+        val violation = locateRepoRoot()
+            .walkTopDown()
+            .filter { file -> file.isFile && file.name.endsWith(GRADLE_BUILD_FILE_SUFFIX) }
+            .filter { file -> file.path.contains(
+                other = "${File.separator}build${File.separator}").not()
+            }
+            .mapNotNull { file ->
+                findTemplateDependencyViolation(file)?.let { lineNumber -> file to lineNumber }
+            }
+            .firstOrNull()
+
+        if (violation != null) {
+            val msg = "Name: ${violation.first.name}. FAILED. " +
+                "Only libs.bundles.* is allowed under // Template at line ${violation.second}."
             println(msg)
         }
 

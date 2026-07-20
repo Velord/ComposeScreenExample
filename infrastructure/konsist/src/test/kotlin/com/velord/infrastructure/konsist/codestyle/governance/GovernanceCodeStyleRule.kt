@@ -5,6 +5,11 @@ import java.io.File
 
 private const val RECOMPOSE_HIGHLIGHTER_PATH =
     "core/core-ui/src/main/kotlin/com/velord/core/ui/util/modifier/RecomposeHighlighter.kt"
+private const val TEMPLATE_SECTION_COMMENT = "// Template"
+private const val TEMPLATE_DEPENDENCY_ALIAS = "libs.bundles."
+private val GRADLE_DEPENDENCY_CALL_REGEX = Regex(
+    "^\\s*(api|compileOnly|implementation|ksp|runtimeOnly|testImplementation)\\(",
+)
 
 internal val governanceFileRoster = projectFileRoster.filter { file ->
     file.path.contains("infrastructure/konsist/src/test/kotlin/")
@@ -36,4 +41,23 @@ internal fun isLateConstDeclaration(
             previousLineTrimmed.startsWith("sealed class ") ||
             previousLineTrimmed.startsWith("internal sealed class ")
     }
+}
+
+internal fun findTemplateDependencyViolation(file: File): Int? {
+    var isTemplateSection = false
+    file.readLines().forEachIndexed { lineIndex, line ->
+        val lineTrimmed = line.trim()
+        if (lineTrimmed.startsWith("// ")) {
+            isTemplateSection = lineTrimmed == TEMPLATE_SECTION_COMMENT
+        }
+        if (lineTrimmed.startsWith("//")) return@forEachIndexed
+        if (isTemplateSection &&
+            GRADLE_DEPENDENCY_CALL_REGEX.containsMatchIn(line) &&
+            line.contains(TEMPLATE_DEPENDENCY_ALIAS).not()
+        ) {
+            return lineIndex + 1
+        }
+    }
+
+    return null
 }

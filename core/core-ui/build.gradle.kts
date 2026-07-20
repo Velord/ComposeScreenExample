@@ -1,14 +1,10 @@
 plugins {
-    alias(libs.plugins.convention.kmp.library)
-    alias(libs.plugins.jetbrains.compose)
-    alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.convention.multiplatform.library)
+    alias(libs.plugins.multiplatform.compose)
+    alias(libs.plugins.kotlin.compose)
 }
 
 kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xcontext-parameters")
-    }
-
     android {
         namespace = "com.velord.core.ui"
     }
@@ -25,8 +21,8 @@ kotlin {
             implementation(libs.bundles.compose.foundation)
             implementation(libs.bundles.compose.core)
             implementation(libs.bundles.compose.material3.all)
-            implementation(libs.androidx.graphics.shapes)
             // Lib
+            implementation(libs.androidx.graphics.shapes)
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.coil.compose)
         }

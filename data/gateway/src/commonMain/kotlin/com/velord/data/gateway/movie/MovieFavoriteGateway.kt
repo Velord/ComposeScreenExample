@@ -15,12 +15,12 @@ import org.koin.core.annotation.Single
 
 private val log = Logger.withTag("MovieFavoriteGateway")
 
-@Single(binds = [MovieFavoriteReader::class])
+@Single
 class MovieFavoriteGateway(
     private val appState: AppStateDataSource,
     private val db: MovieDbDataSource,
     private val movieSortGateway: MovieSortGateway,
-) : MovieFavoriteReader {
+) {
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
         log.d { "CoroutineExceptionHandler: $throwable" }
@@ -38,7 +38,7 @@ class MovieFavoriteGateway(
 
     fun get(): List<Movie> = appState.movieFavoriteRosterFlow.value
 
-    override fun getFlow(): Flow<List<Movie>> = appState.movieFavoriteRosterFlow
+    fun getFlow(): Flow<List<Movie>> = appState.movieFavoriteRosterFlow
 
     suspend fun update(movie: Movie) {
         val updated = movie.copy(isLiked = movie.isLiked.not())

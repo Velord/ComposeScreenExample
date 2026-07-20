@@ -215,7 +215,11 @@ internal fun isCallChainViolation(
     val nextLine = lineRoster[lineIndex + 1]
     if (isWrappedChainLineWithMultipleCalls(currentLine)) return true
 
-    return isInlineCallChainStartBeforeMultilineContinuation(
+    return isSplitExpressionBodyChainReceiver(
+        currentLine = currentLine,
+        nextLine = nextLine,
+        thirdLine = lineRoster.getOrNull(lineIndex + 2),
+    ) || isInlineCallChainStartBeforeMultilineContinuation(
         currentLine = currentLine,
         nextLine = nextLine,
         thirdLine = lineRoster.getOrNull(lineIndex + 2),
@@ -230,6 +234,25 @@ internal fun isCallChainViolation(
         currentLine = currentLine,
         nextLine = nextLine,
     )
+}
+
+internal fun isSplitExpressionBodyChainReceiver(
+    currentLine: String,
+    nextLine: String,
+    thirdLine: String?,
+): Boolean {
+    val currentLineTrimmed = currentLine.trimEnd()
+    val nextLineTrimmed = nextLine.trimStart()
+    val thirdLineTrimmed = thirdLine?.trimStart().orEmpty()
+    if (currentLineTrimmed.endsWith("=").not()) return false
+    if (nextLineTrimmed.startsWith(".") || nextLineTrimmed.startsWith("?.")) return false
+    if (thirdLineTrimmed.startsWith(".").not() &&
+        thirdLineTrimmed.startsWith("?.").not()
+    ) {
+        return false
+    }
+
+    return joinLine(currentLine, nextLine).length <= HARD_WRAP
 }
 
 internal fun isClosedNonChainCallFollowedByShortDotCall(

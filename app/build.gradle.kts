@@ -1,18 +1,20 @@
+import com.velord.buildlogic.model.BuildEnvironment
+import com.velord.buildlogic.model.BuildType
+
 plugins {
     alias(libs.plugins.convention.android.application)
     alias(libs.plugins.convention.android.compose)
     alias(libs.plugins.convention.android.viewbinding)
-    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
-    alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.convention.koin)
+    id(libs.plugins.kotlin.parcelize.get().pluginId)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.gms.services)
     alias(libs.plugins.google.firebase.crashlytic)
     alias(libs.plugins.dependency.guard)
 }
 
 dependencyGuard {
-    configuration("productionReleaseRuntimeClasspath")
+    val buildVariant = BuildEnvironment.Production.variantName(buildType = BuildType.Release)
+    configuration("${buildVariant}RuntimeClasspath")
 }
 
 // When app incompatible with previous version change this value
@@ -58,79 +60,48 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("debug")
+        getByName(BuildType.Release.value) {
+            signingConfig = signingConfigs.getByName(BuildType.Debug.value)
         }
-        named("debug") {
-            buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
-            buildConfigField(
-                "com.velord.infrastructure.config.NavigationLib",
-                "NAVIGATION_LIB",
-                "com.velord.infrastructure.config.NavigationLib.Nav3"
-            )
-        }
-        named("release") {
+        named(BuildType.Release.value) {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
-            buildConfigField(
-                "com.velord.infrastructure.config.NavigationLib",
-                "NAVIGATION_LIB",
-                "com.velord.infrastructure.config.NavigationLib.Destinations"
-            )
         }
     }
 
     flavorDimensions.add("environment")
     productFlavors {
-        val baseUrl = "https://google.com"
-        val currentVersion = globalVersion * 100000 +
-                majorVersion * 10000 +
-                minorVersion * 1000 +
-                fixVersion * 100
-
-        create("develop") {
+        create(BuildEnvironment.Develop.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = false
-            applicationIdSuffix = ".develop"
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
-            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+            applicationIdSuffix = ".${BuildEnvironment.Develop.value}"
 
             resourceConfigurations.add("xxxhdpi")
         }
-        create("qa") {
+        create(BuildEnvironment.Qa.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            applicationIdSuffix = ".develop"
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
-            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+            applicationIdSuffix = ".${BuildEnvironment.Qa.value}"
         }
 
-        create("stage") {
+        create(BuildEnvironment.Stage.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            applicationIdSuffix = ".stage"
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
-            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+            applicationIdSuffix = ".${BuildEnvironment.Stage.value}"
         }
 
-        create("production") {
+        create(BuildEnvironment.Production.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
-            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
         }
     }
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-    }
-    buildFeatures {
-        buildConfig = true
     }
 }
 
@@ -141,8 +112,6 @@ dependencies {
     implementation(projects.infrastructure.navigation)
     implementation(projects.infrastructure.di)
     implementation(projects.infrastructure.config)
-    // Module Domain
-    implementation(projects.domain.usecaseEvent)
     // Module Core
     implementation(projects.core.coreUi)
     implementation(projects.core.coreNavigation)
@@ -162,16 +131,14 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.ui.core)
-    // Koin annotations
-    implementation(libs.koin.annotation)
-    ksp(libs.koin.ksp)
+    // Koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+    // Navigation
+    implementation(libs.androidx.navigation.fragment)
     // Tool
     coreLibraryDesugaring(libs.android.desugar)
     // Other
-    implementation(libs.androidx.glance.appwidget)
-    // Firebase
-    implementation(platform(libs.google.firebase.bom))
-    implementation(libs.bundles.google.firebase)
     // Test libs.versions.toml
 //    implementation(libs.bundles.android.all)
 //    implementation(libs.bundles.androidx.all)

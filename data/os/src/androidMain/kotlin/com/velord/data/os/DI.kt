@@ -6,6 +6,8 @@ import com.velord.data.os.camera.AndroidCameraControllerFactory
 import com.velord.data.os.camera.CameraControllerFactory
 import com.velord.data.os.file.AndroidFileDataSource
 import com.velord.data.os.file.FileDataSource
+import com.velord.data.os.memory.AndroidMemoryLogger
+import com.velord.data.os.memory.MemoryLogger
 import com.velord.data.os.share.AndroidShareDataSource
 import com.velord.data.os.share.ShareDataSource
 import org.koin.core.annotation.Module
@@ -25,6 +27,12 @@ actual class FilePlatformModule {
     actual fun provideFileDataSource(
         scope: Scope,
     ): FileDataSource = AndroidFileDataSource(scope.get())
+}
+
+@Module
+actual class MemoryLoggerPlatformModule {
+    @Single
+    actual fun provideMemoryLogger(scope: Scope): MemoryLogger = AndroidMemoryLogger(scope.get())
 }
 
 @Module
