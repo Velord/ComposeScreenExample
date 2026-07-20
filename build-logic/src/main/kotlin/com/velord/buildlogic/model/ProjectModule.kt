@@ -1,4 +1,4 @@
-package com.velord.buildlogic
+package com.velord.buildlogic.model
 
 internal enum class ProjectModule(val path: String) {
     MODEL(":model"),

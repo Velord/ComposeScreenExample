@@ -2,38 +2,45 @@ package com.velord.data.os.memory
 
 import co.touchlab.kermit.Logger
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.velord.infrastructure.config.BuildConfigResolver
 
-class AndroidMemoryLogger : MemoryLogger {
+internal class AndroidMemoryLogger(
+    private val buildConfigResolver: BuildConfigResolver,
+) : MemoryLogger {
 
     private val crashlytics = FirebaseCrashlytics.getInstance()
 
     override fun log(message: String, isError: Boolean) {
+        val isLoggingEnabled = buildConfigResolver.isLoggingEnabled()
+
         if (isError) {
-            log.e { message }
+            if (isLoggingEnabled) log.e { message }
             crashlytics.log("E/$TAG: $message")
         } else {
-            log.d { message }
+            if (isLoggingEnabled) log.d { message }
             crashlytics.log("D/$TAG: $message")
         }
     }
 
     override fun recordException(throwable: Throwable) {
-        log.e(throwable) { "Recording non-fatal exception" }
+        if (buildConfigResolver.isLoggingEnabled()) {
+            log.e(throwable) { "Recording non-fatal exception" }
+        }
         crashlytics.recordException(throwable)
     }
 
     override fun setCustomKey(key: String, value: Int) {
-        log.d { "Key [$key] = $value" }
+        if (buildConfigResolver.isLoggingEnabled()) log.d { "Key [$key] = $value" }
         crashlytics.setCustomKey(key, value)
     }
 
     override fun setCustomKey(key: String, value: Long) {
-        log.d { "Key [$key] = $value" }
+        if (buildConfigResolver.isLoggingEnabled()) log.d { "Key [$key] = $value" }
         crashlytics.setCustomKey(key, value)
     }
 
     override fun setCustomKey(key: String, value: String) {
-        log.d { "Key [$key] = $value" }
+        if (buildConfigResolver.isLoggingEnabled()) log.d { "Key [$key] = $value" }
         crashlytics.setCustomKey(key, value)
     }
 

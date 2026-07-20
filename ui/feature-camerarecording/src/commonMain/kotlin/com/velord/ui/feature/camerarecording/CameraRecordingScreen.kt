@@ -38,17 +38,17 @@ fun CameraRecordingScreen(
 
     if (needToHandlePermission) {
         // To annoying. Return back later.
-        CheckCameraAndAudioRecordPermission(
-            triggerCheckEvent = viewModel.checkPermissionEvent,
-            onCameraUpdateState = {
-                val action = CameraRecordingUiAction.UpdateCameraPermissionGrantState(it)
-                viewModel.onAction(action)
-            },
-            onMicroUpdateState = {
-                val action = CameraRecordingUiAction.UpdateAudioPermissionGrantState(it)
-                viewModel.onAction(action)
-            }
-        )
+//        CheckCameraAndAudioRecordPermission(
+//            triggerCheckEvent = viewModel.checkPermissionEvent,
+//            onCameraUpdateState = {
+//                val action = CameraRecordingUiAction.UpdateCameraPermissionGrantState(it)
+//                viewModel.onAction(action)
+//            },
+//            onMicroUpdateState = {
+//                val action = CameraRecordingUiAction.UpdateAudioPermissionGrantState(it)
+//                viewModel.onAction(action)
+//            }
+//        )
     }
 
     log.d { "permissionCameraState: ${uiState.value.permissionState.camera}" }

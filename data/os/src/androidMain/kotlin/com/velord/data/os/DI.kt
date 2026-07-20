@@ -32,7 +32,7 @@ actual class FilePlatformModule {
 @Module
 actual class MemoryLoggerPlatformModule {
     @Single
-    actual fun provideMemoryLogger(scope: Scope): MemoryLogger = AndroidMemoryLogger()
+    actual fun provideMemoryLogger(scope: Scope): MemoryLogger = AndroidMemoryLogger(scope.get())
 }
 
 @Module

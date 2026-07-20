@@ -1,5 +1,6 @@
-package com.velord.buildlogic
+package com.velord.buildlogic.plugin.module
 
+import com.velord.buildlogic.util.applyPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

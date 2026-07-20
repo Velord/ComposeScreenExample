@@ -31,7 +31,7 @@ actual class FilePlatformModule {
 @Module
 actual class MemoryLoggerPlatformModule {
     @Single
-    actual fun provideMemoryLogger(scope: Scope): MemoryLogger = DesktopMemoryLogger()
+    actual fun provideMemoryLogger(scope: Scope): MemoryLogger = DesktopMemoryLogger(scope.get())
 }
 
 @Module

@@ -1,3 +1,6 @@
+import com.velord.buildlogic.model.BuildEnvironment
+import com.velord.buildlogic.model.BuildType
+
 plugins {
     alias(libs.plugins.convention.android.application)
     alias(libs.plugins.convention.android.compose)
@@ -10,7 +13,8 @@ plugins {
 }
 
 dependencyGuard {
-    configuration("productionReleaseRuntimeClasspath")
+    val buildVariant = BuildEnvironment.Production.variantName(buildType = BuildType.Release)
+    configuration("${buildVariant}RuntimeClasspath")
 }
 
 // When app incompatible with previous version change this value
@@ -56,10 +60,10 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("debug")
+        getByName(BuildType.Release.value) {
+            signingConfig = signingConfigs.getByName(BuildType.Debug.value)
         }
-        named("release") {
+        named(BuildType.Release.value) {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -71,26 +75,26 @@ android {
 
     flavorDimensions.add("environment")
     productFlavors {
-        create("develop") {
+        create(BuildEnvironment.Develop.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = false
-            applicationIdSuffix = ".develop"
+            applicationIdSuffix = ".${BuildEnvironment.Develop.value}"
 
             resourceConfigurations.add("xxxhdpi")
         }
-        create("qa") {
+        create(BuildEnvironment.Qa.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            applicationIdSuffix = ".develop"
+            applicationIdSuffix = ".${BuildEnvironment.Qa.value}"
         }
 
-        create("stage") {
+        create(BuildEnvironment.Stage.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            applicationIdSuffix = ".stage"
+            applicationIdSuffix = ".${BuildEnvironment.Stage.value}"
         }
 
-        create("production") {
+        create(BuildEnvironment.Production.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
         }
@@ -127,7 +131,6 @@ dependencies {
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
     implementation(libs.bundles.compose.ui.core)
-    // Koin annotations
     // Koin
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)

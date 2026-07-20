@@ -1,6 +1,8 @@
-package com.velord.buildlogic
+package com.velord.buildlogic.plugin
 
 import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
+import com.velord.buildlogic.util.applyPlugin
+import com.velord.buildlogic.util.versionInt
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware

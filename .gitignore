@@ -46,8 +46,7 @@ google-services.json
 # Android Profiling
 *.hprof
 
-/.kotlin
-/.kotlin/sessions
+**/.kotlin/
 
 # AI AI AI AI AI
 CLAUDE.md

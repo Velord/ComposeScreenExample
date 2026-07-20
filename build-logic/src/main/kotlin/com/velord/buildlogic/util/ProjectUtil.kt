@@ -1,10 +1,10 @@
-package com.velord.buildlogic
+package com.velord.buildlogic.util
 
+import com.velord.buildlogic.model.ProjectModule
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.plugin.use.PluginDependency
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal val Project.libs: VersionCatalog
     get() = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
@@ -37,6 +37,10 @@ internal fun Project.implementationBundle(bundleName: String) {
     }
 }
 
+internal fun Project.apiLibrary(libraryName: String) {
+    dependencies.add("api", library(libraryName))
+}
+
 internal fun Project.implementationLibrary(libraryName: String) {
     dependencies.add("implementation", library(libraryName))
 }
@@ -60,28 +64,3 @@ internal fun Project.implementationProject(project: ProjectModule) {
 internal fun Project.projectDependency(projectPath: String) = project(projectPath)
 
 internal fun Project.projectDependency(project: ProjectModule) = projectDependency(project.path)
-
-internal fun KotlinMultiplatformExtension.commonMainImplementationLibrary(
-    project: Project,
-    libraryName: String,
-) {
-    sourceSets.commonMain.dependencies {
-        implementation(project.library(libraryName))
-    }
-}
-
-internal fun KotlinMultiplatformExtension.commonMainImplementationProject(
-    project: Project,
-    projectPath: String,
-) {
-    sourceSets.commonMain.dependencies {
-        implementation(project.projectDependency(projectPath))
-    }
-}
-
-internal fun KotlinMultiplatformExtension.commonMainImplementationProject(
-    project: Project,
-    projectPath: ProjectModule,
-) {
-    commonMainImplementationProject(project, projectPath.path)
-}

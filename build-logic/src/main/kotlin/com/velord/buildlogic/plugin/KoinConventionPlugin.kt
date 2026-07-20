@@ -1,6 +1,10 @@
-package com.velord.buildlogic
+package com.velord.buildlogic.plugin
 
 import com.google.devtools.ksp.gradle.KspExtension
+import com.velord.buildlogic.util.applyPlugin
+import com.velord.buildlogic.util.implementationBundle
+import com.velord.buildlogic.util.implementationPlatformLibrary
+import com.velord.buildlogic.util.kspLibrary
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

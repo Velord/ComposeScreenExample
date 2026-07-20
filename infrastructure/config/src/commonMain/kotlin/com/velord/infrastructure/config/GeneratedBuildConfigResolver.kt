@@ -9,7 +9,5 @@ class GeneratedBuildConfigResolver : BuildConfigResolver {
 
     override fun getBaseUrl(): String = ProjectBuildConfig.baseUrl
 
-    override fun getCurrentVersion(): String = ProjectBuildConfig.currentVersion
-
     override fun isLoggingEnabled(): Boolean = ProjectBuildConfig.isLoggingEnabled
 }

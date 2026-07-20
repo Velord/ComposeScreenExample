@@ -1,5 +1,9 @@
-package com.velord.buildlogic
+package com.velord.buildlogic.plugin.module
 
+import com.velord.buildlogic.model.ProjectModule
+import com.velord.buildlogic.util.applyPlugin
+import com.velord.buildlogic.util.commonMainImplementationLibrary
+import com.velord.buildlogic.util.commonMainImplementationProject
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

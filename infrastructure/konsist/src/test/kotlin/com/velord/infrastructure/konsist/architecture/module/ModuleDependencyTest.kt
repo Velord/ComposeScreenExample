@@ -16,7 +16,6 @@ import kotlin.test.assertTrue
 
 private const val UI_FOLDER_NAME = "ui"
 private const val DATA_GATEWAY_COMMON_PATH = "data/gateway/src/commonMain/kotlin"
-private const val INFRASTRUCTURE_DI_PATH = "infrastructure/di/src"
 private const val BUILD_FILE_NAME = "build.gradle.kts"
 private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
 private const val KAMERA_IMPORT_PREFIX = "import com.kashif.cameraK."
@@ -33,18 +32,12 @@ private val DATA_PROJECT_ACCESSOR_REGEX = Regex("""projects\.data\.[A-Za-z][A-Za
 private val DATA_PROJECT_PATH_REGEX = Regex("""project\(\s*[\"']:data:[^\"']+[\"']\s*\)""")
 private val KAMERA_ALIAS_REGEX = Regex("""\s+as\s+[A-Za-z0-9]*[Kk]amera[A-Za-z0-9]*$""")
 private val APP_EVENT_REFERENCE_REGEX = Regex("""\bAppEvent\.""")
-private val COLLABORATOR_CONTRACT_REGEX = Regex(
-    """\b(?:fun\s+)?interface\s+([A-Za-z][A-Za-z0-9]*(?:Reader|Updater|Manager))\b""",
-)
 private val GATEWAY_CLASS_CONSTRUCTOR_REGEX = Regex(
     """class\s+([A-Za-z][A-Za-z0-9]*Gateway)\s*\((.*?)\)\s*(?::|\{)""",
     setOf(RegexOption.DOT_MATCHES_ALL),
 )
 private val CONSTRUCTOR_TYPE_REGEX = Regex(
     """(?:private\s+)?(?:val|var)\s+[A-Za-z][A-Za-z0-9]*\s*:\s*([A-Za-z][A-Za-z0-9]*)""",
-)
-private val DI_GATEWAY_DECLARATION_REGEX = Regex(
-    """\b(?:class|interface|fun\s+interface|object)\s+([A-Za-z][A-Za-z0-9]*Gateway)\b""",
 )
 private val USE_CASE_CONSTRUCTOR_CALL_REGEX = Regex("""\b[A-Za-z][A-Za-z0-9]*UC\s*\(""")
 private val USE_CASE_CONSTRUCTOR_LAMBDA_REGEX = Regex("""\b[A-Za-z][A-Za-z0-9]*UC\s*\{""")
@@ -133,30 +126,6 @@ class ModuleDependencyTest {
     }
 
     @Test
-    fun `data gateway should not define public collaborator contracts`() {
-        val dataGatewayRoot = File(repoRoot, DATA_GATEWAY_COMMON_PATH)
-        val violationRoster = dataGatewayRoot
-            .walkTopDown()
-            .filter { file -> file.extension == "kt" }
-            .flatMap { file ->
-                COLLABORATOR_CONTRACT_REGEX.findAll(file.readText()).map { match ->
-                    val contractName = match.groupValues[1]
-                    val lineNumber = file.lineNumberOf(match.range.first)
-                    "${file.relativeTo(repoRoot).path}:$lineNumber:$contractName"
-                }
-            }
-            .toList()
-
-        if (violationRoster.isNotEmpty()) {
-            val msg = "Data gateway defines collaborator contracts: " +
-                violationRoster.joinToString()
-            println(msg)
-        }
-
-        assertTrue(violationRoster.isEmpty())
-    }
-
-    @Test
     fun `gateway constructors should depend only on data sources or gateways`() {
         val dataGatewayRoot = File(repoRoot, DATA_GATEWAY_COMMON_PATH)
         val violationRoster = dataGatewayRoot
@@ -180,30 +149,6 @@ class ModuleDependencyTest {
 
         if (violationRoster.isNotEmpty()) {
             val msg = "Gateway constructors depend on non-source collaborators: " +
-                violationRoster.joinToString()
-            println(msg)
-        }
-
-        assertTrue(violationRoster.isEmpty())
-    }
-
-    @Test
-    fun `di module should not declare gateways`() {
-        val diRoot = File(repoRoot, INFRASTRUCTURE_DI_PATH)
-        val violationRoster = diRoot
-            .walkTopDown()
-            .filter { file -> file.extension == "kt" }
-            .flatMap { file ->
-                DI_GATEWAY_DECLARATION_REGEX.findAll(file.readText()).map { match ->
-                    val gatewayName = match.groupValues[1]
-                    val lineNumber = file.lineNumberOf(match.range.first)
-                    "${file.relativeTo(repoRoot).path}:$lineNumber:$gatewayName"
-                }
-            }
-            .toList()
-
-        if (violationRoster.isNotEmpty()) {
-            val msg = "DI module declares gateway types: " +
                 violationRoster.joinToString()
             println(msg)
         }

@@ -9,11 +9,6 @@ import com.velord.usecase.event.GetToastConfigFlowUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
-// Only one valid place for "Provided" annotation.
-// As this ViewModule can not be placed inside manual setup in viewModelModule DI.
-// Also, "app" module uses ksp generation.
-// Mixing them together derives telling compile time verification that GetToastConfigFlowUC
-// will be provided during runtime.
 class MainVM(
     private val getAppEventFlowUC: GetAppEventFlowUC,
     private val getToastConfigFlowUC: GetToastConfigFlowUC,
@@ -41,7 +36,7 @@ class MainVM(
             actionFlow.collect { action ->
                 when (action) {
                     // TODO: Define branches when they appear
-                    else -> {}
+                    else -> Unit
                 }
             }
         }
