@@ -5,7 +5,6 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import com.velord.data.os.memory.MemoryLeakMonitor
-import com.velord.infrastructure.navigation.voyager.initVoyager
 import org.koin.android.ext.android.inject
 
 class App : Application() {
@@ -15,7 +14,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initVoyager()
         initKoin()
         initStrictMode()
         initMemoryLeakMonitor()

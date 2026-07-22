@@ -251,6 +251,7 @@ sagarCoroutinePermission = "2.0.3"
 accompanistPermission = "0.37.2"
 # Navigation
 composeDestinations = "2.3.0"
+nav3 = "1.1.1"
 voyager = "1.1.0-beta03"
 velordMultipleBackstack = "0.5.9.1"
 # Logging
@@ -403,7 +404,7 @@ androidx-lifecycle-viewmodel-core = { module = "androidx.lifecycle:lifecycle-vie
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidxLifecycle" }
-androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidxNavigation3" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidxLifecycle" }
 # AndroidX Navigation
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
@@ -686,6 +687,9 @@ voyager-bottomSheetNavigator = { module = "cafe.adriel.voyager:voyager-bottom-sh
 voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
+## Navigation 3
+nav3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "nav3" }
+nav3-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidxLifecycle" }
 # Logging
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 slf4j-android = { module = "org.slf4j:slf4j-android", version.ref = "slf4j" }
@@ -1263,15 +1267,18 @@ kamera-all = [
 # Image Loader
 coil = ["coil-network-ktor3", "coil-compose", "coil-gif"]
 # --------------------------------------------------------------------------------------------------
-# Navigation 3-rd Party
+# Navigation
+## Compose Destinations
+compose-destinations = ["compose-destinations", "compose-destinations-bottomsheet"]
+## Navigation 3
+nav3 = ["nav3-ui", "nav3-lifecycle-viewmodel"]
 ## Voyager
-voyager = [
+voyager-navigation = ["voyager-navigator", "voyager-transitions"]
+voyager-all = [
     "voyager-navigator", "voyager-screenModel",
     "voyager-bottomSheetNavigator", "voyager-tabNavigator",
     "voyager-transitions", "voyager-hilt",
 ]
-## Compose Destinations
-compose-destinations = ["compose-destinations", "compose-destinations-bottomsheet"]
 # Logging
 logging-kmp = ["kermit"]
 logging = ["slf4j-android", "takt", "rebugger"]

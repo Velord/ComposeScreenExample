@@ -15,15 +15,15 @@ import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigator
 import com.velord.ui.feature.bottomnavigation.screen.component.Content
 import com.velord.ui.feature.bottomnavigation.screen.component.ScreenSetup
-import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsUiAction
-import com.velord.ui.feature.bottomnavigation.viewmodel.destinations.BottomNavigationDestinationsVM
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationUiAction
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVM
 import org.koin.compose.viewmodel.koinViewModel
 
 private val log = Logger.withTag("LogBackStack")
 
 @Composable
 fun BottomNavigationScreen(navigator: BottomNavigator) {
-    val viewModel = koinViewModel<BottomNavigationDestinationsVM>()
+    val viewModel = koinViewModel<BottomNavigationVM>()
 
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
     val isEnabledState = remember {
@@ -34,13 +34,13 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
         state = uiState,
         isBackHandlingEnabled = isEnabledState.value,
         onBackDoubleClick = {
-            viewModel.onAction(BottomNavigationDestinationsUiAction.BackDoubleClick)
+            viewModel.onAction(BottomNavigationUiAction.BackDoubleClick)
         },
         libSetup = {
             navigator.SetupNavController(
                 updateBackHandling = { startDestinationRoster, currentDestination ->
                     viewModel.onAction(
-                        BottomNavigationDestinationsUiAction.UpdateBackHandling(
+                        BottomNavigationUiAction.UpdateBackHandling(
                             startDestinationRoster = startDestinationRoster,
                             currentRoute = currentDestination,
                         )
@@ -48,7 +48,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
                 },
                 onTabChanged = { tab ->
                     viewModel.onAction(
-                        BottomNavigationDestinationsUiAction.TabDestinationChanged(tab)
+                        BottomNavigationUiAction.TabDestinationChanged(tab)
                     )
                 }
             )
@@ -73,7 +73,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
             selectedItem = uiState.value.tabState.current,
             navigationItemRoster = viewModel.getNavigationItemRoster(),
             onClick = { tab ->
-                viewModel.onAction(BottomNavigationDestinationsUiAction.TabClick(tab))
+                viewModel.onAction(BottomNavigationUiAction.TabClick(tab))
             },
             content = {
                 navigator.CreateNavHostForBottom(

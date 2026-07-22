@@ -21,9 +21,10 @@ class BuildConfigConventionPlugin : Plugin<Project> {
     // Full variant tasks can select one matching flavor. App aggregate tasks are rejected because
     // one generated object cannot represent multiple variants in the same invocation.
     private fun Project.configureBuildConfigFlavor() {
-        val flavor = BuildConfigFlavorResolver.resolve(gradle.startParameter.taskNames)
-        if (hasProperty(BUILD_CONFIG_FLAVOR_PROPERTY)) return
+        val isPresent = providers.gradleProperty(BUILD_CONFIG_FLAVOR_PROPERTY).isPresent
+        if (isPresent || hasProperty(BUILD_CONFIG_FLAVOR_PROPERTY)) return
 
+        val flavor = BuildConfigFlavorResolver.resolve(gradle.startParameter.taskNames)
         flavor?.let {
             extensions.extraProperties.set(BUILD_CONFIG_FLAVOR_PROPERTY, flavor)
         }

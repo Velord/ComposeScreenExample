@@ -13,3 +13,8 @@ internal actual fun PlatformBackHandler(
 ) {
     // Desktop has no system back button; closing the window remains a platform-owned action.
 }
+
+@Composable
+internal actual fun PlatformSingleBackHandler(isEnabled: Boolean, onBackClick: () -> Unit) {
+    // Desktop has no system back button; closing the window remains a platform-owned action.
+}

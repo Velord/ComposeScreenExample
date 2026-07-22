@@ -18,7 +18,28 @@ private const val UI_FOLDER_NAME = "ui"
 private const val DATA_GATEWAY_COMMON_PATH = "data/gateway/src/commonMain/kotlin"
 private const val BUILD_FILE_NAME = "build.gradle.kts"
 private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
+private const val APP_SOURCE_PATH_SEGMENT = "/app/src/"
+private const val NAVIGATION_SOURCE_PATH_SEGMENT = "/infrastructure/navigation/src/"
 private const val KAMERA_IMPORT_PREFIX = "import com.kashif.cameraK."
+// TODO: delete or change to "roster" independent test
+private val APP_CONCRETE_NAVIGATION_IMPORT_PREFIX_ROSTER = setOf(
+    "import androidx.navigation.",
+    "import androidx.navigation3.",
+    "import cafe.adriel.voyager.",
+    "import com.ramcosta.composedestinations.",
+    "import com.velord.infrastructure.navigation.CreateNavigationVia",
+    "import com.velord.infrastructure.navigation.compose.",
+    "import com.velord.infrastructure.navigation.jetpackNavigation.",
+    "import com.velord.infrastructure.navigation.voyager.",
+)
+// TODO: delete or change to "roster" independent test
+private val NAVIGATION_ENGINE_PACKAGE_BY_PATH_SEGMENT = mapOf(
+    "/compose/nav3/" to "com.velord.infrastructure.navigation.compose.nav3.",
+    "/compose/vanilla/" to "com.velord.infrastructure.navigation.compose.vanilla.",
+    "/compose/destinations/" to "com.velord.infrastructure.navigation.compose.destinations.",
+    "/jetpackNavigation/" to "com.velord.infrastructure.navigation.jetpackNavigation.",
+    "/voyager/" to "com.velord.infrastructure.navigation.voyager.",
+)
 private val DI_MODULE_FILE_REGEX = Regex(
     """.*[\\/]infrastructure[\\/]di[\\/]src[\\/][^\\/]+Main[\\/].*Module\.kt$""",
 )
@@ -224,6 +245,69 @@ class ModuleDependencyTest {
 
         if (violationRoster.isNotEmpty()) {
             val msg = "Platform modules bind domain use cases: " +
+                violationRoster.joinToString()
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
+    @Test
+    fun `app shells should access navigation through host APIs only`() {
+        val importPrefixRoster = APP_CONCRETE_NAVIGATION_IMPORT_PREFIX_ROSTER
+        val violationRoster = projectScope.files.flatMap { file ->
+            val normalizedPath = file.path.replace('\\', '/')
+            if (normalizedPath.contains(APP_SOURCE_PATH_SEGMENT).not()) {
+                return@flatMap emptyList()
+            }
+
+            file.text.lines().withIndex().mapNotNull { (lineIndex, line) ->
+                val hasConcreteImport = importPrefixRoster.any(line::startsWith)
+                if (hasConcreteImport) {
+                    "${file.name}:${lineIndex + 1}"
+                } else {
+                    null
+                }
+            }
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "App shells import concrete navigation engines: " +
+                violationRoster.joinToString()
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
+    @Test
+    fun `parallel navigation engines should not depend on sibling engines`() {
+        val enginePackageByPath = NAVIGATION_ENGINE_PACKAGE_BY_PATH_SEGMENT
+        val violationRoster = projectScope.files.flatMap { file ->
+            val normalizedPath = file.path.replace('\\', '/')
+            if (normalizedPath.contains(NAVIGATION_SOURCE_PATH_SEGMENT).not()) {
+                return@flatMap emptyList()
+            }
+
+            val ownerPackage = enginePackageByPath.entries
+                .firstOrNull { (pathSegment) -> normalizedPath.contains(pathSegment) }
+                ?.value
+                ?: return@flatMap emptyList()
+            val siblingPackageRoster = enginePackageByPath.values - ownerPackage
+            file.text.lines().withIndex().mapNotNull { (lineIndex, line) ->
+                val hasSiblingImport = siblingPackageRoster.any { packageName ->
+                    line.startsWith("import $packageName")
+                }
+                if (hasSiblingImport) {
+                    "${file.name}:${lineIndex + 1}"
+                } else {
+                    null
+                }
+            }
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "Navigation engines import sibling implementations: " +
                 violationRoster.joinToString()
             println(msg)
         }

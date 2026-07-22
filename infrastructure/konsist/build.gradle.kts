@@ -12,5 +12,15 @@ dependencies {
 }
 
 tasks.test {
+    inputs.files(
+        rootProject.fileTree(rootProject.projectDir) {
+            include("**/src/**/*.kt")
+            include("**/*.gradle.kts")
+            include("gradle/libs.versions.toml")
+            exclude("**/build/**")
+            exclude("**/.gradle/**")
+        }
+    ).withPathSensitivity(PathSensitivity.RELATIVE)
+
     useJUnitPlatform()
 }

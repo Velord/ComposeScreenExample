@@ -5,9 +5,13 @@ import androidx.compose.material.icons.outlined.Camera
 import androidx.compose.material.icons.outlined.Hexagon
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.core.registry.rememberScreen
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
@@ -18,6 +22,9 @@ import com.velord.core.resource.camera
 import com.velord.core.resource.demo
 import com.velord.core.resource.settings
 import org.jetbrains.compose.resources.stringResource
+
+internal val LocalVoyagerNavigatorObserver =
+    staticCompositionLocalOf<(Navigator, Screen) -> Unit> { { _, _ -> } }
 
 sealed class BottomNavigationTab : Tab {
     data object Camera : BottomNavigationTab() {
@@ -40,7 +47,13 @@ sealed class BottomNavigationTab : Tab {
         @Composable
         override fun Content() {
             val screen = rememberScreen(SharedScreenVoyager.BottomNavigationTab.Camera)
-            Navigator(screen)
+            Navigator(screen) { navigator ->
+                ObserveNavigator(
+                    navigator = navigator,
+                    startDestination = screen,
+                )
+                CurrentScreen()
+            }
         }
     }
 
@@ -64,8 +77,12 @@ sealed class BottomNavigationTab : Tab {
         @Composable
         override fun Content() {
             val screen = rememberScreen(SharedScreenVoyager.BottomNavigationTab.Demo)
-            Navigator(screen) {
-                SlideTransition(it)
+            Navigator(screen) { navigator ->
+                ObserveNavigator(
+                    navigator = navigator,
+                    startDestination = screen,
+                )
+                SlideTransition(navigator)
             }
         }
     }
@@ -90,7 +107,22 @@ sealed class BottomNavigationTab : Tab {
         @Composable
         override fun Content() {
             val screen = rememberScreen(SharedScreenVoyager.BottomNavigationTab.Settings)
-            Navigator(screen)
+            Navigator(screen) { navigator ->
+                ObserveNavigator(
+                    navigator = navigator,
+                    startDestination = screen,
+                )
+                CurrentScreen()
+            }
         }
+    }
+}
+
+@Composable
+private fun ObserveNavigator(navigator: Navigator, startDestination: Screen) {
+    val onNavigatorChanged = LocalVoyagerNavigatorObserver.current
+    val currentDestination = navigator.lastItem
+    LaunchedEffect(currentDestination) {
+        onNavigatorChanged(navigator, startDestination)
     }
 }

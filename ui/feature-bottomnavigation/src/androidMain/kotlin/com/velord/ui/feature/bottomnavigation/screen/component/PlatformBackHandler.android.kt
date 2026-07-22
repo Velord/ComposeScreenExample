@@ -1,5 +1,6 @@
 package com.velord.ui.feature.bottomnavigation.screen.component
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
@@ -20,4 +21,9 @@ internal actual fun PlatformBackHandler(
     ) { snackbarData ->
         content(snackbarData.visuals.message)
     }
+}
+
+@Composable
+internal actual fun PlatformSingleBackHandler(isEnabled: Boolean, onBackClick: () -> Unit) {
+    BackHandler(enabled = isEnabled, onBack = onBackClick)
 }

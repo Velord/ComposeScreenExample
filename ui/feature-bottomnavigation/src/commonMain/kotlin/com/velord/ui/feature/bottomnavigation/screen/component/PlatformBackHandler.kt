@@ -11,3 +11,6 @@ internal expect fun PlatformBackHandler(
     onBackDoubleClick: () -> Unit,
     content: @Composable (String) -> Unit,
 )
+
+@Composable
+internal expect fun PlatformSingleBackHandler(isEnabled: Boolean, onBackClick: () -> Unit)

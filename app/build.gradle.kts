@@ -160,3 +160,14 @@ kotlin {
         }
     }
 }
+
+val navigationResourcePreparation = project(":infrastructure:navigation").tasks.matching { task ->
+    task.name == "prepareAndroidMainNavigationResources"
+}
+
+tasks.matching { task ->
+    task.name.endsWith("NavigationResources")
+}.configureEach {
+    // Compose Destinations reads the generated Android KMP navigation resources directly.
+    dependsOn(navigationResourcePreparation)
+}
