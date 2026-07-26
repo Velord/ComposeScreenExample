@@ -9,6 +9,7 @@ import com.ramcosta.composedestinations.generated.navigation.destinations.Modifi
 import com.ramcosta.composedestinations.generated.navigation.destinations.MorphDemoDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.MovieDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.ShapeDemoDestinationDestination
+import com.ramcosta.composedestinations.spec.Direction
 import com.ramcosta.composedestinations.utils.toDestinationsNavigator
 import com.velord.ui.feature.camerarecording.CameraRecordingNavigator
 import com.velord.ui.feature.demo.DemoNavigationEvent
@@ -18,7 +19,7 @@ private val log = Logger.withTag("LogBackStack - BottomNavigatorDestinations")
 
 internal class BottomNavigatorDestinations(
     private val parent: SupremeNavigatorDestinations,
-    private val navController: NavHostController
+    private val navController: NavHostController,
 ) : DemoNavigator, CameraRecordingNavigator by parent {
 
     init {
@@ -26,7 +27,11 @@ internal class BottomNavigatorDestinations(
     }
 
     override fun goTo(dest: DemoNavigationEvent) {
-        val dest = when(dest) {
+        navController.toDestinationsNavigator().navigate(dest.toDestination())
+    }
+
+    internal companion object {
+        fun DemoNavigationEvent.toDestination(): Direction = when(this) {
             DemoNavigationEvent.Shape -> ShapeDemoDestinationDestination
             DemoNavigationEvent.Modifier -> ModifierDemoDestinationDestination
             DemoNavigationEvent.FlowSummator -> FlowSummatorDestinationDestination
@@ -35,6 +40,5 @@ internal class BottomNavigatorDestinations(
             DemoNavigationEvent.Movie -> MovieDestinationDestination
             DemoNavigationEvent.Dialog -> DialogDestinationDestination
         }
-        navController.toDestinationsNavigator().navigate(dest)
     }
 }

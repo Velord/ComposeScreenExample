@@ -17,6 +17,9 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
+/**
+ * Shared diagnostic surface for testing navigation adapters without feature-specific UI.
+ */
 @Composable
 fun TestScreen(
     title: StringResource,

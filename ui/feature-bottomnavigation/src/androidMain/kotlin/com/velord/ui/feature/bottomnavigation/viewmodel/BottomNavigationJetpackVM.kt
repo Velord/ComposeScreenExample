@@ -95,21 +95,25 @@ class BottomNavigationJetpackVM(
         uiStateFlow.update { state -> state.copy(backHandlingState = newState) }
     }
 
+    private fun handleUiAction(action: BottomNavigationJetpackUiAction) {
+        when (action) {
+            is BottomNavigationJetpackUiAction.TabClick -> onTabClick(action.newTab)
+            is BottomNavigationJetpackUiAction.BackDoubleClick -> onBackDoubleClick()
+            is BottomNavigationJetpackUiAction.ShowBackPressToast ->
+                onShowBackPressToast(action.tag)
+            is BottomNavigationJetpackUiAction.UpdateBackHandling ->
+                onUpdateBackHandling(action.currentNavigationDestination)
+            is BottomNavigationJetpackUiAction.GraphCompletedHandling ->
+                onGraphCompletedHandling()
+            is BottomNavigationJetpackUiAction.GraphTakeResponsibility ->
+                onGraphTakeResponsibility()
+        }
+    }
+
     private fun observe() {
         launch {
             actionFlow.collect { action ->
-                when (action) {
-                    is BottomNavigationJetpackUiAction.TabClick -> onTabClick(action.newTab)
-                    is BottomNavigationJetpackUiAction.BackDoubleClick -> onBackDoubleClick()
-                    is BottomNavigationJetpackUiAction.ShowBackPressToast ->
-                        onShowBackPressToast(action.tag)
-                    is BottomNavigationJetpackUiAction.UpdateBackHandling ->
-                        onUpdateBackHandling(action.currentNavigationDestination)
-                    is BottomNavigationJetpackUiAction.GraphCompletedHandling ->
-                        onGraphCompletedHandling()
-                    is BottomNavigationJetpackUiAction.GraphTakeResponsibility ->
-                        onGraphTakeResponsibility()
-                }
+                handleUiAction(action)
             }
         }
     }

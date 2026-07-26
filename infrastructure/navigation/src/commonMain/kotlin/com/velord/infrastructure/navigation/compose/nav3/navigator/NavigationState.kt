@@ -42,12 +42,7 @@ internal class NavigationState(
     val backStacks: Map<GraphNav3, NavBackStack<GraphNav3>>,
 ) {
     var topLevelRoute: GraphNav3 by topLevelRoute
-    val stacksInUse: List<GraphNav3> get() {
-        val stacksInUse = mutableListOf(startRoute)
-        if (topLevelRoute != startRoute) stacksInUse += topLevelRoute
-
-        return stacksInUse
-    }
+    val displayedStackRoster: List<GraphNav3> get() = listOf(topLevelRoute)
 
     @Composable
     fun toEntries(
@@ -65,7 +60,7 @@ internal class NavigationState(
             )
         }
 
-        return stacksInUse
+        return displayedStackRoster
             .flatMap { decoratedEntries[it] ?: emptyList() }
             .toMutableStateList()
     }

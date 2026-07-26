@@ -87,7 +87,11 @@ kotlin {
     }
 }
 
-// TODO: add comment what does it do
+/*
+Android KMP packages navigation XML from a generated resource directory. The plugin creates that
+directory but does not copy src/androidMain/res into it, so this task prepares the packaging input
+before packageAndroidMainResources runs.
+*/
 val prepareAndroidMainNavigationResources = tasks.register<Sync>(
     "prepareAndroidMainNavigationResources",
 ) {

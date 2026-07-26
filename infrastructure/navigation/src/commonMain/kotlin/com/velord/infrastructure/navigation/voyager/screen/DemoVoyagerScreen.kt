@@ -8,6 +8,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.velord.core.navigation.voyager.SharedScreenVoyager
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationUiAction
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVM
 import com.velord.ui.feature.demo.DemoNavigationEvent
 import com.velord.ui.feature.demo.DemoScreen
 import com.velord.ui.feature.demo.DemoVM
@@ -18,6 +20,7 @@ internal object DemoVoyagerScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel = koinViewModel<DemoVM>()
+        val bottomNavVM = koinViewModel<BottomNavigationVM>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle(
             initialValue = null,
@@ -38,6 +41,7 @@ internal object DemoVoyagerScreen : Screen {
                 // To enable System Back Button handling
                 // via Bottom Navigation -> comment the line below
                 // bottomNavViewModel.graphCompletedHandling()
+                bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
             },
         )
     }

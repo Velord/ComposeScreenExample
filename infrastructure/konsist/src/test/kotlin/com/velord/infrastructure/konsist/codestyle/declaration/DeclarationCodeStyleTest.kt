@@ -150,13 +150,34 @@ class DeclarationCodeStyleTest {
     }
 
     @Test
-    fun `compact sealed headers without parent functions should not be followed by a blank line`() {
+    fun `compact sealed headers before one-line members should not be followed by a blank line`() {
+        projectFileRoster.assertTrue { file ->
+            val lineRoster = file.text.lines()
+            val violation = (0 until (lineRoster.lastIndex - 1)).firstOrNull { lineIndex ->
+                isBlankLineAfterCompactSealedHeaderBeforeOneLineMember(
+                    currentLine = lineRoster[lineIndex],
+                    nextLine = lineRoster[lineIndex + 1],
+                    thirdLine = lineRoster[lineIndex + 2],
+                )
+            }
+
+            if (violation != null) {
+                val msg = "Name: ${file.name}. FAILED. " +
+                    "Compact sealed header at line ${violation + 1} " +
+                    "must not have a blank line before a one-line member."
+                println(msg)
+            }
+
+            violation == null
+        }
+    }
+
+    @Test
+    fun `compact sealed headers before nested bodies should keep a blank line`() {
         projectFileRoster.assertTrue { file ->
             val lineRoster = file.text.lines()
             val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
-                isBlankLineAfterCompactSealedHeaderWithoutParentFunction(
-                    lineRoster = lineRoster,
-                    lineIndex = lineIndex,
+                isMissingBlankLineAfterCompactSealedHeaderBeforeNestedBody(
                     currentLine = lineRoster[lineIndex],
                     nextLine = lineRoster[lineIndex + 1],
                 )
@@ -165,7 +186,7 @@ class DeclarationCodeStyleTest {
             if (violation != null) {
                 val msg = "Name: ${file.name}. FAILED. " +
                     "Compact sealed header at line ${violation + 1} " +
-                    "must not have a blank line when parent has no functions."
+                    "must have a blank line before a nested body."
                 println(msg)
             }
 

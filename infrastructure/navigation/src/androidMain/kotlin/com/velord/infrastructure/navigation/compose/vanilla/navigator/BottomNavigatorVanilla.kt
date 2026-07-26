@@ -19,7 +19,11 @@ internal class BottomNavigatorVanilla(
     }
 
     override fun goTo(dest: DemoNavigationEvent) {
-        val dest = when (dest) {
+        navController.navigate(dest.toGraphVanilla())
+    }
+
+    internal companion object {
+        fun DemoNavigationEvent.toGraphVanilla(): Any = when(this) {
             DemoNavigationEvent.Shape -> GraphVanilla.BottomTab.Demo.ShapeDemoDestinationVanilla
             DemoNavigationEvent.Modifier -> GraphVanilla.BottomTab.Demo.ModifierDestinationVanilla
             DemoNavigationEvent.FlowSummator ->
@@ -30,6 +34,5 @@ internal class BottomNavigatorVanilla(
             DemoNavigationEvent.Movie -> GraphVanilla.BottomTab.Demo.MovieDestinationVanilla
             DemoNavigationEvent.Dialog -> GraphVanilla.BottomTab.Demo.DialogDestinationVanilla
         }
-        navController.navigate(dest)
     }
 }

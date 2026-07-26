@@ -5,6 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVM
 import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.ui.feature.demo.DemoScreen
@@ -46,7 +47,7 @@ internal fun DemoDestination(navigator: DemoNavigator) {
         onBackClick = {
             // To enable System Back Button handling
             // via Bottom Navigation -> comment the line below
-            // bottomNavViewModel.graphCompletedHandling()
+            bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
         },
     )
 }

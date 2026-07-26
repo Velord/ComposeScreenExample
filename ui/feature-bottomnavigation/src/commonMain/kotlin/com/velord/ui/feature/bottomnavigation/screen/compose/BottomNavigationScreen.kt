@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
@@ -26,13 +24,14 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
     val viewModel = koinViewModel<BottomNavigationVM>()
 
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
-    val isEnabledState = remember {
-        derivedStateOf { uiState.value.backHandlingState.isEnabled }
-    }
+    val backBehavior = uiState.value.backBehavior
 
     ScreenSetup(
         state = uiState,
-        isBackHandlingEnabled = isEnabledState.value,
+        backBehavior = backBehavior,
+        onBackClick = {
+            viewModel.onAction(BottomNavigationUiAction.BackClick)
+        },
         onBackDoubleClick = {
             viewModel.onAction(BottomNavigationUiAction.BackDoubleClick)
         },

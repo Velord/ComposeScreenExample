@@ -23,8 +23,9 @@ fun CreateNavigationViaNav3() {
     and receives app-level destinations such as Setting. BottomNavigationScreen delegates its
     nested host to SupremeNavigatorNav3, where NavigationState keeps one saved back stack for each
     top-level tab. Selecting another tab switches the active stack; selecting the current tab pops
-    only that tab to its root. Keep this start destination, the NavigationState start route, and
-    TabState.DEFAULT aligned when changing the initial screen.
+    only that tab to its root. NavDisplay.onBack removes only the last outer destination. Back
+    behavior inside a selected tab remains owned by the nested host. Keep this start destination,
+    the NavigationState start route, and TabState.DEFAULT aligned when changing the initial screen.
     */
 
     NavDisplay(

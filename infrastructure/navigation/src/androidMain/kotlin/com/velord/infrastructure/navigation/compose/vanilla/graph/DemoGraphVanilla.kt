@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVM
 import com.velord.ui.feature.demo.DemoNavigator
 import com.velord.ui.feature.demo.DemoScreen
@@ -38,7 +39,7 @@ internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
                 onBackClick = {
                     // To enable System Back Button handling
                     // via Bottom Navigation -> comment the line below
-                    // bottomNavViewModel.graphCompletedHandling()
+                    bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
                 },
             )
         }

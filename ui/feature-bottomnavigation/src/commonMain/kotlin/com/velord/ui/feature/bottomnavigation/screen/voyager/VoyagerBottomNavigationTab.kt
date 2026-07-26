@@ -23,11 +23,21 @@ import com.velord.core.resource.demo
 import com.velord.core.resource.settings
 import org.jetbrains.compose.resources.stringResource
 
+/*
+Each tab owns a nested Voyager Navigator. The bottom-navigation parent provides this callback so
+the active tab can report its navigator and neutral route identities upward. The Navigator stays
+inside the Voyager adapter, while the VM receives only route identities. This keeps back ownership
+based on the active tab stack instead of the outer navigator that hosts the bottom-navigation
+screen.
+*/
 internal val LocalVoyagerNavigatorObserver =
-    staticCompositionLocalOf<(Navigator, Screen) -> Unit> { { _, _ -> } }
+    staticCompositionLocalOf<(Navigator, List<String?>, String?) -> Unit> {
+        error("LocalVoyagerNavigatorObserver is not provided")
+    }
 
-sealed class BottomNavigationTab : Tab {
-    data object Camera : BottomNavigationTab() {
+sealed class VoyagerBottomNavigationTab : Tab {
+
+    data object Camera : VoyagerBottomNavigationTab() {
 
         override val options: TabOptions
             @Composable
@@ -57,7 +67,7 @@ sealed class BottomNavigationTab : Tab {
         }
     }
 
-    data object Demo : BottomNavigationTab() {
+    data object Demo : VoyagerBottomNavigationTab() {
 
         override val options: TabOptions
             @Composable
@@ -87,7 +97,7 @@ sealed class BottomNavigationTab : Tab {
         }
     }
 
-    data object Settings : BottomNavigationTab() {
+    data object Settings : VoyagerBottomNavigationTab() {
 
         override val options: TabOptions
             @Composable
@@ -123,6 +133,10 @@ private fun ObserveNavigator(navigator: Navigator, startDestination: Screen) {
     val onNavigatorChanged = LocalVoyagerNavigatorObserver.current
     val currentDestination = navigator.lastItem
     LaunchedEffect(currentDestination) {
-        onNavigatorChanged(navigator, startDestination)
+        onNavigatorChanged(
+            navigator,
+            listOf(startDestination.key),
+            currentDestination.key,
+        )
     }
 }

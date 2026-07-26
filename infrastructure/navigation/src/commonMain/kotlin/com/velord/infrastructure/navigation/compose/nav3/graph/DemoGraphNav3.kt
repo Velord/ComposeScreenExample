@@ -34,10 +34,7 @@ internal fun EntryProviderScope<GraphNav3>.setupDemoGraphNav3(navigator: DemoNav
             onBackClick = {
                 // To enable System Back Button handling
                 // via Bottom Navigation -> comment the line below
-                // bottomNavViewModel.graphCompletedHandling()
-                bottomNavVM.onAction(
-                    BottomNavigationUiAction.GraphTakeResponsibility
-                )
+                bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
             },
         )
     }

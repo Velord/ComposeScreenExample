@@ -1,12 +1,14 @@
 package com.velord.infrastructure.navigation
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.navigation3.runtime.NavBackStack
 import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
 import com.velord.infrastructure.navigation.compose.nav3.navigator.BackStackNavigator
+import com.velord.infrastructure.navigation.compose.nav3.navigator.BottomNavigatorNav3
 import com.velord.infrastructure.navigation.compose.nav3.navigator.NavigationState
 import com.velord.infrastructure.navigation.compose.nav3.navigator.SupremeNavigatorNav3
-import com.velord.infrastructure.navigation.creation.popOuterBackStack
+import com.velord.ui.feature.demo.DemoNavigationEvent
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import kotlin.test.Test
@@ -21,10 +23,21 @@ class Nav3NavigationTest {
 
         assertEquals(DEMO_ROUTE, state.startRoute)
         assertEquals(DEMO_ROUTE, state.topLevelRoute)
+        assertEquals(listOf(DEMO_ROUTE), state.displayedStackRoster)
         assertEquals(TOP_LEVEL_ROUTE_ROSTER.toSet(), state.backStacks.keys)
         state.backStacks.forEach { (route, backStack) ->
             assertEquals(listOf(route), backStack)
         }
+    }
+
+    @Test
+    fun `navigation display includes only active tab stack`() {
+        val state = createNavigationState()
+
+        state.topLevelRoute = SETTING_ROUTE
+
+        assertEquals(listOf(SETTING_ROUTE), state.displayedStackRoster)
+        assertEquals(TOP_LEVEL_ROUTE_ROSTER.toSet(), state.backStacks.keys)
     }
 
     @Test
@@ -102,11 +115,10 @@ class Nav3NavigationTest {
 
     @Test
     fun `camera setting navigation uses outer stack`() {
-        val outerStack = mutableListOf<GraphNav3>(GraphNav3.Main.BottomNavigationDestinationNav3)
-        val navigator = SupremeNavigatorNav3(
-            outerStack,
-            BackStackNavigator(createNavigationState()),
+        val outerStack = mutableStateListOf<GraphNav3>(
+            GraphNav3.Main.BottomNavigationDestinationNav3,
         )
+        val navigator = SupremeNavigatorNav3(outerStack)
 
         navigator.goToSettingFromCameraRecording()
 
@@ -117,29 +129,17 @@ class Nav3NavigationTest {
             ),
             actual = outerStack,
         )
-
-        popOuterBackStack(outerStack)
-        assertEquals(
-            expected = listOf<GraphNav3>(GraphNav3.Main.BottomNavigationDestinationNav3),
-            actual = outerStack
-        )
-
-        popOuterBackStack(outerStack)
-        assertEquals(
-            expected = listOf<GraphNav3>(GraphNav3.Main.BottomNavigationDestinationNav3),
-            actual = outerStack
-        )
     }
 
-    // TODO: delete or find ::toGraphNav3
-//    @Test
-//    fun `every demo event maps to a unique Nav3 route`() {
-//        val routeRoster = DemoNavigationEvent.entries.map(DemoNavigationEvent::toGraphNav3)
-//
-//        assertEquals(DemoNavigationEvent.entries.size, routeRoster.size)
-//        assertEquals(routeRoster.size, routeRoster.toSet().size)
-//        assertTrue(routeRoster.all { route -> route is GraphNav3.BottomTab.Demo })
-//    }
+    @Test
+    fun `every demo event maps to a unique Nav3 route`() {
+        val routeRoster = with(BottomNavigatorNav3) {
+            DemoNavigationEvent.entries.map { event -> event.toGraphNav3() }
+        }
+
+        assertEquals(DemoNavigationEvent.entries.size, routeRoster.size)
+        assertEquals(routeRoster.size, routeRoster.toSet().size)
+    }
 
     @Test
     fun `Nav3 keys serialize and restore without reflection`() {

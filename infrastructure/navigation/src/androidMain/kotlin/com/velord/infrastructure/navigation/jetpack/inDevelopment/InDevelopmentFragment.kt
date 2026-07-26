@@ -25,6 +25,9 @@ import com.velord.infrastructure.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * Jetpack diagnostic destination for exercising repeated graph navigation.
+ */
 class InDevelopmentFragment : Fragment() {
 
     private val viewModel by viewModels<InDevelopmentVM>()

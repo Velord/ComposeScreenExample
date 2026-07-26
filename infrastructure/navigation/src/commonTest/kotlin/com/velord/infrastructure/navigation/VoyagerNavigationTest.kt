@@ -23,7 +23,6 @@ class VoyagerNavigationTest {
 
     @Test
     fun `registry initialization is platform neutral and idempotent`() {
-        // TODO: 2 init voyagers why ?
         initVoyager()
         initVoyager()
 
@@ -45,6 +44,19 @@ class VoyagerNavigationTest {
         registrationRoster.forEach { (provider, expectedScreen) ->
             assertSame(expectedScreen, ScreenRegistry.get(provider))
         }
+    }
+
+    @Test
+    fun `bottom navigation root screen keys are unique`() {
+        initVoyager()
+        val screenRoster = listOf(
+            ScreenRegistry.get(SharedScreenVoyager.BottomNavigationTab.Camera),
+            ScreenRegistry.get(SharedScreenVoyager.BottomNavigationTab.Demo),
+            ScreenRegistry.get(SharedScreenVoyager.BottomNavigationTab.Settings),
+        )
+        val keyRoster = screenRoster.map { screen -> screen.key }
+
+        assertEquals(keyRoster.size, keyRoster.toSet().size)
     }
 
     @Test

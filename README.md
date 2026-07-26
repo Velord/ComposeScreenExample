@@ -1,26 +1,103 @@
 # ComposeScreenExample
-## Architecture:
-Single Activity — Multi Module — Multiple Backstack — MVVM(UiState + UiAction) — Clean Architecture/Redux(one app state)
+
+[GitHub repository](https://github.com/Velord/ComposeScreenExample)
+
+**Kotlin Multiplatform and Compose Multiplatform architecture and UI laboratory.**
+
+ComposeScreenExample develops and compares navigation engines, shared Compose UI patterns,
+platform integrations, and multiplatform boundaries in one multi-module codebase.
+
+## Architecture
+
+Single Activity — Multi Module — Multiple Backstack — MVVM(UiState + UiAction) —
+Clean Architecture/Redux(one app state)
+
+## Navigation
 
 Project uses navigation libs:
-* [Jetpack Navigation](https://developer.android.com/guide/navigation) **80%** _screens covered._ **DEPRECATED**
-* [Voyager](https://github.com/adrielcafe/voyager) **100%** _screens covered_
-* [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation) **100%** _screens covered_
-* [Compose Destinations](https://github.com/raamcosta/compose-destinations) **100%** _screens covered_
-* [Compose Nav3](https://developer.android.com/guide/navigation/navigation-3) **100%** _screens covered_ !!! In active phase development
-  
-To use different Navigation library need to change in ```build.gradle.kts``` at ```app``` module.
 
+* [Jetpack Navigation](https://developer.android.com/guide/navigation) **80%**
+  *screens covered.* **DEPRECATED**
+* [Voyager](https://github.com/adrielcafe/voyager) **100%** *screens covered*
+* [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation) **100%**
+  *screens covered*
+* [Compose Destinations](https://github.com/raamcosta/compose-destinations) **100%**
+  *screens covered*
+* [Compose Nav3](https://developer.android.com/guide/navigation/navigation-3) **100%**
+  *screens covered*
+
+Nav3 and Voyager are CMP implementations in `commonMain`. Compose Navigation, Compose
+Destinations, and Jetpack Navigation remain Android-only.
+
+Navigation selection is generated from
+[`infrastructure/config/build.gradle.kts`](infrastructure/config/build.gradle.kts). Configure
+`debugNavigationLib` and `releaseNavigationLib` there. Do not add navigation-engine branches to the
+app entry point.
+
+See the [navigation toolkit](infrastructure/navigation/README.md) for construction, multiple
+back stacks, back handling, and adding independent bottom-navigation modules.
+
+## Tech Stack
+
+- Kotlin Multiplatform, coroutines, Flow, and kotlinx serialization.
+- Jetpack Compose, Compose Multiplatform, and Glance.
+- Nav3, Voyager, Compose Navigation, Compose Destinations, and Fragment Navigation.
+- Koin for dependency injection.
+- Ktor for backend communication.
+- Room and DataStore for persistence.
+- Kamera for multiplatform camera preview and video recording.
+- Coil for image loading.
+- Kermit for multiplatform logging.
+- BuildKonfig for generated build configuration.
+- KSP for code generation.
+- Gradle convention plugins in `build-logic`.
+- Konsist and Detekt for architecture and code-quality checks.
+
+Dependency and tool versions live in
+[`gradle/libs.versions.toml`](gradle/libs.versions.toml). Keep version numbers out of this README so
+the version catalog remains the source of truth.
+
+## Build And Run
+
+Requirements:
+
+- JDK 24.
+- An Android Studio version compatible with the configured Android Gradle Plugin.
+- An Android SDK matching `targetApi` in the version catalog.
+
+Use the checked-in Gradle wrapper:
+
+```powershell
+git clone https://github.com/Velord/ComposeScreenExample.git
+cd ComposeScreenExample
+.\gradlew.bat :app:assembleDevelopDebug
 ```
-buildConfigField(    
-    "com.velord.infrastructure.config.NavigationLib",
-    "NAVIGATION_LIB",
-    "com.velord.infrastructure.config.NavigationLib.{Voyager}" or "Jetpack" or "Destinations" or "Compose" or "Nav3"
-)
+
+Available environments are `develop`, `qa`, `stage`, and `production`. Build types are `debug` and
+`release`.
+
+BuildKonfig generates one configuration for each Gradle invocation. Build different environment
+and build-type combinations in separate invocations.
+
+Common project checks:
+
+```powershell
+.\gradlew.bat :infrastructure:konsist:test
+.\gradlew.bat detekt
 ```
 
+Individual KMP modules expose focused tasks such as `allTests`, `compileAndroidMain`, and
+`compileKotlinDesktop`.
 
-## UI Features:
+## Project Documentation
+
+- [Navigation toolkit](infrastructure/navigation/README.md)
+- [Privacy policy](PRIVACY_POLICY.md)
+- [Terms and conditions](TERMS_AND_CONDITIONS.md)
+- [Version catalog](gradle/libs.versions.toml)
+
+## UI Features
+
 * [Movie Demo](#movie-demo)
 * [Theme Demo](#theme-demo)
    * [Before 8.1 Oreo](#before-81-oreo)

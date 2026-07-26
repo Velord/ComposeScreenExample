@@ -75,6 +75,8 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
         DestinationsNavHost(
             navGraph = BottomNavigationNavGraph,
             modifier = modifier,
+            // Dynamic start breaks saved multiple back stacks:
+            // https://github.com/raamcosta/compose-destinations/issues/667
             //start = getDirection(start), // Fixme: this is not working
             defaultTransitions = PopFadeTransition,
             navController = navController,

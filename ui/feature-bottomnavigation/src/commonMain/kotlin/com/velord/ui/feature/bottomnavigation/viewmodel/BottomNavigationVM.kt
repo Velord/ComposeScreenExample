@@ -71,6 +71,8 @@ class BottomNavigationVM(
         requestAppExitUC()
     }
 
+    private fun onBackClick() = onTabClick(TabState.DEFAULT.current)
+
     fun getNavigationItemRoster() = BottomNavigationItem.entries
 
     private fun onUpdateBackHandling(
@@ -109,20 +111,36 @@ class BottomNavigationVM(
         uiStateFlow.update { state -> state.copy(backHandlingState = newState) }
     }
 
+    private fun handleUiAction(action: BottomNavigationUiAction) {
+        when (action) {
+            is BottomNavigationUiAction.TabClick -> onTabClick(action.newTab)
+            is BottomNavigationUiAction.TabDestinationChanged ->
+                onTabDestinationChanged(action.newTab)
+            is BottomNavigationUiAction.BackDoubleClick -> onBackDoubleClick()
+            is BottomNavigationUiAction.BackClick -> onBackClick()
+            is BottomNavigationUiAction.UpdateBackHandling -> onUpdateBackHandling(
+                startDestinationRoster = action.startDestinationRoster,
+                currentRoute = action.currentRoute,
+            )
+            is BottomNavigationUiAction.GraphCompletedHandling -> onGraphCompletedHandling()
+            is BottomNavigationUiAction.GraphTakeResponsibility -> onGraphTakeResponsibility()
+        }
+    }
+
     private fun observe() {
         launch {
+            bottomNavEventService.currentTabStateFlow.collect { tabState ->
+                uiStateFlow.update { state -> state.copy(tabState = tabState) }
+            }
+        }
+        launch {
+            bottomNavEventService.backHandlingStateFlow.collect { backHandlingState ->
+                uiStateFlow.update { state -> state.copy(backHandlingState = backHandlingState) }
+            }
+        }
+        launch {
             actionFlow.collect { action ->
-                when (action) {
-                    is BottomNavigationUiAction.TabClick -> onTabClick(action.newTab)
-                    is BottomNavigationUiAction.TabDestinationChanged -> onTabDestinationChanged(action.newTab)
-                    is BottomNavigationUiAction.BackDoubleClick -> onBackDoubleClick()
-                    is BottomNavigationUiAction.UpdateBackHandling -> onUpdateBackHandling(
-                        startDestinationRoster = action.startDestinationRoster,
-                        currentRoute = action.currentRoute,
-                    )
-                    is BottomNavigationUiAction.GraphCompletedHandling -> onGraphCompletedHandling()
-                    is BottomNavigationUiAction.GraphTakeResponsibility -> onGraphTakeResponsibility()
-                }
+                handleUiAction(action)
             }
         }
     }

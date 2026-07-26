@@ -6,6 +6,9 @@ import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Emits the recursive Jetpack navigation event used by [InDevelopmentFragment].
+ */
 class InDevelopmentVM : CoroutineScopeVM() {
 
     val navigationEvent = MutableSharedFlow<NavigationDataFragment>()

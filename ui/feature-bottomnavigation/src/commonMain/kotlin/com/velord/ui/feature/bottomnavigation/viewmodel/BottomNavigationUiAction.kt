@@ -5,6 +5,7 @@ import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 sealed interface BottomNavigationUiAction {
     data class TabClick(val newTab: BottomNavigationItem) : BottomNavigationUiAction
     data object BackDoubleClick : BottomNavigationUiAction
+    data object BackClick : BottomNavigationUiAction
     data class UpdateBackHandling(
         val startDestinationRoster: List<String?>,
         val currentRoute: String?,
