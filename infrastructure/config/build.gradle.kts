@@ -6,8 +6,8 @@ import com.velord.buildlogic.model.BuildType
 private val baseUrl = "https://google.com"
 private val buildConfigPackage = "com.velord.infrastructure.config"
 private val buildConfigObject = "ProjectBuildConfig"
-private val debugNavigationLib = "Nav3"
-private val releaseNavigationLib = "Destinations"
+private val debugNavigationLib = "Destinations"
+private val releaseNavigationLib = "Nav3"
 
 plugins {
     alias(libs.plugins.convention.build.config)

@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.velord.core.resource.Res
 import com.velord.core.resource.press_again_to_exit
+import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationBackBehavior
 import org.jetbrains.compose.resources.stringResource
 
 private val log = Logger.withTag("LogBackStack")
@@ -17,7 +18,8 @@ private val log = Logger.withTag("LogBackStack")
 @Composable
 internal  fun <T> ScreenSetup(
     state: State<T>,
-    isBackHandlingEnabled: Boolean,
+    backBehavior: BottomNavigationBackBehavior,
+    onBackClick: () -> Unit,
     onBackDoubleClick: () -> Unit,
     libSetup: @Composable () -> Unit,
     content: @Composable () -> Unit,
@@ -34,12 +36,13 @@ internal  fun <T> ScreenSetup(
     content()
 
     val str = stringResource(Res.string.press_again_to_exit)
-    log.d { "ScreenSetup: Parent BackHandler Registered. Enabled=$isBackHandlingEnabled" }
+    log.d { "ScreenSetup: BackHandler Registered. Behavior=$backBehavior" }
 
     PlatformBackHandler(
+        backBehavior = backBehavior,
         message = str,
         modifier = Modifier.padding(horizontal = 8.dp),
-        isEnabled = isBackHandlingEnabled,
+        onBackClick = onBackClick,
         onBackDoubleClick = onBackDoubleClick,
         content = ::SnackbarMessage
     )

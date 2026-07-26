@@ -1,10 +1,13 @@
 ﻿package com.velord.infrastructure.konsist.architecture.ui
 
 import com.lemonappdev.konsist.api.Konsist
+import com.velord.infrastructure.konsist.codestyle.HARD_WRAP
+import com.velord.infrastructure.konsist.codestyle.compactWhitespace
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
+private const val INLINE_UI_ACTION_BRANCH_EXTRA_INDENT = 8
 private const val SCREEN_FILE_SUFFIX = "Screen.kt"
 private const val UI_FEATURE_IMPORT_PREFIX = "import com.velord.ui.feature."
 private const val COMPONENT_IMPORT_SEGMENT = ".component."
@@ -26,14 +29,24 @@ private val DIRECT_VIEW_MODEL_COLLECTION_REGEX =
     Regex("""\bviewModel\.[A-Za-z][A-Za-z0-9]*\.collectAsStateWithLifecycle\(""")
 private val MUTABLE_STATE_FLOW_DECLARATION_REGEX =
     Regex("""\bval\s+[A-Za-z][A-Za-z0-9]*\s*(?::[^=]+)?=\s*MutableStateFlow""")
-private val PUBLIC_UI_ENTRY_REGEX =
-    Regex("""(?m)^\s*(?:public\s+)?fun\s+on[A-Z][A-Za-z0-9]*\s*\(""")
+private val UI_ENTRY_REGEX = Regex("""(?m)^\s*(?:public\s+)?fun\s+on[A-Z][A-Za-z0-9]*\s*\(""")
 private val UI_ACTION_BRANCH_REGEX =
     Regex("""(?:is\s+)?[A-Za-z][A-Za-z0-9]*UiAction\.([A-Za-z][A-Za-z0-9]*)\s*->""")
 private val UI_ACTION_DELEGATE_REGEX = Regex(
     """(?:is\s+)?[A-Za-z][A-Za-z0-9]*UiAction\.([A-Za-z][A-Za-z0-9]*)\s*->""" +
         """\s*([A-Za-z][A-Za-z0-9]*)\s*\("""
 )
+private val UI_ACTION_HANDLER_REGEX =
+    Regex("""private\s+fun\s+handleUiAction\s*\(\s*action\s*:\s*\w+UiAction\s*\)\s*\{""")
+private val UI_ACTION_COLLECTION_DELEGATE_REGEX = Regex(
+    """actionFlow\.collect(?:Latest)?\s*\{\s*action\s*->""" +
+        """\s*handleUiAction\(action\)\s*}"""
+)
+private val UI_ACTION_INLINE_DISPATCH_REGEX = Regex(
+    """actionFlow\.collect(?:Latest)?\s*\{\s*(?:\w+\s*->\s*)?""" +
+        """when\s*\(\s*\w+\s*\)\s*\{"""
+)
+private val UI_ACTION_COLLECTION_REGEX = Regex("""actionFlow\.collect(?:Latest)?\s*\{""")
 
 class UiArchitectureTest {
 
@@ -111,13 +124,29 @@ class UiArchitectureTest {
     @Test
     fun `view models with mutable presentation state should use UiState`() {
         val violationRoster = viewModelFileRoster().filter { file ->
-            ownsMutablePresentationState(file.text) &&
+            hasMutablePresentationState(file.text) &&
                 hasUiContractExemption(file.text).not() &&
                 hasMatchingUiStateContract(file.name, file.text).not()
         }
 
         if (violationRoster.isNotEmpty()) {
             val msg = "VM mutable presentation state must use matching UiState: " +
+                violationRoster.joinToString { file -> file.name }
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
+    @Test
+    fun `ui action dispatch should extract only when inline branches exceed hard wrap`() {
+        val violationRoster = viewModelFileRoster().filter { file ->
+            hasUiActionCollection(file.text) &&
+                hasInvalidUiActionDispatch(file.text)
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "UiAction dispatch must stay inline unless a branch exceeds hard wrap: " +
                 violationRoster.joinToString { file -> file.name }
             println(msg)
         }
@@ -200,7 +229,7 @@ class UiArchitectureTest {
         file.name.endsWith(VIEW_MODEL_SUFFIX)
     }
 
-    private fun hasPublicUiEntry(text: String): Boolean = PUBLIC_UI_ENTRY_REGEX.containsMatchIn(text)
+    private fun hasPublicUiEntry(text: String): Boolean = UI_ENTRY_REGEX.containsMatchIn(text)
 
     private fun hasUiContractExemption(text: String): Boolean =
         text.contains(UI_CONTRACT_EXEMPT_ANNOTATION)
@@ -216,7 +245,7 @@ class UiArchitectureTest {
         return hasOnAction && hasActionType
     }
 
-    private fun ownsMutablePresentationState(text: String): Boolean = mutableStateFlowCount(text) > 0
+    private fun hasMutablePresentationState(text: String): Boolean = mutableStateFlowCount(text) > 0
 
     private fun mutableStateFlowCount(text: String): Int =
         MUTABLE_STATE_FLOW_DECLARATION_REGEX.findAll(text).count()
@@ -229,6 +258,76 @@ class UiArchitectureTest {
         }
 
         return hasStateFlow && hasStateType
+    }
+
+    private fun hasUiActionCollection(text: String): Boolean = text.contains("actionFlow.collect")
+
+    private fun hasInvalidUiActionDispatch(text: String): Boolean {
+        val code = text.lines().joinToString("\n") { line -> line.substringBefore("//") }
+        val inlineIndent = inlineUiActionBranchIndent(code)
+        val mustExtract = uiActionBranchRoster(code).any { branch ->
+            inlineIndent + branch.length > HARD_WRAP
+        }
+        val hasHandler = UI_ACTION_HANDLER_REGEX.containsMatchIn(code)
+        val hasDelegatedCollection = UI_ACTION_COLLECTION_DELEGATE_REGEX.containsMatchIn(code)
+        val hasInlineDispatch = UI_ACTION_INLINE_DISPATCH_REGEX.containsMatchIn(code)
+
+        return if (mustExtract) {
+            hasHandler.not() || hasDelegatedCollection.not()
+        } else {
+            hasHandler || hasInlineDispatch.not()
+        }
+    }
+
+    private fun inlineUiActionBranchIndent(text: String): Int {
+        val collectorLine = text.lineSequence().first { line ->
+            UI_ACTION_COLLECTION_REGEX.containsMatchIn(line)
+        }
+        val collectorIndent = collectorLine.indexOfFirst { char -> char.isWhitespace().not() }
+
+        return collectorIndent + INLINE_UI_ACTION_BRANCH_EXTRA_INDENT
+    }
+
+    private fun uiActionBranchRoster(text: String): List<String> {
+        val lineRoster = text.lines()
+        return lineRoster.indices.mapNotNull { lineIndex ->
+            val line = lineRoster[lineIndex]
+            if (UI_ACTION_BRANCH_REGEX.containsMatchIn(line).not()) return@mapNotNull null
+
+            collectUiActionBranch(lineRoster, lineIndex)
+        }
+    }
+
+    private fun collectUiActionBranch(lineRoster: List<String>, startIndex: Int): String {
+        val branchPartRoster = mutableListOf<String>()
+        var parenthesisDepth = 0
+        var isCallStarted = false
+
+        for (lineIndex in startIndex until lineRoster.size) {
+            val line = lineRoster[lineIndex]
+            if (lineIndex > startIndex && UI_ACTION_BRANCH_REGEX.containsMatchIn(line)) break
+
+            val linePart = if (lineIndex == startIndex) {
+                line.trim().substringAfter("->")
+            } else {
+                line.trim()
+            }
+            if (lineIndex == startIndex) {
+                branchPartRoster += line.trim().substringBefore("->") + "->"
+            }
+            branchPartRoster += linePart
+
+            for (char in linePart) {
+                if (char == '(') {
+                    isCallStarted = true
+                    parenthesisDepth++
+                }
+                if (char == ')') parenthesisDepth--
+            }
+            if (isCallStarted && parenthesisDepth == 0) break
+        }
+
+        return compactWhitespace(branchPartRoster.joinToString(" "))
     }
 
     private fun hasInvalidUiActionBranch(text: String): Boolean {

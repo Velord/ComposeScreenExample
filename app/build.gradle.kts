@@ -20,7 +20,7 @@ dependencyGuard {
 // When app incompatible with previous version change this value
 val globalVersion = 1
 // When you create huge feature(or many) release change this value
-val majorVersion = 2
+val majorVersion = 3
 // When you create feature release change this value
 val minorVersion = 0
 // When you create fix change this value
@@ -159,4 +159,15 @@ kotlin {
             freeCompilerArgs.add("-Xdebug")
         }
     }
+}
+
+val navigationResourcePreparation = project(":infrastructure:navigation").tasks.matching { task ->
+    task.name == "prepareAndroidMainNavigationResources"
+}
+
+tasks.matching { task ->
+    task.name.endsWith("NavigationResources")
+}.configureEach {
+    // Compose Destinations reads the generated Android KMP navigation resources directly.
+    dependsOn(navigationResourcePreparation)
 }

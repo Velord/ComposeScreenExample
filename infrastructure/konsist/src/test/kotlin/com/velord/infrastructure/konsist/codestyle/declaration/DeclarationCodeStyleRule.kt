@@ -10,6 +10,13 @@ private val COMPANION_DEFAULT_VALUE_REGEX = Regex(
     "^(?:(?:private|internal|public|protected)\\s+)*" +
         "(?:const\\s+)?(?:val|var)\\s+[Dd]efault(?:\\s*[:=].*)?",
 )
+private val NESTED_TYPE_PREFIX_ROSTER = listOf(
+    "class ",
+    "data class ",
+    "object ",
+    "data object ",
+    "sealed class ",
+)
 
 internal fun isBlankLineAfterFunctionOpeningBrace(
     currentLine: String,
@@ -127,26 +134,26 @@ internal fun isOneLineMemberAllowedAfterCompactHeader(line: String): Boolean {
     return lineTrimmed.contains("=") || lineTrimmed.startsWith("fun ")
 }
 
-internal fun isBlankLineAfterCompactSealedHeaderWithoutParentFunction(
-    lineRoster: List<String>,
-    lineIndex: Int,
+internal fun isBlankLineAfterCompactSealedHeaderBeforeOneLineMember(
+    currentLine: String,
+    nextLine: String,
+    thirdLine: String,
+): Boolean {
+    if (isCompactSealedHeader(currentLine).not()) return false
+    if (nextLine.isBlank().not()) return false
+    if (isNestedTypeDeclaration(thirdLine).not()) return false
+
+    return thirdLine.trimEnd().endsWith("{").not()
+}
+
+internal fun isMissingBlankLineAfterCompactSealedHeaderBeforeNestedBody(
     currentLine: String,
     nextLine: String,
 ): Boolean {
-    val currentLineTrimmed = currentLine.trimEnd()
-    if (currentLineTrimmed.startsWith("sealed class ").not() &&
-        currentLineTrimmed.startsWith("internal sealed class ").not() &&
-        currentLineTrimmed.startsWith("actual sealed class ").not()
-    ) {
-        return false
-    }
-    if (currentLineTrimmed.endsWith("{").not()) return false
-    if (nextLine.isBlank().not()) return false
+    if (isCompactSealedHeader(currentLine).not()) return false
+    if (isNestedTypeDeclaration(nextLine).not()) return false
 
-    return hasTopLevelFunctionInsideSealedBody(
-        lineRoster = lineRoster,
-        headerLineIndex = lineIndex,
-    ).not()
+    return nextLine.trimEnd().endsWith("{")
 }
 
 internal fun isBlankLineAfterCompanionObjectOpening(
@@ -219,20 +226,20 @@ internal fun isBlankLineAfterCompactAbstractClassHeaderBeforeAbstractMember(
     return true
 }
 
-internal fun hasTopLevelFunctionInsideSealedBody(
-    lineRoster: List<String>,
-    headerLineIndex: Int,
-): Boolean {
-    var depth = 1
-    for (candidateIndex in (headerLineIndex + 1)..lineRoster.lastIndex) {
-        val line = lineRoster[candidateIndex]
-        val trimmedLine = line.trimStart()
-        if (depth == 1 && trimmedLine.contains("fun ")) return true
-
-        depth += line.count { it == '{' }
-        depth -= line.count { it == '}' }
-        if (depth == 0) return false
+private fun isCompactSealedHeader(line: String): Boolean {
+    val lineTrimmed = line.trimEnd()
+    if (lineTrimmed.startsWith("sealed class ").not() &&
+        lineTrimmed.startsWith("internal sealed class ").not() &&
+        lineTrimmed.startsWith("actual sealed class ").not()
+    ) {
+        return false
     }
 
-    return false
+    return lineTrimmed.endsWith("{")
+}
+
+private fun isNestedTypeDeclaration(line: String): Boolean {
+    val lineTrimmed = line.trimStart()
+
+    return NESTED_TYPE_PREFIX_ROSTER.any(lineTrimmed::startsWith)
 }

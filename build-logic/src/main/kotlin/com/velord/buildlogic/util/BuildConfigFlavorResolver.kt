@@ -30,8 +30,8 @@ internal object BuildConfigFlavorResolver {
             taskName.isIncompleteAppBuildTask()
         }
         require(incompleteAppTask == null) {
-            "Build configuration requires one Android variant per Gradle invocation. " +
-                "Run a task such as :app:assembleProductionRelease."
+            "Build configuration task '$incompleteAppTask' requires one Android variant. " +
+                    "Run a task such as :app:assembleProductionRelease."
         }
 
         return variantRoster.singleOrNull()?.flavor
@@ -85,7 +85,8 @@ private fun String.isIncompleteAppBuildTask(): Boolean {
 private fun String.isAppTask(): Boolean {
     val segmentRoster = removePrefix(":").split(":")
 
-    return segmentRoster.size == 1 || segmentRoster.dropLast(1).lastOrNull() == APP_MODULE_NAME
+    return segmentRoster.size >= 2 &&
+            segmentRoster.dropLast(1).lastOrNull() == APP_MODULE_NAME
 }
 
 private fun String.taskName(): String = removePrefix(":").substringAfterLast(":")

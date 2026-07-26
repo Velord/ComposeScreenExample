@@ -23,6 +23,5 @@ kotlin {
             api(libs.compose.resources)
             implementation(libs.compose.runtime)
         }
-
     }
 }

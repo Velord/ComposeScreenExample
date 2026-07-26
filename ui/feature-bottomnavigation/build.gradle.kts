@@ -43,10 +43,15 @@ kotlin {
             implementation(libs.kermit)
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+
         androidMain.dependencies {
             implementation(projects.model)
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.android)
+            implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.activity.ktx)
             implementation(libs.androidx.constraint)
             implementation(libs.androidx.fragment.ktx)
