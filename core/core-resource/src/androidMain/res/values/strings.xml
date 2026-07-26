@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ComposeScreenExample</string>
+    <string name="loading">Loading</string>
+    <string name="error">Error</string>
+    <string name="counter_widget">Counter Widget</string>
+    <string name="image_widget">Image Widget</string>
+</resources>

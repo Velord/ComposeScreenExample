@@ -1,14 +1,27 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
+    alias(libs.plugins.convention.multiplatform.library)
+    alias(libs.plugins.multiplatform.compose)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.velord.core.resource"
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.velord.core.resource"
 }
 
-dependencies {
-    // Templates
-    implementation(libs.bundles.kotlin.all)
-    implementation(libs.bundles.androidx.module)
-    implementation(libs.androidx.core.splashscreen)
+kotlin {
+    android {
+        namespace = "com.velord.core.resource"
+        androidResources {
+            enable = true
+        }
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            api(libs.compose.resources)
+            implementation(libs.compose.runtime)
+        }
+    }
 }

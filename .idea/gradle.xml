@@ -34,11 +34,14 @@
             <option value="$PROJECT_DIR$/data/gateway" />
             <option value="$PROJECT_DIR$/data/os" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/usecase-camera" />
+            <option value="$PROJECT_DIR$/domain/usecase-event" />
             <option value="$PROJECT_DIR$/domain/usecase-movie" />
             <option value="$PROJECT_DIR$/domain/usecase-setting" />
             <option value="$PROJECT_DIR$/infrastructure" />
             <option value="$PROJECT_DIR$/infrastructure/config" />
             <option value="$PROJECT_DIR$/infrastructure/di" />
+            <option value="$PROJECT_DIR$/infrastructure/konsist" />
             <option value="$PROJECT_DIR$/infrastructure/navigation" />
             <option value="$PROJECT_DIR$/infrastructure/util" />
             <option value="$PROJECT_DIR$/model" />
@@ -60,6 +63,8 @@
             <option value="$PROJECT_DIR$/ui/widget-refreshableimage" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="true" />
+        <option name="myGradleHome" value="D:\Android Project\gradleCache\wrapper\dists\gradle-9.6.1-bin\4ticwg1pgcbps2hj28r8so764\gradle-9.6.1" />
       </GradleProjectSettings>
     </option>
     <option name="parallelModelFetch" value="true" />

@@ -1,23 +1,26 @@
+import com.velord.buildlogic.model.BuildEnvironment
+import com.velord.buildlogic.model.BuildType
+
 plugins {
     alias(libs.plugins.convention.android.application)
     alias(libs.plugins.convention.android.compose)
     alias(libs.plugins.convention.android.viewbinding)
-    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
-    alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.convention.koin)
+    id(libs.plugins.kotlin.parcelize.get().pluginId)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.gms.services)
     alias(libs.plugins.google.firebase.crashlytic)
     alias(libs.plugins.dependency.guard)
 }
 
 dependencyGuard {
-    configuration("productionReleaseRuntimeClasspath")
+    val buildVariant = BuildEnvironment.Production.variantName(buildType = BuildType.Release)
+    configuration("${buildVariant}RuntimeClasspath")
 }
 
 // When app incompatible with previous version change this value
 val globalVersion = 1
 // When you create huge feature(or many) release change this value
-val majorVersion = 2
+val majorVersion = 3
 // When you create feature release change this value
 val minorVersion = 0
 // When you create fix change this value
@@ -57,114 +60,85 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("debug")
+        getByName(BuildType.Release.value) {
+            signingConfig = signingConfigs.getByName(BuildType.Debug.value)
         }
-        named("debug") {
-            buildConfigField("Boolean", "IS_LOGGING_ENABLED", "true")
-            buildConfigField(
-                "com.velord.config.NavigationLib",
-                "NAVIGATION_LIB",
-                "com.velord.config.NavigationLib.Nav3"
-            )
-        }
-        named("release") {
+        named(BuildType.Release.value) {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("Boolean", "IS_LOGGING_ENABLED", "false")
-            buildConfigField(
-                "com.velord.config.NavigationLib",
-                "NAVIGATION_LIB",
-                "com.velord.config.NavigationLib.Destinations"
-            )
         }
     }
 
     flavorDimensions.add("environment")
     productFlavors {
-        val baseUrl = "https://google.com"
-        val currentVersion = globalVersion * 100000 +
-                majorVersion * 10000 +
-                minorVersion * 1000 +
-                fixVersion * 100
-
-        create("develop") {
+        create(BuildEnvironment.Develop.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = false
-            applicationIdSuffix = ".develop"
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
-            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+            applicationIdSuffix = ".${BuildEnvironment.Develop.value}"
 
             resourceConfigurations.add("xxxhdpi")
         }
-        create("qa") {
+        create(BuildEnvironment.Qa.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            applicationIdSuffix = ".develop"
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
-            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+            applicationIdSuffix = ".${BuildEnvironment.Qa.value}"
         }
 
-        create("stage") {
+        create(BuildEnvironment.Stage.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            applicationIdSuffix = ".stage"
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
-            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
+            applicationIdSuffix = ".${BuildEnvironment.Stage.value}"
         }
 
-        create("production") {
+        create(BuildEnvironment.Production.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
-            buildConfigField("String", "CURRENT_VERSION", "\"${currentVersion}\"")
         }
     }
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
-    buildFeatures {
-        buildConfig = true
-    }
 }
 
 dependencies {
-    implementation(project(":model"))
+    implementation(projects.model)
     // Module Infrastructure
-    implementation(project(":infrastructure:util"))
-    implementation(project(":infrastructure:navigation"))
-    implementation(project(":infrastructure:di"))
-    implementation(project(":infrastructure:config"))
+    implementation(projects.infrastructure.util)
+    implementation(projects.infrastructure.navigation)
+    implementation(projects.infrastructure.di)
+    implementation(projects.infrastructure.config)
     // Module Core
-    implementation(project(":core:core-ui"))
-    implementation(project(":core:core-navigation"))
-    implementation(project(":core:core-resource"))
+    implementation(projects.core.coreUi)
+    implementation(projects.core.coreNavigation)
+    implementation(projects.core.coreResource)
     // Module Data
-    implementation(project(":data:os"))
+    implementation(projects.data.os)
+    implementation(projects.data.appstate)
     // Module UI
-    implementation(project(":ui:sharedviewmodel"))
+    implementation(projects.ui.sharedviewmodel)
     // Module UI Feature
-    implementation(project(":ui:feature-bottomnavigation"))
-    implementation(project(":ui:feature-splash"))
+    implementation(projects.ui.featureBottomnavigation)
+    implementation(projects.ui.featureSplash)
     // Module UI Widget
-    implementation(project(":ui:widget-refreshableimage"))
-    implementation(project(":ui:widget-counter"))
-    // Templates
+    implementation(projects.ui.widgetRefreshableimage)
+    implementation(projects.ui.widgetCounter)
+    // Template
     implementation(libs.bundles.kotlin.module)
     implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.compose.ui)
+    implementation(libs.bundles.compose.ui.core)
+    // Koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+    // Navigation
+    implementation(libs.androidx.navigation.fragment)
     // Tool
     coreLibraryDesugaring(libs.android.desugar)
     // Other
-    implementation(libs.androidx.glance.appwidget)
-    // Firebase
-    implementation(platform(libs.google.firebase.bom))
-    implementation(libs.bundles.google.firebase)
     // Test libs.versions.toml
 //    implementation(libs.bundles.android.all)
 //    implementation(libs.bundles.androidx.all)
@@ -185,4 +159,15 @@ kotlin {
             freeCompilerArgs.add("-Xdebug")
         }
     }
+}
+
+val navigationResourcePreparation = project(":infrastructure:navigation").tasks.matching { task ->
+    task.name == "prepareAndroidMainNavigationResources"
+}
+
+tasks.matching { task ->
+    task.name.endsWith("NavigationResources")
+}.configureEach {
+    // Compose Destinations reads the generated Android KMP navigation resources directly.
+    dependsOn(navigationResourcePreparation)
 }

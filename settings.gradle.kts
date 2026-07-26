@@ -8,11 +8,14 @@ pluginManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
     id("com.autonomousapps.build-health") version "3.7.0"
-    id("org.jetbrains.kotlin.android") version "2.3.10" apply false
-    id("com.android.application") version "9.0.1" apply false
-    id("com.android.library") version "9.0.1" apply false
+    id("org.jetbrains.kotlin.android") version "2.4.0" apply false
+    id("com.android.application") version "9.2.1" apply false
+    id("com.android.library") version "9.2.1" apply false
 }
 
 dependencyResolutionManagement {
@@ -52,11 +55,12 @@ rootProject.name = "ComposeScreenExample"
 include(":app")
 // Model
 include(":model")
-// Specific
+// Infrastructure
 include(":infrastructure:util")
 include(":infrastructure:navigation")
 include(":infrastructure:di")
 include(":infrastructure:config")
+include(":infrastructure:konsist")
 // Core
 include(":core:core-ui")
 include(":core:core-navigation")
@@ -71,6 +75,8 @@ include(":data:os")
 // Domain
 include(":domain:usecase-setting")
 include(":domain:usecase-movie")
+include(":domain:usecase-camera")
+include(":domain:usecase-event")
 // UI
 include(":ui:sharedviewmodel")
 // UI Feature

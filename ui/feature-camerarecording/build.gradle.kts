@@ -1,23 +1,42 @@
 plugins {
-    alias(libs.plugins.convention.feature.ui.koin)
+    alias(libs.plugins.convention.multiplatform.library)
+    alias(libs.plugins.multiplatform.compose)
+    alias(libs.plugins.kotlin.compose)
 }
 
-android {
-    namespace = "com.velord.camerarecording"
-}
+kotlin {
+    android {
+        namespace = "com.velord.ui.feature.camerarecording"
+    }
 
-dependencies {
-    // Modules
-    implementation(project(":model"))
-    implementation(project(":infrastructure:util"))
-    implementation(project(":core:core-resource"))
-    implementation(project(":core:core-ui"))
-    implementation(project(":core:core-navigation"))
-    implementation(project(":ui:sharedviewmodel"))
-    implementation(project(":ui:feature-bottomnavigation"))
-    // Templates
-    implementation(libs.bundles.androidx.camera.all)
-    implementation(libs.bundles.compose.all)
-    // Navigation
-    ksp(libs.compose.destinations.ksp)
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.model)
+            implementation(projects.core.coreResource)
+            implementation(projects.core.coreUi)
+            implementation(projects.infrastructure.util)
+            implementation(projects.domain.usecaseCamera)
+            implementation(projects.domain.usecaseEvent)
+            implementation(projects.ui.sharedviewmodel)
+            implementation(libs.kotlin.coroutine.core)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material.icons.extended)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.resources)
+            implementation(libs.kamera.core)
+            implementation(libs.kermit)
+        }
+
+        androidMain.dependencies {
+            implementation(projects.core.coreUi)
+            implementation(projects.ui.featureBottomnavigation)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.android)
+            implementation(libs.androidx.fragment.ktx)
+            implementation(libs.androidx.navigation.fragment)
+        }
+    }
 }

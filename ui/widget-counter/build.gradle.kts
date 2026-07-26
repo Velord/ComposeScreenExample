@@ -3,5 +3,5 @@ plugins {
 }
 
 android {
-    namespace = "com.velord.widgetcounter"
+    namespace = "com.velord.ui.widget.counter"
 }

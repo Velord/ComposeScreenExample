@@ -1,52 +1,118 @@
 plugins {
-    alias(libs.plugins.convention.android.library)
-    alias(libs.plugins.convention.android.compose)
-    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
-    alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.convention.koin)
+    alias(libs.plugins.convention.multiplatform.library)
+    alias(libs.plugins.multiplatform.compose)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
-android {
-    namespace = "com.velord.navigation"
+kotlin {
+    android {
+        namespace = "com.velord.infrastructure.navigation"
+
+        androidResources {
+            enable = true
+        }
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            // Module Infrastructure
+            implementation(projects.infrastructure.config)
+            // Module Core
+            implementation(projects.core.coreNavigation)
+            implementation(projects.core.coreResource)
+            implementation(projects.core.coreUi)
+            // Module UI
+            implementation(projects.ui.sharedviewmodel)
+            // Module UI Feature
+            implementation(projects.ui.featureDemo)
+            implementation(projects.ui.featureCamerarecording)
+            implementation(projects.ui.featureBottomnavigation)
+            implementation(projects.ui.featureSetting)
+            implementation(projects.ui.featureDemoShape)
+            implementation(projects.ui.featureDemoModifier)
+            implementation(projects.ui.featureDemoMorph)
+            implementation(projects.ui.featureDemoHintphonenumber)
+            implementation(projects.ui.featureDemoDialog)
+            implementation(projects.ui.featureFlowsummator)
+            implementation(projects.ui.featureMovie)
+            // Template
+            implementation(libs.bundles.nav3)
+            implementation(libs.bundles.voyager.navigation)
+            // Compose
+            implementation(libs.compose.resources)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.ui)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            // Kotlin
+            implementation(libs.kotlin.datetime)
+            implementation(libs.kotlin.serialization.json)
+            // Voyager
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.transitions)
+            // Koin
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            // Other
+            implementation(libs.kermit)
+        }
+
+        androidMain.dependencies {
+            // Module Infrastructure
+            implementation(projects.infrastructure.util)
+            // Module Core
+            implementation(projects.core.coreUi)
+            implementation(projects.core.coreNavigation)
+            // Template
+            implementation(libs.bundles.androidx.navigation)
+            // AndroidX
+            implementation(libs.androidx.activity.ktx)
+            implementation(libs.androidx.collection)
+            implementation(libs.androidx.fragment.ktx)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            // Compose
+            implementation(libs.compose.ui.tooling.preview)
+            // Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.android)
+            // Navigation Compose Destinations
+            implementation(libs.compose.destinations)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+    }
 }
 
+/*
+Android KMP packages navigation XML from a generated resource directory. The plugin creates that
+directory but does not copy src/androidMain/res into it, so this task prepares the packaging input
+before packageAndroidMainResources runs.
+*/
+val prepareAndroidMainNavigationResources = tasks.register<Sync>(
+    "prepareAndroidMainNavigationResources",
+) {
+    description = "Prepares the navigation XML resources for Android Main source set."
+    // Android KMP maps navigation XML to this directory without producing it.
+    dependsOn("generateAndroidMainEmptyResourceFiles")
+    from("src/androidMain/res")
+    into(layout.buildDirectory.dir("generated/updated_navigation_xml/androidMain/res"))
+}
+
+tasks.matching { task ->
+    task.name == "packageAndroidMainResources"
+}.configureEach {
+    dependsOn(prepareAndroidMainNavigationResources)
+}
+
+// After migrating this module from Android-only to KMP, the generic `ksp` configuration
+// became target-specific. Compose Destinations is used only by Android, so its processor
+// must be registered with `kspAndroid` in the project-level dependencies block.
 dependencies {
-    // Module
-    implementation(project(":model"))
-    implementation(project(":infrastructure:util"))
-    implementation(project(":infrastructure:config"))
-    // Module Core
-    implementation(project(":core:core-ui"))
-    implementation(project(":core:core-navigation"))
-    implementation(project(":core:core-resource"))
-    // Module UI
-    implementation(project(":ui:sharedviewmodel"))
-    // Module UI Feature
-    implementation(project(":ui:feature-demo"))
-    implementation(project(":ui:feature-camerarecording"))
-    implementation(project(":ui:feature-bottomnavigation"))
-    implementation(project(":ui:feature-setting"))
-    implementation(project(":ui:feature-splash"))
-    implementation(project(":ui:feature-demo-shape"))
-    implementation(project(":ui:feature-demo-modifier"))
-    implementation(project(":ui:feature-demo-morph"))
-    implementation(project(":ui:feature-demo-hintphonenumber"))
-    implementation(project(":ui:feature-demo-dialog"))
-    implementation(project(":ui:feature-flowsummator"))
-    implementation(project(":ui:feature-movie"))
-    // Templates
-    implementation(libs.bundles.kotlin.all)
-    implementation(libs.bundles.androidx.module)
-    implementation(libs.bundles.androidx.navigation.all)
-    implementation(libs.bundles.compose.all)
-    implementation(libs.bundles.coil)
-    implementation(libs.bundles.kotlin.serialization)
-    // Navigation 3-rd Party
-    // Navigation Voyager
-    implementation(libs.bundles.voyager)
-    // Navigation Compose Destinations
-    implementation(libs.bundles.compose.destinations)
-    ksp(libs.compose.destinations.ksp)
+    kspAndroid(libs.compose.destinations.ksp)
 }
 
 ksp {

@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.convention.widget.glance)
-    id(libs.plugins.kotlin.plugin.parcelize.get().pluginId)
+    id(libs.plugins.kotlin.parcelize.get().pluginId)
 }
 
 android {
-    namespace = "com.velord.refreshableimage"
+    namespace = "com.velord.ui.widget.refreshableimage"
 }
 
 dependencies {
