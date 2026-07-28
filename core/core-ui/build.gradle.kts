@@ -35,6 +35,8 @@ kotlin {
         desktopMain.dependencies {
             // Template
             implementation(libs.bundles.kotlin.core)
+            // Lib
+            implementation(libs.compose.material.icons.core)
         }
 
         androidMain.dependencies {

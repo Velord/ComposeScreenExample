@@ -3,7 +3,6 @@ package com.velord.ui.feature.bottomnavigation.screen.compose
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
@@ -55,11 +54,6 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
             // In that case, we can simply not call graphCompletedHandling() at all,
             // and the back handling will not be enabled,
             // allowing the system to handle the back press as usual.
-            SideEffect {
-                // When the graph is completed, we can proceed with the back handling
-                // Current logic is simple, we just allow the back handling
-                // viewModel.graphCompletedHandling()
-            }
         },
     ) {
         // Observe all clicks, not just state(state can't be changed when you click on same tab)
@@ -71,7 +65,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
         Content(
             selectedItem = uiState.value.tabState.current,
             navigationItemRoster = viewModel.getNavigationItemRoster(),
-            onClick = { tab ->
+            onTabClick = { tab ->
                 viewModel.onAction(BottomNavigationUiAction.TabClick(tab))
             },
             content = {
@@ -79,7 +73,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
                     modifier = Modifier
                         .padding(bottom = it.calculateBottomPadding())
                         .fillMaxSize(),
-                    startRoute = uiState.value.tabState.current
+                    startRoute = uiState.value.tabState.current,
                 )
             },
         )
@@ -92,7 +86,7 @@ private fun Preview() {
     Content(
         selectedItem = BottomNavigationItem.Camera,
         navigationItemRoster = BottomNavigationItem.entries,
-        onClick = {},
+        onTabClick = {},
         content = {},
     )
 }

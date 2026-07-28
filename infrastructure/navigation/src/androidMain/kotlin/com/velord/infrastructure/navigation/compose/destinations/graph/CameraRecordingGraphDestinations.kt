@@ -33,8 +33,11 @@ internal fun CameraRecordingDestination(navigator: CameraRecordingNavigator) {
                 CameraRecordingNavigationEvent.Setting -> navigator.goToSettingFromCameraRecording()
             }
         },
-        onBackClick = {
+        onGraphCompleted = {
             bottomNavVM.onAction(BottomNavigationUiAction.GraphCompletedHandling)
+        },
+        onBackClick = {
+            bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
         }
     )
 }

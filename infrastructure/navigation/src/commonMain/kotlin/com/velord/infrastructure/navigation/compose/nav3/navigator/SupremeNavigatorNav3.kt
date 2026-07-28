@@ -37,7 +37,8 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Gra
     // In Vanilla, we hoisted a `NavHostController`.
     // In Nav3, there is no monolithic NavController. State is explicitly managed by a custom
     // `NavigationState` object which maps NavKeys to SnapshotStateLists. We hoist our wrapper class
-    // (`BackStackNavigator`) so both SetupNavController and CreateNavHostForBottom can share the same memory reference.
+    // (`BackStackNavigator`) so both SetupNavController and CreateNavHostForBottom can share
+    // the same memory reference.
     private val backStackNavigatorState: MutableState<BackStackNavigator?> = mutableStateOf(null)
 
     init {
@@ -82,7 +83,8 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Gra
     }
 
     private fun getRouteOnTabClickNav3(route: BottomNavigationItem): GraphNav3 = when(route) {
-        BottomNavigationItem.Camera -> GraphNav3.BottomTab.CameraRecording.CameraRecordingDestinationNav3
+        BottomNavigationItem.Camera ->
+            GraphNav3.BottomTab.CameraRecording.CameraRecordingDestinationNav3
         BottomNavigationItem.Demo -> GraphNav3.BottomTab.Demo.DemoDestinationNav3
         BottomNavigationItem.Setting -> GraphNav3.BottomTab.SettingDestinationNav3
     }
@@ -103,7 +105,7 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Gra
         }
 
         val entryProvider = entryProvider {
-            setupBottomNavigationGraphNav3(navigator)
+            setupBottomNavigationGraphNav3(navigator = navigator)
         }
 
         NavDisplay(
@@ -137,12 +139,14 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Gra
         val currentTabRoute = navigationState.topLevelRoute
         val activeStack = navigationState.backStacks[currentTabRoute]
         val currentDestination = activeStack?.lastOrNull()
-        // We also track stackSize so the LaunchedEffect triggers even if we pop/push the same exact route type.
+        // We also track stackSize so the LaunchedEffect triggers even if we pop/push the
+        // same exact route type.
         val stackSize = activeStack?.size ?: 0
 
         // DIFFERENCE FROM VANILLA:
         // Vanilla collects the `navController.currentBackStackEntryFlow`.
-        // Nav3 triggers a standard Compose LaunchedEffect whenever the MutableState (`topLevelRoute`)
+        // Nav3 triggers a standard Compose LaunchedEffect whenever the MutableState
+        // (`topLevelRoute`)
         // or the SnapshotStateList (`activeStack`) changes.
         LaunchedEffect(currentTabRoute, currentDestination, stackSize) {
             if (currentDestination == null) return@LaunchedEffect
@@ -154,11 +158,18 @@ internal class SupremeNavigatorNav3(private val backStack: SnapshotStateList<Gra
 
             // Sync current tab state with nav controller destination
             val currentTab = when (currentTabRoute) {
-                GraphNav3.BottomTab.CameraRecording.CameraRecordingDestinationNav3 -> BottomNavigationItem.Camera
+                GraphNav3.BottomTab.CameraRecording.CameraRecordingDestinationNav3 ->
+                    BottomNavigationItem.Camera
                 GraphNav3.BottomTab.SettingDestinationNav3 -> BottomNavigationItem.Setting
                 else -> BottomNavigationItem.Demo
             }
             onTabChanged(currentTab)
+        }
+    }
+
+    internal fun goBack() {
+        if (backStack.size > 1) {
+            backStack.removeAt(backStack.lastIndex)
         }
     }
 

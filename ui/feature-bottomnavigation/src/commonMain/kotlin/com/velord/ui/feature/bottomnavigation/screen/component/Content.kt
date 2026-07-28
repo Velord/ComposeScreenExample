@@ -22,7 +22,7 @@ import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 internal fun Content(
     selectedItem: BottomNavigationItem,
     navigationItemRoster: List<BottomNavigationItem>,
-    onClick: (BottomNavigationItem) -> Unit,
+    onTabClick: (BottomNavigationItem) -> Unit,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
@@ -33,7 +33,7 @@ internal fun Content(
                 modifier = Modifier
                     .navigationBarsPadding()
                     .height(72.dp),
-                onClick = onClick,
+                onClick = onTabClick,
             )
         },
         content = content,
@@ -83,7 +83,7 @@ private fun Preview() {
     Content(
         selectedItem = BottomNavigationItem.Camera,
         navigationItemRoster = BottomNavigationItem.entries,
-        onClick = {},
+        onTabClick = {},
         content = {},
     )
 }

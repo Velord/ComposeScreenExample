@@ -33,19 +33,20 @@ internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
 
             DemoScreen(
                 viewModel = viewModel,
+                onGraphCompleted = {
+                    bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+                },
                 onNavigationEvent = {
                     navigator.goTo(it)
                 },
                 onBackClick = {
-                    // To enable System Back Button handling
-                    // via Bottom Navigation -> comment the line below
-                    bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+                    bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
                 },
             )
         }
 
         composable<GraphVanilla.BottomTab.Demo.ShapeDemoDestinationVanilla> {
-            ShapeDemoScreen()
+            ShapeDemoScreen(onBackClick = navigator::goBack)
         }
 
         composable<GraphVanilla.BottomTab.Demo.ModifierDestinationVanilla> {

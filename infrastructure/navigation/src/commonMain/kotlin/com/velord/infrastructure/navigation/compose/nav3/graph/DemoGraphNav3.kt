@@ -28,19 +28,20 @@ internal fun EntryProviderScope<GraphNav3>.setupDemoGraphNav3(navigator: DemoNav
 
         DemoScreen(
             viewModel = viewModel,
+            onGraphCompleted = {
+                bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+            },
             onNavigationEvent = {
                 navigator.goTo(it)
             },
             onBackClick = {
-                // To enable System Back Button handling
-                // via Bottom Navigation -> comment the line below
-                bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+                bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
             },
         )
     }
 
     entry<GraphNav3.BottomTab.Demo.ShapeDemoDestinationNav3> {
-        ShapeDemoScreen()
+        ShapeDemoScreen(onBackClick = navigator::goBack)
     }
 
     entry<GraphNav3.BottomTab.Demo.ModifierDestinationNav3> {

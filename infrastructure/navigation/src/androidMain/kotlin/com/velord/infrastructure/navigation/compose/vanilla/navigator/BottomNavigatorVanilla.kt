@@ -22,6 +22,10 @@ internal class BottomNavigatorVanilla(
         navController.navigate(dest.toGraphVanilla())
     }
 
+    override fun goBack() {
+        navController.popBackStack()
+    }
+
     internal companion object {
         fun DemoNavigationEvent.toGraphVanilla(): Any = when(this) {
             DemoNavigationEvent.Shape -> GraphVanilla.BottomTab.Demo.ShapeDemoDestinationVanilla

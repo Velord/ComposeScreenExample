@@ -156,6 +156,10 @@ internal class SupremeNavigatorDestinations(private val supremeNavController: Na
 
     override fun getPopRouteOnTabClick(): NavHostGraphSpec = BottomNavigationNavGraph
 
+    internal fun goBack() {
+        supremeNavController.popBackStack()
+    }
+
     override fun goToSettingFromCameraRecording() {
         supremeNavController.toDestinationsNavigator().navigate(MainSettingsDestinationDestination)
     }

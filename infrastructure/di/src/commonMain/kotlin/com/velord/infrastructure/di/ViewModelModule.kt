@@ -24,7 +24,7 @@ val viewModelModule = module {
     viewModel { AllMovieVM(get(), get(), get(), get(), get()) }
     viewModel { FavoriteMovieVM(get(), get()) }
     viewModel { CameraRecordingVM(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { BottomNavigationVM(get(), get()) }
+    viewModel { BottomNavigationVM(get(), get(), get()) }
     viewModel { DialogDemoVM() }
     viewModel { MainVM(get(), get(), get()) }
 }

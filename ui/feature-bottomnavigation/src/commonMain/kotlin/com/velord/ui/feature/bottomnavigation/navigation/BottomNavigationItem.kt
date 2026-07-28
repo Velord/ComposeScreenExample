@@ -16,4 +16,8 @@ enum class BottomNavigationItem {
         Demo -> Icons.Outlined.Hexagon
         Setting -> Icons.Outlined.Settings
     }
+
+    val isCamera: Boolean get() = this == Camera
+    val isDemo: Boolean get() = this == Demo
+    val isSetting: Boolean get() = this == Setting
 }

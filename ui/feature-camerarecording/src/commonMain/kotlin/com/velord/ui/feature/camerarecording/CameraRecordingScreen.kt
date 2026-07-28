@@ -19,6 +19,7 @@ fun CameraRecordingScreen(
     viewModel: CameraRecordingVM,
     needToHandlePermission: Boolean = false,
     onNavigationEvent: (CameraRecordingNavigationEvent) -> Unit,
+    onGraphCompleted: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
@@ -29,7 +30,7 @@ fun CameraRecordingScreen(
 
     SideEffect {
         // Simulate we completed back stack handling
-        onBackClick()
+        onGraphCompleted()
     }
 
     ObserveSharedFlow(flow = viewModel.navigationEvent) {
@@ -56,6 +57,7 @@ fun CameraRecordingScreen(
     Content(
         uiState = uiState.value,
         onAction = viewModel::onAction,
+        onBackClick = onBackClick,
     )
 }
 

@@ -14,6 +14,6 @@ class ShapeDemoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        ShapeDemoScreen()
+        ShapeDemoScreen(onBackClick = {})
     }
 }

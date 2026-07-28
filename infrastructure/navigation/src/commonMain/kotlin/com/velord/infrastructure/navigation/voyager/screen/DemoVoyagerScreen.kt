@@ -36,12 +36,12 @@ internal object DemoVoyagerScreen : Screen {
 
         DemoScreen(
             viewModel = viewModel,
+            onGraphCompleted = {
+                bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+            },
             onNavigationEvent = {}, // Handled by LaunchedEffect
             onBackClick = {
-                // To enable System Back Button handling
-                // via Bottom Navigation -> comment the line below
-                // bottomNavViewModel.graphCompletedHandling()
-                bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+                bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
             },
         )
     }

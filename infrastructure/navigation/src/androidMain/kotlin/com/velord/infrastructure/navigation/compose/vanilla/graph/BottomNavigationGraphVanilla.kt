@@ -10,7 +10,9 @@ import com.velord.ui.feature.setting.SettingScreen
 import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.compose.viewmodel.koinViewModel
 
-internal fun NavGraphBuilder.setupBottomNavigationGraphVanilla(navigator: BottomNavigatorVanilla) {
+internal fun NavGraphBuilder.setupBottomNavigationGraphVanilla(
+    navigator: BottomNavigatorVanilla,
+) {
     setupCameraRecordingGraphVanilla(navigator)
     setupDemoGraphVanilla(navigator)
 
@@ -19,8 +21,11 @@ internal fun NavGraphBuilder.setupBottomNavigationGraphVanilla(navigator: Bottom
         val bottomNavVM = koinViewModel<BottomNavigationVM>()
         SettingScreen(
             viewModel = viewModel,
-            onBackClick = {
+            onGraphCompleted = {
                 bottomNavVM.onAction(BottomNavigationUiAction.GraphCompletedHandling)
+            },
+            onBackClick = {
+                bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
             }
         )
     }

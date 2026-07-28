@@ -41,21 +41,22 @@ internal fun DemoDestination(navigator: DemoNavigator) {
 
     DemoScreen(
         viewModel = viewModel,
+        onGraphCompleted = {
+            bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+        },
         onNavigationEvent = {
             navigator.goTo(it)
         },
         onBackClick = {
-            // To enable System Back Button handling
-            // via Bottom Navigation -> comment the line below
-            bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+            bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
         },
     )
 }
 
 @Destination<DemoGraph>
 @Composable
-internal fun ShapeDemoDestination() {
-    ShapeDemoScreen()
+internal fun ShapeDemoDestination(navigator: DemoNavigator) {
+    ShapeDemoScreen(onBackClick = navigator::goBack)
 }
 
 @Destination<DemoGraph>

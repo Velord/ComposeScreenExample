@@ -560,10 +560,10 @@ compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.re
 compose-accompanist-drawable = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "composeAccompanist" }
 compose-accompanist-permission = { module = "com.google.accompanist:accompanist-permissions", version.ref = "composeAccompanist" }
 ## Compose Foundation
-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeDefault" }
-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "composeDefault" }
+compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composePlugin" }
+compose-foundation-layout = { module = "org.jetbrains.compose.foundation:foundation-layout", version.ref = "composePlugin" }
 ## Compose Material 2
-compose-material = { module = "androidx.compose.material:material", version.ref = "composeDefault" }
+compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "composePlugin" }
 compose-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "composeIcon" }
 compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeIcon" }
 ## Compose Material 3

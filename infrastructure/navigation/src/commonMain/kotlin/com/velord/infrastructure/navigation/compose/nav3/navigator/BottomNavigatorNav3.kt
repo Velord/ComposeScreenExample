@@ -18,11 +18,7 @@ internal class BottomNavigatorNav3(
     }
 
     override fun goTo(dest: DemoNavigationEvent) {
-        backStackNavigator.navigate(dest.toGraphNav3())
-    }
-
-    internal companion object {
-        fun DemoNavigationEvent.toGraphNav3(): GraphNav3.BottomTab.Demo = when(this) {
+        val destination = when (dest) {
             DemoNavigationEvent.Shape -> GraphNav3.BottomTab.Demo.ShapeDemoDestinationNav3
             DemoNavigationEvent.Modifier -> GraphNav3.BottomTab.Demo.ModifierDestinationNav3
             DemoNavigationEvent.FlowSummator ->
@@ -33,5 +29,10 @@ internal class BottomNavigatorNav3(
             DemoNavigationEvent.Movie -> GraphNav3.BottomTab.Demo.MovieDestinationNav3
             DemoNavigationEvent.Dialog -> GraphNav3.BottomTab.Demo.DialogDestinationNav3
         }
+        backStackNavigator.navigate(destination)
+    }
+
+    override fun goBack() {
+        backStackNavigator.goBack()
     }
 }
