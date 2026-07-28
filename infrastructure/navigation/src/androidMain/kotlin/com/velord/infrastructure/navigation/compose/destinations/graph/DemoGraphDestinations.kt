@@ -61,45 +61,52 @@ internal fun ShapeDemoDestination(navigator: DemoNavigator) {
 
 @Destination<DemoGraph>
 @Composable
-internal fun ModifierDemoDestination() {
-    ModifierDemoScreen()
+internal fun ModifierDemoDestination(navigator: DemoNavigator) {
+    ModifierDemoScreen(onBackClick = navigator::goBack)
 }
 
 @Destination<DemoGraph>
 @Composable
-internal fun FlowSummatorDestination() {
+internal fun FlowSummatorDestination(navigator: DemoNavigator) {
     val viewModel = koinViewModel<FlowSummatorVM>()
-    FlowSummatorScreen(viewModel)
-}
-
-@Destination<DemoGraph>
-@Composable
-internal fun MorphDemoDestination() {
-    MorphDemoScreen()
-}
-
-@Destination<DemoGraph>
-@Composable
-internal fun HintPhoneNumberDestination() {
-    HintPhoneNumberScreen()
-}
-
-@Destination<DemoGraph>
-@Composable
-internal fun MovieDestination() {
-    val viewModel = koinViewModel<MovieVM>()
-    val allMovieVM = koinViewModel<AllMovieVM>()
-    val favoriteMovieVM = koinViewModel<FavoriteMovieVM>()
-    MovieScreen(
-        viewModel,
-        allMovieVM,
-        favoriteMovieVM,
+    FlowSummatorScreen(
+        viewModel = viewModel,
+        onBackClick = navigator::goBack
     )
 }
 
 @Destination<DemoGraph>
 @Composable
-internal fun DialogDestination() {
+internal fun MorphDemoDestination(navigator: DemoNavigator) {
+    MorphDemoScreen(onBackClick = navigator::goBack)
+}
+
+@Destination<DemoGraph>
+@Composable
+internal fun HintPhoneNumberDestination(navigator: DemoNavigator) {
+    HintPhoneNumberScreen(onBackClick = navigator::goBack)
+}
+
+@Destination<DemoGraph>
+@Composable
+internal fun MovieDestination(navigator: DemoNavigator) {
+    val viewModel = koinViewModel<MovieVM>()
+    val allMovieVM = koinViewModel<AllMovieVM>()
+    val favoriteMovieVM = koinViewModel<FavoriteMovieVM>()
+    MovieScreen(
+        viewModel = viewModel,
+        allMovieVM = allMovieVM,
+        favoriteMovieVM = favoriteMovieVM,
+        onBackClick = navigator::goBack
+    )
+}
+
+@Destination<DemoGraph>
+@Composable
+internal fun DialogDestination(navigator: DemoNavigator) {
     val viewModel = koinViewModel<DialogDemoVM>()
-    DialogDemoScreen(viewModel)
+    DialogDemoScreen(
+        viewModel = viewModel,
+        onBackClick = navigator::goBack
+    )
 }

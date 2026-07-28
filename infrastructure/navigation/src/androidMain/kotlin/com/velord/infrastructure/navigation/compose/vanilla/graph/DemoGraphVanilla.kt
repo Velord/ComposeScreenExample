@@ -50,20 +50,23 @@ internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
         }
 
         composable<GraphVanilla.BottomTab.Demo.ModifierDestinationVanilla> {
-            ModifierDemoScreen()
+            ModifierDemoScreen(onBackClick = navigator::goBack)
         }
 
         composable<GraphVanilla.BottomTab.Demo.FlowSummatorDestinationVanilla> {
             val viewModel = koinViewModel<FlowSummatorVM>()
-            FlowSummatorScreen(viewModel)
+            FlowSummatorScreen(
+                viewModel = viewModel,
+                onBackClick = navigator::goBack
+            )
         }
 
         composable<GraphVanilla.BottomTab.Demo.MorphDemoDestinationVanilla> {
-            MorphDemoScreen()
+            MorphDemoScreen(onBackClick = navigator::goBack)
         }
 
         composable<GraphVanilla.BottomTab.Demo.HintPhoneDestinationVanilla> {
-            HintPhoneNumberScreen()
+            HintPhoneNumberScreen(onBackClick = navigator::goBack)
         }
 
         composable<GraphVanilla.BottomTab.Demo.MovieDestinationVanilla> {
@@ -71,15 +74,19 @@ internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
             val allMovieVM = koinViewModel<AllMovieVM>()
             val favoriteMovieVM = koinViewModel<FavoriteMovieVM>()
             MovieScreen(
-                viewModel,
-                allMovieVM,
-                favoriteMovieVM,
+                viewModel = viewModel,
+                allMovieVM = allMovieVM,
+                favoriteMovieVM = favoriteMovieVM,
+                onBackClick = navigator::goBack
             )
         }
 
         composable<GraphVanilla.BottomTab.Demo.DialogDestinationVanilla> {
             val viewModel = koinViewModel<DialogDemoVM>()
-            DialogDemoScreen(viewModel)
+            DialogDemoScreen(
+                viewModel = viewModel,
+                onBackClick = navigator::goBack
+            )
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.velord.ui.feature.demo.dialog
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,8 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.velord.core.resource.Res
+import com.velord.core.resource.dialog_demo
 import com.velord.core.resource.show_one_button_dialog
 import com.velord.core.resource.show_two_buttons_dialog
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.demo.dialog.component.DialogActions
 import com.velord.ui.feature.demo.dialog.component.DialogAnimations
@@ -30,14 +33,19 @@ import com.velord.ui.feature.demo.dialog.component.OneButtonDialog
 import com.velord.ui.feature.demo.dialog.component.TwoButtonDialog
 import org.jetbrains.compose.resources.stringResource
 
-
 @Composable
-fun DialogDemoScreen(viewModel: DialogDemoVM) {
+fun DialogDemoScreen(
+    viewModel: DialogDemoVM,
+    onBackClick: (() -> Unit)? = null,
+) {
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
     val isVisibleTwoButtonDialogState = rememberUpdatedState(uiState.value.isVisibleTwoButtonDialog)
     val isVisibleOneButtonDialogState = rememberUpdatedState(uiState.value.isVisibleOneButtonDialog)
 
-    Content(onAction = viewModel::onAction)
+    Content(
+        onAction = viewModel::onAction,
+        onBackClick = onBackClick,
+    )
 
     TwoButtonDialog(
         isVisibleState = isVisibleTwoButtonDialogState,
@@ -60,7 +68,10 @@ fun DialogDemoScreen(viewModel: DialogDemoVM) {
 }
 
 @Composable
-private fun Content(onAction: (DialogDemoUiAction) -> Unit) {
+private fun Content(
+    onAction: (DialogDemoUiAction) -> Unit,
+    onBackClick: (() -> Unit)? = null,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -69,6 +80,10 @@ private fun Content(onAction: (DialogDemoUiAction) -> Unit) {
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        PlatformScreenHeader(
+            title = stringResource(Res.string.dialog_demo),
+            onBackClick = onBackClick
+        )
         OpenButton(
             text = stringResource(Res.string.show_two_buttons_dialog),
             onClick = { onAction(DialogDemoUiAction.OpenTwoButtonDialogClick) }

@@ -32,7 +32,10 @@ private fun Content(onBackClick: () -> Unit) {
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
     ) {
-        PlatformScreenHeader(onBackClick = onBackClick)
+        PlatformScreenHeader(
+            title = "Shape Demo",
+            onBackClick = onBackClick
+        )
         TicketShapeDemo()
         PervasiveArcFromBottomShapeDemo()
         WaveShapeDemo()
