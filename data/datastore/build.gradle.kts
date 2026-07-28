@@ -11,12 +11,16 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Module Model
             implementation(projects.model)
+            // Kotlin
             implementation(libs.kotlin.coroutine.core)
+            implementation(libs.kotlin.serialization.json)
+            // Koin
             implementation(libs.koin.core)
             api(libs.koin.annotation)
+            // DataStore
             implementation(libs.androidx.datastore.core.okio)
-            implementation(libs.kotlin.serialization.json)
         }
 
         named("commonMain").configure {
@@ -26,6 +30,7 @@ kotlin {
 }
 
 dependencies {
+    // KSP
     add("kspCommonMainMetadata", libs.koin.ksp)
     add("kspAndroid", libs.koin.ksp)
     add("kspDesktop", libs.koin.ksp)

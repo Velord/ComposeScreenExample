@@ -10,11 +10,15 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Kotlin DateTime
             api(libs.kotlin.datetime)
+            // Kamera
             api(libs.kamera.core)
+            // Kotlin Serialization
             implementation(libs.kotlin.serialization.json)
         }
         commonTest.dependencies {
+            // Testing
             implementation(libs.kotlin.test)
         }
     }

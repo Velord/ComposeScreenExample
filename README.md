@@ -37,21 +37,25 @@ app entry point.
 See the [navigation toolkit](infrastructure/navigation/README.md) for construction, multiple
 back stacks, back handling, and adding independent bottom-navigation modules.
 
-## Tech Stack
+## Tech Stack & Target Support
 
-- Kotlin Multiplatform, coroutines, Flow, and kotlinx serialization.
-- Jetpack Compose, Compose Multiplatform, and Glance.
-- Nav3, Voyager, Compose Navigation, Compose Destinations, and Fragment Navigation.
-- Koin for dependency injection.
-- Ktor for backend communication.
-- Room and DataStore for persistence.
-- Kamera for multiplatform camera preview and video recording.
-- Coil for image loading.
-- Kermit for multiplatform logging.
-- BuildKonfig for generated build configuration.
-- KSP for code generation.
-- Gradle convention plugins in `build-logic`.
-- Konsist and Detekt for architecture and code-quality checks.
+### 📱 Multiplatform (Android + Desktop)
+- **Language & Core**: [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html), [coroutines](https://github.com/Kotlin/kotlinx.coroutines), [Flow](https://kotlinlang.org/docs/flow.html), and [kotlinx serialization](https://github.com/Kotlin/kotlinx.serialization).
+- **UI & Foundation**: [Jetpack Compose](https://developer.android.com/compose) & [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) (CMP).
+- **Navigation**: [Nav3](https://developer.android.com/guide/navigation/navigation-3) & [Voyager](https://github.com/adrielcafe/voyager).
+- **Dependency Injection**: [Koin](https://github.com/InsertKoinIO/koin) (`koin-core`, `koin-compose`).
+- **Networking**: [Ktor](https://github.com/ktorio/ktor) client for backend communication.
+- **Persistence & State**: [Room](https://developer.android.com/training/data-storage/room) & [DataStore](https://developer.android.com/topic/libraries/architecture/datastore).
+- **Camera & Video**: [Kamera](https://github.com/KmpTor/Kamera) for multiplatform camera preview and video recording.
+- **Image Loading**: [Coil](https://github.com/coil-kt/coil).
+- **Logging**: [Kermit](https://github.com/touchlab/Kermit) multiplatform logging.
+- **Build Configuration**: [BuildKonfig](https://github.com/yshrsmz/BuildKonfig).
+- **Code Generation & Quality**: [KSP](https://github.com/google/ksp), Gradle convention plugins in `build-logic`, [Konsist](https://github.com/LemonAppDev/konsist), and [Detekt](https://github.com/detekt/detekt).
+
+### 🤖 Android Only
+- **Navigation**: [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation), [Compose Destinations](https://github.com/raamcosta/compose-destinations), and [Fragment Navigation](https://developer.android.com/guide/navigation).
+- **Home Screen Widgets**: [Glance](https://developer.android.com/jetpack/compose/glance) AppWidgets.
+- **Credentials & SMS**: Play Services Credential Manager.
 
 Dependency and tool versions live in
 [`gradle/libs.versions.toml`](gradle/libs.versions.toml). Keep version numbers out of this README so
@@ -70,7 +74,12 @@ Use the checked-in Gradle wrapper:
 ```powershell
 git clone https://github.com/Velord/ComposeScreenExample.git
 cd ComposeScreenExample
-.\gradlew.bat :app:assembleDevelopDebug
+
+# Build Android App (Develop Debug)
+.\gradlew.bat :app:android:assembleDevelopDebug
+
+# Run Desktop App (Develop Debug)
+.\gradlew.bat :app:desktop:runDevelopDebug
 ```
 
 Available environments are `develop`, `qa`, `stage`, and `production`. Build types are `debug` and
@@ -91,6 +100,8 @@ Individual KMP modules expose focused tasks such as `allTests`, `compileAndroidM
 
 ## Project Documentation
 
+- [Android App Module (:app:android)](app/android/README.md)
+- [Desktop App Module (:app:desktop)](app/desktop/README.md)
 - [Navigation toolkit](infrastructure/navigation/README.md)
 - [Privacy policy](PRIVACY_POLICY.md)
 - [Terms and conditions](TERMS_AND_CONDITIONS.md)

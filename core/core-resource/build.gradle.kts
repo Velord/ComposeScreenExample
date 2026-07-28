@@ -20,6 +20,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Compose
             api(libs.compose.resources)
             implementation(libs.compose.runtime)
         }

@@ -30,9 +30,11 @@ kotlin {
         }
 
         androidMain.dependencies {
+            // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.androidx.fragment.ktx)
             implementation(libs.koin.android)
+            // AndroidX
+            implementation(libs.androidx.fragment.ktx)
         }
     }
 }

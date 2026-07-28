@@ -1,5 +1,6 @@
 import com.velord.buildlogic.model.BuildEnvironment
 import com.velord.buildlogic.model.BuildType
+import com.velord.buildlogic.util.AppVersion
 
 plugins {
     alias(libs.plugins.convention.android.application)
@@ -17,27 +18,6 @@ dependencyGuard {
     configuration("${buildVariant}RuntimeClasspath")
 }
 
-// When app incompatible with previous version change this value
-val globalVersion = 1
-// When you create huge feature(or many) release change this value
-val majorVersion = 3
-// When you create feature release change this value
-val minorVersion = 0
-// When you create fix change this value
-val fixVersion = 0
-// When you create quick fix from master branch change this value
-val hotfixVersion = 0
-// Based on current CI BUILD_NUMBER
-val buildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull() ?: hotfixVersion
-// Doc says: max number is 2100000000
-// Do not use auto numeration when value beyond edge
-val maxSafeVersionCode = 1000000000
-val calculatedVersionNumber = globalVersion * 100000 +
-        majorVersion * 10000 +
-        minorVersion * 1000 +
-        fixVersion * 100 +
-        buildNumber
-
 android {
     namespace = "com.velord.composescreenexample"
 
@@ -46,10 +26,8 @@ android {
 
         targetSdk = libs.versions.targetApi.get().toInt()
 
-        //Don't use number greater than maxSafeVersionCode
-        val isLessThanMax = calculatedVersionNumber < maxSafeVersionCode
-        versionCode = if (isLessThanMax) calculatedVersionNumber else 0
-        versionName = "$globalVersion.$majorVersion.$minorVersion"
+        versionCode = AppVersion.versionCode
+        versionName = AppVersion.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

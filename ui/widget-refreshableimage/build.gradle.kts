@@ -8,6 +8,8 @@ android {
 }
 
 dependencies {
+    // Coil
     implementation(libs.bundles.coil)
+    // AndroidX
     implementation(libs.androidx.core.ktx)
 }

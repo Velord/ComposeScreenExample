@@ -11,18 +11,23 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Kotlin
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.kotlin.serialization.json)
+            // Compose
             implementation(libs.compose.runtime)
             implementation(libs.compose.ui)
             implementation(libs.compose.resources)
+            // Navigation Voyager
             implementation(libs.voyager.navigator)
         }
 
         androidMain.dependencies {
+            // AndroidX
             implementation(libs.androidx.activity.ktx)
             implementation(libs.androidx.core.ktx)
             implementation(libs.androidx.fragment.ktx)
+            // Navigation
             implementation(libs.androidx.navigation.fragment)
         }
     }

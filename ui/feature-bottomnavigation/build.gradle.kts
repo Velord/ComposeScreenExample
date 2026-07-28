@@ -44,17 +44,22 @@ kotlin {
         }
 
         commonTest.dependencies {
+            // Testing
             implementation(libs.kotlin.test)
         }
 
         androidMain.dependencies {
+            // Module Model
             implementation(projects.model)
+            // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.android)
+            // AndroidX
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.activity.ktx)
             implementation(libs.androidx.constraint)
             implementation(libs.androidx.fragment.ktx)
+            // Navigation
             implementation(libs.androidx.navigation.fragment)
             implementation(libs.androidx.navigation.ui)
             implementation(libs.velord.multiplebackstack)

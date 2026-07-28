@@ -37,10 +37,12 @@ kotlin {
         }
 
         androidMain.dependencies {
+            // Compose Scrollbar
             implementation(libs.compose.scrollbar.nanihadesuka)
         }
 
         desktopMain.dependencies {
+            // Desktop
             implementation(compose.desktop.currentOs)
         }
     }

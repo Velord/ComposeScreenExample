@@ -11,20 +11,28 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Kotlin Serialization
             implementation(libs.kotlin.serialization.json)
+            // Logging
             implementation(libs.kermit)
+            // Compose
             implementation(libs.compose.runtime)
         }
 
         androidMain.dependencies {
+            // AndroidX
             implementation(libs.bundles.androidx.module)
             implementation(libs.bundles.androidx.credentials)
+            // Google Services
             implementation(libs.bundles.google.gms)
+            // Network
             implementation(libs.bundles.network.retrofit)
+            // UI
             implementation(libs.bundles.ui)
         }
 
         desktopMain.dependencies {
+            // Network
             implementation(libs.bundles.network.retrofit)
         }
     }

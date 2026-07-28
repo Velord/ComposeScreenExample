@@ -4,6 +4,7 @@ import com.velord.buildlogic.model.BuildEnvironment
 import com.velord.buildlogic.model.BuildType
 
 private const val APP_MODULE_NAME = "app"
+private const val ANDROID_MODULE_NAME = "android"
 private val CAMEL_WORD_REGEX = Regex("[A-Z]?[a-z0-9]+|[A-Z]")
 private val VARIANT_SENSITIVE_TASK_ROSTER = listOf(
     "assemble",
@@ -84,9 +85,11 @@ private fun String.isIncompleteAppBuildTask(): Boolean {
 
 private fun String.isAppTask(): Boolean {
     val segmentRoster = removePrefix(":").split(":")
-
-    return segmentRoster.size >= 2 &&
-            segmentRoster.dropLast(1).lastOrNull() == APP_MODULE_NAME
+    val moduleName = segmentRoster.dropLast(1).lastOrNull()
+    val isApp = { moduleName == APP_MODULE_NAME }
+    val isAndroid = { moduleName == ANDROID_MODULE_NAME }
+    val isAppOrAndroid = { isApp() || isAndroid() }
+    return segmentRoster.size >= 2 && isAppOrAndroid()
 }
 
 private fun String.taskName(): String = removePrefix(":").substringAfterLast(":")
