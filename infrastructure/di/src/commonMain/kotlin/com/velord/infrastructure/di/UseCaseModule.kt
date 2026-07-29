@@ -7,6 +7,7 @@ import com.velord.data.gateway.event.AppEventGateway
 import com.velord.data.gateway.file.FileGateway
 import com.velord.data.gateway.movie.MovieByGateway
 import com.velord.data.gateway.movie.MovieFavoriteGateway
+import com.velord.data.gateway.movie.MovieFilterGateway
 import com.velord.data.gateway.movie.MovieGateway
 import com.velord.data.gateway.movie.MoviePaginationGateway
 import com.velord.data.gateway.movie.MovieSortGateway
@@ -29,9 +30,11 @@ import com.velord.usecase.event.RequestAppExitUC
 import com.velord.usecase.event.ShowToastUC
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetFavoriteMovieUC
+import com.velord.usecase.movie.GetMovieFilterOptionUC
 import com.velord.usecase.movie.GetMovieSortOptionUC
 import com.velord.usecase.movie.LoadNewPageMovieUC
 import com.velord.usecase.movie.RefreshMovieUC
+import com.velord.usecase.movie.SetMovieFilterOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.ShareMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
@@ -67,7 +70,7 @@ val useCaseModule = module {
         SwitchDynamicColorThemeConfigUC(get<SwitchThemeConfigGateway>()::switchDynamicColor)
     }
     single<GetAllMovieUC> {
-        GetAllMovieUC(get<MovieByGateway>()::getBySort)
+        GetAllMovieUC(get<MovieByGateway>()::getBySortAndFilter)
     }
     single<GetFavoriteMovieUC> {
         GetFavoriteMovieUC(get<MovieByGateway>()::getByFavorite)
@@ -77,6 +80,12 @@ val useCaseModule = module {
     }
     single<SetMovieSortOptionUC> {
         SetMovieSortOptionUC(get<MovieSortGateway>()::update)
+    }
+    single<GetMovieFilterOptionUC> {
+        GetMovieFilterOptionUC(get<MovieFilterGateway>()::getFlow)
+    }
+    single<SetMovieFilterOptionUC> {
+        SetMovieFilterOptionUC(get<MovieFilterGateway>()::update)
     }
     single<UpdateMovieLikeUC> {
         UpdateMovieLikeUC(get<MovieFavoriteGateway>()::update)

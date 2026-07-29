@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -14,8 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.velord.core.resource.Res
-import com.velord.core.resource.movie
 import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.movie.component.MovieAction
@@ -27,7 +26,6 @@ import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieUiAction
 import com.velord.ui.feature.movie.viewModel.MovieUiState
 import com.velord.ui.feature.movie.viewModel.MovieVM
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MovieScreen(
@@ -66,13 +64,11 @@ private fun Content(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface),
+                    .background(MaterialTheme.colorScheme.surface)
+                    .statusBarsPadding(),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
-                PlatformScreenHeader(
-                    title = stringResource(Res.string.movie),
-                    onBackClick = onBackClick
-                )
+                PlatformScreenHeader(onBackClick = onBackClick)
                 MovieHeader(
                     currentPage = uiState.currentPage,
                     pages = uiState.pageRoster,

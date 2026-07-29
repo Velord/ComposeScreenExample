@@ -1,6 +1,7 @@
 package com.velord.data.datastore
 
 import com.velord.data.datastore.appSetting.AppSettingDataStore
+import com.velord.model.movie.MovieFilterOption
 import com.velord.model.setting.AppSetting
 import com.velord.model.setting.ThemeConfig
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,8 @@ import org.koin.core.annotation.Single
 interface DataStoreDataSource {
     suspend fun checkAppFirstLaunch(): Boolean
     suspend fun setThemeConfig(theme: ThemeConfig)
-    suspend fun getAppSettingFlow(): Flow<AppSetting>
+    fun getAppSettingFlow(): Flow<AppSetting>
+    suspend fun setMovieFilters(filters: List<MovieFilterOption>)
 }
 
 @Single(binds = [DataStoreDataSource::class])
@@ -39,5 +41,11 @@ class DataStoreDataSourceImpl(
         }
     }
 
-    override suspend fun getAppSettingFlow(): Flow<AppSetting> = appSetting.flow
+    override fun getAppSettingFlow(): Flow<AppSetting> = appSetting.flow
+
+    override suspend fun setMovieFilters(filters: List<MovieFilterOption>) {
+        appSetting.updateData {
+            it.copy(movieFilters = filters)
+        }
+    }
 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Single
 
@@ -25,6 +26,7 @@ class MoviePaginationGateway(
     private val db: MovieDbDataSource,
     private val movieGateway: MovieGateway,
     private val movieSortGateway: MovieSortGateway,
+    private val movieFilterGateway: MovieFilterGateway,
 ) {
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
@@ -73,10 +75,16 @@ class MoviePaginationGateway(
     }
 
     private suspend fun loadFromNetwork(page: Int): MovieRosterSize {
+        val activeFilters = movieFilterGateway.get()
+        val ratingFilter = activeFilters.find { it.type is FilterType.Rating }?.type as? FilterType.Rating
+            ?: FilterType.Rating.DEFAULT
+        val voteCountFilter = activeFilters.find { it.type is FilterType.VoteCount }?.type as? FilterType.VoteCount
+            ?: FilterType.VoteCount.DEFAULT
+
         val newPage = MoviePageRequest(
             page = page,
-            rating = FilterType.Rating.DEFAULT,
-            voteCount = FilterType.VoteCount.DEFAULT,
+            rating = ratingFilter,
+            voteCount = voteCountFilter,
         )
         val movieRoster = http.getMovie(newPage)
         val newRoster = movieRoster.roster.map { it.toDomain() }
@@ -92,7 +100,7 @@ class MoviePaginationGateway(
 
     private suspend fun loadFromDb(page: Int): MovieRosterSize {
         val sortType = movieSortGateway.getSelected().type
-        val filterRoster = FilterType.ALL
+        val filterRoster = movieFilterGateway.get().map { it.type }
 
         val fromDb = db.getPage(
             page = page,
@@ -109,9 +117,19 @@ class MoviePaginationGateway(
 
     private fun observe() {
         scope.launch {
-            movieGateway.getFlow().collect {
+            movieGateway.getAllFlow().flow.collect {
                 currentPage = MoviePagination.calculatePage(it.size)
             }
         }
+        scope.launch {
+            movieFilterGateway.getFlow().flow.drop(1).collect {
+                applyFilter()
+            }
+        }
+    }
+
+    private suspend fun applyFilter() {
+        movieGateway.clearInMemory()
+        load()
     }
 }

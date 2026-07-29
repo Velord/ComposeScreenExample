@@ -4,11 +4,11 @@ import co.touchlab.kermit.Logger
 import com.velord.data.appstate.AppStateDataSource
 import com.velord.data.db.movie.dataSource.MovieDbDataSource
 import com.velord.model.movie.Movie
+import com.velord.usecase.movie.model.MovieFlow
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Single
@@ -36,9 +36,9 @@ class MovieFavoriteGateway(
         }
     }
 
-    fun get(): List<Movie> = appState.movieFavoriteRosterFlow.value
+    fun getAll(): List<Movie> = appState.movieFavoriteRosterFlow.value
 
-    fun getFlow(): Flow<List<Movie>> = appState.movieFavoriteRosterFlow
+    fun getAllFlow(): MovieFlow = MovieFlow(appState.movieFavoriteRosterFlow)
 
     suspend fun update(movie: Movie) {
         val updated = movie.copy(isLiked = movie.isLiked.not())
