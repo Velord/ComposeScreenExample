@@ -10,16 +10,22 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Module Model
             implementation(projects.model)
+            // Module Data
             implementation(projects.data.appstate)
             implementation(projects.data.backend)
             implementation(projects.data.datastore)
             implementation(projects.data.db)
             implementation(projects.data.os)
+            // Module Domain
             implementation(projects.domain.usecaseMovie)
             implementation(projects.domain.usecaseCamera)
+            // Kotlin
             implementation(libs.kotlin.coroutine.core)
+            // Logging
             implementation(libs.kermit)
+            // Koin
             implementation(libs.koin.core)
             api(libs.koin.annotation)
         }
@@ -31,6 +37,7 @@ kotlin {
 }
 
 dependencies {
+    // KSP
     add("kspCommonMainMetadata", libs.koin.ksp)
     add("kspAndroid", libs.koin.ksp)
     add("kspDesktop", libs.koin.ksp)

@@ -7,6 +7,7 @@ kotlin {
 }
 
 dependencies {
+    // Testing
     testImplementation(libs.konsist)
     testImplementation(libs.kotlin.test)
 }

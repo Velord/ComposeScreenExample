@@ -12,18 +12,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.demo.shape.component.PervasiveArcFromBottomShapeDemo
 import com.velord.ui.feature.demo.shape.component.TicketShapeDemo
 import com.velord.ui.feature.demo.shape.component.WaveShapeDemo
 
 @Composable
-fun ShapeDemoScreen() {
-    Content()
+fun ShapeDemoScreen(onBackClick: () -> Unit) {
+    Content(onBackClick = onBackClick)
 }
 
 @Composable
-private fun Content() {
+private fun Content(onBackClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -31,6 +32,10 @@ private fun Content() {
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
     ) {
+        PlatformScreenHeader(
+            title = "Shape Demo",
+            onBackClick = onBackClick
+        )
         TicketShapeDemo()
         PervasiveArcFromBottomShapeDemo()
         WaveShapeDemo()
@@ -42,5 +47,5 @@ private fun Content() {
 @PreviewCombined
 @Composable
 private fun Preview() {
-    Content()
+    Content(onBackClick = {})
 }

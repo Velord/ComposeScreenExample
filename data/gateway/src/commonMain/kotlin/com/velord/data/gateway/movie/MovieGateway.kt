@@ -3,7 +3,7 @@ package com.velord.data.gateway.movie
 import com.velord.data.appstate.AppStateDataSource
 import com.velord.data.os.share.ShareDataSource
 import com.velord.model.movie.Movie
-import kotlinx.coroutines.flow.Flow
+import com.velord.usecase.movie.model.MovieFlow
 import kotlinx.coroutines.flow.update
 import org.koin.core.annotation.Single
 
@@ -13,9 +13,9 @@ class MovieGateway(
     private val shareDataSource: ShareDataSource,
 ) {
 
-    fun getFlow(): Flow<List<Movie>> = appState.movieRosterFlow
+    fun getAllFlow(): MovieFlow = MovieFlow(appState.movieRosterFlow)
 
-    fun get(): List<Movie> = appState.movieRosterFlow.value
+    fun getAll(): List<Movie> = appState.movieRosterFlow.value
 
     fun clearInMemory() {
         appState.movieRosterFlow.value = emptyList()

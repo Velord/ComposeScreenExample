@@ -30,10 +30,9 @@ inside the Voyager adapter, while the VM receives only route identities. This ke
 based on the active tab stack instead of the outer navigator that hosts the bottom-navigation
 screen.
 */
-internal val LocalVoyagerNavigatorObserver =
-    staticCompositionLocalOf<(Navigator, List<String?>, String?) -> Unit> {
-        error("LocalVoyagerNavigatorObserver is not provided")
-    }
+internal val LocalVoyagerNavigatorObserver = staticCompositionLocalOf<(Navigator, List<String?>, String?) -> Unit> {
+    error("LocalVoyagerNavigatorObserver is not provided")
+}
 
 sealed class VoyagerBottomNavigationTab : Tab {
 

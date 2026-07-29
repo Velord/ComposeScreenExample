@@ -43,6 +43,9 @@ private val USE_CASE_CONSTRUCTOR_CALL_REGEX = Regex("""\b[A-Za-z][A-Za-z0-9]*UC\
 private val USE_CASE_CONSTRUCTOR_LAMBDA_REGEX = Regex("""\b[A-Za-z][A-Za-z0-9]*UC\s*\{""")
 private val USE_CASE_IMPORT_REGEX = Regex("""(?m)^import\s+com\.velord\.usecase\.""")
 private val USE_CASE_BINDING_REGEX = Regex("""single<\s*[A-Za-z0-9_]+UC\s*>""")
+private val DEPENDENCY_DECLARATION_REGEX = Regex(
+    """^\s*(?:implementation|api|ksp|compileOnly|runtimeOnly|coreLibraryDesugaring|testImplementation|desktopMainImplementation|androidMainImplementation|commonMainImplementation)\b""",
+)
 private val SAME_TARGET_EXTENSION_DEBT_ROSTER = emptySet<String>()
 
 class ModuleDependencyTest {
@@ -225,6 +228,72 @@ class ModuleDependencyTest {
         if (violationRoster.isNotEmpty()) {
             val msg = "Platform modules bind domain use cases: " +
                 violationRoster.joinToString()
+            println(msg)
+        }
+
+        assertTrue(violationRoster.isEmpty())
+    }
+
+    @Test
+    fun `gradle build files dependencies must be grouped under section comments`() {
+        val buildFiles = repoRoot
+            .walkTopDown()
+            .filter { file ->
+                file.name == BUILD_FILE_NAME &&
+                file.path.contains("${File.separator}build${File.separator}").not() &&
+                file != File(repoRoot, BUILD_FILE_NAME)
+            }
+            .toList()
+
+        val violationRoster = buildFiles.flatMap { file ->
+            val lines = file.readLines()
+            val fileViolations = mutableListOf<String>()
+            var inDependenciesBlock = false
+            var activeCommentFound = false
+
+            lines.forEachIndexed { index, line ->
+                val trimmed = line.trim()
+                if (trimmed.contains("dependencies {") || trimmed.contains("dependencies.apply {")) {
+                    inDependenciesBlock = true
+                    activeCommentFound = false
+                    return@forEachIndexed
+                }
+
+                if (inDependenciesBlock) {
+                    if (trimmed == "}") {
+                        inDependenciesBlock = false
+                        activeCommentFound = false
+                        return@forEachIndexed
+                    }
+
+                    if (trimmed.isEmpty()) {
+                        activeCommentFound = false
+                        return@forEachIndexed
+                    }
+
+                    if (trimmed.startsWith("//")) {
+                        val commentTitle = trimmed.removePrefix("//").trim()
+                        if (commentTitle.endsWith("Plugins") || commentTitle.endsWith("Modules") || commentTitle.endsWith("Tools") || commentTitle.endsWith("Libraries") || commentTitle.endsWith("Dependencies")) {
+                            fileViolations.add("${file.relativeTo(repoRoot).path}:${index + 1} -> Plural section header name violation: '$trimmed' (use singular form)")
+                        }
+                        activeCommentFound = true
+                        return@forEachIndexed
+                    }
+
+                    if (DEPENDENCY_DECLARATION_REGEX.containsMatchIn(trimmed)) {
+                        if (!activeCommentFound) {
+                            fileViolations.add("${file.relativeTo(repoRoot).path}:${index + 1} -> $trimmed")
+                        }
+                    }
+                }
+            }
+
+            fileViolations
+        }
+
+        if (violationRoster.isNotEmpty()) {
+            val msg = "Build files containing uncommented dependency declarations:\n" +
+                violationRoster.joinToString("\n")
             println(msg)
         }
 

@@ -161,6 +161,10 @@ internal class SupremeNavigatorVanilla(private val supremeNavController: NavHost
         return tabRoot.id
     }
 
+    internal fun goBack() {
+        supremeNavController.popBackStack()
+    }
+
     override fun goToSettingFromCameraRecording() {
         supremeNavController.navigate(GraphVanilla.Main.SettingDestinationVanilla)
     }

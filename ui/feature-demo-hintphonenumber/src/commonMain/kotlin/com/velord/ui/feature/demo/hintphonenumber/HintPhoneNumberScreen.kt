@@ -1,6 +1,5 @@
 package com.velord.ui.feature.demo.hintphonenumber
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,14 +17,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.velord.core.resource.Res
+import com.velord.core.resource.hint_phone_number
 import com.velord.core.resource.invoke_again
 import com.velord.core.resource.phone_number_hint_not_available_on_desktop
 import com.velord.core.resource.waiting
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun HintPhoneNumberScreen() {
+fun HintPhoneNumberScreen(onBackClick: (() -> Unit)? = null) {
     val phoneState: MutableState<String?> = remember {
         mutableStateOf(null)
     }
@@ -42,14 +43,16 @@ fun HintPhoneNumberScreen() {
 
     Content(
         phone = phoneState.value,
-        register = register
+        register = register,
+        onBackClick = onBackClick,
     )
 }
 
 @Composable
 private fun Content(
     phone: String?,
-    register: () -> Unit
+    register: () -> Unit,
+    onBackClick: (() -> Unit)? = null,
 ) {
     Surface(
         modifier = Modifier
@@ -57,9 +60,12 @@ private fun Content(
             .statusBarsPadding(),
     ) {
         Column(
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            PlatformScreenHeader(
+                title = stringResource(Res.string.hint_phone_number),
+                onBackClick = onBackClick
+            )
             val defStr = stringResource(Res.string.waiting)
             val str = phone ?: defStr
             Text(

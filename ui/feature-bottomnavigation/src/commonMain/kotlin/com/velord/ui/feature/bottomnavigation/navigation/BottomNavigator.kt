@@ -8,7 +8,7 @@ interface BottomNavigator {
     @Composable
     fun CreateNavHostForBottom(
         modifier: Modifier,
-        startRoute: BottomNavigationItem
+        startRoute: BottomNavigationItem,
     )
     @Composable
     fun SetupNavController(

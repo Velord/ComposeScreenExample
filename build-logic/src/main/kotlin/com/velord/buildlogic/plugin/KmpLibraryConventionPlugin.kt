@@ -16,6 +16,10 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
             applyPlugin("multiplatform-kotlin")
             applyPlugin("multiplatform-android-library")
 
+            configurations.matching { it.name.startsWith("desktop") }.configureEach {
+                exclude(mapOf("group" to "androidx.compose.ui"))
+            }
+
             val targetJvmVersion = versionInt("jvmTarget")
 
             extensions.configure<KotlinMultiplatformExtension> {

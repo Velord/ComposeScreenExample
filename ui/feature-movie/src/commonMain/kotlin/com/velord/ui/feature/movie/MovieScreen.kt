@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.movie.component.MovieAction
 import com.velord.ui.feature.movie.component.MovieBottomSheet
@@ -30,12 +32,14 @@ fun MovieScreen(
     viewModel: MovieVM,
     allMovieVM: AllMovieVM,
     favoriteMovieVM: FavoriteMovieVM,
+    onBackClick: (() -> Unit)? = null,
 ) {
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     Content(
         uiState = uiState.value,
         onAction = viewModel::onAction,
+        onBackClick = onBackClick,
     ) {
         MoviePager(
             allMovieVM = allMovieVM,
@@ -52,6 +56,7 @@ fun MovieScreen(
 private fun Content(
     uiState: MovieUiState,
     onAction: (MovieUiAction) -> Unit,
+    onBackClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -59,9 +64,11 @@ private fun Content(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface),
+                    .background(MaterialTheme.colorScheme.surface)
+                    .statusBarsPadding(),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
+                PlatformScreenHeader(onBackClick = onBackClick)
                 MovieHeader(
                     currentPage = uiState.currentPage,
                     pages = uiState.pageRoster,

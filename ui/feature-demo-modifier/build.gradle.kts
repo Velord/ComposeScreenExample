@@ -11,7 +11,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Module Core
             implementation(projects.core.coreUi)
+            // Compose
             implementation(libs.compose.foundation)
             implementation(libs.compose.material.icons.extended)
             implementation(libs.compose.material3)
@@ -19,7 +21,9 @@ kotlin {
         }
 
         androidMain.dependencies {
+            // Module Core
             implementation(projects.core.coreUi)
+            // AndroidX
             implementation(libs.androidx.fragment.ktx)
         }
     }

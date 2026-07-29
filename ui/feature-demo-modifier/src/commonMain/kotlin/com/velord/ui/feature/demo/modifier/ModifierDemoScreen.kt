@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.demo.modifier.component.BlinkingShadowDemo
 import com.velord.ui.feature.demo.modifier.component.HangingDemo
@@ -20,12 +21,12 @@ import com.velord.ui.feature.demo.modifier.component.ShimmeringDemo
 import com.velord.ui.feature.demo.modifier.component.SwellingDemo
 
 @Composable
-fun ModifierDemoScreen() {
-    Content()
+fun ModifierDemoScreen(onBackClick: (() -> Unit)? = null) {
+    Content(onBackClick = onBackClick)
 }
 
 @Composable
-private fun Content() {
+private fun Content(onBackClick: (() -> Unit)? = null) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -33,6 +34,10 @@ private fun Content() {
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
     ) {
+        PlatformScreenHeader(
+            title = "Modifier Demo",
+            onBackClick = onBackClick
+        )
         ShimmeringDemo()
         BlinkingShadowDemo()
         HangingDemo()

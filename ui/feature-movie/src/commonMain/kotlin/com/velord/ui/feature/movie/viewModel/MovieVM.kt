@@ -5,14 +5,14 @@ import com.velord.ui.feature.movie.model.MovieFilterOptionUI
 import com.velord.ui.feature.movie.model.MoviePage
 import com.velord.ui.feature.movie.model.MovieSortOptionUI
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
+import com.velord.usecase.movie.GetMovieFilterOptionUC
 import com.velord.usecase.movie.GetMovieSortOptionUC
+import com.velord.usecase.movie.SetMovieFilterOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-// TODO: Create Filter logic through layers. Use Default by now
 
 data class MovieUiState(
     val initialPage: Int,
@@ -41,12 +41,14 @@ data class MovieUiState(
 sealed interface MovieUiAction {
     data class PageSwipe(val newPage: Int) : MovieUiAction
     data class SortOptionClick(val newOption: MovieSortOptionUI) : MovieUiAction
-    data class FilterOptionClick(val newOption: MovieFilterOptionUI) : MovieUiAction
+    data class FilterOptionChange(val newOption: MovieFilterOption) : MovieUiAction
 }
 
 class MovieVM(
     private val getMovieSortOptionUC: GetMovieSortOptionUC,
-    private val setMovieSortOptionUC: SetMovieSortOptionUC
+    private val setMovieSortOptionUC: SetMovieSortOptionUC,
+    private val getMovieFilterOptionUC: GetMovieFilterOptionUC,
+    private val setMovieFilterOptionUC: SetMovieFilterOptionUC
 ) : CoroutineScopeVM() {
 
     val uiStateFlow: MutableStateFlow<MovieUiState> = MutableStateFlow(MovieUiState.DEFAULT)
@@ -75,9 +77,10 @@ class MovieVM(
         setMovieSortOptionUC(domain)
     }
 
-    @Suppress("UnusedParameter", "EmptyFunctionBlock")
-    private fun onFilterOptionClick(newOption: MovieFilterOptionUI) {
-        // TODO: disabled for now
+    private fun onFilterOptionChange(newOption: MovieFilterOption) {
+        launch {
+            setMovieFilterOptionUC(newOption)
+        }
     }
 
     private fun observe() {
@@ -89,11 +92,18 @@ class MovieVM(
             }
         }
         launch {
+            getMovieFilterOptionUC().flow.collect { newValue ->
+                uiStateFlow.update { state ->
+                    state.copy(movieFilterOptionRoster = newValue.map { MovieFilterOptionUI.fromDomain(it) })
+                }
+            }
+        }
+        launch {
             actionFlow.collect { action ->
                 when (action) {
                     is MovieUiAction.PageSwipe -> onPageSwipe(action.newPage)
                     is MovieUiAction.SortOptionClick -> onSortOptionClick(action.newOption)
-                    is MovieUiAction.FilterOptionClick -> onFilterOptionClick(action.newOption)
+                    is MovieUiAction.FilterOptionChange -> onFilterOptionChange(action.newOption)
                 }
             }
         }

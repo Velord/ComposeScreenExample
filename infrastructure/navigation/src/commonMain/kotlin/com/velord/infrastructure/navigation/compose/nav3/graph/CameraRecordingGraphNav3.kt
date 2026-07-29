@@ -25,8 +25,11 @@ internal fun EntryProviderScope<GraphNav3>.setupCameraRecordingGraphNav3(
                         navigator.goToSettingFromCameraRecording()
                 }
             },
-            onBackClick = {
+            onGraphCompleted = {
                 bottomNavVM.onAction(BottomNavigationUiAction.GraphCompletedHandling)
+            },
+            onBackClick = {
+                bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
             }
         )
     }

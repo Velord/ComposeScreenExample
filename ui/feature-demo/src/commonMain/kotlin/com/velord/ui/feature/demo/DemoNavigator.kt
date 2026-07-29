@@ -12,4 +12,5 @@ enum class DemoNavigationEvent {
 
 interface DemoNavigator {
     fun goTo(dest: DemoNavigationEvent)
+    fun goBack()
 }

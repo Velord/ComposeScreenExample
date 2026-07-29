@@ -21,6 +21,11 @@ kotlin {
             implementation(libs.bundles.compose.foundation)
             implementation(libs.bundles.compose.core)
             implementation(libs.bundles.compose.material3.all)
+            // Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             // Lib
             implementation(libs.androidx.graphics.shapes)
             implementation(libs.kotlin.coroutine.core)
@@ -30,6 +35,8 @@ kotlin {
         desktopMain.dependencies {
             // Template
             implementation(libs.bundles.kotlin.core)
+            // Lib
+            implementation(libs.compose.material.icons.core)
         }
 
         androidMain.dependencies {

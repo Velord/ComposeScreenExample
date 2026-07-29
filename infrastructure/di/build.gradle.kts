@@ -9,7 +9,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Module Infrastructure
             implementation(projects.infrastructure.config)
+            // Module Model
             implementation(projects.model)
             // Module Domain
             implementation(projects.domain.usecaseSetting)
@@ -41,10 +43,13 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
         }
         androidMain.dependencies {
+            // Module Core
             implementation(projects.core.coreUi)
         }
         desktopTest.dependencies {
+            // Module Infrastructure
             implementation(projects.infrastructure.config)
+            // Testing
             implementation(libs.kotlin.test)
             implementation(libs.koin.test)
         }

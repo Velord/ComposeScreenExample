@@ -25,9 +25,13 @@ class SettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
-        SettingScreen(viewModel) {
-            viewModelBottom.onAction(BottomNavigationJetpackUiAction.GraphCompletedHandling)
-        }
+        SettingScreen(
+            viewModel = viewModel,
+            onGraphCompleted = {
+                viewModelBottom.onAction(BottomNavigationJetpackUiAction.GraphCompletedHandling)
+            },
+            onBackClick = {},
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

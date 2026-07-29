@@ -28,36 +28,40 @@ internal fun EntryProviderScope<GraphNav3>.setupDemoGraphNav3(navigator: DemoNav
 
         DemoScreen(
             viewModel = viewModel,
+            onGraphCompleted = {
+                bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+            },
             onNavigationEvent = {
                 navigator.goTo(it)
             },
             onBackClick = {
-                // To enable System Back Button handling
-                // via Bottom Navigation -> comment the line below
-                bottomNavVM.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
+                bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
             },
         )
     }
 
     entry<GraphNav3.BottomTab.Demo.ShapeDemoDestinationNav3> {
-        ShapeDemoScreen()
+        ShapeDemoScreen(onBackClick = navigator::goBack)
     }
 
     entry<GraphNav3.BottomTab.Demo.ModifierDestinationNav3> {
-        ModifierDemoScreen()
+        ModifierDemoScreen(onBackClick = navigator::goBack)
     }
 
     entry<GraphNav3.BottomTab.Demo.FlowSummatorDestinationNav3> {
         val viewModel = koinViewModel<FlowSummatorVM>()
-        FlowSummatorScreen(viewModel)
+        FlowSummatorScreen(
+            viewModel = viewModel,
+            onBackClick = navigator::goBack
+        )
     }
 
     entry<GraphNav3.BottomTab.Demo.MorphDemoDestinationNav3> {
-        MorphDemoScreen()
+        MorphDemoScreen(onBackClick = navigator::goBack)
     }
 
     entry<GraphNav3.BottomTab.Demo.HintPhoneDestinationNav3> {
-        HintPhoneNumberScreen()
+        HintPhoneNumberScreen(onBackClick = navigator::goBack)
     }
 
     entry<GraphNav3.BottomTab.Demo.MovieDestinationNav3> {
@@ -65,14 +69,18 @@ internal fun EntryProviderScope<GraphNav3>.setupDemoGraphNav3(navigator: DemoNav
         val allMovieVM = koinViewModel<AllMovieVM>()
         val favoriteMovieVM = koinViewModel<FavoriteMovieVM>()
         MovieScreen(
-            viewModel,
-            allMovieVM,
-            favoriteMovieVM,
+            viewModel = viewModel,
+            allMovieVM = allMovieVM,
+            favoriteMovieVM = favoriteMovieVM,
+            onBackClick = navigator::goBack
         )
     }
 
     entry<GraphNav3.BottomTab.Demo.DialogDestinationNav3> {
         val viewModel = koinViewModel<DialogDemoVM>()
-        DialogDemoScreen(viewModel)
+        DialogDemoScreen(
+            viewModel = viewModel,
+            onBackClick = navigator::goBack
+        )
     }
 }

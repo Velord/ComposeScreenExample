@@ -15,11 +15,12 @@ import kotlinx.coroutines.flow.filterNotNull
 @Composable
 fun <T> ObserveSharedFlow(
     flow: MutableSharedFlow<T>,
+    minActiveState: Lifecycle.State = Lifecycle.State.RESUMED,
     onEvent: (T) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
-    val eventFlow = remember(flow, lifecycleOwner) {
-        flow.flowWithLifecycle(lifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
+    val eventFlow = remember(flow, lifecycleOwner, minActiveState) {
+        flow.flowWithLifecycle(lifecycleOwner.lifecycle, minActiveState)
     }
 
     LaunchedEffect(eventFlow) {

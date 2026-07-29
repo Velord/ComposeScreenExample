@@ -38,12 +38,16 @@ import com.velord.core.resource.flow_summator
 import com.velord.core.resource.info_description_flow_summator
 import com.velord.core.resource.launch
 import com.velord.core.resource.please_enter_the_number
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun FlowSummatorScreen(viewModel: FlowSummatorVM) {
+fun FlowSummatorScreen(
+    viewModel: FlowSummatorVM,
+    onBackClick: (() -> Unit)? = null,
+) {
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     val isStartEnabledState = remember {
@@ -54,6 +58,7 @@ fun FlowSummatorScreen(viewModel: FlowSummatorVM) {
         uiState = uiState.value,
         isStartEnabledState = isStartEnabledState,
         onAction = viewModel::onAction,
+        onBackClick = onBackClick,
     )
 }
 
@@ -61,7 +66,8 @@ fun FlowSummatorScreen(viewModel: FlowSummatorVM) {
 private fun Content(
     uiState: FlowSummatorUiState,
     isStartEnabledState: State<Boolean>,
-    onAction: (FlowSummatorUiAction) -> Unit
+    onAction: (FlowSummatorUiAction) -> Unit,
+    onBackClick: (() -> Unit)? = null,
 ) {
     Column(
         modifier = Modifier
@@ -71,6 +77,10 @@ private fun Content(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        PlatformScreenHeader(
+            title = stringResource(Res.string.flow_summator),
+            onBackClick = onBackClick
+        )
         Title()
         Start(
             isEnabled = isStartEnabledState.value,

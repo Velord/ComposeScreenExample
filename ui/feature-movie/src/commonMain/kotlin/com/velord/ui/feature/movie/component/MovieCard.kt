@@ -146,7 +146,7 @@ private fun DateAndRating(movie: Movie) {
                 tint = Color.Yellow,
             )
             Text(
-                text = movie.rating.toString(),
+                text = "${movie.rating} (${movie.voteCount})",
                 modifier = Modifier.padding(start = 4.dp),
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 style = MaterialTheme.typography.labelMedium,

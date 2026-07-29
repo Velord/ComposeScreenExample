@@ -1,8 +1,7 @@
 package com.velord.ui.feature.demo
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
@@ -19,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.velord.core.resource.Res
+import com.velord.core.resource.demo
 import com.velord.core.resource.open_dialog
 import com.velord.core.resource.open_flow_summator
 import com.velord.core.resource.open_hint_phone_number
@@ -26,6 +26,7 @@ import com.velord.core.resource.open_modifier_demo
 import com.velord.core.resource.open_morph_demo
 import com.velord.core.resource.open_movie
 import com.velord.core.resource.open_shape_demo
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
 import org.jetbrains.compose.resources.stringResource
@@ -34,31 +35,44 @@ import org.jetbrains.compose.resources.stringResource
 fun DemoScreen(
     viewModel: DemoVM,
     onNavigationEvent: (DemoNavigationEvent) -> Unit,
+    onGraphCompleted: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     SideEffect {
         // Simulate we completed back stack handling
-        onBackClick()
+        onGraphCompleted()
     }
 
     ObserveSharedFlow(flow = viewModel.navigationEvent) {
         onNavigationEvent(it)
     }
 
-    Content(onAction = viewModel::onAction)
+    Content(
+        onAction = viewModel::onAction,
+        onBackClick = onBackClick,
+    )
 }
 
 @Composable
-private fun Content(onAction: (DemoUiAction) -> Unit) {
+private fun Content(
+    onAction: (DemoUiAction) -> Unit,
+    onBackClick: () -> Unit,
+) {
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
             .statusBarsPadding()
-            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
+            .verticalScroll(scrollState)
             .padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        PlatformScreenHeader(
+            title = stringResource(Res.string.demo),
+            onBackClick = onBackClick,
+        )
+
         OpenButton(
             text = stringResource(Res.string.open_shape_demo),
             onClick = { onAction(DemoUiAction.OpenShapeClick) },
@@ -114,5 +128,8 @@ private fun OpenButton(
 @PreviewCombined
 @Composable
 private fun Preview() {
-    Content(onAction = {})
+    Content(
+        onAction = {},
+        onBackClick = {}
+    )
 }

@@ -18,9 +18,10 @@ internal fun NavGraphBuilder.setupMainGraphVanilla(navigator: SupremeNavigatorVa
         val viewModel = koinViewModel<ThemeVM>()
         SettingScreen(
             viewModel = viewModel,
-            onBackClick = {
+            onGraphCompleted = {
                // Handle back navigation if needed
-            }
+            },
+            onBackClick = navigator::goBack,
         )
     }
 }

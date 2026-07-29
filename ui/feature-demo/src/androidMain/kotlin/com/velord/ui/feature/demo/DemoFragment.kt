@@ -27,6 +27,7 @@ class DemoFragment : Fragment() {
         DemoScreen(
             viewModel = viewModel,
             onNavigationEvent = ::handleNavigationEvent,
+            onGraphCompleted = {},
             onBackClick = {
                 // To enable System Back Button handling
                 // via Bottom Navigation -> comment the line below

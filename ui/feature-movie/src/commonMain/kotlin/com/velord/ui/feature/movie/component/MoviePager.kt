@@ -116,10 +116,7 @@ private fun RefreshPage(
     PullToRefreshBox(
         isRefreshing = isRefreshing,
         onRefresh = onRefresh,
-        modifier = Modifier
-            .fillMaxSize()
-            //.pullRefresh(state = pullRefreshState, enabled = isPaginationAvailable)
-            .scrollOrNot(),
+        modifier = Modifier.fillMaxSize(),
         state = refreshState,
         indicator =  {
             if (isPaginationAvailable) {
@@ -132,7 +129,7 @@ private fun RefreshPage(
         }
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().scrollOrNot(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (isDataExausted) {

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -42,10 +41,8 @@ internal fun MovieHeader(
 ) {
     Row(
         modifier = Modifier
-            .statusBarsPadding()
             .fillMaxWidth()
-            .clip(RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
-        ,
+            .clip(RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
