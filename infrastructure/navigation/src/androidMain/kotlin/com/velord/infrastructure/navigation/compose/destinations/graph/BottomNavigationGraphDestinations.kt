@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavHostGraph
 import com.ramcosta.composedestinations.annotation.parameters.CodeGenVisibility
+import com.velord.infrastructure.navigation.compose.destinations.navigator.SupremeNavigatorDestinations
 import com.velord.infrastructure.navigation.compose.destinations.transition.PopFadeTransition
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVM
@@ -20,15 +21,28 @@ private const val BOTTOM_NAVIGATION_GRAPH = "bottom_navigation_graph"
 annotation class BottomNavigationGraph
 
 @Destination<BottomNavigationGraph>
-@Destination<MainGraph>
 @Composable
-internal fun SettingsDestination() {
+internal fun BottomNavigationSettingsDestination() {
     val viewModel = koinViewModel<ThemeVM>()
     val bottomNavVM = koinViewModel<BottomNavigationVM>()
     SettingScreen(
         viewModel = viewModel,
-        onBackClick = {
+        onGraphCompleted = {
             bottomNavVM.onAction(BottomNavigationUiAction.GraphCompletedHandling)
-        }
+        },
+        onBackClick = {
+            bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
+        },
+    )
+}
+
+@Destination<MainGraph>
+@Composable
+internal fun MainSettingsDestination(navigator: SupremeNavigatorDestinations) {
+    val viewModel = koinViewModel<ThemeVM>()
+    SettingScreen(
+        viewModel = viewModel,
+        onGraphCompleted = {},
+        onBackClick = navigator::goBack,
     )
 }

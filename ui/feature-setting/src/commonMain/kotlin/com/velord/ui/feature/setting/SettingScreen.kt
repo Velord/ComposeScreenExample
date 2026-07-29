@@ -6,7 +6,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,10 +19,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.velord.core.resource.Res
 import com.velord.core.resource.abide_to_os_theme
@@ -33,6 +30,7 @@ import com.velord.core.resource.os_does_not_support_theme_switching
 import com.velord.core.resource.settings
 import com.velord.core.resource.use_dark_theme
 import com.velord.core.resource.use_system_dynamic_theme
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.LocalTheme
 import com.velord.ui.sharedviewmodel.ThemeUiAction
@@ -42,27 +40,36 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun SettingScreen(
     viewModel: ThemeVM,
-    onBackClick: () -> Unit,
+    onGraphCompleted: () -> Unit,
+    onBackClick: (() -> Unit),
 ) {
     SideEffect {
         // Simulate we completed back stack handling
-        onBackClick()
+        onGraphCompleted()
     }
 
-    Content(onThemeAction = viewModel::onAction)
+    Content(
+        onThemeAction = viewModel::onAction,
+        onBackClick = onBackClick,
+    )
 }
 
 @Composable
-internal fun Content(onThemeAction: (ThemeUiAction) -> Unit) {
+internal fun Content(
+    onThemeAction: (ThemeUiAction) -> Unit,
+    onBackClick: (() -> Unit)? = null,
+) {
     Surface {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
-                .padding(top = 16.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            Title(stringResource(Res.string.settings))
+            PlatformScreenHeader(
+                title = stringResource(Res.string.settings),
+                onBackClick = onBackClick,
+            )
 
             Column(
                 modifier = Modifier
@@ -179,19 +186,6 @@ private fun SwitcherDivider() {
         modifier = Modifier.clip(MaterialTheme.shapes.large),
         thickness = 2.5.dp,
         color =MaterialTheme.colorScheme.onSurfaceVariant
-    )
-}
-
-@Composable
-private fun ColumnScope.Title(text: String) {
-    Text(
-        text = text,
-        modifier = Modifier
-            .padding(top = 8.dp)
-            .align(alignment = Alignment.CenterHorizontally),
-        color = MaterialTheme.colorScheme.primary,
-        textAlign = TextAlign.Start,
-        style = MaterialTheme.typography.bodyLarge,
     )
 }
 

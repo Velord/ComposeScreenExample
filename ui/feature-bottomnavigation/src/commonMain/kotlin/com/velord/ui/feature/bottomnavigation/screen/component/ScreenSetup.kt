@@ -16,7 +16,7 @@ import org.jetbrains.compose.resources.stringResource
 private val log = Logger.withTag("LogBackStack")
 
 @Composable
-internal  fun <T> ScreenSetup(
+internal fun <T> ScreenSetup(
     state: State<T>,
     backBehavior: BottomNavigationBackBehavior,
     onBackClick: () -> Unit,
@@ -35,9 +35,9 @@ internal  fun <T> ScreenSetup(
 
     content()
 
-    val str = stringResource(Res.string.press_again_to_exit)
     log.d { "ScreenSetup: BackHandler Registered. Behavior=$backBehavior" }
 
+    val str = stringResource(Res.string.press_again_to_exit)
     PlatformBackHandler(
         backBehavior = backBehavior,
         message = str,

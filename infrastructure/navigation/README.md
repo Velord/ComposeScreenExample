@@ -122,6 +122,25 @@ chooses the rendering surface:
 
 Do not add engine-specific branches back to `MainActivity`.
 
+## Engine Creation Layer
+
+The `creation/` directory bridges `NavigationContent` and each engine through an expect/actual
+pattern:
+
+| Function | `commonMain` | `androidMain` | `desktopMain` |
+| --- | --- | --- | --- |
+| `CreateNavigationViaNav3` | Implementation | — | — |
+| `CreateNavigationViaVoyager` | Implementation | — | — |
+| `CreateNavigationViaVanilla` | Expect | Actual | Throws (unsupported) |
+| `CreateNavigationViaDestinations` | Expect | Actual | Throws (unsupported) |
+| `CreateNavigationViaJetpack` | Stub (throws) | — | — |
+
+Nav3 and Voyager are fully common. Vanilla and Destinations use expect/actual because they depend
+on Android-only libraries. Jetpack throws from common because it renders through a Fragment host,
+not a Composable.
+
+Do not add engine construction logic outside of `creation/`.
+
 ## Feature Navigation Contract
 
 A feature describes intent without naming a navigation library:
@@ -296,10 +315,17 @@ Nav3 is the primary CMP implementation.
 
 Key files:
 
-- `GraphNav3.kt`.
-- `NavigationState.kt`.
-- `BackStackNavigator.kt`.
-- `SupremeNavigatorNav3.kt`.
+- `GraphNav3.kt` — sealed `NavKey` route hierarchy.
+- `NavigationState.kt` — per-tab `NavBackStack` state holder.
+- `BackStackNavigator.kt` — stack mutation controller.
+- `SupremeNavigatorNav3.kt` — root navigator, implements `BottomNavigator` and `CameraRecordingNavigator`.
+- `BottomNavigatorNav3.kt` — tab-level navigator, implements `DemoNavigator`.
+
+Graph entry providers:
+
+- `MainGraphNav3.kt` — root-level entries.
+- `BottomNavigationGraphNav3.kt` — tab entries.
+- `CameraRecordingGraphNav3.kt`, `DemoGraphNav3.kt` — per-tab child entries.
 
 Source:
 [`compose/nav3`](./src/commonMain/kotlin/com/velord/infrastructure/navigation/compose/nav3)
@@ -372,9 +398,15 @@ Vanilla is the Android-only, typed Compose Navigation implementation.
 
 Key files:
 
-- `GraphVanilla.kt`.
-- `SupremeNavigatorVanilla.kt`.
-- `BottomTabNavigatorVanilla.kt`.
+- `GraphVanilla.kt` — sealed `@Serializable` route definitions.
+- `SupremeNavigatorVanilla.kt` — root navigator, implements `BottomNavigator` and `CameraRecordingNavigator`.
+- `BottomNavigatorVanilla.kt` — tab-level navigator, implements `DemoNavigator`.
+- `BottomTabNavigatorVanilla.kt` — tab switching helper.
+
+Graph builders:
+
+- `MainGraphVanilla.kt`, `BottomNavigationGraphVanilla.kt`.
+- `CameraRecordingGraphVanilla.kt`, `DemoGraphVanilla.kt`.
 
 Source:
 [`compose/vanilla`](./src/androidMain/kotlin/com/velord/infrastructure/navigation/compose/vanilla)
@@ -399,9 +431,14 @@ Destinations is Android-only in this project.
 
 Key files:
 
-- `MainGraphDestinations.kt`.
-- `SupremeNavigatorDestinations.kt`.
-- `BottomTabNavigatorDestinations.kt`.
+- `MainGraphDestinations.kt` — root `@NavHostGraph` annotation and destinations.
+- `SupremeNavigatorDestinations.kt` — root navigator, implements `BottomNavigator` and `CameraRecordingNavigator`.
+- `BottomNavigatorDestinations.kt` — tab-level navigator, implements `DemoNavigator`.
+- `BottomTabNavigatorDestinations.kt` — tab switching helper.
+
+Graph annotations:
+
+- `BottomNavigationGraphDestinations.kt`, `CameraRecordingGraphDestinations.kt`, `DemoGraphDestinations.kt`.
 
 Source:
 [`compose/destinations`](./src/androidMain/kotlin/com/velord/infrastructure/navigation/compose)
@@ -530,6 +567,12 @@ Give every host scoped types:
 - `AccountBottomNavigationVM`.
 - `AccountBottomNavigator`.
 - `AccountBottomNavEventService`.
+
+Every host also needs its own platform component set:
+
+- `PlatformBackHandler` — expect/actual for system back interception.
+- `ScreenSetup` — wires back handlers, state logging, and exit confirmation.
+- `SnackbarMessage` — exit confirmation UI.
 
 Do not reuse the current unqualified `BottomNavEventService`. It is a Koin singleton. Sharing it
 would couple selected tabs, graph ownership, and exit behavior between independent hosts.
@@ -748,6 +791,24 @@ Check `prepareAndroidMainNavigationResources` and confirm XML remains in
 
 Fix build selection. Do not silently substitute Nav3 or Voyager for Vanilla, Destinations, or
 Jetpack.
+
+## Desktop
+
+Desktop uses the same `NavigationContent` dispatch as Android. The entry point is
+[`Main.kt`](../../app/desktop/src/desktopMain/kotlin/com/velord/composescreenexample/desktop/Main.kt).
+
+Platform differences:
+
+| Concern | Android | Desktop |
+| --- | --- | --- |
+| Supported engines | Nav3, Voyager, Vanilla, Destinations, Jetpack | Nav3, Voyager |
+| Unsupported engine handling | — | `CreateNavigationVia*` throws at runtime |
+| System back button | `BackHandler` and `PlatformBackHandler` | No-op (`PlatformBackHandler.desktop.kt`) |
+| Bottom-navigation DI | `bottomNavigationPlatformModule` binds `BottomNavigationJetpackVM` | Empty module |
+| App exit | `RequestAppExitUC` emits `AppEvent.Exit` | Same, handled by `exitApplication()` |
+
+Desktop has no Fragment surface. `AndroidNavigationHost` does not exist on desktop. Window closing
+is handled by the desktop app shell, not by the navigation module.
 
 ## Definition Of Done
 

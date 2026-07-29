@@ -30,6 +30,10 @@ internal class BottomNavigatorDestinations(
         navController.toDestinationsNavigator().navigate(dest.toDestination())
     }
 
+    override fun goBack() {
+        navController.popBackStack()
+    }
+
     internal companion object {
         fun DemoNavigationEvent.toDestination(): Direction = when(this) {
             DemoNavigationEvent.Shape -> ShapeDemoDestinationDestination

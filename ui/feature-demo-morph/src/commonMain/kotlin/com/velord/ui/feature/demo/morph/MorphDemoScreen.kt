@@ -43,18 +43,19 @@ import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.pillStar
 import androidx.graphics.shapes.star
 import com.velord.core.ui.compose.animation.easing.AnticipateOvershootInterpolatorEasing
+import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.path.toComposePath
 import com.velord.core.ui.compose.polygon.heart
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.compose.shape.MorphShape
 
 @Composable
-fun MorphDemoScreen() {
-    Content()
+fun MorphDemoScreen(onBackClick: (() -> Unit)? = null) {
+    Content(onBackClick = onBackClick)
 }
 
 @Composable
-private fun Content() {
+private fun Content(onBackClick: (() -> Unit)? = null) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,6 +63,10 @@ private fun Content() {
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
     ) {
+        PlatformScreenHeader(
+            title = "Morph Demo",
+            onBackClick = onBackClick
+        )
         TriangleToStar()
         PillToPolygon()
         Heart()

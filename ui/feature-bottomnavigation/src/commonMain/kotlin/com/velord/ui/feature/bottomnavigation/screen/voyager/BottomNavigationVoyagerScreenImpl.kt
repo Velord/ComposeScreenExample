@@ -18,10 +18,10 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
+import com.velord.ui.feature.bottomnavigation.screen.component.Content
 import com.velord.ui.feature.bottomnavigation.screen.component.ScreenSetup
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVM
-import com.velord.ui.feature.bottomnavigation.screen.component.Content as BottomNavigationContent
 
 private fun createBottomNavigationTab(
     item: BottomNavigationItem
@@ -97,10 +97,10 @@ private fun Content(
             tabNavigator.current = tab
         }
 
-        BottomNavigationContent(
+        Content(
             selectedItem = currentItem,
             navigationItemRoster = getNavigationItemRoster(),
-            onClick = onTabClick,
+            onTabClick = onTabClick,
             content = { padding ->
                 Surface(Modifier.padding(bottom = padding.calculateBottomPadding())) {
                     CompositionLocalProvider(
@@ -117,10 +117,10 @@ private fun Content(
 @PreviewCombined
 @Composable
 private fun Preview() {
-    BottomNavigationContent(
+    Content(
         selectedItem = BottomNavigationItem.Camera,
         navigationItemRoster = BottomNavigationItem.entries,
-        onClick = {},
+        onTabClick = {},
         content = {},
     )
 }

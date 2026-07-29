@@ -30,7 +30,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun CameraPermissionInfo(
+internal fun PermissionInfo(
     uiState: CameraRecordingUiState,
     onCheckPermissionClick: () -> Unit,
 ) {
@@ -97,7 +97,7 @@ private fun Preview() {
         audio = PermissionGrantState.Denied,
     )
     val uiState = CameraRecordingUiState.DEFAULT.copy(permissionState = permissionState)
-    CameraPermissionInfo(
+    PermissionInfo(
         uiState = uiState,
         onCheckPermissionClick = {},
     )

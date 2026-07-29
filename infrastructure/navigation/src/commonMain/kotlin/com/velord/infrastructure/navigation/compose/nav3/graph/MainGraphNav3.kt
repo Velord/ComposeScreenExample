@@ -17,9 +17,10 @@ internal fun EntryProviderScope<GraphNav3>.setupMainGraphNav3(navigator: Supreme
         val viewModel = koinViewModel<ThemeVM>()
         SettingScreen(
             viewModel = viewModel,
-            onBackClick = {
+            onGraphCompleted = {
                 // Handle back navigation if needed
-            }
+            },
+            onBackClick = navigator::goBack,
         )
     }
 }

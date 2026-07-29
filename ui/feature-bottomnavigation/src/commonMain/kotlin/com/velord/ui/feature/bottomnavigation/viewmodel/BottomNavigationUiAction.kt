@@ -15,4 +15,5 @@ sealed interface BottomNavigationUiAction {
     ) : BottomNavigationUiAction
     data object GraphCompletedHandling : BottomNavigationUiAction
     data object GraphTakeResponsibility : BottomNavigationUiAction
+    data object BackRequest : BottomNavigationUiAction
 }

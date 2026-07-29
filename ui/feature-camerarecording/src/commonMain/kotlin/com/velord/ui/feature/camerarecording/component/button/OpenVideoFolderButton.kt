@@ -1,4 +1,4 @@
-package com.velord.ui.feature.camerarecording.component
+package com.velord.ui.feature.camerarecording.component.button
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FolderOpen

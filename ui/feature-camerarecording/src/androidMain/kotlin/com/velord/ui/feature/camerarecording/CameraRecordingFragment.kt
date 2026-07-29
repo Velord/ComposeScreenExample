@@ -68,8 +68,9 @@ class CameraRecordingFragment : Fragment() {
     ): View = setContentWithTheme {
         CameraRecordingScreen(
             viewModel = viewModel,
-            needToHandlePermission = false,
+            needToHandlePermission = true,
             onNavigationEvent = ::handleNavigationEvent,
+            onGraphCompleted = {},
             onBackClick = {
                 viewModelBottom.onAction(BottomNavigationJetpackUiAction.GraphCompletedHandling)
             },

@@ -25,9 +25,12 @@ internal object CameraRecordingVoyagerScreen : Screen {
             viewModel = viewModel,
             needToHandlePermission = true,
             onNavigationEvent = { navigator?.push(settingScreen) },
-            onBackClick = {
+            onGraphCompleted = {
                 bottomNavVM.onAction(BottomNavigationUiAction.GraphCompletedHandling)
             },
+            onBackClick = {
+                bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
+            }
         )
     }
 }

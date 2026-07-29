@@ -132,6 +132,22 @@ class Nav3NavigationTest {
     }
 
     @Test
+    fun `back from root setting removes outer setting destination`() {
+        val outerStack = mutableStateListOf<GraphNav3>(
+            GraphNav3.Main.BottomNavigationDestinationNav3,
+        )
+        val navigator = SupremeNavigatorNav3(outerStack)
+        navigator.goToSettingFromCameraRecording()
+
+        navigator.goBack()
+
+        assertEquals(
+            expected = listOf<GraphNav3>(GraphNav3.Main.BottomNavigationDestinationNav3),
+            actual = outerStack,
+        )
+    }
+
+    @Test
     fun `every demo event maps to a unique Nav3 route`() {
         val routeRoster = with(BottomNavigatorNav3) {
             DemoNavigationEvent.entries.map { event -> event.toGraphNav3() }

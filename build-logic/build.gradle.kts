@@ -64,11 +64,13 @@ gradlePlugin {
 }
 
 dependencies {
+    // Gradle Plugin
     implementation(libs.gradle.android)
     implementation(libs.gradle.kotlin)
     implementation(libs.gradle.compose)
     implementation(libs.gradle.buildkonfig)
     implementation(libs.gradle.ksp)
+    // Testing
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
 }

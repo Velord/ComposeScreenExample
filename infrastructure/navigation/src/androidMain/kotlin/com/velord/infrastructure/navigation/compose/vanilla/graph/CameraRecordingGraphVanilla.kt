@@ -31,9 +31,14 @@ internal fun NavGraphBuilder.setupCameraRecordingGraphVanilla(
                             navigator.goToSettingFromCameraRecording()
                     }
                 },
-                onBackClick = {
+                onGraphCompleted = {
                     bottomNavVM.onAction(
                         BottomNavigationUiAction.GraphCompletedHandling
+                    )
+                },
+                onBackClick = {
+                    bottomNavVM.onAction(
+                        BottomNavigationUiAction.BackRequest
                     )
                 }
             )

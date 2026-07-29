@@ -95,6 +95,8 @@ class CameraRecordingVM(
 
     private fun onChangeCameraSelector() = launch {
         val uiState = uiStateFlow.value
+        if (uiState.isCameraLensSwitchAvailable.not()) return@launch
+
         val config = CameraRecordingConfig(
             lens = uiState.cameraState.lens.next(),
             quality = uiState.videoQuality,
@@ -123,7 +125,9 @@ class CameraRecordingVM(
                 CameraRecordingConfig(
                     lens = uiState.cameraState.lens,
                     quality = uiState.videoQuality,
-                    audioConfig = CameraAudioConfig(isEnabled = uiState.isAudioEnabled),
+                    audioConfig = CameraAudioConfig(
+                        isEnabled = uiState.isAudioEnabled,
+                    ),
                 ),
             )
         } else {
@@ -133,6 +137,7 @@ class CameraRecordingVM(
 
     private fun onOpenVideoFolder() {
         val directoryPath = uiStateFlow.value.lastVideoAsset?.directoryPath ?: return
+
         openCameraVideoFolder(directoryPath)
     }
 

@@ -39,6 +39,8 @@ import com.velord.core.resource.info_description_movie
 import com.velord.core.resource.info_description_movie_url
 import com.velord.core.resource.range
 import com.velord.core.ui.compose.preview.PreviewCombined
+import com.velord.model.movie.FilterType
+import com.velord.model.movie.MovieFilterOption
 import com.velord.ui.feature.movie.model.MovieFilterOptionUI
 import com.velord.ui.feature.movie.model.MovieSortOptionUI
 import com.velord.ui.feature.movie.viewModel.MovieUiAction
@@ -73,8 +75,8 @@ internal fun MovieBottomSheet(
             optionRoster = uiState.movieFilterOptionRoster,
             isShowing = isFilterShowing,
             onHide = onHideFilter,
-            onOptionClick = {
-                onAction(MovieUiAction.FilterOptionClick(it))
+            onOptionChange = {
+                onAction(MovieUiAction.FilterOptionChange(it))
             }
         )
     }
@@ -131,13 +133,12 @@ private fun Sort(
     )
 }
 
-@Suppress("UnusedParameter") // TODO: Wire up filter option click
 @Composable
 private fun Filter(
     optionRoster: List<MovieFilterOptionUI>,
     isShowing: Boolean,
     onHide: () -> Unit,
-    onOptionClick: (MovieFilterOptionUI) -> Unit
+    onOptionChange: (MovieFilterOption) -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -146,7 +147,7 @@ private fun Filter(
         onHide = { scope.hide(onHide) },
         content = {
             optionRoster.forEach { option ->
-                val sliderRangeState = remember {
+                val sliderRangeState = remember(option.type.start, option.type.end) {
                     mutableStateOf(option.type.start.toFloat()..option.type.end.toFloat())
                 }
                 val sliderMinState = remember { mutableFloatStateOf(option.type.min.toFloat()) }
@@ -170,11 +171,24 @@ private fun Filter(
                     )
                     RangeSlider(
                         value = sliderRangeState.value,
-                        onValueChange = {},
+                        onValueChange = { sliderRangeState.value = it },
+                        onValueChangeFinished = {
+                            val newType = when (val t = option.type) {
+                                is FilterType.Rating -> t.copy(
+                                    start = sliderRangeState.value.start,
+                                    end = sliderRangeState.value.endInclusive
+                                )
+                                is FilterType.VoteCount -> t.copy(
+                                    start = sliderRangeState.value.start.toInt(),
+                                    end = sliderRangeState.value.endInclusive.toInt()
+                                )
+                            }
+                            onOptionChange(MovieFilterOption(newType))
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 4.dp),
-                        enabled = false,
+                        enabled = true,
                         valueRange = sliderMinState.floatValue..sliderMaxState.floatValue,
                         steps = option.type.stepCount,
                         colors = SliderDefaults.colors(

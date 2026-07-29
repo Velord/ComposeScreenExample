@@ -13,7 +13,7 @@ class MovieSortGateway(private val appState: AppStateDataSource) {
 
     fun getFlow(): MovieSortOptionFlow = MovieSortOptionFlow(appState.movieSortFlow)
 
-    fun getSelectedFlow(): Flow<MovieSortOption> = appState.movieSortFlow
+    fun getSelectedSortOptionFlow(): Flow<MovieSortOption> = appState.movieSortFlow
         .mapNotNull { roster -> roster.firstOrNull { it.isSelected } }
 
     fun update(newOption: MovieSortOption) {

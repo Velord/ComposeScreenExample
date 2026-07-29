@@ -36,7 +36,7 @@ object AndroidNavigationHost {
         containerParameter.composeView.isVisible = true
         containerParameter.fragmentView.isVisible = false
         installComposeContent {
-            NavigationContent(navigationLib)
+            NavigationHost(navigationLib)
         }
     }
 

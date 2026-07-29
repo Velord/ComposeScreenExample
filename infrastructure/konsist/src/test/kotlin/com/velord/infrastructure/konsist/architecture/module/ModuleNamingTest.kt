@@ -1,4 +1,4 @@
-﻿package com.velord.infrastructure.konsist.architecture.module
+package com.velord.infrastructure.konsist.architecture.module
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
@@ -167,10 +167,10 @@ class ModuleNamingTest {
             }
 
             val prefix = PLUGIN_PREFIX_BY_SECTION[section]
-            if (section == STANDALONE_PLUGIN_SECTION) {
+            if (prefix == null) {
                 PLUGIN_PREFIX_BY_SECTION.values.any(alias::startsWith)
             } else {
-                prefix == null || alias.startsWith(prefix).not()
+                alias.startsWith(prefix).not()
             }
         }
 
@@ -274,7 +274,7 @@ private data class ModulePath(val value: String) {
 
     fun matchesNamingFamily(): Boolean = when {
         value == BUILD_LOGIC_MODULE_PATH -> true
-        value == APP_MODULE_PATH -> true
+        value == APP_MODULE_PATH || value.startsWith(":app:") -> true
         value == MODEL_MODULE_PATH -> true
         value == SHARED_VIEW_MODEL_MODULE_PATH -> true
         value.startsWith(":domain:") ->
@@ -295,7 +295,7 @@ private data class ModulePath(val value: String) {
 
     fun expectedPackageRoot(): String? = when {
         value == BUILD_LOGIC_MODULE_PATH -> BUILD_LOGIC_PACKAGE_ROOT
-        value == APP_MODULE_PATH -> APP_PACKAGE_ROOT
+        value == APP_MODULE_PATH || value.startsWith(":app:") -> APP_PACKAGE_ROOT
         value == MODEL_MODULE_PATH -> MODEL_PACKAGE_ROOT
         value == SHARED_VIEW_MODEL_MODULE_PATH -> SHARED_VIEW_MODEL_PACKAGE_ROOT
         value.startsWith(":domain:usecase-") ->

@@ -1,20 +1,25 @@
 package com.velord.model.movie
 
-sealed class FilterType(
-    open val start: Number,
-    open val end: Number,
-    open val min: Number,
-    open val max: Number,
-    open val stepCount: Int
-) {
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
+sealed class FilterType {
+    abstract val start: Number
+    abstract val end: Number
+    abstract val min: Number
+    abstract val max: Number
+    abstract val stepCount: Int
+
+    @Serializable
+    @SerialName("Rating")
     data class Rating(
         override val start: Float,
         override val end: Float,
         override val min: Float,
         override val max: Float,
         override val stepCount: Int
-    ) : FilterType(start, end, min, max, stepCount) {
+    ) : FilterType() {
 
         init {
             require(min >= MIN_RATING)
@@ -43,13 +48,15 @@ sealed class FilterType(
         }
     }
 
+    @Serializable
+    @SerialName("VoteCount")
     data class VoteCount(
         override val start: Int,
         override val end: Int,
         override val min: Int,
         override val max: Int,
         override val stepCount: Int
-    ) : FilterType(start, end, min, max, stepCount) {
+    ) : FilterType() {
 
         init {
             require(min >= MIN_VOTE_COUNT)
@@ -88,6 +95,7 @@ sealed class FilterType(
     }
 }
 
+@Serializable
 data class MovieFilterOption(val type: FilterType) {
 
     companion object {

@@ -8,6 +8,7 @@ import co.touchlab.kermit.Logger
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.ui.feature.camerarecording.component.Content
+import com.velord.ui.feature.camerarecording.util.CheckCameraAndAudioRecordPermission
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiAction
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
@@ -19,6 +20,7 @@ fun CameraRecordingScreen(
     viewModel: CameraRecordingVM,
     needToHandlePermission: Boolean = false,
     onNavigationEvent: (CameraRecordingNavigationEvent) -> Unit,
+    onGraphCompleted: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle()
@@ -29,7 +31,7 @@ fun CameraRecordingScreen(
 
     SideEffect {
         // Simulate we completed back stack handling
-        onBackClick()
+        onGraphCompleted()
     }
 
     ObserveSharedFlow(flow = viewModel.navigationEvent) {
@@ -37,18 +39,17 @@ fun CameraRecordingScreen(
     }
 
     if (needToHandlePermission) {
-        // To annoying. Return back later.
-//        CheckCameraAndAudioRecordPermission(
-//            triggerCheckEvent = viewModel.checkPermissionEvent,
-//            onCameraUpdateState = {
-//                val action = CameraRecordingUiAction.UpdateCameraPermissionGrantState(it)
-//                viewModel.onAction(action)
-//            },
-//            onMicroUpdateState = {
-//                val action = CameraRecordingUiAction.UpdateAudioPermissionGrantState(it)
-//                viewModel.onAction(action)
-//            }
-//        )
+        CheckCameraAndAudioRecordPermission(
+            triggerCheckEvent = viewModel.checkPermissionEvent,
+            onCameraUpdateState = {
+                val action = CameraRecordingUiAction.UpdateCameraPermissionGrantState(it)
+                viewModel.onAction(action)
+            },
+            onMicroUpdateState = {
+                val action = CameraRecordingUiAction.UpdateAudioPermissionGrantState(it)
+                viewModel.onAction(action)
+            },
+        )
     }
 
     log.d { "permissionCameraState: ${uiState.value.permissionState.camera}" }
@@ -56,6 +57,7 @@ fun CameraRecordingScreen(
     Content(
         uiState = uiState.value,
         onAction = viewModel::onAction,
+        onBackClick = onBackClick,
     )
 }
 
@@ -65,5 +67,6 @@ private fun Preview() {
     Content(
         uiState = CameraRecordingUiState.DEFAULT,
         onAction = {},
+        onBackClick = {},
     )
 }

@@ -20,8 +20,11 @@ internal fun EntryProviderScope<GraphNav3>.setupBottomNavigationGraphNav3(
         val bottomNavVM = koinViewModel<BottomNavigationVM>()
         SettingScreen(
             viewModel = viewModel,
-            onBackClick = {
+            onGraphCompleted = {
                 bottomNavVM.onAction(BottomNavigationUiAction.GraphCompletedHandling)
+            },
+            onBackClick = {
+                bottomNavVM.onAction(BottomNavigationUiAction.BackRequest)
             }
         )
     }
