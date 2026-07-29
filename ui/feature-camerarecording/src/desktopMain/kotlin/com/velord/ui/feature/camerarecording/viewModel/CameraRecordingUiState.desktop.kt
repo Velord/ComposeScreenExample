@@ -6,3 +6,5 @@ internal actual fun defaultPermissionUiState(): PermissionUiState = PermissionUi
     camera = PermissionGrantState.Granted,
     audio = PermissionGrantState.Granted,
 )
+
+internal actual val defaultIsCameraLensSwitchAvailable: Boolean = false

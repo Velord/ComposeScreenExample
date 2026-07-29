@@ -34,8 +34,8 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun DemoScreen(
     viewModel: DemoVM,
-    onGraphCompleted: () -> Unit,
     onNavigationEvent: (DemoNavigationEvent) -> Unit,
+    onGraphCompleted: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     SideEffect {

@@ -8,6 +8,7 @@ import co.touchlab.kermit.Logger
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.ui.feature.camerarecording.component.Content
+import com.velord.ui.feature.camerarecording.util.CheckCameraAndAudioRecordPermission
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiAction
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
@@ -38,18 +39,17 @@ fun CameraRecordingScreen(
     }
 
     if (needToHandlePermission) {
-        // To annoying. Return back later.
-//        CheckCameraAndAudioRecordPermission(
-//            triggerCheckEvent = viewModel.checkPermissionEvent,
-//            onCameraUpdateState = {
-//                val action = CameraRecordingUiAction.UpdateCameraPermissionGrantState(it)
-//                viewModel.onAction(action)
-//            },
-//            onMicroUpdateState = {
-//                val action = CameraRecordingUiAction.UpdateAudioPermissionGrantState(it)
-//                viewModel.onAction(action)
-//            }
-//        )
+        CheckCameraAndAudioRecordPermission(
+            triggerCheckEvent = viewModel.checkPermissionEvent,
+            onCameraUpdateState = {
+                val action = CameraRecordingUiAction.UpdateCameraPermissionGrantState(it)
+                viewModel.onAction(action)
+            },
+            onMicroUpdateState = {
+                val action = CameraRecordingUiAction.UpdateAudioPermissionGrantState(it)
+                viewModel.onAction(action)
+            },
+        )
     }
 
     log.d { "permissionCameraState: ${uiState.value.permissionState.camera}" }
@@ -67,5 +67,6 @@ private fun Preview() {
     Content(
         uiState = CameraRecordingUiState.DEFAULT,
         onAction = {},
+        onBackClick = {},
     )
 }

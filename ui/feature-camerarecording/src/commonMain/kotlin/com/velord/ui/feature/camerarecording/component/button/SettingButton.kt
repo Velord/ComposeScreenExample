@@ -1,4 +1,4 @@
-package com.velord.ui.feature.camerarecording.component
+package com.velord.ui.feature.camerarecording.component.button
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.velord.core.ui.compose.preview.PreviewCombined
 
 @Composable
-internal fun BoxScope.CameraSettingsButton(
+internal fun BoxScope.CameraSettingButton(
     onClick: () -> Unit,
     enabled: Boolean,
 ) {
@@ -40,7 +40,7 @@ internal fun BoxScope.CameraSettingsButton(
 @Composable
 private fun Preview() {
     Box {
-        CameraSettingsButton(
+        CameraSettingButton(
             onClick = {},
             enabled = true,
         )

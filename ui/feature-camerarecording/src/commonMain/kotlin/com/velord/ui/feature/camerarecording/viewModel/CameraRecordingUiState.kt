@@ -16,6 +16,7 @@ data class CameraRecordingUiState(
     val permissionState: PermissionUiState,
     val videoQuality: CameraVideoQuality,
     val isAudioEnabled: Boolean,
+    val isCameraLensSwitchAvailable: Boolean,
     val cameraState: CameraState,
     val cameraSession: CameraSessionWrapper?,
     val lastVideoAsset: CameraVideoAsset?,
@@ -28,6 +29,7 @@ data class CameraRecordingUiState(
             permissionState = defaultPermissionUiState(),
             videoQuality = CameraVideoQuality.FullHd,
             isAudioEnabled = true,
+            isCameraLensSwitchAvailable = defaultIsCameraLensSwitchAvailable,
             cameraState = CameraState.DEFAULT,
             cameraSession = null,
             lastVideoAsset = null,
@@ -36,3 +38,5 @@ data class CameraRecordingUiState(
 }
 
 internal expect fun defaultPermissionUiState(): PermissionUiState
+
+internal expect val defaultIsCameraLensSwitchAvailable: Boolean
