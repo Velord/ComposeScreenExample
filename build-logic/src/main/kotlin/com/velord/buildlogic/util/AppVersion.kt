@@ -6,7 +6,7 @@ object AppVersion {
     // When you create huge feature(or many) release change this value
     const val majorVersion = 3
     // When you create feature release change this value
-    const val minorVersion = 0
+    const val minorVersion = 1
     // When you create fix change this value
     const val fixVersion = 0
     // When you create quick fix from master branch change this value
