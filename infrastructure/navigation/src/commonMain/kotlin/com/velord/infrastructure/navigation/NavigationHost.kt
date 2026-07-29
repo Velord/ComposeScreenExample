@@ -9,7 +9,7 @@ import com.velord.infrastructure.navigation.creation.CreateNavigationViaVanilla
 import com.velord.infrastructure.navigation.creation.CreateNavigationViaVoyager
 
 @Composable
-fun NavigationContent(navigationLib: NavigationLib) {
+fun NavigationHost(navigationLib: NavigationLib) {
     when (navigationLib) {
         NavigationLib.Nav3 -> CreateNavigationViaNav3()
         NavigationLib.Voyager -> CreateNavigationViaVoyager()

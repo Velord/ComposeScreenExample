@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.velord.core.ui.compose.component.ToastHost
+import com.velord.core.ui.theme.AppThemeHost
 import com.velord.model.ToastConfig
 import kotlinx.coroutines.flow.Flow
 
@@ -41,7 +42,7 @@ private fun ComposeView.setThemedContent(
     setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
     setContent {
-        com.velord.core.ui.theme.AppThemeContainer {
+        AppThemeHost {
             this@setThemedContent.content()
         }
     }

@@ -13,7 +13,7 @@ import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AppThemeContainer(
+fun AppThemeHost(
     themeVM: ThemeVM = koinViewModel(),
     content: @Composable () -> Unit,
 ) {
