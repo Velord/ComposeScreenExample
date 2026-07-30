@@ -47,7 +47,7 @@ fun BottomNavigationVoyagerScreenImpl(viewModel: BottomNavigationVM) {
         state = uiState,
         backBehavior = uiState.value.backBehavior,
         onBackClick = {
-            viewModel.onAction(BottomNavigationUiAction.BackClick)
+            viewModel.onAction(BottomNavigationUiAction.BackRequest)
         },
         onBackDoubleClick = {
             viewModel.onAction(BottomNavigationUiAction.BackDoubleClick)
