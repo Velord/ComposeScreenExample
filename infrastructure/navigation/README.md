@@ -803,12 +803,14 @@ Platform differences:
 | --- | --- | --- |
 | Supported engines | Nav3, Voyager, Vanilla, Destinations, Jetpack | Nav3, Voyager |
 | Unsupported engine handling | — | `CreateNavigationVia*` throws at runtime |
-| System back button | `BackHandler` and `PlatformBackHandler` | No-op (`PlatformBackHandler.desktop.kt`) |
+| System back button | `BackHandler` and `PlatformBackHandler` | Intercepted via `DesktopBackDispatcher` (Escape key) in `PlatformBackHandler.desktop.kt` |
 | Bottom-navigation DI | `bottomNavigationPlatformModule` binds `BottomNavigationJetpackVM` | Empty module |
 | App exit | `RequestAppExitUC` emits `AppEvent.Exit` | Same, handled by `exitApplication()` |
 
 Desktop has no Fragment surface. `AndroidNavigationHost` does not exist on desktop. Window closing
 is handled by the desktop app shell, not by the navigation module.
+
+On Desktop, the hardware Escape key is bound to `DesktopBackDispatcher` to simulate the Android hardware back button. `PlatformBackHandler.desktop.kt` catches these back events and funnels them through the same `BottomNavigationVM` logic used on Android, ensuring consistent behavior (e.g., popping child screens, and exiting the app from the root graph). Unhandled Escape key presses fall back and are ignored, preventing aggressive application exits.
 
 ## Definition Of Done
 

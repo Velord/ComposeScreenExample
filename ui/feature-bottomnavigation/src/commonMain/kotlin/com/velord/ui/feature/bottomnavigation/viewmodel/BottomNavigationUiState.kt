@@ -9,6 +9,21 @@ data class BottomNavigationUiState(
     val backHandlingState: BottomNavBackHandlingState,
     val isConfirmExitRequested: Boolean,
 ) {
+
+    override fun toString(): String = """
+        BottomNavigationUiState(
+            tabState=TabState(
+                previous=${tabState.previous},
+                current=${tabState.current}
+            ),
+            backHandlingState=BottomNavBackHandlingState(
+                isAtStartGraphDestination=${backHandlingState.isAtStartGraphDestination},
+                isGrantedToProceed=${backHandlingState.isGrantedToProceed}
+            ),
+            isConfirmExitRequested=$isConfirmExitRequested
+        )
+    """.trimIndent()
+
     val backBehavior: BottomNavigationBackBehavior get() {
         val isNotStart = backHandlingState.isAtStartGraphDestination.not()
         return when {
