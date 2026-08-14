@@ -18,12 +18,14 @@ kotlin {
             implementation(projects.domain.usecaseMovie)
             implementation(projects.domain.usecaseCamera)
             implementation(projects.domain.usecaseEvent)
+            implementation(projects.domain.usecaseLocalization)
             // Module Data Source
             implementation(projects.data.backend)
             implementation(projects.data.datastore)
             implementation(projects.data.appstate)
             implementation(projects.data.gateway)
             implementation(projects.data.db)
+            implementation(projects.data.firebase)
             implementation(projects.data.os)
             // Module UI
             implementation(projects.ui.sharedviewmodel)
