@@ -11,9 +11,9 @@
 - Persist only the user's language choice in the existing app settings/DataStore.
 - Firebase project: **ComposeScreenExample** (`true-artwork-239920`). Current Android apps inside that single Firebase project:
   - `develop` → CSE Dev → `com.velord.composescreenexample.develop`
+  - `qa` → uses the same **CSE Dev / develop Firebase configuration**; no separate QA Firebase app.
   - `stage` → CSE Stage → `com.velord.composescreenexample.stage`
   - `production` → CSE Prod → `com.velord.composescreenexample`
-  - `qa` → verify/add `com.velord.composescreenexample.qa` if the build really uses that application ID.
 - Remote Config belongs to the Firebase **project**, not an individual Android app. The default `localization` value is therefore shared by all app variants unless app-specific Remote Config conditions are deliberately added later.
 - Firebase client SDK: **GitLive Firebase Kotlin SDK**, dependency `dev.gitlive:firebase-config`, used from common KMP code for Android + Desktop/JVM.
 - Use **one Firebase Remote Config parameter**, e.g. `localization`.
@@ -581,13 +581,16 @@ CSE Stage → com.velord.composescreenexample.stage
 CSE Prod  → com.velord.composescreenexample
 ```
 
-For QA, first verify the build configuration. If QA really uses:
+QA uses the **develop / CSE Dev Firebase configuration**. Do not register a separate QA Firebase Android app and do not add a `com.velord.composescreenexample.qa` Firebase client solely for QA.
+
+Environment mapping for Firebase configuration is therefore:
 
 ```text
-com.velord.composescreenexample.qa
+develop    → CSE Dev
+qa         → CSE Dev
+stage      → CSE Stage
+production → CSE Prod
 ```
-
-register that Android app in the same Firebase project and include its client configuration.
 
 Important: **Remote Config is project-level.** CSE Dev / Stage / Prod are apps inside the same Firebase project, so the single default `localization` parameter is shared across them. That is acceptable for localization and avoids unnecessary environment duplication.
 
