@@ -6,12 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.velord.core.resource.Res
-import com.velord.core.resource.video_quality
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.camera.config.CameraVideoQuality
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CameraVideoQualityChooser(
@@ -20,7 +19,7 @@ internal fun CameraVideoQualityChooser(
     modifier: Modifier = Modifier,
 ) {
     val expandedState = remember { mutableStateOf(false) }
-    val label = stringResource(Res.string.video_quality)
+    val label = stringResource(AppString.video_quality)
 
     Box(
         modifier = modifier,
