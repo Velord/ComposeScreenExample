@@ -5,6 +5,7 @@ import com.velord.infrastructure.navigation.compose.nav3.GraphNav3
 import com.velord.infrastructure.navigation.compose.nav3.navigator.SupremeNavigatorNav3
 import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigationScreen
 import com.velord.ui.feature.setting.SettingScreen
+import com.velord.ui.sharedviewmodel.LanguageVM
 import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -14,9 +15,11 @@ internal fun EntryProviderScope<GraphNav3>.setupMainGraphNav3(navigator: Supreme
     }
 
     entry<GraphNav3.Main.SettingDestinationNav3> {
-        val viewModel = koinViewModel<ThemeVM>()
+        val themeViewModel = koinViewModel<ThemeVM>()
+        val languageViewModel = koinViewModel<LanguageVM>()
         SettingScreen(
-            viewModel = viewModel,
+            themeViewModel = themeViewModel,
+            languageViewModel = languageViewModel,
             onGraphCompleted = {
                 // Handle back navigation if needed
             },
