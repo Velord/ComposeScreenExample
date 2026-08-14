@@ -13,7 +13,9 @@ kotlin {
             api(projects.model)
             api(projects.infrastructure.config)
             api(projects.infrastructure.util)
+            api(projects.core.coreResource)
             api(projects.domain.usecaseEvent)
+            api(projects.domain.usecaseLocalization)
             api(projects.domain.usecaseSetting)
 
             // Template
