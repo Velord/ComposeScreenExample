@@ -13,12 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.velord.core.resource.Res
-import com.velord.core.resource.selected
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.camera.config.CameraVideoQuality
 import com.velord.ui.feature.camerarecording.util.label
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CameraVideoQualityMenuItem(
@@ -40,7 +39,7 @@ internal fun CameraVideoQualityMenuItem(
                 if (isSelected) {
                     Icon(
                         imageVector = Icons.Filled.Check,
-                        contentDescription = stringResource(Res.string.selected),
+                        contentDescription = stringResource(AppString.selected),
                         modifier = Modifier.size(18.dp),
                         tint = MaterialTheme.colorScheme.secondary,
                     )
