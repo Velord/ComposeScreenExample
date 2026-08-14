@@ -45,18 +45,23 @@ val generateAppStringResources = tasks.register("generateAppStringResources") {
                 appendLine("@JvmInline")
                 appendLine("value class AppStringResource internal constructor(")
                 appendLine("    internal val key: String,")
-                appendLine("    internal val defaultValue: String,")
                 appendLine(")")
                 appendLine()
                 appendLine("object AppString {")
-                entryRoster.forEach { (key, value) ->
-                    append("    val $key = AppStringResource(")
-                    append(key.toKotlinStringLiteral())
-                    append(", ")
-                    append(value.toKotlinStringLiteral())
-                    appendLine(")")
+                entryRoster.forEach { (key, _) ->
+                    appendLine("    val $key = AppStringResource(\"$key\")")
                 }
                 appendLine("}")
+                appendLine()
+                appendLine("internal val defaultLocalizationStringRoster = mapOf(")
+                entryRoster.forEach { (key, value) ->
+                    append("    ")
+                    append(key.toKotlinStringLiteral())
+                    append(" to ")
+                    append(value.toKotlinStringLiteral())
+                    appendLine(",")
+                }
+                appendLine(")")
             },
         )
     }
