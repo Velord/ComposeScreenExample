@@ -73,6 +73,7 @@ include(":data:backend")
 include(":data:datastore")
 include(":data:appstate")
 include(":data:db")
+include(":data:firebase")
 include(":data:gateway")
 include(":data:os")
 // Domain
@@ -80,6 +81,7 @@ include(":domain:usecase-setting")
 include(":domain:usecase-movie")
 include(":domain:usecase-camera")
 include(":domain:usecase-event")
+include(":domain:usecase-localization")
 // UI
 include(":ui:sharedviewmodel")
 // UI Feature
