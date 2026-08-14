@@ -6,6 +6,7 @@ import com.velord.data.appstate.AppStateModule
 import com.velord.data.backend.ktor.BackendModule
 import com.velord.data.datastore.DataStoreModule
 import com.velord.data.db.DbModule
+import com.velord.data.firebase.FirebaseModule
 import com.velord.data.os.OsModule
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
@@ -16,6 +17,7 @@ import org.koin.core.annotation.Module
         DbModule::class,
         BackendModule::class,
         DataStoreModule::class,
+        FirebaseModule::class,
         OsModule::class,
     ],
 )
