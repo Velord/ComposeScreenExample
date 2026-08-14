@@ -5,14 +5,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.velord.core.resource.Res
-import com.velord.core.resource.camera
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.camerarecording.component.button.CameraSettingButton
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiAction
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun Content(
@@ -25,7 +24,7 @@ internal fun Content(
         HeaderShroud()
         PlatformScreenHeader(
             modifier = Modifier.statusBarsPadding(),
-            title = stringResource(Res.string.camera),
+            title = stringResource(AppString.camera),
             onBackClick = onBackClick,
         )
         PermissionInfo(
