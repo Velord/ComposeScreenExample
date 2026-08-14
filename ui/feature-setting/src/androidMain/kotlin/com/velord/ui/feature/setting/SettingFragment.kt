@@ -12,12 +12,14 @@ import com.velord.core.ui.util.setContentWithTheme
 import com.velord.ui.feature.bottomnavigation.screen.addTestCallback
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
+import com.velord.ui.sharedviewmodel.LanguageVM
 import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingFragment : Fragment() {
 
-    private val viewModel by activityViewModels<ThemeVM>()
+    private val themeViewModel by activityViewModels<ThemeVM>()
+    private val languageViewModel by viewModel<LanguageVM>()
     private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
 
     override fun onCreateView(
@@ -26,7 +28,8 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = setContentWithTheme {
         SettingScreen(
-            viewModel = viewModel,
+            themeViewModel = themeViewModel,
+            languageViewModel = languageViewModel,
             onGraphCompleted = {
                 viewModelBottom.onAction(BottomNavigationJetpackUiAction.GraphCompletedHandling)
             },
