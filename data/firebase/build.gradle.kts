@@ -18,11 +18,11 @@ kotlin {
         }
         androidMain.dependencies {
             // GitLive keeps Firebase Android SDK versions BOM-managed.
-            implementation(platform(libs.google.firebase.bom))
+            implementation(project.dependencies.platform(libs.google.firebase.bom))
         }
         desktopMain.dependencies {
             // GitLive's JVM artifact uses the same Firebase dependency constraints.
-            implementation(platform(libs.google.firebase.bom))
+            implementation(project.dependencies.platform(libs.google.firebase.bom))
         }
     }
 
