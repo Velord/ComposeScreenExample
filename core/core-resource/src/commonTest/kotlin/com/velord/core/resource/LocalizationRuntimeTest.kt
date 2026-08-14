@@ -146,11 +146,11 @@ class LocalizationRuntimeTest {
           "languages": {
             "en": {
               "settings": "$englishSettings",
-              "count": "Count: %1\$d"
+              "count": "Count: %1${'$'}d"
             },
             "es": {
               "settings": "$spanishSettings",
-              "count": "Cantidad: %1\$d"
+              "count": "Cantidad: %1${'$'}d"
             }
           }
         }
