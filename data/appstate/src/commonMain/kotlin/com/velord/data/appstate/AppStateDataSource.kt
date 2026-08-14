@@ -7,6 +7,7 @@ import com.velord.model.camera.CameraVideoAsset
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
+import com.velord.model.setting.LanguagePreference
 import com.velord.model.setting.ThemeConfig
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +15,7 @@ import org.koin.core.annotation.Single
 
 interface AppStateDataSource {
     val themeConfigFlow: MutableStateFlow<ThemeConfig>
+    val languagePreferenceFlow: MutableStateFlow<LanguagePreference>
     val movieRosterFlow: MutableStateFlow<List<Movie>>
     val movieFavoriteRosterFlow: MutableStateFlow<List<Movie>>
     val movieSortFlow: MutableStateFlow<List<MovieSortOption>>
@@ -27,6 +29,7 @@ interface AppStateDataSource {
 class AppStateDataSourceImpl : AppStateDataSource {
 
     override val themeConfigFlow = MutableStateFlow(ThemeConfig.DEFAULT)
+    override val languagePreferenceFlow = MutableStateFlow(LanguagePreference.DEFAULT)
 
     override val movieRosterFlow = MutableStateFlow<List<Movie>>(emptyList())
     override val movieFavoriteRosterFlow = MutableStateFlow<List<Movie>>(emptyList())
