@@ -5,11 +5,9 @@ package com.velord.data.firebase
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 
-@Module(includes = [FirebasePlatformModule::class])
-class FirebaseModule
-
 @Module
-expect class FirebasePlatformModule() {
+class FirebaseModule {
     @Single
-    fun provideFirebaseRemoteConfigDataSource(): FirebaseRemoteConfigDataSource
+    fun provideFirebaseRemoteConfigDataSource(): FirebaseRemoteConfigDataSource =
+        FirebaseRemoteConfigDataSourceImpl()
 }
