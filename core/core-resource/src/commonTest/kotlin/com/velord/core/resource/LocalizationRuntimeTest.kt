@@ -1,10 +1,16 @@
 package com.velord.core.resource
 
 import com.velord.model.setting.LanguagePreference
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class LocalizationRuntimeTest {
+
+    @BeforeTest
+    fun setUp() {
+        LocalizationRuntime.resetForTest()
+    }
 
     @Test
     fun `default preference uses Spanish device language`() {
@@ -79,6 +85,31 @@ class LocalizationRuntimeTest {
 
         assertEquals(
             expected = "Application settings",
+            actual = LocalizationRuntime.getString(AppString.settings),
+        )
+    }
+
+    @Test
+    fun `second initialization keeps first session document`() {
+        LocalizationRuntime.initialize(
+            bundledJson = localizationJson(),
+            remoteJson = localizationJson(
+                englishSettings = "Activated before launch",
+                spanishSettings = "Activado antes del inicio",
+            ),
+            preference = LanguagePreference.ENGLISH,
+        )
+        LocalizationRuntime.initialize(
+            bundledJson = localizationJson(),
+            remoteJson = localizationJson(
+                englishSettings = "Fetched during session",
+                spanishSettings = "Obtenido durante la sesión",
+            ),
+            preference = LanguagePreference.SPANISH,
+        )
+
+        assertEquals(
+            expected = "Activado antes del inicio",
             actual = LocalizationRuntime.getString(AppString.settings),
         )
     }
