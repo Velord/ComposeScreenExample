@@ -15,6 +15,7 @@ kotlin {
             implementation(projects.model)
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
+            implementation(projects.domain.usecaseLocalization)
             implementation(projects.ui.sharedviewmodel)
             implementation(libs.kotlin.coroutine.core)
             // Template
