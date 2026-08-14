@@ -1,5 +1,4 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
+import com.velord.buildlogic.task.GenerateAppStringResourcesTask
 
 plugins {
     alias(libs.plugins.convention.multiplatform.library)
@@ -14,54 +13,11 @@ val localizationFile = layout.projectDirectory.file(
 val generatedLocalizationDirectory = layout.buildDirectory.dir(
     "generated/localization/commonMain/kotlin",
 )
-val generateAppStringResources = tasks.register("generateAppStringResources") {
-    inputs.file(localizationFile)
-    outputs.dir(generatedLocalizationDirectory)
-
-    doLast {
-        val document = JsonSlurper().parse(localizationFile.asFile) as Map<*, *>
-        val languages = document["languages"] as? Map<*, *>
-            ?: error("localization.json must contain languages")
-        val english = languages["en"] as? Map<*, *>
-            ?: error("localization.json must contain languages.en")
-        val outputDirectory = generatedLocalizationDirectory.get().asFile
-        val outputFile = outputDirectory.resolve(
-            "com/velord/core/resource/AppString.kt",
-        )
-        val entryRoster = english.entries
-            .map { it.key.toString() to it.value.toString() }
-            .sortedBy { it.first }
-
-        outputFile.parentFile.mkdirs()
-        outputFile.writeText(
-            buildString {
-                appendLine("package com.velord.core.resource")
-                appendLine()
-                appendLine("@JvmInline")
-                appendLine("value class AppStringResource internal constructor(")
-                appendLine("    internal val key: String,")
-                appendLine(")")
-                appendLine()
-                appendLine("object AppString {")
-                entryRoster.forEach { (key, _) ->
-                    append("    val $key = AppStringResource(")
-                    append(JsonOutput.toJson(key))
-                    appendLine(")")
-                }
-                appendLine("}")
-                appendLine()
-                appendLine("internal val defaultLocalizationStringRoster = mapOf(")
-                entryRoster.forEach { (key, value) ->
-                    append("    ")
-                    append(JsonOutput.toJson(key))
-                    append(" to ")
-                    append(JsonOutput.toJson(value))
-                    appendLine(",")
-                }
-                appendLine(")")
-            },
-        )
-    }
+val generateAppStringResources = tasks.register<GenerateAppStringResourcesTask>(
+    "generateAppStringResources",
+) {
+    this.localizationFile.set(localizationFile)
+    outputDirectory.set(generatedLocalizationDirectory)
 }
 
 compose.resources {
