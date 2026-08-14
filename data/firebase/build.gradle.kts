@@ -16,7 +16,7 @@ kotlin {
         }
         androidMain.dependencies {
             // Firebase
-            implementation(libs.gitlive.firebase.config)
+            implementation(gitliveLibs.firebase.config)
         }
     }
 
