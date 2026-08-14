@@ -33,15 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.velord.core.resource.Res
-import com.velord.core.resource.flow_summator
-import com.velord.core.resource.info_description_flow_summator
-import com.velord.core.resource.launch
-import com.velord.core.resource.please_enter_the_number
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FlowSummatorScreen(
@@ -78,7 +74,7 @@ private fun Content(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         PlatformScreenHeader(
-            title = stringResource(Res.string.flow_summator),
+            title = stringResource(AppString.flow_summator),
             onBackClick = onBackClick
         )
         Title()
@@ -99,7 +95,7 @@ private fun Content(
 @Composable
 private fun Title() {
     Text(
-        text = stringResource(Res.string.flow_summator),
+        text = stringResource(AppString.flow_summator),
         modifier = Modifier.padding(top = 32.dp),
         color = MaterialTheme.colorScheme.onSurface,
         style = MaterialTheme.typography.bodyLarge,
@@ -116,7 +112,7 @@ private fun Start(
         modifier = Modifier.padding(top = 32.dp),
         enabled = isEnabled,
     ) {
-        Text(text = stringResource(Res.string.launch))
+        Text(text = stringResource(AppString.launch))
     }
 }
 
@@ -131,7 +127,7 @@ private fun EnterField(
         modifier = Modifier
             .padding(top = 16.dp)
             .padding(horizontal = 32.dp),
-        placeholder = { Text(text = stringResource(Res.string.please_enter_the_number)) },
+        placeholder = { Text(text = stringResource(AppString.please_enter_the_number)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
 }
@@ -168,7 +164,7 @@ private fun Info() {
             contentWindowInsets = { WindowInsets(top = 0.dp) },
         ) {
             Text(
-                text = stringResource(Res.string.info_description_flow_summator),
+                text = stringResource(AppString.info_description_flow_summator),
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 8.dp)
