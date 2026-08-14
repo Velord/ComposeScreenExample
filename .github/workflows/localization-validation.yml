@@ -6,6 +6,10 @@ on:
       - feature/firebase-remote-localization
   workflow_dispatch:
 
+concurrency:
+  group: localization-validation
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
