@@ -17,6 +17,7 @@ kotlin {
             implementation(projects.data.backend)
             implementation(projects.data.datastore)
             implementation(projects.data.db)
+            implementation(projects.data.firebase)
             implementation(projects.data.os)
             // Module Domain
             implementation(projects.domain.usecaseMovie)
