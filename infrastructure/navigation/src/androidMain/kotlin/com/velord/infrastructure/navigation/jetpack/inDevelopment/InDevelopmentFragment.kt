@@ -18,12 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.velord.core.navigation.fragment.util.activityNavController
-import com.velord.core.resource.Res
-import com.velord.core.resource.open_new
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.util.setContentWithTheme
 import com.velord.infrastructure.util.fragment.viewLifecycleScope
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
 
 /**
  * Jetpack diagnostic destination for exercising repeated graph navigation.
@@ -79,7 +78,7 @@ private fun Content(
                 .align(Alignment.BottomCenter)
                 .padding(32.dp)
         ) {
-            Text(text = stringResource(Res.string.open_new))
+            Text(text = stringResource(AppString.open_new))
         }
     }
 }
