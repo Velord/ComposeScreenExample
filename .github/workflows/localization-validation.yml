@@ -34,4 +34,5 @@ jobs:
           :core:core-resource:desktopTest
           :app:desktop:compileKotlinDesktop
           :app:android:compileDevelopDebugKotlin
+          -x :app:android:processDevelopDebugGoogleServices
           --stacktrace
