@@ -1,7 +1,7 @@
 package com.velord.ui.feature.demo
 
-import com.velord.core.resource.Res
-import com.velord.core.resource.this_demo_is_deprecated
+import com.velord.core.resource.AppString
+import com.velord.core.resource.getString
 import com.velord.infrastructure.config.BuildConfigResolver
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
@@ -9,7 +9,6 @@ import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.event.ShowToastUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 
 sealed interface DemoUiAction {
     data object OpenShapeClick : DemoUiAction
@@ -69,7 +68,7 @@ class DemoVM(
     private suspend fun checkJetpackLib() {
         val lib = buildConfigResolver.getNavigationLib()
         if (lib.isJetpack) {
-            val message = getString(Res.string.this_demo_is_deprecated, lib.name)
+            val message = getString(AppString.this_demo_is_deprecated, lib.name)
             val toastConfig = ToastConfig(message = message, duration = ToastDuration.Long)
             showToastUC(toastConfig)
         }
