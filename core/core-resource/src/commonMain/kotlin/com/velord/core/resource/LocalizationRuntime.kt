@@ -25,6 +25,14 @@ object LocalizationRuntime {
         preference: LanguagePreference,
         deviceLanguageTag: String = currentLanguageTag(),
     ) {
+        if (state != null) {
+            setLanguagePreference(
+                preference = preference,
+                deviceLanguageTag = deviceLanguageTag,
+            )
+            return
+        }
+
         val bundled = LocalizationDocumentParser.parse(bundledJson).getOrThrow()
         val document = remoteJson
             ?.let { LocalizationDocumentParser.parseRemote(it, bundled) }
@@ -69,6 +77,10 @@ object LocalizationRuntime {
             ?: resource.key
 
         return format(template, formatArgs)
+    }
+
+    internal fun resetForTest() {
+        state = null
     }
 
     internal fun resolveLanguage(
