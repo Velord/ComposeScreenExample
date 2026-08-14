@@ -47,7 +47,7 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
                 appendLine("object AppString {")
                 entryRoster.forEach { (key, _) ->
                     append("    val $key = AppStringResource(")
-                    append(JsonOutput.toJson(key))
+                    append(key.toKotlinStringLiteral())
                     appendLine(")")
                 }
                 appendLine("}")
@@ -55,13 +55,17 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
                 appendLine("internal val defaultLocalizationStringRoster = mapOf(")
                 entryRoster.forEach { (key, value) ->
                     append("    ")
-                    append(JsonOutput.toJson(key))
+                    append(key.toKotlinStringLiteral())
                     append(" to ")
-                    append(JsonOutput.toJson(value))
+                    append(value.toKotlinStringLiteral())
                     appendLine(",")
                 }
                 appendLine(")")
             },
         )
     }
+
+    private fun String.toKotlinStringLiteral(): String = JsonOutput
+        .toJson(this)
+        .replace("$", "\\$")
 }
