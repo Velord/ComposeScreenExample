@@ -1,10 +1,5 @@
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-
-private fun String.toKotlinStringLiteral(): String = replace("\\", "\\\\")
-    .replace("\"", "\\\"")
-    .replace("$", "\\$")
-    .replace("\r", "\\r")
-    .replace("\n", "\\n")
 
 plugins {
     alias(libs.plugins.convention.multiplatform.library)
@@ -49,16 +44,18 @@ val generateAppStringResources = tasks.register("generateAppStringResources") {
                 appendLine()
                 appendLine("object AppString {")
                 entryRoster.forEach { (key, _) ->
-                    appendLine("    val $key = AppStringResource(\"$key\")")
+                    append("    val $key = AppStringResource(")
+                    append(JsonOutput.toJson(key))
+                    appendLine(")")
                 }
                 appendLine("}")
                 appendLine()
                 appendLine("internal val defaultLocalizationStringRoster = mapOf(")
                 entryRoster.forEach { (key, value) ->
                     append("    ")
-                    append(key.toKotlinStringLiteral())
+                    append(JsonOutput.toJson(key))
                     append(" to ")
-                    append(value.toKotlinStringLiteral())
+                    append(JsonOutput.toJson(value))
                     appendLine(",")
                 }
                 appendLine(")")
