@@ -5,3 +5,10 @@ plugins {
 android {
     namespace = "com.velord.ui.widget.counter"
 }
+
+dependencies {
+    // Module Domain
+    implementation(projects.domain.usecaseLocalization)
+    // Koin
+    implementation(libs.koin.core)
+}
