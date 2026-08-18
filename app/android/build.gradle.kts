@@ -63,7 +63,8 @@ android {
         create(BuildEnvironment.Qa.value) {
             dimension = "environment"
             manifestPlaceholders["enableCrashReporting"] = true
-            applicationIdSuffix = ".${BuildEnvironment.Qa.value}"
+            // QA intentionally uses the same Firebase Android app/configuration as Develop.
+            applicationIdSuffix = ".${BuildEnvironment.Develop.value}"
         }
 
         create(BuildEnvironment.Stage.value) {
