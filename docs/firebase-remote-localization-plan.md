@@ -125,12 +125,16 @@ start UI
         ↓
 FetchLocalizationUC in the application-lifetime background scope
         ↓
+force a Remote Config fetch for this launch and activate it
+        ↓
 newly fetched value becomes eligible on the next application start
 ```
 
 Use cases are named proxy boundaries only. Localization orchestration lives in `LocalizationGateway`; Koin declarations only connect use cases to gateway functions.
 
-The in-memory localization document is not replaced when `fetchAndActivate()` completes. This guarantees the agreed next-start behavior.
+The Android Firebase SDK defaults normal fetches to a 12-hour minimum interval. Since the product behavior requires a newly published localization to be eligible on the next launch, the localization data source explicitly calls `fetch(0)` followed by `activate()` after the current session document has been frozen. Backend throttling is still handled by Firebase; failures are contained by the gateway and never invalidate the bundled fallback.
+
+The in-memory localization document is not replaced when the background fetch/activation completes. This guarantees the agreed next-start behavior.
 
 Changing the language preference does not replace the document. It changes which language inside the already-frozen document is selected, so the UI updates immediately.
 
@@ -145,7 +149,7 @@ The Android data source:
 1. supplies the bundled JSON as the Remote Config default for `localization`;
 2. calls `ensureInitialized()`;
 3. reads the currently active/default `localization` value;
-4. later calls `fetchAndActivate()` after the runtime session has been initialized.
+4. after the session has been initialized, calls `fetch(0)` and then `activate()` so a newly published value can be used on the next launch.
 
 If Firebase initialization/read/fetch fails, the localization gateway contains the failure and the bundled document remains usable.
 
@@ -329,7 +333,7 @@ The implementation is ready for integration when:
 4. Desktop compiles/tests using the explicit bundled fallback;
 5. Develop and QA configuration mapping compiles as designed;
 6. the publisher validates the canonical document;
-7. the Firebase `localization` parameter is verified against the canonical JSON;
+7. the Firebase `localization` parameter is present and its deployed document is integration-verified when Firebase CLI access is available;
 8. an authenticated Firebase CLI publish can be performed when deployment verification is desired.
 
 A live Android Remote Config fetch and an authenticated Firebase publish remain environment/integration checks; they are not reasons to introduce a custom synchronization layer.
