@@ -2,6 +2,7 @@
 param(
     [string]$ProjectId = "true-artwork-239920",
     [string]$LocalizationPath = "core/core-resource/src/commonMain/composeResources/files/localization.json",
+    [switch]$ValidateOnly,
     [switch]$Publish
 )
 
@@ -27,7 +28,7 @@ function Get-Placeholders {
     }
 
     return @(
-        [regex]::Matches($Value, '%\d+\$[A-Za-z]') |
+        [regex]::Matches($Value, '%\d+\$[sd]') |
             ForEach-Object { $_.Value } |
             Sort-Object
     )
@@ -36,8 +37,8 @@ function Get-Placeholders {
 function Assert-LocalizationDocument {
     param([Parameter(Mandatory = $true)]$Document)
 
-    if ($null -eq $Document.schemaVersion) {
-        throw "localization.json is missing schemaVersion."
+    if ($Document.schemaVersion -ne 1) {
+        throw "localization.json must use schemaVersion 1."
     }
 
     if ($null -eq $Document.languages -or $null -eq $Document.languages.en -or $null -eq $Document.languages.es) {
@@ -46,6 +47,10 @@ function Assert-LocalizationDocument {
 
     $englishKeys = @($Document.languages.en.PSObject.Properties.Name | Sort-Object)
     $spanishKeys = @($Document.languages.es.PSObject.Properties.Name | Sort-Object)
+
+    if ($englishKeys.Count -eq 0) {
+        throw "localization.json must contain strings."
+    }
 
     $keyDifference = @(Compare-Object -ReferenceObject $englishKeys -DifferenceObject $spanishKeys)
     if ($keyDifference.Count -ne 0) {
@@ -57,6 +62,10 @@ function Assert-LocalizationDocument {
         $englishValue = [string]$Document.languages.en.$key
         $spanishValue = [string]$Document.languages.es.$key
 
+        if ([string]::IsNullOrEmpty($englishValue) -or [string]::IsNullOrEmpty($spanishValue)) {
+            throw "Localization value must not be empty for key '$key'."
+        }
+
         $englishPlaceholders = @(Get-Placeholders $englishValue)
         $spanishPlaceholders = @(Get-Placeholders $spanishValue)
         $placeholderDifference = @(Compare-Object -ReferenceObject $englishPlaceholders -DifferenceObject $spanishPlaceholders)
@@ -67,11 +76,6 @@ function Assert-LocalizationDocument {
     }
 
     Write-Host "Localization validation passed: $($englishKeys.Count) keys in EN and ES."
-}
-
-$firebase = Get-Command firebase -ErrorAction SilentlyContinue
-if ($null -eq $firebase) {
-    throw "Firebase CLI was not found. Install firebase-tools and run 'firebase login' once before using this script."
 }
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
@@ -93,6 +97,16 @@ try {
 }
 
 Assert-LocalizationDocument $localization
+
+if ($ValidateOnly) {
+    Write-Host "Validation-only run complete. Firebase was not contacted."
+    return
+}
+
+$firebase = Get-Command firebase -ErrorAction SilentlyContinue
+if ($null -eq $firebase) {
+    throw "Firebase CLI was not found. Install firebase-tools and run 'firebase login' once before using this script."
+}
 
 # Compact the localization document before placing it inside the Remote Config parameter value.
 $compactLocalization = $localization | ConvertTo-Json -Depth 100 -Compress
@@ -163,7 +177,7 @@ try {
         return
     }
 
-    Write-Host "Publishing only the patched Remote Config template..."
+    Write-Host "Publishing patched Remote Config template..."
     Push-Location $tempDir
     try {
         & firebase deploy --only remoteconfig --project $ProjectId --config firebase.json --non-interactive
