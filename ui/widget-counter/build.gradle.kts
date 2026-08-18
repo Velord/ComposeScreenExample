@@ -7,6 +7,8 @@ android {
 }
 
 dependencies {
+    // Module Model
+    implementation(projects.model)
     // Module Domain
     implementation(projects.domain.usecaseLocalization)
     // Koin
