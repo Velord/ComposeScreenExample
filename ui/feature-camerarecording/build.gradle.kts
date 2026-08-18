@@ -16,13 +16,12 @@ kotlin {
             // Module Core
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
-            // Module Data
-            implementation(projects.data.localization)
             // Module Infrastructure
             implementation(projects.infrastructure.util)
             // Module Domain
             implementation(projects.domain.usecaseCamera)
             implementation(projects.domain.usecaseEvent)
+            implementation(projects.domain.usecaseSetting)
             // Module UI
             implementation(projects.ui.sharedviewmodel)
             // Kotlin
