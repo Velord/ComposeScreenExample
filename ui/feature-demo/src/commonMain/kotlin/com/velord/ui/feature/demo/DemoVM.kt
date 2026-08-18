@@ -7,6 +7,7 @@ import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.event.ShowToastUC
+import com.velord.usecase.setting.GetLocalizationStateUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
@@ -23,7 +24,10 @@ sealed interface DemoUiAction {
 class DemoVM(
     private val buildConfigResolver: BuildConfigResolver,
     private val showToastUC: ShowToastUC,
+    getLocalizationStateUC: GetLocalizationStateUC,
 ) : CoroutineScopeVM() {
+
+    private val localizationStateFlow = getLocalizationStateUC()
 
     val navigationEvent = MutableSharedFlow<DemoNavigationEvent>()
     private val actionFlow = MutableSharedFlow<DemoUiAction>()
@@ -68,7 +72,10 @@ class DemoVM(
     private suspend fun checkJetpackLib() {
         val lib = buildConfigResolver.getNavigationLib()
         if (lib.isJetpack) {
-            val message = getString(AppString.this_demo_is_deprecated, lib.name)
+            val localization = requireNotNull(localizationStateFlow.value) {
+                "Localization is not initialized"
+            }
+            val message = getString(localization, AppString.this_demo_is_deprecated, lib.name)
             val toastConfig = ToastConfig(message = message, duration = ToastDuration.Long)
             showToastUC(toastConfig)
         }
