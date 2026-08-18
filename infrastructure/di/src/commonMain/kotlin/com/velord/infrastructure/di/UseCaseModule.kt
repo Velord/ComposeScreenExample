@@ -13,7 +13,6 @@ import com.velord.data.gateway.movie.MovieGateway
 import com.velord.data.gateway.movie.MoviePaginationGateway
 import com.velord.data.gateway.movie.MovieSortGateway
 import com.velord.data.gateway.setting.GetThemeConfigGateway
-import com.velord.data.gateway.setting.LanguagePreferenceGateway
 import com.velord.data.gateway.setting.SwitchThemeConfigGateway
 import com.velord.usecase.camera.CreateCameraSessionUC
 import com.velord.usecase.camera.GetCameraSessionUC
@@ -40,7 +39,7 @@ import com.velord.usecase.movie.SetMovieFilterOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.ShareMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
-import com.velord.usecase.setting.GetLanguagePreferenceUC
+import com.velord.usecase.setting.GetLocalizationStateUC
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.InitializeLocalizationUC
 import com.velord.usecase.setting.SetLanguagePreferenceUC
@@ -77,11 +76,11 @@ val useCaseModule = module {
     single<InitializeLocalizationUC> {
         InitializeLocalizationUC(get<LocalizationGateway>()::initialize)
     }
-    single<GetLanguagePreferenceUC> {
-        GetLanguagePreferenceUC(get<LanguagePreferenceGateway>()::getFlow)
+    single<GetLocalizationStateUC> {
+        GetLocalizationStateUC(get<LocalizationGateway>()::getStateFlow)
     }
     single<SetLanguagePreferenceUC> {
-        SetLanguagePreferenceUC(get<LanguagePreferenceGateway>()::save)
+        SetLanguagePreferenceUC(get<LocalizationGateway>()::setLanguagePreference)
     }
     single<GetAllMovieUC> {
         GetAllMovieUC(get<MovieByGateway>()::getBySortAndFilter)
