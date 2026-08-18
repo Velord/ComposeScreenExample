@@ -1,15 +1,15 @@
 package com.velord.ui.sharedviewmodel
 
-import com.velord.core.resource.LocalizationRuntime
+import com.velord.model.localization.LocalizationState
 import com.velord.model.setting.LanguagePreference
-import com.velord.usecase.setting.GetLanguagePreferenceUC
+import com.velord.usecase.setting.GetLocalizationStateUC
 import com.velord.usecase.setting.SetLanguagePreferenceUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 data class LanguageUiState(
-    val preference: LanguagePreference = LanguagePreference.DEFAULT,
+    val localization: LocalizationState? = null,
 )
 
 sealed interface LanguageUiAction {
@@ -17,7 +17,7 @@ sealed interface LanguageUiAction {
 }
 
 class LanguageVM(
-    private val getLanguagePreferenceUC: GetLanguagePreferenceUC,
+    private val getLocalizationStateUC: GetLocalizationStateUC,
     private val setLanguagePreferenceUC: SetLanguagePreferenceUC,
 ) : CoroutineScopeVM() {
 
@@ -36,9 +36,8 @@ class LanguageVM(
 
     private fun observe() {
         launch {
-            getLanguagePreferenceUC().collect { preference ->
-                LocalizationRuntime.setLanguagePreference(preference)
-                uiStateFlow.value = LanguageUiState(preference)
+            getLocalizationStateUC().collect { localization ->
+                uiStateFlow.value = LanguageUiState(localization)
             }
         }
         launch {
