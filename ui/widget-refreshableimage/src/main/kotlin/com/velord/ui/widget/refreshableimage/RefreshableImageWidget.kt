@@ -2,6 +2,7 @@ package com.velord.ui.widget.refreshableimage
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.net.toUri
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -17,18 +18,19 @@ import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
+import com.velord.core.resource.LocalLocalizationState
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 import com.velord.ui.widget.refreshableimage.model.ImageParameter
+import com.velord.usecase.setting.GetLocalizationStateUC
+import org.koin.core.context.GlobalContext
 
 class RefreshableImageWidget :
     GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout),
     GlanceWidgetThemeSustainer<RefreshableImageWidget> {
 
-    // GlanceAppWidget
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
     override val sizeMode: SizeMode = SizeMode.Exact
 
-    // GlanceWidgetThemeSustainer
     override val name: Class<RefreshableImageWidget> = RefreshableImageWidget::class.java
     override val useDarkThemePreferenceKey: Preferences.Key<Boolean> =
         RefreshableImageWidget.useDarkThemePreferenceKey
@@ -37,7 +39,16 @@ class RefreshableImageWidget :
         context: Context,
         id: GlanceId
     ) {
-        provideContent { RefreshableImageWidgetScreen() }
+        val localization = GlobalContext
+            .get()
+            .get<GetLocalizationStateUC>()()
+            .value
+
+        provideContent {
+            CompositionLocalProvider(LocalLocalizationState provides localization) {
+                RefreshableImageWidgetScreen()
+            }
+        }
     }
 
     override suspend fun onDelete(context: Context, glanceId: GlanceId) {
@@ -46,14 +57,12 @@ class RefreshableImageWidget :
     }
 
     companion object {
-        // Preferences keys
         private val sourceUrlPreferenceKey = stringPreferencesKey("image_source_url")
         internal val seedPreferenceKey = stringPreferencesKey("image_seed")
         internal val isDownloadingNewImagePreferenceKey = booleanPreferencesKey(
             "image_is_downloading",
         )
         internal val useDarkThemePreferenceKey = booleanPreferencesKey("use_dark_theme")
-        // ActionParameters keys
         internal val refreshableImageWidgetKey = ActionParameters.Key<ImageParameter>(
             "refreshableImageWidgetKey",
         )
