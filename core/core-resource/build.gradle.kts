@@ -35,7 +35,8 @@ kotlin {
 
     sourceSets {
         commonMain {
-            kotlin.srcDir(generatedLocalizationDirectory)
+            // Using the task output provider records the generation dependency automatically.
+            kotlin.srcDir(generateAppStringResources.flatMap { it.outputDirectory })
             dependencies {
                 // Module Model
                 implementation(projects.model)
@@ -51,10 +52,4 @@ kotlin {
             implementation(libs.kotlin.test)
         }
     }
-}
-
-tasks.matching {
-    it.name.startsWith("compile")
-}.configureEach {
-    dependsOn(generateAppStringResources)
 }
