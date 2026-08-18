@@ -66,12 +66,19 @@ class LocalizationGateway(
         document: LocalizationDocument,
     ): LanguageCode {
         val requested = if (preference.isDefault) {
-            localizationDataSource.currentLanguageCode()
+            localizationDataSource.currentLanguageCode().value
         } else {
-            LanguageCode(preference.languageCode)
+            preference.languageCode
         }
-        return requested.takeIf(document.languages::containsKey) ?: document.defaultLanguage
+
+        return document.findLanguage(requested)
+            ?: document.findLanguage(requested.substringBefore('-').substringBefore('_'))
+            ?: document.defaultLanguage
     }
+
+    private fun LocalizationDocument.findLanguage(languageTag: String): LanguageCode? = languages
+        .keys
+        .firstOrNull { language -> language.value.equals(languageTag, ignoreCase = true) }
 
     @OptIn(ExperimentalResourceApi::class)
     private suspend fun readBundledLocalizationJson(): String = Res
