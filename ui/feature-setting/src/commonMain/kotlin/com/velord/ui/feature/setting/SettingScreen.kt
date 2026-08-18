@@ -29,10 +29,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.velord.core.resource.AppString
+import com.velord.core.resource.getString
 import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.LocalTheme
+import com.velord.model.localization.LanguageCode
+import com.velord.model.localization.LocalizationState
 import com.velord.model.setting.LanguagePreference
 import com.velord.ui.sharedviewmodel.LanguageUiAction
 import com.velord.ui.sharedviewmodel.LanguageVM
@@ -54,7 +57,7 @@ fun SettingScreen(
     }
 
     Content(
-        languagePreference = languageUiState.preference,
+        localization = languageUiState.localization,
         onThemeAction = themeViewModel::onAction,
         onLanguageAction = languageViewModel::onAction,
         onBackClick = onBackClick,
@@ -63,7 +66,7 @@ fun SettingScreen(
 
 @Composable
 internal fun Content(
-    languagePreference: LanguagePreference = LanguagePreference.DEFAULT,
+    localization: LocalizationState? = null,
     onThemeAction: (ThemeUiAction) -> Unit,
     onLanguageAction: (LanguageUiAction) -> Unit = {},
     onBackClick: (() -> Unit)? = null,
@@ -82,7 +85,7 @@ internal fun Content(
 
             ThemeSettings(onThemeAction)
             LanguageSettings(
-                languagePreference = languagePreference,
+                localization = localization,
                 onLanguageAction = onLanguageAction,
             )
         }
@@ -109,7 +112,7 @@ private fun ThemeSettings(onThemeAction: (ThemeUiAction) -> Unit) {
 
 @Composable
 private fun LanguageSettings(
-    languagePreference: LanguagePreference,
+    localization: LocalizationState?,
     onLanguageAction: (LanguageUiAction) -> Unit,
 ) {
     Column(
@@ -126,29 +129,44 @@ private fun LanguageSettings(
             text = stringResource(AppString.language),
             style = MaterialTheme.typography.titleMedium,
         )
-        LanguagePreference.entries.forEach { preference ->
-            LanguageOption(
-                preference = preference,
-                isSelected = languagePreference == preference,
-                onClick = {
-                    onLanguageAction(LanguageUiAction.Select(preference))
-                },
-            )
-        }
+
+        val selectedPreference = localization?.preference ?: LanguagePreference.DEFAULT
+        LanguageOption(
+            title = stringResource(AppString.language_default),
+            isSelected = selectedPreference.isDefault,
+            onClick = {
+                onLanguageAction(LanguageUiAction.Select(LanguagePreference.DEFAULT))
+            },
+        )
+
+        localization
+            ?.document
+            ?.languages
+            ?.keys
+            ?.sortedBy(LanguageCode::value)
+            ?.forEach { language ->
+                val preference = LanguagePreference.language(language)
+                LanguageOption(
+                    title = getString(
+                        localization = localization,
+                        language = language,
+                        resource = AppString.language_name,
+                    ),
+                    isSelected = selectedPreference == preference,
+                    onClick = {
+                        onLanguageAction(LanguageUiAction.Select(preference))
+                    },
+                )
+            }
     }
 }
 
 @Composable
 private fun LanguageOption(
-    preference: LanguagePreference,
+    title: String,
     isSelected: Boolean,
     onClick: () -> Unit,
 ) {
-    val title = when (preference) {
-        LanguagePreference.DEFAULT -> stringResource(AppString.language_default)
-        LanguagePreference.ENGLISH -> stringResource(AppString.language_english)
-        LanguagePreference.SPANISH -> stringResource(AppString.language_spanish)
-    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
