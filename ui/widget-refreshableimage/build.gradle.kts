@@ -10,6 +10,8 @@ android {
 dependencies {
     // Module Model
     implementation(projects.model)
+    // Module Data
+    implementation(projects.data.localization)
     // Coil
     implementation(libs.bundles.coil)
     // AndroidX
