@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$ProjectId = "true-artwork-239920",
+    [string]$ProjectId = $env:FIREBASE_PROJECT_ID,
     [string]$LocalizationPath = "core/core-resource/src/commonMain/composeResources/files/localization.json",
     [switch]$ValidateOnly,
     [switch]$Publish
@@ -126,6 +126,10 @@ if ($ValidateOnly) {
     return
 }
 
+if ([string]::IsNullOrWhiteSpace($ProjectId)) {
+    throw "Firebase project ID is missing. Pass -ProjectId or set FIREBASE_PROJECT_ID."
+}
+
 $firebase = Get-Command firebase -ErrorAction SilentlyContinue
 if ($null -eq $firebase) {
     throw "Firebase CLI was not found. Install firebase-tools and run 'firebase login' once before using this script."
@@ -192,7 +196,7 @@ try {
         Write-Host "Dry run complete. Nothing was published."
         Write-Host "Generated template: $patchedTemplatePath"
         Write-Host "Run again with -Publish when ready:"
-        Write-Host ".\scripts\firebase\publish-localization.ps1 -Publish"
+        Write-Host ".\scripts\firebase\publish-localization.ps1 -Publish -ProjectId <firebase-project-id>"
         return
     }
 
