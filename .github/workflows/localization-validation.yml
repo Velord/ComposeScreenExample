@@ -17,10 +17,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
@@ -28,10 +28,23 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x gradlew
 
+      - name: Verify Compose string migration
+        shell: bash
+        run: |
+          if grep -R --line-number --include='*.kt' 'Res\.string' app core data domain infrastructure model ui; then
+            echo 'Found remaining Compose Res.string usage.'
+            exit 1
+          fi
+          if grep -R --line-number --include='*.kt' 'org\.jetbrains\.compose\.resources\.stringResource' app core data domain infrastructure model ui; then
+            echo 'Found remaining JetBrains Compose stringResource import.'
+            exit 1
+          fi
+
       - name: Compile and test localization
         run: >-
           ./gradlew
           :core:core-resource:desktopTest
+          :data:firebase:desktopTest
           :app:desktop:compileKotlinDesktop
           :app:android:compileDevelopDebugKotlin
           -x :app:android:processDevelopDebugGoogleServices
