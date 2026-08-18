@@ -21,13 +21,7 @@ import com.velord.model.AppEvent
 import com.velord.ui.feature.splash.SplashScreen
 import com.velord.ui.feature.splash.SplashVM
 import com.velord.ui.sharedviewmodel.MainVM
-import com.velord.usecase.setting.FetchLocalizationUC
 import com.velord.usecase.setting.InitializeLocalizationUC
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.compose.koinInject
 import org.koin.core.context.startKoin
@@ -41,52 +35,43 @@ fun main() {
         koin.get<InitializeLocalizationUC>()()
     }
 
-    val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    appScope.launch {
-        koin.get<FetchLocalizationUC>()()
-    }
+    application {
+        val splashVM: SplashVM = koinInject()
+        val mainVM: MainVM = koinInject()
 
-    try {
-        application {
-            val splashVM: SplashVM = koinInject()
-            val mainVM: MainVM = koinInject()
+        val dispatcher = remember { DesktopBackDispatcher() }
 
-            val dispatcher = remember { DesktopBackDispatcher() }
-
-            Window(
-                onCloseRequest = ::exitApplication,
-                title = "ComposeScreenExample",
-                onPreviewKeyEvent = { event ->
-                    if (event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
-                        dispatcher.onBackPressed()
-                    } else {
-                        false
-                    }
+        Window(
+            onCloseRequest = ::exitApplication,
+            title = "ComposeScreenExample",
+            onPreviewKeyEvent = { event ->
+                if (event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
+                    dispatcher.onBackPressed()
+                } else {
+                    false
                 }
-            ) {
-                ObserveSharedFlow(mainVM.appEventFlow) {
-                    when (it) {
-                        is AppEvent.Exit -> exitApplication()
-                        else -> Unit
-                    }
+            }
+        ) {
+            ObserveSharedFlow(mainVM.appEventFlow) {
+                when (it) {
+                    is AppEvent.Exit -> exitApplication()
+                    else -> Unit
                 }
+            }
 
-                CompositionLocalProvider(LocalDesktopBackDispatcher provides dispatcher) {
-                    AppThemeHost {
-                        SplashScreen(viewModel = splashVM) {
-                            ToastHost(
-                                toastEventFlow = mainVM.toastConfigFlow,
-                                modifier = Modifier.fillMaxSize(),
-                                content = {
-                                    NavigationHost(navigationLib = mainVM.navigationLib)
-                                }
-                            )
-                        }
+            CompositionLocalProvider(LocalDesktopBackDispatcher provides dispatcher) {
+                AppThemeHost {
+                    SplashScreen(viewModel = splashVM) {
+                        ToastHost(
+                            toastEventFlow = mainVM.toastConfigFlow,
+                            modifier = Modifier.fillMaxSize(),
+                            content = {
+                                NavigationHost(navigationLib = mainVM.navigationLib)
+                            }
+                        )
                     }
                 }
             }
         }
-    } finally {
-        appScope.cancel()
     }
 }
