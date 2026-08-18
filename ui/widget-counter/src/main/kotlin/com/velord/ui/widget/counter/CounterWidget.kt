@@ -1,6 +1,7 @@
 package com.velord.ui.widget.counter
 
 import android.content.Context
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -14,7 +15,10 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
+import com.velord.core.resource.LocalLocalizationState
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
+import com.velord.usecase.setting.GetLocalizationStateUC
+import org.koin.core.context.GlobalContext
 
 class CounterWidget :
     GlanceAppWidget(errorUiLayout = R.layout.counter_widget_error_layout),
@@ -27,7 +31,16 @@ class CounterWidget :
     override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = CounterWidget.useDarkThemePreferenceKey
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        provideContent { CounterWidgetScreen() }
+        val localization = GlobalContext
+            .get()
+            .get<GetLocalizationStateUC>()()
+            .value
+
+        provideContent {
+            CompositionLocalProvider(LocalLocalizationState provides localization) {
+                CounterWidgetScreen()
+            }
+        }
     }
 
     companion object {
