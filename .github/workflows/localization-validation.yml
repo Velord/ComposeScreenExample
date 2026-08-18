@@ -61,3 +61,17 @@ jobs:
           :app:android:compileQaDebugKotlin
           -x :app:android:processQaDebugGoogleServices
           --stacktrace
+
+      - name: Compile Stage Firebase mapping
+        run: >-
+          ./gradlew
+          :app:android:compileStageDebugKotlin
+          -x :app:android:processStageDebugGoogleServices
+          --stacktrace
+
+      - name: Compile Production Firebase mapping
+        run: >-
+          ./gradlew
+          :app:android:compileProductionDebugKotlin
+          -x :app:android:processProductionDebugGoogleServices
+          --stacktrace
