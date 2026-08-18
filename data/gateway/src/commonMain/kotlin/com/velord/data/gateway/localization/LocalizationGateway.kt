@@ -4,6 +4,7 @@ import com.velord.core.resource.LocalizationRuntime
 import com.velord.core.resource.readBundledLocalizationJson
 import com.velord.data.firebase.FirebaseRemoteConfigDataSource
 import com.velord.data.gateway.setting.LanguagePreferenceGateway
+import kotlinx.coroutines.CancellationException
 import org.koin.core.annotation.Single
 
 @Single
@@ -14,10 +15,14 @@ class LocalizationGateway(
 
     suspend fun initialize() {
         val bundledLocalization = readBundledLocalizationJson()
-        val remoteLocalization = runCatching {
+        val remoteLocalization = try {
             remoteConfig.initialize(bundledLocalization)
             remoteConfig.getLocalization()
-        }.getOrNull()
+        } catch (error: CancellationException) {
+            throw error
+        } catch (_: Exception) {
+            null
+        }
 
         LocalizationRuntime.initialize(
             bundledJson = bundledLocalization,
@@ -27,8 +32,12 @@ class LocalizationGateway(
     }
 
     suspend fun fetchAndActivate() {
-        runCatching {
+        try {
             remoteConfig.fetchAndActivate()
+        } catch (error: CancellationException) {
+            throw error
+        } catch (_: Exception) {
+            // The current session already has a validated bundled/activated localization document.
         }
     }
 }
