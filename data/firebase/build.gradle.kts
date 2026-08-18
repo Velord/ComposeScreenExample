@@ -14,6 +14,9 @@ kotlin {
             implementation(libs.koin.core)
             api(libs.koin.annotation)
         }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
         androidMain.dependencies {
             // Firebase Remote Config
             implementation(project.dependencies.platform(libs.google.firebase.bom))
