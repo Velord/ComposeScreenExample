@@ -23,8 +23,6 @@ kotlin {
             implementation(projects.core.coreNavigation)
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
-            // Module Data
-            implementation(projects.data.localization)
             // Module UI
             implementation(projects.ui.sharedviewmodel)
             // Module UI Feature
