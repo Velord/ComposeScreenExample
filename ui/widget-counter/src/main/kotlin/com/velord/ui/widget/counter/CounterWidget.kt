@@ -14,19 +14,11 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import com.velord.core.resource.LocalizationRuntime
-import com.velord.core.resource.readBundledLocalizationJson
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
-import com.velord.usecase.localization.InitializeLocalizationUC
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class CounterWidget :
     GlanceAppWidget(errorUiLayout = R.layout.counter_widget_error_layout),
-    GlanceWidgetThemeSustainer<CounterWidget>,
-    KoinComponent {
-
-    private val initializeLocalizationUC: InitializeLocalizationUC by inject()
+    GlanceWidgetThemeSustainer<CounterWidget> {
 
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
     override val sizeMode: SizeMode = SizeMode.Exact
@@ -35,18 +27,7 @@ class CounterWidget :
     override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = CounterWidget.useDarkThemePreferenceKey
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        initializeLocalization()
         provideContent { CounterWidgetScreen() }
-    }
-
-    private suspend fun initializeLocalization() {
-        val bundledLocalization = readBundledLocalizationJson()
-        val startup = initializeLocalizationUC(bundledLocalization)
-        LocalizationRuntime.initialize(
-            bundledJson = bundledLocalization,
-            remoteJson = startup.remoteJson,
-            preference = startup.languagePreference,
-        )
     }
 
     companion object {
