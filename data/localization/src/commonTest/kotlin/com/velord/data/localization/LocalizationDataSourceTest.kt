@@ -28,7 +28,7 @@ class LocalizationDataSourceTest {
                     ,"fr": {
                       "language_name": "Français",
                       "settings": "Paramètres",
-                      "count": "Nombre : %1\$d"
+                      "count": "Nombre : %1${'$'}d"
                     }
                 """.trimIndent(),
             )
@@ -76,7 +76,7 @@ class LocalizationDataSourceTest {
                 ,"fr": {
                   "language_name": "Français",
                   "settings": "Paramètres",
-                  "count": "Nombre : %1\$d"
+                  "count": "Nombre : %1${'$'}d"
                 }
             """.trimIndent(),
         )
@@ -95,7 +95,7 @@ class LocalizationDataSourceTest {
                 "en": {
                   "language_name": "English",
                   "settings": "Remote settings",
-                  "count": "Count: %1\$d"
+                  "count": "Count: %1${'$'}d"
                 }
               }
             }
@@ -123,12 +123,12 @@ class LocalizationDataSourceTest {
             "en": {
               "language_name": "English",
               "settings": "Settings",
-              "count": "Count: %1\$d"
+              "count": "Count: %1${'$'}d"
             },
             "es": {
               "language_name": "Español",
               "settings": "Configuración",
-              "count": "Cantidad: %1\$d"
+              "count": "Cantidad: %1${'$'}d"
             }
             $extraLanguages
           }
