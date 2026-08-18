@@ -5,5 +5,5 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 internal actual val bottomNavigationPlatformModule = module {
-    viewModel { BottomNavigationJetpackVM(get(), get(), get()) }
+    viewModel { BottomNavigationJetpackVM(get(), get(), get(), get()) }
 }
