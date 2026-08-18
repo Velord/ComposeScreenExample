@@ -15,11 +15,13 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
+import com.velord.core.resource.LocalLocalizationState
 import com.velord.core.ui.dialog.showGoToSettingsForCamera
 import com.velord.core.ui.dialog.showGoToSettingsForMic
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.infrastructure.util.persmission.toPermissionGrantState
+import com.velord.model.localization.LocalizationState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import com.google.accompanist.permissions.PermissionState as AccompanistPermissionState
 
@@ -33,8 +35,7 @@ fun CheckCameraAndAudioRecordPermission(
     onMicroUpdateState: (PermissionGrantState) -> Unit,
 ) {
     val context = LocalContext.current
-    // Fix the issue when the user first time asked for permission.
-    // Can't do anything if user just leaves\close permission dialog infinite times.
+    val localization = LocalLocalizationState.current
     val permissionAlreadyRequestedState = rememberSaveable {
         mutableStateOf(false)
     }
@@ -54,16 +55,12 @@ fun CheckCameraAndAudioRecordPermission(
 
     val cameraState = remember {
         derivedStateOf {
-            permissionsState
-                .permissions
-                .firstOrNull { it.permission == Manifest.permission.CAMERA }
+            permissionsState.permissions.firstOrNull { it.permission == Manifest.permission.CAMERA }
         }
     }
     val microState = remember {
         derivedStateOf {
-            permissionsState
-                .permissions
-                .firstOrNull { it.permission == Manifest.permission.RECORD_AUDIO }
+            permissionsState.permissions.firstOrNull { it.permission == Manifest.permission.RECORD_AUDIO }
         }
     }
 
@@ -72,12 +69,13 @@ fun CheckCameraAndAudioRecordPermission(
         permissionsState.launchMultiplePermissionRequest()
     }
 
-    LaunchedEffect(permissionAlreadyRequestedState.value) {
+    LaunchedEffect(permissionAlreadyRequestedState.value, localization) {
         if (permissionAlreadyRequestedState.value.not()) return@LaunchedEffect
+        val currentLocalization = localization ?: return@LaunchedEffect
 
         log.d { "LaunchedEffect permissionAlreadyRequestedState" }
-        checkCamera(permissionAlreadyRequestedState, cameraState, context)
-        checkAudioRecord(permissionAlreadyRequestedState, microState, context)
+        checkCamera(permissionAlreadyRequestedState, cameraState, context, currentLocalization)
+        checkAudioRecord(permissionAlreadyRequestedState, microState, context, currentLocalization)
     }
 
     cameraState.value?.let {
@@ -99,8 +97,10 @@ fun CheckCameraAndAudioRecordPermission(
         log.d { "ObserveTrigger != null" }
         permissionsState.launchMultiplePermissionRequest()
 
-        checkCamera(permissionAlreadyRequestedState, cameraState, context)
-        checkAudioRecord(permissionAlreadyRequestedState, microState, context)
+        localization?.let { currentLocalization ->
+            checkCamera(permissionAlreadyRequestedState, cameraState, context, currentLocalization)
+            checkAudioRecord(permissionAlreadyRequestedState, microState, context, currentLocalization)
+        }
     }
 }
 
@@ -108,12 +108,13 @@ fun CheckCameraAndAudioRecordPermission(
 private fun checkCamera(
     permissionAlreadyRequestedState: State<Boolean>,
     cameraState: State<AccompanistPermissionState?>,
-    context: Context
+    context: Context,
+    localization: LocalizationState,
 ) {
     baseCheck(
         permissionAlreadyRequestedState,
         cameraState,
-        { context.showGoToSettingsForCamera {} },
+        { context.showGoToSettingsForCamera(localization) {} },
         "Camera"
     )
 }
@@ -122,12 +123,13 @@ private fun checkCamera(
 private fun checkAudioRecord(
     permissionAlreadyRequestedState: State<Boolean>,
     microState: State<AccompanistPermissionState?>,
-    context: Context
+    context: Context,
+    localization: LocalizationState,
 ) {
     baseCheck(
         permissionAlreadyRequestedState,
         microState,
-        { context.showGoToSettingsForMic {} },
+        { context.showGoToSettingsForMic(localization) {} },
         "AudioRecord"
     )
 }
