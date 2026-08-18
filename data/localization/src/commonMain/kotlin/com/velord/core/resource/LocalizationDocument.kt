@@ -29,11 +29,10 @@ internal object LocalizationDocumentParser {
         value: String,
         bundled: LocalizationDocument,
     ): LocalizationDocument? = parse(value).getOrNull()?.takeIf { remote ->
+        val bundledKeys = bundled.languages.getValue(DEFAULT_LANGUAGE).keys
         remote.schemaVersion == bundled.schemaVersion &&
-            remote.languages.keys == bundled.languages.keys &&
-            remote.languages.all { (language, strings) ->
-                strings.keys == bundled.languages.getValue(language).keys
-            }
+            remote.languages.keys.containsAll(bundled.languages.keys) &&
+            remote.languages.values.all { strings -> strings.keys == bundledKeys }
     }
 
     private fun validate(document: LocalizationDocument) {
