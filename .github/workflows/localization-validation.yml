@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - feature/firebase-remote-localization
+  pull_request:
+    branches:
+      - develop
   workflow_dispatch:
 
 concurrency:
-  group: localization-validation
+  group: localization-validation-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
