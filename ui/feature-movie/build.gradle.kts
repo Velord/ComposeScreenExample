@@ -15,7 +15,6 @@ kotlin {
             implementation(projects.model)
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
-            implementation(projects.data.localization)
             implementation(projects.ui.sharedviewmodel)
             implementation(projects.domain.usecaseMovie)
             // Template
