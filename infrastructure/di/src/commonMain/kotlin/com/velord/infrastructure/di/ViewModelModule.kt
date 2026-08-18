@@ -20,7 +20,7 @@ val viewModelModule = module {
     viewModel { ThemeVM(get(), get(), get(), get()) }
     viewModel { LanguageVM(get(), get()) }
     viewModel { SplashVM() }
-    viewModel { DemoVM(get(), get()) }
+    viewModel { DemoVM(get(), get(), get()) }
     viewModel { FlowSummatorVM() }
     viewModel { MovieVM(get(), get(), get(), get()) }
     viewModel { AllMovieVM(get(), get(), get(), get(), get()) }
