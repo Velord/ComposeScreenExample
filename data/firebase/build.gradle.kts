@@ -10,19 +10,14 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // Firebase
-            implementation(gitliveLibs.firebase.config)
             // Koin
             implementation(libs.koin.core)
             api(libs.koin.annotation)
         }
         androidMain.dependencies {
-            // GitLive keeps Firebase Android SDK versions BOM-managed.
+            // Firebase Remote Config
             implementation(project.dependencies.platform(libs.google.firebase.bom))
-        }
-        desktopMain.dependencies {
-            // GitLive's JVM artifact uses the same Firebase dependency constraints.
-            implementation(project.dependencies.platform(libs.google.firebase.bom))
+            implementation(gitliveLibs.firebase.config)
         }
     }
 
