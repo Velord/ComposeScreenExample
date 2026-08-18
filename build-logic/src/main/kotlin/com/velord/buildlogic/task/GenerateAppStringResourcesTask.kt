@@ -29,8 +29,8 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
         val document = JsonSlurper().parse(localizationFile.get().asFile) as Map<*, *>
         validate(document)
 
-        val languages = document.getValue("languages") as Map<*, *>
-        val english = languages.getValue("en") as Map<*, *>
+        val languages = document["languages"] as Map<*, *>
+        val english = languages["en"] as Map<*, *>
         val outputFile = outputDirectory.get().asFile.resolve(
             "com/velord/core/resource/AppString.kt",
         )
