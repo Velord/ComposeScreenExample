@@ -1,5 +1,0 @@
-[versions]
-firebase = "2.6.0"
-
-[libraries]
-firebase-config = { module = "dev.gitlive:firebase-config", version.ref = "firebase" }
