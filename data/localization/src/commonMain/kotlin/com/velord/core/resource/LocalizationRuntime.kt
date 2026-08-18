@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.velord.model.setting.LanguagePreference
 
-private const val ENGLISH_LANGUAGE = "en"
+private const val DEFAULT_LANGUAGE = "en"
 private const val SPANISH_LANGUAGE = "es"
 private val FORMAT_ARGUMENT_REGEX = Regex("""%(\d+)\${'$'}([sd])""")
 
@@ -87,15 +87,16 @@ object LocalizationRuntime {
         preference: LanguagePreference,
         deviceLanguageTag: String,
         availableLanguages: Set<String>,
-    ): String = when (preference) {
-        LanguagePreference.ENGLISH -> ENGLISH_LANGUAGE
-        LanguagePreference.SPANISH -> SPANISH_LANGUAGE
-        LanguagePreference.DEFAULT -> deviceLanguageTag
-            .lowercase()
-            .substringBefore('-')
-            .substringBefore('_')
-            .takeIf { it in availableLanguages }
-            ?: ENGLISH_LANGUAGE
+    ): String {
+        val requestedLanguage = when (preference) {
+            LanguagePreference.ENGLISH -> DEFAULT_LANGUAGE
+            LanguagePreference.SPANISH -> SPANISH_LANGUAGE
+            LanguagePreference.DEFAULT -> deviceLanguageTag
+                .lowercase()
+                .substringBefore('-')
+                .substringBefore('_')
+        }
+        return requestedLanguage.takeIf { it in availableLanguages } ?: DEFAULT_LANGUAGE
     }
 
     private fun format(
