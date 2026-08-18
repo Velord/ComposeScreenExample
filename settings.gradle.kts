@@ -73,7 +73,7 @@ include(":data:backend")
 include(":data:datastore")
 include(":data:appstate")
 include(":data:db")
-include(":data:firebase")
+include(":data:localization")
 include(":data:gateway")
 include(":data:os")
 // Domain
