@@ -1,5 +1,6 @@
 import com.velord.buildlogic.model.BuildEnvironment
 import com.velord.buildlogic.model.BuildType
+import com.velord.buildlogic.task.GenerateQaGoogleServicesTask
 import com.velord.buildlogic.util.AppVersion
 
 plugins {
@@ -86,31 +87,15 @@ android {
 // client while preserving the Develop Firebase app id/API key/project values.
 val developApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Develop.value}"
 val qaApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Qa.value}"
-val rootGoogleServicesFile = layout.projectDirectory.file("google-services.json")
-val qaGoogleServicesFile = layout.projectDirectory.file("src/${BuildEnvironment.Qa.value}/google-services.json")
-val prepareQaGoogleServices = tasks.register("prepareQaGoogleServices") {
-    doLast {
-        val source = rootGoogleServicesFile.asFile
-        val destination = qaGoogleServicesFile.asFile
-        if (source.isFile.not()) {
-            destination.delete()
-            return@doLast
-        }
-
-        val sourceText = source.readText()
-        val developPackageEntry = "\"package_name\": \"$developApplicationId\""
-        require(sourceText.contains(developPackageEntry)) {
-            "Develop Firebase client '$developApplicationId' is missing from google-services.json"
-        }
-
-        destination.parentFile.mkdirs()
-        destination.writeText(
-            sourceText.replace(
-                oldValue = developPackageEntry,
-                newValue = "\"package_name\": \"$qaApplicationId\"",
-            ),
-        )
-    }
+val prepareQaGoogleServices = tasks.register<GenerateQaGoogleServicesTask>("prepareQaGoogleServices") {
+    sourceFile.set(layout.projectDirectory.file("google-services.json"))
+    outputFile.set(
+        layout.projectDirectory.file(
+            "src/${BuildEnvironment.Qa.value}/google-services.json",
+        ),
+    )
+    sourceApplicationId.set(developApplicationId)
+    targetApplicationId.set(qaApplicationId)
 }
 
 tasks.matching { task ->
