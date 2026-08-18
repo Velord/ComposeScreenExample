@@ -28,7 +28,7 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x gradlew
 
-      - name: Verify Compose string migration
+      - name: Verify localization architecture
         shell: bash
         run: |
           if grep -R --line-number --include='*.kt' 'Res\.string' app core data domain infrastructure model ui; then
@@ -39,6 +39,15 @@ jobs:
             echo 'Found remaining JetBrains Compose stringResource import.'
             exit 1
           fi
+          if grep -R --line-number --include='*.kt' 'com\.google\.firebase\.remoteconfig\.FirebaseRemoteConfig' data; then
+            echo 'Localization must use the common GitLive Remote Config API.'
+            exit 1
+          fi
+          if find core/core-resource/src -type f -name '*.kt' | grep -q .; then
+            echo 'core-resource must contain raw resources only.'
+            find core/core-resource/src -type f -name '*.kt'
+            exit 1
+          fi
 
       - name: Validate localization publishing script
         shell: pwsh
@@ -47,29 +56,28 @@ jobs:
       - name: Compile and test localization
         run: >-
           ./gradlew
-          :core:core-resource:desktopTest
-          :data:firebase:desktopTest
+          :data:localization:desktopTest
           :infrastructure:di:desktopTest
           :app:desktop:compileKotlinDesktop
           :app:android:compileDevelopDebugKotlin
           -x :app:android:processDevelopDebugGoogleServices
           --stacktrace
 
-      - name: Compile QA Firebase mapping
+      - name: Compile QA
         run: >-
           ./gradlew
           :app:android:compileQaDebugKotlin
           -x :app:android:processQaDebugGoogleServices
           --stacktrace
 
-      - name: Compile Stage Firebase mapping
+      - name: Compile Stage
         run: >-
           ./gradlew
           :app:android:compileStageDebugKotlin
           -x :app:android:processStageDebugGoogleServices
           --stacktrace
 
-      - name: Compile Production Firebase mapping
+      - name: Compile Production
         run: >-
           ./gradlew
           :app:android:compileProductionDebugKotlin
