@@ -33,8 +33,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-        androidResources.localeFilters += listOf("en", "es")
     }
 
     buildTypes {
