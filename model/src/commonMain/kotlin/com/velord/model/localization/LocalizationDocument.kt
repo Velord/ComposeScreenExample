@@ -10,5 +10,6 @@ value class LocalizationStrings(
 
 data class LocalizationDocument(
     val schemaVersion: Int,
+    val defaultLanguage: LanguageCode,
     val languages: Map<LanguageCode, LocalizationStrings>,
 )
