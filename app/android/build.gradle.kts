@@ -1,3 +1,4 @@
+import com.google.gms.googleservices.GoogleServicesTask
 import com.velord.buildlogic.model.BuildEnvironment
 import com.velord.buildlogic.model.BuildType
 import com.velord.buildlogic.util.AppVersion
@@ -78,6 +79,15 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
+    }
+}
+
+// QA keeps its own package/application ID, while Google Services selects the Develop client
+// from the local google-services.json. Firebase therefore uses CSE Dev without collapsing QA
+// into the Develop Android application package.
+tasks.withType<GoogleServicesTask>().configureEach {
+    if (name.startsWith("processQa") && name.endsWith("GoogleServices")) {
+        applicationId.set("com.velord.composescreenexample.${BuildEnvironment.Develop.value}")
     }
 }
 
