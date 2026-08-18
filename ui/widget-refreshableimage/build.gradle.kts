@@ -8,10 +8,12 @@ android {
 }
 
 dependencies {
-    // Module Model
-    implementation(projects.model)
-    // Module Data
-    implementation(projects.data.localization)
+    // Module Core
+    implementation(projects.core.coreResource)
+    // Module Domain
+    implementation(projects.domain.usecaseSetting)
+    // Koin
+    implementation(libs.koin.core)
     // Coil
     implementation(libs.bundles.coil)
     // AndroidX
