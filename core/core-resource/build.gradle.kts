@@ -1,3 +1,5 @@
+import com.velord.buildlogic.task.GenerateAppStringResourcesTask
+
 plugins {
     alias(libs.plugins.convention.multiplatform.library)
     alias(libs.plugins.multiplatform.compose)
@@ -9,6 +11,19 @@ compose.resources {
     packageOfResClass = "com.velord.core.resource"
 }
 
+val localizationFile = layout.projectDirectory.file(
+    "src/commonMain/composeResources/files/localization.json",
+)
+val generatedLocalizationDirectory = layout.buildDirectory.dir(
+    "generated/localization/commonMain/kotlin",
+)
+val generateAppStringResources = tasks.register<GenerateAppStringResourcesTask>(
+    "generateAppStringResources",
+) {
+    this.localizationFile.set(localizationFile)
+    outputDirectory.set(generatedLocalizationDirectory)
+}
+
 kotlin {
     android {
         namespace = "com.velord.core.resource"
@@ -18,9 +33,13 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            api(libs.compose.resources)
-            implementation(libs.compose.runtime)
+        commonMain {
+            kotlin.srcDir(generateAppStringResources.flatMap { it.outputDirectory })
+            dependencies {
+                api(projects.model)
+                api(libs.compose.resources)
+                implementation(libs.compose.runtime)
+            }
         }
     }
 }
