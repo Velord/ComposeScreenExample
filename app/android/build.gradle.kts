@@ -1,4 +1,3 @@
-import com.google.gms.googleservices.GoogleServicesTask
 import com.velord.buildlogic.model.BuildEnvironment
 import com.velord.buildlogic.model.BuildType
 import com.velord.buildlogic.util.AppVersion
@@ -82,13 +81,42 @@ android {
     }
 }
 
-// QA keeps its own package/application ID, while Google Services selects the Develop client
-// from the local google-services.json. Firebase therefore uses CSE Dev without collapsing QA
-// into the Develop Android application package.
-tasks.withType<GoogleServicesTask>().configureEach {
-    if (name.startsWith("processQa") && name.endsWith("GoogleServices")) {
-        applicationId.set("com.velord.composescreenexample.${BuildEnvironment.Develop.value}")
+// QA is a distinct Android package, but it intentionally uses the Develop Firebase app.
+// google-services requires a package-name match, so derive a QA-local config from the Develop
+// client while preserving the Develop Firebase app id/API key/project values.
+val developApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Develop.value}"
+val qaApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Qa.value}"
+val rootGoogleServicesFile = layout.projectDirectory.file("google-services.json")
+val qaGoogleServicesFile = layout.projectDirectory.file("src/${BuildEnvironment.Qa.value}/google-services.json")
+val prepareQaGoogleServices = tasks.register("prepareQaGoogleServices") {
+    doLast {
+        val source = rootGoogleServicesFile.asFile
+        val destination = qaGoogleServicesFile.asFile
+        if (source.isFile.not()) {
+            destination.delete()
+            return@doLast
+        }
+
+        val sourceText = source.readText()
+        val developPackageEntry = "\"package_name\": \"$developApplicationId\""
+        require(sourceText.contains(developPackageEntry)) {
+            "Develop Firebase client '$developApplicationId' is missing from google-services.json"
+        }
+
+        destination.parentFile.mkdirs()
+        destination.writeText(
+            sourceText.replace(
+                oldValue = developPackageEntry,
+                newValue = "\"package_name\": \"$qaApplicationId\"",
+            ),
+        )
     }
+}
+
+tasks.matching { task ->
+    task.name.startsWith("processQa") && task.name.endsWith("GoogleServices")
+}.configureEach {
+    dependsOn(prepareQaGoogleServices)
 }
 
 dependencies {
