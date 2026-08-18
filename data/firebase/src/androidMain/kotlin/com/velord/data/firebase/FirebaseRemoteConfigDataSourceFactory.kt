@@ -1,7 +1,7 @@
 package com.velord.data.firebase
 
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.remoteconfig.remoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import kotlinx.coroutines.tasks.await
 
 private const val LOCALIZATION_PARAMETER = "localization"
 
@@ -10,14 +10,14 @@ internal actual fun createFirebaseRemoteConfigDataSource(): FirebaseRemoteConfig
 
 private class AndroidFirebaseRemoteConfigDataSource : FirebaseRemoteConfigDataSource {
 
-    private val remoteConfig
-        get() = Firebase.remoteConfig
+    private val remoteConfig: FirebaseRemoteConfig
+        get() = FirebaseRemoteConfig.getInstance()
 
     override suspend fun initialize(defaultLocalization: String) {
-        remoteConfig.setDefaults(
-            LOCALIZATION_PARAMETER to defaultLocalization,
-        )
-        remoteConfig.ensureInitialized()
+        remoteConfig.setDefaultsAsync(
+            mapOf(LOCALIZATION_PARAMETER to defaultLocalization),
+        ).await()
+        remoteConfig.ensureInitialized().await()
     }
 
     override fun getLocalization(): String? = remoteConfig
@@ -26,6 +26,6 @@ private class AndroidFirebaseRemoteConfigDataSource : FirebaseRemoteConfigDataSo
         .takeIf(String::isNotBlank)
 
     override suspend fun fetchAndActivate() {
-        remoteConfig.fetchAndActivate()
+        remoteConfig.fetchAndActivate().await()
     }
 }
