@@ -2,14 +2,14 @@ package com.velord.data.gateway.localization
 
 import com.velord.core.resource.LocalizationRuntime
 import com.velord.core.resource.readBundledLocalizationJson
-import com.velord.data.firebase.FirebaseRemoteConfigDataSource
 import com.velord.data.gateway.setting.LanguagePreferenceGateway
+import com.velord.data.localization.LocalizationRemoteDataSource
 import kotlinx.coroutines.CancellationException
 import org.koin.core.annotation.Single
 
 @Single
 class LocalizationGateway(
-    private val remoteConfig: FirebaseRemoteConfigDataSource,
+    private val remoteConfig: LocalizationRemoteDataSource,
     private val languagePreferenceGateway: LanguagePreferenceGateway,
 ) {
 
