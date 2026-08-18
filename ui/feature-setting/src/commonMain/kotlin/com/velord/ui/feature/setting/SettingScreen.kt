@@ -52,7 +52,6 @@ fun SettingScreen(
     val languageUiState by languageViewModel.uiStateFlow.collectAsState()
 
     SideEffect {
-        // Simulate we completed back stack handling
         onGraphCompleted()
     }
 
@@ -139,25 +138,24 @@ private fun LanguageSettings(
             },
         )
 
-        localization
-            ?.document
-            ?.languages
-            ?.keys
-            ?.sortedBy(LanguageCode::value)
-            ?.forEach { language ->
-                val preference = LanguagePreference.language(language)
-                LanguageOption(
-                    title = getString(
-                        localization = localization,
-                        language = language,
-                        resource = AppString.language_name,
-                    ),
-                    isSelected = selectedPreference == preference,
-                    onClick = {
-                        onLanguageAction(LanguageUiAction.Select(preference))
-                    },
-                )
-            }
+        localization?.let { currentLocalization ->
+            currentLocalization.document.languages.keys
+                .sortedBy(LanguageCode::value)
+                .forEach { language ->
+                    val preference = LanguagePreference.language(language)
+                    LanguageOption(
+                        title = getString(
+                            localization = currentLocalization,
+                            language = language,
+                            resource = AppString.language_name,
+                        ),
+                        isSelected = selectedPreference == preference,
+                        onClick = {
+                            onLanguageAction(LanguageUiAction.Select(preference))
+                        },
+                    )
+                }
+        }
     }
 }
 
