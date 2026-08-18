@@ -13,6 +13,7 @@ import com.velord.ui.feature.bottomnavigation.navigation.TabState
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.event.RequestAppExitUC
 import com.velord.usecase.event.ShowToastUC
+import com.velord.usecase.setting.GetLocalizationStateUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -22,7 +23,10 @@ class BottomNavigationJetpackVM(
     private val bottomNavEventService: BottomNavEventService,
     private val requestAppExitUC: RequestAppExitUC,
     private val showToastUC: ShowToastUC,
+    getLocalizationStateUC: GetLocalizationStateUC,
 ) : CoroutineScopeVM() {
+
+    private val localizationStateFlow = getLocalizationStateUC()
 
     val uiStateFlow = MutableStateFlow(
         BottomNavigationJetpackUiState(
@@ -60,7 +64,10 @@ class BottomNavigationJetpackVM(
     private fun onBackDoubleClick() = launch { requestAppExitUC() }
 
     private fun onShowBackPressToast(tag: String) = launch {
-        val message = getString(AppString.bottom_navigation_first_back_press, tag)
+        val localization = requireNotNull(localizationStateFlow.value) {
+            "Localization is not initialized"
+        }
+        val message = getString(localization, AppString.bottom_navigation_first_back_press, tag)
         val toastConfig = ToastConfig(message = message, duration = ToastDuration.Short)
         showToastUC(toastConfig)
     }
@@ -98,14 +105,11 @@ class BottomNavigationJetpackVM(
         when (action) {
             is BottomNavigationJetpackUiAction.TabClick -> onTabClick(action.newTab)
             is BottomNavigationJetpackUiAction.BackDoubleClick -> onBackDoubleClick()
-            is BottomNavigationJetpackUiAction.ShowBackPressToast ->
-                onShowBackPressToast(action.tag)
+            is BottomNavigationJetpackUiAction.ShowBackPressToast -> onShowBackPressToast(action.tag)
             is BottomNavigationJetpackUiAction.UpdateBackHandling ->
                 onUpdateBackHandling(action.currentNavigationDestination)
-            is BottomNavigationJetpackUiAction.GraphCompletedHandling ->
-                onGraphCompletedHandling()
-            is BottomNavigationJetpackUiAction.GraphTakeResponsibility ->
-                onGraphTakeResponsibility()
+            is BottomNavigationJetpackUiAction.GraphCompletedHandling -> onGraphCompletedHandling()
+            is BottomNavigationJetpackUiAction.GraphTakeResponsibility -> onGraphTakeResponsibility()
         }
     }
 
