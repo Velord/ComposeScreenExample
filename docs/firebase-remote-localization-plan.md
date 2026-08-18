@@ -125,16 +125,14 @@ start UI
         ↓
 FetchLocalizationUC in the application-lifetime background scope
         ↓
-force a Remote Config fetch for this launch and activate it
+Firebase fetches/activates according to its normal client fetch policy
         ↓
-newly fetched value becomes eligible on the next application start
+when a new value is fetched, it becomes eligible on the next application start
 ```
 
 Use cases are named proxy boundaries only. Localization orchestration lives in `LocalizationGateway`; Koin declarations only connect use cases to gateway functions.
 
-The Android Firebase SDK defaults normal fetches to a 12-hour minimum interval. Since the product behavior requires a newly published localization to be eligible on the next launch, the localization data source explicitly calls `fetch(0)` followed by `activate()` after the current session document has been frozen. Backend throttling is still handled by Firebase; failures are contained by the gateway and never invalidate the bundled fallback.
-
-The in-memory localization document is not replaced when the background fetch/activation completes. This guarantees the agreed next-start behavior.
+The in-memory localization document is not replaced when the background `fetchAndActivate()` completes. This guarantees that a value fetched during the current session is not injected into that session; it is read on the next application start. Firebase's normal client-side fetch interval and throttling policy remain in effect rather than forcing a network request on every launch.
 
 Changing the language preference does not replace the document. It changes which language inside the already-frozen document is selected, so the UI updates immediately.
 
@@ -149,7 +147,7 @@ The Android data source:
 1. supplies the bundled JSON as the Remote Config default for `localization`;
 2. calls `ensureInitialized()`;
 3. reads the currently active/default `localization` value;
-4. after the session has been initialized, calls `fetch(0)` and then `activate()` so a newly published value can be used on the next launch.
+4. later calls `fetchAndActivate()` after the runtime session has been initialized.
 
 If Firebase initialization/read/fetch fails, the localization gateway contains the failure and the bundled document remains usable.
 
@@ -309,7 +307,11 @@ The Firebase Console is not the normal localization editing workflow. Localizati
 - Koin graph/Desktop tests;
 - Desktop application compilation;
 - Develop Android compilation;
-- QA Android compilation in a separate Gradle invocation because the repository build configuration intentionally permits only one flavor per Gradle invocation.
+- QA Android compilation;
+- Stage Android compilation;
+- Production Android compilation.
+
+Each Android flavor that must be invoked separately is compiled in its own Gradle invocation because the repository build configuration intentionally permits only one flavor per Gradle invocation.
 
 Core tests cover:
 
@@ -331,7 +333,7 @@ The implementation is ready for integration when:
 2. no unintended Compose `Res.string` usages remain;
 3. Android compiles with the official Firebase Remote Config data source;
 4. Desktop compiles/tests using the explicit bundled fallback;
-5. Develop and QA configuration mapping compiles as designed;
+5. Develop, QA, Stage, and Production variants compile as designed;
 6. the publisher validates the canonical document;
 7. the Firebase `localization` parameter is present and its deployed document is integration-verified when Firebase CLI access is available;
 8. an authenticated Firebase CLI publish can be performed when deployment verification is desired.
