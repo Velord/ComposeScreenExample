@@ -98,6 +98,8 @@ dependencies {
     // Module Data
     implementation(projects.data.os)
     implementation(projects.data.appstate)
+    // Module Domain
+    implementation(projects.domain.usecaseSetting)
     // Module UI
     implementation(projects.ui.sharedviewmodel)
     // Module UI Feature
