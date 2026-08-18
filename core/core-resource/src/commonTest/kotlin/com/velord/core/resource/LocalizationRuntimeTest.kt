@@ -73,6 +73,28 @@ class LocalizationRuntimeTest {
     }
 
     @Test
+    fun `language preference switches current session without replacing document`() {
+        LocalizationRuntime.initialize(
+            bundledJson = localizationJson(),
+            remoteJson = localizationJson(
+                englishSettings = "Remote settings",
+                spanishSettings = "Configuración remota",
+            ),
+            preference = LanguagePreference.ENGLISH,
+        )
+
+        LocalizationRuntime.setLanguagePreference(
+            preference = LanguagePreference.SPANISH,
+            deviceLanguageTag = "en-US",
+        )
+
+        assertEquals(
+            expected = "Configuración remota",
+            actual = LocalizationRuntime.getString(AppString.settings),
+        )
+    }
+
+    @Test
     fun `valid remote document replaces bundled document atomically`() {
         LocalizationRuntime.initialize(
             bundledJson = localizationJson(),
