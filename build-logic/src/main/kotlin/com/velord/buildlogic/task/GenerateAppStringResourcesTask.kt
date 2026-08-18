@@ -11,6 +11,10 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
+private const val SUPPORTED_SCHEMA_VERSION = 1
+private val APP_STRING_KEY_REGEX = Regex("[A-Za-z_][A-Za-z0-9_]*")
+private val FORMAT_PLACEHOLDER_REGEX = Regex("""%\d+\$[sd]""")
+
 abstract class GenerateAppStringResourcesTask : DefaultTask() {
 
     @get:InputFile
@@ -23,10 +27,10 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
     @TaskAction
     fun generate() {
         val document = JsonSlurper().parse(localizationFile.get().asFile) as Map<*, *>
-        val languages = document["languages"] as? Map<*, *>
-            ?: error("localization.json must contain languages")
-        val english = languages["en"] as? Map<*, *>
-            ?: error("localization.json must contain languages.en")
+        validate(document)
+
+        val languages = document.getValue("languages") as Map<*, *>
+        val english = languages.getValue("en") as Map<*, *>
         val outputFile = outputDirectory.get().asFile.resolve(
             "com/velord/core/resource/AppString.kt",
         )
@@ -64,6 +68,63 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
             },
         )
     }
+
+    private fun validate(document: Map<*, *>) {
+        val schemaVersion = (document["schemaVersion"] as? Number)?.toInt()
+        require(schemaVersion == SUPPORTED_SCHEMA_VERSION) {
+            "localization.json must use schemaVersion $SUPPORTED_SCHEMA_VERSION"
+        }
+
+        val languages = document["languages"] as? Map<*, *>
+            ?: error("localization.json must contain languages")
+        val english = languages["en"].asStringMap("languages.en")
+        require(languages.containsKey("es")) {
+            "localization.json must contain languages.es"
+        }
+        require(english.isNotEmpty()) {
+            "localization.json must contain strings"
+        }
+
+        english.keys.forEach { key ->
+            require(APP_STRING_KEY_REGEX.matches(key)) {
+                "Invalid AppString key: $key"
+            }
+        }
+
+        languages.forEach { (languageKey, rawStrings) ->
+            val language = languageKey.toString()
+            val strings = rawStrings.asStringMap("languages.$language")
+            require(strings.keys == english.keys) {
+                "Localization key mismatch for language: $language"
+            }
+            strings.forEach { (key, value) ->
+                require(value.isNotEmpty()) {
+                    "Localization value is empty: $language/$key"
+                }
+                require(placeholders(value) == placeholders(english.getValue(key))) {
+                    "Localization placeholder mismatch: $language/$key"
+                }
+            }
+        }
+    }
+
+    private fun Any?.asStringMap(name: String): Map<String, String> {
+        val value = this as? Map<*, *>
+            ?: error("localization.json must contain $name")
+        return value.entries.associate { (key, entryValue) ->
+            val stringKey = key as? String
+                ?: error("Localization key in $name must be a string")
+            val stringValue = entryValue as? String
+                ?: error("Localization value for $name/$stringKey must be a string")
+            stringKey to stringValue
+        }
+    }
+
+    private fun placeholders(value: String): List<String> = FORMAT_PLACEHOLDER_REGEX
+        .findAll(value)
+        .map { it.value }
+        .sorted()
+        .toList()
 
     private fun String.toKotlinStringLiteral(): String = JsonOutput
         .toJson(this)
