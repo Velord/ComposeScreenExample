@@ -16,6 +16,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.coroutine.test)
         }
         androidMain.dependencies {
             // Firebase Remote Config
