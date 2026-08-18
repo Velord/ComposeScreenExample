@@ -40,12 +40,19 @@ jobs:
             exit 1
           fi
 
+      - name: Validate localization publishing script
+        shell: pwsh
+        run: ./scripts/firebase/publish-localization.ps1 -ValidateOnly
+
       - name: Compile and test localization
         run: >-
           ./gradlew
           :core:core-resource:desktopTest
           :data:firebase:desktopTest
+          :infrastructure:di:desktopTest
           :app:desktop:compileKotlinDesktop
           :app:android:compileDevelopDebugKotlin
+          :app:android:compileQaDebugKotlin
           -x :app:android:processDevelopDebugGoogleServices
+          -x :app:android:processQaDebugGoogleServices
           --stacktrace
