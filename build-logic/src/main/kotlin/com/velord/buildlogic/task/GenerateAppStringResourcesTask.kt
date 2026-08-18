@@ -117,8 +117,11 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
         document: Map<*, *>,
         languages: Map<String, Map<String, String>>,
     ): String {
-        val configured = document["defaultLanguage"] as? String
-        val defaultLanguage = configured ?: languages.keys.first()
+        val defaultLanguage = document["defaultLanguage"] as? String
+            ?: error("localization.json must contain defaultLanguage")
+        require(defaultLanguage.isNotBlank()) {
+            "localization.json defaultLanguage must not be blank"
+        }
         require(defaultLanguage in languages) {
             "Default localization language '$defaultLanguage' is missing"
         }
