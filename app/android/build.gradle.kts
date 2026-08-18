@@ -1,7 +1,7 @@
 import com.velord.buildlogic.model.BuildEnvironment
 import com.velord.buildlogic.model.BuildType
-import com.velord.buildlogic.task.GenerateQaGoogleServicesTask
 import com.velord.buildlogic.util.AppVersion
+import org.gradle.api.tasks.Copy
 
 plugins {
     alias(libs.plugins.convention.android.application)
@@ -82,20 +82,14 @@ android {
     }
 }
 
-// QA is a distinct Android package, but it intentionally uses the Develop Firebase app.
-// google-services requires a package-name match, so derive a QA-local config from the Develop
-// client while preserving the Develop Firebase app id/API key/project values.
+// QA uses the Develop Firebase client. The only derived value is the Android application/package
+// name required by the Google Services plugin; all Firebase identifiers stay identical to Develop.
 val developApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Develop.value}"
 val qaApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Qa.value}"
-val prepareQaGoogleServices = tasks.register<GenerateQaGoogleServicesTask>("prepareQaGoogleServices") {
-    sourceFile.set(layout.projectDirectory.file("google-services.json"))
-    outputFile.set(
-        layout.projectDirectory.file(
-            "src/${BuildEnvironment.Qa.value}/google-services.json",
-        ),
-    )
-    sourceApplicationId.set(developApplicationId)
-    targetApplicationId.set(qaApplicationId)
+val prepareQaGoogleServices = tasks.register<Copy>("prepareQaGoogleServices") {
+    from(layout.projectDirectory.file("google-services.json"))
+    into(layout.projectDirectory.dir("src/${BuildEnvironment.Qa.value}"))
+    filter { line -> line.replace(developApplicationId, qaApplicationId) }
 }
 
 tasks.matching { task ->
