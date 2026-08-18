@@ -2,8 +2,8 @@ package com.velord.ui.sharedviewmodel
 
 import com.velord.core.resource.LocalizationRuntime
 import com.velord.model.setting.LanguagePreference
-import com.velord.usecase.localization.GetLanguagePreferenceUC
-import com.velord.usecase.localization.SetLanguagePreferenceUC
+import com.velord.usecase.setting.GetLanguagePreferenceUC
+import com.velord.usecase.setting.SetLanguagePreferenceUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
