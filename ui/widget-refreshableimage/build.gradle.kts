@@ -10,12 +10,8 @@ android {
 dependencies {
     // Module Model
     implementation(projects.model)
-    // Module Domain
-    implementation(projects.domain.usecaseLocalization)
     // Coil
     implementation(libs.bundles.coil)
     // AndroidX
     implementation(libs.androidx.core.ktx)
-    // Koin
-    implementation(libs.koin.core)
 }
