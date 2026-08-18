@@ -21,11 +21,6 @@ plugins {
 }
 
 dependencyResolutionManagement {
-    versionCatalogs {
-        create("gitliveLibs") {
-            from(files("gradle/gitlive.versions.toml"))
-        }
-    }
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google {
@@ -86,7 +81,6 @@ include(":domain:usecase-setting")
 include(":domain:usecase-movie")
 include(":domain:usecase-camera")
 include(":domain:usecase-event")
-include(":domain:usecase-localization")
 // UI
 include(":ui:sharedviewmodel")
 // UI Feature
