@@ -7,7 +7,6 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$DefaultLanguage = "en"
 
 function Write-Utf8WithoutBom {
     param(
@@ -51,9 +50,14 @@ function Assert-LocalizationDocument {
         throw "localization.json must contain at least one language."
     }
 
-    $defaultLanguageProperty = $Document.languages.PSObject.Properties[$DefaultLanguage]
+    $defaultLanguage = [string]$Document.defaultLanguage
+    if ([string]::IsNullOrWhiteSpace($defaultLanguage)) {
+        throw "localization.json must contain defaultLanguage."
+    }
+
+    $defaultLanguageProperty = $Document.languages.PSObject.Properties[$defaultLanguage]
     if ($null -eq $defaultLanguageProperty) {
-        throw "localization.json must contain default language '$DefaultLanguage'."
+        throw "localization.json must contain default language '$defaultLanguage'."
     }
 
     $defaultStrings = $defaultLanguageProperty.Value
@@ -70,7 +74,7 @@ function Assert-LocalizationDocument {
 
         if ($keyDifference.Count -ne 0) {
             $details = ($keyDifference | ForEach-Object { "{0} ({1})" -f $_.InputObject, $_.SideIndicator }) -join ", "
-            throw "Localization keys for '$language' do not match '$DefaultLanguage': $details"
+            throw "Localization keys for '$language' do not match '$defaultLanguage': $details"
         }
 
         foreach ($key in $defaultKeys) {
@@ -94,7 +98,7 @@ function Assert-LocalizationDocument {
     }
 
     $languageRoster = @($languageProperties.Name | Sort-Object)
-    Write-Host "Localization validation passed: $($defaultKeys.Count) keys in $($languageRoster.Count) languages [$($languageRoster -join ', ')]."
+    Write-Host "Localization validation passed: $($defaultKeys.Count) keys in $($languageRoster.Count) languages [$($languageRoster -join ', ')], default '$defaultLanguage'."
 }
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
