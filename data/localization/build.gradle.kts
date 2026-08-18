@@ -38,8 +38,8 @@ kotlin {
                 implementation(libs.compose.runtime)
                 // Kotlin Serialization
                 implementation(libs.kotlin.serialization.json)
-                // Firebase KMP
-                implementation("dev.gitlive:firebase-config:2.6.0")
+                // Firebase Remote Config with a real Desktop/JVM implementation.
+                implementation("io.github.razotron.firebase-kit:remote-config:0.4.0")
                 // Koin
                 implementation(libs.koin.core)
                 api(libs.koin.annotation)
