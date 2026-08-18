@@ -17,6 +17,7 @@ kotlin {
             api(projects.infrastructure.config)
             // Module Domain
             implementation(projects.domain.usecaseEvent)
+            implementation(projects.domain.usecaseSetting)
             // Module Core
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
