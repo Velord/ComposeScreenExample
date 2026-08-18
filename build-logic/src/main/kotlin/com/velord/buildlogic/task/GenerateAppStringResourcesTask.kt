@@ -12,9 +12,8 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
 private const val SUPPORTED_SCHEMA_VERSION = 1
-private const val DEFAULT_LANGUAGE = "en"
 private val APP_STRING_KEY_REGEX = Regex("[A-Za-z_][A-Za-z0-9_]*")
-private val FORMAT_PLACEHOLDER_REGEX = Regex("""%\d+\$[sd]""")
+private val FORMAT_PLACEHOLDER_REGEX = Regex("""%[0-9]+[$][sd]""")
 
 abstract class GenerateAppStringResourcesTask : DefaultTask() {
 
@@ -28,15 +27,14 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
     @TaskAction
     fun generate() {
         val document = JsonSlurper().parse(localizationFile.get().asFile) as Map<*, *>
-        validate(document)
-
-        val languages = document["languages"] as Map<*, *>
-        val defaultStrings = languages[DEFAULT_LANGUAGE] as Map<*, *>
+        val languages = validate(document)
+        val defaultLanguage = resolveDefaultLanguage(document, languages)
+        val defaultStrings = languages.getValue(defaultLanguage)
         val outputFile = outputDirectory.get().asFile.resolve(
             "com/velord/core/resource/AppString.kt",
         )
         val entryRoster = defaultStrings.entries
-            .map { it.key.toString() to it.value.toString() }
+            .map { it.key to it.value }
             .sortedBy { it.first }
 
         outputFile.parentFile.mkdirs()
@@ -70,21 +68,25 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
         )
     }
 
-    private fun validate(document: Map<*, *>) {
+    private fun validate(document: Map<*, *>): Map<String, Map<String, String>> {
         val schemaVersion = (document["schemaVersion"] as? Number)?.toInt()
         require(schemaVersion == SUPPORTED_SCHEMA_VERSION) {
             "localization.json must use schemaVersion $SUPPORTED_SCHEMA_VERSION"
         }
 
-        val languages = document["languages"] as? Map<*, *>
+        val rawLanguages = document["languages"] as? Map<*, *>
             ?: error("localization.json must contain languages")
-        require(languages.isNotEmpty()) {
+        require(rawLanguages.isNotEmpty()) {
             "localization.json must contain at least one language"
         }
 
-        val defaultStrings = languages[DEFAULT_LANGUAGE].asStringMap(
-            "languages.$DEFAULT_LANGUAGE",
-        )
+        val languages = rawLanguages.entries.associate { (languageKey, rawStrings) ->
+            val language = languageKey as? String
+                ?: error("Localization language code must be a string")
+            language to rawStrings.asStringMap("languages.$language")
+        }
+        val defaultLanguage = resolveDefaultLanguage(document, languages)
+        val defaultStrings = languages.getValue(defaultLanguage)
         require(defaultStrings.isNotEmpty()) {
             "localization.json must contain strings"
         }
@@ -95,9 +97,7 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
             }
         }
 
-        languages.forEach { (languageKey, rawStrings) ->
-            val language = languageKey.toString()
-            val strings = rawStrings.asStringMap("languages.$language")
+        languages.forEach { (language, strings) ->
             require(strings.keys == defaultStrings.keys) {
                 "Localization key mismatch for language: $language"
             }
@@ -110,6 +110,19 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
                 }
             }
         }
+        return languages
+    }
+
+    private fun resolveDefaultLanguage(
+        document: Map<*, *>,
+        languages: Map<String, Map<String, String>>,
+    ): String {
+        val configured = document["defaultLanguage"] as? String
+        val defaultLanguage = configured ?: languages.keys.first()
+        require(defaultLanguage in languages) {
+            "Default localization language '$defaultLanguage' is missing"
+        }
+        return defaultLanguage
     }
 
     private fun Any?.asStringMap(name: String): Map<String, String> {
