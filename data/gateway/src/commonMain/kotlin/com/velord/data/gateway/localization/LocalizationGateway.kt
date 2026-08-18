@@ -16,8 +16,7 @@ class LocalizationGateway(
     suspend fun initialize() {
         val bundledLocalization = readBundledLocalizationJson()
         val remoteLocalization = try {
-            remoteConfig.initialize(bundledLocalization)
-            remoteConfig.getLocalization()
+            remoteConfig.fetchLocalization()
         } catch (error: CancellationException) {
             throw error
         } catch (_: Exception) {
@@ -29,15 +28,5 @@ class LocalizationGateway(
             remoteJson = remoteLocalization,
             preference = languagePreferenceGateway.get(),
         )
-    }
-
-    suspend fun fetchAndActivate() {
-        try {
-            remoteConfig.fetchAndActivate()
-        } catch (error: CancellationException) {
-            throw error
-        } catch (_: Exception) {
-            // The current session already has a validated bundled/activated localization document.
-        }
     }
 }
