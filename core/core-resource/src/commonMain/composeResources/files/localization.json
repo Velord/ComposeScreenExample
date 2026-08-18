@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "defaultLanguage": "en",
   "languages": {
     "en": {
       "app_name": "ComposeScreenExample",
@@ -93,8 +94,7 @@
       "show_one_button_dialog": "Show one button dialog",
       "language": "Language",
       "language_default": "Default",
-      "language_english": "English",
-      "language_spanish": "Spanish"
+      "language_name": "English"
     },
     "es": {
       "app_name": "ComposeScreenExample",
@@ -188,8 +188,7 @@
       "show_one_button_dialog": "Mostrar diálogo con un botón",
       "language": "Idioma",
       "language_default": "Predeterminado",
-      "language_english": "Inglés",
-      "language_spanish": "Español"
+      "language_name": "Español"
     }
   }
 }
