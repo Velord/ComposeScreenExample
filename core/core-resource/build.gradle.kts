@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.convention.multiplatform.library)
     alias(libs.plugins.multiplatform.compose)
+    alias(libs.plugins.kotlin.compose)
 }
 
 compose.resources {
@@ -19,6 +20,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(libs.compose.resources)
+            implementation(libs.compose.runtime)
         }
     }
 }
