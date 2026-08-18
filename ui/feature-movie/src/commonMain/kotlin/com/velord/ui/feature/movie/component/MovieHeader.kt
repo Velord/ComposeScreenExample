@@ -27,9 +27,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.movie.model.MoviePage
-import org.jetbrains.compose.resources.stringResource
 
 private const val HEADER_ANIMATION_DURATION = 700
 

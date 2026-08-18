@@ -5,3 +5,10 @@ plugins {
 android {
     namespace = "com.velord.ui.widget.counter"
 }
+
+dependencies {
+    // Module Model
+    implementation(projects.model)
+    // Module Data
+    implementation(projects.data.localization)
+}

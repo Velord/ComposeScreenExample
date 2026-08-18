@@ -14,7 +14,7 @@ kotlin {
             // Module
             implementation(projects.model)
             implementation(projects.infrastructure.util)
-            implementation(projects.core.coreResource)
+            implementation(projects.data.localization)
             implementation(projects.ui.sharedviewmodel)
             // Template
             implementation(libs.bundles.compose.ui.core)
@@ -43,7 +43,7 @@ kotlin {
             // Module
             implementation(projects.model)
             implementation(projects.infrastructure.util)
-            implementation(projects.core.coreResource)
+            implementation(projects.data.localization)
             implementation(projects.ui.sharedviewmodel)
             // Template
             implementation(libs.bundles.kotlin.core)

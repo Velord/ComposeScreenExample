@@ -36,7 +36,9 @@ class RefreshableImageWidget :
     override suspend fun provideGlance(
         context: Context,
         id: GlanceId
-    ) = provideContent { RefreshableImageWidgetScreen() }
+    ) {
+        provideContent { RefreshableImageWidgetScreen() }
+    }
 
     override suspend fun onDelete(context: Context, glanceId: GlanceId) {
         super.onDelete(context, glanceId)

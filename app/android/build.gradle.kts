@@ -1,5 +1,6 @@
 import com.velord.buildlogic.model.BuildEnvironment
 import com.velord.buildlogic.model.BuildType
+import com.velord.buildlogic.task.GenerateQaGoogleServicesTask
 import com.velord.buildlogic.util.AppVersion
 
 plugins {
@@ -33,8 +34,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-        androidResources.localeFilters += listOf("en")
     }
 
     buildTypes {
@@ -83,6 +82,28 @@ android {
     }
 }
 
+// QA is a distinct Android package, but it intentionally uses the Develop Firebase app.
+// google-services requires a package-name match, so derive a QA-local config from the Develop
+// client while preserving the Develop Firebase app id/API key/project values.
+val developApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Develop.value}"
+val qaApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Qa.value}"
+val prepareQaGoogleServices = tasks.register<GenerateQaGoogleServicesTask>("prepareQaGoogleServices") {
+    sourceFile.set(layout.projectDirectory.file("google-services.json"))
+    outputFile.set(
+        layout.projectDirectory.file(
+            "src/${BuildEnvironment.Qa.value}/google-services.json",
+        ),
+    )
+    sourceApplicationId.set(developApplicationId)
+    targetApplicationId.set(qaApplicationId)
+}
+
+tasks.matching { task ->
+    task.name.startsWith("processQa") && task.name.endsWith("GoogleServices")
+}.configureEach {
+    dependsOn(prepareQaGoogleServices)
+}
+
 dependencies {
     implementation(projects.model)
     // Module Infrastructure
@@ -97,6 +118,8 @@ dependencies {
     // Module Data
     implementation(projects.data.os)
     implementation(projects.data.appstate)
+    // Module Domain
+    implementation(projects.domain.usecaseSetting)
     // Module UI
     implementation(projects.ui.sharedviewmodel)
     // Module UI Feature

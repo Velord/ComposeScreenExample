@@ -26,8 +26,9 @@ class CounterWidget :
     override val name: Class<CounterWidget> = CounterWidget::class.java
     override val useDarkThemePreferenceKey: Preferences.Key<Boolean> = CounterWidget.useDarkThemePreferenceKey
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) =
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent { CounterWidgetScreen() }
+    }
 
     companion object {
         internal val actionParameterKey = ActionParameters.Key<Int>("countWidgetKey")

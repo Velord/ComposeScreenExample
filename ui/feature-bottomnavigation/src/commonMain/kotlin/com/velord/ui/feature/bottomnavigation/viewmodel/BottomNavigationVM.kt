@@ -1,7 +1,7 @@
 package com.velord.ui.feature.bottomnavigation.viewmodel
 
-import com.velord.core.resource.Res
-import com.velord.core.resource.press_again_to_exit
+import com.velord.core.resource.AppString
+import com.velord.core.resource.getString
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavBackHandlingState
@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 import kotlin.time.Duration.Companion.milliseconds
 
 private const val CONFIRM_EXIT_THROTTLE = 2000L
@@ -102,7 +101,7 @@ class BottomNavigationVM(
             onBackDoubleClick()
         } else {
             setConfirmExitRequested(true)
-            val message = getString(Res.string.press_again_to_exit)
+            val message = getString(AppString.press_again_to_exit)
             val toastConfig = ToastConfig(
                 message = message,
                 duration = ToastDuration.Short,

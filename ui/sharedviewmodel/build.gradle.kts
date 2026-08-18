@@ -13,6 +13,8 @@ kotlin {
             api(projects.model)
             api(projects.infrastructure.config)
             api(projects.infrastructure.util)
+            api(projects.core.coreResource)
+            api(projects.data.localization)
             api(projects.domain.usecaseEvent)
             api(projects.domain.usecaseSetting)
 

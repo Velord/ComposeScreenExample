@@ -1,7 +1,7 @@
 package com.velord.ui.feature.camerarecording.viewModel
 
-import com.velord.core.resource.Res
-import com.velord.core.resource.recording_restarted_after_camera_switch
+import com.velord.core.resource.AppString
+import com.velord.core.resource.getString
 import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 
 class CameraRecordingVM(
     private val createCameraSession: CreateCameraSessionUC,
@@ -107,7 +106,7 @@ class CameraRecordingVM(
     }
 
     private suspend fun showRecordingRestartedWarning() {
-        val message = getString(Res.string.recording_restarted_after_camera_switch)
+        val message = getString(AppString.recording_restarted_after_camera_switch)
         val toastConfig = ToastConfig(message = message, duration = ToastDuration.Long)
         showToastUC(toastConfig)
     }

@@ -5,6 +5,7 @@ import com.velord.data.gateway.camera.CameraSessionGateway
 import com.velord.data.gateway.camera.CameraStateGateway
 import com.velord.data.gateway.event.AppEventGateway
 import com.velord.data.gateway.file.FileGateway
+import com.velord.data.gateway.localization.LocalizationGateway
 import com.velord.data.gateway.movie.MovieByGateway
 import com.velord.data.gateway.movie.MovieFavoriteGateway
 import com.velord.data.gateway.movie.MovieFilterGateway
@@ -12,6 +13,7 @@ import com.velord.data.gateway.movie.MovieGateway
 import com.velord.data.gateway.movie.MoviePaginationGateway
 import com.velord.data.gateway.movie.MovieSortGateway
 import com.velord.data.gateway.setting.GetThemeConfigGateway
+import com.velord.data.gateway.setting.LanguagePreferenceGateway
 import com.velord.data.gateway.setting.SwitchThemeConfigGateway
 import com.velord.usecase.camera.CreateCameraSessionUC
 import com.velord.usecase.camera.GetCameraSessionUC
@@ -38,7 +40,10 @@ import com.velord.usecase.movie.SetMovieFilterOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.ShareMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
+import com.velord.usecase.setting.GetLanguagePreferenceUC
 import com.velord.usecase.setting.GetThemeConfigUC
+import com.velord.usecase.setting.InitializeLocalizationUC
+import com.velord.usecase.setting.SetLanguagePreferenceUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDarkThemeConfigUC
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
@@ -68,6 +73,15 @@ val useCaseModule = module {
     }
     single<SwitchDynamicColorThemeConfigUC> {
         SwitchDynamicColorThemeConfigUC(get<SwitchThemeConfigGateway>()::switchDynamicColor)
+    }
+    single<InitializeLocalizationUC> {
+        InitializeLocalizationUC(get<LocalizationGateway>()::initialize)
+    }
+    single<GetLanguagePreferenceUC> {
+        GetLanguagePreferenceUC(get<LanguagePreferenceGateway>()::getFlow)
+    }
+    single<SetLanguagePreferenceUC> {
+        SetLanguagePreferenceUC(get<LanguagePreferenceGateway>()::save)
     }
     single<GetAllMovieUC> {
         GetAllMovieUC(get<MovieByGateway>()::getBySortAndFilter)

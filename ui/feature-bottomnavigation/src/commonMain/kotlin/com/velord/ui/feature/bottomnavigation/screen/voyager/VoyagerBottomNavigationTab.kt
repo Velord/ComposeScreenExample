@@ -17,11 +17,8 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.velord.core.navigation.voyager.SharedScreenVoyager
-import com.velord.core.resource.Res
-import com.velord.core.resource.camera
-import com.velord.core.resource.demo
-import com.velord.core.resource.settings
-import org.jetbrains.compose.resources.stringResource
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 
 /*
 Each tab owns a nested Voyager Navigator. The bottom-navigation parent provides this callback so
@@ -41,10 +38,10 @@ sealed class VoyagerBottomNavigationTab : Tab {
         override val options: TabOptions
             @Composable
             get() {
-                val title = stringResource(Res.string.camera)
+                val title = stringResource(AppString.camera)
                 val icon = rememberVectorPainter(image = Icons.Outlined.Camera)
 
-                return remember {
+                return remember(title) {
                     TabOptions(
                         index = 0u,
                         title = title,
@@ -71,10 +68,10 @@ sealed class VoyagerBottomNavigationTab : Tab {
         override val options: TabOptions
             @Composable
             get() {
-                val title = stringResource(Res.string.demo)
+                val title = stringResource(AppString.demo)
                 val icon = rememberVectorPainter(image = Icons.Outlined.Hexagon)
 
-                return remember {
+                return remember(title) {
                     TabOptions(
                         index = 1u,
                         title = title,
@@ -101,10 +98,10 @@ sealed class VoyagerBottomNavigationTab : Tab {
         override val options: TabOptions
             @Composable
             get() {
-                val title = stringResource(Res.string.settings)
+                val title = stringResource(AppString.settings)
                 val icon = rememberVectorPainter(image = Icons.Outlined.Settings)
 
-                return remember {
+                return remember(title) {
                     TabOptions(
                         index = 2u,
                         title = title,

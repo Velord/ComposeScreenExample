@@ -6,11 +6,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.velord.core.resource.Res
-import com.velord.core.resource.open_video_folder
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun OpenVideoFolderButton(
@@ -26,7 +25,7 @@ internal fun OpenVideoFolderButton(
     ) {
         Icon(
             imageVector = Icons.Filled.FolderOpen,
-            contentDescription = stringResource(Res.string.open_video_folder),
+            contentDescription = stringResource(AppString.open_video_folder),
         )
     }
 }

@@ -14,6 +14,7 @@ kotlin {
             // Module
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
+            implementation(projects.data.localization)
             implementation(projects.ui.sharedviewmodel)
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.androidx.lifecycle.runtime.compose)

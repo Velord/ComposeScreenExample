@@ -19,11 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.velord.core.resource.Res
-import com.velord.core.resource.filter_by
-import com.velord.core.resource.sort_by
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun BoxScope.MovieAction(
@@ -48,7 +46,7 @@ internal fun BoxScope.MovieAction(
         ExtendedFloatingActionButton(
             onClick = onSortClick,
             text = {
-                Text(stringResource(Res.string.sort_by))
+                Text(stringResource(AppString.sort_by))
             },
             icon = {
                 Icon(
@@ -61,7 +59,7 @@ internal fun BoxScope.MovieAction(
         ExtendedFloatingActionButton(
             onClick = onFilterClick,
             text = {
-                Text(stringResource(Res.string.filter_by))
+                Text(stringResource(AppString.filter_by))
             },
             icon = {
                 Icon(

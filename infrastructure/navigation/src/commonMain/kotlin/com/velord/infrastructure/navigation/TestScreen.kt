@@ -10,11 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.velord.core.resource.Res
-import com.velord.core.resource.settings
+import com.velord.core.resource.AppString
+import com.velord.core.resource.AppStringResource
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
 /**
@@ -22,7 +21,7 @@ import kotlin.time.Clock
  */
 @Composable
 fun TestScreen(
-    title: StringResource,
+    title: AppStringResource,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
@@ -35,7 +34,7 @@ fun TestScreen(
 
 @Composable
 private fun Content(
-    title: StringResource,
+    title: AppStringResource,
     modifier: Modifier,
     onClick: () -> Unit = {},
 ) {
@@ -68,7 +67,7 @@ private fun Content(
 @Composable
 private fun Preview() {
     Content(
-        title = Res.string.settings,
+        title = AppString.settings,
         modifier = Modifier.fillMaxSize()
     )
 }

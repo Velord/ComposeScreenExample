@@ -20,6 +20,8 @@ kotlin {
             // Module Core
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
+            // Module Data
+            implementation(projects.data.localization)
             // Module Ui
             api(projects.ui.sharedviewmodel)
             // Template

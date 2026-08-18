@@ -4,6 +4,7 @@ import com.velord.model.AppEvent
 import com.velord.model.camera.CameraSessionWrapper
 import com.velord.model.camera.CameraState
 import com.velord.model.camera.CameraVideoAsset
+import com.velord.model.localization.LocalizationState
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
@@ -14,6 +15,7 @@ import org.koin.core.annotation.Single
 
 interface AppStateDataSource {
     val themeConfigFlow: MutableStateFlow<ThemeConfig>
+    val localizationStateFlow: MutableStateFlow<LocalizationState?>
     val movieRosterFlow: MutableStateFlow<List<Movie>>
     val movieFavoriteRosterFlow: MutableStateFlow<List<Movie>>
     val movieSortFlow: MutableStateFlow<List<MovieSortOption>>
@@ -27,6 +29,7 @@ interface AppStateDataSource {
 class AppStateDataSourceImpl : AppStateDataSource {
 
     override val themeConfigFlow = MutableStateFlow(ThemeConfig.DEFAULT)
+    override val localizationStateFlow = MutableStateFlow<LocalizationState?>(null)
 
     override val movieRosterFlow = MutableStateFlow<List<Movie>>(emptyList())
     override val movieFavoriteRosterFlow = MutableStateFlow<List<Movie>>(emptyList())

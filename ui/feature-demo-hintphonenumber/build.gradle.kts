@@ -14,6 +14,7 @@ kotlin {
             // Module
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
+            implementation(projects.data.localization)
             // Template
             // Compose
             implementation(libs.compose.foundation)
