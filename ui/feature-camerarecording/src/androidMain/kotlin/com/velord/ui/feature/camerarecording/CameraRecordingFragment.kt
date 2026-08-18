@@ -20,7 +20,9 @@ import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackU
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiAction
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
+import com.velord.usecase.setting.GetLocalizationStateUC
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private val log = Logger.withTag("CameraRecordingFragment")
@@ -29,6 +31,7 @@ class CameraRecordingFragment : Fragment() {
 
     private val viewModel by viewModel<CameraRecordingVM>()
     private val viewModelBottom by viewModel<BottomNavigationJetpackVM>()
+    private val getLocalizationStateUC by inject<GetLocalizationStateUC>()
 
     private val requestRecordVideoPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -109,7 +112,11 @@ class CameraRecordingFragment : Fragment() {
     }
 
     private fun checkRecordVideoPermission() {
+        val localization = requireNotNull(getLocalizationStateUC().value) {
+            "Localization is not initialized"
+        }
         checkRecordVideoPermission(
+            localization = localization,
             actionLauncher = requestRecordVideoPermissionLauncher,
             onGranted = {
                 val action = CameraRecordingUiAction.UpdatePermissionGrantState(
