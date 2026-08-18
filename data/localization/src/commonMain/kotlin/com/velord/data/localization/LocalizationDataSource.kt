@@ -59,11 +59,7 @@ class LocalizationDataSource {
     }
 
     fun currentLanguageCode(): LanguageCode = LanguageCode(
-        LocalizationPlatform
-            .currentLanguageTag()
-            .lowercase()
-            .substringBefore('-')
-            .substringBefore('_'),
+        LocalizationPlatform.currentLanguageTag(),
     )
 
     private fun validate(document: LocalizationDocument) {
