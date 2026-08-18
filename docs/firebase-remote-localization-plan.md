@@ -1,30 +1,86 @@
-# Implementation Plan — Firebase Remote Localization for ComposeScreenExample
+# Firebase Remote Localization — Implementation Plan
 
-## Fixed decisions
+## Status
 
-- Base branch: **`develop`**. Implementation branch: **`feature/firebase-remote-localization`** (already created).
-- Settings languages:
-  - **Default** — follows device locale.
+Implementation branch: `feature/firebase-remote-localization`
+
+The common localization runtime is implemented for Android and Desktop. Firebase Remote Config delivery is implemented on Android. Desktop deliberately uses the bundled localization document because GitLive's current JVM Firebase backend does not provide functional Remote Config support.
+
+This document reflects the implemented architecture and replaces the earlier assumption that GitLive Remote Config itself was usable on Desktop/JVM.
+
+## Fixed product decisions
+
+- Languages exposed in Settings:
+  - **Default** — follows the device locale.
   - **English**.
   - **Spanish**.
-- If `Default` resolves to an unsupported locale, use **English**.
-- Persist only the user's language choice in the existing app settings/DataStore.
-- Firebase project: **ComposeScreenExample** (`true-artwork-239920`). Current Android apps inside that single Firebase project:
-  - `develop` → CSE Dev → `com.velord.composescreenexample.develop`
-  - `qa` → uses the same **CSE Dev / develop Firebase configuration**; no separate QA Firebase app.
-  - `stage` → CSE Stage → `com.velord.composescreenexample.stage`
-  - `production` → CSE Prod → `com.velord.composescreenexample`
-- Remote Config belongs to the Firebase **project**, not an individual Android app. The default `localization` value is therefore shared by all app variants unless app-specific Remote Config conditions are deliberately added later.
-- Firebase client SDK: **GitLive Firebase Kotlin SDK**, dependency `dev.gitlive:firebase-config`, used from common KMP code for Android + Desktop/JVM.
-- Use **one Firebase Remote Config parameter**, e.g. `localization`.
-- That parameter contains **one JSON document with all languages**.
-- `:core:core-resource/.../localization.json` is the canonical localization document and ships with the app as the built-in fallback. The publishing script pushes that same document into Firebase Remote Config; Firebase Console is not the normal editing surface.
-- **Remove localization from `Res.string.*` completely.** Keep `Res` for drawables/images/etc.
-- No Room/DataStore cache for localization JSON.
-- No custom sync, timestamps, retry scheduler, version comparison, downloaded files, or extra persistence.
-- **Firebase SDK alone owns fetch/cache/activation.**
-- New Remote Config content is applied on the **next app start**, not during the current session.
-- Preferred API:
+- Unsupported device locale falls back to **English**.
+- Language selection changes the current UI immediately.
+- The selected language preference is persisted in the existing app settings/DataStore.
+- Remote localization fetched during a running session is used on the **next app start**, not injected into the current session.
+- There is no custom localization cache, sync engine, timestamp, retry scheduler, version comparison, or downloaded resource-pack storage.
+- Localization is no longer read from Compose `Res.string` resources.
+- Compose `Res` remains valid for non-string resources such as drawables.
+
+## Firebase project mapping
+
+Firebase project: `ComposeScreenExample` (`true-artwork-239920`).
+
+| Build environment | Firebase Android app | Application ID |
+|---|---|---|
+| develop | CSE Dev | `com.velord.composescreenexample.develop` |
+| qa | CSE Dev | `com.velord.composescreenexample.develop` |
+| stage | CSE Stage | `com.velord.composescreenexample.stage` |
+| production | CSE Prod | `com.velord.composescreenexample` |
+
+QA intentionally uses the same Firebase application/configuration as Develop. There is no separate QA Firebase app.
+
+Remote Config is project-level. All variants therefore see the same default `localization` parameter unless Firebase conditions are introduced later.
+
+## Canonical localization document
+
+The source of truth is:
+
+```text
+core/core-resource/src/commonMain/composeResources/files/localization.json
+```
+
+Shape:
+
+```json
+{
+  "schemaVersion": 1,
+  "languages": {
+    "en": {
+      "settings": "Settings"
+    },
+    "es": {
+      "settings": "Configuración"
+    }
+  }
+}
+```
+
+The document currently contains the complete English and Spanish application string set.
+
+Build-time validation rejects the bundled document when:
+
+- `schemaVersion` is not `1`;
+- English or Spanish is missing;
+- a value is empty;
+- language key sets differ;
+- format placeholders differ between translations;
+- a key cannot be emitted as an `AppString` member.
+
+Runtime validation applies the remote document atomically. If the remote document is malformed, uses the wrong schema, has missing/extra language keys, has missing string keys, or has placeholder mismatches, the entire remote document is rejected and the bundled document is used.
+
+There is no per-string mixing of remote and bundled documents.
+
+## Generated API
+
+`AppString` is generated from the canonical bundled JSON during the Gradle build. There is no manually maintained second list of keys.
+
+Usage:
 
 ```kotlin
 Text(
@@ -32,7 +88,7 @@ Text(
 )
 ```
 
-and:
+Formatted strings:
 
 ```kotlin
 Text(
@@ -40,801 +96,207 @@ Text(
 )
 ```
 
----
+A non-Compose `getString(AppString.xxx)` API is available for places such as Android framework code and Glance.
 
-## 1. Feature branch
+Supported positional placeholders currently include the formats already used by the application, such as `%1$s`, `%2$s`, and `%1$d`.
 
-The implementation branch already exists:
+## Runtime lifecycle
 
-```text
-develop
-  ↓
-feature/firebase-remote-localization
-```
-
-The Firebase publishing helper is already committed there at:
+Application startup:
 
 ```text
-scripts/firebase/publish-localization.ps1
+read bundled localization.json
+        ↓
+initialize platform Remote Config data source
+        ↓
+read the currently active/default localization value
+        ↓
+validate remote value against bundled schema
+        ↓
+freeze the accepted document for this application session
+        ↓
+render the application
+        ↓
+fetchAndActivate() in the background on Android
+        ↓
+newly fetched value becomes eligible on the next application start
 ```
 
-Continue all implementation on this branch. Before each larger change, re-check the latest `develop`, repository rules, architecture, and dependency graph. Do not implement directly on `develop`.
+The in-memory localization document is not replaced when `fetchAndActivate()` completes. This guarantees the agreed next-start behavior.
 
----
+Changing the language preference does not replace the document. It changes which language inside the already-frozen document is selected, so the UI updates immediately.
 
-## 2. Use GitLive Firebase Remote Config in common KMP code
+## Platform Remote Config implementation
 
-Use the GitLive Firebase Kotlin SDK through the version catalog:
+### Android
 
-```text
-dev.gitlive:firebase-config
-```
+Android uses GitLive Firebase Kotlin SDK `dev.gitlive:firebase-config`.
 
-This is no longer an architecture proof gate. GitLive explicitly documents Desktop support for the SDK, and its `firebase-config` module explicitly enables the JVM target. The common Remote Config API already exposes the operations required by this feature:
+The Android data source:
 
-```text
-setDefaults(...)
-ensureInitialized()
-getValue(...)
-fetch(...)
-activate()
-fetchAndActivate()
-settings { ... }
-```
+1. supplies the bundled JSON as the Remote Config default for `localization`;
+2. calls `ensureInitialized()`;
+3. reads the currently active/default `localization` value;
+4. later calls `fetchAndActivate()` after the runtime session has been initialized.
 
-Therefore the intended implementation is:
+If Firebase initialization/read/fetch fails, the localization gateway contains the failure and the bundled document remains usable.
 
-```text
-commonMain
-   │
-   └── GitLive Firebase.remoteConfig
-          ├── Android
-          └── Desktop/JVM
-```
+### Desktop/JVM
 
-Do not create a separate Desktop HTTP client or custom Remote Config implementation.
+Desktop uses the same public localization runtime and the same bundled `localization.json`, but does **not** execute GitLive Remote Config.
 
-Still run an Android + Desktop smoke test during implementation:
+Reason: GitLive supports JVM/Compose Multiplatform broadly, but its current Firebase Java SDK explicitly lists **Remote Config as currently non-functional**. The Kotlin SDK JVM target for `firebase-config` reuses the Android implementation. Treating successful JVM compilation as proof of working Desktop Remote Config was therefore incorrect.
 
-```text
-initialize Firebase
-set bundled localization as default
-read localization
-fetchAndActivate
-restart
-verify newly activated value is used
-```
+The Desktop platform data source intentionally returns no remote value and performs no remote fetch. This keeps Desktop deterministic and offline-safe instead of shipping an unsupported runtime path.
 
-This is normal integration validation, not a reason to redesign the architecture in advance.
+No custom REST/sync implementation is added, because that would violate the requirement to avoid an additional localization synchronization layer.
 
----
+When GitLive provides functional JVM Remote Config, only the Desktop platform data-source implementation needs to change; the localization JSON, generated API, settings UI, validation, and runtime lifecycle remain unchanged.
 
-## 3. Introduce canonical `localization.json`
+Upstream references:
 
-Create:
+- `https://github.com/GitLiveApp/firebase-kotlin-sdk`
+- `https://github.com/GitLiveApp/firebase-java-sdk`
 
-```text
-core/core-resource/
-└── src/commonMain/composeResources/files/
-    └── localization.json
-```
+## Language preference
 
-Initial structure:
-
-```json
-{
-  "schemaVersion": 1,
-  "languages": {
-    "en": {
-      "app_name": "ComposeScreenExample",
-      "camera": "Camera",
-      "settings": "Settings",
-      "loading": "Loading",
-      "count": "Count: %1$d"
-    },
-    "es": {
-      "app_name": "ComposeScreenExample",
-      "camera": "Cámara",
-      "settings": "Configuración",
-      "loading": "Cargando",
-      "count": "Cantidad: %1$d"
-    }
-  }
-}
-```
-
-Move **all existing values** from the current `strings.xml` into this JSON.
-
-Rules:
-
-```text
-English key set == Spanish key set
-English placeholders == Spanish placeholders
-Firebase JSON structure == bundled localization.json structure
-```
-
-No partial Spanish translation should silently remove a string.
-
----
-
-## 4. Make `localization.json` the source of truth for generated string identifiers
-
-Do **not** manually maintain JSON keys plus a separate enum/list.
-
-Add a Gradle generation task to `:core:core-resource`.
-
-Input:
-
-```text
-localization.json
-```
-
-Generated output conceptually:
+The existing `AppSetting` model contains:
 
 ```kotlin
-object AppString {
-    val app_name = AppStringResource("app_name")
-    val camera = AppStringResource("camera")
-    val settings = AppStringResource("settings")
-    val loading = AppStringResource("loading")
-    val count = AppStringResource("count")
-}
+val language: LanguagePreference = LanguagePreference.DEFAULT
 ```
 
-With:
-
-```kotlin
-@JvmInline
-value class AppStringResource internal constructor(
-    internal val key: String,
-)
-```
-
-This gives the requested API:
-
-```kotlin
-stringResource(AppString.settings)
-```
-
-while preserving compile-time safety.
-
-Adding a new key to JSON should generate the matching `AppString.*` member automatically.
-
----
-
-## 5. Add the new `stringResource(...)`
-
-Inside `:core:core-resource`, provide your own overload:
-
-```kotlin
-@Composable
-fun stringResource(
-    resource: AppStringResource,
-    vararg formatArgs: Any,
-): String
-```
-
-Usage:
-
-```kotlin
-stringResource(AppString.settings)
-```
-
-and:
-
-```kotlin
-stringResource(
-    AppString.bottom_navigation_first_back_press,
-    value,
-)
-```
-
-It must support the formatting already used throughout the application:
-
-```text
-%1$s
-%2$s
-%1$d
-\n
-```
-
-The implementation should be independent of JetBrains `StringResource`.
-
----
-
-## 6. Create runtime localization state in `core-resource`
-
-The application needs one immutable localization document for the current session.
-
-Conceptually:
-
-```text
-LocalizationSession
-
-document
-selectedLanguage
-resolvedLanguage
-```
-
-Resolution:
-
-```text
-AppString.settings
-       ↓
-"settings"
-       ↓
-current resolved language
-       ↓
-current session JSON
-       ↓
-"Configuración"
-```
-
-The state must cause normal Compose UI to recompose when the user changes:
-
-```text
-Default ↔ English ↔ Spanish
-```
-
-A **Firebase fetch must not update this state during the current session**.
-
-The resource layer must also work for Android Glance/string consumers that are not underneath the normal application UI tree.
-
----
-
-## 7. Add Firebase as a data source
-
-Prefer a dedicated module:
-
-```text
-:data:firebase
-```
-
-Responsibilities:
-
-```text
-GitLive Firebase initialization/configuration
-GitLive Remote Config initialization
-setDefaults(localization JSON)
-read localization parameter
-fetchAndActivate()
-Firebase-specific exceptions
-```
-
-Implement the Remote Config data source in `commonMain` using GitLive. Do not add Android/Desktop `expect/actual` data sources merely for Remote Config. Platform-specific code is allowed only where Firebase application configuration genuinely requires platform input.
-
-No UI decisions.
-No language selection logic.
-No local cache.
-No resource rendering.
-
-Conceptual API:
-
-```kotlin
-interface FirebaseRemoteConfigDataSource {
-    suspend fun initialize(defaultLocalization: String)
-    fun getLocalization(): String
-    suspend fun fetchAndActivate()
-}
-```
-
-Exact API should follow existing project style after inspecting neighboring data sources.
-
----
-
-## 8. Add localization Gateway + Domain use cases
-
-Follow the project's architecture:
-
-```text
-UI
- ↓
-UseCase
- ↓
-Gateway
- ↓
-Data sources
-```
-
-Add approximately:
-
-```text
-:data:gateway/localization/
-    LocalizationGateway
-
-:domain:usecase-localization/
-    InitializeLocalizationUC
-    GetLanguagePreferenceUC
-    SetLanguagePreferenceUC
-```
-
-Do **not** introduce a Repository abstraction.
-
-### `InitializeLocalizationUC`
-
-Responsibilities:
-
-```text
-receive/load bundled JSON
-        ↓
-Firebase setDefaults(bundled JSON)
-        ↓
-Firebase ensureInitialized
-        ↓
-get currently activated/default "localization"
-        ↓
-validate + parse
-        ↓
-create current session localization
-        ↓
-start Firebase fetchAndActivate()
-        ↓
-ignore its value for current session
-```
-
-Important ordering:
-
-```text
-1. read current value
-2. freeze current-session localization
-3. fetchAndActivate
-```
-
-Not:
-
-```text
-fetchAndActivate
-↓
-read it
-```
-
-because that would apply newly published translations immediately.
-
----
-
-## 9. Firebase owns synchronization
-
-The application must **not** introduce:
-
-```text
-DataStore localization JSON
-Room localization JSON
-local JSON downloaded by the application
-lastFetch timestamps
-remote revision comparison
-periodic WorkManager task
-manual refresh scheduler
-custom retries
-custom expiry
-custom cache invalidation
-custom synchronization state
-```
-
-Runtime model:
-
-```text
-                bundled localization.json
-                         │
-                         ▼
-Firebase Remote Config setDefaults
-                         │
-                         ▼
-                   APP START
-                         │
-                getValue("localization")
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-       activated Firebase       Firebase default
-             exists             bundled JSON
-              │                     │
-              └──────────┬──────────┘
-                         ▼
-                  validate / parse
-                         ▼
-             current session resources
-                         │
-                         ▼
-                        UI
-
-afterwards:
-
-fetchAndActivate()
-       ↓
-Firebase SDK handles everything
-       ↓
-new value available next app launch
-```
-
-If an activated remote JSON is malformed or violates the required schema, reject that document for the current startup and use the bundled JSON. That is **validation/fallback**, not synchronization.
-
----
-
-## 10. Add language preference to existing `AppSetting`
-
-Add:
+with:
 
 ```kotlin
 enum class LanguagePreference {
-    Default,
-    English,
-    Spanish,
+    DEFAULT,
+    ENGLISH,
+    SPANISH,
 }
 ```
 
-Then extend `AppSetting`:
-
-```kotlin
-data class AppSetting(
-    ...
-    val language: LanguagePreference = LanguagePreference.Default,
-)
-```
-
-Add a DataStore setter:
+Resolution rules:
 
 ```text
-setLanguagePreference(...)
+ENGLISH → en
+SPANISH → es
+DEFAULT + es-* → es
+DEFAULT + en-* → en
+DEFAULT + unsupported locale → en
 ```
 
-and Gateway/domain access following the same pattern as theme configuration.
+Adding the field with a default value keeps existing serialized settings readable.
 
-**This DataStore use is only for the selected language. It must never store localization JSON.**
+## Settings UI
 
----
-
-## 11. Resolve `Default`
-
-Add a small platform locale abstraction.
-
-Resolution:
+Settings displays a radio/selectable language section in this order:
 
 ```text
-LanguagePreference.Default
-        ↓
-device language
-        │
-        ├── es-* → es
-        ├── en-* → en
-        └── unsupported → en
-
-LanguagePreference.English → en
-LanguagePreference.Spanish → es
-```
-
-The JSON itself defines which localization data exists.
-
-Later, adding another language should not require redesigning Firebase.
-
----
-
-## 12. Initialize localization during Splash
-
-Integrate localization initialization into application startup before the first normal screen renders.
-
-Target:
-
-```text
-Splash starts
-    │
-    ├── initialize localization
-    │
-    └── existing splash timing/other startup requirements
-             │
-             ▼
-        app ready
-```
-
-The first normal application screen must never render before a valid localization document exists.
-
-If Firebase has never been fetched, the bundled JSON becomes the value through Remote Config defaults.
-
----
-
-## 13. Add language selection to Settings
-
-Add a Language section:
-
-```text
-Language
-
 Default
 English
 Spanish
 ```
 
-Prefer a radio/selectable control rather than three independent switches.
+The UI observes the persisted language preference. Selecting a different item updates the preference flow, changes the active language in `LocalizationRuntime`, and recomposes string consumers.
 
-Selecting Spanish:
+## Android framework and widgets
 
-```text
-Spanish
-   ↓
-persist LanguagePreference.Spanish
-   ↓
-resolve "es"
-   ↓
-switch current session to languages.es
-   ↓
-Compose recomposes
-```
+Compose string calls are migrated to `AppString`.
 
-This is immediate because the complete English + Spanish document is already in memory.
+Android framework resources that are required by the manifest, AppWidget metadata, error layouts, or other framework-only XML remain Android resources. They are not Compose `Res.string` localization sources.
 
-**Changing the user's selected language may update the UI immediately.**
+Glance widgets initialize the localization runtime before composing widget content and use the custom `AppString` API for their runtime-visible strings.
 
-That is separate from the rule that **new Firebase content only takes effect next launch**.
+## Firebase publishing workflow
 
----
-
-## 14. Firebase project/app setup
-
-The current Firebase layout is one project:
-
-```text
-Firebase project: ComposeScreenExample
-projectId: true-artwork-239920
-
-Android apps:
-CSE Dev   → com.velord.composescreenexample.develop
-CSE Stage → com.velord.composescreenexample.stage
-CSE Prod  → com.velord.composescreenexample
-```
-
-QA uses the **develop / CSE Dev Firebase configuration**. Do not register a separate QA Firebase Android app and do not add a `com.velord.composescreenexample.qa` Firebase client solely for QA.
-
-Environment mapping for Firebase configuration is therefore:
-
-```text
-develop    → CSE Dev
-qa         → CSE Dev
-stage      → CSE Stage
-production → CSE Prod
-```
-
-Important: **Remote Config is project-level.** CSE Dev / Stage / Prod are apps inside the same Firebase project, so the single default `localization` parameter is shared across them. That is acceptable for localization and avoids unnecessary environment duplication.
-
-If environment-specific localization is ever required, use explicit Remote Config conditions based on app/environment. Do not create extra localization parameters or extra Firebase projects just for this feature.
-
-For Desktop/JVM, initialize GitLive Firebase using the same Firebase project options selected through the project's existing environment/BuildKonfig mechanism. Do not hardcode environment branching in `Main.kt`.
-
----
-
-## 15. Remote Config publishing workflow
-
-Do not use the Firebase Console JSON editor as the normal localization workflow.
-
-The repository contains:
+Script:
 
 ```text
 scripts/firebase/publish-localization.ps1
 ```
 
-The script must:
-
-```text
-read bundled localization.json
-validate EN/ES keys
-validate formatting placeholders
-fetch the current Firebase Remote Config template
-replace only parameters.localization.defaultValue
-preserve all other Remote Config parameters/metadata that should remain
-publish only when -Publish is supplied
-```
-
-Normal usage:
+Validation without Firebase access:
 
 ```powershell
-# dry run
-.\scripts\firebase\publish-localization.ps1
+.\scripts\firebase\publish-localization.ps1 -ValidateOnly
+```
 
-# publish
+Dry run against Firebase:
+
+```powershell
+.\scripts\firebase\publish-localization.ps1
+```
+
+Publish:
+
+```powershell
 .\scripts\firebase\publish-localization.ps1 -Publish
 ```
 
-Firebase CLI authentication is a one-time local prerequisite:
+The script:
 
-```powershell
-firebase login
-```
+- validates the canonical JSON before contacting Firebase;
+- fetches the current Remote Config template;
+- preserves unrelated Remote Config parameters/conditions;
+- replaces the default value of `parameters.localization` with the canonical JSON;
+- keeps the parameter type as `JSON`;
+- publishes only when `-Publish` is supplied.
 
-During implementation, test the script against the current `localization` parameter before relying on it for routine updates.
+Firebase CLI authentication is an external prerequisite for dry-run/publish operations. `-ValidateOnly` does not require Firebase CLI authentication.
 
----
+## Remote Config parameter
 
-## 16. Migrate all current strings
-
-After the infrastructure works on one pilot screen:
-
-```text
-Search repository for:
-Res.string.
-org.jetbrains.compose.resources.stringResource
-```
-
-Convert:
-
-```kotlin
-stringResource(Res.string.settings)
-```
-
-to:
-
-```kotlin
-stringResource(AppString.settings)
-```
-
-Convert formatted calls similarly.
-
-Migrate:
-
-- CMP feature screens
-- navigation labels
-- dialogs
-- camera UI
-- movie UI
-- bottom navigation
-- toasts where applicable
-- Android widgets/Glance
-- every other current `Res.string` consumer
-
-Do **one feature first**, validate it, then perform the mechanical repository-wide migration.
-
----
-
-## 17. Remove the old localization resources
-
-When:
+Parameter key:
 
 ```text
-search "Res.string" → 0 usages
+localization
 ```
 
-remove:
+Type:
 
 ```text
-core/core-resource/src/commonMain/composeResources/values/strings.xml
+JSON
 ```
 
-and obsolete generated string imports.
+The Firebase Console is not the normal localization editing workflow. Localization changes should be made in the repository JSON, validated in CI, then published with the script.
 
-Do not remove:
+## CI/reviewer gates
 
-```text
-Res.drawable
-Res.painter
-other Compose resources
-```
+`.github/workflows/localization-validation.yml` validates the feature branch by checking:
 
-Only the string mechanism is replaced.
+- no remaining Compose `Res.string` usages in Kotlin source;
+- no remaining JetBrains Compose `stringResource` imports;
+- the PowerShell publisher in `-ValidateOnly` mode;
+- core localization Desktop tests;
+- Desktop Firebase fallback test;
+- Koin graph/Desktop tests;
+- Desktop application compilation;
+- Develop Android compilation;
+- QA Android compilation in a separate Gradle invocation because the repository build configuration intentionally permits only one flavor per Gradle invocation.
 
----
+Core tests cover:
 
-## 18. Validation rules
+- Default locale resolution;
+- unsupported-locale English fallback;
+- explicit English/Spanish selection;
+- immediate language switching within the frozen session document;
+- valid remote-document use;
+- rejection of incomplete remote JSON;
+- rejection of placeholder mismatches;
+- formatted positional arguments;
+- prevention of mid-session document replacement.
 
-Add tests around the bundled JSON and Remote Config parser:
+## Definition of done
 
-```text
-JSON parses
-schema version supported
-"en" exists
-"es" exists
-same keys in all languages
-no empty mandatory values
-format arguments compatible
-%1$d stays %1$d-compatible
-%1$s stays %1$s-compatible
-remote malformed → bundled document used
-remote missing language/key → bundled document used
-unsupported device locale → English
-Default + Spanish device → Spanish
-English selection overrides Spanish device
-Spanish selection overrides English device
-```
+The implementation is ready for integration when:
 
-Prefer rejecting the **entire bad remote localization document** rather than producing a UI made from a mixture of remote and bundled strings.
+1. localization validation CI is green;
+2. no unintended Compose `Res.string` usages remain;
+3. Android can compile with the GitLive Remote Config data source;
+4. Desktop compiles/tests using the explicit bundled fallback;
+5. Develop and QA configuration mapping compiles as designed;
+6. the publisher validates the canonical document;
+7. a local authenticated Firebase CLI dry-run/publish can be performed when deployment verification is desired.
 
----
-
-## 19. Build/test matrix
-
-Before calling the feature complete:
-
-```text
-Android develop debug
-Android qa debug
-Android stage
-Android production release compile
-
-Desktop develop debug
-Desktop qa
-Desktop stage
-Desktop production package/compile
-GitLive Remote Config Android smoke test
-GitLive Remote Config Desktop/JVM smoke test
-
-Default + English device
-Default + Spanish device
-Default + unsupported device locale
-forced English
-forced Spanish
-
-first launch offline
-first launch online
-existing activated Firebase value
-new Firebase value published during session
-restart after fetch
-malformed Firebase JSON
-
-normal CMP screen
-formatted string
-multiline string
-Settings
-Glance widget
-```
-
-Also run the repository's existing Konsist/Detekt checks and any module-specific tests required by the project skills.
-
----
-
-## 20. Definition of done
-
-The feature is complete when this architecture is true:
-
-```text
-                         Firebase Remote Config
-                       parameter: "localization"
-                                  │
-                                  │
-                 Firebase SDK fetch/cache/activate
-                                  │
-                         application startup
-                                  │
-               ┌──────────────────┴──────────────────┐
-               │                                     │
-       activated remote JSON                 bundled JSON default
-                                                     │
-                           core-resource/localization.json
-               │                                     │
-               └──────────────────┬──────────────────┘
-                                  ▼
-                         LocalizationDocument
-                     English + Spanish together
-                                  │
-                                  ▼
-                     LanguagePreference
-                 Default / English / Spanish
-                                  │
-                                  ▼
-                         resolved language
-                                  │
-                                  ▼
-                    stringResource(AppString.*)
-                                  │
-                                  ▼
-                              UI
-```
-
-And:
-
-```text
-Res.string usages                         = 0
-custom Firebase synchronization logic    = 0
-localization JSON in DataStore/Room      = 0
-bundled localization JSON files          = 1
-Remote Config localization parameters    = 1
-Remote Config client implementations      = 1 common GitLive path
-```
-
----
-
-## Verified SDK basis
-
-Plan assumption verified against `GitLiveApp/firebase-kotlin-sdk`:
-
-- The project README states that the Kotlin SDK supports **Desktop** in multiplatform projects.
-- `firebase-config` enables the **JVM** target when `firebase-config.supportedTargets` contains `jvm`.
-- The repository currently lists `firebase-config.supportedTargets=ios,macos,tvos,jvm,js,android`.
-- The common Remote Config API provides the exact operations needed by this localization design, including defaults, initialization, value reads, fetch, activate, and `fetchAndActivate()`.
-
-The upstream repository currently reports partial Remote Config API coverage, but the subset required by this feature is present.
+A live Android Remote Config fetch and an authenticated Firebase publish are environment/integration checks, not reasons to reintroduce custom synchronization logic.
