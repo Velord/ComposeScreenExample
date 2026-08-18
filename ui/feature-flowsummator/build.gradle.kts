@@ -15,7 +15,6 @@ kotlin {
             implementation(projects.infrastructure.util)
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
-            implementation(projects.data.localization)
             implementation(projects.ui.sharedviewmodel)
             implementation(libs.kotlin.bignum)
             implementation(libs.kotlin.coroutine.core)
