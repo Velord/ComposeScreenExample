@@ -11,7 +11,7 @@ compose.resources {
     packageOfResClass = "com.velord.core.resource"
 }
 
-val localizationFile = layout.projectDirectory.file(
+val bundledLocalizationFile = layout.projectDirectory.file(
     "src/commonMain/composeResources/files/localization.json",
 )
 val generatedLocalizationDirectory = layout.buildDirectory.dir(
@@ -20,7 +20,7 @@ val generatedLocalizationDirectory = layout.buildDirectory.dir(
 val generateAppStringResources = tasks.register<GenerateAppStringResourcesTask>(
     "generateAppStringResources",
 ) {
-    this.localizationFile.set(localizationFile)
+    localizationFile.set(bundledLocalizationFile)
     outputDirectory.set(generatedLocalizationDirectory)
 }
 
