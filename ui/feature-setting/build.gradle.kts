@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.convention.multiplatform.library)
-    alias(libs.plugins.multiplatform.compose)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.multiplatform.compose)
 }
 
 kotlin {
@@ -15,7 +15,6 @@ kotlin {
             implementation(projects.model)
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
-            implementation(projects.data.localization)
             implementation(projects.ui.sharedviewmodel)
             // Template
             // Compose
