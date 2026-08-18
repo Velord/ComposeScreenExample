@@ -40,7 +40,6 @@ import com.velord.usecase.movie.SetMovieFilterOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.ShareMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
-import com.velord.usecase.setting.FetchLocalizationUC
 import com.velord.usecase.setting.GetLanguagePreferenceUC
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.InitializeLocalizationUC
@@ -77,9 +76,6 @@ val useCaseModule = module {
     }
     single<InitializeLocalizationUC> {
         InitializeLocalizationUC(get<LocalizationGateway>()::initialize)
-    }
-    single<FetchLocalizationUC> {
-        FetchLocalizationUC(get<LocalizationGateway>()::fetchAndActivate)
     }
     single<GetLanguagePreferenceUC> {
         GetLanguagePreferenceUC(get<LanguagePreferenceGateway>()::getFlow)
