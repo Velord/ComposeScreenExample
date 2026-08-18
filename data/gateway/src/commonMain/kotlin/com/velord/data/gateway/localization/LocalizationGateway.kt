@@ -1,8 +1,6 @@
 package com.velord.data.gateway.localization
 
-import com.velord.core.resource.AppStringResource
 import com.velord.core.resource.Res
-import com.velord.core.resource.getString as resolveString
 import com.velord.data.appstate.AppStateDataSource
 import com.velord.data.gateway.setting.LanguagePreferenceGateway
 import com.velord.data.localization.LocalizationDataSource
@@ -27,10 +25,10 @@ class LocalizationGateway(
     suspend fun initialize() {
         if (appState.localizationStateFlow.value != null) return
 
-        val bundledJson = readBundledLocalizationJson()
-        val bundled = localizationDataSource.parse(bundledJson).getOrThrow()
-        val remote = fetchRemoteLocalization(bundled)
-        val document = remote ?: bundled
+        val bundled = localizationDataSource
+            .parse(readBundledLocalizationJson())
+            .getOrThrow()
+        val document = fetchRemoteLocalization(bundled) ?: bundled
         val preference = languagePreferenceGateway.get()
 
         appState.localizationStateFlow.value = LocalizationState(
@@ -42,31 +40,13 @@ class LocalizationGateway(
 
     fun getStateFlow(): StateFlow<LocalizationState?> = appState.localizationStateFlow
 
-    fun getString(
-        resource: AppStringResource,
-        vararg formatArgs: Any,
-    ): String = resolveString(
-        localization = requireNotNull(appState.localizationStateFlow.value) {
-            "Localization is not initialized"
-        },
-        resource = resource,
-        formatArgs = formatArgs,
-    )
-
     suspend fun setLanguagePreference(preference: LanguagePreference) {
         val current = appState.localizationStateFlow.value ?: return
+        languagePreferenceGateway.save(preference)
         appState.localizationStateFlow.value = current.copy(
             language = resolveLanguage(preference, current.document),
             preference = preference,
         )
-
-        try {
-            languagePreferenceGateway.save(preference)
-        } catch (error: CancellationException) {
-            throw error
-        } catch (_: Exception) {
-            // The active app state stays responsive even when persistence is temporarily unavailable.
-        }
     }
 
     private suspend fun fetchRemoteLocalization(
