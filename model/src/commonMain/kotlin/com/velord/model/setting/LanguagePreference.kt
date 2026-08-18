@@ -39,6 +39,6 @@ object LanguagePreferenceSerializer : KSerializer<LanguagePreference> {
         "", "default", "DEFAULT" -> LanguagePreference.DEFAULT
         "ENGLISH" -> LanguagePreference.language("en")
         "SPANISH" -> LanguagePreference.language("es")
-        else -> LanguagePreference.language(value.lowercase())
+        else -> LanguagePreference.language(value)
     }
 }
