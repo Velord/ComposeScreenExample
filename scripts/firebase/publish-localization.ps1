@@ -7,6 +7,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$DefaultLanguage = "en"
 
 function Write-Utf8WithoutBom {
     param(
@@ -41,41 +42,59 @@ function Assert-LocalizationDocument {
         throw "localization.json must use schemaVersion 1."
     }
 
-    if ($null -eq $Document.languages -or $null -eq $Document.languages.en -or $null -eq $Document.languages.es) {
-        throw "localization.json must contain languages.en and languages.es."
+    if ($null -eq $Document.languages) {
+        throw "localization.json must contain languages."
     }
 
-    $englishKeys = @($Document.languages.en.PSObject.Properties.Name | Sort-Object)
-    $spanishKeys = @($Document.languages.es.PSObject.Properties.Name | Sort-Object)
+    $languageProperties = @($Document.languages.PSObject.Properties)
+    if ($languageProperties.Count -eq 0) {
+        throw "localization.json must contain at least one language."
+    }
 
-    if ($englishKeys.Count -eq 0) {
+    $defaultLanguageProperty = $Document.languages.PSObject.Properties[$DefaultLanguage]
+    if ($null -eq $defaultLanguageProperty) {
+        throw "localization.json must contain default language '$DefaultLanguage'."
+    }
+
+    $defaultStrings = $defaultLanguageProperty.Value
+    $defaultKeys = @($defaultStrings.PSObject.Properties.Name | Sort-Object)
+    if ($defaultKeys.Count -eq 0) {
         throw "localization.json must contain strings."
     }
 
-    $keyDifference = @(Compare-Object -ReferenceObject $englishKeys -DifferenceObject $spanishKeys)
-    if ($keyDifference.Count -ne 0) {
-        $details = ($keyDifference | ForEach-Object { "{0} ({1})" -f $_.InputObject, $_.SideIndicator }) -join ", "
-        throw "English and Spanish localization keys do not match: $details"
-    }
+    foreach ($languageProperty in $languageProperties) {
+        $language = $languageProperty.Name
+        $strings = $languageProperty.Value
+        $languageKeys = @($strings.PSObject.Properties.Name | Sort-Object)
+        $keyDifference = @(Compare-Object -ReferenceObject $defaultKeys -DifferenceObject $languageKeys)
 
-    foreach ($key in $englishKeys) {
-        $englishValue = [string]$Document.languages.en.$key
-        $spanishValue = [string]$Document.languages.es.$key
-
-        if ([string]::IsNullOrEmpty($englishValue) -or [string]::IsNullOrEmpty($spanishValue)) {
-            throw "Localization value must not be empty for key '$key'."
+        if ($keyDifference.Count -ne 0) {
+            $details = ($keyDifference | ForEach-Object { "{0} ({1})" -f $_.InputObject, $_.SideIndicator }) -join ", "
+            throw "Localization keys for '$language' do not match '$DefaultLanguage': $details"
         }
 
-        $englishPlaceholders = @(Get-Placeholders $englishValue)
-        $spanishPlaceholders = @(Get-Placeholders $spanishValue)
-        $placeholderDifference = @(Compare-Object -ReferenceObject $englishPlaceholders -DifferenceObject $spanishPlaceholders)
+        foreach ($key in $defaultKeys) {
+            $defaultValue = [string]$defaultStrings.$key
+            $translatedValue = [string]$strings.$key
 
-        if ($placeholderDifference.Count -ne 0) {
-            throw "Placeholder mismatch for localization key '$key'. EN=[$($englishPlaceholders -join ', ')] ES=[$($spanishPlaceholders -join ', ')]"
+            if ([string]::IsNullOrEmpty($defaultValue) -or [string]::IsNullOrEmpty($translatedValue)) {
+                throw "Localization value must not be empty for '$language/$key'."
+            }
+
+            $defaultPlaceholders = @(Get-Placeholders $defaultValue)
+            $translatedPlaceholders = @(Get-Placeholders $translatedValue)
+            $placeholderDifference = @(
+                Compare-Object -ReferenceObject $defaultPlaceholders -DifferenceObject $translatedPlaceholders
+            )
+
+            if ($placeholderDifference.Count -ne 0) {
+                throw "Placeholder mismatch for '$language/$key'. Default=[$($defaultPlaceholders -join ', ')] Translation=[$($translatedPlaceholders -join ', ')]"
+            }
         }
     }
 
-    Write-Host "Localization validation passed: $($englishKeys.Count) keys in EN and ES."
+    $languageRoster = @($languageProperties.Name | Sort-Object)
+    Write-Host "Localization validation passed: $($defaultKeys.Count) keys in $($languageRoster.Count) languages [$($languageRoster -join ', ')]."
 }
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
@@ -108,7 +127,6 @@ if ($null -eq $firebase) {
     throw "Firebase CLI was not found. Install firebase-tools and run 'firebase login' once before using this script."
 }
 
-# Compact the localization document before placing it inside the Remote Config parameter value.
 $compactLocalization = $localization | ConvertTo-Json -Depth 100 -Compress
 
 $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("compose-screen-example-remote-config-" + [Guid]::NewGuid().ToString("N"))
@@ -140,18 +158,15 @@ try {
         $template.parameters | Add-Member -NotePropertyName localization -NotePropertyValue $localizationParameter
     }
 
-    # Preserve any existing conditional values and other parameter metadata. Only the default
-    # localization document, JSON type and missing description are changed here.
     $localizationParameter | Add-Member -NotePropertyName defaultValue -NotePropertyValue ([pscustomobject]@{
         value = $compactLocalization
     }) -Force
     $localizationParameter | Add-Member -NotePropertyName valueType -NotePropertyValue "JSON" -Force
 
     if ($null -eq $localizationParameter.description -or [string]::IsNullOrWhiteSpace([string]$localizationParameter.description)) {
-        $localizationParameter | Add-Member -NotePropertyName description -NotePropertyValue "ComposeScreenExample localization document (English + Spanish)" -Force
+        $localizationParameter | Add-Member -NotePropertyName description -NotePropertyValue "ComposeScreenExample localization document" -Force
     }
 
-    # Server-generated metadata is not part of the template we deploy.
     if ($null -ne $template.PSObject.Properties["etag"]) {
         $template.PSObject.Properties.Remove("etag")
     }
