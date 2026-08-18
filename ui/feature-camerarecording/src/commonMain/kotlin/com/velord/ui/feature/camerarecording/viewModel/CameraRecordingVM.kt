@@ -21,6 +21,7 @@ import com.velord.usecase.camera.StartRecordingUC
 import com.velord.usecase.camera.StopRecordingUC
 import com.velord.usecase.camera.ToggleCameraLensUC
 import com.velord.usecase.event.ShowToastUC
+import com.velord.usecase.setting.GetLocalizationStateUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -36,7 +37,10 @@ class CameraRecordingVM(
     private val toggleCameraLens: ToggleCameraLensUC,
     private val openCameraVideoFolder: OpenCameraVideoFolderUC,
     private val showToastUC: ShowToastUC,
+    getLocalizationStateUC: GetLocalizationStateUC,
 ) : CoroutineScopeVM() {
+
+    private val localizationStateFlow = getLocalizationStateUC()
 
     val uiStateFlow = MutableStateFlow(CameraRecordingUiState.DEFAULT)
     val checkPermissionEvent = MutableSharedFlow<Unit>()
@@ -106,7 +110,10 @@ class CameraRecordingVM(
     }
 
     private suspend fun showRecordingRestartedWarning() {
-        val message = getString(AppString.recording_restarted_after_camera_switch)
+        val localization = requireNotNull(localizationStateFlow.value) {
+            "Localization is not initialized"
+        }
+        val message = getString(localization, AppString.recording_restarted_after_camera_switch)
         val toastConfig = ToastConfig(message = message, duration = ToastDuration.Long)
         showToastUC(toastConfig)
     }
