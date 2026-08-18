@@ -39,8 +39,16 @@ jobs:
             echo 'Found remaining JetBrains Compose stringResource import.'
             exit 1
           fi
-          if grep -R --line-number --include='*.kt' 'com\.google\.firebase\.remoteconfig\.FirebaseRemoteConfig' data; then
-            echo 'Localization must use the common GitLive Remote Config API.'
+          if grep -R --line-number --include='*.kt' 'com\.google\.firebase\.remoteconfig\.FirebaseRemoteConfig' data/localization; then
+            echo 'Localization app code must use the common KMP Remote Config API.'
+            exit 1
+          fi
+          if grep -R --line-number --include='*.kt' 'dev\.gitlive\.firebase' data/localization; then
+            echo 'Found obsolete GitLive localization integration.'
+            exit 1
+          fi
+          if [ -d data/firebase ]; then
+            echo 'Obsolete data/firebase module still exists.'
             exit 1
           fi
           if find core/core-resource/src -type f -name '*.kt' | grep -q .; then
