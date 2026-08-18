@@ -5,9 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.velord.core.resource.LocalLocalizationState
 import com.velord.core.ui.compose.theme.MainTheme
 import com.velord.core.ui.util.LocalTheme
 import com.velord.model.setting.AppThemeConfig
+import com.velord.ui.sharedviewmodel.LanguageVM
 import com.velord.ui.sharedviewmodel.ThemeUiState
 import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.compose.viewmodel.koinViewModel
@@ -15,12 +17,20 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun AppThemeHost(
     themeVM: ThemeVM = koinViewModel(),
+    languageVM: LanguageVM = koinViewModel(),
     content: @Composable () -> Unit,
 ) {
     val themeState: State<ThemeUiState?> = themeVM.uiStateFlow.collectAsStateWithLifecycle()
     val theme = themeState.value?.appThemeConfig ?: AppThemeConfig.DEFAULT
+    val localizationState = languageVM.uiStateFlow
+        .collectAsStateWithLifecycle()
+        .value
+        .localization
 
-    CompositionLocalProvider(LocalTheme provides theme) {
+    CompositionLocalProvider(
+        LocalTheme provides theme,
+        LocalLocalizationState provides localizationState,
+    ) {
         val localThemeConfig = LocalTheme.current
 
         val isDark = if (localThemeConfig.config.abideToOs) {
