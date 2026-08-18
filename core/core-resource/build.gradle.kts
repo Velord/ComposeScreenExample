@@ -1,23 +1,7 @@
-import com.velord.buildlogic.task.GenerateAppStringResourcesTask
-
 plugins {
     alias(libs.plugins.convention.multiplatform.library)
     alias(libs.plugins.multiplatform.compose)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
-}
-
-val bundledLocalizationFile = layout.projectDirectory.file(
-    "src/commonMain/composeResources/files/localization.json",
-)
-val generatedLocalizationDirectory = layout.buildDirectory.dir(
-    "generated/localization/commonMain/kotlin",
-)
-val generateAppStringResources = tasks.register<GenerateAppStringResourcesTask>(
-    "generateAppStringResources",
-) {
-    localizationFile.set(bundledLocalizationFile)
-    outputDirectory.set(generatedLocalizationDirectory)
 }
 
 compose.resources {
@@ -34,22 +18,8 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            // Using the task output provider records the generation dependency automatically.
-            kotlin.srcDir(generateAppStringResources.flatMap { it.outputDirectory })
-            dependencies {
-                // Module Model
-                implementation(projects.model)
-                // Compose
-                api(libs.compose.resources)
-                implementation(libs.compose.runtime)
-                // Kotlin Serialization
-                implementation(libs.kotlin.serialization.json)
-            }
-        }
-        commonTest.dependencies {
-            // Testing
-            implementation(libs.kotlin.test)
+        commonMain.dependencies {
+            api(libs.compose.resources)
         }
     }
 }
