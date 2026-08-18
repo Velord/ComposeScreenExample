@@ -82,14 +82,17 @@ android {
     }
 }
 
-// QA uses the Develop Firebase client. The only derived value is the Android application/package
-// name required by the Google Services plugin; all Firebase identifiers stay identical to Develop.
-val developApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Develop.value}"
-val qaApplicationId = "com.velord.composescreenexample.${BuildEnvironment.Qa.value}"
+// QA keeps its unique package name while reusing the Develop Firebase client configuration.
+// Only the package_name field is adjusted; Firebase project/app/API identifiers stay unchanged.
 val prepareQaGoogleServices = tasks.register<Copy>("prepareQaGoogleServices") {
     from(layout.projectDirectory.file("google-services.json"))
-    into(layout.projectDirectory.dir("src/${BuildEnvironment.Qa.value}"))
-    filter { line -> line.replace(developApplicationId, qaApplicationId) }
+    into(layout.projectDirectory.dir("src/qa"))
+    filter { line ->
+        line.replace(
+            "\"package_name\": \"com.velord.composescreenexample.develop\"",
+            "\"package_name\": \"com.velord.composescreenexample.qa\"",
+        )
+    }
 }
 
 tasks.matching { task ->
