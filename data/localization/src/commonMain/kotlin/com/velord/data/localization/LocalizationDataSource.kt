@@ -23,7 +23,7 @@ class LocalizationDataSource {
     }
 
     suspend fun fetchLocalization(): String? {
-        initializeRemoteConfigPlatform()
+        LocalizationPlatform.initializeRemoteConfig()
         Firebase.remoteConfig.fetchAndActivate()
         return Firebase.remoteConfig
             .getString(LOCALIZATION_PARAMETER)
@@ -59,7 +59,8 @@ class LocalizationDataSource {
     }
 
     fun currentLanguageCode(): LanguageCode = LanguageCode(
-        currentLanguageTag()
+        LocalizationPlatform
+            .currentLanguageTag()
             .lowercase()
             .substringBefore('-')
             .substringBefore('_'),
