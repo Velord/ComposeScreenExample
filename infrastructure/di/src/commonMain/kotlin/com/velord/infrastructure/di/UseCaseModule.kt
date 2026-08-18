@@ -15,7 +15,6 @@ import com.velord.data.gateway.movie.MovieSortGateway
 import com.velord.data.gateway.setting.GetThemeConfigGateway
 import com.velord.data.gateway.setting.LanguagePreferenceGateway
 import com.velord.data.gateway.setting.SwitchThemeConfigGateway
-import com.velord.model.localization.LocalizationStartup
 import com.velord.usecase.camera.CreateCameraSessionUC
 import com.velord.usecase.camera.GetCameraSessionUC
 import com.velord.usecase.camera.GetCameraStateUC
@@ -31,10 +30,6 @@ import com.velord.usecase.event.GetAppEventFlowUC
 import com.velord.usecase.event.GetToastConfigFlowUC
 import com.velord.usecase.event.RequestAppExitUC
 import com.velord.usecase.event.ShowToastUC
-import com.velord.usecase.localization.FetchLocalizationUC
-import com.velord.usecase.localization.GetLanguagePreferenceUC
-import com.velord.usecase.localization.InitializeLocalizationUC
-import com.velord.usecase.localization.SetLanguagePreferenceUC
 import com.velord.usecase.movie.GetAllMovieUC
 import com.velord.usecase.movie.GetFavoriteMovieUC
 import com.velord.usecase.movie.GetMovieFilterOptionUC
@@ -45,7 +40,11 @@ import com.velord.usecase.movie.SetMovieFilterOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.ShareMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
+import com.velord.usecase.setting.FetchLocalizationUC
+import com.velord.usecase.setting.GetLanguagePreferenceUC
 import com.velord.usecase.setting.GetThemeConfigUC
+import com.velord.usecase.setting.InitializeLocalizationUC
+import com.velord.usecase.setting.SetLanguagePreferenceUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDarkThemeConfigUC
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
@@ -77,14 +76,7 @@ val useCaseModule = module {
         SwitchDynamicColorThemeConfigUC(get<SwitchThemeConfigGateway>()::switchDynamicColor)
     }
     single<InitializeLocalizationUC> {
-        val localizationGateway = get<LocalizationGateway>()
-        val languagePreferenceGateway = get<LanguagePreferenceGateway>()
-        InitializeLocalizationUC { bundledLocalization ->
-            LocalizationStartup(
-                remoteJson = localizationGateway.initialize(bundledLocalization),
-                languagePreference = languagePreferenceGateway.get(),
-            )
-        }
+        InitializeLocalizationUC(get<LocalizationGateway>()::initialize)
     }
     single<FetchLocalizationUC> {
         FetchLocalizationUC(get<LocalizationGateway>()::fetchAndActivate)
