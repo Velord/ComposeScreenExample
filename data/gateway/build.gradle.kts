@@ -12,6 +12,8 @@ kotlin {
         commonMain.dependencies {
             // Module Model
             implementation(projects.model)
+            // Module Core
+            implementation(projects.core.coreResource)
             // Module Data
             implementation(projects.data.appstate)
             implementation(projects.data.backend)
