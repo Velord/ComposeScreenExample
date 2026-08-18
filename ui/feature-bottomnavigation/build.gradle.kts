@@ -19,8 +19,8 @@ kotlin {
             implementation(projects.core.coreNavigation)
             implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
-            implementation(projects.data.localization)
             implementation(projects.domain.usecaseEvent)
+            implementation(projects.domain.usecaseSetting)
             implementation(projects.ui.sharedviewmodel)
             // Core
             implementation(libs.kotlin.coroutine.core)
