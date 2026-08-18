@@ -18,7 +18,6 @@ kotlin {
             implementation(projects.domain.usecaseMovie)
             implementation(projects.domain.usecaseCamera)
             implementation(projects.domain.usecaseEvent)
-            implementation(projects.domain.usecaseLocalization)
             // Module Data Source
             implementation(projects.data.backend)
             implementation(projects.data.datastore)
