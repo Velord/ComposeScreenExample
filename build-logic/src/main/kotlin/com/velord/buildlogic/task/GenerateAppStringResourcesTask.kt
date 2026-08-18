@@ -12,6 +12,7 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
 private const val SUPPORTED_SCHEMA_VERSION = 1
+private const val DEFAULT_LANGUAGE = "en"
 private val APP_STRING_KEY_REGEX = Regex("[A-Za-z_][A-Za-z0-9_]*")
 private val FORMAT_PLACEHOLDER_REGEX = Regex("""%\d+\$[sd]""")
 
@@ -30,11 +31,11 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
         validate(document)
 
         val languages = document["languages"] as Map<*, *>
-        val english = languages["en"] as Map<*, *>
+        val defaultStrings = languages[DEFAULT_LANGUAGE] as Map<*, *>
         val outputFile = outputDirectory.get().asFile.resolve(
             "com/velord/core/resource/AppString.kt",
         )
-        val entryRoster = english.entries
+        val entryRoster = defaultStrings.entries
             .map { it.key.toString() to it.value.toString() }
             .sortedBy { it.first }
 
@@ -77,15 +78,18 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
 
         val languages = document["languages"] as? Map<*, *>
             ?: error("localization.json must contain languages")
-        val english = languages["en"].asStringMap("languages.en")
-        require(languages.containsKey("es")) {
-            "localization.json must contain languages.es"
+        require(languages.isNotEmpty()) {
+            "localization.json must contain at least one language"
         }
-        require(english.isNotEmpty()) {
+
+        val defaultStrings = languages[DEFAULT_LANGUAGE].asStringMap(
+            "languages.$DEFAULT_LANGUAGE",
+        )
+        require(defaultStrings.isNotEmpty()) {
             "localization.json must contain strings"
         }
 
-        english.keys.forEach { key ->
+        defaultStrings.keys.forEach { key ->
             require(APP_STRING_KEY_REGEX.matches(key)) {
                 "Invalid AppString key: $key"
             }
@@ -94,14 +98,14 @@ abstract class GenerateAppStringResourcesTask : DefaultTask() {
         languages.forEach { (languageKey, rawStrings) ->
             val language = languageKey.toString()
             val strings = rawStrings.asStringMap("languages.$language")
-            require(strings.keys == english.keys) {
+            require(strings.keys == defaultStrings.keys) {
                 "Localization key mismatch for language: $language"
             }
             strings.forEach { (key, value) ->
                 require(value.isNotEmpty()) {
                     "Localization value is empty: $language/$key"
                 }
-                require(placeholders(value) == placeholders(english.getValue(key))) {
+                require(placeholders(value) == placeholders(defaultStrings.getValue(key))) {
                     "Localization placeholder mismatch: $language/$key"
                 }
             }
