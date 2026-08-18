@@ -34,7 +34,7 @@ android {
             useSupportLibrary = true
         }
 
-        androidResources.localeFilters += listOf("en")
+        androidResources.localeFilters += listOf("en", "es")
     }
 
     buildTypes {
