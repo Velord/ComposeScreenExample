@@ -61,6 +61,35 @@ jobs:
         shell: pwsh
         run: ./scripts/firebase/publish-localization.ps1 -ValidateOnly
 
+      - name: Verify QA maps to Develop Firebase client
+        shell: bash
+        run: |
+          trap 'rm -f app/android/google-services.json' EXIT
+          cat > app/android/google-services.json <<'JSON'
+          {
+            "project_info": {
+              "project_number": "1",
+              "project_id": "firebase-mapping-test"
+            },
+            "client": [
+              {
+                "client_info": {
+                  "mobilesdk_app_id": "1:1:android:develop-test",
+                  "android_client_info": {
+                    "package_name": "com.velord.composescreenexample.develop"
+                  }
+                },
+                "api_key": [
+                  {
+                    "current_key": "test-api-key"
+                  }
+                ]
+              }
+            ]
+          }
+          JSON
+          ./gradlew :app:android:processQaDebugGoogleServices --stacktrace
+
       - name: Compile and test localization
         run: >-
           ./gradlew
