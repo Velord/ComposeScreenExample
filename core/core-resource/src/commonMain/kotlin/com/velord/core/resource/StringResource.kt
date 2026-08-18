@@ -13,11 +13,14 @@ val LocalLocalizationState = staticCompositionLocalOf<LocalizationState?> { null
 fun stringResource(
     resource: AppStringResource,
     vararg formatArgs: Any,
-): String = getString(
-    localization = requireNotNull(LocalLocalizationState.current) {
-        "Localization is not provided"
-    },
-    resource = resource,
+): String = LocalLocalizationState.current?.let { localization ->
+    getString(
+        localization = localization,
+        resource = resource,
+        formatArgs = formatArgs,
+    )
+} ?: format(
+    template = defaultLocalizationStringRoster[resource.key] ?: resource.key,
     formatArgs = formatArgs,
 )
 
@@ -39,6 +42,7 @@ fun getString(
     vararg formatArgs: Any,
 ): String {
     val template = localization.document.languages[language]?.get(resource.key)
+        ?: localization.document.languages[localization.document.defaultLanguage]?.get(resource.key)
         ?: defaultLocalizationStringRoster[resource.key]
         ?: resource.key
     return format(template, formatArgs)
