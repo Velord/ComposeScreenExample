@@ -10,88 +10,96 @@ import com.velord.core.resource.AppString
 import com.velord.core.resource.AppStringResource
 import com.velord.core.resource.getString
 import com.velord.infrastructure.util.context.createSettingsIntent
+import com.velord.model.localization.LocalizationState
 
 private fun Context.askUserActivatePermissionInSettings(
+    localization: LocalizationState,
     title: AppStringResource,
     message: AppStringResource,
-    onDecline: () -> Unit
+    onDecline: () -> Unit,
 ) {
     alertDialog(
-        title = getString(title),
-        message = getString(message),
-        positiveText = getString(AppString.go_to_app_settings),
-        negativeText = getString(AppString.decline),
+        title = getString(localization, title),
+        message = getString(localization, message),
+        positiveText = getString(localization, AppString.go_to_app_settings),
+        negativeText = getString(localization, AppString.decline),
         positiveCallback = {
             startActivity(createSettingsIntent())
         },
         negativeCallback = onDecline,
-        cancelable = false
+        cancelable = false,
     )
 }
 
 fun Context.showGoToSettingsForMic(
-    onDecline: () -> Unit
+    localization: LocalizationState,
+    onDecline: () -> Unit,
 ) {
     askUserActivatePermissionInSettings(
+        localization = localization,
         title = AppString.require_microphone_permission,
         message = AppString.give_access_to_microphone,
-        onDecline = onDecline
+        onDecline = onDecline,
     )
 }
 
 fun Context.showGoToSettingsForCamera(
-    onDecline: () -> Unit
+    localization: LocalizationState,
+    onDecline: () -> Unit,
 ) {
     askUserActivatePermissionInSettings(
+        localization = localization,
         title = AppString.require_camera_permission,
         message = AppString.give_access_to_camera,
-        onDecline = onDecline
+        onDecline = onDecline,
     )
 }
 
 fun Fragment.checkRecordAudioPermission(
+    localization: LocalizationState,
     actionLauncher: ActivityResultLauncher<String>,
-    onGranted: () -> Unit
+    onGranted: () -> Unit,
 ) {
     val permRecordAudio = Manifest.permission.RECORD_AUDIO
     val isGranted = ContextCompat.checkSelfPermission(
         requireContext(),
-        permRecordAudio
+        permRecordAudio,
     ) == PackageManager.PERMISSION_GRANTED
 
     when {
         isGranted -> onGranted()
         shouldShowRequestPermissionRationale(permRecordAudio) ->
-            requireContext().showGoToSettingsForMic {}
+            requireContext().showGoToSettingsForMic(localization) {}
         else -> actionLauncher.launch(permRecordAudio)
     }
 }
 
 fun Fragment.checkRecordVideoPermission(
+    localization: LocalizationState,
     actionLauncher: ActivityResultLauncher<Array<String>>,
     onGranted: () -> Unit,
-    onDecline: () -> Unit
+    onDecline: () -> Unit,
 ) {
     val permRecordAudio = Manifest.permission.RECORD_AUDIO
     val permCamera = Manifest.permission.CAMERA
     val permissionRoster = arrayOf(
         permRecordAudio,
-        permCamera
+        permCamera,
     )
 
     val isGranted = permissionRoster.all { permission ->
         ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
     }
 
     when {
         isGranted -> onGranted()
         shouldShowRequestPermissionRationale(permRecordAudio) ->
-            requireContext().showGoToSettingsForMic(onDecline)
+            requireContext().showGoToSettingsForMic(localization, onDecline)
         shouldShowRequestPermissionRationale(permCamera) ->
-            requireContext().showGoToSettingsForCamera(onDecline)
+            requireContext().showGoToSettingsForCamera(localization, onDecline)
         else -> actionLauncher.launch(permissionRoster)
     }
 }
