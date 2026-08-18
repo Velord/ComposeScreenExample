@@ -40,7 +40,7 @@ jobs:
             exit 1
           fi
           if grep -R --line-number --include='*.kt' 'com\.google\.firebase\.remoteconfig\.FirebaseRemoteConfig' data/localization; then
-            echo 'Localization app code must use the common KMP Remote Config API.'
+            echo 'Localization data code must use the common KMP Remote Config API.'
             exit 1
           fi
           if grep -R --line-number --include='*.kt' 'dev\.gitlive\.firebase' data/localization; then
@@ -51,9 +51,14 @@ jobs:
             echo 'Obsolete data/firebase module still exists.'
             exit 1
           fi
-          if find core/core-resource/src -type f -name '*.kt' | grep -q .; then
-            echo 'core-resource must contain raw resources only.'
-            find core/core-resource/src -type f -name '*.kt'
+          if find data/localization/src -type f -name '*.kt' | grep -v '/com/velord/data/localization/' | grep -q .; then
+            echo 'Found Kotlin source in data/localization outside com.velord.data.localization.'
+            find data/localization/src -type f -name '*.kt' | grep -v '/com/velord/data/localization/'
+            exit 1
+          fi
+          if find core/core-resource/src/androidMain/res -path '*/values-*/strings.xml' | grep -q .; then
+            echo 'Translated Android strings.xml files are forbidden; localization.json is canonical.'
+            find core/core-resource/src/androidMain/res -path '*/values-*/strings.xml'
             exit 1
           fi
 
@@ -64,7 +69,7 @@ jobs:
       - name: Verify QA maps to Develop Firebase client
         shell: bash
         run: |
-          trap 'rm -f app/android/google-services.json' EXIT
+          trap 'rm -f app/android/google-services.json app/android/src/qa/google-services.json' EXIT
           cat > app/android/google-services.json <<'JSON'
           {
             "project_info": {
@@ -89,6 +94,8 @@ jobs:
           }
           JSON
           ./gradlew :app:android:processQaDebugGoogleServices --stacktrace
+          grep -q 'com.velord.composescreenexample.qa' app/android/src/qa/google-services.json
+          grep -q '1:1:android:develop-test' app/android/src/qa/google-services.json
 
       - name: Compile and test localization
         run: >-
