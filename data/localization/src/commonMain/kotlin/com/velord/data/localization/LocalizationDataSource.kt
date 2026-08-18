@@ -33,10 +33,12 @@ class LocalizationDataSource {
     fun parse(value: String): Result<LocalizationDocument> = runCatching {
         val root = json.parseToJsonElement(value).jsonObject
         val schemaVersion = root.getValue("schemaVersion").jsonPrimitive.content.toInt()
+        val defaultLanguage = LanguageCode(root.getValue("defaultLanguage").jsonPrimitive.content)
         val languageObject = root.getValue("languages").jsonObject
 
         val document = LocalizationDocument(
             schemaVersion = schemaVersion,
+            defaultLanguage = defaultLanguage,
             languages = languageObject.map { (language, rawStrings) ->
                 LanguageCode(language) to LocalizationStrings(rawStrings.jsonObject.toStringMap(language))
             }.toMap(),
@@ -49,8 +51,9 @@ class LocalizationDataSource {
         value: String,
         bundled: LocalizationDocument,
     ): LocalizationDocument? = parse(value).getOrNull()?.takeIf { remote ->
-        val bundledKeys = bundled.languages.getValue(LanguageCode.English).keys
+        val bundledKeys = bundled.languages.getValue(bundled.defaultLanguage).keys
         remote.schemaVersion == bundled.schemaVersion &&
+            remote.defaultLanguage == bundled.defaultLanguage &&
             remote.languages.keys.containsAll(bundled.languages.keys) &&
             remote.languages.values.all { strings -> strings.keys == bundledKeys }
     }
@@ -70,8 +73,8 @@ class LocalizationDataSource {
             "Localization must contain at least one language"
         }
 
-        val defaultStrings = requireNotNull(document.languages[LanguageCode.English]) {
-            "Localization must contain fallback language: ${LanguageCode.English.value}"
+        val defaultStrings = requireNotNull(document.languages[document.defaultLanguage]) {
+            "Localization must contain default language: ${document.defaultLanguage.value}"
         }
         require(defaultStrings.value.isNotEmpty()) {
             "Localization must contain strings"
