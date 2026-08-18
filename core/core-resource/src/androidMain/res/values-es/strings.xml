@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">ComposeScreenExample</string>
-    <string name="loading">Cargando</string>
-    <string name="error">Error</string>
-    <string name="counter_widget">Widget de contador</string>
-    <string name="image_widget">Widget de imagen</string>
-</resources>
