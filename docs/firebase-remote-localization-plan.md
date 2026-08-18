@@ -4,9 +4,7 @@
 
 Implementation branch: `feature/firebase-remote-localization`
 
-The common localization runtime is implemented for Android and Desktop. Firebase Remote Config delivery is implemented on Android. Desktop deliberately uses the bundled localization document because GitLive's current JVM Firebase backend does not provide functional Remote Config support.
-
-This document reflects the implemented architecture and replaces the earlier assumption that GitLive Remote Config itself was usable on Desktop/JVM.
+The common localization runtime is implemented for Android and Desktop. Firebase Remote Config delivery is implemented on Android with the official Firebase Android SDK. Desktop deliberately uses the bundled localization document because the currently available JVM backend does not provide functional Remote Config support.
 
 ## Fixed product decisions
 
@@ -61,7 +59,7 @@ Shape:
 }
 ```
 
-The document currently contains the complete English and Spanish application string set.
+The document contains the complete English and Spanish application string set.
 
 Build-time validation rejects the bundled document when:
 
@@ -102,9 +100,17 @@ Supported positional placeholders currently include the formats already used by 
 
 ## Runtime lifecycle
 
+Localization initialization is an application-start concern, not splash-screen or widget logic.
+
 Application startup:
 
 ```text
+start dependency injection
+        ↓
+InitializeLocalizationUC
+        ↓
+LocalizationGateway
+        ↓
 read bundled localization.json
         ↓
 initialize platform Remote Config data source
@@ -115,12 +121,14 @@ validate remote value against bundled schema
         ↓
 freeze the accepted document for this application session
         ↓
-render the application
+start UI
         ↓
-fetchAndActivate() in the background on Android
+FetchLocalizationUC in the application-lifetime background scope
         ↓
 newly fetched value becomes eligible on the next application start
 ```
+
+Use cases are named proxy boundaries only. Localization orchestration lives in `LocalizationGateway`; Koin declarations only connect use cases to gateway functions.
 
 The in-memory localization document is not replaced when `fetchAndActivate()` completes. This guarantees the agreed next-start behavior.
 
@@ -130,7 +138,7 @@ Changing the language preference does not replace the document. It changes which
 
 ### Android
 
-Android uses GitLive Firebase Kotlin SDK `dev.gitlive:firebase-config`.
+Android uses the official Firebase Android Remote Config SDK under the repository's existing Firebase BOM.
 
 The Android data source:
 
@@ -143,20 +151,44 @@ If Firebase initialization/read/fetch fails, the localization gateway contains t
 
 ### Desktop/JVM
 
-Desktop uses the same public localization runtime and the same bundled `localization.json`, but does **not** execute GitLive Remote Config.
+Desktop uses the same public localization runtime and the same bundled `localization.json`, but does **not** execute an unsupported JVM Remote Config path.
 
-Reason: GitLive supports JVM/Compose Multiplatform broadly, but its current Firebase Java SDK explicitly lists **Remote Config as currently non-functional**. The Kotlin SDK JVM target for `firebase-config` reuses the Android implementation. Treating successful JVM compilation as proof of working Desktop Remote Config was therefore incorrect.
+GitLive advertises Desktop/JVM support broadly, but its current JVM Remote Config implementation reuses Android-side implementation sources, while the Java backend used for Desktop marks Remote Config as non-functional. Successful JVM compilation was therefore not accepted as proof of a working Desktop Remote Config runtime.
 
 The Desktop platform data source intentionally returns no remote value and performs no remote fetch. This keeps Desktop deterministic and offline-safe instead of shipping an unsupported runtime path.
 
 No custom REST/sync implementation is added, because that would violate the requirement to avoid an additional localization synchronization layer.
 
-When GitLive provides functional JVM Remote Config, only the Desktop platform data-source implementation needs to change; the localization JSON, generated API, settings UI, validation, and runtime lifecycle remain unchanged.
+When a functional JVM Remote Config implementation is available, only the Desktop platform data-source implementation needs to change; the localization JSON, generated API, settings UI, validation, and runtime lifecycle remain unchanged.
 
 Upstream references:
 
 - `https://github.com/GitLiveApp/firebase-kotlin-sdk`
 - `https://github.com/GitLiveApp/firebase-java-sdk`
+
+## Domain/module placement
+
+Localization setting use cases live in the existing module:
+
+```text
+:domain:usecase-setting
+```
+
+There is no separate `:domain:usecase-localization` module.
+
+The localization use cases are intentionally thin named proxies:
+
+```text
+UI / application startup
+        ↓
+Use case
+        ↓
+Gateway
+        ↓
+Data sources / runtime state
+```
+
+Dependency-injection declarations do not contain localization business/orchestration logic.
 
 ## Language preference
 
@@ -206,7 +238,7 @@ Compose string calls are migrated to `AppString`.
 
 Android framework resources that are required by the manifest, AppWidget metadata, error layouts, or other framework-only XML remain Android resources. They are not Compose `Res.string` localization sources.
 
-Glance widgets initialize the localization runtime before composing widget content and use the custom `AppString` API for their runtime-visible strings.
+Android `Application.onCreate()` initializes localization before normal application UI. The same `Application` lifecycle also runs when the process is started for an AppWidget, so Glance widgets consume the already initialized runtime instead of duplicating localization bootstrap code.
 
 ## Firebase publishing workflow
 
@@ -293,10 +325,11 @@ The implementation is ready for integration when:
 
 1. localization validation CI is green;
 2. no unintended Compose `Res.string` usages remain;
-3. Android can compile with the GitLive Remote Config data source;
+3. Android compiles with the official Firebase Remote Config data source;
 4. Desktop compiles/tests using the explicit bundled fallback;
 5. Develop and QA configuration mapping compiles as designed;
 6. the publisher validates the canonical document;
-7. a local authenticated Firebase CLI dry-run/publish can be performed when deployment verification is desired.
+7. the Firebase `localization` parameter is verified against the canonical JSON;
+8. an authenticated Firebase CLI publish can be performed when deployment verification is desired.
 
-A live Android Remote Config fetch and an authenticated Firebase publish are environment/integration checks, not reasons to reintroduce custom synchronization logic.
+A live Android Remote Config fetch and an authenticated Firebase publish remain environment/integration checks; they are not reasons to introduce a custom synchronization layer.
