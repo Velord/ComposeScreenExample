@@ -11,6 +11,7 @@ import com.velord.ui.feature.bottomnavigation.navigation.TabState
 import com.velord.ui.sharedviewmodel.CoroutineScopeVM
 import com.velord.usecase.event.RequestAppExitUC
 import com.velord.usecase.event.ShowToastUC
+import com.velord.usecase.setting.GetLocalizationStateUC
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,8 +28,11 @@ private const val CONFIRM_EXIT_THROTTLE = 2000L
 class BottomNavigationVM(
     private val bottomNavEventService: BottomNavEventService,
     private val requestAppExitUC: RequestAppExitUC,
-    private val showToastUC: ShowToastUC
+    private val showToastUC: ShowToastUC,
+    getLocalizationStateUC: GetLocalizationStateUC,
 ) : CoroutineScopeVM() {
+
+    private val localizationStateFlow = getLocalizationStateUC()
 
     val uiStateFlow = MutableStateFlow(BottomNavigationUiState.from(bottomNavEventService))
     val onTabClickEvent = MutableSharedFlow<TabState>()
@@ -46,22 +50,8 @@ class BottomNavigationVM(
 
     fun getNavigationItemRoster() = BottomNavigationItem.entries
 
-    // (Back Press -> Updates State ONLY)
     private suspend fun onTabDestinationChanged(newTab: BottomNavigationItem) {
-        // Previous solution was to reset all time we enter a new tab,
-        // But this causes sync issues at a startup time.
-        // The "bottom navigation" screen and the "first destination" screen
-        // in the graph are into race condition.
-        // For example, if the first destination screen is faster to emit the tab state than
-        // the bottom navigation screen, then the bottom navigation screen will override
-        // it with the default tab state, causing the app to always
-        // start with isGrantedToProceed = false
-        //graphTakeResponsibility()
-
-        // We only update the UI state so the bottom bar highlights correctly.
-        // We do NOT emit to onTabClickEvent, preventing the navigation loop.
         if (uiStateFlow.value.tabState.current == newTab) return
-
         onTabClick(newTab)
     }
 
@@ -101,7 +91,10 @@ class BottomNavigationVM(
             onBackDoubleClick()
         } else {
             setConfirmExitRequested(true)
-            val message = getString(AppString.press_again_to_exit)
+            val localization = requireNotNull(localizationStateFlow.value) {
+                "Localization is not initialized"
+            }
+            val message = getString(localization, AppString.press_again_to_exit)
             val toastConfig = ToastConfig(
                 message = message,
                 duration = ToastDuration.Short,
@@ -121,8 +114,6 @@ class BottomNavigationVM(
         val isStart = startDestinationRoster.contains(currentRoute)
         val newState = uiStateFlow.value.backHandlingState.copy(
             isAtStartGraphDestination = isStart,
-            // Auto-revoke the grant if we navigate deep into the stack.
-            // If we are at the start, keep whatever the screen requested.
             isGrantedToProceed = if (isStart) {
                 uiStateFlow.value.backHandlingState.isGrantedToProceed
             } else {
@@ -162,8 +153,7 @@ class BottomNavigationVM(
     private suspend fun handleUiAction(action: BottomNavigationUiAction) {
         when (action) {
             is BottomNavigationUiAction.TabClick -> onTabClick(action.newTab)
-            is BottomNavigationUiAction.TabDestinationChanged ->
-                onTabDestinationChanged(action.newTab)
+            is BottomNavigationUiAction.TabDestinationChanged -> onTabDestinationChanged(action.newTab)
             is BottomNavigationUiAction.BackDoubleClick -> onBackDoubleClick()
             is BottomNavigationUiAction.BackClick -> onBackClick()
             is BottomNavigationUiAction.BackRequest -> onBackRequest()
@@ -188,8 +178,8 @@ class BottomNavigationVM(
             }
         }
         launch {
-            bottomNavEventService.confirmExitRequestedFlow.collect { isRequested ->
-                uiStateFlow.update { state -> state.copy(isConfirmExitRequested = isRequested) }
+            bottomNavEventService.confirmExitRequestedFlow.collect { isConfirmExitRequested ->
+                uiStateFlow.update { state -> state.copy(isConfirmExitRequested = isConfirmExitRequested) }
             }
         }
         launch {
