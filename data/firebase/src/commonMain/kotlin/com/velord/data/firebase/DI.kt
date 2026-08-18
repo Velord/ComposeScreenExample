@@ -9,5 +9,5 @@ import org.koin.core.annotation.Single
 class FirebaseModule {
     @Single
     fun provideFirebaseRemoteConfigDataSource(): FirebaseRemoteConfigDataSource =
-        FirebaseRemoteConfigDataSourceImpl()
+        createFirebaseRemoteConfigDataSource()
 }
