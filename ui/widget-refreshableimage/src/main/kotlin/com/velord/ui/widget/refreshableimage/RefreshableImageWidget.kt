@@ -17,20 +17,12 @@ import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import com.velord.core.resource.LocalizationRuntime
-import com.velord.core.resource.readBundledLocalizationJson
 import com.velord.core.ui.compose.glance.GlanceWidgetThemeSustainer
 import com.velord.ui.widget.refreshableimage.model.ImageParameter
-import com.velord.usecase.localization.InitializeLocalizationUC
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class RefreshableImageWidget :
     GlanceAppWidget(errorUiLayout = R.layout.refreshable_image_widget_error_layout),
-    GlanceWidgetThemeSustainer<RefreshableImageWidget>,
-    KoinComponent {
-
-    private val initializeLocalizationUC: InitializeLocalizationUC by inject()
+    GlanceWidgetThemeSustainer<RefreshableImageWidget> {
 
     // GlanceAppWidget
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
@@ -45,18 +37,7 @@ class RefreshableImageWidget :
         context: Context,
         id: GlanceId
     ) {
-        initializeLocalization()
         provideContent { RefreshableImageWidgetScreen() }
-    }
-
-    private suspend fun initializeLocalization() {
-        val bundledLocalization = readBundledLocalizationJson()
-        val startup = initializeLocalizationUC(bundledLocalization)
-        LocalizationRuntime.initialize(
-            bundledJson = bundledLocalization,
-            remoteJson = startup.remoteJson,
-            preference = startup.languagePreference,
-        )
     }
 
     override suspend fun onDelete(context: Context, glanceId: GlanceId) {
