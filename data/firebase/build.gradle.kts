@@ -21,7 +21,8 @@ kotlin {
         androidMain.dependencies {
             // Firebase Remote Config
             implementation(project.dependencies.platform(libs.google.firebase.bom))
-            implementation(gitliveLibs.firebase.config)
+            implementation("com.google.firebase:firebase-config")
+            implementation(libs.kotlin.coroutine.play.service)
         }
     }
 
