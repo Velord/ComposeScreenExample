@@ -52,7 +52,12 @@ jobs:
           :infrastructure:di:desktopTest
           :app:desktop:compileKotlinDesktop
           :app:android:compileDevelopDebugKotlin
-          :app:android:compileQaDebugKotlin
           -x :app:android:processDevelopDebugGoogleServices
+          --stacktrace
+
+      - name: Compile QA Firebase mapping
+        run: >-
+          ./gradlew
+          :app:android:compileQaDebugKotlin
           -x :app:android:processQaDebugGoogleServices
           --stacktrace
