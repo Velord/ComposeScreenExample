@@ -33,15 +33,11 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
 import co.touchlab.kermit.Logger
-import com.velord.core.resource.Res
-import com.velord.core.resource.downloaded_from
-import com.velord.core.resource.image_widget
-import com.velord.core.resource.refresh
-import com.velord.core.resource.widget_size
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.glance.MainGlanceTheme
 import com.velord.ui.widget.refreshableimage.util.createImageParameter
 import com.velord.ui.widget.refreshableimage.util.getImageFilePath
-import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
 
 // On emulator redundant compositions with wrong LocalSize.current ruin all flow
@@ -95,7 +91,7 @@ private fun Content(
 @Composable
 private fun Title() {
     Text(
-        text = stringResource(Res.string.image_widget),
+        text = stringResource(AppString.image_widget),
         modifier = GlanceModifier.padding(top = 16.dp),
         style = TextStyle(
             color = GlanceTheme.colors.onBackground,
@@ -120,7 +116,7 @@ private fun CurrentSize(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = stringResource(Res.string.widget_size, size.width.value, size.height.value),
+            text = stringResource(AppString.widget_size, size.width.value, size.height.value),
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 color = GlanceTheme.colors.onBackground,
@@ -138,7 +134,7 @@ private fun CurrentSize(
         horizontalAlignment = Alignment.Start,
     ) {
         Text(
-            text = stringResource(Res.string.downloaded_from, url),
+            text = stringResource(AppString.downloaded_from, url),
             modifier = GlanceModifier.padding(8.dp),
             style = TextStyle(
                 textDecoration = TextDecoration.Underline,
@@ -171,7 +167,7 @@ private fun Refresh(url: String, isDownloadingNewImage: Boolean) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = stringResource(Res.string.refresh),
+            text = stringResource(AppString.refresh),
             modifier = GlanceModifier.padding(horizontal = 8.dp),
             style = TextStyle(
                 color = GlanceTheme.colors.onSecondaryContainer,

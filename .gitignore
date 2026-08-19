@@ -54,3 +54,7 @@ CLAUDE.local.md
 .claude/
 .claudeignore
 .mcp.json
+
+# Desktop runtime cache
+app/desktop/cache/
+

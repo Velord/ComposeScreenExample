@@ -4,6 +4,7 @@ import com.velord.model.AppEvent
 import com.velord.model.camera.CameraSessionWrapper
 import com.velord.model.camera.CameraState
 import com.velord.model.camera.CameraVideoAsset
+import com.velord.model.localization.LocalizationState
 import com.velord.model.movie.Movie
 import com.velord.model.movie.MovieSortOption
 import com.velord.model.movie.SortType
@@ -21,6 +22,7 @@ interface AppStateDataSource {
     val cameraSessionFlow: MutableStateFlow<CameraSessionWrapper?>
     val cameraStateFlow: MutableStateFlow<CameraState>
     val lastCameraVideoAssetFlow: MutableStateFlow<CameraVideoAsset?>
+    val localizationStateFlow: MutableStateFlow<LocalizationState>
 }
 
 @Single(binds = [AppStateDataSource::class])
@@ -42,4 +44,6 @@ class AppStateDataSourceImpl : AppStateDataSource {
     override val cameraSessionFlow = MutableStateFlow<CameraSessionWrapper?>(null)
     override val cameraStateFlow = MutableStateFlow(CameraState.DEFAULT)
     override val lastCameraVideoAssetFlow = MutableStateFlow<CameraVideoAsset?>(null)
+
+    override val localizationStateFlow = MutableStateFlow(LocalizationState.DEFAULT)
 }

@@ -12,11 +12,14 @@ kotlin {
         commonMain.dependencies {
             // Module Model
             implementation(projects.model)
+            // Module Core
+            implementation(projects.core.coreResource)
             // Module Data
             implementation(projects.data.appstate)
             implementation(projects.data.backend)
             implementation(projects.data.datastore)
             implementation(projects.data.db)
+            implementation(projects.data.localization)
             implementation(projects.data.os)
             // Module Domain
             implementation(projects.domain.usecaseMovie)

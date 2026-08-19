@@ -20,14 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.velord.core.resource.Res
-import com.velord.core.resource.can_not_get_permission_for_camera
-import com.velord.core.resource.can_not_get_permission_for_mic
+import com.velord.core.resource.AppString
+import com.velord.core.resource.AppStringResource
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun PermissionInfo(
@@ -41,7 +39,7 @@ internal fun PermissionInfo(
         if (uiState.permissionState.camera.isForbidden) {
             PermissionIsNotGrantedState(
                 icon = Icons.Filled.CameraAlt,
-                label = Res.string.can_not_get_permission_for_camera,
+                label = AppString.can_not_get_permission_for_camera,
                 onClick = onCheckPermissionClick,
             )
         }
@@ -49,7 +47,7 @@ internal fun PermissionInfo(
             Spacer(modifier = Modifier.size(32.dp))
             PermissionIsNotGrantedState(
                 icon = Icons.Filled.PermCameraMic,
-                label = Res.string.can_not_get_permission_for_mic,
+                label = AppString.can_not_get_permission_for_mic,
                 onClick = onCheckPermissionClick,
             )
         }
@@ -59,7 +57,7 @@ internal fun PermissionInfo(
 @Composable
 private fun PermissionIsNotGrantedState(
     icon: ImageVector,
-    label: StringResource,
+    label: AppStringResource,
     onClick: () -> Unit,
 ) {
     Row(

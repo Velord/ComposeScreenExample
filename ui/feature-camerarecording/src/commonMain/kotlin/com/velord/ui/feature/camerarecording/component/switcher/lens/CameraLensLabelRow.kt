@@ -11,11 +11,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.velord.core.resource.Res
-import com.velord.core.resource.front
-import com.velord.core.resource.rear
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CameraLensLabelRow(
@@ -27,7 +25,7 @@ internal fun CameraLensLabelRow(
         modifier = Modifier.padding(top = 4.dp),
     ) {
         CameraLensLabel(
-            text = stringResource(Res.string.front),
+            text = stringResource(AppString.front),
             isSelected = isFront,
             accentColor = accentColor,
         )
@@ -40,7 +38,7 @@ internal fun CameraLensLabelRow(
             ),
         )
         CameraLensLabel(
-            text = stringResource(Res.string.rear),
+            text = stringResource(AppString.rear),
             isSelected = isFront.not(),
             accentColor = accentColor,
         )

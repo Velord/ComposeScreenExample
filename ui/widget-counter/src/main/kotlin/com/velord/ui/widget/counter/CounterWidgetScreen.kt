@@ -27,13 +27,9 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextDecoration
 import androidx.glance.text.TextStyle
-import com.velord.core.resource.Res
-import com.velord.core.resource.count
-import com.velord.core.resource.counter_widget
-import com.velord.core.resource.minus_sign
-import com.velord.core.resource.plus_sign
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.glance.MainGlanceTheme
-import org.jetbrains.compose.resources.stringResource
 
 private fun createAction(count: Int): Action = actionRunCallback<UpdateCountCallback>(
     parameters = actionParametersOf(CounterWidget.actionParameterKey to count)
@@ -60,7 +56,7 @@ private fun Content(count: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(Res.string.counter_widget),
+            text = stringResource(AppString.counter_widget),
             modifier = GlanceModifier.padding(top = 8.dp),
             style = TextStyle(
                 color = GlanceTheme.colors.onSurface,
@@ -76,7 +72,7 @@ private fun Content(count: Int) {
 @Composable
 private fun Counter(count: Int) {
     Text(
-        text = stringResource(Res.string.count, count),
+        text = stringResource(AppString.count, count),
         modifier = GlanceModifier.padding(top = 8.dp),
         style = TextStyle(
             textDecoration = TextDecoration.Underline,
@@ -93,7 +89,7 @@ private fun Counter(count: Int) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
-            text = stringResource(Res.string.plus_sign),
+            text = stringResource(AppString.plus_sign),
             modifier = GlanceModifier
                 .width(100.dp)
                 .background(GlanceTheme.colors.surfaceVariant)
@@ -102,7 +98,7 @@ private fun Counter(count: Int) {
         )
         Spacer(modifier = GlanceModifier.width(32.dp))
         Button(
-            text = stringResource(Res.string.minus_sign),
+            text = stringResource(AppString.minus_sign),
             modifier = GlanceModifier
                 .width(100.dp)
                 .background(GlanceTheme.colors.surfaceVariant)

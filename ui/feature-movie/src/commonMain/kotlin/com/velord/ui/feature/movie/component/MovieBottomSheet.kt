@@ -34,10 +34,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.velord.core.resource.Res
-import com.velord.core.resource.info_description_movie
-import com.velord.core.resource.info_description_movie_url
-import com.velord.core.resource.range
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.movie.FilterType
 import com.velord.model.movie.MovieFilterOption
@@ -47,7 +45,6 @@ import com.velord.ui.feature.movie.viewModel.MovieUiAction
 import com.velord.ui.feature.movie.viewModel.MovieUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun MovieBottomSheet(
@@ -207,7 +204,7 @@ private fun Filter(
                         Text(text = minStr)
 
                         val rangeStr = option.getRangeStr(sliderRangeState)
-                        Text(text = stringResource(Res.string.range, rangeStr))
+                        Text(text = stringResource(AppString.range, rangeStr))
 
                         Text(text = maxStr)
                     }
@@ -228,7 +225,7 @@ private fun Info(
         isShowing = isShowing,
         onHide = { scope.hide(onHide) },
         content = {
-            val url = stringResource(Res.string.info_description_movie_url)
+            val url = stringResource(AppString.info_description_movie_url)
             Text(
                 buildAnnotatedString {
                     withLink(
@@ -252,7 +249,7 @@ private fun Info(
                 modifier = Modifier.padding(16.dp)
             )
             Text(
-                text = stringResource(Res.string.info_description_movie),
+                text = stringResource(AppString.info_description_movie),
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 8.dp)

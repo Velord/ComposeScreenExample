@@ -8,10 +8,9 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
-import com.velord.core.resource.Res
-import com.velord.core.resource.press_again_to_exit
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationBackBehavior
-import org.jetbrains.compose.resources.stringResource
 
 private val log = Logger.withTag("LogBackStack")
 
@@ -37,7 +36,7 @@ internal fun <T> ScreenSetup(
 
     log.d { "ScreenSetup: BackHandler Registered. Behavior=$backBehavior" }
 
-    val str = stringResource(Res.string.press_again_to_exit)
+    val str = stringResource(AppString.press_again_to_exit)
     PlatformBackHandler(
         backBehavior = backBehavior,
         message = str,

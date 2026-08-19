@@ -1,29 +1,27 @@
 package com.velord.ui.feature.bottomnavigation.viewmodel
 
 import androidx.navigation.NavDestination
+import com.velord.core.resource.AppString
 import com.velord.core.resource.R
-import com.velord.core.resource.Res
-import com.velord.core.resource.bottom_navigation_first_back_press
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavBackHandlingState
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavEventService
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.navigation.TabState
-import com.velord.ui.sharedviewmodel.CoroutineScopeVM
+import com.velord.ui.sharedviewmodel.LocalizationVM
 import com.velord.usecase.event.RequestAppExitUC
 import com.velord.usecase.event.ShowToastUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 
 class BottomNavigationJetpackVM(
     private val bottomNavEventService: BottomNavEventService,
     private val requestAppExitUC: RequestAppExitUC,
     private val showToastUC: ShowToastUC,
-) : CoroutineScopeVM() {
+) : LocalizationVM() {
 
     val uiStateFlow = MutableStateFlow(
         BottomNavigationJetpackUiState(
@@ -61,7 +59,7 @@ class BottomNavigationJetpackVM(
     private fun onBackDoubleClick() = launch { requestAppExitUC() }
 
     private fun onShowBackPressToast(tag: String) = launch {
-        val message = getString(Res.string.bottom_navigation_first_back_press, tag)
+        val message = getString(AppString.bottom_navigation_first_back_press, tag)
         val toastConfig = ToastConfig(message = message, duration = ToastDuration.Short)
         showToastUC(toastConfig)
     }
@@ -99,14 +97,11 @@ class BottomNavigationJetpackVM(
         when (action) {
             is BottomNavigationJetpackUiAction.TabClick -> onTabClick(action.newTab)
             is BottomNavigationJetpackUiAction.BackDoubleClick -> onBackDoubleClick()
-            is BottomNavigationJetpackUiAction.ShowBackPressToast ->
-                onShowBackPressToast(action.tag)
+            is BottomNavigationJetpackUiAction.ShowBackPressToast -> onShowBackPressToast(action.tag)
             is BottomNavigationJetpackUiAction.UpdateBackHandling ->
                 onUpdateBackHandling(action.currentNavigationDestination)
-            is BottomNavigationJetpackUiAction.GraphCompletedHandling ->
-                onGraphCompletedHandling()
-            is BottomNavigationJetpackUiAction.GraphTakeResponsibility ->
-                onGraphTakeResponsibility()
+            is BottomNavigationJetpackUiAction.GraphCompletedHandling -> onGraphCompletedHandling()
+            is BottomNavigationJetpackUiAction.GraphTakeResponsibility -> onGraphTakeResponsibility()
         }
     }
 

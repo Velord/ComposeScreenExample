@@ -18,12 +18,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.velord.core.resource.Res
-import com.velord.core.resource.start_recording
-import com.velord.core.resource.stop_recording
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingUiState
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun StartStopRecordingButton(
@@ -51,9 +49,9 @@ private fun CameraRecordingUiState.hasRequiredPermission(): Boolean {
 
 @Composable
 private fun startStopRecordingLabel(isRecording: Boolean): String = if (isRecording) {
-    stringResource(Res.string.stop_recording)
+    stringResource(AppString.stop_recording)
 } else {
-    stringResource(Res.string.start_recording)
+    stringResource(AppString.start_recording)
 }
 
 @Composable
