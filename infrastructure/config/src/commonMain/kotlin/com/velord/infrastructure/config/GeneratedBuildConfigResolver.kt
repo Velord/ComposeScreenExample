@@ -10,4 +10,11 @@ class GeneratedBuildConfigResolver : BuildConfigResolver {
     override fun getBaseUrl(): String = ProjectBuildConfig.baseUrl
 
     override fun isLoggingEnabled(): Boolean = ProjectBuildConfig.isLoggingEnabled
+
+    override fun getFirebaseApiKey(): String = ProjectBuildConfig.firebaseApiKey
+
+    override fun getFirebaseProjectId(): String = ProjectBuildConfig.firebaseProjectId
+
+    override fun getFirebaseAppId(): String = ProjectBuildConfig.firebaseAppId
 }
+

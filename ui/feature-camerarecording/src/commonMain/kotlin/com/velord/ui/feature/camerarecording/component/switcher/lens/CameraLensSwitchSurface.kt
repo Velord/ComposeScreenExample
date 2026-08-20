@@ -19,11 +19,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import com.velord.core.resource.Res
-import com.velord.core.resource.switch_camera_lens
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.icon.DoubleArrowRightIcon
 import com.velord.core.ui.compose.preview.PreviewCombined
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CameraLensSwitchSurface(
@@ -93,7 +92,7 @@ private fun CameraLensSwitchThumb(
     ) {
         Icon(
             imageVector = DoubleArrowRightIcon,
-            contentDescription = stringResource(Res.string.switch_camera_lens),
+            contentDescription = stringResource(AppString.switch_camera_lens),
             modifier = Modifier.size(18.dp),
             tint = lensSwitchIconTint(isFront = isFront),
         )

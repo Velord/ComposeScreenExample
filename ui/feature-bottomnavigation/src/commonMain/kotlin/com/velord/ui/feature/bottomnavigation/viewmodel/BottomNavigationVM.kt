@@ -1,14 +1,13 @@
 package com.velord.ui.feature.bottomnavigation.viewmodel
 
-import com.velord.core.resource.Res
-import com.velord.core.resource.press_again_to_exit
+import com.velord.core.resource.AppString
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavBackHandlingState
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavEventService
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.navigation.TabState
-import com.velord.ui.sharedviewmodel.CoroutineScopeVM
+import com.velord.ui.sharedviewmodel.LocalizationVM
 import com.velord.usecase.event.RequestAppExitUC
 import com.velord.usecase.event.ShowToastUC
 import kotlinx.coroutines.delay
@@ -20,7 +19,6 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 import kotlin.time.Duration.Companion.milliseconds
 
 private const val CONFIRM_EXIT_THROTTLE = 2000L
@@ -28,8 +26,8 @@ private const val CONFIRM_EXIT_THROTTLE = 2000L
 class BottomNavigationVM(
     private val bottomNavEventService: BottomNavEventService,
     private val requestAppExitUC: RequestAppExitUC,
-    private val showToastUC: ShowToastUC
-) : CoroutineScopeVM() {
+    private val showToastUC: ShowToastUC,
+) : LocalizationVM() {
 
     val uiStateFlow = MutableStateFlow(BottomNavigationUiState.from(bottomNavEventService))
     val onTabClickEvent = MutableSharedFlow<TabState>()
@@ -102,7 +100,7 @@ class BottomNavigationVM(
             onBackDoubleClick()
         } else {
             setConfirmExitRequested(true)
-            val message = getString(Res.string.press_again_to_exit)
+            val message = getString(AppString.press_again_to_exit)
             val toastConfig = ToastConfig(
                 message = message,
                 duration = ToastDuration.Short,
@@ -117,7 +115,7 @@ class BottomNavigationVM(
 
     private fun onUpdateBackHandling(
         startDestinationRoster: List<String?>,
-        currentRoute: String?
+        currentRoute: String?,
     ) {
         val isStart = startDestinationRoster.contains(currentRoute)
         val newState = uiStateFlow.value.backHandlingState.copy(
@@ -128,7 +126,7 @@ class BottomNavigationVM(
                 uiStateFlow.value.backHandlingState.isGrantedToProceed
             } else {
                 false
-            }
+            },
         )
         updateBackHandlingState(newState)
     }

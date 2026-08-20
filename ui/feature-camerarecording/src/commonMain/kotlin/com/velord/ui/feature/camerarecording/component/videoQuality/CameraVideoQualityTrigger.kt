@@ -17,12 +17,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.velord.core.resource.Res
-import com.velord.core.resource.video_quality
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.model.camera.config.CameraVideoQuality
 import com.velord.ui.feature.camerarecording.util.shortLabel
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CameraVideoQualityTrigger(
@@ -66,7 +65,7 @@ private fun Preview() {
     CameraVideoQualityTrigger(
         quality = CameraVideoQuality.FullHd,
         isEnabled = true,
-        contentDescription = stringResource(Res.string.video_quality),
+        contentDescription = stringResource(AppString.video_quality),
         onClick = {},
     )
 }

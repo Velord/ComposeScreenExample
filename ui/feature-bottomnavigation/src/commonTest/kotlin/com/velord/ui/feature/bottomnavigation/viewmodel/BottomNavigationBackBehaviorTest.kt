@@ -15,7 +15,7 @@ class BottomNavigationBackBehaviorTest {
     )
     private val rootBehaviorWithGrant = mapOf(
         BottomNavigationItem.Camera to BottomNavigationBackBehavior.ReturnToDefaultTab,
-        BottomNavigationItem.Demo to BottomNavigationBackBehavior.DelegateToNavigator,
+        BottomNavigationItem.Demo to BottomNavigationBackBehavior.ConfirmExit,
         BottomNavigationItem.Setting to BottomNavigationBackBehavior.ConfirmExit,
     )
 

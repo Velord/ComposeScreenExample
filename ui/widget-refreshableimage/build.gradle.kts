@@ -8,8 +8,13 @@ android {
 }
 
 dependencies {
-    // Coil
+    // Module Core
+    implementation(projects.core.coreResource)
+    // Module Domain
+    implementation(projects.domain.usecaseSetting)
+    // Template
     implementation(libs.bundles.coil)
-    // AndroidX
+    // Other
+    implementation(libs.koin.core)
     implementation(libs.androidx.core.ktx)
 }

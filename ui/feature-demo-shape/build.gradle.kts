@@ -12,6 +12,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             // Module Core
+            implementation(projects.core.coreResource)
             implementation(projects.core.coreUi)
             // Compose
             implementation(libs.compose.foundation)

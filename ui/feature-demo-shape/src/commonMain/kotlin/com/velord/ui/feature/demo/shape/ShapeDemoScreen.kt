@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.demo.shape.component.PervasiveArcFromBottomShapeDemo
@@ -30,11 +32,11 @@ private fun Content(onBackClick: () -> Unit) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
             .statusBarsPadding()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
     ) {
         PlatformScreenHeader(
-            title = "Shape Demo",
-            onBackClick = onBackClick
+            title = stringResource(AppString.shape_demo),
+            onBackClick = onBackClick,
         )
         TicketShapeDemo()
         PervasiveArcFromBottomShapeDemo()

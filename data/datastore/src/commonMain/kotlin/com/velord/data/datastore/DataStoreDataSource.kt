@@ -3,6 +3,7 @@ package com.velord.data.datastore
 import com.velord.data.datastore.appSetting.AppSettingDataStore
 import com.velord.model.movie.MovieFilterOption
 import com.velord.model.setting.AppSetting
+import com.velord.model.setting.LanguagePreference
 import com.velord.model.setting.ThemeConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -14,6 +15,7 @@ interface DataStoreDataSource {
     suspend fun setThemeConfig(theme: ThemeConfig)
     fun getAppSettingFlow(): Flow<AppSetting>
     suspend fun setMovieFilters(filters: List<MovieFilterOption>)
+    suspend fun setLanguagePreference(language: LanguagePreference)
 }
 
 @Single(binds = [DataStoreDataSource::class])
@@ -46,6 +48,12 @@ class DataStoreDataSourceImpl(
     override suspend fun setMovieFilters(filters: List<MovieFilterOption>) {
         appSetting.updateData {
             it.copy(movieFilters = filters)
+        }
+    }
+
+    override suspend fun setLanguagePreference(language: LanguagePreference) {
+        appSetting.updateData {
+            it.copy(language = language)
         }
     }
 }

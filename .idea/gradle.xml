@@ -34,6 +34,7 @@
             <option value="$PROJECT_DIR$/data/datastore" />
             <option value="$PROJECT_DIR$/data/db" />
             <option value="$PROJECT_DIR$/data/gateway" />
+            <option value="$PROJECT_DIR$/data/localization" />
             <option value="$PROJECT_DIR$/data/os" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/usecase-camera" />

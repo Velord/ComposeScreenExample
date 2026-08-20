@@ -23,6 +23,7 @@ android {
 
     defaultConfig {
         applicationId = "com.velord.composescreenexample"
+        manifestPlaceholders["appName"] = "@string/app_name"
 
         targetSdk = libs.versions.targetApi.get().toInt()
 
@@ -62,8 +63,9 @@ android {
         }
         create(BuildEnvironment.Qa.value) {
             dimension = "environment"
+            manifestPlaceholders["appName"] = "ComposeScreenExample QA"
             manifestPlaceholders["enableCrashReporting"] = true
-            applicationIdSuffix = ".${BuildEnvironment.Qa.value}"
+            applicationIdSuffix = ".${BuildEnvironment.Develop.value}"
         }
 
         create(BuildEnvironment.Stage.value) {
@@ -84,6 +86,7 @@ android {
 }
 
 dependencies {
+    // Module Model
     implementation(projects.model)
     // Module Infrastructure
     implementation(projects.infrastructure.util)
@@ -97,6 +100,8 @@ dependencies {
     // Module Data
     implementation(projects.data.os)
     implementation(projects.data.appstate)
+    // Module Domain
+    implementation(projects.domain.usecaseSetting)
     // Module UI
     implementation(projects.ui.sharedviewmodel)
     // Module UI Feature

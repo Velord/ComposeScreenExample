@@ -30,6 +30,8 @@ kotlin {
                 implementation(projects.core.coreResource)
                 // Module Data
                 implementation(projects.data.appstate)
+                // Module Domain
+                implementation(projects.domain.usecaseSetting)
                 // Module UI
                 implementation(projects.ui.sharedviewmodel)
                 // Module UI Feature

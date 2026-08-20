@@ -6,20 +6,23 @@ import com.velord.infrastructure.navigation.compose.vanilla.GraphVanilla
 import com.velord.infrastructure.navigation.compose.vanilla.navigator.SupremeNavigatorVanilla
 import com.velord.ui.feature.bottomnavigation.screen.compose.BottomNavigationScreen
 import com.velord.ui.feature.setting.SettingScreen
+import com.velord.ui.sharedviewmodel.LanguageVM
 import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.compose.viewmodel.koinViewModel
 
-internal fun NavGraphBuilder.setupMainGraphVanilla(navigator: SupremeNavigatorVanilla)  {
+internal fun NavGraphBuilder.setupMainGraphVanilla(navigator: SupremeNavigatorVanilla) {
     composable<GraphVanilla.Main.BottomNavigationDestinationVanilla> {
         BottomNavigationScreen(navigator = navigator)
     }
 
     composable<GraphVanilla.Main.SettingDestinationVanilla> {
-        val viewModel = koinViewModel<ThemeVM>()
+        val themeViewModel = koinViewModel<ThemeVM>()
+        val languageViewModel = koinViewModel<LanguageVM>()
         SettingScreen(
-            viewModel = viewModel,
+            themeViewModel = themeViewModel,
+            languageViewModel = languageViewModel,
             onGraphCompleted = {
-               // Handle back navigation if needed
+                // Handle back navigation if needed
             },
             onBackClick = navigator::goBack,
         )

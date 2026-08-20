@@ -1,0 +1,146 @@
+name: Localization Validation
+
+on:
+  push:
+    branches:
+      - feature/firebase-remote-localization
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
+
+concurrency:
+  group: localization-validation-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Verify localization architecture
+        shell: bash
+        run: |
+          if grep -R --line-number --include='*.kt' 'Res\.string' app core data domain infrastructure model ui; then
+            echo 'Found remaining Compose Res.string usage.'
+            exit 1
+          fi
+          if grep -R --line-number --include='*.kt' 'org\.jetbrains\.compose\.resources\.stringResource' app core data domain infrastructure model ui; then
+            echo 'Found remaining JetBrains Compose stringResource import.'
+            exit 1
+          fi
+          if grep -R --line-number --include='*.kt' 'com\.google\.firebase' data/localization; then
+            echo 'Localization data code must use Firebase-KMP-Kit.'
+            exit 1
+          fi
+          if ! grep -R --line-number --include='*.kt' 'com\.firebasekit\.remoteconfig' data/localization/src/commonMain; then
+            echo 'Firebase-KMP-Kit Remote Config must be used from commonMain.'
+            exit 1
+          fi
+          if grep -R --line-number --include='*.kt' 'dev\.gitlive\.firebase' data/localization; then
+            echo 'Found obsolete GitLive localization integration.'
+            exit 1
+          fi
+          if [ -d data/firebase ]; then
+            echo 'Obsolete data/firebase module still exists.'
+            exit 1
+          fi
+          if find data/localization/src -type f -name '*.kt' | grep -v '/com/velord/data/localization/' | grep -q .; then
+            echo 'Found Kotlin source in data/localization outside com.velord.data.localization.'
+            find data/localization/src -type f -name '*.kt' | grep -v '/com/velord/data/localization/'
+            exit 1
+          fi
+          if find core/core-resource/src/androidMain/res -path '*/values-*/strings.xml' | grep -q .; then
+            echo 'Translated Android strings.xml files are forbidden; localization.json is canonical.'
+            find core/core-resource/src/androidMain/res -path '*/values-*/strings.xml'
+            exit 1
+          fi
+
+      - name: Validate localization publishing script
+        shell: pwsh
+        run: ./scripts/firebase/publish-localization.ps1 -ValidateOnly
+
+      - name: Verify QA reuses Develop Firebase client
+        shell: bash
+        run: |
+          trap 'rm -f app/android/google-services.json' EXIT
+          cat > app/android/google-services.json <<'JSON'
+          {
+            "project_info": {
+              "project_number": "1",
+              "project_id": "firebase-mapping-test"
+            },
+            "client": [
+              {
+                "client_info": {
+                  "mobilesdk_app_id": "1:1:android:develop-test",
+                  "android_client_info": {
+                    "package_name": "com.velord.composescreenexample.develop"
+                  }
+                },
+                "api_key": [
+                  {
+                    "current_key": "test-api-key"
+                  }
+                ]
+              }
+            ]
+          }
+          JSON
+          ./gradlew :app:android:processQaDebugGoogleServices --stacktrace
+          if [ -e app/android/src/qa/google-services.json ]; then
+            echo 'QA must not generate or rewrite a Firebase client configuration.'
+            exit 1
+          fi
+
+      - name: Compile and test localization
+        run: >-
+          ./gradlew
+          :data:localization:desktopTest
+          :infrastructure:di:desktopTest
+          :app:desktop:compileKotlinDesktop
+          :app:android:processDevelopDebugMainManifest
+          :app:android:compileDevelopDebugKotlin
+          -x :app:android:processDevelopDebugGoogleServices
+          --stacktrace
+
+      - name: Compile QA
+        run: >-
+          ./gradlew
+          :app:android:compileQaDebugKotlin
+          -x :app:android:processQaDebugGoogleServices
+          --stacktrace
+
+      - name: Compile Stage
+        run: >-
+          ./gradlew
+          :app:android:compileStageDebugKotlin
+          -x :app:android:processStageDebugGoogleServices
+          --stacktrace
+
+      - name: Compile Production
+        run: >-
+          ./gradlew
+          :app:android:compileProductionDebugKotlin
+          -x :app:android:processProductionDebugGoogleServices
+          --stacktrace
+
+      - name: Run project quality checks
+        run: >-
+          ./gradlew
+          :infrastructure:konsist:test
+          detekt
+          --stacktrace

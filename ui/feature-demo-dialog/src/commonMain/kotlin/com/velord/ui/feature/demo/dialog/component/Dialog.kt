@@ -7,13 +7,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.velord.core.resource.Res
-import com.velord.core.resource.app_name
-import com.velord.core.resource.cancel
-import com.velord.core.resource.confirm
-import com.velord.core.resource.ok
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun OneButtonDialog(
@@ -25,7 +21,7 @@ fun OneButtonDialog(
     color: DialogColors = DialogDefaults.colors(),
     style: DialogTextStyles = DialogDefaults.textStyles(),
     message: String? = null,
-    positiveText: String = stringResource(Res.string.ok),
+    positiveText: String = stringResource(AppString.ok),
     content: @Composable () -> Unit = {
         Content(
             title = title,
@@ -59,8 +55,8 @@ fun TwoButtonDialog(
     color: DialogColors = DialogDefaults.colors(),
     style: DialogTextStyles = DialogDefaults.textStyles(),
     message: String? = null,
-    positiveText: String = stringResource(Res.string.confirm),
-    negativeText: String = stringResource(Res.string.cancel),
+    positiveText: String = stringResource(AppString.confirm),
+    negativeText: String = stringResource(AppString.cancel),
     content: @Composable () -> Unit = {
         Content(
             title = title,
@@ -123,8 +119,8 @@ private fun WithTwoButtonsPreview() {
     MaterialTheme {
         TwoButtonDialog(
             isVisibleState = remember { mutableStateOf(true) },
-            title = stringResource(Res.string.app_name),
-            message = stringResource(Res.string.app_name),
+            title = stringResource(AppString.app_name),
+            message = stringResource(AppString.app_name),
             action = DialogActions.TwoButton {}
         )
     }
@@ -136,8 +132,8 @@ private fun OneButtonPreview() {
     MaterialTheme {
         OneButtonDialog(
             isVisibleState = remember { mutableStateOf(true) },
-            title = stringResource(Res.string.app_name),
-            message = stringResource(Res.string.app_name),
+            title = stringResource(AppString.app_name),
+            message = stringResource(AppString.app_name),
             action = DialogActions.OneButton {}
         )
     }

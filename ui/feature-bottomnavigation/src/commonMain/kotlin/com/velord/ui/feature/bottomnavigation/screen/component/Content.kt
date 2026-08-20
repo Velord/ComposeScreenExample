@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.component.AnimatableLabeledIcon
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun Content(

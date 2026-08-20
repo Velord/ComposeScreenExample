@@ -9,6 +9,7 @@ import com.velord.ui.feature.movie.viewModel.AllMovieVM
 import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
 import com.velord.ui.feature.movie.viewModel.MovieVM
 import com.velord.ui.feature.splash.SplashVM
+import com.velord.ui.sharedviewmodel.LanguageVM
 import com.velord.ui.sharedviewmodel.MainVM
 import com.velord.ui.sharedviewmodel.ThemeVM
 import org.koin.core.module.dsl.viewModel
@@ -17,6 +18,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     // VieModel that can not be \or have not to be instantiated here has their own module DI
     viewModel { ThemeVM(get(), get(), get(), get()) }
+    viewModel { LanguageVM(get(), get()) }
     viewModel { SplashVM() }
     viewModel { DemoVM(get(), get()) }
     viewModel { FlowSummatorVM() }
