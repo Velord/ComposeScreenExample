@@ -6,7 +6,7 @@ targetApi = "37"
 buildTools = "36.0.0"
 buildkonfig = "0.22.0"
 gradle = "9.3.1"
-jvmTarget = "24"
+jvmTarget = "21"
 jetifier = "1.0.0-beta10"
 # DI
 dagger = "2.60.1"

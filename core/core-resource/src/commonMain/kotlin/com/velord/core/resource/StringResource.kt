@@ -15,7 +15,8 @@ fun stringResource(
     resource: AppStringResource,
     vararg formatArgs: Any,
 ): String {
-    val localization = localizationForStringResource() ?: error("LocalizationState is not provided")
+    // ?: in case of Preview
+    val localization = localizationForStringResource() ?: return resource.key
 
     return getString(
         localization = localization,
@@ -30,7 +31,8 @@ fun stringResource(
     language: LanguageCode,
     vararg formatArgs: Any,
 ): String {
-    val localization = localizationForStringResource() ?: error("LocalizationState is not provided")
+    // ?: in case of Preview
+    val localization = localizationForStringResource() ?: return resource.key
 
     return getString(
         localization = localization,
