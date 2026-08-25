@@ -8,15 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
-import com.velord.core.resource.Res
-import com.velord.core.resource.press_again_to_exit
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.multiplebackstackapplier.utils.compose.SnackBarOnBackPressHandler
 import com.velord.ui.feature.bottomnavigation.navigation.BottomNavigationItem
 import com.velord.ui.feature.bottomnavigation.screen.component.BottomBar
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackUiAction
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationJetpackVM
-import org.jetbrains.compose.resources.stringResource
 
 private val log = Logger.withTag(TAG)
 
@@ -34,7 +33,7 @@ internal fun BottomNavigationJetpackScreen(viewModel: BottomNavigationJetpackVM)
 
     log.d { "BottomNavScreen: ${uiState.value.backHandlingState}" }
     if (uiState.value.backHandlingState.isEnabled) {
-        val str = stringResource(Res.string.press_again_to_exit)
+        val str = stringResource(AppString.press_again_to_exit)
         SnackBarOnBackPressHandler(
             message = str,
             modifier = Modifier.padding(horizontal = 8.dp),

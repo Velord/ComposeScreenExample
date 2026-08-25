@@ -24,6 +24,7 @@ kotlin {
             implementation(projects.data.appstate)
             implementation(projects.data.gateway)
             implementation(projects.data.db)
+            implementation(projects.data.localization)
             implementation(projects.data.os)
             // Module UI
             implementation(projects.ui.sharedviewmodel)

@@ -5,6 +5,7 @@ import com.velord.data.gateway.camera.CameraSessionGateway
 import com.velord.data.gateway.camera.CameraStateGateway
 import com.velord.data.gateway.event.AppEventGateway
 import com.velord.data.gateway.file.FileGateway
+import com.velord.data.gateway.localization.LocalizationGateway
 import com.velord.data.gateway.movie.MovieByGateway
 import com.velord.data.gateway.movie.MovieFavoriteGateway
 import com.velord.data.gateway.movie.MovieFilterGateway
@@ -38,7 +39,11 @@ import com.velord.usecase.movie.SetMovieFilterOptionUC
 import com.velord.usecase.movie.SetMovieSortOptionUC
 import com.velord.usecase.movie.ShareMovieUC
 import com.velord.usecase.movie.UpdateMovieLikeUC
+import com.velord.usecase.setting.GetLanguagePreferenceUC
+import com.velord.usecase.setting.GetLocalizationStateUC
 import com.velord.usecase.setting.GetThemeConfigUC
+import com.velord.usecase.setting.InitializeLocalizationUC
+import com.velord.usecase.setting.SetLanguagePreferenceUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDarkThemeConfigUC
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
@@ -68,6 +73,18 @@ val useCaseModule = module {
     }
     single<SwitchDynamicColorThemeConfigUC> {
         SwitchDynamicColorThemeConfigUC(get<SwitchThemeConfigGateway>()::switchDynamicColor)
+    }
+    single<InitializeLocalizationUC> {
+        InitializeLocalizationUC(get<LocalizationGateway>()::initialize)
+    }
+    single<GetLocalizationStateUC> {
+        GetLocalizationStateUC(get<LocalizationGateway>()::getStateFlow)
+    }
+    single<GetLanguagePreferenceUC> {
+        GetLanguagePreferenceUC(get<LocalizationGateway>()::getLanguagePreferenceFlow)
+    }
+    single<SetLanguagePreferenceUC> {
+        SetLanguagePreferenceUC(get<LocalizationGateway>()::setLanguagePreference)
     }
     single<GetAllMovieUC> {
         GetAllMovieUC(get<MovieByGateway>()::getBySortAndFilter)

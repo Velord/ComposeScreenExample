@@ -7,10 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.velord.core.resource.Res
-import com.velord.core.resource.record_audio_on
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CameraAudioLabel(label: String) {
@@ -27,5 +26,5 @@ internal fun CameraAudioLabel(label: String) {
 @PreviewCombined
 @Composable
 private fun Preview() {
-    CameraAudioLabel(label = stringResource(Res.string.record_audio_on))
+    CameraAudioLabel(label = stringResource(AppString.record_audio_on))
 }

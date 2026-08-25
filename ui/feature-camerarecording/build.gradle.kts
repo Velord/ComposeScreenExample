@@ -21,6 +21,7 @@ kotlin {
             // Module Domain
             implementation(projects.domain.usecaseCamera)
             implementation(projects.domain.usecaseEvent)
+            implementation(projects.domain.usecaseSetting)
             // Module UI
             implementation(projects.ui.sharedviewmodel)
             // Kotlin

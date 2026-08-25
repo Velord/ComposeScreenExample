@@ -6,7 +6,7 @@ targetApi = "37"
 buildTools = "36.0.0"
 buildkonfig = "0.22.0"
 gradle = "9.3.1"
-jvmTarget = "24"
+jvmTarget = "21"
 jetifier = "1.0.0-beta10"
 # DI
 dagger = "2.60.1"
@@ -18,6 +18,7 @@ koinKsp = "2.3.2-Beta1"
 # Google Firebase
 googleFirebaseBom = "34.16.0"
 googleFirebaseCrashlyticPlugin = "3.0.7"
+firebaseKit = "0.4.0"
 # Google Other
 googleGuava = "33.6.0-android"
 googleKsp = "2.3.4"
@@ -621,6 +622,9 @@ google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref
 google-firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
 google-firebase-crashlytic = { module = "com.google.firebase:firebase-crashlytics" }
 google-firebase-analytic = { module = "com.google.firebase:firebase-analytics" }
+google-firebase-config = { module = "com.google.firebase:firebase-config" }
+firebase-kit-remote-config = { module = "io.github.razotron.firebase-kit:remote-config", version.ref = "firebaseKit" }
+firebase-kit-crashlytics = { module = "io.github.razotron.firebase-kit:crashlytics", version.ref = "firebaseKit" }
 ## Google Other
 google-guava = { module = "com.google.guava:guava", version.ref = "googleGuava" }
 google-modernstorage = { module = "com.google.modernstorage:modernstorage-photopicker", version.ref = "googleModernStorage" }

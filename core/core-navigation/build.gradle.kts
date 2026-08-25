@@ -11,6 +11,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Module Core
+            implementation(projects.core.coreResource)
             // Kotlin
             implementation(libs.kotlin.coroutine.core)
             implementation(libs.kotlin.serialization.json)

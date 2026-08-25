@@ -2,12 +2,24 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.BOOLEAN
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import com.velord.buildlogic.model.BuildEnvironment
 import com.velord.buildlogic.model.BuildType
+import java.util.Properties
 
 private val baseUrl = "https://google.com"
 private val buildConfigPackage = "com.velord.infrastructure.config"
 private val buildConfigObject = "ProjectBuildConfig"
 private val debugNavigationLib = "Nav3"
 private val releaseNavigationLib = "Nav3"
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
+
+val firebaseApiKey: String = localProperties.getProperty("firebase.apiKey").orEmpty()
+val firebaseProjectId: String = localProperties.getProperty("firebase.projectId").orEmpty()
+val firebaseAppId: String = localProperties.getProperty("firebase.appId").orEmpty()
 
 plugins {
     alias(libs.plugins.convention.build.config)
@@ -27,6 +39,9 @@ buildkonfig {
         buildConfigField(BOOLEAN, "isLoggingEnabled", "true")
         buildConfigField(STRING, "navigationLib", debugNavigationLib)
         buildConfigField(STRING, "baseUrl", baseUrl)
+        buildConfigField(STRING, "firebaseApiKey", firebaseApiKey)
+        buildConfigField(STRING, "firebaseProjectId", firebaseProjectId)
+        buildConfigField(STRING, "firebaseAppId", firebaseAppId)
     }
 
     BuildEnvironment.entries.forEach { environment ->
@@ -35,6 +50,9 @@ buildkonfig {
             buildConfigField(BOOLEAN, "isLoggingEnabled", "true")
             buildConfigField(STRING, "navigationLib", debugNavigationLib)
             buildConfigField(STRING, "baseUrl", baseUrl)
+            buildConfigField(STRING, "firebaseApiKey", firebaseApiKey)
+            buildConfigField(STRING, "firebaseProjectId", firebaseProjectId)
+            buildConfigField(STRING, "firebaseAppId", firebaseAppId)
         }
     }
 
@@ -44,6 +62,9 @@ buildkonfig {
             buildConfigField(BOOLEAN, "isLoggingEnabled", "false")
             buildConfigField(STRING, "navigationLib", releaseNavigationLib)
             buildConfigField(STRING, "baseUrl", baseUrl)
+            buildConfigField(STRING, "firebaseApiKey", firebaseApiKey)
+            buildConfigField(STRING, "firebaseProjectId", firebaseProjectId)
+            buildConfigField(STRING, "firebaseAppId", firebaseAppId)
         }
     }
 }

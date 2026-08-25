@@ -29,7 +29,7 @@ fun BottomNavigationScreen(navigator: BottomNavigator) {
         state = uiState,
         backBehavior = backBehavior,
         onBackClick = {
-            viewModel.onAction(BottomNavigationUiAction.BackClick)
+            viewModel.onAction(BottomNavigationUiAction.BackRequest)
         },
         onBackDoubleClick = {
             viewModel.onAction(BottomNavigationUiAction.BackDoubleClick)

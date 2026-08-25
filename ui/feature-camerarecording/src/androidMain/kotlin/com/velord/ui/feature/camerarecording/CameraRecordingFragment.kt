@@ -110,6 +110,7 @@ class CameraRecordingFragment : Fragment() {
 
     private fun checkRecordVideoPermission() {
         checkRecordVideoPermission(
+            localization = viewModel.localizationStateFlow.value,
             actionLauncher = requestRecordVideoPermissionLauncher,
             onGranted = {
                 val action = CameraRecordingUiAction.UpdatePermissionGrantState(

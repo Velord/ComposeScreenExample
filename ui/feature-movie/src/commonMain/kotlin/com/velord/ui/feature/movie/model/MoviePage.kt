@@ -4,21 +4,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.velord.core.resource.Res
-import com.velord.core.resource.all
-import com.velord.core.resource.favorite
-import org.jetbrains.compose.resources.StringResource
+import com.velord.core.resource.AppString
+import com.velord.core.resource.AppStringResource
 
 enum class MoviePage(
-    val titleRes: StringResource,
+    val titleRes: AppStringResource,
     val imageRes: ImageVector
 ) {
     All(
-        titleRes = Res.string.all,
+        titleRes = AppString.all,
         imageRes = Icons.Rounded.List
     ),
     Favorite(
-        titleRes = Res.string.favorite,
+        titleRes = AppString.favorite,
         imageRes = Icons.Rounded.Favorite
     )
 }

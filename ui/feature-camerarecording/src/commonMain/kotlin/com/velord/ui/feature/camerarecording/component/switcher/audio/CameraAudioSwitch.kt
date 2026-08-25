@@ -18,10 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.velord.core.resource.Res
-import com.velord.core.resource.record_audio_on
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.preview.PreviewCombined
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CameraAudioSwitch(
@@ -74,7 +73,7 @@ private fun Preview() {
     CameraAudioSwitch(
         isEnabled = true,
         isRecording = false,
-        contentDescription = stringResource(Res.string.record_audio_on),
+        contentDescription = stringResource(AppString.record_audio_on),
         onClick = {},
     )
 }

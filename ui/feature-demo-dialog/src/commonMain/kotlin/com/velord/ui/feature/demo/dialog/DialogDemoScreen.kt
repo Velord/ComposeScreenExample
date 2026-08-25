@@ -20,10 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.velord.core.resource.Res
-import com.velord.core.resource.dialog_demo
-import com.velord.core.resource.show_one_button_dialog
-import com.velord.core.resource.show_two_buttons_dialog
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.ui.feature.demo.dialog.component.DialogActions
@@ -31,7 +29,6 @@ import com.velord.ui.feature.demo.dialog.component.DialogAnimations
 import com.velord.ui.feature.demo.dialog.component.DialogPredefinedAnimation
 import com.velord.ui.feature.demo.dialog.component.OneButtonDialog
 import com.velord.ui.feature.demo.dialog.component.TwoButtonDialog
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DialogDemoScreen(
@@ -81,15 +78,15 @@ private fun Content(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         PlatformScreenHeader(
-            title = stringResource(Res.string.dialog_demo),
+            title = stringResource(AppString.dialog_demo),
             onBackClick = onBackClick
         )
         OpenButton(
-            text = stringResource(Res.string.show_two_buttons_dialog),
+            text = stringResource(AppString.show_two_buttons_dialog),
             onClick = { onAction(DialogDemoUiAction.OpenTwoButtonDialogClick) }
         )
         OpenButton(
-            text = stringResource(Res.string.show_one_button_dialog),
+            text = stringResource(AppString.show_one_button_dialog),
             onClick = { onAction(DialogDemoUiAction.OpenOneButtonDialogClick) },
         )
     }

@@ -4,9 +4,9 @@ object AppVersion {
     // When app incompatible with previous version change this value
     const val globalVersion = 1
     // When you create huge feature(or many) release change this value
-    const val majorVersion = 3
+    const val majorVersion = 4
     // When you create feature release change this value
-    const val minorVersion = 1
+    const val minorVersion = 0
     // When you create fix change this value
     const val fixVersion = 0
     // When you create quick fix from master branch change this value
@@ -28,12 +28,9 @@ object AppVersion {
                 buildNumber
 
     // Don't use number greater than maxSafeVersionCode
-    val isLessThanMax: Boolean
-        get() = calculatedVersionNumber < maxSafeVersionCode
+    val isLessThanMax: Boolean get() = calculatedVersionNumber < maxSafeVersionCode
 
-    val versionCode: Int
-        get() = if (isLessThanMax) calculatedVersionNumber else 0
+    val versionCode: Int get() = if (isLessThanMax) calculatedVersionNumber else 0
 
-    val versionName: String
-        get() = "$globalVersion.$majorVersion.$minorVersion"
+    val versionName: String get() = "$globalVersion.$majorVersion.$minorVersion"
 }

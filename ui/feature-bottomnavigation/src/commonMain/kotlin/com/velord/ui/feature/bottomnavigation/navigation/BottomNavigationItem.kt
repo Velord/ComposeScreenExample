@@ -5,11 +5,8 @@ import androidx.compose.material.icons.outlined.Camera
 import androidx.compose.material.icons.outlined.Hexagon
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.velord.core.resource.Res
-import com.velord.core.resource.camera
-import com.velord.core.resource.demo
-import com.velord.core.resource.settings
-import org.jetbrains.compose.resources.StringResource
+import com.velord.core.resource.AppString
+import com.velord.core.resource.AppStringResource
 
 enum class BottomNavigationItem {
     Camera,
@@ -26,9 +23,9 @@ enum class BottomNavigationItem {
     val isDemo: Boolean get() = this == Demo
     val isSetting: Boolean get() = this == Setting
 
-    val label: StringResource get() = when (this) {
-        Camera -> Res.string.camera
-        Demo -> Res.string.demo
-        Setting -> Res.string.settings
+    val label: AppStringResource get() = when (this) {
+        Camera -> AppString.camera
+        Demo -> AppString.demo
+        Setting -> AppString.settings
     }
 }

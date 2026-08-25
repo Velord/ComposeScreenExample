@@ -17,19 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.velord.core.resource.Res
-import com.velord.core.resource.demo
-import com.velord.core.resource.open_dialog
-import com.velord.core.resource.open_flow_summator
-import com.velord.core.resource.open_hint_phone_number
-import com.velord.core.resource.open_modifier_demo
-import com.velord.core.resource.open_morph_demo
-import com.velord.core.resource.open_movie
-import com.velord.core.resource.open_shape_demo
+import com.velord.core.resource.AppString
+import com.velord.core.resource.stringResource
 import com.velord.core.ui.compose.component.PlatformScreenHeader
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.ObserveSharedFlow
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DemoScreen(
@@ -69,36 +61,36 @@ private fun Content(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         PlatformScreenHeader(
-            title = stringResource(Res.string.demo),
+            title = stringResource(AppString.demo),
             onBackClick = onBackClick,
         )
 
         OpenButton(
-            text = stringResource(Res.string.open_shape_demo),
+            text = stringResource(AppString.open_shape_demo),
             onClick = { onAction(DemoUiAction.OpenShapeClick) },
         )
         OpenButton(
-            text = stringResource(Res.string.open_modifier_demo),
+            text = stringResource(AppString.open_modifier_demo),
             onClick = { onAction(DemoUiAction.OpenModifierClick) },
         )
         OpenButton(
-            text = stringResource(Res.string.open_flow_summator),
+            text = stringResource(AppString.open_flow_summator),
             onClick = { onAction(DemoUiAction.OpenSummatorClick) },
         )
         OpenButton(
-            text = stringResource(Res.string.open_morph_demo),
+            text = stringResource(AppString.open_morph_demo),
             onClick = { onAction(DemoUiAction.OpenMorphClick) },
         )
         OpenButton(
-            text = stringResource(Res.string.open_hint_phone_number),
+            text = stringResource(AppString.open_hint_phone_number),
             onClick = { onAction(DemoUiAction.OpenHintPhoneNumberClick) },
         )
         OpenButton(
-            text = stringResource(Res.string.open_movie),
+            text = stringResource(AppString.open_movie),
             onClick = { onAction(DemoUiAction.OpenMovieClick) },
         )
         OpenButton(
-            text = stringResource(Res.string.open_dialog),
+            text = stringResource(AppString.open_dialog),
             onClick = { onAction(DemoUiAction.OpenDialogClick) },
         )
     }
