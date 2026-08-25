@@ -1,11 +1,15 @@
 package com.velord.ui.sharedviewmodel
 
+import com.velord.model.setting.AppShapeStyle
 import com.velord.model.setting.AppThemeConfig
+import com.velord.model.setting.SpecialTheme
 import com.velord.model.setting.ThemeConfig
 import com.velord.usecase.setting.GetThemeConfigUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDarkThemeConfigUC
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
+import com.velord.usecase.setting.SwitchShapeStyleThemeConfigUC
+import com.velord.usecase.setting.SwitchSpecialThemeConfigUC
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -26,6 +30,8 @@ sealed interface ThemeUiAction {
     data object AbideToOsThemeSwitch : ThemeUiAction
     data object DynamicThemeSwitch : ThemeUiAction
     data object DarkThemeSwitch : ThemeUiAction
+    data class SpecialThemeSwitch(val theme: SpecialTheme) : ThemeUiAction
+    data class ShapeStyleSwitch(val style: AppShapeStyle) : ThemeUiAction
 }
 
 class ThemeVM(
@@ -33,6 +39,8 @@ class ThemeVM(
     private val switchDynamicColorThemeConfigUC: SwitchDynamicColorThemeConfigUC,
     private val switchAbideToOsThemeConfigUC: SwitchAbideToOsThemeConfigUC,
     private val switchDarkThemeConfigUC: SwitchDarkThemeConfigUC,
+    private val switchSpecialThemeConfigUC: SwitchSpecialThemeConfigUC,
+    private val switchShapeStyleThemeConfigUC: SwitchShapeStyleThemeConfigUC,
 ) : CoroutineScopeVM() {
 
     val uiStateFlow = MutableStateFlow(ThemeUiState.DEFAULT)
@@ -48,10 +56,9 @@ class ThemeVM(
         }
     }
 
-    private fun onAbideToOsThemeSwitch() = launch {
-        uiStateFlow.value.appThemeConfig?.let {
-            switchAbideToOsThemeConfigUC.invoke(it.config)
-        }
+    private fun onAbideToOsThemeSwitch() {
+        val config = uiStateFlow.value.appThemeConfig?.config ?: return
+        launch { switchAbideToOsThemeConfigUC.invoke(config) }
     }
 
     private fun onDynamicThemeSwitch() {
@@ -64,6 +71,17 @@ class ThemeVM(
         switchConfig {
             switchDarkThemeConfigUC.invoke(it)
         }
+    }
+
+    private fun onSpecialThemeSwitch(theme: SpecialTheme) {
+        switchConfig {
+            switchSpecialThemeConfigUC.invoke(it, theme)
+        }
+    }
+
+    private fun onShapeStyleSwitch(style: AppShapeStyle) {
+        val config = uiStateFlow.value.appThemeConfig?.config ?: return
+        launch { switchShapeStyleThemeConfigUC.invoke(config, style) }
     }
 
     private fun switchConfig(f: suspend (ThemeConfig) -> Unit) {
@@ -90,6 +108,8 @@ class ThemeVM(
                     is ThemeUiAction.AbideToOsThemeSwitch -> onAbideToOsThemeSwitch()
                     is ThemeUiAction.DynamicThemeSwitch -> onDynamicThemeSwitch()
                     is ThemeUiAction.DarkThemeSwitch -> onDarkThemeSwitch()
+                    is ThemeUiAction.SpecialThemeSwitch -> onSpecialThemeSwitch(it.theme)
+                    is ThemeUiAction.ShapeStyleSwitch -> onShapeStyleSwitch(it.style)
                 }
             }
         }

@@ -14,6 +14,7 @@ import com.velord.core.ui.compose.component.DesktopBackDispatcher
 import com.velord.core.ui.compose.component.LocalDesktopBackDispatcher
 import com.velord.core.ui.compose.component.ToastHost
 import com.velord.core.ui.theme.AppThemeHost
+import com.velord.core.ui.theme.LocalizationHost
 import com.velord.core.ui.util.ObserveSharedFlow
 import com.velord.infrastructure.di.createCommonAppModuleRoster
 import com.velord.infrastructure.navigation.NavigationHost
@@ -58,15 +59,17 @@ fun main() = application {
         }
 
         CompositionLocalProvider(LocalDesktopBackDispatcher provides dispatcher) {
-            AppThemeHost {
-                SplashScreen(viewModel = splashVM) {
-                    ToastHost(
-                        toastEventFlow = mainVM.toastConfigFlow,
-                        modifier = Modifier.fillMaxSize(),
-                        content = {
-                            NavigationHost(navigationLib = mainVM.navigationLib)
-                        },
-                    )
+            LocalizationHost {
+                AppThemeHost {
+                    SplashScreen(viewModel = splashVM) {
+                        ToastHost(
+                            toastEventFlow = mainVM.toastConfigFlow,
+                            modifier = Modifier.fillMaxSize(),
+                            content = {
+                                NavigationHost(navigationLib = mainVM.navigationLib)
+                            },
+                        )
+                    }
                 }
             }
         }

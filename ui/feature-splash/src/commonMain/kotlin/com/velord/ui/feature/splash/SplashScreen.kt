@@ -42,7 +42,6 @@ import com.velord.core.resource.ic_launcher_foreground_dark
 import com.velord.core.resource.ic_launcher_foreground_light
 import com.velord.core.ui.compose.preview.PreviewCombined
 import com.velord.core.ui.util.LocalTheme
-import com.velord.model.setting.SpecialTheme
 import org.jetbrains.compose.resources.painterResource
 
 private const val ANIMATION_TRANSITION_TO_CURRENT_THEME = 500
@@ -273,9 +272,11 @@ private fun getIconPainter(): Painter {
             Res.drawable.ic_launcher_foreground_dark
         }
     } else {
-        when (themeConfig.config.current) {
-            SpecialTheme.LIGHT -> Res.drawable.ic_launcher_foreground_light
-            SpecialTheme.DARK -> Res.drawable.ic_launcher_foreground_dark
+        // TODO: create dedicated icons for every theme
+        if (themeConfig.config.useDarkTheme) {
+            Res.drawable.ic_launcher_foreground_dark
+        } else {
+            Res.drawable.ic_launcher_foreground_light
         }
     }
 

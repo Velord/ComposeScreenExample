@@ -1,5 +1,7 @@
 package com.velord.data.gateway.setting
 
+import com.velord.model.setting.AppShapeStyle
+import com.velord.model.setting.SpecialTheme
 import com.velord.model.setting.ThemeConfig
 import org.koin.core.annotation.Single
 
@@ -16,11 +18,25 @@ class SwitchThemeConfigGateway(private val getThemeConfigGateway: GetThemeConfig
         getThemeConfigGateway.save(newConfig)
     }
 
-    suspend fun switchDarkTheme(config: ThemeConfig) {
+    suspend fun switchSpecialTheme(config: ThemeConfig, newTheme: SpecialTheme) {
         val newConfig = config.copy(
-            useDarkTheme = config.useDarkTheme.not(),
-            current = ThemeConfig.getOppositeTheme(config.current),
+            useDarkTheme = newTheme.mode.isDark(config.useDarkTheme),
+            current = newTheme,
         )
+        getThemeConfigGateway.save(newConfig)
+    }
+
+    suspend fun switchDarkTheme(config: ThemeConfig) {
+        val newUseDark = config.useDarkTheme.not()
+        val newConfig = config.copy(
+            useDarkTheme = newUseDark,
+            current = config.current.getOppositeDefaultTheme(newUseDark),
+        )
+        getThemeConfigGateway.save(newConfig)
+    }
+
+    suspend fun switchShapeStyle(config: ThemeConfig, newStyle: AppShapeStyle) {
+        val newConfig = config.copy(shapeStyle = newStyle)
         getThemeConfigGateway.save(newConfig)
     }
 }
