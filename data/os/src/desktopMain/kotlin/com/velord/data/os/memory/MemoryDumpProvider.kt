@@ -1,9 +1,8 @@
 package com.velord.data.os.memory
 
-internal actual class MemoryDumpProvider actual constructor(
-    private val logger: MemoryLogger,
-) {
-    actual fun takeDump(reason: DumpReason, trimLevel: Int?): MemoryDump {
+internal class MemoryDumpProviderImpl(private val logger: MemoryLogger): MemoryDumpProvider {
+
+    override fun takeDump(reason: DumpReason, trimLevel: Int?): MemoryDump {
         logger.log("Memory dump is not implemented for desktop target.")
         return MemoryDump(
             reason = reason,
