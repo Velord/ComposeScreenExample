@@ -7,14 +7,12 @@ import java.io.BufferedReader
 import java.io.FileReader
 import kotlin.math.roundToLong
 
-internal actual class MemoryDumpProvider actual constructor(
-    private val logger: MemoryLogger,
-) {
+internal class MemoryDumpProviderImpl(private val logger: MemoryLogger): MemoryDumpProvider {
 
     private val memoryInfo = Debug.MemoryInfo()
     private val pageSize by lazy { Os.sysconf(OsConstants._SC_PAGESIZE) }
 
-    actual fun takeDump(reason: DumpReason, trimLevel: Int?): MemoryDump {
+    override fun takeDump(reason: DumpReason, trimLevel: Int?): MemoryDump {
         Debug.getMemoryInfo(memoryInfo)
 
         val (rss, shared) = getRssAndShared()

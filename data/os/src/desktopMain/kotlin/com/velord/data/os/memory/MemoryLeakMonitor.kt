@@ -1,11 +1,8 @@
 package com.velord.data.os.memory
 
-import org.koin.core.annotation.Single
+internal class MemoryLeakMonitorImpl(private val logger: MemoryLogger): MemoryLeakMonitor {
 
-@Single
-actual class MemoryLeakMonitor actual constructor(private val logger: MemoryLogger) {
-
-    actual fun start() {
+    override fun start() {
         logger.log("Memory leak monitor is not implemented for desktop target.")
     }
 }
