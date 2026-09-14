@@ -34,8 +34,7 @@ class DataStoreDataSourceImpl(
         if (isFirstLaunch) setFirstLaunch()
 
         isFirstLaunch
-    }
-        .first()
+    }.first()
 
     override suspend fun setThemeConfig(theme: ThemeConfig) {
         appSetting.updateData {

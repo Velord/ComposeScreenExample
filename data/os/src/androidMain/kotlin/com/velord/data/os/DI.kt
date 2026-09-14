@@ -62,6 +62,7 @@ actual class MemoryLoggerPlatformModule {
 actual class SharePlatformModule {
 
     @Single
-    actual fun provideShareDataSource(scope: Scope): ShareDataSource =
-        AndroidShareDataSource(scope.get())
+    actual fun provideShareDataSource(
+        scope: Scope
+    ): ShareDataSource = AndroidShareDataSource(scope.get())
 }
