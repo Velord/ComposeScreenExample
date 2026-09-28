@@ -4,8 +4,8 @@ minApi = "26"
 targetApi = "37"
 # Build
 buildTools = "36.0.0"
-buildkonfig = "0.22.0"
-gradle = "9.3.2"
+buildkonfig = "0.23.0"
+gradle = "9.3.3"
 jvmTarget = "21"
 jetifier = "1.0.0-beta10"
 # DI
@@ -32,7 +32,7 @@ googleWalletCompose = "0.1.0-beta01"
 googleGmsAppSet = "16.1.0"
 googleGmsAuth = "22.0.0"
 googleGmsAuthApiPhone = "18.3.1"
-googleGmsBase = "18.10.1"
+googleGmsBase = "18.11.0"
 googleGmsLocation = "21.4.0"
 googleGmsMap = "20.0.0"
 googleGmsMlKit = "19.0.1"
@@ -55,7 +55,7 @@ androidInstallReferrer = "2.2"
 ## A
 androidxActivity = "1.13.0"
 androidxAds = "1.0.0-alpha05"
-androidxAnnotation = "1.10.0"
+androidxAnnotation = "1.11.0"
 androidxAppCompat = "1.8.0"
 androidxAppSearch = "1.1.0"
 androidxArchCore = "2.2.0"
@@ -82,7 +82,7 @@ androidxConstraintCompose = "1.1.2"
 androidxContentPager = "1.0.0"
 androidxCoordinatorLayout = "1.3.0"
 ## Core
-androidxCore = "1.19.0"
+androidxCore = "1.19.1"
 androidxCoreAnimation = "1.0.0"
 androidxCoreGoogleShortcuts = "1.1.0"
 androidxCorePerformance = "1.0.0"
@@ -105,11 +105,11 @@ androidxDrawerLayout = "1.2.0"
 androidxDynamicAnimation = "1.1.0"
 ## Emoji
 androidxEmoji = "1.2.0"
-androidxEmoji2 = "1.6.0"
+androidxEmoji2 = "1.7.0"
 ## E
 androidxEnterprise = "1.1.0"
 androidxExifInterface = "1.4.2"
-androidxFragment = "1.9.0"
+androidxFragment = "1.9.1"
 ## Games
 androidxGamesActivity = "4.4.2"
 androidxGamesController = "2.0.2"
@@ -132,8 +132,8 @@ androidxLifecycle = "2.11.0"
 ## M
 androidxMedia3 = "1.11.1"
 ## N
-androidxNavigation = "2.10.1"
-androidxNavigation3 = "1.1.7"
+androidxNavigation = "2.10.2"
+androidxNavigation3 = "1.2.0"
 ## AndroidX Paging
 androidxPaging = "3.5.1"
 ## P
@@ -192,8 +192,8 @@ androidxTestServices = "1.6.0"
 androidxTestUiAutomator = "2.4.0"
 ## T
 androidxTextClassifier = "1.0.0-alpha04"
-androidxTracing = "2.0.2"
-androidxTransition = "1.7.1"
+androidxTracing = "2.0.3"
+androidxTransition = "1.7.2"
 ## TV
 androidxTvFoundation = "1.0.0"
 androidxTvMaterial = "1.1.0"
@@ -214,23 +214,23 @@ androidxWearInput = "1.2.0" # For Input, Input Testing
 androidxWearOngoing = "1.1.0"
 androidxWearPhone = "1.1.1"
 androidxWearRemote = "1.2.0"
-androidxWearCompose = "1.6.2"
+androidxWearCompose = "1.7.0"
 androidxWearProtoLayout = "1.4.2"
 androidxWearTiles = "1.6.2"
 androidxWearWatchface = "1.3.0"
 ## W
-androidxWebkit = "1.17.0"
+androidxWebkit = "1.17.1"
 ## Window
 androidxWindow = "1.5.1"
 androidxWindowExtension = "1.0.0"
 ## W
-androidxWorkManager = "2.11.2"
+androidxWorkManager = "2.12.0"
 # Network
 squareRetrofit = "3.0.0"
 squareOkhttp3Interceptor = "5.5.0"
-ktor = "3.5.2"
+ktor = "3.6.0"
 # Compose
-composePlugin = "1.12.0"
+composePlugin = "1.12.1"
 composeDefault = "1.12.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeIcon = "1.7.8"
 composeAccompanist = "0.37.3"
@@ -242,17 +242,17 @@ composeHtmlIreward = "1.0.2"
 composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
-composeHaze = "1.7.3"
+composeHaze = "2.0.0"
 # Camera
 kamera = "1.2"
 # Image loader
-coil = "3.6.2"
+coil = "3.6.3"
 # Permission
 sagarCoroutinePermission = "2.0.3"
 accompanistPermission = "0.37.2"
 # Navigation
 composeDestinations = "2.3.0"
-nav3 = "1.1.1"
+nav3 = "1.1.2"
 voyager = "2.2.21-1.10.3"
 velordMultipleBackstack = "0.5.9.1"
 # Logging
@@ -270,7 +270,7 @@ turbine = "1.2.1"
 detekt = "2.0.0-alpha.6"
 dependencyGuard = "0.5.0"
 foojayResolver = "1.0.0"
-dependencyAnalysis = "3.19.1"
+dependencyAnalysis = "3.19.2"
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
