@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ComposeRuntimeFlags
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
@@ -79,8 +81,10 @@ class MainActivity : AppCompatActivity() {
         initObserving()
     }
 
+    @OptIn(ExperimentalComposeApi::class)
     context(b: ActivityMainBinding)
     private fun setContent() {
+        ComposeRuntimeFlags.isLinkBufferComposerEnabled = true
         b.apply {
             setContentView(root)
             toastOverlay.setToastOverlayWithTheme(toastEventFlow = mainVM.toastConfigFlow)
