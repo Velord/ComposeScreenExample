@@ -25,3 +25,6 @@
 -dontwarn javax.swing.Timer
 
 -keep class com.velord.navigation.** { *; }
+-assumevalues public class androidx.compose.runtime.ComposeRuntimeFlags {
+    static boolean isLinkBufferComposerEnabled return true;
+}

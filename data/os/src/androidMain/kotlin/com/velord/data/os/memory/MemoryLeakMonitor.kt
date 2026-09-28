@@ -10,17 +10,15 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import org.koin.core.annotation.Single
 import org.koin.core.context.GlobalContext
 import kotlin.time.Duration.Companion.minutes
 
-@Single
-actual class MemoryLeakMonitor actual constructor(
+internal class MemoryLeakMonitorImpl(
     private val logger: MemoryLogger,
-) : ComponentCallbacks2 {
+    private val memoryDumpProvider: MemoryDumpProvider,
+) : MemoryLeakMonitor, ComponentCallbacks2 {
 
     private val context: Context = GlobalContext.get().get<Context>().applicationContext
-    private val memoryDumpProvider = MemoryDumpProvider(logger)
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         logger.log("MemoryLeakMonitor coroutine error: ${exception.message}")
     }
@@ -28,7 +26,7 @@ actual class MemoryLeakMonitor actual constructor(
         SupervisorJob() + Dispatchers.Default + exceptionHandler,
     )
 
-    actual fun start() {
+    override fun start() {
         context.registerComponentCallbacks(this)
 
         setupIntervalLogging()

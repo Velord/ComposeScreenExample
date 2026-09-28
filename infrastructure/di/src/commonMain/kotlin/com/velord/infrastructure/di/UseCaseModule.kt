@@ -47,6 +47,8 @@ import com.velord.usecase.setting.SetLanguagePreferenceUC
 import com.velord.usecase.setting.SwitchAbideToOsThemeConfigUC
 import com.velord.usecase.setting.SwitchDarkThemeConfigUC
 import com.velord.usecase.setting.SwitchDynamicColorThemeConfigUC
+import com.velord.usecase.setting.SwitchShapeStyleThemeConfigUC
+import com.velord.usecase.setting.SwitchSpecialThemeConfigUC
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -67,6 +69,12 @@ val useCaseModule = module {
     }
     single<SwitchDarkThemeConfigUC> {
         SwitchDarkThemeConfigUC(get<SwitchThemeConfigGateway>()::switchDarkTheme)
+    }
+    single<SwitchSpecialThemeConfigUC> {
+        SwitchSpecialThemeConfigUC(get<SwitchThemeConfigGateway>()::switchSpecialTheme)
+    }
+    single<SwitchShapeStyleThemeConfigUC> {
+        SwitchShapeStyleThemeConfigUC(get<SwitchThemeConfigGateway>()::switchShapeStyle)
     }
     single<SwitchAbideToOsThemeConfigUC> {
         SwitchAbideToOsThemeConfigUC(get<SwitchThemeConfigGateway>()::switchAbideToOs)
@@ -150,3 +158,4 @@ val useCaseModule = module {
         OpenCameraVideoFolderUC(get<FileGateway>()::openDirectory)
     }
 }
+

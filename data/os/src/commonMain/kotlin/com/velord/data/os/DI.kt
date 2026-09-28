@@ -4,6 +4,8 @@ package com.velord.data.os
 
 import com.velord.data.os.camera.CameraControllerFactory
 import com.velord.data.os.file.FileDataSource
+import com.velord.data.os.memory.MemoryDumpProvider
+import com.velord.data.os.memory.MemoryLeakMonitor
 import com.velord.data.os.memory.MemoryLogger
 import com.velord.data.os.share.ShareDataSource
 import org.koin.core.annotation.ComponentScan
@@ -24,24 +26,41 @@ class OsModule
 
 @Module
 expect class CameraPlatformModule() {
+
     @Single
     fun provideCameraControllerFactory(scope: Scope): CameraControllerFactory
 }
 
 @Module
 expect class FilePlatformModule() {
+
     @Single
     fun provideFileDataSource(scope: Scope): FileDataSource
 }
 
 @Module
 expect class MemoryLoggerPlatformModule() {
+
     @Single
-    fun provideMemoryLogger(scope: Scope): MemoryLogger
+    internal fun provideMemoryLogger(scope: Scope): MemoryLogger
+
+    @Single
+    internal fun provideMemoryDumpProvider(
+        scope: Scope,
+        memoryLogger: MemoryLogger
+    ): MemoryDumpProvider
+
+    @Single
+    internal fun provideMemoryLeakMonitor(
+        scope: Scope,
+        memoryLogger: MemoryLogger,
+        memoryDumpProvider: MemoryDumpProvider,
+    ): MemoryLeakMonitor
 }
 
 @Module
 expect class SharePlatformModule() {
+
     @Single
     fun provideShareDataSource(scope: Scope): ShareDataSource
 }

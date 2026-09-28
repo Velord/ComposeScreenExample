@@ -5,7 +5,7 @@ targetApi = "37"
 # Build
 buildTools = "36.0.0"
 buildkonfig = "0.22.0"
-gradle = "9.3.1"
+gradle = "9.3.2"
 jvmTarget = "21"
 jetifier = "1.0.0-beta10"
 # DI
@@ -16,23 +16,23 @@ hiltNavigationCompose = "1.4.0"
 koinBom = "4.2.2"
 koinKsp = "2.3.2-Beta1"
 # Google Firebase
-googleFirebaseBom = "34.16.0"
-googleFirebaseCrashlyticPlugin = "3.0.7"
+googleFirebaseBom = "34.19.0"
+googleFirebaseCrashlyticPlugin = "3.0.8"
 firebaseKit = "0.4.0"
 # Google Other
-googleGuava = "33.6.0-android"
+googleGuava = "33.7.1-android"
 googleKsp = "2.3.4"
-googleMapCompose = "8.4.0"
-googleMapUtil = "5.0.0"
+googleMapCompose = "8.6.0"
+googleMapUtil = "5.2.0"
 googleModernStorage = "1.0.0-alpha06"
-googleRecaptcha = "18.9.2" # 18.8.0 requires core library desugaring to be enabled
+googleRecaptcha = "18.9.3" # 18.8.0 requires core library desugaring to be enabled
 googlePayCompose = "1.2.0"
 googleWalletCompose = "0.1.0-beta01"
 # Google GMS/Google Play Services
 googleGmsAppSet = "16.1.0"
-googleGmsAuth = "21.6.0"
+googleGmsAuth = "22.0.0"
 googleGmsAuthApiPhone = "18.3.1"
-googleGmsBase = "18.10.0"
+googleGmsBase = "18.10.1"
 googleGmsLocation = "21.4.0"
 googleGmsMap = "20.0.0"
 googleGmsMlKit = "19.0.1"
@@ -40,10 +40,10 @@ googleGmsVision = "20.1.3"
 googleGmsServicesPlugin = "4.5.0"
 googleGmsWallet = "20.0.0"
 # Kotlin
-kotlin = "2.4.10"
+kotlin = "2.4.20"
 kotlinCoroutine = "1.11.0"
 kotlinBignum = "0.3.10"
-kotlinCollectionsImmutable = "0.5.1"
+kotlinCollectionsImmutable = "0.5.2"
 kotlinDateTime = "0.8.0"
 # Kotlin Json Serialization
 kotlinJsonSerialization = "1.11.0"
@@ -56,28 +56,28 @@ androidInstallReferrer = "2.2"
 androidxActivity = "1.13.0"
 androidxAds = "1.0.0-alpha05"
 androidxAnnotation = "1.10.0"
-androidxAppCompat = "1.7.1"
+androidxAppCompat = "1.8.0"
 androidxAppSearch = "1.1.0"
 androidxArchCore = "2.2.0"
 androidxAsyncLayoutInflater = "1.1.0"
 androidxAutoFill = "1.3.0"
 ## B
-androidxBenchmark = "1.4.1"
+androidxBenchmark = "1.5.0"
 androidxBiometric = "1.1.0"
 androidxBluetooth = "1.0.0-alpha02"
 androidxBrowser = "1.10.0"
 ## Camera
-androidxCamera = "1.6.1"
+androidxCamera = "1.6.2"
 androidxCameraMedia3 = "1.0.0-alpha04"
-androidxCameraViewFinder = "1.6.1"
+androidxCameraViewFinder = "1.6.2"
 ## C
 androidxCarApp = "1.7.0"
 androidXCardView = "1.0.0"
 androidxCollection = "1.6.0"
 androidxConcurrent = "1.3.0"
 ## AndroidX Constraint
-androidxConstraint = "2.2.1"
-androidxConstraintCompose = "1.1.1"
+androidxConstraint = "2.2.2"
+androidxConstraintCompose = "1.1.2"
 ## C
 androidxContentPager = "1.0.0"
 androidxCoordinatorLayout = "1.3.0"
@@ -109,7 +109,7 @@ androidxEmoji2 = "1.6.0"
 ## E
 androidxEnterprise = "1.1.0"
 androidxExifInterface = "1.4.2"
-androidxFragment = "1.8.9"
+androidxFragment = "1.9.0"
 ## Games
 androidxGamesActivity = "4.4.2"
 androidxGamesController = "2.0.2"
@@ -118,7 +118,7 @@ androidxGamesMemoryAdvice = "2.0.1"
 androidxGamesTextInput = "4.3.1"
 androidxGamesPerformanceTuner = "2.0.0"
 ## Glance
-androidxGlance = "1.1.1"  # For Glance, AppWidgets
+androidxGlance = "1.2.0"  # For Glance, AppWidgets
 androidxGlanceWearTiles = "1.0.0-alpha07"
 ## Graphics
 androidxGraphicsCore = "1.0.4"
@@ -130,12 +130,12 @@ androidxGridlayout = "1.1.0"
 androidxLegacySupport = "1.0.0"
 androidxLifecycle = "2.11.0"
 ## M
-androidxMedia3 = "1.10.1"
+androidxMedia3 = "1.11.1"
 ## N
-androidxNavigation = "2.9.8"
-androidxNavigation3 = "1.1.4"
+androidxNavigation = "2.10.1"
+androidxNavigation3 = "1.1.7"
 ## AndroidX Paging
-androidxPaging = "3.5.0"
+androidxPaging = "3.5.1"
 ## P
 androidxPalette = "1.0.0" # There are no release notes for this artifact.
 androidxPercentLayout = "1.0.0"
@@ -158,7 +158,7 @@ androidxRecyclerViewSelection = "1.2.0"
 ## R
 androidxRemoteCallback = "1.0.0-alpha03"
 androidxResourceInspection = "1.0.1"
-androidxRoom = "2.8.4"
+androidxRoom = "2.8.5"
 ## S
 androidxSavedState = "1.5.0"
 ## Security
@@ -172,7 +172,7 @@ androidxSlice = "1.1.0-alpha02"
 androidxSliceKtx = "1.0.0-alpha08"
 ## S
 androidxSlidingPaneLayout = "1.2.0"
-androidxSqlite = "2.7.0"
+androidxSqlite = "2.7.1"
 androidxStartup = "1.2.0"
 androidxSwipeRefreshLayout = "1.2.0"
 ## T
@@ -192,8 +192,8 @@ androidxTestServices = "1.6.0"
 androidxTestUiAutomator = "2.4.0"
 ## T
 androidxTextClassifier = "1.0.0-alpha04"
-androidxTracing = "1.3.0"
-androidxTransition = "1.7.0"
+androidxTracing = "2.0.2"
+androidxTransition = "1.7.1"
 ## TV
 androidxTvFoundation = "1.0.0"
 androidxTvMaterial = "1.1.0"
@@ -215,11 +215,11 @@ androidxWearOngoing = "1.1.0"
 androidxWearPhone = "1.1.1"
 androidxWearRemote = "1.2.0"
 androidxWearCompose = "1.6.2"
-androidxWearProtoLayout = "1.4.1"
-androidxWearTiles = "1.6.1"
+androidxWearProtoLayout = "1.4.2"
+androidxWearTiles = "1.6.2"
 androidxWearWatchface = "1.3.0"
 ## W
-androidxWebkit = "1.16.0"
+androidxWebkit = "1.17.0"
 ## Window
 androidxWindow = "1.5.1"
 androidxWindowExtension = "1.0.0"
@@ -227,26 +227,26 @@ androidxWindowExtension = "1.0.0"
 androidxWorkManager = "2.11.2"
 # Network
 squareRetrofit = "3.0.0"
-squareOkhttp3Interceptor = "5.4.0"
-ktor = "3.5.1"
+squareOkhttp3Interceptor = "5.5.0"
+ktor = "3.5.2"
 # Compose
-composePlugin = "1.11.1"
-composeDefault = "1.12.0-beta02" # Foundation, Material, Animation, Ui, UiTooling, Runtime
+composePlugin = "1.12.0"
+composeDefault = "1.12.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeIcon = "1.7.8"
 composeAccompanist = "0.37.3"
 # composeCompiler = "1.5.14"
 composeMaterial3 = "1.11.0-alpha07"
-composeMaterial3Adaptive = "1.3.0-beta02"
+composeMaterial3Adaptive = "1.3.0-rc01"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
 composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
-composeHaze = "1.7.2"
+composeHaze = "1.7.3"
 # Camera
-kamera = "1.1"
+kamera = "1.2"
 # Image loader
-coil = "3.5.0"
+coil = "3.6.2"
 # Permission
 sagarCoroutinePermission = "2.0.3"
 accompanistPermission = "0.37.2"
@@ -256,7 +256,7 @@ nav3 = "1.1.1"
 voyager = "2.2.21-1.10.3"
 velordMultipleBackstack = "0.5.9.1"
 # Logging
-kermit = "2.1.0"
+kermit = "2.2.0"
 slf4j = "1.7.36"
 takt = "2.1.1"
 rebugger = "1.0.1"
@@ -264,13 +264,13 @@ rebugger = "1.0.1"
 junit = "4.13.2"
 konsist = "0.17.3"
 mockk = "1.14.11"
-mokkery = "3.4.2"
+mokkery = "3.5.0"
 turbine = "1.2.1"
 # Code quality
-detekt = "2.0.0-alpha.5"
+detekt = "2.0.0-alpha.6"
 dependencyGuard = "0.5.0"
 foojayResolver = "1.0.0"
-dependencyAnalysis = "3.17.0"
+dependencyAnalysis = "3.19.1"
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------

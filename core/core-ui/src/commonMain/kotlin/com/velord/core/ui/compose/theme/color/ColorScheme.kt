@@ -2,6 +2,8 @@ package com.velord.core.ui.compose.theme.color
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.ui.graphics.Color
+import com.velord.core.ui.util.color.inverseColor
 
 val DarkColorScheme = darkColorScheme(
     primary = ColorDarkTokens.Primary,
@@ -80,3 +82,82 @@ val LightColorScheme = lightColorScheme(
     surfaceContainerLowest = ColorLightTokens.SurfaceContainerLowest,
     surfaceDim = ColorLightTokens.SurfaceDim,
 )
+
+val NegativeLightColorScheme = darkColorScheme(
+    primary = ColorLightTokens.Primary.inverseColor(),
+    onPrimary = ColorLightTokens.OnPrimary.inverseColor(),
+    primaryContainer = ColorLightTokens.PrimaryContainer.inverseColor(),
+    onPrimaryContainer = ColorLightTokens.OnPrimaryContainer.inverseColor(),
+    inversePrimary = ColorLightTokens.InversePrimary.inverseColor(),
+    secondary = ColorLightTokens.Secondary.inverseColor(),
+    onSecondary = ColorLightTokens.OnSecondary.inverseColor(),
+    secondaryContainer = ColorLightTokens.SecondaryContainer.inverseColor(),
+    onSecondaryContainer = ColorLightTokens.OnSecondaryContainer.inverseColor(),
+    tertiary = ColorLightTokens.Tertiary.inverseColor(),
+    onTertiary = ColorLightTokens.OnTertiary.inverseColor(),
+    tertiaryContainer = ColorLightTokens.TertiaryContainer.inverseColor(),
+    onTertiaryContainer = ColorLightTokens.OnTertiaryContainer.inverseColor(),
+    background = ColorLightTokens.Background.inverseColor(),
+    onBackground = ColorLightTokens.OnBackground.inverseColor(),
+    surface = ColorLightTokens.Surface.inverseColor(),
+    onSurface = ColorLightTokens.OnSurface.inverseColor(),
+    surfaceVariant = ColorLightTokens.SurfaceVariant.inverseColor(),
+    onSurfaceVariant = ColorLightTokens.OnSurfaceVariant.inverseColor(),
+    surfaceTint = ColorLightTokens.SurfaceTint.inverseColor(),
+    inverseSurface = ColorLightTokens.InverseSurface.inverseColor(),
+    inverseOnSurface = ColorLightTokens.InverseOnSurface.inverseColor(),
+    error = ColorLightTokens.Error.inverseColor(),
+    onError = ColorLightTokens.OnError.inverseColor(),
+    errorContainer = ColorLightTokens.ErrorContainer.inverseColor(),
+    onErrorContainer = ColorLightTokens.OnErrorContainer.inverseColor(),
+    outline = ColorLightTokens.Outline.inverseColor(),
+    outlineVariant = ColorLightTokens.OutlineVariant.inverseColor(),
+    scrim = ColorLightTokens.Scrim.inverseColor(),
+    surfaceBright = ColorLightTokens.SurfaceBright.inverseColor(),
+    surfaceContainer = ColorLightTokens.SurfaceContainer.inverseColor(),
+    surfaceContainerHigh = ColorLightTokens.SurfaceContainerHigh.inverseColor(),
+    surfaceContainerHighest = ColorLightTokens.SurfaceContainerHighest.inverseColor(),
+    surfaceContainerLow = ColorLightTokens.SurfaceContainerLow.inverseColor(),
+    surfaceContainerLowest = ColorLightTokens.SurfaceContainerLowest.inverseColor(),
+    surfaceDim = ColorLightTokens.SurfaceDim.inverseColor(),
+)
+
+val OceanColorScheme = darkColorScheme(
+    primary = Color(0xFF4DD0E1),
+    onPrimary = Color(0xFF00363A),
+    primaryContainer = Color(0xFF004D40),
+    onPrimaryContainer = Color(0xFF80CBC4),
+    inversePrimary = Color(0xFF00838F),
+    secondary = Color(0xFF81C784),
+    onSecondary = Color(0xFF1B5E20),
+    secondaryContainer = Color(0xFF2E7D32),
+    onSecondaryContainer = Color(0xFFA5D6A7),
+    tertiary = Color(0xFF64B5F6),
+    onTertiary = Color(0xFF0D47A1),
+    tertiaryContainer = Color(0xFF1565C0),
+    onTertiaryContainer = Color(0xFFE3F2FD),
+    background = Color(0xFF001F24),
+    onBackground = Color(0xFFE0F7FA),
+    surface = Color(0xFF001F24),
+    onSurface = Color(0xFFE0F7FA),
+    surfaceVariant = Color(0xFF00363A),
+    onSurfaceVariant = Color(0xFF80CBC4),
+    surfaceTint = Color(0xFF4DD0E1),
+    inverseSurface = Color(0xFFE0F7FA),
+    inverseOnSurface = Color(0xFF001F24),
+    error = Color(0xFFE57373),
+    onError = Color(0xFFB71C1C),
+    errorContainer = Color(0xFFD32F2F),
+    onErrorContainer = Color(0xFFFFEBEE),
+    outline = Color(0xFF4DD0E1),
+    outlineVariant = Color(0xFF006064),
+    scrim = Color(0xFF000000),
+    surfaceBright = Color(0xFF00363A),
+    surfaceContainer = Color(0xFF001518),
+    surfaceContainerHigh = Color(0xFF001A1E),
+    surfaceContainerHighest = Color(0xFF001F24),
+    surfaceContainerLow = Color(0xFF000B0D),
+    surfaceContainerLowest = Color(0xFF000507),
+    surfaceDim = Color(0xFF001518)
+)
+
