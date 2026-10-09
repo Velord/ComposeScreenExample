@@ -36,6 +36,7 @@ buildkonfig {
     objectName = buildConfigObject
 
     defaultConfigs {
+        buildConfigField(STRING, "buildEnvironment", BuildEnvironment.Production.name)
         buildConfigField(BOOLEAN, "isLoggingEnabled", "true")
         buildConfigField(STRING, "navigationLib", debugNavigationLib)
         buildConfigField(STRING, "baseUrl", baseUrl)
@@ -47,6 +48,7 @@ buildkonfig {
     BuildEnvironment.entries.forEach { environment ->
         val flavor = environment.variantName(BuildType.Debug)
         defaultConfigs(flavor) {
+            buildConfigField(STRING, "buildEnvironment", environment.name)
             buildConfigField(BOOLEAN, "isLoggingEnabled", "true")
             buildConfigField(STRING, "navigationLib", debugNavigationLib)
             buildConfigField(STRING, "baseUrl", baseUrl)
@@ -59,6 +61,7 @@ buildkonfig {
     BuildEnvironment.entries.forEach { environment ->
         val flavor = environment.variantName(BuildType.Release)
         defaultConfigs(flavor) {
+            buildConfigField(STRING, "buildEnvironment", environment.name)
             buildConfigField(BOOLEAN, "isLoggingEnabled", "false")
             buildConfigField(STRING, "navigationLib", releaseNavigationLib)
             buildConfigField(STRING, "baseUrl", baseUrl)

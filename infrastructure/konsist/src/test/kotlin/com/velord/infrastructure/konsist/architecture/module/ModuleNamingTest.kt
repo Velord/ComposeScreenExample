@@ -1,7 +1,7 @@
 package com.velord.infrastructure.konsist.architecture.module
 
-import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
+import com.velord.infrastructure.konsist.ActiveProjectSource
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -52,7 +52,7 @@ private val PLUGIN_PREFIX_BY_SECTION = mapOf(
 class ModuleNamingTest {
 
     private val repoRoot = locateRepoRoot()
-    private val projectFileRoster = Konsist.scopeFromProject().files
+    private val projectFileRoster = ActiveProjectSource.fileRoster
 
     @Test
     fun `kotlin file should live under an allowed module naming family`() {

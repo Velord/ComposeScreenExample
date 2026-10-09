@@ -1,6 +1,7 @@
 package com.velord.infrastructure.config
 
 interface BuildConfigResolver {
+    fun getBuildEnvironment(): BuildEnvironment
     fun getNavigationLib(): NavigationLib
     fun getBaseUrl(): String
     fun isLoggingEnabled(): Boolean

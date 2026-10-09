@@ -2,6 +2,7 @@ package com.velord.data.gateway.setting
 
 import com.velord.data.appstate.AppStateDataSource
 import com.velord.data.datastore.DataStoreDataSource
+import com.velord.model.setting.AppThemeConfig
 import com.velord.model.setting.ThemeConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -20,10 +21,20 @@ class GetThemeConfigGateway(
         if (isInitialized.not()) {
             isInitialized = true
             runCatching {
-                appState.themeConfigFlow.value = dataStore
+                val config = dataStore
                     .getAppSettingFlow()
                     .map { it.theme }
                     .first()
+                val isDynamicColorEnabled = config.useDynamicColor
+                val isDynamicColorAvailable = AppThemeConfig.DEFAULT.isSystemDynamicColorAvailable
+
+                // Restored preferences may request dynamic colors on a device without support.
+                when {
+                    isDynamicColorEnabled && isDynamicColorAvailable.not() -> save(
+                        config.copy(useDynamicColor = false)
+                    )
+                    else -> appState.themeConfigFlow.value = config
+                }
             }
         }
 

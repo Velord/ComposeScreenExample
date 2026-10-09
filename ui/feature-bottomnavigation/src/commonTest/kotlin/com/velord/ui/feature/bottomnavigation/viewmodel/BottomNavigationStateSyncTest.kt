@@ -68,7 +68,7 @@ class BottomNavigationStateSyncTest {
 
         viewModel.onAction(BottomNavigationUiAction.GraphCompletedHandling)
         val grantedRootState = viewModel.awaitUiState { state ->
-            state.backBehavior == BottomNavigationBackBehavior.ConfirmExit
+            state.backBehavior.isConfirmExit
         }
 
         viewModel.onAction(
@@ -94,11 +94,11 @@ class BottomNavigationStateSyncTest {
 
         viewModel.onAction(BottomNavigationUiAction.GraphCompletedHandling)
         viewModel.awaitUiState { state ->
-            state.backBehavior == BottomNavigationBackBehavior.ConfirmExit
+            state.backBehavior.isConfirmExit
         }
         viewModel.onAction(BottomNavigationUiAction.GraphTakeResponsibility)
         val releasedRootState = viewModel.awaitUiState { state ->
-            state.backBehavior == BottomNavigationBackBehavior.DelegateToNavigator
+            state.backBehavior.isDelegateToNavigator
         }
 
         assertTrue(grantedRootState.backHandlingState.isGrantedToProceed)
@@ -120,7 +120,7 @@ class BottomNavigationStateSyncTest {
             BottomNavigationUiAction.TabClick(BottomNavigationItem.Camera)
         )
         val secondTabState = secondViewModel.awaitUiState { state ->
-            state.tabState.current == BottomNavigationItem.Camera
+            state.tabState.current.isCamera
         }
 
         secondViewModel.onAction(BottomNavigationUiAction.GraphCompletedHandling)

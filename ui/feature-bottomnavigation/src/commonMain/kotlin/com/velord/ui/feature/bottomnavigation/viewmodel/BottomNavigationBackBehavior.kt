@@ -6,4 +6,5 @@ enum class BottomNavigationBackBehavior {
     ConfirmExit;
 
     val isConfirmExit: Boolean get() = this == ConfirmExit
+    val isDelegateToNavigator: Boolean get() = this == DelegateToNavigator
 }

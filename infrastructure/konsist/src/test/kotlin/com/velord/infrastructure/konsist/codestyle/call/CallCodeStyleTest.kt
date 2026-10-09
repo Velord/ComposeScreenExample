@@ -2,6 +2,7 @@
 
 import com.lemonappdev.konsist.api.verify.assertTrue
 import com.velord.infrastructure.konsist.codestyle.projectFileRoster
+import com.velord.infrastructure.konsist.codestyle.withKotlinFileRoster
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -11,25 +12,31 @@ class CallCodeStyleTest {
         val projectComposeCallNameRoster = projectFileRoster
             .flatMap { file -> composeCallNameRoster(file.text) }
             .toSet()
-        projectFileRoster.assertTrue { file ->
-            val lineRoster = file.text.lines()
-            val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
-                isSplitOneOrTwoArgumentCall(
-                    composeCallNameRoster = projectComposeCallNameRoster,
-                    currentLine = lineRoster[lineIndex],
-                    nextLine = lineRoster.getOrNull(lineIndex + 1),
-                    thirdLine = lineRoster.getOrNull(lineIndex + 2),
-                    fourthLine = lineRoster.getOrNull(lineIndex + 3),
-                )
+        projectFileRoster.map { it.text }.withKotlinFileRoster { kotlinFileRoster ->
+            val callbackLineRosterByFile = kotlinFileRoster.associate { file ->
+                file.text to file.composableCallbackLineRoster()
             }
+            projectFileRoster.assertTrue { file ->
+                val lineRoster = file.text.lines()
+                val callbackLineRoster = callbackLineRosterByFile.getValue(file.text)
+                val violation = (0 until lineRoster.lastIndex).firstOrNull { lineIndex ->
+                    lineIndex !in callbackLineRoster && isSplitOneOrTwoArgumentCall(
+                        composeCallNameRoster = projectComposeCallNameRoster,
+                        currentLine = lineRoster[lineIndex],
+                        nextLine = lineRoster.getOrNull(lineIndex + 1),
+                        thirdLine = lineRoster.getOrNull(lineIndex + 2),
+                        fourthLine = lineRoster.getOrNull(lineIndex + 3),
+                    )
+                }
 
-            if (violation != null) {
-                val msg = "Name: ${file.name}. FAILED. " +
-                    "One or two argument call at line ${violation + 1} should stay on one line."
-                println(msg)
+                if (violation != null) {
+                    val msg = "Name: ${file.name}. FAILED. " +
+                        "One or two argument call at line ${violation + 1} should stay on one line."
+                    println(msg)
+                }
+
+                violation == null
             }
-
-            violation == null
         }
     }
 

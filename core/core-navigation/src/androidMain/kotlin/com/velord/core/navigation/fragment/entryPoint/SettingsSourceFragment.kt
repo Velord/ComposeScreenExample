@@ -7,6 +7,8 @@ enum class SettingsSourceFragment {
     CameraRecording,
     ;
 
+    val isSettingsGraph: Boolean get() = this == SettingsGraph
+
     fun encode(): String = Json.encodeToString(this)
 
     companion object {

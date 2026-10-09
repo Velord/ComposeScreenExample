@@ -46,7 +46,7 @@ class SettingFragment : Fragment() {
         val sourceFromArgs = arguments
             ?.get(SettingsSourceFragment.ARGUMENT) as? SettingsSourceFragment
         val source = sourceFromPayload ?: sourceFromArgs
-        val isActivated = source == SettingsSourceFragment.SettingsGraph
+        val isActivated = source?.isSettingsGraph == true
         if (isActivated.not()) return
         addTestCallback("Setting graph", viewModelBottom)
     }

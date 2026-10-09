@@ -4,7 +4,6 @@ import com.velord.core.resource.AppString
 import com.velord.infrastructure.util.permission.PermissionGrantState
 import com.velord.model.ToastConfig
 import com.velord.model.ToastDuration
-import com.velord.model.camera.CameraRecordingState
 import com.velord.model.camera.config.CameraAudioConfig
 import com.velord.model.camera.config.CameraLens
 import com.velord.model.camera.config.CameraRecordingConfig
@@ -118,7 +117,7 @@ class CameraRecordingVM(
 
     private fun onStartStopRecording() {
         val uiState = uiStateFlow.value
-        if (uiState.cameraState.recordingState == CameraRecordingState.Idle) {
+        if (uiState.cameraState.recordingState.isIdle) {
             startRecording(
                 CameraRecordingConfig(
                     lens = uiState.cameraState.lens,

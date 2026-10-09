@@ -1,7 +1,7 @@
 ﻿package com.velord.infrastructure.konsist.codestyle.compose
 
-import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
+import com.velord.infrastructure.konsist.ActiveProjectSource
 import com.velord.infrastructure.konsist.codestyle.call.composeCallNameRoster
 import com.velord.infrastructure.konsist.codestyle.call.isCompactComposeCallWithSeveralParameters
 import java.io.File
@@ -15,7 +15,6 @@ private const val PREVIEW_ANNOTATION = "@Preview"
 private const val PREVIEW_COMBINED_ANNOTATION = "@PreviewCombined"
 private const val COMPOSABLE_ANNOTATION = "@Composable"
 private const val PREVIEW_FUNCTION = "private fun Preview() {"
-private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
 private val DELEGATED_REMEMBERED_MUTABLE_STATE_REGEX = Regex(
     """\bvar\s+\w+\s+by\s+remember(?:Saveable)?\s*""" +
         """(?:\([^)]*\))?\s*\{\s*mutable(?:Int|Long|Float|Double)?StateOf\(""",
@@ -24,7 +23,7 @@ private val EMPTY_MODIFIER_ARGUMENT_REGEX = Regex("""(?m)^\s*modifier\s*=\s*Modi
 
 class ComposeCodeStyleTest {
 
-    private val projectFileRoster = Konsist.scopeFromExternalDirectory(locateRepoRoot().path).files
+    private val projectFileRoster = ActiveProjectSource.fileRoster
     private val projectComposeCallNameRoster = projectFileRoster
         .flatMap { file -> composeCallNameRoster(file.text) }
         .toSet()
@@ -95,14 +94,6 @@ class ComposeCodeStyleTest {
         return lineTrimmed == PREVIEW_ANNOTATION ||
             lineTrimmed == PREVIEW_COMBINED_ANNOTATION
     }
-
-    private fun locateRepoRoot(): File = generateSequence(
-        File(System.getProperty("user.dir")).absoluteFile,
-    ) { currentDirectory ->
-        currentDirectory.parentFile
-    }.firstOrNull { currentDirectory ->
-        File(currentDirectory, SETTINGS_GRADLE_FILE).isFile
-    } ?: error("Cannot locate repo root from ${System.getProperty("user.dir")}")
 
     private fun String.invariantPath(): String = replace(File.separatorChar, '/')
 

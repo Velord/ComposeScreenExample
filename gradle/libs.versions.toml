@@ -263,6 +263,7 @@ rebugger = "1.0.1"
 # Testing
 junit = "4.13.2"
 konsist = "0.17.3"
+konsistCompiler = "2.0.21"
 mockk = "1.14.11"
 mokkery = "3.5.0"
 turbine = "1.2.1"
@@ -713,6 +714,7 @@ rebugger = { module = "io.github.theapache64:rebugger", version.ref = "rebugger"
 # Test
 junit = { module = "junit:junit", version.ref = "junit" }
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
+kotlin-compiler-embeddable = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "konsistCompiler" }
 coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutine" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mock = { module = "io.mockk:mockk", version.ref = "mockk" }

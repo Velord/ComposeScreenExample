@@ -1,7 +1,6 @@
 package com.velord.ui.feature.camerarecording.viewModel
 
 import com.velord.infrastructure.util.permission.PermissionGrantState
-import com.velord.model.camera.CameraRecordingState
 import com.velord.model.camera.CameraSessionWrapper
 import com.velord.model.camera.CameraState
 import com.velord.model.camera.CameraVideoAsset
@@ -22,7 +21,7 @@ data class CameraRecordingUiState(
     val lastVideoAsset: CameraVideoAsset?,
 ) {
     val isRecordingStarted: Boolean
-        get() = cameraState.recordingState != CameraRecordingState.Idle
+        get() = cameraState.recordingState.isIdle.not()
 
     companion object {
         val DEFAULT = CameraRecordingUiState(

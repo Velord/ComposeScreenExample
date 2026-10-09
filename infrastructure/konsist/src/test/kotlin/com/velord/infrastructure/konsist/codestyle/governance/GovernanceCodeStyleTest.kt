@@ -1,6 +1,7 @@
 ﻿package com.velord.infrastructure.konsist.codestyle.governance
 
 import com.lemonappdev.konsist.api.verify.assertTrue
+import com.velord.infrastructure.konsist.ActiveProjectSource
 import com.velord.infrastructure.konsist.codestyle.HARD_WRAP
 import com.velord.infrastructure.konsist.codestyle.locateRepoRoot
 import java.io.File
@@ -53,6 +54,7 @@ class GovernanceCodeStyleTest {
         val violation = locateRepoRoot()
             .walkTopDown()
             .filter { file -> file.isFile && file.name.endsWith(GRADLE_BUILD_FILE_SUFFIX) }
+            .filter { file -> ActiveProjectSource.containsGradleScript(file.path) }
             .filter { file -> file.path.contains(
                 other = "${File.separator}build${File.separator}").not()
             }
@@ -72,6 +74,7 @@ class GovernanceCodeStyleTest {
         val violation = locateRepoRoot()
             .walkTopDown()
             .filter { file -> file.isFile && file.name.endsWith(GRADLE_BUILD_FILE_SUFFIX) }
+            .filter { file -> ActiveProjectSource.containsGradleScript(file.path) }
             .filter { file -> file.path.contains(
                 other = "${File.separator}build${File.separator}").not()
             }

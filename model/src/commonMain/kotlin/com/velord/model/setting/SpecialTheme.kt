@@ -3,6 +3,8 @@ package com.velord.model.setting
 enum class ThemeMode {
     LIGHT, DARK, BOTH;
 
+    val isBoth: Boolean get() = this == BOTH
+
     fun isDark(currentUseDarkTheme: Boolean): Boolean = when(this) {
         DARK -> true
         LIGHT -> false
@@ -23,7 +25,7 @@ enum class SpecialTheme(
 
     fun getOppositeDefaultTheme(newUseDark: Boolean): SpecialTheme {
         val newMode = if (newUseDark) ThemeMode.DARK else ThemeMode.LIGHT
-        if (this.mode == newMode || this.mode == ThemeMode.BOTH) return this
+        if (this.mode == newMode || this.mode.isBoth) return this
 
         return if (newUseDark) DEFAULT_DARK_SCHEME else DEFAULT_LIGHT_SCHEME
     }
@@ -34,7 +36,7 @@ enum class SpecialTheme(
 
         fun getAvailableThemeRoster(useDarkTheme: Boolean): List<SpecialTheme> {
             val targetMode = if (useDarkTheme) ThemeMode.DARK else ThemeMode.LIGHT
-            return entries.filter { it.mode == targetMode || it.mode == ThemeMode.BOTH }
+            return entries.filter { it.mode == targetMode || it.mode.isBoth }
         }
     }
 }

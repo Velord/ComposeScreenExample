@@ -1,6 +1,5 @@
 package com.velord.infrastructure.konsist.architecture.module
 
-import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.declaration.KoFileDeclaration
 import com.lemonappdev.konsist.api.declaration.KoFunctionDeclaration
 import com.lemonappdev.konsist.api.declaration.KoPropertyDeclaration
@@ -10,6 +9,7 @@ import com.lemonappdev.konsist.api.ext.koscope.declarationsOf
 import com.lemonappdev.konsist.api.provider.KoModuleProvider
 import com.lemonappdev.konsist.api.provider.KoReceiverTypeProvider
 import com.lemonappdev.konsist.api.provider.KoSourceSetProvider
+import com.velord.infrastructure.konsist.ActiveProjectSource
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -51,13 +51,15 @@ private val SAME_TARGET_EXTENSION_DEBT_ROSTER = emptySet<String>()
 class ModuleDependencyTest {
 
     private val repoRoot = locateRepoRoot()
-    private val projectScope = Konsist.scopeFromProject()
+    private val projectScope = ActiveProjectSource.projectScope
+    private val projectFileRoster = ActiveProjectSource.fileRoster
 
     @Test
     fun `ui modules should not depend directly on data modules`() {
         val violationRoster = File(repoRoot, UI_FOLDER_NAME)
             .walkTopDown()
             .filter { file -> file.name == BUILD_FILE_NAME }
+            .filter { file -> ActiveProjectSource.containsBuildFile(file.path) }
             .flatMap { file ->
                 file.readLines().withIndex().mapNotNull { (lineIndex, line) ->
                     line.takeIf(::isDirectDataDependency)?.let {
@@ -80,10 +82,12 @@ class ModuleDependencyTest {
     fun `project owned types should not have extensions in their owning target`() {
         val functionViolationRoster = projectScope
             .declarationsOf<KoFunctionDeclaration>()
+            .filter { function -> ActiveProjectSource.containsSource(function.containingFile.path) }
             .filter { function -> function.hasSameModuleReceiver() }
             .map { function -> "${function.containingFile.name}:${function.name}" }
         val propertyViolationRoster = projectScope
             .declarationsOf<KoPropertyDeclaration>()
+            .filter { property -> ActiveProjectSource.containsSource(property.containingFile.path) }
             .filter { property -> property.hasSameModuleReceiver() }
             .map { property -> "${property.containingFile.name}:${property.name}" }
         val violationRoster = (functionViolationRoster + propertyViolationRoster).toSet()
@@ -107,7 +111,7 @@ class ModuleDependencyTest {
 
     @Test
     fun `kamera imports should use library prefixed aliases`() {
-        val violationRoster = projectScope.files.flatMap { file ->
+        val violationRoster = projectFileRoster.flatMap { file ->
             file.text.lines().withIndex().mapNotNull { (lineIndex, line) ->
                 val isKameraImport = line.startsWith(KAMERA_IMPORT_PREFIX)
                 val hasLibraryAlias = KAMERA_ALIAS_REGEX.containsMatchIn(line)
@@ -161,7 +165,7 @@ class ModuleDependencyTest {
 
     @Test
     fun `di modules should bind use cases to callable references`() {
-        val violationRoster = projectScope.files
+        val violationRoster = projectFileRoster
             .filter { file -> DI_MODULE_FILE_REGEX.matches(file.path) }
             .flatMap { file ->
                 file.text.lines().withIndex().mapNotNull { (lineIndex, line) ->
@@ -191,7 +195,7 @@ class ModuleDependencyTest {
 
     @Test
     fun `use case module should not construct app events`() {
-        val violationRoster = projectScope.files
+        val violationRoster = projectFileRoster
             .filter { file -> USE_CASE_MODULE_FILE_REGEX.matches(file.path) }
             .flatMap { file ->
                 file.text.lines().withIndex().mapNotNull { (lineIndex, line) ->
@@ -214,7 +218,7 @@ class ModuleDependencyTest {
 
     @Test
     fun `platform modules should not bind domain use cases`() {
-        val violationRoster = projectScope.files
+        val violationRoster = projectFileRoster
             .filter { file -> PLATFORM_MODULE_FILE_REGEX.matches(file.path) }
             .flatMap { file ->
                 val useCaseImportViolation = USE_CASE_IMPORT_REGEX.find(file.text)
@@ -240,8 +244,7 @@ class ModuleDependencyTest {
             .walkTopDown()
             .filter { file ->
                 file.name == BUILD_FILE_NAME &&
-                file.path.contains("${File.separator}build${File.separator}").not() &&
-                file != File(repoRoot, BUILD_FILE_NAME)
+                ActiveProjectSource.containsBuildFile(file.path)
             }
             .toList()
 

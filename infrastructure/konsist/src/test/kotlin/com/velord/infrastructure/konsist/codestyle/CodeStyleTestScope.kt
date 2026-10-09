@@ -1,13 +1,34 @@
 ﻿package com.velord.infrastructure.konsist.codestyle
 
-import com.lemonappdev.konsist.api.Konsist
+import com.velord.infrastructure.konsist.ActiveProjectSource
+import org.jetbrains.kotlin.cli.jvm.compiler.EnvironmentConfigFiles
+import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
+import org.jetbrains.kotlin.com.intellij.openapi.util.Disposer
+import org.jetbrains.kotlin.config.CompilerConfiguration
+import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.psi.KtPsiFactory
 import java.io.File
 
 private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
 private val WHITESPACE_REGEX = Regex("\\s+")
 
 internal const val HARD_WRAP = 100
-internal val projectFileRoster = Konsist.scopeFromProject().files
+internal val projectFileRoster = ActiveProjectSource.fileRoster
+
+internal fun <T> List<String>.withKotlinFileRoster(block: (List<KtFile>) -> T): T {
+    val disposable = Disposer.newDisposable()
+    try {
+        val environment = KotlinCoreEnvironment.createForProduction(
+            disposable,
+            CompilerConfiguration(),
+            EnvironmentConfigFiles.JVM_CONFIG_FILES,
+        )
+        val factory = KtPsiFactory(environment.project)
+        return block(map(factory::createFile))
+    } finally {
+        Disposer.dispose(disposable)
+    }
+}
 
 internal fun joinLine(currentLine: String, nextLine: String): String = compactWhitespace(
     "${currentLine.trimEnd()} ${nextLine.trimStart()}",

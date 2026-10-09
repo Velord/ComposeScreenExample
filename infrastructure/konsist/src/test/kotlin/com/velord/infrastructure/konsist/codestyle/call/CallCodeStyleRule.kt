@@ -2,6 +2,12 @@
 
 import com.velord.infrastructure.konsist.codestyle.HARD_WRAP
 import com.velord.infrastructure.konsist.codestyle.joinLine
+import org.jetbrains.kotlin.psi.KtCallExpression
+import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.psi.KtFunction
+import org.jetbrains.kotlin.psi.KtNameReferenceExpression
+import org.jetbrains.kotlin.psi.psiUtil.collectDescendantsOfType
+import org.jetbrains.kotlin.psi.psiUtil.parents
 
 private const val LOOKBACK_LINE_COUNT = 6
 private val COLLECTION_CALL_REGEX = Regex(
@@ -30,6 +36,22 @@ private val BUILT_IN_COMPOSE_CALL_NAME_ROSTER = setOf(
 private val EXPRESSION_BODY_MAPPING_CALL_REGEX = Regex(
     """\bfun\b.+?\(([^)]*)\)\s*:\s*([A-Z][A-Za-z0-9_]*)\s*=\s*\2\(""",
 )
+
+internal fun KtFile.composableCallbackLineRoster() = collectDescendantsOfType<KtCallExpression>()
+    .filter { call ->
+        val callee = call.calleeExpression as? KtNameReferenceExpression ?: return@filter false
+        val name = callee.getReferencedName()
+        val parameter = call.parents
+            .filterIsInstance<KtFunction>()
+            .firstNotNullOfOrNull { function ->
+                function.valueParameters.firstOrNull { it.name == name }
+            }
+        parameter?.typeReference?.annotationEntries?.any { annotation ->
+            annotation.shortName?.asString() == "Composable"
+        } == true
+    }
+    .map { call -> text.take(call.textOffset).count { it == '\n' } }
+    .toSet()
 
 internal fun isSplitOneOrTwoArgumentCall(
     composeCallNameRoster: Set<String>,

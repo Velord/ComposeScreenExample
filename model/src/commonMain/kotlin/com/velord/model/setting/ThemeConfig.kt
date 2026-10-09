@@ -41,7 +41,7 @@ data class ThemeConfig(
             val targetMode = if (isDark) ThemeMode.DARK else ThemeMode.LIGHT
             return SpecialTheme.entries
                 .filter { it.isDefault }
-                .find { it.mode == targetMode || it.mode == ThemeMode.BOTH }
+                .find { it.mode == targetMode || it.mode.isBoth }
                 ?: error("No default theme found")
         }
     }

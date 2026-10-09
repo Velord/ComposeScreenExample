@@ -3,5 +3,7 @@ package com.velord.model.camera
 enum class CameraRecordingState {
     Idle,
     Recording,
-    Paused,
+    Paused;
+
+    val isIdle: Boolean get() = this == Idle
 }

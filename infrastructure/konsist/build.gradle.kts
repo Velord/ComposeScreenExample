@@ -9,6 +9,7 @@ kotlin {
 dependencies {
     // Testing
     testImplementation(libs.konsist)
+    testCompileOnly(libs.kotlin.compiler.embeddable)
     testImplementation(libs.kotlin.test)
 }
 

@@ -2,6 +2,9 @@ package com.velord.infrastructure.config
 
 class GeneratedBuildConfigResolver : BuildConfigResolver {
 
+    override fun getBuildEnvironment(): BuildEnvironment =
+        BuildEnvironment.valueOf(ProjectBuildConfig.buildEnvironment)
+
     override fun getNavigationLib(): NavigationLib {
         val navigationLibName = ProjectBuildConfig.navigationLib
         return NavigationLib.valueOf(navigationLibName)

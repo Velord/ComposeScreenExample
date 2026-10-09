@@ -6,6 +6,9 @@ enum class BuildEnvironment(val value: String) {
     Stage("stage"),
     Production("production");
 
+    val isProduction: Boolean get() = this == Production
+    val isQa: Boolean get() = this == Qa
+
     fun variantName(buildType: BuildType): String =
         value + buildType.value.replaceFirstChar(Char::uppercase)
 }

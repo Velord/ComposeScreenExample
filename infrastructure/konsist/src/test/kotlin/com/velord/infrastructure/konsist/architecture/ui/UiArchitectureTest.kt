@@ -1,9 +1,8 @@
 ﻿package com.velord.infrastructure.konsist.architecture.ui
 
-import com.lemonappdev.konsist.api.Konsist
+import com.velord.infrastructure.konsist.ActiveProjectSource
 import com.velord.infrastructure.konsist.codestyle.HARD_WRAP
 import com.velord.infrastructure.konsist.codestyle.compactWhitespace
-import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -14,7 +13,6 @@ private const val COMPONENT_IMPORT_SEGMENT = ".component."
 private const val CONTENT_NAME = "Content"
 private const val CONTENT_FILE_NAME = "Content.kt"
 private const val LIFECYCLE_COLLECTION = "collectAsStateWithLifecycle"
-private const val SETTINGS_GRADLE_FILE = "settings.gradle.kts"
 private const val UI_PACKAGE_PREFIX = "com.velord.ui."
 private const val ANDROID_TOAST_TYPE = "android.widget.Toast"
 private const val TOAST_CONFIG_TYPE = "ToastConfig"
@@ -29,15 +27,18 @@ private val DIRECT_VIEW_MODEL_COLLECTION_REGEX =
     Regex("""\bviewModel\.[A-Za-z][A-Za-z0-9]*\.collectAsStateWithLifecycle\(""")
 private val MUTABLE_STATE_FLOW_DECLARATION_REGEX =
     Regex("""\bval\s+[A-Za-z][A-Za-z0-9]*\s*(?::[^=]+)?=\s*MutableStateFlow""")
-private val UI_ENTRY_REGEX = Regex("""(?m)^\s*(?:public\s+)?fun\s+on[A-Z][A-Za-z0-9]*\s*\(""")
+private val UI_ENTRY_REGEX =
+    Regex("""(?m)^\s*(?:(?:public|internal)\s+)?fun\s+on[A-Z][A-Za-z0-9]*\s*\(""")
 private val UI_ACTION_BRANCH_REGEX =
     Regex("""(?:is\s+)?[A-Za-z][A-Za-z0-9]*UiAction\.([A-Za-z][A-Za-z0-9]*)\s*->""")
 private val UI_ACTION_DELEGATE_REGEX = Regex(
     """(?:is\s+)?[A-Za-z][A-Za-z0-9]*UiAction\.([A-Za-z][A-Za-z0-9]*)\s*->""" +
         """\s*([A-Za-z][A-Za-z0-9]*)\s*\("""
 )
-private val UI_ACTION_HANDLER_REGEX =
-    Regex("""private\s+fun\s+handleUiAction\s*\(\s*action\s*:\s*\w+UiAction\s*\)\s*\{""")
+private val UI_ACTION_HANDLER_REGEX = Regex(
+    """private\s+(?:suspend\s+)?fun\s+handleUiAction\s*""" +
+        """\(\s*action\s*:\s*\w+UiAction\s*\)\s*\{"""
+)
 private val UI_ACTION_COLLECTION_DELEGATE_REGEX = Regex(
     """actionFlow\.collect(?:Latest)?\s*\{\s*action\s*->""" +
         """\s*handleUiAction\(action\)\s*}"""
@@ -50,7 +51,7 @@ private val UI_ACTION_COLLECTION_REGEX = Regex("""actionFlow\.collect(?:Latest)?
 
 class UiArchitectureTest {
 
-    private val projectFileRoster = Konsist.scopeFromExternalDirectory(locateRepoRoot().path).files
+    private val projectFileRoster = ActiveProjectSource.fileRoster
 
     @Test
     fun `screen lifecycle state collection should be direct from view model`() {
@@ -109,7 +110,7 @@ class UiArchitectureTest {
         val violationRoster = viewModelFileRoster().filter { file ->
             val hasInvalidContract = hasUiContractExemption(file.text) ||
                 hasMatchingUiActionContract(file.name, file.text).not()
-            hasPublicUiEntry(file.text) && hasInvalidContract
+            hasUiEntry(file.text) && hasInvalidContract
         }
 
         if (violationRoster.isNotEmpty()) {
@@ -173,7 +174,7 @@ class UiArchitectureTest {
     fun `ui contract exemptions should remain simple`() {
         val violationRoster = viewModelFileRoster().filter { file ->
             hasUiContractExemption(file.text) &&
-                (hasPublicUiEntry(file.text) || mutableStateFlowCount(file.text) > 1)
+                (hasUiEntry(file.text) || mutableStateFlowCount(file.text) > 1)
         }
 
         if (violationRoster.isNotEmpty()) {
@@ -229,7 +230,7 @@ class UiArchitectureTest {
         file.name.endsWith(VIEW_MODEL_SUFFIX)
     }
 
-    private fun hasPublicUiEntry(text: String): Boolean = UI_ENTRY_REGEX.containsMatchIn(text)
+    private fun hasUiEntry(text: String): Boolean = UI_ENTRY_REGEX.containsMatchIn(text)
 
     private fun hasUiContractExemption(text: String): Boolean =
         text.contains(UI_CONTRACT_EXEMPT_ANNOTATION)
@@ -353,7 +354,7 @@ class UiArchitectureTest {
         actionName.startsWith("On") && actionName.getOrNull(2)?.isUpperCase() == true
 
     private fun hasPrivateHandler(text: String, handlerName: String): Boolean =
-        Regex("""private\s+fun\s+$handlerName\s*\(""").containsMatchIn(text)
+        Regex("""private\s+(?:suspend\s+)?fun\s+$handlerName\s*\(""").containsMatchIn(text)
 
     private fun isLifecycleCollection(line: String): Boolean {
         val lineTrimmed = line.trimStart()
@@ -394,11 +395,4 @@ class UiArchitectureTest {
         }
     }
 
-    private fun locateRepoRoot(): File = generateSequence(
-        File(System.getProperty("user.dir")).absoluteFile,
-    ) { currentDirectory ->
-        currentDirectory.parentFile
-    }.firstOrNull { currentDirectory ->
-        File(currentDirectory, SETTINGS_GRADLE_FILE).isFile
-    } ?: error("Cannot locate repo root from ${System.getProperty("user.dir")}")
 }
