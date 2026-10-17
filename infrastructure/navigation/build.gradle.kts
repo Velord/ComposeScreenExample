@@ -33,6 +33,7 @@ kotlin {
             implementation(projects.ui.featureDemoShape)
             implementation(projects.ui.featureDemoModifier)
             implementation(projects.ui.featureDemoMorph)
+            implementation(projects.ui.featureDemoHorizon)
             implementation(projects.ui.featureDemoHintphonenumber)
             implementation(projects.ui.featureDemoDialog)
             implementation(projects.ui.featureFlowsummator)

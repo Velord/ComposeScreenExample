@@ -4,6 +4,7 @@ import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationVM
 import com.velord.ui.feature.camerarecording.viewModel.CameraRecordingVM
 import com.velord.ui.feature.demo.DemoVM
 import com.velord.ui.feature.demo.dialog.DialogDemoVM
+import com.velord.ui.feature.demo.horizon.HorizonDemoVM
 import com.velord.ui.feature.flowsummator.FlowSummatorVM
 import com.velord.ui.feature.movie.viewModel.AllMovieVM
 import com.velord.ui.feature.movie.viewModel.FavoriteMovieVM
@@ -21,6 +22,7 @@ val viewModelModule = module {
     viewModel { LanguageVM(get(), get()) }
     viewModel { SplashVM() }
     viewModel { DemoVM(get(), get()) }
+    viewModel { HorizonDemoVM() }
     viewModel { FlowSummatorVM() }
     viewModel { MovieVM(get(), get(), get(), get()) }
     viewModel { AllMovieVM(get(), get(), get(), get(), get()) }

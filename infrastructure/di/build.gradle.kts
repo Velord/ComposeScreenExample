@@ -30,6 +30,7 @@ kotlin {
             implementation(projects.ui.sharedviewmodel)
             // Module UI Feature
             implementation(projects.ui.featureDemo)
+            implementation(projects.ui.featureDemoHorizon)
             implementation(projects.ui.featureCamerarecording)
             implementation(projects.ui.featureBottomnavigation)
             implementation(projects.ui.featureSetting)

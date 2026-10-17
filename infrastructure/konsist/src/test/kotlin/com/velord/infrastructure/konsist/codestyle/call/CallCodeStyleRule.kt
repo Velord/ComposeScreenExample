@@ -30,9 +30,11 @@ private val BUILT_IN_COMPOSE_CALL_NAME_ROSTER = setOf(
     "NavigationBarItem",
     "RadioButton",
     "Snackbar",
+    "Switch",
     "Text",
     "TextButton",
 )
+private val MULTILINE_OBJECT_MAPPING_TYPE_ROSTER = setOf("LocalizationState", "LanguageUiState", "ToastConfig")
 private val EXPRESSION_BODY_MAPPING_CALL_REGEX = Regex(
     """\bfun\b.+?\(([^)]*)\)\s*:\s*([A-Z][A-Za-z0-9_]*)\s*=\s*\2\(""",
 )
@@ -67,6 +69,8 @@ internal fun isSplitOneOrTwoArgumentCall(
     if (currentLineTrimmed.endsWith("(").not()) return false
     if (isDeclarationOpening(currentLineTrimmed)) return false
     if (isComposeCallOpening(composeCallNameRoster, currentLineTrimmed)) return false
+    val isMapping = MULTILINE_OBJECT_MAPPING_TYPE_ROSTER.any { currentLineTrimmed.endsWith("$it(") }
+    if (isMapping) return false
     if (isExpressionBodyMappingCallOpening(currentLineTrimmed)) return false
     if (nextLineTrimmed.endsWith(",").not()) return false
     if (thirdLineTrimmed == ")") {

@@ -12,6 +12,8 @@ import com.velord.ui.feature.demo.DemoVM
 import com.velord.ui.feature.demo.dialog.DialogDemoScreen
 import com.velord.ui.feature.demo.dialog.DialogDemoVM
 import com.velord.ui.feature.demo.hintphonenumber.HintPhoneNumberScreen
+import com.velord.ui.feature.demo.horizon.HorizonDemoScreen
+import com.velord.ui.feature.demo.horizon.HorizonDemoVM
 import com.velord.ui.feature.demo.modifier.ModifierDemoScreen
 import com.velord.ui.feature.demo.morph.MorphDemoScreen
 import com.velord.ui.feature.demo.shape.ShapeDemoScreen
@@ -58,6 +60,13 @@ internal fun NavGraphBuilder.setupDemoGraphVanilla(navigator: DemoNavigator) {
             FlowSummatorScreen(
                 viewModel = viewModel,
                 onBackClick = navigator::goBack
+            )
+        }
+
+        composable<GraphVanilla.BottomTab.Demo.HorizonDemoDestinationVanilla> {
+            HorizonDemoScreen(
+                viewModel = koinViewModel<HorizonDemoVM>(),
+                onBackClick = navigator::goBack,
             )
         }
 

@@ -53,6 +53,9 @@ internal sealed interface GraphNav3 : NavKey {
             object MorphDemoDestinationNav3 : Demo
 
             @Serializable
+            object HorizonDemoDestinationNav3 : Demo
+
+            @Serializable
             object ShapeDemoDestinationNav3 : Demo
 
             @Serializable

@@ -46,6 +46,9 @@ internal interface GraphVanilla {
             object MorphDemoDestinationVanilla
 
             @Serializable
+            object HorizonDemoDestinationVanilla
+
+            @Serializable
             object ShapeDemoDestinationVanilla
 
             @Serializable

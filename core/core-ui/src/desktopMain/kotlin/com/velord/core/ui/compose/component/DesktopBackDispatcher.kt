@@ -5,6 +5,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 val LocalDesktopBackDispatcher = staticCompositionLocalOf<DesktopBackDispatcher?> { null }
 
 class DesktopBackDispatcher {
+
     private val handlers = mutableListOf<() -> Boolean>()
 
     fun register(handler: () -> Boolean) {
@@ -20,6 +21,7 @@ class DesktopBackDispatcher {
         for (handler in handlers.reversed()) {
             if (handler()) return true // Event consumed
         }
+
         return false // Event not consumed
     }
 }

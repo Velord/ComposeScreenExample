@@ -13,6 +13,7 @@ sealed interface DemoUiAction {
     data object OpenShapeClick : DemoUiAction
     data object OpenModifierClick : DemoUiAction
     data object OpenSummatorClick : DemoUiAction
+    data object OpenHorizonClick : DemoUiAction
     data object OpenMorphClick : DemoUiAction
     data object OpenHintPhoneNumberClick : DemoUiAction
     data object OpenMovieClick : DemoUiAction
@@ -42,6 +43,8 @@ class DemoVM(
     private fun onOpenModifierClick() = navigateTo(DemoNavigationEvent.Modifier)
 
     private fun onOpenSummatorClick() = navigateTo(DemoNavigationEvent.FlowSummator)
+
+    private fun onOpenHorizonClick() = navigateTo(DemoNavigationEvent.Horizon)
 
     private fun onOpenMorphClick() = navigateTo(DemoNavigationEvent.Morph)
 
@@ -80,6 +83,7 @@ class DemoVM(
                     DemoUiAction.OpenShapeClick -> onOpenShapeClick()
                     DemoUiAction.OpenModifierClick -> onOpenModifierClick()
                     DemoUiAction.OpenSummatorClick -> onOpenSummatorClick()
+                    DemoUiAction.OpenHorizonClick -> onOpenHorizonClick()
                     DemoUiAction.OpenMorphClick -> onOpenMorphClick()
                     DemoUiAction.OpenHintPhoneNumberClick -> onOpenHintPhoneNumberClick()
                     DemoUiAction.OpenMovieClick -> onOpenMovieClick()

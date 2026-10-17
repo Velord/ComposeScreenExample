@@ -5,6 +5,7 @@ enum class DemoNavigationEvent {
     Modifier,
     FlowSummator,
     Morph,
+    Horizon,
     HintPhoneNumber,
     Movie,
     Dialog,

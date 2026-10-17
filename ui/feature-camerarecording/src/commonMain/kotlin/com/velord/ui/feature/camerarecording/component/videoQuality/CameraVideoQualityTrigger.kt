@@ -33,10 +33,7 @@ internal fun CameraVideoQualityTrigger(
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
-            .clickable(
-                enabled = isEnabled,
-                onClick = onClick,
-            )
+            .clickable(enabled = isEnabled, onClick = onClick)
             .padding(horizontal = 8.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

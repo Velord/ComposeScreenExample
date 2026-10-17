@@ -33,6 +33,7 @@ internal class BottomNavigatorVanilla(
             DemoNavigationEvent.FlowSummator ->
                 GraphVanilla.BottomTab.Demo.FlowSummatorDestinationVanilla
             DemoNavigationEvent.Morph -> GraphVanilla.BottomTab.Demo.MorphDemoDestinationVanilla
+            DemoNavigationEvent.Horizon -> GraphVanilla.BottomTab.Demo.HorizonDemoDestinationVanilla
             DemoNavigationEvent.HintPhoneNumber ->
                 GraphVanilla.BottomTab.Demo.HintPhoneDestinationVanilla
             DemoNavigationEvent.Movie -> GraphVanilla.BottomTab.Demo.MovieDestinationVanilla

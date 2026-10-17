@@ -23,6 +23,12 @@ data class CameraRecordingUiState(
     val isRecordingStarted: Boolean
         get() = cameraState.recordingState.isIdle.not()
 
+    fun hasRequiredPermission(): Boolean {
+        val hasAudioRequiredPermission = isAudioEnabled.not() || permissionState.audio.isGranted
+
+        return permissionState.camera.isGranted && hasAudioRequiredPermission
+    }
+
     companion object {
         val DEFAULT = CameraRecordingUiState(
             permissionState = defaultPermissionUiState(),

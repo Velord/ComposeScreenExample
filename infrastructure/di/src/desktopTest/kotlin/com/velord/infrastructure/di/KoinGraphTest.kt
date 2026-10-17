@@ -1,6 +1,5 @@
 package com.velord.infrastructure.di
 
-import com.velord.data.os.memory.MemoryLogger
 import com.velord.usecase.movie.GetAllMovieUC
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.context.GlobalContext.startKoin
@@ -11,6 +10,8 @@ import org.koin.test.get
 import org.koin.test.verify.verify
 import kotlin.test.Test
 
+private const val MEMORY_LOGGER_TYPE_NAME = "com.velord.data.os.memory.MemoryLogger"
+
 @OptIn(KoinExperimentalAPI::class)
 class KoinGraphTest : KoinTest {
 
@@ -20,7 +21,8 @@ class KoinGraphTest : KoinTest {
             includes(createCommonAppModuleRoster())
         }
 
-        appModule.verify(extraTypes = listOf(MemoryLogger::class))
+        val internalLogger = Class.forName(MEMORY_LOGGER_TYPE_NAME).kotlin
+        appModule.verify(extraTypes = listOf(internalLogger))
     }
 
     @Test

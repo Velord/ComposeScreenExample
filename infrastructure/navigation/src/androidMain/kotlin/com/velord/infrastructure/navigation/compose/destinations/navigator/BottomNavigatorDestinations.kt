@@ -5,6 +5,7 @@ import co.touchlab.kermit.Logger
 import com.ramcosta.composedestinations.generated.navigation.destinations.DialogDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.FlowSummatorDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.HintPhoneNumberDestinationDestination
+import com.ramcosta.composedestinations.generated.navigation.destinations.HorizonDemoDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.ModifierDemoDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.MorphDemoDestinationDestination
 import com.ramcosta.composedestinations.generated.navigation.destinations.MovieDestinationDestination
@@ -40,6 +41,7 @@ internal class BottomNavigatorDestinations(
             DemoNavigationEvent.Modifier -> ModifierDemoDestinationDestination
             DemoNavigationEvent.FlowSummator -> FlowSummatorDestinationDestination
             DemoNavigationEvent.Morph -> MorphDemoDestinationDestination
+            DemoNavigationEvent.Horizon -> HorizonDemoDestinationDestination
             DemoNavigationEvent.HintPhoneNumber -> HintPhoneNumberDestinationDestination
             DemoNavigationEvent.Movie -> MovieDestinationDestination
             DemoNavigationEvent.Dialog -> DialogDestinationDestination

@@ -52,6 +52,7 @@ private fun DemoNavigationEvent.toJetpackDestinationId(): Int? = when(this) {
     DemoNavigationEvent.Modifier -> R.id.from_demoFragment_to_modifierDemoFragment
     DemoNavigationEvent.FlowSummator -> R.id.from_demoFragment_to_flowSummatorFragment
     DemoNavigationEvent.Morph -> R.id.from_demoFragment_to_morphDemoFragment
+    DemoNavigationEvent.Horizon -> null
     DemoNavigationEvent.HintPhoneNumber -> null
     DemoNavigationEvent.Movie -> null
     DemoNavigationEvent.Dialog -> null

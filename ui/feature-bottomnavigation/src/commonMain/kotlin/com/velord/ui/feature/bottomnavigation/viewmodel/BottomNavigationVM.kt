@@ -69,10 +69,7 @@ class BottomNavigationVM(
         val new = current.copy(previous = current.current, current = newTab)
         bottomNavEventService.updateTab(new)
         uiStateFlow.update { state ->
-            state.copy(
-                tabState = new,
-                isConfirmExitRequested = false,
-            )
+            state.copy(tabState = new, isConfirmExitRequested = false)
         }
         bottomNavEventService.emitTabClick(new)
     }
