@@ -8,6 +8,7 @@ import com.velord.infrastructure.navigation.voyager.screen.DemoVoyagerScreen
 import com.velord.infrastructure.navigation.voyager.screen.DialogDemoVoyagerScreen
 import com.velord.infrastructure.navigation.voyager.screen.FlowSummatorVoyagerScreen
 import com.velord.infrastructure.navigation.voyager.screen.HintPhoneNumberVoyagerScreen
+import com.velord.infrastructure.navigation.voyager.screen.HorizonDemoVoyagerScreen
 import com.velord.infrastructure.navigation.voyager.screen.ModifierDemoVoyagerScreen
 import com.velord.infrastructure.navigation.voyager.screen.MorphDemoVoyagerScreen
 import com.velord.infrastructure.navigation.voyager.screen.MovieVoyagerScreen
@@ -42,6 +43,9 @@ internal val featureDemoModule: ScreenRegistry.() -> Unit get() = screenModule {
     }
     register<SharedScreenVoyager.Demo.FlowSummator> {
         FlowSummatorVoyagerScreen
+    }
+    register<SharedScreenVoyager.Demo.Horizon> {
+        HorizonDemoVoyagerScreen
     }
     register<SharedScreenVoyager.Demo.Morph> {
         MorphDemoVoyagerScreen

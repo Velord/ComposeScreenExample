@@ -78,10 +78,7 @@ private fun LanguageOption(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .selectable(
-                selected = isSelected,
-                onClick = onClick,
-            )
+            .selectable(selected = isSelected, onClick = onClick)
             .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),

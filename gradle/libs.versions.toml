@@ -230,12 +230,12 @@ squareRetrofit = "3.0.0"
 squareOkhttp3Interceptor = "5.5.0"
 ktor = "3.6.0"
 # Compose
-composePlugin = "1.12.1"
+composePlugin = "1.12.2"
 composeDefault = "1.12.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
 composeIcon = "1.7.8"
 composeAccompanist = "0.37.3"
 # composeCompiler = "1.5.14"
-composeMaterial3 = "1.11.0-alpha07"
+composeMaterial3 = "1.12.0-alpha03"
 composeMaterial3Adaptive = "1.3.0-rc01"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
@@ -243,6 +243,7 @@ composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
 composeHaze = "2.0.0"
+horizonBloom = "0.1.1"
 # Camera
 kamera = "1.2"
 # Image loader
@@ -586,6 +587,7 @@ compose-scrollbar-nanihadesuka = { module = "com.github.nanihadesuka:LazyColumnS
 compose-smarttoolfactory-cropper = { module = "com.github.SmartToolFactory:Compose-Cropper", version.ref = "composeSmartToolFactoryCropper" }
 compose-smarttoolfactory-gesture = { module = "com.github.SmartToolFactory:Compose-Extended-Gestures", version.ref = "composeSmartToolFactoryGesture" }
 compose-haze = { module = "dev.chrisbanes.haze:haze", version.ref = "composeHaze" }
+horizon-bloom-demo = { module = "io.github.velord.horizonbloom:demo", version.ref = "horizonBloom" }
 # DI
 # ---------------------------------------------------------------------------------------------------
 ## DI Dagger

@@ -77,10 +77,7 @@ private fun calculatePreviewCoverScale(
         .getAspectRatio()
         .kameraPreviewAspectRatio(orientation)
 
-    return maxOf(
-        containerRatio / previewRatio,
-        previewRatio / containerRatio,
-    )
+    return maxOf(containerRatio / previewRatio, previewRatio / containerRatio)
 }
 
 @PreviewCombined

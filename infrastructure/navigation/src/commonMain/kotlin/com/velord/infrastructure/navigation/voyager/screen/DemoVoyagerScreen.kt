@@ -52,6 +52,7 @@ internal fun DemoNavigationEvent.voyagerScreenProvider(): SharedScreenVoyager.De
     DemoNavigationEvent.Modifier -> SharedScreenVoyager.Demo.Modifier
     DemoNavigationEvent.FlowSummator -> SharedScreenVoyager.Demo.FlowSummator
     DemoNavigationEvent.Morph -> SharedScreenVoyager.Demo.Morph
+    DemoNavigationEvent.Horizon -> SharedScreenVoyager.Demo.Horizon
     DemoNavigationEvent.HintPhoneNumber -> SharedScreenVoyager.Demo.HintPhoneNumber
     DemoNavigationEvent.Movie -> SharedScreenVoyager.Demo.Movie
     DemoNavigationEvent.Dialog -> SharedScreenVoyager.Demo.Dialog

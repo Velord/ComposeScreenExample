@@ -23,6 +23,7 @@ sealed class SharedScreenVoyager : ScreenProvider {
         data object Modifier : Demo()
         data object FlowSummator : Demo()
         data object Morph : Demo()
+        data object Horizon : Demo()
         data object HintPhoneNumber : Demo()
         data object Movie : Demo()
         data object Dialog : Demo()

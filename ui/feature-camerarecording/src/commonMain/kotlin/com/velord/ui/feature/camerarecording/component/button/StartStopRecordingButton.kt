@@ -41,12 +41,6 @@ internal fun StartStopRecordingButton(
     )
 }
 
-private fun CameraRecordingUiState.hasRequiredPermission(): Boolean {
-    val hasAudioRequiredPermission = isAudioEnabled.not() || permissionState.audio.isGranted
-
-    return permissionState.camera.isGranted && hasAudioRequiredPermission
-}
-
 @Composable
 private fun startStopRecordingLabel(isRecording: Boolean): String = if (isRecording) {
     stringResource(AppString.stop_recording)
@@ -69,15 +63,10 @@ private fun StartStopRecordingButtonSurface(
         modifier = modifier
             .size(82.dp)
             .clip(CircleShape)
-            .clickable(
-                enabled = hasRequiredPermission,
-                onClick = onClick,
-            )
+            .clickable(enabled = hasRequiredPermission, onClick = onClick)
             .semantics { contentDescription = actionLabel }
             .graphicsLayer {
-                alpha = recordingButtonContentAlpha(
-                    hasRequiredPermission = hasRequiredPermission,
-                )
+                alpha = recordingButtonContentAlpha(hasRequiredPermission = hasRequiredPermission)
             },
         contentAlignment = Alignment.Center,
     ) {

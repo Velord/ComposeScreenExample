@@ -93,6 +93,10 @@ private fun Content(
             text = stringResource(AppString.open_dialog),
             onClick = { onAction(DemoUiAction.OpenDialogClick) },
         )
+        OpenButton(
+            text = "Horizon Bloom",
+            onClick = { onAction(DemoUiAction.OpenHorizonClick) },
+        )
     }
 }
 

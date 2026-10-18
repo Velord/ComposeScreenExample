@@ -32,6 +32,7 @@ internal class BottomNavigatorNav3(
             DemoNavigationEvent.FlowSummator ->
                 GraphNav3.BottomTab.Demo.FlowSummatorDestinationNav3
             DemoNavigationEvent.Morph -> GraphNav3.BottomTab.Demo.MorphDemoDestinationNav3
+            DemoNavigationEvent.Horizon -> GraphNav3.BottomTab.Demo.HorizonDemoDestinationNav3
             DemoNavigationEvent.HintPhoneNumber ->
                 GraphNav3.BottomTab.Demo.HintPhoneDestinationNav3
             DemoNavigationEvent.Movie -> GraphNav3.BottomTab.Demo.MovieDestinationNav3

@@ -63,8 +63,7 @@ class LocalizationDataSource {
         Firebase.crashlytics.recordException(error)
     }
 
-    fun currentLanguageCode(): LanguageCode =
-        LanguageCode(LocalizationPlatform.currentLanguageTag())
+    fun currentLanguageCode(): LanguageCode = LanguageCode(LocalizationPlatform.currentLanguageTag())
 
     fun parse(value: String): LocalizationDocument {
         val root = json.parseToJsonElement(value).jsonObject
@@ -107,6 +106,7 @@ class LocalizationDataSource {
                 "Remote key mismatch for '${language.value}'. Missing: $missingKeys, Extra: $extraKeys"
             }
         }
+
         return remote
     }
 
@@ -152,6 +152,7 @@ class LocalizationDataSource {
             require(primitive.isString) { "Localization value must be a string: $language/$key" }
             primitive.content
         }
+
         return LocalizationStringMap(stringMap)
     }
 

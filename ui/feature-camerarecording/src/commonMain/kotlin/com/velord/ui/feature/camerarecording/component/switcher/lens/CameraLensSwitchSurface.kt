@@ -36,10 +36,7 @@ internal fun CameraLensSwitchSurface(
     Surface(
         modifier = Modifier
             .clip(selectorShape)
-            .clickable(
-                enabled = isEnabled,
-                onClick = onClick,
-            )
+            .clickable(enabled = isEnabled, onClick = onClick)
             .graphicsLayer {
                 alpha = lensSwitchAlpha(isEnabled = isEnabled)
             },
