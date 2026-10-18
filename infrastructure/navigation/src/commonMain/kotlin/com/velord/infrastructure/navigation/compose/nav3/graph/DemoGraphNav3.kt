@@ -11,7 +11,6 @@ import com.velord.ui.feature.demo.dialog.DialogDemoScreen
 import com.velord.ui.feature.demo.dialog.DialogDemoVM
 import com.velord.ui.feature.demo.hintphonenumber.HintPhoneNumberScreen
 import com.velord.ui.feature.demo.horizon.HorizonDemoScreen
-import com.velord.ui.feature.demo.horizon.HorizonDemoVM
 import com.velord.ui.feature.demo.modifier.ModifierDemoScreen
 import com.velord.ui.feature.demo.morph.MorphDemoScreen
 import com.velord.ui.feature.demo.shape.ShapeDemoScreen
@@ -59,10 +58,7 @@ internal fun EntryProviderScope<GraphNav3>.setupDemoGraphNav3(navigator: DemoNav
     }
 
     entry<GraphNav3.BottomTab.Demo.HorizonDemoDestinationNav3> {
-        HorizonDemoScreen(
-            viewModel = koinViewModel<HorizonDemoVM>(),
-            onBackClick = navigator::goBack,
-        )
+        HorizonDemoScreen(onBackClick = navigator::goBack)
     }
 
     entry<GraphNav3.BottomTab.Demo.MorphDemoDestinationNav3> {

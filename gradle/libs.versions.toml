@@ -243,7 +243,7 @@ composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
 composeHaze = "2.0.0"
-horizonBloom = "0.1.0"
+horizonBloom = "0.1.1"
 # Camera
 kamera = "1.2"
 # Image loader
@@ -587,7 +587,7 @@ compose-scrollbar-nanihadesuka = { module = "com.github.nanihadesuka:LazyColumnS
 compose-smarttoolfactory-cropper = { module = "com.github.SmartToolFactory:Compose-Cropper", version.ref = "composeSmartToolFactoryCropper" }
 compose-smarttoolfactory-gesture = { module = "com.github.SmartToolFactory:Compose-Extended-Gestures", version.ref = "composeSmartToolFactoryGesture" }
 compose-haze = { module = "dev.chrisbanes.haze:haze", version.ref = "composeHaze" }
-horizon-bloom = { module = "io.github.velord:horizon-bloom", version.ref = "horizonBloom" }
+horizon-bloom-demo = { module = "io.github.velord.horizonbloom:demo", version.ref = "horizonBloom" }
 # DI
 # ---------------------------------------------------------------------------------------------------
 ## DI Dagger
@@ -1197,7 +1197,7 @@ compose-smarttoolfactory = [
 compose-thirdparty = [
     "compose-html", "compose-scrollbar-nanihadesuka",
     "compose-smarttoolfactory-cropper", "compose-smarttoolfactory-gesture",
-    "compose-haze", "horizon-bloom"
+    "compose-haze"
 ]
 # Compose All
 # Material 2 excluded
