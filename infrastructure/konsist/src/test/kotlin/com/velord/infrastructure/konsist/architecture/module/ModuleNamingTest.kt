@@ -175,7 +175,9 @@ class ModuleNamingTest {
         }
 
         if (violationRoster.isNotEmpty()) {
-            println("Plugin aliases do not match their concern sections: ${violationRoster.joinToString()}")
+            val msg = "Plugin aliases do not match their concern sections: " +
+                violationRoster.joinToString()
+            println(msg)
         }
 
         assertTrue(violationRoster.isEmpty())

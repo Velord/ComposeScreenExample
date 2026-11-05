@@ -44,7 +44,9 @@ private val USE_CASE_CONSTRUCTOR_LAMBDA_REGEX = Regex("""\b[A-Za-z][A-Za-z0-9]*U
 private val USE_CASE_IMPORT_REGEX = Regex("""(?m)^import\s+com\.velord\.usecase\.""")
 private val USE_CASE_BINDING_REGEX = Regex("""single<\s*[A-Za-z0-9_]+UC\s*>""")
 private val DEPENDENCY_DECLARATION_REGEX = Regex(
-    """^\s*(?:implementation|api|ksp|compileOnly|runtimeOnly|coreLibraryDesugaring|testImplementation|desktopMainImplementation|androidMainImplementation|commonMainImplementation)\b""",
+    """^\s*(?:implementation|api|ksp|compileOnly|runtimeOnly|""" +
+        """coreLibraryDesugaring|testImplementation|desktopMainImplementation|""" +
+        """androidMainImplementation|commonMainImplementation)\b""",
 )
 private val SAME_TARGET_EXTENSION_DEBT_ROSTER = emptySet<String>()
 
@@ -256,7 +258,9 @@ class ModuleDependencyTest {
 
             lines.forEachIndexed { index, line ->
                 val trimmed = line.trim()
-                if (trimmed.contains("dependencies {") || trimmed.contains("dependencies.apply {")) {
+                if (trimmed.contains("dependencies {") ||
+                    trimmed.contains("dependencies.apply {")
+                ) {
                     inDependenciesBlock = true
                     activeCommentFound = false
                     return@forEachIndexed
@@ -276,8 +280,16 @@ class ModuleDependencyTest {
 
                     if (trimmed.startsWith("//")) {
                         val commentTitle = trimmed.removePrefix("//").trim()
-                        if (commentTitle.endsWith("Plugins") || commentTitle.endsWith("Modules") || commentTitle.endsWith("Tools") || commentTitle.endsWith("Libraries") || commentTitle.endsWith("Dependencies")) {
-                            fileViolations.add("${file.relativeTo(repoRoot).path}:${index + 1} -> Plural section header name violation: '$trimmed' (use singular form)")
+                        if (commentTitle.endsWith("Plugins") ||
+                            commentTitle.endsWith("Modules") ||
+                            commentTitle.endsWith("Tools") ||
+                            commentTitle.endsWith("Libraries") ||
+                            commentTitle.endsWith("Dependencies")
+                        ) {
+                            val msg = "${file.relativeTo(repoRoot).path}:${index + 1} -> " +
+                                "Plural section header name violation: '$trimmed' " +
+                                    "(use singular form)"
+                            fileViolations.add(msg)
                         }
                         activeCommentFound = true
                         return@forEachIndexed
@@ -285,7 +297,8 @@ class ModuleDependencyTest {
 
                     if (DEPENDENCY_DECLARATION_REGEX.containsMatchIn(trimmed)) {
                         if (!activeCommentFound) {
-                            fileViolations.add("${file.relativeTo(repoRoot).path}:${index + 1} -> $trimmed")
+                            val msg = "${file.relativeTo(repoRoot).path}:${index + 1} -> $trimmed"
+                            fileViolations.add(msg)
                         }
                     }
                 }
