@@ -5,7 +5,7 @@ targetApi = "37"
 # Build
 buildTools = "36.0.0"
 buildkonfig = "0.23.0"
-gradle = "9.3.3"
+gradle = "9.5.1"
 jvmTarget = "21"
 jetifier = "1.0.0-beta10"
 # DI
@@ -16,37 +16,37 @@ hiltNavigationCompose = "1.4.0"
 koinBom = "4.2.2"
 koinKsp = "2.3.2-Beta1"
 # Google Firebase
-googleFirebaseBom = "34.19.0"
+googleFirebaseBom = "35.1.0"
 googleFirebaseCrashlyticPlugin = "3.0.8"
 firebaseKit = "0.4.0"
 # Google Other
-googleGuava = "33.7.1-android"
+googleGuava = "33.8.0-android"
 googleKsp = "2.3.4"
-googleMapCompose = "8.6.0"
-googleMapUtil = "5.2.0"
+googleMapCompose = "9.0.1"
+googleMapUtil = "7.0.0"
 googleModernStorage = "1.0.0-alpha06"
-googleRecaptcha = "18.9.3" # 18.8.0 requires core library desugaring to be enabled
+googleRecaptcha = "18.9.4" # 18.8.0 requires core library desugaring to be enabled
 googlePayCompose = "1.2.0"
 googleWalletCompose = "0.1.0-beta01"
 # Google GMS/Google Play Services
 googleGmsAppSet = "16.1.0"
 googleGmsAuth = "22.0.0"
 googleGmsAuthApiPhone = "18.3.1"
-googleGmsBase = "18.11.0"
+googleGmsBase = "18.11.1"
 googleGmsLocation = "21.4.0"
-googleGmsMap = "20.0.0"
-googleGmsMlKit = "19.0.1"
+googleGmsMap = "20.1.0"
+googleGmsMlKit = "19.0.2"
 googleGmsVision = "20.1.3"
 googleGmsServicesPlugin = "4.5.0"
 googleGmsWallet = "20.0.0"
 # Kotlin
-kotlin = "2.4.20"
+kotlin = "2.4.21"
 kotlinCoroutine = "1.11.0"
 kotlinBignum = "0.3.10"
 kotlinCollectionsImmutable = "0.5.2"
 kotlinDateTime = "0.8.0"
 # Kotlin Json Serialization
-kotlinJsonSerialization = "1.11.0"
+kotlinJsonSerialization = "1.12.0"
 kotlinJsonSerializationRetrofitConverter = "1.0.0"
 ## Android
 androidDesugar = "2.1.5"
@@ -73,7 +73,7 @@ androidxCameraViewFinder = "1.6.2"
 ## C
 androidxCarApp = "1.7.0"
 androidXCardView = "1.0.0"
-androidxCollection = "1.6.0"
+androidxCollection = "1.7.0"
 androidxConcurrent = "1.3.0"
 ## AndroidX Constraint
 androidxConstraint = "2.2.2"
@@ -98,7 +98,7 @@ androidxCustomView = "1.2.0"
 androidxCustomViewPollingContainer = "1.1.0"
 ## D
 androidxDataBinding = "3.5.0" # The databinding library is bundled with the Android Gradle plugin. You do not need to declare a dependency on the library, but you must enable it.
-androidxDatastore = "1.2.1"
+androidxDatastore = "1.3.0"
 androidxDocumentFile = "1.1.0"
 androidxDragAndDrop = "1.0.0"
 androidxDrawerLayout = "1.2.0"
@@ -133,9 +133,9 @@ androidxLifecycle = "2.11.0"
 androidxMedia3 = "1.11.1"
 ## N
 androidxNavigation = "2.10.2"
-androidxNavigation3 = "1.2.0"
+androidxNavigation3 = "1.2.1"
 ## AndroidX Paging
-androidxPaging = "3.5.1"
+androidxPaging = "3.5.3"
 ## P
 androidxPalette = "1.0.0" # There are no release notes for this artifact.
 androidxPercentLayout = "1.0.0"
@@ -189,10 +189,10 @@ androidxTestOrchestrator = "1.6.1"
 androidxTestRunner = "1.7.0"
 androidxTestRules = "1.7.0"
 androidxTestServices = "1.6.0"
-androidxTestUiAutomator = "2.4.0"
+androidxTestUiAutomator = "2.4.1"
 ## T
 androidxTextClassifier = "1.0.0-alpha04"
-androidxTracing = "2.0.3"
+androidxTracing = "2.0.5"
 androidxTransition = "1.7.2"
 ## TV
 androidxTvFoundation = "1.0.0"
@@ -214,12 +214,12 @@ androidxWearInput = "1.2.0" # For Input, Input Testing
 androidxWearOngoing = "1.1.0"
 androidxWearPhone = "1.1.1"
 androidxWearRemote = "1.2.0"
-androidxWearCompose = "1.7.0"
+androidxWearCompose = "1.7.1"
 androidxWearProtoLayout = "1.4.2"
 androidxWearTiles = "1.6.2"
 androidxWearWatchface = "1.3.0"
 ## W
-androidxWebkit = "1.17.1"
+androidxWebkit = "1.18.0"
 ## Window
 androidxWindow = "1.5.1"
 androidxWindowExtension = "1.0.0"
@@ -227,8 +227,8 @@ androidxWindowExtension = "1.0.0"
 androidxWorkManager = "2.12.0"
 # Network
 squareRetrofit = "3.0.0"
-squareOkhttp3Interceptor = "5.5.0"
-ktor = "3.6.0"
+squareOkhttp3Interceptor = "5.5.1"
+ktor = "3.6.1"
 # Compose
 composePlugin = "1.12.2"
 composeDefault = "1.12.1" # Foundation, Material, Animation, Ui, UiTooling, Runtime
@@ -236,13 +236,13 @@ composeIcon = "1.7.8"
 composeAccompanist = "0.37.3"
 # composeCompiler = "1.5.14"
 composeMaterial3 = "1.12.0-alpha03"
-composeMaterial3Adaptive = "1.3.0-rc01"
+composeMaterial3Adaptive = "1.3.0"
 # Compose 3-rd party
 composeHtmlIreward = "1.0.2"
 composeScrollbarNanihadesuka = "2.2.0"
 composeSmartToolFactoryCropper = "0.4.0"
 composeSmartToolFactoryGesture = "3.0.0"
-composeHaze = "2.0.0"
+composeHaze = "2.1.0"
 horizonBloom = "0.1.1"
 # Camera
 kamera = "1.2"
@@ -253,7 +253,7 @@ sagarCoroutinePermission = "2.0.3"
 accompanistPermission = "0.37.2"
 # Navigation
 composeDestinations = "2.3.0"
-nav3 = "1.1.2"
+nav3 = "1.2.0"
 voyager = "2.2.21-1.10.3"
 velordMultipleBackstack = "0.5.9.1"
 # Logging
@@ -263,16 +263,16 @@ takt = "2.1.1"
 rebugger = "1.0.1"
 # Testing
 junit = "4.13.2"
-konsist = "0.17.3"
-konsistCompiler = "2.0.21"
+konsist = "0.18.1"
+konsistCompiler = "2.4.21"
 mockk = "1.14.11"
-mokkery = "3.5.0"
+mokkery = "3.6.0"
 turbine = "1.2.1"
 # Code quality
 detekt = "2.0.0-alpha.6"
 dependencyGuard = "0.5.0"
 foojayResolver = "1.0.0"
-dependencyAnalysis = "3.19.2"
+dependencyAnalysis = "3.20.1"
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------
