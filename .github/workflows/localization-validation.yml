@@ -42,8 +42,8 @@ jobs:
             echo 'Found remaining JetBrains Compose stringResource import.'
             exit 1
           fi
-          if grep -R --line-number --include='*.kt' 'com\.google\.firebase' data/localization; then
-            echo 'Localization data code must use Firebase-KMP-Kit.'
+          if grep -R --line-number --include='*.kt' 'com\.google\.firebase' data/localization/src/commonMain; then
+            echo 'Shared localization code must use Firebase-KMP-Kit.'
             exit 1
           fi
           if ! grep -R --line-number --include='*.kt' 'com\.firebasekit\.remoteconfig' data/localization/src/commonMain; then
