@@ -104,7 +104,10 @@ private fun hasCustomizedModifierCall(
 
         val closingParenthesisIndex = findClosingParenthesis(source.text, openingParenthesisIndex)
             ?: return@any false
-        val argumentText = source.text.substring(openingParenthesisIndex + 1, closingParenthesisIndex)
+        val argumentText = source.text.substring(
+            openingParenthesisIndex + 1,
+            closingParenthesisIndex,
+        )
         val argumentCount = topLevelSegmentRoster(argumentText).size
         argumentText.contains("modifier =") || argumentCount >= candidate.parameterCount
     }

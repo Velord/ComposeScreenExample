@@ -1,6 +1,8 @@
 ﻿package com.velord.infrastructure.konsist.codestyle
 
 import com.velord.infrastructure.konsist.ActiveProjectSource
+import org.jetbrains.kotlin.CoreEnvironmentDeprecation
+import org.jetbrains.kotlin.cli.create
 import org.jetbrains.kotlin.cli.jvm.compiler.EnvironmentConfigFiles
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
 import org.jetbrains.kotlin.com.intellij.openapi.util.Disposer
@@ -15,12 +17,13 @@ private val WHITESPACE_REGEX = Regex("\\s+")
 internal const val HARD_WRAP = 100
 internal val projectFileRoster = ActiveProjectSource.fileRoster
 
+@OptIn(CoreEnvironmentDeprecation::class)
 internal fun <T> List<String>.withKotlinFileRoster(block: (List<KtFile>) -> T): T {
     val disposable = Disposer.newDisposable()
     try {
         val environment = KotlinCoreEnvironment.createForProduction(
             disposable,
-            CompilerConfiguration(),
+            CompilerConfiguration.create(),
             EnvironmentConfigFiles.JVM_CONFIG_FILES,
         )
         val factory = KtPsiFactory(environment.project)

@@ -4,6 +4,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import java.util.Locale
 
+// Kit lacks Android fetch settings, so use its native SDK to allow fresh explicit fetches.
 internal actual object LocalizationPlatform {
 
     actual suspend fun initializeRemoteConfig() {

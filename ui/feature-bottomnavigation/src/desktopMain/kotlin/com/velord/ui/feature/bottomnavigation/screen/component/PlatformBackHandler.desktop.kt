@@ -5,6 +5,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import com.velord.core.ui.compose.component.DesktopBackHandlerWrapper
 import com.velord.core.ui.compose.component.LocalDesktopBackDispatcher
 import com.velord.ui.feature.bottomnavigation.viewmodel.BottomNavigationBackBehavior
 
@@ -21,7 +22,7 @@ internal actual fun PlatformBackHandler(
     val currentOnBackClick by rememberUpdatedState(onBackClick)
 
     DisposableEffect(dispatcher, backBehavior) {
-        val handler: () -> Boolean = {
+        val handler = DesktopBackHandlerWrapper{
             currentOnBackClick()
             when (backBehavior) {
                 BottomNavigationBackBehavior.DelegateToNavigator -> false

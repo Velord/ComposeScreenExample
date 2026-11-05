@@ -34,7 +34,11 @@ private val BUILT_IN_COMPOSE_CALL_NAME_ROSTER = setOf(
     "Text",
     "TextButton",
 )
-private val MULTILINE_OBJECT_MAPPING_TYPE_ROSTER = setOf("LocalizationState", "LanguageUiState", "ToastConfig")
+private val MULTILINE_OBJECT_MAPPING_TYPE_ROSTER = setOf(
+    "LocalizationState",
+    "LanguageUiState",
+    "ToastConfig",
+)
 private val EXPRESSION_BODY_MAPPING_CALL_REGEX = Regex(
     """\bfun\b.+?\(([^)]*)\)\s*:\s*([A-Z][A-Za-z0-9_]*)\s*=\s*\2\(""",
 )

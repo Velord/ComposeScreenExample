@@ -19,7 +19,8 @@ internal fun KtFile.whenBranchLineRoster(): Set<Int> = collectDescendantsOfType<
     .map { offset -> text.take(offset).count { it == '\n' } }
     .toSet()
 
-internal fun KtFile.unbracedIfElseLineRoster(): List<Int> = collectDescendantsOfType<KtIfExpression>()
+internal fun KtFile.unbracedIfElseLineRoster(): List<Int> = this
+    .collectDescendantsOfType<KtIfExpression>()
     .filter { expression ->
         if (expression.isAssignedToVariable().not()) return@filter false
         val elseBranch = expression.`else` ?: return@filter false
